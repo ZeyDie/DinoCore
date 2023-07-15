@@ -1,14 +1,13 @@
 package net.minecraft.world.biome;
 
 import net.minecraft.block.Block;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.OreGenEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
-import ru.zoom4ikdan4ik.settings.optimization.CoreSettings;
+import com.zeydie.settings.optimization.CoreSettings;
 
 import java.util.Random;
 
@@ -181,7 +180,7 @@ public class BiomeDecorator
         {
 
             //TODO ZoomCodeStart
-            if (!CoreSettings.getInstance().disableAsynchronousWarnings)
+            if (!CoreSettings.getInstance().isDisableAsynchronousWarnings())
                 //TODO ZoomCodeEnd
 
             throw new RuntimeException("Already decorating!!");

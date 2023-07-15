@@ -1,9 +1,8 @@
 package net.minecraft.pathfinding;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.Vec3;
-import ru.zoom4ikdan4ik.settings.optimization.MultiThreadSettings;
+import com.zeydie.settings.optimization.MultiThreadSettings;
 
 public class PathEntity
 {
@@ -79,7 +78,7 @@ public class PathEntity
      */
     public Vec3 getVectorFromIndex(Entity par1Entity, int par2) {
         //todo sa1zer_ code start
-        boolean useSafeMod = MultiThreadSettings.getInstance().getMobsSettings().enable;
+        boolean useSafeMod = MultiThreadSettings.getInstance().getMobsSettings().isEnable();
         if(useSafeMod) {
             try {
                 return vectorFromIndex(par1Entity, par2);

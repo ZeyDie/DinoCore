@@ -4,7 +4,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
 import org.bukkit.command.Command;
 import org.bukkit.configuration.file.YamlConfiguration;
-import ru.zoom4ikdan4ik.DefaultPaths;
+import com.zeydie.DefaultPaths;
 
 import java.io.File;
 import java.io.IOException;

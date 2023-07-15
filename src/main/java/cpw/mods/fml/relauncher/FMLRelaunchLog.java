@@ -14,8 +14,8 @@ package cpw.mods.fml.relauncher;
 
 import com.google.common.base.Throwables;
 import net.minecraft.launchwrapper.LogWrapper;
-import ru.zoom4ikdan4ik.DefaultPaths;
-import ru.zoom4ikdan4ik.modified.ArchiveLogs;
+import com.zeydie.DefaultPaths;
+import com.zeydie.modified.ArchiveLogs;
 
 import java.io.*;
 import java.util.concurrent.LinkedBlockingQueue;

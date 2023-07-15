@@ -1,7 +1,6 @@
 package net.minecraft.world;
 
 import com.google.common.collect.ImmutableSetMultimap;
-import com.google.common.collect.Sets;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -68,12 +67,11 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.weather.ThunderChangeEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.generator.ChunkGenerator;
-import ru.zoom4ikdan4ik.settings.optimization.MultiThreadSettings;
-import ru.zoom4ikdan4ik.threads.runnables.WeatherEffectsRunnable;
+import com.zeydie.settings.optimization.MultiThreadSettings;
+import com.zeydie.threads.runnables.WeatherEffectsRunnable;
 
 import java.util.*;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 // CraftBukkit start
@@ -2222,7 +2220,7 @@ public abstract class World implements IBlockAccess {
         // Cauldron end
 
         //TODO ZoomCodeStart
-        if (MultiThreadSettings.getInstance().worldSettings.enable)
+        if (MultiThreadSettings.getInstance().getWorldSettings().isEnable())
             MinecraftServer.getServer().addWorldRunnable(new WeatherEffectsRunnable(this));
         else
             //TODO ZoomCodeEnd

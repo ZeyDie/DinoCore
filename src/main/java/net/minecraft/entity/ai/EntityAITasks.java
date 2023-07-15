@@ -2,8 +2,8 @@ package net.minecraft.entity.ai;
 
 import net.minecraft.profiler.Profiler;
 import net.minecraft.server.MinecraftServer;
-import ru.zoom4ikdan4ik.settings.optimization.MultiThreadSettings;
-import ru.zoom4ikdan4ik.threads.runnables.AIRunnable;
+import com.zeydie.settings.optimization.MultiThreadSettings;
+import com.zeydie.threads.runnables.AIRunnable;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -63,7 +63,7 @@ public class EntityAITasks {
     public void onUpdateTasks() {
 
         //TODO ZoomCodeStart
-        if (MultiThreadSettings.getInstance().getMobsSettings().enable) {
+        if (MultiThreadSettings.getInstance().getMobsSettings().isEnable()) {
             MinecraftServer.getServer().addMobRunnable(new AIRunnable(this));
 
             return;

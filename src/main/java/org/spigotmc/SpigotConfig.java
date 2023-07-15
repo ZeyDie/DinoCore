@@ -7,7 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_6_R3.command.TicksPerSecondCommand;
-import ru.zoom4ikdan4ik.DefaultPaths;
+import com.zeydie.DefaultPaths;
 
 import java.io.File;
 import java.io.IOException;

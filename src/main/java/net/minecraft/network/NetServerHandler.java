@@ -1,5 +1,7 @@
 package net.minecraft.network;
 
+import com.zeydie.legacy.core.waitables.WaitableBukkit;
+import com.zeydie.legacy.core.waitables.WaitableChatMessage;
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 import net.minecraft.block.Block;
 import net.minecraft.crash.CrashReport;
@@ -960,7 +962,7 @@ public class NetServerHandler extends NetHandler {
                 // CraftBukkit start
                 if (par1Packet3Chat.canProcessAsync()) {
                     //TODO ZoomCodeStart
-                    final Waitable waitable = new ru.zoom4ikdan4ik.legacy.core.waitables.WaitableChatMessage(this, "Chat message too long");
+                    final Waitable waitable = new WaitableChatMessage(this, "Chat message too long");
                     //TODO ZoomCodeEnd
                     //TODO ZoomCodeClear
                     /*Waitable waitable = new Waitable() {
@@ -992,7 +994,7 @@ public class NetServerHandler extends NetHandler {
                         if (par1Packet3Chat.canProcessAsync()) {
 
                             //TODO ZoomCodeStart
-                            final Waitable waitable = new ru.zoom4ikdan4ik.legacy.core.waitables.WaitableChatMessage(this, String.format("Illegal characters in chat %s", s.charAt(i)));
+                            final Waitable waitable = new WaitableChatMessage(this, String.format("Illegal characters in chat %s", s.charAt(i)));
                             //TODO ZoomCodeEnd
                             //TODO ZoomCodeClear
                             /*Waitable waitable = new Waitable() {
@@ -1051,7 +1053,7 @@ public class NetServerHandler extends NetHandler {
                     if (par1Packet3Chat.canProcessAsync()) {
 
                         //TODO ZoomCodeStart
-                        final Waitable waitable = new ru.zoom4ikdan4ik.legacy.core.waitables.WaitableChatMessage(this, "disconnect.spam");
+                        final Waitable waitable = new WaitableChatMessage(this, "disconnect.spam");
                         //TODO ZoomCodeEnd
                         //TODO ZoomCodeClear
                         /*Waitable waitable = new Waitable() {
@@ -1111,7 +1113,7 @@ public class NetServerHandler extends NetHandler {
                     queueEvent.setCancelled(event.isCancelled());
 
                     //TODO ZoomCodeStart
-                    final Waitable waitable = new ru.zoom4ikdan4ik.legacy.core.waitables.WaitableBukkit(this, queueEvent);
+                    final Waitable waitable = new WaitableBukkit(this, queueEvent);
                     //TODO ZoomCodeEnd
                     //TODO ZoomCodeClear
                         /*Waitable waitable = new Waitable() {

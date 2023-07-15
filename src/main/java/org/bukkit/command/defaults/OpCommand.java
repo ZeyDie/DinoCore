@@ -1,7 +1,6 @@
 package org.bukkit.command.defaults;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.server.MinecraftServer;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
-import ru.zoom4ikdan4ik.settings.optimization.PermissionsSettings;
+import com.zeydie.settings.optimization.PermissionsSettings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +35,7 @@ public class OpCommand extends VanillaCommand {
         //TODO ZoomCodeStart
         final PermissionsSettings.PermissionsSettingsGson permissionsSettingsGson = PermissionsSettings.getInstance();
 
-        if (permissionsSettingsGson.opsOnlyFromConsole && !(sender instanceof ConsoleCommandSender)) {
+        if (permissionsSettingsGson.isOpsOnlyFromConsole() && !(sender instanceof ConsoleCommandSender)) {
             sender.sendMessage(ChatColor.RED + "Ops command only for console!");
 
             return false;

@@ -12,12 +12,11 @@ import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.network.packet.Packet;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.IntHashMap;
 import net.minecraft.util.ReportedException;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
-import ru.zoom4ikdan4ik.settings.optimization.CoreSettings;
+import com.zeydie.settings.optimization.CoreSettings;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -117,7 +116,7 @@ public class EntityTracker {
     public void addEntityToTracker(Entity par1Entity, int par2, int par3, boolean par4) {
 
         //TODO ZoomCodeStart
-        if (!CoreSettings.getInstance().disableAsynchronousWarnings)
+        if (!CoreSettings.getInstance().isDisableAsynchronousWarnings())
             //TODO ZoomCodeEnd
 
             if (Thread.currentThread() != net.minecraft.server.MinecraftServer.getServer().primaryThread) {
@@ -133,7 +132,7 @@ public class EntityTracker {
         try {
 
             //TODO ZoomCodeStart
-            if (CoreSettings.getInstance().disableAsynchronousWarnings)
+            if (CoreSettings.getInstance().isDisableAsynchronousWarnings())
                 if (this.trackedEntityIDs.containsItem(par1Entity.entityId))
                     return;
             //TODO ZoomCodeEnd
@@ -167,7 +166,7 @@ public class EntityTracker {
     public void removeEntityFromAllTrackingPlayers(Entity par1Entity) {
 
         //TODO ZoomCodeStart
-        if (!CoreSettings.getInstance().disableAsynchronousWarnings)
+        if (!CoreSettings.getInstance().isDisableAsynchronousWarnings())
             //TODO ZoomCodeEnd
 
             if (Thread.currentThread() != net.minecraft.server.MinecraftServer.getServer().primaryThread) {

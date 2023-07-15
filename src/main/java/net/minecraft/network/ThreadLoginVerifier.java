@@ -1,12 +1,13 @@
 package net.minecraft.network;
 
-import cpw.mods.fml.common.FMLLog;
+import com.zeydie.legacy.core.waitables.WaitablePlayerPreLogin;
+import com.zeydie.modified.CustomLoginVerified;
+import com.zeydie.settings.optimization.AuthSettings;
 import net.minecraft.util.CryptManager;
 import org.bukkit.craftbukkit.v1_6_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_6_R3.util.Waitable;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerPreLoginEvent;
-import ru.zoom4ikdan4ik.settings.auth.AuthSettings;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -46,41 +47,8 @@ public class ThreadLoginVerifier extends Thread {
         String s = (new BigInteger(Objects.requireNonNull(CryptManager.getServerIdHash(NetLoginHandler.getServerId(this.loginHandler), NetLoginHandler.getLoginMinecraftServer(this.loginHandler).getKeyPair().getPublic(), NetLoginHandler.getSharedKey(this.loginHandler))))).toString(16);
 
         //TODO ZoomCodeStart
-        final AuthSettings.AuthSettingsGson authSettingsGson = AuthSettings.getInstance();
-
-        if (authSettingsGson.enable) {
-            final String username = URLEncoder.encode(NetLoginHandler.getClientUsername(this.loginHandler), "UTF-8");
-            final String serverID = URLEncoder.encode(s, "UTF-8");
-
-            try {
-                //TODO ZoomCodeStart
-                return com.mojang.authlib.yggdrasil.CompatBridge.checkServer(username, serverID) != null;
-                //TODO ZoomCodeEnd
-                //TODO ZoomCodeClear
-                //return com.mojang.authlib.yggdrasil.LegacyBridge.checkServer(username, serverID);
-            } catch (Throwable exception) {
-                final String site = String.format(authSettingsGson.getAuthRequest(), username, serverID);
-
-                if (authSettingsGson.debug)
-                    FMLLog.info("Connection to %s...", site);
-
-                final URL url = new URL(site);
-                final BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(url.openConnection(NetLoginHandler.getLoginMinecraftServer(this.loginHandler).getServerProxy()).getInputStream()));
-                final String s1 = bufferedreader.readLine();
-
-                bufferedreader.close();
-
-                if (authSettingsGson.debug)
-                    FMLLog.info("Result: %s", s1);
-
-                if (!authSettingsGson.success.equals(s1)) {
-                    this.loginHandler.raiseErrorAndDisconnect("Failed to verify username!");
-                    return false;
-                }
-            }
-
-            return this.loginHandler.getSocket() != null;
-        }
+        if (AuthSettings.getInstance().isEnable())
+            return CustomLoginVerified.auth(this.loginHandler, s);
         //TODO ZoomCodeEnd
 
         URL url = new URL("http://session.minecraft.net/game/checkserver.jsp?user=" + URLEncoder.encode(NetLoginHandler.getClientUsername(this.loginHandler), "UTF-8") + "&serverId=" + URLEncoder.encode(s, "UTF-8"));
@@ -113,7 +81,7 @@ public class ThreadLoginVerifier extends Thread {
                 }
 
                 //TODO ZoomCodeStart
-                final Waitable<PlayerPreLoginEvent.Result> waitable = new ru.zoom4ikdan4ik.legacy.core.waitables.WaitablePlayerPreLogin(this, event);
+                final Waitable<PlayerPreLoginEvent.Result> waitable = new WaitablePlayerPreLogin(this, event);
                 //TODO ZoomCodeEnd
                 //TODO ZoomCodeClear
                 /*Waitable<PlayerPreLoginEvent.Result> waitable = new Waitable<PlayerPreLoginEvent.Result>() {
@@ -147,11 +115,5 @@ public class ThreadLoginVerifier extends Thread {
             server.getLogger().log(java.util.logging.Level.WARNING, "Exception verifying " + NetLoginHandler.getClientUsername(this.loginHandler), exception);
             // CraftBukkit end
         }
-
-        //TODO ZoomCodeStart
-        finally {
-            this.stop();
-        }
-        //TODO ZoomCodeEnd
     }
 }

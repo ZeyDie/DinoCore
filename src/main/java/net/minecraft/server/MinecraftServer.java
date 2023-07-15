@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import com.zeydie.settings.optimization.*;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
@@ -50,12 +51,11 @@ import org.bukkit.craftbukkit.v1_6_R3.block.CraftBlock;
 import org.bukkit.craftbukkit.v1_6_R3.util.Waitable;
 import org.bukkit.event.server.RemoteServerCommandEvent;
 import org.bukkit.event.world.WorldSaveEvent;
-import ru.zoom4ikdan4ik.DefaultPaths;
-import ru.zoom4ikdan4ik.settings.auth.AuthSettings;
-import ru.zoom4ikdan4ik.settings.optimization.*;
-import ru.zoom4ikdan4ik.threads.EntityThread;
-import ru.zoom4ikdan4ik.threads.WorldThread;
-import ru.zoom4ikdan4ik.threads.runnables.UnloadingWorldsRunnable;
+import com.zeydie.DefaultPaths;
+import com.zeydie.settings.optimization.AuthSettings;
+import com.zeydie.threads.EntityThread;
+import com.zeydie.threads.WorldThread;
+import com.zeydie.threads.runnables.UnloadingWorldsRunnable;
 
 import java.awt.*;
 import java.io.File;
@@ -244,7 +244,6 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
     //TODO ZoomCodeStart
     public final AuthSettings authSettings = new AuthSettings();
     public final CoreSettings coreSettings = new CoreSettings();
-    public final BotsSettings botsSettings = new BotsSettings();
     public final MultiThreadSettings multiThreadSettings = new MultiThreadSettings();
     public final PermissionsSettings permissionsSettings = new PermissionsSettings();
     public final WorldsSettings worldsSettings = new WorldsSettings();
@@ -255,15 +254,14 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
     public final void init() {
         this.authSettings.reload();
         this.coreSettings.reload();
-        this.botsSettings.reload();
         this.multiThreadSettings.reload();
         this.permissionsSettings.reload();
         this.worldsSettings.reload();
 
         final MultiThreadSettings.MultiThreadSettingsGson.MobsSettings mobsSettings = MultiThreadSettings.getInstance().getMobsSettings();
 
-        if (mobsSettings.enable)
-            for (int i = 0; i < mobsSettings.pools; i++) {
+        if (mobsSettings.isEnable())
+            for (int i = 0; i < mobsSettings.getPools(); i++) {
                 final EntityThread entityThread = new EntityThread(i);
 
                 entityThread.start();
@@ -273,8 +271,8 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
 
         final MultiThreadSettings.MultiThreadSettingsGson.WorldSettings worldSettings = MultiThreadSettings.getInstance().getWorldSettings();
 
-        if (worldSettings.enable) {
-            for (int i = 0; i < worldSettings.pools; i++) {
+        if (worldSettings.isEnable()) {
+            for (int i = 0; i < worldSettings.getPools(); i++) {
                 final WorldThread worldThread = new WorldThread(i);
 
                 worldThread.start();
@@ -647,17 +645,6 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
                 this.usageSnooper.stopSnooper();
             }
         }
-
-        //TODO ZoomCodeStart
-        final BotsSettings.BotsGson botsGson = BotsSettings.getInstance().update();
-
-        if (botsGson.enableAntiBots) {
-            FMLLog.info("Saving data of bots IPs...");
-
-            MinecraftServer.getServer().botsSettings.rewrite(botsGson);
-        }
-        //TODO ZoomCodeEnd
-
     }
 
     /**

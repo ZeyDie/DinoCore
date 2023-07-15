@@ -18,6 +18,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.ObjectArrays;
 import com.google.common.primitives.Ints;
+import com.zeydie.legacy.JavaLegacy;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.launcher.FMLInjectionAndSortingTweaker;
 import cpw.mods.fml.common.launcher.FMLTweaker;
@@ -500,7 +501,7 @@ public class CoreModManager {
         List<ITweaker> tweakers = (List<ITweaker>) Launch.blackboard.get("Tweaks");
 
         //TODO ZoomCodeReplace Collections on ru.zoom4ikdan4ik.legacy.JavaLegacy
-        ru.zoom4ikdan4ik.legacy.JavaLegacy.sort(tweakers, new Comparator<ITweaker>() {
+        JavaLegacy.sort(tweakers, new Comparator<ITweaker>() {
             @Override
             public int compare(ITweaker o1, ITweaker o2)
             {

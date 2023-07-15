@@ -63,7 +63,7 @@ import org.bukkit.event.entity.EntityCombustByEntityEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.util.Vector;
-import ru.zoom4ikdan4ik.settings.optimization.CoreSettings;
+import com.zeydie.settings.optimization.CoreSettings;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -1359,7 +1359,7 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
                     if (flag2) {
 
                         //TODO Minecraft 1.12.2 start
-                        if (CoreSettings.getInstance().pvpFromNewVersions) {
+                        if (CoreSettings.getInstance().isPvpFromNewVersions()) {
                             if (i > 0) {
                                 if (targetEntity instanceof EntityLivingBase)
                                     ((EntityLivingBase) targetEntity).knockBack(this, (float) i * 0.5F, (double) MathHelper.sin(this.rotationYaw * 0.017453292F), (double) (-MathHelper.cos(this.rotationYaw * 0.017453292F)));

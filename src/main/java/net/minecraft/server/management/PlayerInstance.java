@@ -1,5 +1,6 @@
 package net.minecraft.server.management;
 
+import com.zeydie.legacy.core.PlayerRunnableLoadChunk;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet51MapChunk;
@@ -13,7 +14,7 @@ import net.minecraftforge.common.ForgeDummyContainer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.ChunkWatchEvent;
 import org.bukkit.craftbukkit.v1_6_R3.chunkio.ChunkIOExecutor;
-import ru.zoom4ikdan4ik.legacy.core.PlayerInstanceRunnable;
+import com.zeydie.legacy.core.PlayerInstanceRunnable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,7 +71,7 @@ public class PlayerInstance {
         if (this.playersInChunk.contains(par1EntityPlayerMP)) {
 
             //TODO ZoomCodeStart
-            if (!MinecraftServer.getServer().coreSettings.getSettings().disableAsynchronousWarnings)
+            if (!MinecraftServer.getServer().coreSettings.getSettings().isDisableAsynchronousWarnings())
                 //TODO ZoomCodeEnd
 
                 throw new IllegalStateException("Failed to add player. " + par1EntityPlayerMP + " already is in chunk " + this.chunkLocation.chunkXPos + ", " + this.chunkLocation.chunkZPos);
@@ -89,7 +90,7 @@ public class PlayerInstance {
             } else {
 
                 //TODO ZoomCodeStart
-                playerRunnable = new ru.zoom4ikdan4ik.legacy.core.PlayerRunnableLoadChunk(par1EntityPlayerMP, this);
+                playerRunnable = new PlayerRunnableLoadChunk(par1EntityPlayerMP, this);
                 //TODO ZoomCodeEnd
 
                 this.thePlayerManager.getWorldServer().theChunkProviderServer.getChunkAt(this.chunkLocation.chunkXPos, this.chunkLocation.chunkZPos, playerRunnable);

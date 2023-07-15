@@ -1,6 +1,5 @@
 package net.minecraft.entity;
 
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 import net.minecraft.entity.ai.attributes.ServersideAttributeMap;
 import net.minecraft.entity.item.*;
@@ -18,7 +17,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.storage.MapData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerVelocityEvent;
-import ru.zoom4ikdan4ik.settings.optimization.CoreSettings;
+import com.zeydie.settings.optimization.CoreSettings;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -345,7 +344,7 @@ public class EntityTrackerEntry {
     public void tryStartWachingThis(EntityPlayerMP par1EntityPlayerMP) {
 
         //TODO ZoomCodeStart
-        if (!CoreSettings.getInstance().disableAsynchronousWarnings)
+        if (!CoreSettings.getInstance().isDisableAsynchronousWarnings())
             //TODO ZoomCodeEnd
 
             if (Thread.currentThread() != MinecraftServer.getServer().primaryThread) {

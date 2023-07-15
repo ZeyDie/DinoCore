@@ -1,7 +1,6 @@
 package org.bukkit.craftbukkit.v1_6_R3.util;
 
-import net.minecraft.server.MinecraftServer;
-import ru.zoom4ikdan4ik.settings.optimization.CoreSettings;
+import com.zeydie.settings.optimization.CoreSettings;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -182,7 +181,7 @@ public class UnsafeList<E> extends AbstractList<E> implements List<E>, RandomAcc
         if (index >= size || index < 0) {
 
             //TODO ZoomCodeStart
-            if (!CoreSettings.getInstance().disableAsynchronousWarnings)
+            if (!CoreSettings.getInstance().isDisableAsynchronousWarnings())
                 //TODO ZoomCodeEnd
 
                 throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);

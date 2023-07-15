@@ -1,5 +1,6 @@
 package net.minecraft.server.management;
 
+import com.zeydie.legacy.core.ChunkCoordComparator;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.LongHashMap;
 import net.minecraft.world.ChunkCoordIntPair;
@@ -175,7 +176,7 @@ public class PlayerManager {
         //TODO ZoomCodeClear
         //Collections.sort(chunkList, new ChunkCoordComparator(par1EntityPlayerMP));
         //TODO ZoomCodeStart
-        Collections.sort(chunkList, new ru.zoom4ikdan4ik.legacy.core.ChunkCoordComparator(par1EntityPlayerMP));
+        Collections.sort(chunkList, new ChunkCoordComparator(par1EntityPlayerMP));
         //TODO ZoomCodeEnd
 
         for (ChunkCoordIntPair pair : chunkList) {
@@ -308,7 +309,7 @@ public class PlayerManager {
                 //TODO ZoomCodeClear
                 //Collections.sort(chunksToLoad, new ChunkCoordComparator(par1EntityPlayerMP));
                 //TODO ZoomCodeStart
-                Collections.sort(chunksToLoad, new ru.zoom4ikdan4ik.legacy.core.ChunkCoordComparator(par1EntityPlayerMP));
+                Collections.sort(chunksToLoad, new ChunkCoordComparator(par1EntityPlayerMP));
                 //TODO ZoomCodeEnd
 
                 for (ChunkCoordIntPair pair : chunksToLoad) {
@@ -319,7 +320,7 @@ public class PlayerManager {
                     //TODO ZoomCodeClear
                     //Collections.sort(par1EntityPlayerMP.loadedChunks, new ChunkCoordComparator(par1EntityPlayerMP));
                     //TODO ZoomCodeStart
-                    Collections.sort(par1EntityPlayerMP.loadedChunks, new ru.zoom4ikdan4ik.legacy.core.ChunkCoordComparator(par1EntityPlayerMP));
+                    Collections.sort(par1EntityPlayerMP.loadedChunks, new ChunkCoordComparator(par1EntityPlayerMP));
                     //TODO ZoomCodeEnd
                 }
 

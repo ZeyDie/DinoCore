@@ -76,7 +76,7 @@ public class TimingsCommand extends BukkitCommand {
 
                 if (paste) {
                     //TODO ZoomCodeStart
-                    final ru.zoom4ikdan4ik.modified.PasteThread pasteThread = new ru.zoom4ikdan4ik.modified.PasteThread(sender, bout);
+                    final com.zeydie.modified.PasteThread pasteThread = new com.zeydie.modified.PasteThread(sender, bout);
                     pasteThread.start();
                     //TODO ZoomCodeEnd
                     //TODO ZoomCodeClear

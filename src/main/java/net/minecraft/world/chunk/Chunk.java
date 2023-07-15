@@ -26,7 +26,7 @@ import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.world.ChunkEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_6_R3.CraftChunk;
-import ru.zoom4ikdan4ik.settings.optimization.MultiThreadSettings;
+import com.zeydie.settings.optimization.MultiThreadSettings;
 
 import java.util.*;
 
@@ -1070,7 +1070,7 @@ public class Chunk {
         }
 
         //TODO ZoomCodeStart
-        final MultiThreadSettings.MultiThreadSettingsGson.MobsSettings.AABBForEntity aabbForEntity = MultiThreadSettings.getInstance().getMobsSettings().aabbForEntity;
+        final MultiThreadSettings.MultiThreadSettingsGson.MobsSettings.AABBForEntity aabbForEntity = MultiThreadSettings.getInstance().getMobsSettings().getAabbForEntity();
 
         int size = par3List.size();
         //TODO ZoomCodeEnd
@@ -1079,8 +1079,8 @@ public class Chunk {
             List list1 = this.entityLists[k];
 
             //TODO ZoomCodeStart
-            if (size >= aabbForEntity.maximumEntities) return;
-            if (aabbForEntity.shuffleLists)
+            if (size >= aabbForEntity.getMaximumEntities()) return;
+            if (aabbForEntity.isShuffleLists())
                 Collections.shuffle(list1);
             //TODO ZoomCodeEnd
 
@@ -1088,7 +1088,7 @@ public class Chunk {
                 Entity entity1 = (Entity) list1.get(l);
 
                 //TODO ZoomCodeStart
-                if (size >= aabbForEntity.maximumEntities) return;
+                if (size >= aabbForEntity.getMaximumEntities()) return;
                 if (entity1 == null) continue;
                 //TODO ZoomCodeEnd
 
@@ -1096,7 +1096,7 @@ public class Chunk {
 
                     //TODO ZoomCodeStart
                     if (entity1 instanceof EntityPlayer) {
-                        if (!aabbForEntity.ignorePlayers)
+                        if (!aabbForEntity.isIgnorePlayers())
                             size += 1;
                     } else size += 1;
                     //TODO ZoomCodeEnd
@@ -1110,7 +1110,7 @@ public class Chunk {
                             entity1 = aentity[i1];
 
                             //TODO ZoomCodeStart
-                            if (size >= aabbForEntity.maximumEntities) return;
+                            if (size >= aabbForEntity.getMaximumEntities()) return;
                             if (entity1 == null) continue;
                             //TODO ZoomCodeEnd
 
@@ -1118,7 +1118,7 @@ public class Chunk {
 
                                 //TODO ZoomCodeStart
                                 if (entity1 instanceof EntityPlayer) {
-                                    if (!aabbForEntity.ignorePlayers)
+                                    if (!aabbForEntity.isIgnorePlayers())
                                         size += 1;
                                 } else size += 1;
                                 //TODO ZoomCodeEnd
@@ -1152,7 +1152,7 @@ public class Chunk {
         }
 
         //TODO ZoomCodeStart
-        final MultiThreadSettings.MultiThreadSettingsGson.MobsSettings.AABBForEntity aabbForEntity = MultiThreadSettings.getInstance().getMobsSettings().aabbForEntity;
+        final MultiThreadSettings.MultiThreadSettingsGson.MobsSettings.AABBForEntity aabbForEntity = MultiThreadSettings.getInstance().getMobsSettings().getAabbForEntity();
 
         int size = par3List.size();
         //TODO ZoomCodeEnd
@@ -1161,8 +1161,8 @@ public class Chunk {
             List list1 = this.entityLists[k];
 
             //TODO ZoomCodeStart
-            if (size >= aabbForEntity.maximumEntities) return;
-            if (aabbForEntity.shuffleLists)
+            if (size >= aabbForEntity.getMaximumEntities()) return;
+            if (aabbForEntity.isShuffleLists())
                 Collections.shuffle(list1);
             //TODO ZoomCodeEnd
 
@@ -1170,7 +1170,7 @@ public class Chunk {
                 Entity entity = (Entity) list1.get(l);
 
                 //TODO ZoomCodeStart
-                if (size >= aabbForEntity.maximumEntities) return;
+                if (size >= aabbForEntity.getMaximumEntities()) return;
                 if (entity == null) continue;
                 //TODO ZoomCodeEnd
 
@@ -1178,7 +1178,7 @@ public class Chunk {
 
                     //TODO ZoomCodeStart
                     if (entity instanceof EntityPlayer) {
-                        if (!aabbForEntity.ignorePlayers)
+                        if (!aabbForEntity.isIgnorePlayers())
                             size += 1;
                     } else size += 1;
                     //TODO ZoomCodeEnd

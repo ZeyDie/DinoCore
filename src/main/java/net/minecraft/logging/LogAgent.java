@@ -1,5 +1,6 @@
 package net.minecraft.logging;
 
+import com.zeydie.legacy.core.LogAgentFilter;
 import cpw.mods.fml.relauncher.FMLRelaunchLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -47,7 +48,7 @@ public class LogAgent implements ILogAgent {
         ConsoleHandler wrappedHandler = new org.bukkit.craftbukkit.v1_6_R3.util.TerminalConsoleHandler(server.reader);
 
         //TODO ZoomCodeStart
-        wrappedHandler.setFilter(new ru.zoom4ikdan4ik.legacy.core.LogAgentFilter());
+        wrappedHandler.setFilter(new LogAgentFilter());
         //TODO ZoomCodeEnd
         //TODO ZoomCodeClear
         /*wrappedHandler.setFilter(new java.util.logging.Filter() {

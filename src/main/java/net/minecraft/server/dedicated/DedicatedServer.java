@@ -29,7 +29,7 @@ import net.minecraft.world.chunk.storage.AnvilSaveConverter;
 import org.bukkit.craftbukkit.v1_6_R3.LoggerOutputStream;
 import org.bukkit.craftbukkit.v1_6_R3.SpigotTimings;
 import org.bukkit.event.server.ServerCommandEvent;
-import ru.zoom4ikdan4ik.settings.optimization.CoreSettings;
+import com.zeydie.settings.optimization.CoreSettings;
 
 import java.io.File;
 import java.io.IOException;
@@ -156,7 +156,7 @@ public class DedicatedServer extends MinecraftServer implements IServer {
 
             final CoreSettings.CoreSettingsGson coreSettingsGson = this.coreSettings.getSettings();
 
-            if (coreSettingsGson.unbindBindedPort) {
+            if (coreSettingsGson.isUnbindBindedPort()) {
                 try {
                     FMLLog.info("Core will unbinding port %d for start again...", this.getServerPort());
                     Runtime.getRuntime().exec(String.format("fuser -k %d/tcp", this.getServerPort()));

@@ -1,12 +1,7 @@
 package net.minecraft.network;
 
-import com.zeydie.netty.handlers.NettyPacketInboundHandler;
-import com.zeydie.netty.handlers.NettyPacketOutboundHandler;
-import com.zeydie.netty.wrappers.NettyPacketWrapperLegacy;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.FMLNetworkHandler;
-import io.netty.channel.socket.SocketChannel;
-import lombok.Getter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.packet.*;
@@ -14,10 +9,9 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.dedicated.DedicatedServerListenThread;
 import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.util.StringUtils;
-import org.jetbrains.annotations.NotNull;
-import ru.zoom4ikdan4ik.settings.optimization.BotsSettings;
 
 import javax.crypto.SecretKey;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.security.PrivateKey;
@@ -58,27 +52,11 @@ public class NetLoginHandler extends NetHandler {
     private SecretKey sharedKey;
     public String hostname = ""; // CraftBukkit - add field
 
-    //TODO ZeyCodeStart
-    @Getter
-    private boolean netty;
-
-    public NetLoginHandler(
-            @NotNull final MinecraftServer minecraftServer,
-            @NotNull final SocketChannel socketChannel,
-            @NotNull final String reason
-    ) {
-        this.netty = true;
-        this.mcServer = minecraftServer;
-        this.myTCPConnection = new TcpConnection(socketChannel, reason, this, minecraftServer.getKeyPair().getPrivate());
-        this.myTCPConnection.field_74468_e = 0;
-    }
-    //TODO ZeyCodeEnd
-
-    /*public NetLoginHandler(MinecraftServer par1MinecraftServer, Socket par2Socket, String par3Str) throws IOException {
+    public NetLoginHandler(MinecraftServer par1MinecraftServer, Socket par2Socket, String par3Str) throws IOException {
         this.mcServer = par1MinecraftServer;
         this.myTCPConnection = new TcpConnection(par1MinecraftServer.getLogAgent(), par2Socket, par3Str, this, par1MinecraftServer.getKeyPair().getPrivate());
         this.myTCPConnection.field_74468_e = 0;
-    }*/
+    }
 
     // CraftBukkit start
     public Socket getSocket() {
@@ -182,7 +160,6 @@ public class NetLoginHandler extends NetHandler {
      * on success the specified username is connected to the minecraftInstance, otherwise they are packet255'd
      */
     public void initializePlayerConnection() {
-        FMLLog.info("initializePlayerConnection");
         FMLNetworkHandler.onConnectionReceivedFromClient(this, this.mcServer, this.myTCPConnection.getSocketAddress(), this.clientUsername);
     }
 
@@ -200,32 +177,6 @@ public class NetLoginHandler extends NetHandler {
                 entityplayermp = this.mcServer.getConfigurationManager().processLogin(entityplayermp); // CraftBukkit - this.h -> s // Cauldron - reuse variable
 
                 if (entityplayermp != null) {
-
-                    //TODO ZeyCodeStart
-                    if (this.isNetty()) {
-                        this.myTCPConnection.socketChannel
-                                .pipeline()
-                                .addAfter(
-                                        "decoder",
-                                        "inboundHandler",
-                                        new NettyPacketInboundHandler(
-                                                this.clientUsername,
-                                                entityplayermp.getUniqueID()
-                                        )
-                                );
-                        this.myTCPConnection.socketChannel
-                                .pipeline()
-                                .addBefore(
-                                        "encoder",
-                                        "outboundHandler",
-                                        new NettyPacketOutboundHandler(
-                                                this.clientUsername,
-                                                entityplayermp.getUniqueID()
-                                        )
-                                );
-                    }
-                    //TODO ZeyCodeEnd
-
                     this.mcServer.getConfigurationManager().initializeConnectionToPlayer((INetworkManager) this.myTCPConnection, entityplayermp);
                 }
             }
@@ -235,14 +186,11 @@ public class NetLoginHandler extends NetHandler {
     }
 
     public void handleErrorMessage(String par1Str, Object[] par2ArrayOfObj) {
-
-        //TODO ZoomCodeStart
-        if (this.sharedKey == null)
-            BotsSettings.getInstance().add(this.getSocket());
-        else
-            //TODO ZoomCodeEnd
-
-            this.mcServer.getLogAgent().logInfo(this.getUsernameAndAddress() + " lost connection");
+        //TODO ZeyCodeClear
+        //this.mcServer.getLogAgent().logInfo(this.getUsernameAndAddress() + " lost connection");
+        //TODO ZeyCodeStart
+        this.mcServer.getLogAgent().logInfo(this.getUsernameAndAddress() + " lost connection " + par1Str);
+        //TODO ZeyCodeEnd
         this.connectionComplete = true;
     }
 
@@ -283,19 +231,6 @@ public class NetLoginHandler extends NetHandler {
                 // CraftBukkit end
             }
 
-            //TODO ZeyCodeStart
-            if (this.isNetty()) {
-                this.myTCPConnection.socketChannel
-                        .pipeline()
-                        .replace(
-                                "wrapper",
-                                "wrapper_legacy",
-                                new NettyPacketWrapperLegacy()
-                        );
-                this.myTCPConnection.setHideError(true);
-            }
-            //TODO ZeyCodeEnd
-
             InetAddress inetaddress = null;
 
             if (this.getSocket() != null) {
@@ -320,14 +255,7 @@ public class NetLoginHandler extends NetHandler {
      * nothing.
      */
     public void unexpectedPacket(Packet par1Packet) {
-
-        //TODO ZoomCodeStart
-        if (this.sharedKey == null)
-            BotsSettings.getInstance().add(this.getSocket());
-        else
-            //TODO ZoomCodeEnd
-
-            this.raiseErrorAndDisconnect("Protocol error");
+        this.raiseErrorAndDisconnect("Protocol error");
     }
 
     public String getUsernameAndAddress() {

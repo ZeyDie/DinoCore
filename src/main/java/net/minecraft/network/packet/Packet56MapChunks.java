@@ -1,5 +1,6 @@
 package net.minecraft.network.packet;
 
+import com.zeydie.legacy.core.DeflaterThreadLocal;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.world.World;
@@ -38,7 +39,7 @@ public class Packet56MapChunks extends Packet {
     private byte[] chunkDataNotCompressed = new byte[0]; // CraftBukkit - remove static
     // CraftBukkit start
     //TODO ZoomCodeStart
-    static final ThreadLocal<Deflater> localDeflater = new ru.zoom4ikdan4ik.legacy.core.DeflaterThreadLocal();
+    static final ThreadLocal<Deflater> localDeflater = new DeflaterThreadLocal();
     //TODO ZoomCodeEnd
     //TODO ZoomCodeClear
     /*static final ThreadLocal<Deflater> localDeflater = new ThreadLocal<Deflater>() {

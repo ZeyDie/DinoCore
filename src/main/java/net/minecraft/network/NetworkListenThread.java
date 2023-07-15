@@ -5,7 +5,7 @@ import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ReportedException;
-import ru.zoom4ikdan4ik.settings.optimization.CoreSettings;
+import com.zeydie.settings.optimization.CoreSettings;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public abstract class NetworkListenThread {
     public void networkTick() {
 
         //TODO ZoomCodeStart
-        if (CoreSettings.getInstance().shuffleConnections)
+        if (CoreSettings.getInstance().isShuffleConnections())
             Collections.shuffle(this.connections);
         //TODO ZoomCodeEnd
 

@@ -3,7 +3,7 @@ package me.Kepa2012.fastbukkit.utils;
 import javassist.*;
 import javassist.bytecode.SignatureAttribute;
 import me.Kepa2012.fastbukkit.model.IProxiedEvent;
-import ru.zoom4ikdan4ik.settings.optimization.CoreSettings;
+import com.zeydie.settings.optimization.CoreSettings;
 
 import java.lang.reflect.Method;
 import java.util.Random;
@@ -22,7 +22,7 @@ public class ProxyCreator {
     }
 
     public static IProxiedEvent createEventProxy(Method eventMethod) {
-        if (!CoreSettings.getInstance().enableFastBukkit) return null;
+        if (!CoreSettings.getInstance().isEnableFastBukkit()) return null;
 
         try {
             Class<?> declCl = eventMethod.getDeclaringClass();

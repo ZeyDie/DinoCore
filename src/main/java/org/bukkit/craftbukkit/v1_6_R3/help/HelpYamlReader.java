@@ -5,7 +5,7 @@ import org.bukkit.Server;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.help.HelpTopic;
-import ru.zoom4ikdan4ik.DefaultPaths;
+import com.zeydie.DefaultPaths;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,6 +1,5 @@
 package net.minecraft.server.dedicated;
 
-import cpw.mods.fml.common.FMLLog;
 import mcp.mobius.mobiuscore.profiler.ProfilerSection;
 import net.minecraft.network.NetworkListenThread;
 import net.minecraft.server.MinecraftServer;
@@ -18,13 +17,8 @@ public class DedicatedServerListenThread extends NetworkListenThread {
     public DedicatedServerListenThread(MinecraftServer par1MinecraftServer, InetAddress par2InetAddress, int par3) throws IOException {
         super(par1MinecraftServer);
 
-        //TODO ZeyCodeClear
-        //this.theServerListenThread = new ServerListenThread(this, par2InetAddress, par3);
-        //TODO ZeyCodeStart
-        this.theServerListenThread = new ServerListenThread(this, par3, par2InetAddress);
-        //TODO ZeyCodeEnd
-
-        //this.theServerListenThread.start();
+        this.theServerListenThread = new ServerListenThread(this, par2InetAddress, par3);
+        this.theServerListenThread.start();
     }
 
     @Override

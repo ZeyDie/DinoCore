@@ -11,56 +11,43 @@ import net.minecraft.server.ServerListenThread;
 import net.minecraft.util.HttpUtil;
 
 import java.io.IOException;
-import java.net.InetAddress;
 
 @SideOnly(Side.CLIENT)
-public class IntegratedServerListenThread extends NetworkListenThread
-{
+public class IntegratedServerListenThread extends NetworkListenThread {
     private final MemoryConnection netMemoryConnection;
     private MemoryConnection theMemoryConnection;
     private String field_71759_e;
     private boolean field_71756_f;
     private ServerListenThread myServerListenThread;
 
-    public IntegratedServerListenThread(IntegratedServer par1IntegratedServer) throws IOException
-    {
+    public IntegratedServerListenThread(IntegratedServer par1IntegratedServer) throws IOException {
         super(par1IntegratedServer);
-        this.netMemoryConnection = new MemoryConnection(par1IntegratedServer.getLogAgent(), (NetHandler)null);
+        this.netMemoryConnection = new MemoryConnection(par1IntegratedServer.getLogAgent(), (NetHandler) null);
     }
 
-    public void func_71754_a(MemoryConnection par1MemoryConnection, String par2Str)
-    {
+    public void func_71754_a(MemoryConnection par1MemoryConnection, String par2Str) {
         this.theMemoryConnection = par1MemoryConnection;
         this.field_71759_e = par2Str;
     }
 
-    public String func_71755_c() throws IOException
-    {
-        if (this.myServerListenThread == null)
-        {
+    public String func_71755_c() throws IOException {
+        if (this.myServerListenThread == null) {
             int i = -1;
 
-            try
-            {
+            try {
                 i = HttpUtil.func_76181_a();
-            }
-            catch (IOException ioexception)
-            {
+            } catch (IOException ioexception) {
                 ;
             }
 
-            if (i <= 0)
-            {
+            if (i <= 0) {
                 i = 25564;
             }
 
-            try
-            {
-                this.myServerListenThread = new ServerListenThread(this, i, null);
+            try {
+                this.myServerListenThread = new ServerListenThread(this, null, i);
                 this.myServerListenThread.start();
-            }
-            catch (IOException ioexception1)
-            {
+            } catch (IOException ioexception1) {
                 throw ioexception1;
             }
         }
@@ -68,12 +55,10 @@ public class IntegratedServerListenThread extends NetworkListenThread
         return String.valueOf(this.myServerListenThread.getMyPort());
     }
 
-    public void stopListening()
-    {
+    public void stopListening() {
         super.stopListening();
 
-        if (this.myServerListenThread != null)
-        {
+        if (this.myServerListenThread != null) {
             this.getIntegratedServer().getLogAgent().logInfo("Stopping server connection");
             this.myServerListenThread.func_71768_b();
             this.myServerListenThread.interrupt();
@@ -84,14 +69,11 @@ public class IntegratedServerListenThread extends NetworkListenThread
     /**
      * processes packets and pending connections
      */
-    public void networkTick()
-    {
-        if (this.theMemoryConnection != null)
-        {
+    public void networkTick() {
+        if (this.theMemoryConnection != null) {
             EntityPlayerMP entityplayermp = this.getIntegratedServer().getConfigurationManager().createPlayerForUser(this.field_71759_e);
 
-            if (entityplayermp != null)
-            {
+            if (entityplayermp != null) {
                 this.netMemoryConnection.pairWith(this.theMemoryConnection);
                 this.field_71756_f = true;
                 this.getIntegratedServer().getConfigurationManager().initializeConnectionToPlayer(this.netMemoryConnection, entityplayermp);
@@ -101,8 +83,7 @@ public class IntegratedServerListenThread extends NetworkListenThread
             this.field_71759_e = null;
         }
 
-        if (this.myServerListenThread != null)
-        {
+        if (this.myServerListenThread != null) {
             this.myServerListenThread.processPendingConnections();
         }
 
@@ -112,18 +93,15 @@ public class IntegratedServerListenThread extends NetworkListenThread
     /**
      * Gets MinecraftServer instance.
      */
-    public IntegratedServer getIntegratedServer()
-    {
-        return (IntegratedServer)super.getServer();
+    public IntegratedServer getIntegratedServer() {
+        return (IntegratedServer) super.getServer();
     }
 
-    public boolean isGamePaused()
-    {
+    public boolean isGamePaused() {
         return this.field_71756_f && this.netMemoryConnection.getPairedConnection().isConnectionActive() && this.netMemoryConnection.getPairedConnection().isGamePaused();
     }
 
-    public MinecraftServer getServer()
-    {
+    public MinecraftServer getServer() {
         return this.getIntegratedServer();
     }
 }
