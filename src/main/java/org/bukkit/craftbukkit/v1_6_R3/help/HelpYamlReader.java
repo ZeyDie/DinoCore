@@ -1,11 +1,11 @@
 package org.bukkit.craftbukkit.v1_6_R3.help;
 
+import com.zeydie.DefaultPaths;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.help.HelpTopic;
-import com.zeydie.DefaultPaths;
 
 import java.io.File;
 import java.io.IOException;

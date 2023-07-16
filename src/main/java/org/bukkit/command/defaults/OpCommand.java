@@ -1,6 +1,7 @@
 package org.bukkit.command.defaults;
 
 import com.google.common.collect.ImmutableList;
+import com.zeydie.settings.optimization.PermissionsSettings;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,7 +11,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
-import com.zeydie.settings.optimization.PermissionsSettings;
 
 import java.util.ArrayList;
 import java.util.Collections;

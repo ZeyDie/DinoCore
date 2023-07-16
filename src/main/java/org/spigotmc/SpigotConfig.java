@@ -1,13 +1,13 @@
 package org.spigotmc;
 
 import com.google.common.base.Throwables;
+import com.zeydie.DefaultPaths;
 import net.minecraft.server.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_6_R3.command.TicksPerSecondCommand;
-import com.zeydie.DefaultPaths;
 
 import java.io.File;
 import java.io.IOException;

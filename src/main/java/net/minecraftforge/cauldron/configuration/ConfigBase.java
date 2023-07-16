@@ -1,10 +1,10 @@
 package net.minecraftforge.cauldron.configuration;
 
+import com.zeydie.DefaultPaths;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
 import org.bukkit.command.Command;
 import org.bukkit.configuration.file.YamlConfiguration;
-import com.zeydie.DefaultPaths;
 
 import java.io.File;
 import java.io.IOException;

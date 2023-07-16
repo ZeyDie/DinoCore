@@ -1,9 +1,9 @@
 package net.minecraft.entity.ai;
 
-import net.minecraft.profiler.Profiler;
-import net.minecraft.server.MinecraftServer;
 import com.zeydie.settings.optimization.MultiThreadSettings;
 import com.zeydie.threads.runnables.AIRunnable;
+import net.minecraft.profiler.Profiler;
+import net.minecraft.server.MinecraftServer;
 
 import java.util.ArrayList;
 import java.util.Iterator;

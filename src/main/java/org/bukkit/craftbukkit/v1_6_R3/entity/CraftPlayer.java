@@ -2,7 +2,6 @@ package org.bukkit.craftbukkit.v1_6_R3.entity;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.MapMaker;
-import cpw.mods.fml.common.FMLLog;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.Validate;
 import org.bukkit.*;

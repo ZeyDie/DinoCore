@@ -36,7 +36,7 @@ public class ThreadLoginVerifier extends Thread {
     }
     // Cauldron end
 
-    ThreadLoginVerifier(NetLoginHandler pendingconnection, CraftServer server) {
+    public ThreadLoginVerifier(NetLoginHandler pendingconnection, CraftServer server) {
         super("Login Verifier - " + pendingconnection.getUsernameAndAddress());
         this.server = server;
         // CraftBukkit end

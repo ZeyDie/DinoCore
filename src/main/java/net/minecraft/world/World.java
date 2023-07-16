@@ -1,6 +1,8 @@
 package net.minecraft.world;
 
 import com.google.common.collect.ImmutableSetMultimap;
+import com.zeydie.settings.optimization.MultiThreadSettings;
+import com.zeydie.threads.runnables.WeatherEffectsRunnable;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -67,8 +69,6 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.weather.ThunderChangeEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.generator.ChunkGenerator;
-import com.zeydie.settings.optimization.MultiThreadSettings;
-import com.zeydie.threads.runnables.WeatherEffectsRunnable;
 
 import java.util.*;
 import java.util.concurrent.Callable;

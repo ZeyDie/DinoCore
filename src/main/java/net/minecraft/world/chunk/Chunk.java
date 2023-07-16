@@ -1,6 +1,7 @@
 package net.minecraft.world.chunk;
 
 import com.google.common.collect.ImmutableList;
+import com.zeydie.settings.optimization.MultiThreadSettings;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -26,7 +27,6 @@ import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.world.ChunkEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_6_R3.CraftChunk;
-import com.zeydie.settings.optimization.MultiThreadSettings;
 
 import java.util.*;
 

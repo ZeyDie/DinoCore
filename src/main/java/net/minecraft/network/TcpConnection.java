@@ -3,11 +3,20 @@ package net.minecraft.network;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.zeydie.legacy.core.network.TcpConnectionReader;
 import com.zeydie.legacy.core.network.TcpConnectionWriter;
+import com.zeydie.netty.common.CustomSocket;
+import com.zeydie.netty.decoders.NettyEncryptingDecoder;
+import com.zeydie.netty.decoders.NettyPacketDecoderLegacy;
+import com.zeydie.netty.encoders.NettyEncryptingEncoder;
+import com.zeydie.netty.encoders.NettyPacketEncoder;
+import com.zeydie.netty.wrappers.NettyPacketWrapper;
 import com.zeydie.settings.optimization.CoreSettings;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.timeout.ReadTimeoutHandler;
 import mcp.mobius.mobiuscore.profiler.ProfilerSection;
 import net.minecraft.logging.ILogAgent;
 import net.minecraft.network.packet.NetHandler;
@@ -16,12 +25,17 @@ import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.network.packet.Packet252SharedKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.CryptManager;
+import org.jetbrains.annotations.NotNull;
 
+import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.SocketException;
+import java.security.GeneralSecurityException;
+import java.security.Key;
 import java.security.PrivateKey;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -29,7 +43,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class TcpConnection implements INetworkManager {
+public class TcpConnection
+
+        //TODO ZeyCodeStart
+        extends ChannelInboundHandlerAdapter
+        //TODO ZeyCodeEnd
+
+        implements INetworkManager {
 
     //TODO ZoomCodeStart
     private static final ExecutorService service = Executors.newCachedThreadPool(new ThreadFactoryBuilder().setNameFormat("%d read-write thread").setPriority(Thread.MAX_PRIORITY).build());
@@ -152,6 +172,64 @@ public class TcpConnection implements INetworkManager {
      */
     private int chunkDataPacketsDelay;
 
+    //TODO ZeyCodeStart
+    public SocketChannel socketChannel;
+
+    public TcpConnection(
+            final SocketChannel socketChannel,
+            final String terminationReason,
+            final NetHandler netHandler
+    ) {
+        this(socketChannel, terminationReason, netHandler, null);
+    }
+
+    public TcpConnection(
+            final SocketChannel socketChannel,
+            final String terminationReason,
+            final NetHandler netHandler,
+            final PrivateKey privateKey
+    ) {
+        this.sendQueueLock = null;
+        this.tcpConLogAgent = null;
+
+        this.socketChannel = socketChannel;
+        this.networkSocket = new CustomSocket(socketChannel);
+        this.remoteSocketAddress = socketChannel.remoteAddress();
+        this.terminationReason = terminationReason;
+        this.theNetHandler = netHandler;
+        this.field_74463_A = privateKey;
+
+        this.readPackets = new ConcurrentLinkedQueue<>();
+
+        this.dataPackets = Collections.synchronizedList(new ArrayList());
+        this.fastDataPackets = Collections.synchronizedList(new ArrayList());
+
+        socketChannel.pipeline()
+                .addLast("timeout", new ReadTimeoutHandler(30))
+                .addLast("wrapper", new NettyPacketWrapper())
+                .addLast("encoder", new NettyPacketEncoder(this))
+                .addLast("decoder_legacy", new NettyPacketDecoderLegacy(this))
+                .addLast("handler", this);
+    }
+
+    @Override
+    public void channelRead(final ChannelHandlerContext channelHandlerContext, final Object o) {
+        final Packet packet = (Packet) o;
+
+        if (packet.canProcessAsync() && this.theNetHandler.canProcessPacketsAsync()) {
+            this.field_74490_x = 0;
+
+            packet.processPacket(this.theNetHandler);
+        } else
+            this.readPackets.add(packet);
+    }
+
+    @Override
+    public void exceptionCaught(final ChannelHandlerContext channelHandlerContext, final Throwable throwable) {
+        this.networkShutdown("disconnect.genericReason", "Internal exception: " + throwable.getMessage());
+    }
+    //TODO ZeyCodeEnd
+
     @SideOnly(Side.CLIENT)
     public TcpConnection(ILogAgent par1ILogAgent, Socket par2Socket, String par3Str, NetHandler par4NetHandler) throws IOException {
         this(par1ILogAgent, par2Socket, par3Str, par4NetHandler, (PrivateKey) null);
@@ -207,6 +285,10 @@ public class TcpConnection implements INetworkManager {
 
     @SideOnly(Side.CLIENT)
     public void closeConnections() {
+        //TODO ZoomCodeStart
+        if (CoreSettings.getInstance().isNettyEnable()) return;
+        //TODO ZoomCodeEnd
+
         this.wakeThreads();
 
         //TODO ZoomCodeStart
@@ -229,6 +311,13 @@ public class TcpConnection implements INetworkManager {
      * Adds the packet to the correct send queue (chunk data packets go to a separate queue).
      */
     public void addToSendQueue(Packet par1Packet) {
+        //TODO ZoomCodeStart
+        if (CoreSettings.getInstance().isNettyEnable()) {
+            this.socketChannel.writeAndFlush(par1Packet);
+            return;
+        }
+        //TODO ZoomCodeEnd
+
         if (!this.isServerTerminating) {
             Object object = this.sendQueueLock;
 
@@ -241,6 +330,13 @@ public class TcpConnection implements INetworkManager {
 
     //TODO ZoomCodeStart
     public final void addToSendQueueFast(final Packet packet) {
+        //TODO ZoomCodeStart
+        if (CoreSettings.getInstance().isNettyEnable()) {
+            this.socketChannel.writeAndFlush(packet);
+            return;
+        }
+        //TODO ZoomCodeEnd
+
         if (!this.isServerTerminating) {
             synchronized (this.sendQueueLock) {
                 this.sendQueueByteLength += packet.getPacketSize() + 1;
@@ -412,6 +508,7 @@ public class TcpConnection implements INetworkManager {
     public void wakeThreads() {
 
         //TODO ZoomCodeStart
+        if (CoreSettings.getInstance().isNettyEnable()) return;
         if (CoreSettings.getInstance().isExecutorServiceConnections())
             return;
         //TODO ZoomCodeEnd
@@ -488,40 +585,48 @@ public class TcpConnection implements INetworkManager {
      * stop reading and writing threads.
      */
     public void networkShutdown(String par1Str, Object... par2ArrayOfObj) {
-        if (this.isRunning) {
-            this.isTerminating = true;
+        //TODO ZeyCodeStart
+        if (CoreSettings.getInstance().isNettyEnable()) {
             this.terminationReason = par1Str;
             this.shutdownDescription = par2ArrayOfObj;
-            this.isRunning = false;
+            this.socketChannel.close();
+        } else
+            //TODO ZeyCodeEnd
 
-            //TODO ZoomCodeStart
-            if (!CoreSettings.getInstance().isExecutorServiceConnections())
-                //TODO ZoomCodeEnd
+            if (this.isRunning) {
+                this.isTerminating = true;
+                this.terminationReason = par1Str;
+                this.shutdownDescription = par2ArrayOfObj;
+                this.isRunning = false;
 
-                (new TcpMasterThread(this)).start();
+                //TODO ZoomCodeStart
+                if (!CoreSettings.getInstance().isExecutorServiceConnections())
+                    //TODO ZoomCodeEnd
 
-            try {
-                this.socketInputStream.close();
-            } catch (Throwable throwable) {
-                ;
+                    (new TcpMasterThread(this)).start();
+
+                try {
+                    this.socketInputStream.close();
+                } catch (Throwable throwable) {
+                    ;
+                }
+
+                try {
+                    this.socketOutputStream.close();
+                } catch (Throwable throwable1) {
+                    ;
+                }
+
+                try {
+                    this.networkSocket.close();
+                } catch (Throwable throwable2) {
+                    ;
+                }
+
+                this.socketInputStream = null;
+                this.socketOutputStream = null;
+                this.networkSocket = null;
             }
-
-            try {
-                this.socketOutputStream.close();
-            } catch (Throwable throwable1) {
-                ;
-            }
-
-            try {
-                this.networkSocket.close();
-            } catch (Throwable throwable2) {
-                ;
-            }
-
-            this.socketInputStream = null;
-            this.socketOutputStream = null;
-            this.networkSocket = null;
-        }
     }
 
     /**
@@ -567,6 +672,11 @@ public class TcpConnection implements INetworkManager {
 
         this.wakeThreads();
 
+        //TODO ZeyCodeStart
+        if (CoreSettings.getInstance().isNettyEnable())
+            this.isTerminating = (this.socketChannel == null || !this.socketChannel.isActive());
+        //TODO ZeyCodeEnd
+
         if (this.isTerminating && this.readPackets.isEmpty()) {
             this.theNetHandler.handleErrorMessage(this.terminationReason, this.shutdownDescription);
             FMLNetworkHandler.onConnectionClosed(this, this.theNetHandler.getPlayer());
@@ -584,22 +694,44 @@ public class TcpConnection implements INetworkManager {
      * Shuts down the server. (Only actually used on the server)
      */
     public void serverShutdown() {
-        if (!this.isServerTerminating) {
-            this.wakeThreads();
-            this.isServerTerminating = true;
+        //TODO ZeyCodeStart
+        if (CoreSettings.getInstance().isNettyEnable())
+            this.socketChannel.close();
+        else
+            //TODO ZeyCodeEnd
 
-            //TODO ZoomCodeStart
-            if (CoreSettings.getInstance().isExecutorServiceConnections())
-                return;
-            //TODO ZoomCodeEnd
+            if (!this.isServerTerminating) {
+                this.wakeThreads();
+                this.isServerTerminating = true;
 
-            this.readThread.interrupt();
-            (new TcpMonitorThread(this)).start();
-        }
+                //TODO ZoomCodeStart
+                if (CoreSettings.getInstance().isExecutorServiceConnections())
+                    return;
+                //TODO ZoomCodeEnd
+
+                this.readThread.interrupt();
+                (new TcpMonitorThread(this)).start();
+            }
     }
 
     //TODO ZeyCodeModified from private to public
     public void decryptInputStream() throws IOException {
+        //TODO ZoomCodeStart
+        if (CoreSettings.getInstance().isNettyEnable()) {
+            this.socketChannel
+                    .pipeline()
+                    .addFirst("decrypt",
+                            new NettyEncryptingDecoder(
+                                    cipher(
+                                            2,
+                                            this.sharedKeyForEncryption
+                                    )
+                            )
+                    );
+            return;
+        }
+        //TODO ZoomCodeEnd
+
         this.isInputBeingDecrypted = true;
         InputStream inputstream = this.networkSocket.getInputStream();
         this.socketInputStream = new DataInputStream(CryptManager.decryptInputStream(this.sharedKeyForEncryption, inputstream));
@@ -610,6 +742,22 @@ public class TcpConnection implements INetworkManager {
      */
     //TODO ZeyCodeModified from private to public
     public void encryptOuputStream() throws IOException {
+        //TODO ZoomCodeStart
+        if (CoreSettings.getInstance().isNettyEnable()) {
+            this.socketChannel
+                    .pipeline()
+                    .addFirst("encrypt",
+                            new NettyEncryptingEncoder(
+                                    cipher(
+                                            1,
+                                            this.sharedKeyForEncryption
+                                    )
+                            )
+                    );
+            return;
+        }
+        //TODO ZoomCodeEnd
+
         this.socketOutputStream.flush();
         this.isOutputEncrypted = true;
 
@@ -691,4 +839,19 @@ public class TcpConnection implements INetworkManager {
     public void setSocketAddress(SocketAddress address) {
         remoteSocketAddress = address;    // Spigot
     }
+
+    //TODO ZeyCodeStart
+    @NotNull
+    public static Cipher cipher(final int paramInt, @NotNull final Key paramKey) {
+        try {
+            final Cipher cipher = Cipher.getInstance("AES/CFB8/NoPadding");
+
+            cipher.init(paramInt, paramKey, new IvParameterSpec(paramKey.getEncoded()));
+
+            return cipher;
+        } catch (GeneralSecurityException generalSecurityException) {
+            throw new RuntimeException(generalSecurityException);
+        }
+    }
+    //TODO ZeyCodeEnd
 }

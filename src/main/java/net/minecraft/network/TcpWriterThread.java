@@ -2,10 +2,10 @@ package net.minecraft.network;
 
 import java.io.IOException;
 
-class TcpWriterThread extends Thread {
+public class TcpWriterThread extends Thread {
     final TcpConnection theTcpConnection;
 
-    TcpWriterThread(TcpConnection par1TcpConnection, String par2Str) {
+    public TcpWriterThread(TcpConnection par1TcpConnection, String par2Str) {
         super(par2Str);
         this.theTcpConnection = par1TcpConnection;
     }

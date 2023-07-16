@@ -1,5 +1,6 @@
 package net.minecraft.entity.player;
 
+import com.zeydie.settings.optimization.CoreSettings;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -63,7 +64,6 @@ import org.bukkit.event.entity.EntityCombustByEntityEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.util.Vector;
-import com.zeydie.settings.optimization.CoreSettings;
 
 import java.util.Collection;
 import java.util.HashMap;

@@ -34,7 +34,6 @@ import net.minecraft.item.ItemMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.MemoryConnection;
-import net.minecraft.network.TcpConnection;
 import net.minecraft.network.packet.*;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.scoreboard.*;

@@ -1,5 +1,7 @@
 package net.minecraft.server.dedicated;
 
+import com.zeydie.netty.server.NettyServerListenThread;
+import com.zeydie.settings.optimization.CoreSettings;
 import mcp.mobius.mobiuscore.profiler.ProfilerSection;
 import net.minecraft.network.NetworkListenThread;
 import net.minecraft.server.MinecraftServer;
@@ -14,16 +16,38 @@ public class DedicatedServerListenThread extends NetworkListenThread {
      */
     private final ServerListenThread theServerListenThread;
 
+    //TODO ZeyCodeStart
+    private final NettyServerListenThread nettyServerListenThread;
+    //TODO ZeyCodeEnd
+
     public DedicatedServerListenThread(MinecraftServer par1MinecraftServer, InetAddress par2InetAddress, int par3) throws IOException {
         super(par1MinecraftServer);
 
         this.theServerListenThread = new ServerListenThread(this, par2InetAddress, par3);
-        this.theServerListenThread.start();
+
+        //TODO ZeyCodeStart
+        this.nettyServerListenThread = new NettyServerListenThread(this, par3);
+
+        if (CoreSettings.getInstance().isNettyEnable())
+            this.nettyServerListenThread.start();
+        else
+            //TODO ZeyCodeEnd
+
+            this.theServerListenThread.start();
     }
 
     @Override
     public void stopListening() {
         super.stopListening();
+
+        //TODO ZeyCodeStart
+        if (CoreSettings.getInstance().isNettyEnable()) {
+            this.nettyServerListenThread.interrupt();
+
+            return;
+        }
+        //TODO ZeyCodeEnd
+
         this.theServerListenThread.func_71768_b();
         this.theServerListenThread.interrupt();
     }
@@ -35,7 +59,15 @@ public class DedicatedServerListenThread extends NetworkListenThread {
     public void networkTick() {
         // Cauldron start - mobius hooks
         ProfilerSection.NETWORK_TICK.start();
-        this.theServerListenThread.processPendingConnections();
+
+
+        //TODO ZeyCodeStart
+        if (CoreSettings.getInstance().isNettyEnable())
+            this.nettyServerListenThread.processPendingConnections();
+        else
+            //TODO ZeyCodeEnd
+
+            this.theServerListenThread.processPendingConnections();
         super.networkTick();
         ProfilerSection.NETWORK_TICK.stop();
         // Cauldron end
@@ -46,7 +78,13 @@ public class DedicatedServerListenThread extends NetworkListenThread {
     }
 
     public void func_71761_a(InetAddress par1InetAddress) {
-        this.theServerListenThread.func_71769_a(par1InetAddress);
+        //TODO ZeyCodeStart
+        if (CoreSettings.getInstance().isNettyEnable())
+            this.nettyServerListenThread.func_71769_a(par1InetAddress);
+        else
+            //TODO ZeyCodeEnd
+
+            this.theServerListenThread.func_71769_a(par1InetAddress);
     }
 
     @Override

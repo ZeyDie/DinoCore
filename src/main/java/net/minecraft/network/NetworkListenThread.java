@@ -1,11 +1,11 @@
 package net.minecraft.network;
 
+import com.zeydie.settings.optimization.CoreSettings;
 import cpw.mods.fml.common.FMLLog;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ReportedException;
-import com.zeydie.settings.optimization.CoreSettings;
 
 import java.io.IOException;
 import java.util.ArrayList;

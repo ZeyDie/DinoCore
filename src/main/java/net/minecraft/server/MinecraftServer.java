@@ -1,8 +1,11 @@
 package net.minecraft.server;
 
+import com.zeydie.DefaultPaths;
 import com.zeydie.settings.optimization.*;
+import com.zeydie.threads.EntityThread;
+import com.zeydie.threads.WorldThread;
+import com.zeydie.threads.runnables.UnloadingWorldsRunnable;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import jline.console.ConsoleReader;
@@ -51,11 +54,6 @@ import org.bukkit.craftbukkit.v1_6_R3.block.CraftBlock;
 import org.bukkit.craftbukkit.v1_6_R3.util.Waitable;
 import org.bukkit.event.server.RemoteServerCommandEvent;
 import org.bukkit.event.world.WorldSaveEvent;
-import com.zeydie.DefaultPaths;
-import com.zeydie.settings.optimization.AuthSettings;
-import com.zeydie.threads.EntityThread;
-import com.zeydie.threads.WorldThread;
-import com.zeydie.threads.runnables.UnloadingWorldsRunnable;
 
 import java.awt.*;
 import java.io.File;

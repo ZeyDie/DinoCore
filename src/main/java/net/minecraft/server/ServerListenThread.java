@@ -42,6 +42,15 @@ public class ServerListenThread extends Thread {
         this.myNetworkListenThread = par1NetworkListenThread;
         this.myPort = par3;
 
+        //TODO ZeyCodeStart
+        if (CoreSettings.getInstance().isNettyEnable()) {
+            this.myServerSocket = null;
+            this.myServerAddress = null;
+
+            return;
+        }
+        //TODO ZeyCodeEnd
+
         this.myServerSocket = new ServerSocket(par3, 0, par2InetAddress);
         this.myServerAddress = par2InetAddress == null ? this.myServerSocket.getInetAddress() : par2InetAddress;
         this.myServerSocket.setPerformancePreferences(0, 2, 1);

@@ -1,6 +1,5 @@
 package net.minecraft.entity.player;
 
-import cpw.mods.fml.common.FMLLog;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;

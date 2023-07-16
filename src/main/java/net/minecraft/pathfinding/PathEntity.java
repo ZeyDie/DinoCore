@@ -1,8 +1,8 @@
 package net.minecraft.pathfinding;
 
+import com.zeydie.settings.optimization.MultiThreadSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Vec3;
-import com.zeydie.settings.optimization.MultiThreadSettings;
 
 public class PathEntity
 {

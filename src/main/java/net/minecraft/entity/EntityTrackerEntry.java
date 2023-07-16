@@ -1,5 +1,6 @@
 package net.minecraft.entity;
 
+import com.zeydie.settings.optimization.CoreSettings;
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 import net.minecraft.entity.ai.attributes.ServersideAttributeMap;
 import net.minecraft.entity.item.*;
@@ -17,7 +18,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.storage.MapData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerVelocityEvent;
-import com.zeydie.settings.optimization.CoreSettings;
 
 import java.util.Collection;
 import java.util.HashSet;

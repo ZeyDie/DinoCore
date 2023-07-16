@@ -1,5 +1,6 @@
 package net.minecraft.server.management;
 
+import com.zeydie.legacy.core.PlayerInstanceRunnable;
 import com.zeydie.legacy.core.PlayerRunnableLoadChunk;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.packet.Packet;
@@ -14,7 +15,6 @@ import net.minecraftforge.common.ForgeDummyContainer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.ChunkWatchEvent;
 import org.bukkit.craftbukkit.v1_6_R3.chunkio.ChunkIOExecutor;
-import com.zeydie.legacy.core.PlayerInstanceRunnable;
 
 import java.util.ArrayList;
 import java.util.Arrays;

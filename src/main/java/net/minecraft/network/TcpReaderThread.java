@@ -1,9 +1,9 @@
 package net.minecraft.network;
 
-class TcpReaderThread extends Thread {
+public class TcpReaderThread extends Thread {
     final TcpConnection theTcpConnection;
 
-    TcpReaderThread(TcpConnection par1TcpConnection, String par2Str) {
+    public TcpReaderThread(TcpConnection par1TcpConnection, String par2Str) {
         super(par2Str);
         this.theTcpConnection = par1TcpConnection;
     }

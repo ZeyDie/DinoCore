@@ -1,5 +1,6 @@
 package net.minecraft.server.dedicated;
 
+import com.zeydie.settings.optimization.CoreSettings;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
@@ -29,7 +30,6 @@ import net.minecraft.world.chunk.storage.AnvilSaveConverter;
 import org.bukkit.craftbukkit.v1_6_R3.LoggerOutputStream;
 import org.bukkit.craftbukkit.v1_6_R3.SpigotTimings;
 import org.bukkit.event.server.ServerCommandEvent;
-import com.zeydie.settings.optimization.CoreSettings;
 
 import java.io.File;
 import java.io.IOException;

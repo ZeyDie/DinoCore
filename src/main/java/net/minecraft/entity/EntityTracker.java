@@ -1,6 +1,7 @@
 package net.minecraft.entity;
 
 import com.google.common.collect.Sets;
+import com.zeydie.settings.optimization.CoreSettings;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
@@ -16,7 +17,6 @@ import net.minecraft.util.IntHashMap;
 import net.minecraft.util.ReportedException;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
-import com.zeydie.settings.optimization.CoreSettings;
 
 import java.util.ArrayList;
 import java.util.Iterator;

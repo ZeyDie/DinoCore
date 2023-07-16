@@ -1,5 +1,6 @@
 package net.minecraft.world.biome;
 
+import com.zeydie.settings.optimization.CoreSettings;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.*;
@@ -7,7 +8,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.OreGenEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
-import com.zeydie.settings.optimization.CoreSettings;
 
 import java.util.Random;
 

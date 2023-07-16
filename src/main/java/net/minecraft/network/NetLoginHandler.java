@@ -1,7 +1,11 @@
 package net.minecraft.network;
 
-import cpw.mods.fml.common.FMLLog;
+import com.zeydie.netty.handlers.NettyPacketInboundHandler;
+import com.zeydie.netty.handlers.NettyPacketOutboundHandler;
+import com.zeydie.netty.wrappers.NettyPacketWrapperLegacy;
+import com.zeydie.settings.optimization.CoreSettings;
 import cpw.mods.fml.common.network.FMLNetworkHandler;
+import io.netty.channel.socket.SocketChannel;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.packet.*;
@@ -9,6 +13,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.dedicated.DedicatedServerListenThread;
 import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.util.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;
@@ -51,6 +56,17 @@ public class NetLoginHandler extends NetHandler {
      */
     private SecretKey sharedKey;
     public String hostname = ""; // CraftBukkit - add field
+
+    //TODO ZeyCodeStart
+    public NetLoginHandler(
+            @NotNull final MinecraftServer minecraftServer,
+            @NotNull final SocketChannel socketChannel,
+            @NotNull final String reason
+    ) {
+        this.mcServer = minecraftServer;
+        this.myTCPConnection = new TcpConnection(socketChannel, reason, this, minecraftServer.getKeyPair().getPrivate());
+    }
+    //TODO ZeyCodeEnd
 
     public NetLoginHandler(MinecraftServer par1MinecraftServer, Socket par2Socket, String par3Str) throws IOException {
         this.mcServer = par1MinecraftServer;
@@ -177,6 +193,32 @@ public class NetLoginHandler extends NetHandler {
                 entityplayermp = this.mcServer.getConfigurationManager().processLogin(entityplayermp); // CraftBukkit - this.h -> s // Cauldron - reuse variable
 
                 if (entityplayermp != null) {
+
+                    //TODO ZeyCodeStart
+                    if (CoreSettings.getInstance().isNettyEnable()) {
+                        this.myTCPConnection.socketChannel
+                                .pipeline()
+                                .addAfter(
+                                        "decoder",
+                                        "inboundHandler",
+                                        new NettyPacketInboundHandler(
+                                                this.clientUsername,
+                                                entityplayermp.getUniqueID()
+                                        )
+                                );
+                        this.myTCPConnection.socketChannel
+                                .pipeline()
+                                .addBefore(
+                                        "encoder",
+                                        "outboundHandler",
+                                        new NettyPacketOutboundHandler(
+                                                this.clientUsername,
+                                                entityplayermp.getUniqueID()
+                                        )
+                                );
+                    }
+                    //TODO ZeyCodeEnd
+
                     this.mcServer.getConfigurationManager().initializeConnectionToPlayer((INetworkManager) this.myTCPConnection, entityplayermp);
                 }
             }
@@ -230,6 +272,17 @@ public class NetLoginHandler extends NetHandler {
                 s = builder.toString();
                 // CraftBukkit end
             }
+
+            //TODO ZeyCodeStart
+            if (CoreSettings.getInstance().isNettyEnable())
+                this.myTCPConnection.socketChannel
+                        .pipeline()
+                        .replace(
+                                "wrapper",
+                                "wrapper_legacy",
+                                new NettyPacketWrapperLegacy()
+                        );
+            //TODO ZeyCodeEnd
 
             InetAddress inetaddress = null;
 

@@ -1,9 +1,9 @@
 package me.Kepa2012.fastbukkit.utils;
 
+import com.zeydie.settings.optimization.CoreSettings;
 import javassist.*;
 import javassist.bytecode.SignatureAttribute;
 import me.Kepa2012.fastbukkit.model.IProxiedEvent;
-import com.zeydie.settings.optimization.CoreSettings;
 
 import java.lang.reflect.Method;
 import java.util.Random;
