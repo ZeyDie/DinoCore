@@ -286,7 +286,7 @@ public class TcpConnection
     @SideOnly(Side.CLIENT)
     public void closeConnections() {
         //TODO ZoomCodeStart
-        if (CoreSettings.getInstance().isNettyEnable()) return;
+        if (CoreSettings.getInstance().isEnableNetty()) return;
         //TODO ZoomCodeEnd
 
         this.wakeThreads();
@@ -312,7 +312,7 @@ public class TcpConnection
      */
     public void addToSendQueue(Packet par1Packet) {
         //TODO ZoomCodeStart
-        if (CoreSettings.getInstance().isNettyEnable()) {
+        if (CoreSettings.getInstance().isEnableNetty()) {
             this.socketChannel.writeAndFlush(par1Packet);
             return;
         }
@@ -331,7 +331,7 @@ public class TcpConnection
     //TODO ZoomCodeStart
     public final void addToSendQueueFast(final Packet packet) {
         //TODO ZoomCodeStart
-        if (CoreSettings.getInstance().isNettyEnable()) {
+        if (CoreSettings.getInstance().isEnableNetty()) {
             this.socketChannel.writeAndFlush(packet);
             return;
         }
@@ -508,7 +508,7 @@ public class TcpConnection
     public void wakeThreads() {
 
         //TODO ZoomCodeStart
-        if (CoreSettings.getInstance().isNettyEnable()) return;
+        if (CoreSettings.getInstance().isEnableNetty()) return;
         if (CoreSettings.getInstance().isExecutorServiceConnections())
             return;
         //TODO ZoomCodeEnd
@@ -586,7 +586,7 @@ public class TcpConnection
      */
     public void networkShutdown(String par1Str, Object... par2ArrayOfObj) {
         //TODO ZeyCodeStart
-        if (CoreSettings.getInstance().isNettyEnable()) {
+        if (CoreSettings.getInstance().isEnableNetty()) {
             this.terminationReason = par1Str;
             this.shutdownDescription = par2ArrayOfObj;
             this.socketChannel.close();
@@ -673,7 +673,7 @@ public class TcpConnection
         this.wakeThreads();
 
         //TODO ZeyCodeStart
-        if (CoreSettings.getInstance().isNettyEnable())
+        if (CoreSettings.getInstance().isEnableNetty())
             this.isTerminating = (this.socketChannel == null || !this.socketChannel.isActive());
         //TODO ZeyCodeEnd
 
@@ -695,7 +695,7 @@ public class TcpConnection
      */
     public void serverShutdown() {
         //TODO ZeyCodeStart
-        if (CoreSettings.getInstance().isNettyEnable())
+        if (CoreSettings.getInstance().isEnableNetty())
             this.socketChannel.close();
         else
             //TODO ZeyCodeEnd
@@ -717,7 +717,7 @@ public class TcpConnection
     //TODO ZeyCodeModified from private to public
     public void decryptInputStream() throws IOException {
         //TODO ZoomCodeStart
-        if (CoreSettings.getInstance().isNettyEnable()) {
+        if (CoreSettings.getInstance().isEnableNetty()) {
             this.socketChannel
                     .pipeline()
                     .addFirst("decrypt",
@@ -743,7 +743,7 @@ public class TcpConnection
     //TODO ZeyCodeModified from private to public
     public void encryptOuputStream() throws IOException {
         //TODO ZoomCodeStart
-        if (CoreSettings.getInstance().isNettyEnable()) {
+        if (CoreSettings.getInstance().isEnableNetty()) {
             this.socketChannel
                     .pipeline()
                     .addFirst("encrypt",

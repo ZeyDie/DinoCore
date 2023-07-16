@@ -30,7 +30,9 @@ public final class CoreSettings extends AbstractSettings {
     @Data
     public static final class CoreSettingsGson implements IGson {
         private boolean debug = true;
-        private boolean nettyEnable = true;
+        private boolean enableNetty = true;
+        private int tps = 25;
+        private boolean enableReloadCommand = true;
         private boolean executorServiceConnections = false;
         private boolean shuffleConnections = true;
         private boolean disableAsynchronousWarnings = true;

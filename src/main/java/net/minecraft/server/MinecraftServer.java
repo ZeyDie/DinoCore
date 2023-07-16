@@ -11,6 +11,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import jline.console.ConsoleReader;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
+import lombok.Getter;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.ServerCommand;
@@ -223,8 +224,14 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
     public int autosavePeriod;
     // CraftBukkit end
     // Spigot start
-    private static final int TPS = 20;
-    private static final int TICK_TIME = 1000000000 / TPS;
+
+    //TODO ZeyCodeStart
+    @Getter
+    //TODO ZeyCodeEnd
+    //TODO ZeyCodeRemove final
+    private static int TPS = 20;
+    //TODO ZeyCodeRemove final
+    private static int TICK_TIME = 1000000000 / TPS;
     public static double currentTPS = 0;
     private static long catchupTime = 0;
     // Spigot end
@@ -280,6 +287,9 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
 
             this.worldThreads.get(0).addRunnable(new UnloadingWorldsRunnable());
         }
+
+        TPS = this.coreSettings.getSettings().getTps();
+        TICK_TIME = 1000000000 / TPS;
     }
 
     public final void addMobRunnable(final Runnable runnable) {

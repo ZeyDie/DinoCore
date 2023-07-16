@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.v1_6_R3.command;
 
+import net.minecraft.server.MinecraftServer;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -17,7 +18,8 @@ public class TicksPerSecondCommand extends Command {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
 
-        double tps = Math.min(20,  Math.round(net.minecraft.server.MinecraftServer.currentTPS * 10) / 10.0);
+        //TODO ZeyCodeReplace 20 on MinecraftServer.getTPS()
+        double tps = Math.min(MinecraftServer.getTPS(),  Math.round(net.minecraft.server.MinecraftServer.currentTPS * 10) / 10.0);
         ChatColor color;
         if (tps > 19.2D) {
             color = ChatColor.GREEN;
