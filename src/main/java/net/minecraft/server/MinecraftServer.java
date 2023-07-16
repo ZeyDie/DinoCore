@@ -252,6 +252,7 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
     public final MultiThreadSettings multiThreadSettings = new MultiThreadSettings();
     public final PermissionsSettings permissionsSettings = new PermissionsSettings();
     public final WorldsSettings worldsSettings = new WorldsSettings();
+    public final WarmRoastSettings warmRoastSettings = new WarmRoastSettings();
 
     public final List<EntityThread> entityThreads = new ArrayList<>();
     public final List<WorldThread> worldThreads = new ArrayList<>();
@@ -262,6 +263,7 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
         this.multiThreadSettings.reload();
         this.permissionsSettings.reload();
         this.worldsSettings.reload();
+        this.warmRoastSettings.reload();
 
         final MultiThreadSettings.MultiThreadSettingsGson.MobsSettings mobsSettings = MultiThreadSettings.getInstance().getMobsSettings();
 

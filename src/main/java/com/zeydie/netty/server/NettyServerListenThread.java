@@ -4,6 +4,7 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.zeydie.netty.handlers.DSLChannelInitializerHandler;
 import cpw.mods.fml.common.FMLLog;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -22,6 +23,8 @@ public final class NettyServerListenThread extends Thread {
     private final Map<InetAddress, Long> recentConnections = new HashMap<>();
     private final List<NetLoginHandler> pendingConnections = Collections.synchronizedList(new ArrayList<NetLoginHandler>());
 
+    private static ChannelFuture channelFuture;
+
     public NettyServerListenThread(
             @NotNull final NetworkListenThread networkListenThread,
             final int port
@@ -30,11 +33,8 @@ public final class NettyServerListenThread extends Thread {
 
         this.networkListenThread = networkListenThread;
         this.port = port;
-    }
 
-    @Override
-    public void run() {
-        new ServerBootstrap().group(
+        channelFuture = new ServerBootstrap().group(
                         new NioEventLoopGroup(
                                 0,
                                 new ThreadFactoryBuilder()
@@ -56,6 +56,10 @@ public final class NettyServerListenThread extends Thread {
                 .childOption(ChannelOption.SO_KEEPALIVE, Boolean.TRUE)
                 .bind(this.port)
                 .syncUninterruptibly();
+    }
+
+    @Override
+    public void run() {
     }
 
     public void processPendingConnections() {

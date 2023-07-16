@@ -40,7 +40,5 @@ public final class CoreSettings extends AbstractSettings {
         private boolean unbindBindedPort = true;
         private boolean pvpFromNewVersions = false;
         private boolean ignoreSendQueueByteLength = true;
-        private boolean enableWarmRoast = true;
-        private String[] warmRoastParams = new String[]{"--port", "25565"};
     }
 }
