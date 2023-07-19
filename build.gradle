@@ -1,5 +1,12 @@
 import joptsimple.internal.Strings
 
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+
+//pathLibrary("asm-debug-all-4.1.jar", true, "asm-debug-all-5.2.jar", false)
+
 buildscript {
     repositories {
         mavenCentral()
@@ -81,8 +88,10 @@ jar {
                     'Specification-Version': '1.6.4-R2.1-SNAPSHOT',
                     'Main-Class': 'cpw.mods.fml.relauncher.ServerLaunchWrapper',
                     'Class-Path': configurations.runtime.collect {
-                        if (it.getAbsolutePath().contains(libsFolder))
-                            it.getAbsolutePath()
+                        def path = it.getAbsolutePath()
+
+                        if (path.contains(libsFolder))
+                            path
                                     .replace(new File(libsFolder).getAbsolutePath(), libsFolder)
                                     .replace('\\', '/')
                         else Strings.EMPTY
@@ -90,4 +99,31 @@ jar {
             )
         }
     }
+}
+
+private final void pathLibrary(
+        final String oldLibrary, final boolean oldGradle,
+        final String newLibrary, final boolean newGradle
+) {
+    final Path target = getPathLibrary(oldLibrary, oldGradle);
+    final Path source = getPathLibrary(newLibrary, newGradle)
+
+    println " " + target + " old"
+    println " " + source + " new"
+
+    Files.copy(
+            source,
+            target,
+            StandardCopyOption.REPLACE_EXISTING
+    )
+}
+
+private final Path getPathLibrary(final String name, final boolean gradleCache) {
+    final Path path = gradleCache ? Paths.get(System.getProperty("user.home"), ".gradle") : Paths.get(System.getProperty("user.dir"), "libs")
+
+    return Files.walk(path, Integer.MAX_VALUE)
+            .filter { !it.toFile().isDirectory() }
+            .filter { it.getFileName().startsWith(name) }
+            .findFirst()
+            .orElseGet { null }
 }
