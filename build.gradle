@@ -1,33 +1,34 @@
+import joptsimple.internal.Strings
+
 buildscript {
     repositories {
-		mavenCentral()
+        mavenCentral()
         maven {
             name = "forge"
             url = "https://files.minecraftforge.net/maven"
         }
-		maven {
-			name = "maven"
-			url = "https://repo1.maven.org/maven2"
-		}
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
     }
 }
 
+def libsFolder = 'libs'
+
 repositories {
-	flatDir {
-		dirs 'libs'
-	}
+    mavenCentral()
+
+    flatDir {
+        dirs libsFolder
+    }
 }
 
 apply plugin: 'forge'
-
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+sourceCompatibility = targetCompatibility = '1.7'
 
-sourceCompatibility = targetCompatibility = '1.8'
 compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
+    sourceCompatibility = targetCompatibility = '1.7'
 }
 
 version = "1.6.4-" + new Date().format('dd.MM.yyyy') + "-deobf"
@@ -35,79 +36,58 @@ group = 'net.minecraftforge'
 archivesBaseName = "DinoCore"
 
 minecraft {
-	version = "1.6.4-9.11.1.963"
-	
-	srgExtra "PK: org/bukkit/craftbukkit org/bukkit/craftbukkit/v1_6_R3"
+    version = "1.6.4-9.11.1.963"
+
+    srgExtra "PK: org/bukkit/craftbukkit org/bukkit/craftbukkit/v1_6_R3"
     srgExtra "PK: net/minecraft/src ."
 }
 
 dependencies {
-	compile fileTree(dir: 'libs' , include: '*.jar')
+    compile fileTree(dir: libsFolder, include: '*.jar')
 
-	compile name: "Sashok724Authlib"
-	compile group: 'com.google.code.gson', name: 'gson', version: '2.2.4'
-	compile group: 'com.google.guava', name: 'guava', version: '14.0'
-	compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
-	compile group: 'commons-io', name: 'commons-io', version: '2.7'
-	compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
-	compile group: 'javax.persistence', name: 'persistence-api', version: '1.0.2'
-	compile group: 'jline', name: 'jline', version: '2.12.1'
-	compile group: 'lzma', name: 'lzma', version: '0.0.1'
-	compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.14'
-	compile group: 'net.lingala.zip4j', name: 'zip4j', version: '2.6.1'
-	compile group: 'net.md-5', name: 'SpecialSource', version: '1.7.4'
-	compile group: 'net.minecraft', name: 'launchwrapper', version: '1.8'
-	compile group: 'net.sf.jopt-simple', name: 'jopt-simple', version: '4.5'
-	compile group: 'net.sf.trove4j', name: 'trove4j', version: '3.0.3'
-	compile group: 'net.sourceforge.argo', name: 'argo', version: '2.25'
-	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.1'
-	compile group: 'org.avaje', name: 'ebean', version: '2.7.3'
-	compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.47'
-	compile group: 'org.fusesource.jansi', name: 'jansi', version: '1.11'
-	compile group: 'org.javassist', name: 'javassist', version: '3.27.0-GA'
-	compile group: 'org.ow2.asm', name: 'asm-debug-all', version: '5.2'
-	compile group: 'org.scala-lang', name: 'scala-compiler', version: '2.10.2'
-	compile group: 'org.scala-lang', name: 'scala-library', version: '2.10.2'
-	compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.7.2'
-	compile group: 'org.yaml', name: 'snakeyaml', version: '1.9'
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.26'
+    //annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.26'
 
-	compile group: 'io.netty', name: 'netty-all', version: '4.1.90.Final'
-
-	// https://mvnrepository.com/artifact/org.projectlombok/lombok
-	compile group: 'org.projectlombok', name: 'lombok', version: '1.18.26'
-	//annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.26'
-
-	// https://mvnrepository.com/artifact/org.jetbrains/annotations
-	compile group: 'org.jetbrains', name: 'annotations', version: '24.0.0'
+    // https://mvnrepository.com/artifact/org.jetbrains/annotations
+    compile group: 'org.jetbrains', name: 'annotations', version: '24.0.0'
 }
 
 task devJar(type: Jar) {
-	classifier = 'dev'
-	from sourceSets.main.output
+    classifier = 'dev'
+    from sourceSets.main.output
 }
 
 task sourcesJar(type: Jar) {
-	classifier = 'sources'
-	from sourceSets.main.allSource
+    classifier = 'sources'
+    from sourceSets.main.allSource
 }
 
 artifacts {
-	archives devJar
-	archives sourcesJar
+    archives devJar
+    archives sourcesJar
 }
 
 jar {
-    manifest {
-        attributes(
-            'Implementation-Vendor': 'Cauldron fork by DiverseLab, ZeyDie',
-			'Implementation-Title': 'Cauldron fork by DiverseLab, ZeyDie',
-			'Implementation-Version': 'git-Cauldron-MCPC-Plus-' + project.version,
-			'Forge-Version': '9.11.1.965',
-			'Specification-Vendor': 'Bukkit Team, ZeyDie, Sa1ZeR_',
-			'Specification-Title': 'Bukkit',
-			'Specification-Version': '1.6.4-R2.1-SNAPSHOT',
-			'Main-Class': 'cpw.mods.fml.relauncher.ServerLaunchWrapper',
-			'Class-Path': 'libs/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar libs/com/google/guava/guava/14.0/guava-14.0.jar libs/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1.jar libs/commons-io/commons-io/2.7/commons-io-2.7.jar libs/commons-lang/commons-lang/2.6/commons-lang-2.6.jar libs/javax/persistence/persistence-api/1.0.2/persistence-api-1.0.2.jar libs/jline/jline/2.12.1/jline-2.12.1.jar libs/lzma/lzma/0.0.1/lzma-0.0.1.jar libs/mysql/mysql-connector-java/5.1.14/mysql-connector-java-5.1.14.jar libs/net/lingala/zip4j/zip4j/2.6.1/zip4j-2.6.1.jar libs/net/md-5/SpecialSource/1.7.4/SpecialSource-1.7.4.jar libs/net/minecraft/launchwrapper/1.8/launchwrapper-1.8.jar libs/net/sf/jopt-simple/jopt-simple/4.5/jopt-simple-4.5.jar libs/net/sf/trove4j/trove4j/3.0.3/trove4j-3.0.3.jar libs/net/sourceforge/argo/argo/2.25/argo-2.25.jar libs/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1.jar libs/org/avaje/ebean/2.7.3/ebean-2.7.3.jar libs/org/bouncycastle/bcprov-jdk15on/1.47/bcprov-jdk15on-1.47.jar libs/org/fusesource/jansi/jansi/1.11/jansi-1.11.jar libs/org/javassist/javassist/3.27.0-GA/javassist-3.27.0-GA.jar libs/org/ow2/asm/asm-debug-all/5.2/asm-debug-all-5.2.jar libs/org/scala-lang/scala-compiler/2.10.2/scala-compiler-2.10.2.jar libs/org/scala-lang/scala-library/2.10.2/scala-library-2.10.2.jar libs/org/xerial/sqlite-jdbc/3.7.2/sqlite-jdbc-3.7.2.jar libs/org/yaml/snakeyaml/1.9/snakeyaml-1.9.jar libs/ru/zoom4ikdan4ik/gson-reader/1.0/gson-reader-1.0.jar libs/com/sk89q/warmroast/warmroast.jar libs/com/zeydie/sgson/2.9.x/1.1/SGson-2.9.x-1.1.jar libs/io/netty/netty-all/netty-all-4.1.90.Final.jar'
-        )
+    doFirst {
+        manifest {
+            attributes(
+                    'Implementation-Vendor': 'Cauldron fork by DiverseLab, ZeyDie',
+                    'Implementation-Title': 'Cauldron fork by DiverseLab, ZeyDie',
+                    'Implementation-Version': 'git-Cauldron-MCPC-Plus-' + project.version,
+                    'Forge-Version': '9.11.1.965',
+                    'Specification-Vendor': 'Bukkit Team, ZeyDie, Sa1ZeR_',
+                    'Specification-Title': 'Bukkit',
+                    'Specification-Version': '1.6.4-R2.1-SNAPSHOT',
+                    'Main-Class': 'cpw.mods.fml.relauncher.ServerLaunchWrapper',
+                    'Class-Path': configurations.runtime.collect {
+                        if (it.getAbsolutePath().contains(libsFolder))
+                            it.getAbsolutePath()
+                                    .replace(new File(libsFolder).getAbsolutePath(), libsFolder)
+                                    .replace('\\', '/')
+                        else Strings.EMPTY
+                    }.join(' ')
+            )
+        }
     }
 }
