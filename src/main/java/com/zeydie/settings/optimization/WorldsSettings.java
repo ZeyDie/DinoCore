@@ -3,6 +3,7 @@ package com.zeydie.settings.optimization;
 import com.zeydie.settings.AbstractSettings;
 import com.zeydie.settings.interfaces.IGson;
 import com.zeydie.settings.interfaces.ITickRunnable;
+import lombok.Data;
 import net.minecraft.server.MinecraftServer;
 
 public final class WorldsSettings extends AbstractSettings {
@@ -27,18 +28,10 @@ public final class WorldsSettings extends AbstractSettings {
         this.worldsSettingsGson = (WorldsSettingsGson) object;
     }
 
+    @Data
     public static final class WorldsSettingsGson implements IGson, ITickRunnable {
-        public boolean enable = true;
-        public int tickRate = 100;
-
-        @Override
-        public int getTickRate() {
-            return this.tickRate;
-        }
-
-        @Override
-        public DebugSettings getDebugSettings() {
-            return new DebugSettings();
-        }
+        private boolean enable = true;
+        private int tickRate = 100;
+        private DebugSettings debugSettings = new DebugSettings();
     }
 }
