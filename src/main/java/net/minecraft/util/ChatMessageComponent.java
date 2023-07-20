@@ -268,7 +268,7 @@ public class ChatMessageComponent
                     astring[i] = ((ChatMessageComponent)this.field_111091_i.get(i)).toStringWithDefaultFormatting(par1, enumchatformatting1, flag5, flag6, flag7, flag8);
                 }
 
-                stringbuilder.append(StatCollector.translateToLocalFormatted(this.translationKey, astring));
+                stringbuilder.append(StatCollector.translateToLocalFormatted(this.translationKey, (Object) astring));
             }
             else
             {

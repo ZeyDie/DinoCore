@@ -28,7 +28,9 @@ public class ASMTransformer implements IClassTransformer
         if ("net.minecraft.src.Block".equals(name))
         {
             ClassReader cr = new ClassReader(bytes);
-            ClassNode cn = new ClassNode(Opcodes.ASM4);
+
+            //TODO ZeyCodeReplace ASM4 on ASM5
+            ClassNode cn = new ClassNode(Opcodes.ASM5);
             cr.accept(cn, ClassReader.EXPAND_FRAMES);
             cn.interfaces.add(Type.getInternalName(BlockProxy.class));
             ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);

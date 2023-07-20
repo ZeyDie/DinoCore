@@ -48,7 +48,8 @@ public class FMLSanityChecker implements IFMLCallHook
         private boolean foundMarker = false;
         private MLDetectorClassVisitor()
         {
-            super(Opcodes.ASM4);
+            //TODO ZeyCodeReplace ASM4 on ASM5
+            super(Opcodes.ASM5);
         }
 
         @Override

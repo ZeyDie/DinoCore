@@ -24,7 +24,8 @@ public class ModAnnotationVisitor extends AnnotationVisitor
 
     public ModAnnotationVisitor(ASMModParser discoverer)
     {
-        super(Opcodes.ASM4);
+        //TODO ZeyCodeReplace ASM4 on ASM5
+        super(Opcodes.ASM5);
         this.discoverer = discoverer;
     }
     

@@ -12,7 +12,8 @@ public class ModMethodVisitor extends MethodVisitor {
 
     public ModMethodVisitor(String name, String desc, ASMModParser discoverer)
     {
-        super(Opcodes.ASM4);
+        //TODO ZeyCodeReplace ASM4 on ASM5
+        super(Opcodes.ASM5);
         this.methodName = name;
         this.methodDescriptor = desc;
         this.discoverer = discoverer;

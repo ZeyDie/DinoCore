@@ -30,7 +30,8 @@ public class ModLoaderPropertiesMethodVisitor extends MethodVisitor
 
     public ModLoaderPropertiesMethodVisitor(String name, ASMModParser discoverer)
     {
-        super(Opcodes.ASM4);
+        //TODO ZeyCodeReplace ASM4 on ASM5
+        super(Opcodes.ASM5);
         this.discoverer = discoverer;
     }
     @Override

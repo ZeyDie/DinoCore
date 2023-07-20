@@ -22,7 +22,8 @@ public class ModClassVisitor extends ClassVisitor
 
     public ModClassVisitor(ASMModParser discoverer)
     {
-        super(Opcodes.ASM4);
+        //TODO ZeyCodeReplace ASM4 on ASM5
+        super(Opcodes.ASM5);
         this.discoverer = discoverer;
     }
 

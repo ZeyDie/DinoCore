@@ -114,7 +114,8 @@ public class EventTransformer implements IClassTransformer
          *              super();
          *      }
          */
-        MethodNode method = new MethodNode(ASM4, ACC_PUBLIC, "<init>", getMethodDescriptor(VOID_TYPE), null, null);
+        //TODO ZeyCodeReplace ASM4 on ASM5
+        MethodNode method = new MethodNode(ASM5, ACC_PUBLIC, "<init>", getMethodDescriptor(VOID_TYPE), null, null);
         method.instructions.add(new VarInsnNode(ALOAD, 0));
         method.instructions.add(new MethodInsnNode(INVOKESPECIAL, tSuper.getInternalName(), "<init>", getMethodDescriptor(VOID_TYPE)));
         method.instructions.add(new InsnNode(RETURN));
@@ -134,7 +135,8 @@ public class EventTransformer implements IClassTransformer
          *              LISTENER_LIST = new ListenerList(super.getListenerList());
          *      }
          */
-        method = new MethodNode(ASM4, ACC_PROTECTED, "setup", getMethodDescriptor(VOID_TYPE), null, null);
+        //TODO ZeyCodeReplace ASM4 on ASM5
+        method = new MethodNode(ASM5, ACC_PROTECTED, "setup", getMethodDescriptor(VOID_TYPE), null, null);
         method.instructions.add(new VarInsnNode(ALOAD, 0));
         method.instructions.add(new MethodInsnNode(INVOKESPECIAL, tSuper.getInternalName(), "setup", getMethodDescriptor(VOID_TYPE)));
         method.instructions.add(new FieldInsnNode(GETSTATIC, classNode.name, "LISTENER_LIST", tList.getDescriptor()));
@@ -158,7 +160,8 @@ public class EventTransformer implements IClassTransformer
          *              return this.LISTENER_LIST;
          *      }
          */
-        method = new MethodNode(ASM4, ACC_PUBLIC, "getListenerList", getMethodDescriptor(tList), null, null);
+        //TODO ZeyCodeReplace ASM4 on ASM5
+        method = new MethodNode(ASM5, ACC_PUBLIC, "getListenerList", getMethodDescriptor(tList), null, null);
         method.instructions.add(new FieldInsnNode(GETSTATIC, classNode.name, "LISTENER_LIST", tList.getDescriptor()));
         method.instructions.add(new InsnNode(ARETURN));
         classNode.methods.add(method);

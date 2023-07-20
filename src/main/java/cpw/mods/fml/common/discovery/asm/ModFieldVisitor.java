@@ -24,7 +24,8 @@ public class ModFieldVisitor extends FieldVisitor
 
     public ModFieldVisitor(String name, ASMModParser discoverer)
     {
-        super(Opcodes.ASM4);
+        //TODO ZeyCodeReplace ASM4 on ASM5
+        super(Opcodes.ASM5);
         this.fieldName = name;
         this.discoverer = discoverer;
     }
