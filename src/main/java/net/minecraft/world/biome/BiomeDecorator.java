@@ -180,7 +180,7 @@ public class BiomeDecorator
         {
 
             //TODO ZoomCodeStart
-            if (!CoreSettings.getInstance().isDisableAsynchronousWarnings())
+            if (CoreSettings.getInstance().isAsynchronousWarnings())
                 //TODO ZoomCodeEnd
 
             throw new RuntimeException("Already decorating!!");

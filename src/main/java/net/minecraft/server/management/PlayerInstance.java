@@ -2,6 +2,7 @@ package net.minecraft.server.management;
 
 import com.zeydie.legacy.core.PlayerInstanceRunnable;
 import com.zeydie.legacy.core.PlayerRunnableLoadChunk;
+import com.zeydie.settings.optimization.CoreSettings;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet51MapChunk;
@@ -71,7 +72,7 @@ public class PlayerInstance {
         if (this.playersInChunk.contains(par1EntityPlayerMP)) {
 
             //TODO ZoomCodeStart
-            if (!MinecraftServer.getServer().coreSettings.getSettings().isDisableAsynchronousWarnings())
+            if (CoreSettings.getInstance().isAsynchronousWarnings())
                 //TODO ZoomCodeEnd
 
                 throw new IllegalStateException("Failed to add player. " + par1EntityPlayerMP + " already is in chunk " + this.chunkLocation.chunkXPos + ", " + this.chunkLocation.chunkZPos);

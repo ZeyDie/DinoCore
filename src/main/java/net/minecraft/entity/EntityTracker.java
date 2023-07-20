@@ -116,7 +116,7 @@ public class EntityTracker {
     public void addEntityToTracker(Entity par1Entity, int par2, int par3, boolean par4) {
 
         //TODO ZoomCodeStart
-        if (!CoreSettings.getInstance().isDisableAsynchronousWarnings())
+        if (CoreSettings.getInstance().isAsynchronousWarnings())
             //TODO ZoomCodeEnd
 
             if (Thread.currentThread() != net.minecraft.server.MinecraftServer.getServer().primaryThread) {
@@ -132,7 +132,7 @@ public class EntityTracker {
         try {
 
             //TODO ZoomCodeStart
-            if (CoreSettings.getInstance().isDisableAsynchronousWarnings())
+            if (!CoreSettings.getInstance().isAsynchronousWarnings())
                 if (this.trackedEntityIDs.containsItem(par1Entity.entityId))
                     return;
             //TODO ZoomCodeEnd
@@ -166,7 +166,7 @@ public class EntityTracker {
     public void removeEntityFromAllTrackingPlayers(Entity par1Entity) {
 
         //TODO ZoomCodeStart
-        if (!CoreSettings.getInstance().isDisableAsynchronousWarnings())
+        if (CoreSettings.getInstance().isAsynchronousWarnings())
             //TODO ZoomCodeEnd
 
             if (Thread.currentThread() != net.minecraft.server.MinecraftServer.getServer().primaryThread) {

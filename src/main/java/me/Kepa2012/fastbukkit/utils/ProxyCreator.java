@@ -22,7 +22,7 @@ public class ProxyCreator {
     }
 
     public static IProxiedEvent createEventProxy(Method eventMethod) {
-        if (!CoreSettings.getInstance().isEnableFastBukkit()) return null;
+        if (!CoreSettings.getInstance().isFastBukkit()) return null;
 
         try {
             Class<?> declCl = eventMethod.getDeclaringClass();

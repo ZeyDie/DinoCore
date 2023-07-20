@@ -29,7 +29,7 @@ public final class WarmRoastSettings extends AbstractSettings {
 
     @Data
     public static final class WarmRoastSettingsGson implements IGson {
-        private boolean enableWarmRoast = true;
+        private boolean enableWarmRoast = false;
         private String[] warmRoastParams = new String[]{"--port", "25565"};
     }
 }

@@ -20,7 +20,7 @@ public class ReloadCommand extends BukkitCommand {
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         //TODO ZeyCodeStart
-        if (CoreSettings.getInstance().isEnableReloadCommand()) {
+        if (CoreSettings.getInstance().isReloadCommand()) {
             if (!testPermission(sender)) return true;
 
             org.spigotmc.CustomTimingsHandler.reload(); // Spigot: TODO: Why is this here?

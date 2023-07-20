@@ -1359,7 +1359,7 @@ public abstract class EntityPlayer extends EntityLivingBase implements ICommandS
                     if (flag2) {
 
                         //TODO Minecraft 1.12.2 start
-                        if (CoreSettings.getInstance().isPvpFromNewVersions()) {
+                        if (CoreSettings.getInstance().isPvp1_12_2()) {
                             if (i > 0) {
                                 if (targetEntity instanceof EntityLivingBase)
                                     ((EntityLivingBase) targetEntity).knockBack(this, (float) i * 0.5F, (double) MathHelper.sin(this.rotationYaw * 0.017453292F), (double) (-MathHelper.cos(this.rotationYaw * 0.017453292F)));

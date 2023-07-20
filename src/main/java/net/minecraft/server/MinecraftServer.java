@@ -589,6 +589,23 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
     protected void saveAllWorlds(boolean par1) throws MinecraftException   // CraftBukkit - added throws
     {
         if (!this.worldIsBeingDeleted) {
+
+            //TODO ZeyCodeStart
+            if (this.getNetworkThread().isListening)
+                if (!CoreSettings.getInstance().isAutoSaveAllWorlds()) {
+                    final WorldServer worldServer = this.worlds.get(0);
+
+                    this.getLogAgent().logInfo("Saving chunks for level \'" + worldServer.getWorldInfo().getWorldName() + "\'/" + worldServer.provider.getDimensionName());
+
+                    worldServer.saveAllChunks(true, null);
+                    worldServer.flush();
+
+                    this.server.getPluginManager().callEvent(new WorldSaveEvent(worldServer.getWorld()));
+
+                    return;
+                }
+            //TODO ZeyCodeEnd
+
             // CraftBukkit start
             for (int j = 0; j < this.worlds.size(); ++j) {
                 WorldServer worldserver = this.worlds.get(j);
@@ -629,7 +646,6 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
             if (this.server != null) {
                 this.server.disablePlugins();
             }
-
             // CraftBukkit end
 
             if (this.getNetworkThread() != null) {

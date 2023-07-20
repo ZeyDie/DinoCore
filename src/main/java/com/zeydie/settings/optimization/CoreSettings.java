@@ -32,13 +32,14 @@ public final class CoreSettings extends AbstractSettings {
         private boolean debug = true;
         private boolean enableNetty = true;
         private int tps = 25;
-        private boolean enableReloadCommand = true;
+        private boolean autoSaveAllWorlds = false;
+        private boolean reloadCommand = true;
         private boolean executorServiceConnections = false;
         private boolean shuffleConnections = true;
-        private boolean disableAsynchronousWarnings = true;
-        private boolean enableFastBukkit = true;
-        private boolean unbindBindedPort = true;
-        private boolean pvpFromNewVersions = false;
+        private boolean asynchronousWarnings = false;
+        private boolean fastBukkit = true;
+        private boolean unbindPort = true;
+        private boolean pvp1_12_2 = false;
         private boolean ignoreSendQueueByteLength = true;
     }
 }
