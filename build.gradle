@@ -36,7 +36,7 @@ compileJava {
     sourceCompatibility = targetCompatibility = '1.7'
 }
 
-version = "1.6.4-" + new Date().format('dd.MM.yyyy') + "-deobf"
+version = "1.6.4-" + new Date().format('dd.MM.yyyy')
 group = 'net.minecraftforge'
 archivesBaseName = "DinoCore"
 
@@ -77,9 +77,9 @@ jar {
     doFirst {
         manifest {
             attributes(
-                    'Implementation-Vendor': 'Cauldron fork by DiverseLab, ZeyDie',
-                    'Implementation-Title': 'Cauldron fork by DiverseLab, ZeyDie',
-                    'Implementation-Version': 'git-Cauldron-MCPC-Plus-' + project.version,
+                    'Implementation-Vendor': 'Cauldron fork by ZeyDie, DiverseLab',
+                    'Implementation-Title': 'Cauldron fork by ZeyDie, DiverseLab',
+                    'Implementation-Version': 'Cauldron-9.11.1.965-R2.1' + project.version,
                     'Forge-Version': '9.11.1.965',
                     'Specification-Vendor': 'Bukkit Team, ZeyDie, Sa1ZeR_',
                     'Specification-Title': 'Bukkit',
