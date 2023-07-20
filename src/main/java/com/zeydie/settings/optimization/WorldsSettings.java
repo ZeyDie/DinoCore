@@ -31,6 +31,7 @@ public final class WorldsSettings extends AbstractSettings {
     public static final class WorldsSettingsGson implements ITickRunnable {
         private boolean enable = true;
         private int tickRate = 100;
+        private boolean waterBiomes = false;
         private DebugSettings debugSettings = new DebugSettings();
     }
 }
