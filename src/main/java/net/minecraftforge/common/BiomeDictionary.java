@@ -220,9 +220,13 @@ public class BiomeDictionary {
             BiomeDictionary.registerBiomeType(biome, SWAMP);
         }
 
-        if (biome.minHeight <= -0.5F) {
-            BiomeDictionary.registerBiomeType(biome, WATER);
-        }
+        //TODO ZeyCodeStart
+        if (WorldsSettings.getInstance().isWaterBiomes())
+            //TODO ZeyCodeEnd
+
+            if (biome.minHeight <= -0.5F) {
+                BiomeDictionary.registerBiomeType(biome, WATER);
+            }
 
         if (biome.maxHeight >= 1.5F) {
             BiomeDictionary.registerBiomeType(biome, MOUNTAIN);
