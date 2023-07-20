@@ -8,7 +8,6 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet51MapChunk;
 import net.minecraft.network.packet.Packet52MultiBlockChange;
 import net.minecraft.network.packet.Packet53BlockChange;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.chunk.Chunk;

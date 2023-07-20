@@ -1,7 +1,6 @@
 package com.zeydie.settings.optimization;
 
 import com.zeydie.settings.AbstractSettings;
-import com.zeydie.settings.interfaces.IGson;
 import com.zeydie.settings.interfaces.ITickRunnable;
 import lombok.Data;
 import net.minecraft.server.MinecraftServer;
@@ -24,12 +23,12 @@ public final class MultiThreadSettings extends AbstractSettings {
     }
 
     @Override
-    public void setSettings(final IGson object) {
+    public void setSettings(final Object object) {
         this.multiThreadSettingsGson = (MultiThreadSettingsGson) object;
     }
 
     @Data
-    public static final class MultiThreadSettingsGson implements IGson {
+    public static final class MultiThreadSettingsGson {
         private MobsSettings mobsSettings = new MobsSettings();
         private WorldSettings worldSettings = new WorldSettings();
 
@@ -44,7 +43,7 @@ public final class MultiThreadSettings extends AbstractSettings {
             private AABBForEntity aabbForEntity = new AABBForEntity();
 
             @Data
-            public final class AABBForEntity {
+            public static final class AABBForEntity {
                 private boolean shuffleLists = false;
                 private int maximumEntities = 16;
                 private boolean ignorePlayers = true;

@@ -1,7 +1,6 @@
 package com.zeydie.settings.optimization;
 
 import com.zeydie.settings.AbstractSettings;
-import com.zeydie.settings.interfaces.IGson;
 import lombok.Data;
 import net.minecraft.server.MinecraftServer;
 
@@ -23,12 +22,12 @@ public final class AuthSettings extends AbstractSettings {
     }
 
     @Override
-    public void setSettings(final IGson object) {
+    public void setSettings(final Object object) {
         this.authSettingsGson = (AuthSettingsGson) object;
     }
 
     @Data
-    public static final class AuthSettingsGson implements IGson {
+    public static final class AuthSettingsGson {
         private boolean enable = true;
         private String url = "http://session.minecraft.net";
         private String path = "game";

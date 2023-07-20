@@ -1,7 +1,6 @@
 package com.zeydie.settings.optimization;
 
 import com.zeydie.settings.AbstractSettings;
-import com.zeydie.settings.interfaces.IGson;
 import lombok.Data;
 import net.minecraft.server.MinecraftServer;
 
@@ -23,12 +22,12 @@ public final class PermissionsSettings extends AbstractSettings {
     }
 
     @Override
-    public void setSettings(final IGson object) {
+    public void setSettings(final Object object) {
         this.permissionsSettingsGson = (PermissionsSettingsGson) object;
     }
 
     @Data
-    public static final class PermissionsSettingsGson implements IGson {
+    public static final class PermissionsSettingsGson {
         private boolean opsOnlyFromConsole = true;
     }
 }

@@ -1,7 +1,6 @@
 package com.zeydie.settings.optimization;
 
 import com.zeydie.settings.AbstractSettings;
-import com.zeydie.settings.interfaces.IGson;
 import com.zeydie.settings.interfaces.ITickRunnable;
 import lombok.Data;
 import net.minecraft.server.MinecraftServer;
@@ -24,12 +23,12 @@ public final class WorldsSettings extends AbstractSettings {
     }
 
     @Override
-    public void setSettings(final IGson object) {
+    public void setSettings(final Object object) {
         this.worldsSettingsGson = (WorldsSettingsGson) object;
     }
 
     @Data
-    public static final class WorldsSettingsGson implements IGson, ITickRunnable {
+    public static final class WorldsSettingsGson implements ITickRunnable {
         private boolean enable = true;
         private int tickRate = 100;
         private DebugSettings debugSettings = new DebugSettings();
