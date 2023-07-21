@@ -218,7 +218,8 @@ public class SpigotWorldConfig {
     public boolean randomLightUpdates;
 
     private void lightUpdates() {
-        randomLightUpdates = getBoolean("random-light-updates", false);
+        //TODO ZeyCodeReplace false on true
+        randomLightUpdates = getBoolean("random-light-updates", true);
         log("Random Lighting Updates: " + randomLightUpdates);
     }
 

@@ -32,8 +32,8 @@ spawn-limits:
     ambient: 35
 chunk-gc:
     enabled: true
-    period-in-ticks: 300
-    load-threshold: 300
+    period-in-ticks: 400
+    load-threshold: 0
 ticks-per:
     animal-spawns: 200
     monster-spawns: 10
