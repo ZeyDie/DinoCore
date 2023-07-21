@@ -3,26 +3,28 @@ package com.zeydie.settings.optimization;
 import com.zeydie.settings.AbstractSettings;
 import lombok.Data;
 import net.minecraft.server.MinecraftServer;
+import org.jetbrains.annotations.NotNull;
 
 public final class CoreSettings extends AbstractSettings {
+    @NotNull
     public CoreSettingsGson coreSettingsGson = new CoreSettingsGson();
 
-    public static CoreSettingsGson getInstance() {
+    public static @NotNull CoreSettingsGson getInstance() {
         return MinecraftServer.getServer().coreSettings.getSettings();
     }
 
     @Override
-    public String getConfigName() {
+    public @NotNull String getConfigName() {
         return "core";
     }
 
     @Override
-    public CoreSettingsGson getSettings() {
+    public @NotNull CoreSettingsGson getSettings() {
         return this.coreSettingsGson;
     }
 
     @Override
-    public void setSettings(final Object object) {
+    public void setSettings(@NotNull final Object object) {
         this.coreSettingsGson = (CoreSettingsGson) object;
     }
 
