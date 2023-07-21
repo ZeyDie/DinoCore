@@ -593,16 +593,22 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
             //TODO ZeyCodeStart
             if (this.getNetworkThread().isListening)
                 if (!CoreSettings.getInstance().isAutoSaveAllWorlds()) {
-                    final WorldServer worldServer = this.worlds.get(0);
+                    final WorldServer worldServer = this.worlds
+                            .stream()
+                            .filter(worldServer1 -> worldServer1.getWorldInfo().getWorldName().equals(getFolderName()))
+                            .findFirst()
+                            .orElse(null);
 
-                    this.getLogAgent().logInfo("Saving chunks for level \'" + worldServer.getWorldInfo().getWorldName() + "\'/" + worldServer.provider.getDimensionName());
+                    if (worldServer != null) {
+                        this.getLogAgent().logInfo("Saving chunks for level \'" + worldServer.getWorldInfo().getWorldName() + "\'/" + worldServer.provider.getDimensionName());
 
-                    worldServer.saveAllChunks(true, null);
-                    worldServer.flush();
+                        worldServer.saveAllChunks(true, null);
+                        worldServer.flush();
 
-                    this.server.getPluginManager().callEvent(new WorldSaveEvent(worldServer.getWorld()));
+                        this.server.getPluginManager().callEvent(new WorldSaveEvent(worldServer.getWorld()));
 
-                    return;
+                        return;
+                    }
                 }
             //TODO ZeyCodeEnd
 
