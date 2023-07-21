@@ -7,10 +7,10 @@ import org.jetbrains.annotations.NotNull;
 
 public final class CoreSettings extends AbstractSettings {
     @NotNull
-    public CoreSettingsGson coreSettingsGson = new CoreSettingsGson();
+    public CoreSettings.CoreSettingsData coreSettingsData = new CoreSettingsData();
 
-    public static @NotNull CoreSettingsGson getInstance() {
-        return MinecraftServer.getServer().coreSettings.getSettings();
+    public static @NotNull CoreSettings getInstance() {
+        return MinecraftServer.getServer().coreSettings;
     }
 
     @Override
@@ -19,17 +19,17 @@ public final class CoreSettings extends AbstractSettings {
     }
 
     @Override
-    public @NotNull CoreSettingsGson getSettings() {
-        return this.coreSettingsGson;
+    public @NotNull CoreSettings.CoreSettingsData getSettings() {
+        return this.coreSettingsData;
     }
 
     @Override
     public void setSettings(@NotNull final Object object) {
-        this.coreSettingsGson = (CoreSettingsGson) object;
+        this.coreSettingsData = (CoreSettingsData) object;
     }
 
     @Data
-    public static final class CoreSettingsGson {
+    public static final class CoreSettingsData {
         private boolean debug = true;
         private boolean enableNetty = true;
         private int tps = 25;

@@ -7,10 +7,10 @@ import org.jetbrains.annotations.NotNull;
 
 public final class WarmRoastSettings extends AbstractSettings {
     @NotNull
-    public WarmRoastSettingsGson warmRoastSettingsGson = new WarmRoastSettingsGson();
+    public WarmRoastSettings.WarmRoastSettingsData warmRoastSettingsData = new WarmRoastSettingsData();
 
-    public static @NotNull WarmRoastSettingsGson getInstance() {
-        return MinecraftServer.getServer().warmRoastSettings.getSettings();
+    public static @NotNull WarmRoastSettings getInstance() {
+        return MinecraftServer.getServer().warmRoastSettings;
     }
 
     @Override
@@ -19,17 +19,17 @@ public final class WarmRoastSettings extends AbstractSettings {
     }
 
     @Override
-    public @NotNull WarmRoastSettingsGson getSettings() {
-        return this.warmRoastSettingsGson;
+    public @NotNull WarmRoastSettings.WarmRoastSettingsData getSettings() {
+        return this.warmRoastSettingsData;
     }
 
     @Override
     public void setSettings(@NotNull final Object object) {
-        this.warmRoastSettingsGson = (WarmRoastSettingsGson) object;
+        this.warmRoastSettingsData = (WarmRoastSettingsData) object;
     }
 
     @Data
-    public static final class WarmRoastSettingsGson {
+    public static final class WarmRoastSettingsData {
         private boolean enableWarmRoast = false;
         @NotNull
         private String[] warmRoastParams = new String[]{"--port", "25565"};

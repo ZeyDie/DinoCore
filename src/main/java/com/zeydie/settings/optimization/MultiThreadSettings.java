@@ -8,10 +8,10 @@ import org.jetbrains.annotations.NotNull;
 
 public final class MultiThreadSettings extends AbstractSettings {
     @NotNull
-    public MultiThreadSettingsGson multiThreadSettingsGson = new MultiThreadSettingsGson();
+    public MultiThreadSettings.MultiThreadSettingsData multiThreadSettingsData = new MultiThreadSettingsData();
 
-    public static @NotNull MultiThreadSettingsGson getInstance() {
-        return MinecraftServer.getServer().multiThreadSettings.getSettings();
+    public static @NotNull MultiThreadSettings getInstance() {
+        return MinecraftServer.getServer().multiThreadSettings;
     }
 
     @Override
@@ -20,17 +20,17 @@ public final class MultiThreadSettings extends AbstractSettings {
     }
 
     @Override
-    public @NotNull MultiThreadSettingsGson getSettings() {
-        return this.multiThreadSettingsGson;
+    public @NotNull MultiThreadSettings.MultiThreadSettingsData getSettings() {
+        return this.multiThreadSettingsData;
     }
 
     @Override
     public void setSettings(@NotNull final Object object) {
-        this.multiThreadSettingsGson = (MultiThreadSettingsGson) object;
+        this.multiThreadSettingsData = (MultiThreadSettingsData) object;
     }
 
     @Data
-    public static final class MultiThreadSettingsGson {
+    public static final class MultiThreadSettingsData {
         @NotNull
         private MobsSettings mobsSettings = new MobsSettings();
         @NotNull
@@ -40,10 +40,10 @@ public final class MultiThreadSettings extends AbstractSettings {
         public static final class MobsSettings implements ITickRunnable {
             @NotNull
             private DebugSettings debugSettings = new DebugSettings();
+            private int tickRate = 1;
 
             private boolean enable = true;
             private int pools = 2;
-            private int tickRate = 1;
 
             @NotNull
             private AABBForEntity aabbForEntity = new AABBForEntity();
@@ -60,10 +60,10 @@ public final class MultiThreadSettings extends AbstractSettings {
         public static final class WorldSettings implements ITickRunnable {
             @NotNull
             private DebugSettings debugSettings = new DebugSettings();
+            private int tickRate = 1;
 
             private boolean enable = true;
             private int pools = 1;
-            private int tickRate = 1;
         }
     }
 }

@@ -221,7 +221,7 @@ public class BiomeDictionary {
         }
 
         //TODO ZeyCodeStart
-        if (WorldsSettings.getInstance().isWaterBiomes())
+        if (WorldsSettings.getInstance().getSettings().isWaterBiomes())
             //TODO ZeyCodeEnd
 
             if (biome.minHeight <= -0.5F) {
@@ -254,7 +254,7 @@ public class BiomeDictionary {
 
     private static void registerVanillaBiomes() {
         //TODO ZeyCodeStart
-        if (WorldsSettings.getInstance().isWaterBiomes())
+        if (WorldsSettings.getInstance().getSettings().isWaterBiomes())
             //TODO ZeyCodeEnd
 
             registerBiomeType(ocean, WATER);
@@ -267,7 +267,7 @@ public class BiomeDictionary {
         registerBiomeType(swampland, SWAMP);
 
         //TODO ZeyCodeStart
-        if (WorldsSettings.getInstance().isWaterBiomes()) {
+        if (WorldsSettings.getInstance().getSettings().isWaterBiomes()) {
             //TODO ZeyCodeEnd
             registerBiomeType(river, WATER);
             registerBiomeType(frozenOcean, WATER, FROZEN);

@@ -43,7 +43,7 @@ public class ServerListenThread extends Thread {
         this.myPort = par3;
 
         //TODO ZeyCodeStart
-        if (CoreSettings.getInstance().isEnableNetty()) {
+        if (CoreSettings.getInstance().getSettings().isEnableNetty()) {
             this.myServerSocket = null;
             this.myServerAddress = null;
 
@@ -94,7 +94,7 @@ public class ServerListenThread extends Thread {
                 long currentTime = System.currentTimeMillis();
 
                 //TODO ZeyCodeStart
-                if (CoreSettings.getInstance().isDebug())
+                if (CoreSettings.getInstance().getSettings().isDebug())
                     FMLLog.info("Connection " + address.getHostAddress() + " " + new SimpleDateFormat("HH:mm:ss").format(new Date()));
                 //TODO ZeyCodeEnd
 

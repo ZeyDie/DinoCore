@@ -344,7 +344,7 @@ public class EntityTrackerEntry {
     public void tryStartWachingThis(EntityPlayerMP par1EntityPlayerMP) {
 
         //TODO ZoomCodeStart
-        if (CoreSettings.getInstance().isAsynchronousWarnings())
+        if (CoreSettings.getInstance().getSettings().isAsynchronousWarnings())
             //TODO ZoomCodeEnd
 
             if (Thread.currentThread() != MinecraftServer.getServer().primaryThread) {

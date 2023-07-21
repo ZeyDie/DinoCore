@@ -10,14 +10,19 @@ public abstract class AbstractSettings {
     private final SGsonFile gsonFile = new SGsonFile(DefaultPaths.getOptimizationFile(String.format("%s.json", this.getConfigName())));
 
     public final void reload() {
-        this.setSettings(this.gsonFile.fromJsonToObject(this.getSettings()));
+        this.setSettings(this.loadSettings(this.getSettings()));
+        this.save(this.getSettings());
     }
 
-    public final @NotNull Object loadData(@NotNull final Object settings) {
+    public final @NotNull Object loadSettings(@NotNull final Object settings) {
         return this.gsonFile.fromJsonToObject(settings);
     }
 
-    public final void rewrite(@NotNull final Object settings) {
+    public final void save() {
+        this.save(this.getSettings());
+    }
+
+    public final void save(@NotNull final Object settings) {
         this.gsonFile.writeJsonFile(settings);
     }
 

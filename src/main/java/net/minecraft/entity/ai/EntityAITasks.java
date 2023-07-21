@@ -63,7 +63,7 @@ public class EntityAITasks {
     public void onUpdateTasks() {
 
         //TODO ZoomCodeStart
-        if (MultiThreadSettings.getInstance().getMobsSettings().isEnable()) {
+        if (MultiThreadSettings.getInstance().getSettings().getMobsSettings().isEnable()) {
             MinecraftServer.getServer().addMobRunnable(new AIRunnable(this));
 
             return;

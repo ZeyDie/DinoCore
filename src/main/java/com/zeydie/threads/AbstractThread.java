@@ -42,7 +42,7 @@ public abstract class AbstractThread extends Thread {
 
             @Override
             public void run() {
-                final long start = System.currentTimeMillis();
+                final int currentTick = MinecraftServer.currentTick;
 
                 synchronized (runnables) {
                     for (final Runnable runnable : runnables)
@@ -53,14 +53,13 @@ public abstract class AbstractThread extends Thread {
                         }
                 }
 
-                final long end = System.currentTimeMillis();
                 final AbstractSettings.DebugSettings debugSettings = tickRate.getDebugSettings();
 
                 if (debugSettings.isDebug())
-                    if (MinecraftServer.currentTick - lastTick >= debugSettings.getTickRateDebug()) {
-                        lastTick = MinecraftServer.currentTick;
+                    if (currentTick - lastTick >= debugSettings.getTickRateDebug()) {
+                        FMLLog.info("[%s] TPS - %f; Runnables - %d; Time - %d ms.", getName(), MinecraftServer.currentTPS, runnables.size(), currentTick - MinecraftServer.currentTick);
 
-                        FMLLog.info("[%s] TPS - %f; Runnables - %d; Time - %d ms.", getName(), MinecraftServer.currentTPS, runnables.size(), end - start);
+                        lastTick = currentTick;
                     }
 
                 if (flush)

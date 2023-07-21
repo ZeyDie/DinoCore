@@ -3,8 +3,8 @@ package net.minecraft.server;
 import com.zeydie.DefaultPaths;
 import com.zeydie.settings.optimization.*;
 import com.zeydie.threads.EntityThread;
+import com.zeydie.threads.UnloadingThread;
 import com.zeydie.threads.WorldThread;
-import com.zeydie.threads.runnables.UnloadingWorldsRunnable;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -257,7 +257,12 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
     public final List<EntityThread> entityThreads = new ArrayList<>();
     public final List<WorldThread> worldThreads = new ArrayList<>();
 
+    public UnloadingThread unloadingThread;
+
     public final void init() {
+        this.entityThreads.clear();
+        this.worldThreads.clear();
+
         this.authSettings.reload();
         this.coreSettings.reload();
         this.multiThreadSettings.reload();
@@ -265,7 +270,7 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
         this.worldsSettings.reload();
         this.warmRoastSettings.reload();
 
-        final MultiThreadSettings.MultiThreadSettingsGson.MobsSettings mobsSettings = MultiThreadSettings.getInstance().getMobsSettings();
+        final MultiThreadSettings.MultiThreadSettingsData.MobsSettings mobsSettings = MultiThreadSettings.getInstance().getSettings().getMobsSettings();
 
         if (mobsSettings.isEnable())
             for (int i = 0; i < mobsSettings.getPools(); i++) {
@@ -276,7 +281,7 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
                 this.entityThreads.add(entityThread);
             }
 
-        final MultiThreadSettings.MultiThreadSettingsGson.WorldSettings worldSettings = MultiThreadSettings.getInstance().getWorldSettings();
+        final MultiThreadSettings.MultiThreadSettingsData.WorldSettings worldSettings = MultiThreadSettings.getInstance().getSettings().getWorldSettings();
 
         if (worldSettings.isEnable()) {
             for (int i = 0; i < worldSettings.getPools(); i++) {
@@ -286,9 +291,10 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
 
                 this.worldThreads.add(worldThread);
             }
-
-            this.worldThreads.get(0).addRunnable(new UnloadingWorldsRunnable());
         }
+
+        this.unloadingThread = new UnloadingThread(0);
+        this.unloadingThread.start();
 
         TPS = this.coreSettings.getSettings().getTps();
         TICK_TIME = 1000000000 / TPS;
@@ -592,7 +598,7 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
 
             //TODO ZeyCodeStart
             if (this.getNetworkThread().isListening)
-                if (!CoreSettings.getInstance().isAutoSaveAllWorlds())
+                if (!CoreSettings.getInstance().getSettings().isAutoSaveAllWorlds())
                     for (final WorldServer worldServer : this.worlds) {
                         if (worldServer != null && worldServer.getWorldInfo().getWorldName().equals(MinecraftServer.this.getFolderName())) {
                             this.getLogAgent().logInfo("Saving chunks for level \'" + worldServer.getWorldInfo().getWorldName() + "\'/" + worldServer.provider.getDimensionName());
@@ -1639,6 +1645,10 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
             dedicatedserver.primaryThread.start();
             // CraftBukkit end
         } catch (Exception exception) {
+            //TODO ZeyCodeStart
+            exception.printStackTrace();
+            //TODO ZeyCodeEnd
+
             Logger.getAnonymousLogger().log(Level.SEVERE, "Failed to start the minecraft server", exception);
         }
     }

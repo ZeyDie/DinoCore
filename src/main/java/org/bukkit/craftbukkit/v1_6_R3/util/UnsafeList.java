@@ -181,7 +181,7 @@ public class UnsafeList<E> extends AbstractList<E> implements List<E>, RandomAcc
         if (index >= size || index < 0) {
 
             //TODO ZoomCodeStart
-            if (CoreSettings.getInstance().isAsynchronousWarnings())
+            if (CoreSettings.getInstance().getSettings().isAsynchronousWarnings())
                 //TODO ZoomCodeEnd
 
                 throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);

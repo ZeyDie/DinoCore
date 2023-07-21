@@ -47,7 +47,7 @@ public abstract class NetworkListenThread {
     public void networkTick() {
 
         //TODO ZoomCodeStart
-        if (CoreSettings.getInstance().isShuffleConnections())
+        if (CoreSettings.getInstance().getSettings().isShuffleConnections())
             Collections.shuffle(this.connections);
         //TODO ZoomCodeEnd
 

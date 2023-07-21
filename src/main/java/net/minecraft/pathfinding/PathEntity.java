@@ -78,7 +78,7 @@ public class PathEntity
      */
     public Vec3 getVectorFromIndex(Entity par1Entity, int par2) {
         //todo sa1zer_ code start
-        boolean useSafeMod = MultiThreadSettings.getInstance().getMobsSettings().isEnable();
+        boolean useSafeMod = MultiThreadSettings.getInstance().getSettings().getMobsSettings().isEnable();
         if(useSafeMod) {
             try {
                 return vectorFromIndex(par1Entity, par2);

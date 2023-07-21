@@ -1,6 +1,7 @@
 package org.bukkit.command.defaults;
 
 import com.zeydie.settings.optimization.CoreSettings;
+import net.minecraft.server.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -20,11 +21,12 @@ public class ReloadCommand extends BukkitCommand {
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         //TODO ZeyCodeStart
-        if (CoreSettings.getInstance().isReloadCommand()) {
+        if (CoreSettings.getInstance().getSettings().isReloadCommand()) {
             if (!testPermission(sender)) return true;
 
             org.spigotmc.CustomTimingsHandler.reload(); // Spigot: TODO: Why is this here?
             Bukkit.reload();
+            MinecraftServer.getServer().init();
             Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Reload complete.");
         } else
             //TODO ZeyCodeEnd

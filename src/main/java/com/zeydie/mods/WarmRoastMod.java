@@ -10,13 +10,13 @@ import cpw.mods.fml.common.event.FMLServerStartedEvent;
 public final class WarmRoastMod {
     @Mod.EventHandler
     public void serverStarted(final FMLServerStartedEvent event) {
-        final WarmRoastSettings.WarmRoastSettingsGson warmRoastSettingsGson = WarmRoastSettings.getInstance();
+        final WarmRoastSettings.WarmRoastSettingsData warmRoastSettingsData = WarmRoastSettings.getInstance().getSettings();
 
-        if (warmRoastSettingsGson.isEnableWarmRoast()) {
+        if (warmRoastSettingsData.isEnableWarmRoast()) {
             FMLLog.info("Starting WarmRoast...");
 
             try {
-                WarmRoast.main(warmRoastSettingsGson.getWarmRoastParams());
+                WarmRoast.main(warmRoastSettingsData.getWarmRoastParams());
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

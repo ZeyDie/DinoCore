@@ -1070,7 +1070,7 @@ public class Chunk {
         }
 
         //TODO ZoomCodeStart
-        final MultiThreadSettings.MultiThreadSettingsGson.MobsSettings.AABBForEntity aabbForEntity = MultiThreadSettings.getInstance().getMobsSettings().getAabbForEntity();
+        final MultiThreadSettings.MultiThreadSettingsData.MobsSettings.AABBForEntity aabbForEntity = MultiThreadSettings.getInstance().getSettings().getMobsSettings().getAabbForEntity();
 
         int size = par3List.size();
         //TODO ZoomCodeEnd
@@ -1152,7 +1152,7 @@ public class Chunk {
         }
 
         //TODO ZoomCodeStart
-        final MultiThreadSettings.MultiThreadSettingsGson.MobsSettings.AABBForEntity aabbForEntity = MultiThreadSettings.getInstance().getMobsSettings().getAabbForEntity();
+        final MultiThreadSettings.MultiThreadSettingsData.MobsSettings.AABBForEntity aabbForEntity = MultiThreadSettings.getInstance().getSettings().getMobsSettings().getAabbForEntity();
 
         int size = par3List.size();
         //TODO ZoomCodeEnd

@@ -71,7 +71,7 @@ public class PlayerInstance {
         if (this.playersInChunk.contains(par1EntityPlayerMP)) {
 
             //TODO ZoomCodeStart
-            if (CoreSettings.getInstance().isAsynchronousWarnings())
+            if (CoreSettings.getInstance().getSettings().isAsynchronousWarnings())
                 //TODO ZoomCodeEnd
 
                 throw new IllegalStateException("Failed to add player. " + par1EntityPlayerMP + " already is in chunk " + this.chunkLocation.chunkXPos + ", " + this.chunkLocation.chunkZPos);

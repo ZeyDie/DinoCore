@@ -154,9 +154,9 @@ public class DedicatedServer extends MinecraftServer implements IServer {
             //TODO ZoomCodeStart
             ioexception.printStackTrace();
 
-            final CoreSettings.CoreSettingsGson coreSettingsGson = this.coreSettings.getSettings();
+            final CoreSettings.CoreSettingsData coreSettingsData = this.coreSettings.getSettings();
 
-            if (coreSettingsGson.isUnbindPort()) {
+            if (coreSettingsData.isUnbindPort()) {
                 try {
                     FMLLog.info("Core will unbinding port %d for start again...", this.getServerPort());
                     Runtime.getRuntime().exec(String.format("fuser -k %d/tcp", this.getServerPort()));

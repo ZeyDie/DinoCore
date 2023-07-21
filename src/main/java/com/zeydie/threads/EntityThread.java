@@ -4,6 +4,6 @@ import com.zeydie.settings.optimization.MultiThreadSettings;
 
 public final class EntityThread extends AbstractThread {
     public EntityThread(final int id) {
-        super(id, MultiThreadSettings.getInstance().getMobsSettings(), true);
+        super(id, MultiThreadSettings.getInstance().getSettings().getMobsSettings(), true);
     }
 }

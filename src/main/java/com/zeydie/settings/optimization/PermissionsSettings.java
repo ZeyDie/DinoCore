@@ -7,10 +7,10 @@ import org.jetbrains.annotations.NotNull;
 
 public final class PermissionsSettings extends AbstractSettings {
     @NotNull
-    public PermissionsSettingsGson permissionsSettingsGson = new PermissionsSettingsGson();
+    public PermissionsSettings.PermissionsSettingsData permissionsSettingsData = new PermissionsSettingsData();
 
-    public static @NotNull PermissionsSettingsGson getInstance() {
-        return MinecraftServer.getServer().permissionsSettings.getSettings();
+    public static @NotNull PermissionsSettings getInstance() {
+        return MinecraftServer.getServer().permissionsSettings;
     }
 
     @Override
@@ -19,17 +19,17 @@ public final class PermissionsSettings extends AbstractSettings {
     }
 
     @Override
-    public @NotNull PermissionsSettingsGson getSettings() {
-        return this.permissionsSettingsGson;
+    public @NotNull PermissionsSettings.PermissionsSettingsData getSettings() {
+        return this.permissionsSettingsData;
     }
 
     @Override
     public void setSettings(@NotNull final Object object) {
-        this.permissionsSettingsGson = (PermissionsSettingsGson) object;
+        this.permissionsSettingsData = (PermissionsSettingsData) object;
     }
 
     @Data
-    public static final class PermissionsSettingsGson {
+    public static final class PermissionsSettingsData {
         private boolean opsOnlyFromConsole = true;
     }
 }

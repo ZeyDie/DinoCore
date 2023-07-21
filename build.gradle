@@ -79,7 +79,7 @@ jar {
             attributes(
                     'Implementation-Vendor': 'Cauldron fork by ZeyDie, DiverseLab',
                     'Implementation-Title': 'Cauldron fork by ZeyDie, DiverseLab',
-                    'Implementation-Version': 'Cauldron-9.11.1.965-R2.1' + project.version,
+                    'Implementation-Version': 'Cauldron-9.11.1.965-R2.1-' + project.version,
                     'Forge-Version': '9.11.1.965',
                     'Specification-Vendor': 'Bukkit Team, ZeyDie, Sa1ZeR_',
                     'Specification-Title': 'Bukkit',

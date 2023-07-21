@@ -33,9 +33,7 @@ public class OpCommand extends VanillaCommand {
         }
 
         //TODO ZoomCodeStart
-        final PermissionsSettings.PermissionsSettingsGson permissionsSettingsGson = PermissionsSettings.getInstance();
-
-        if (permissionsSettingsGson.isOpsOnlyFromConsole() && !(sender instanceof ConsoleCommandSender)) {
+        if (PermissionsSettings.getInstance().getSettings().isOpsOnlyFromConsole() && !(sender instanceof ConsoleCommandSender)) {
             sender.sendMessage(ChatColor.RED + "Ops command only for console!");
 
             return false;

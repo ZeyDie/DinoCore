@@ -195,7 +195,7 @@ public class NetLoginHandler extends NetHandler {
                 if (entityplayermp != null) {
 
                     //TODO ZeyCodeStart
-                    if (CoreSettings.getInstance().isEnableNetty()) {
+                    if (CoreSettings.getInstance().getSettings().isEnableNetty()) {
                         this.myTCPConnection.socketChannel
                                 .pipeline()
                                 .addAfter(
@@ -274,7 +274,7 @@ public class NetLoginHandler extends NetHandler {
             }
 
             //TODO ZeyCodeStart
-            if (CoreSettings.getInstance().isEnableNetty())
+            if (CoreSettings.getInstance().getSettings().isEnableNetty())
                 this.myTCPConnection.socketChannel
                         .pipeline()
                         .replace(

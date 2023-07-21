@@ -7,10 +7,10 @@ import org.jetbrains.annotations.NotNull;
 
 public final class AuthSettings extends AbstractSettings {
     @NotNull
-    public AuthSettingsGson authSettingsGson = new AuthSettingsGson();
+    public AuthSettings.AuthSettingsData authSettingsData = new AuthSettingsData();
 
-    public static @NotNull AuthSettingsGson getInstance() {
-        return MinecraftServer.getServer().authSettings.getSettings();
+    public static @NotNull AuthSettings getInstance() {
+        return MinecraftServer.getServer().authSettings;
     }
 
     @Override
@@ -19,17 +19,17 @@ public final class AuthSettings extends AbstractSettings {
     }
 
     @Override
-    public @NotNull AuthSettingsGson getSettings() {
-        return this.authSettingsGson;
+    public @NotNull AuthSettings.AuthSettingsData getSettings() {
+        return this.authSettingsData;
     }
 
     @Override
     public void setSettings(@NotNull final Object object) {
-        this.authSettingsGson = (AuthSettingsGson) object;
+        this.authSettingsData = (AuthSettingsData) object;
     }
 
     @Data
-    public static final class AuthSettingsGson {
+    public static final class AuthSettingsData {
         private boolean enable = true;
         @NotNull
         private String url = "http://session.minecraft.net";

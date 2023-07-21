@@ -47,7 +47,7 @@ public class ThreadLoginVerifier extends Thread {
         String s = (new BigInteger(Objects.requireNonNull(CryptManager.getServerIdHash(NetLoginHandler.getServerId(this.loginHandler), NetLoginHandler.getLoginMinecraftServer(this.loginHandler).getKeyPair().getPublic(), NetLoginHandler.getSharedKey(this.loginHandler))))).toString(16);
 
         //TODO ZoomCodeStart
-        if (AuthSettings.getInstance().isEnable())
+        if (AuthSettings.getInstance().getSettings().isEnable())
             return CustomLoginVerified.auth(this.loginHandler, s);
         //TODO ZoomCodeEnd
 

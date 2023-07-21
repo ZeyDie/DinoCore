@@ -2220,7 +2220,7 @@ public abstract class World implements IBlockAccess {
         // Cauldron end
 
         //TODO ZoomCodeStart
-        if (MultiThreadSettings.getInstance().getWorldSettings().isEnable())
+        if (MultiThreadSettings.getInstance().getSettings().getWorldSettings().isEnable())
             MinecraftServer.getServer().addWorldRunnable(new WeatherEffectsRunnable(this));
         else
             //TODO ZoomCodeEnd
