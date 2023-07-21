@@ -31,7 +31,8 @@ public final class CoreSettings extends AbstractSettings {
     @Data
     public static final class CoreSettingsData {
         private boolean debug = true;
-        private boolean enableNetty = true;
+        private boolean netty = true;
+        private boolean asynchronousPackets = true;
         private int tps = 25;
         private boolean autoSaveAllWorlds = false;
         private boolean reloadCommand = true;

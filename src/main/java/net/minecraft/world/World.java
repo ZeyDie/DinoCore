@@ -1,6 +1,7 @@
 package net.minecraft.world;
 
 import com.google.common.collect.ImmutableSetMultimap;
+import com.zeydie.settings.optimization.CoreSettings;
 import com.zeydie.settings.optimization.MultiThreadSettings;
 import com.zeydie.threads.runnables.WeatherEffectsRunnable;
 import cpw.mods.fml.common.FMLLog;
@@ -1727,9 +1728,13 @@ public abstract class World implements IBlockAccess {
      * Do NOT use this method to remove normal entities- use normal removeEntity
      */
     public void removePlayerEntityDangerously(Entity par1Entity) {
-        if (Thread.currentThread() != MinecraftServer.getServer().primaryThread) {
-            throw new IllegalStateException("Asynchronous entity remove!");    // Spigot
-        }
+        //TODO ZoomCodeStart
+        if (CoreSettings.getInstance().getSettings().isAsynchronousWarnings())
+            //TODO ZoomCodeEnd
+
+            if (Thread.currentThread() != MinecraftServer.getServer().primaryThread) {
+                throw new IllegalStateException("Asynchronous entity remove!");    // Spigot
+            }
         par1Entity.setDead();
 
         if (par1Entity instanceof EntityPlayer) {
@@ -1781,8 +1786,7 @@ public abstract class World implements IBlockAccess {
         for (int i2 = i; i2 < j; i2++) {
             for (int i3 = n; i3 < i1; i3++) {
                 if (blockExists(i2, 64, i3)) {
-                    for (int i4 = k - 1; i4 < m; i4++)
-                    {
+                    for (int i4 = k - 1; i4 < m; i4++) {
                         Block localBlock = Block.blocksList[getBlockId(i2, i4, i3)];
                         if (localBlock != null) {
                             localBlock.addCollisionBoxesToList(this, i2, i4, i3, paramAxisAlignedBB, this.collidingBoundingBoxes, paramEntity);
@@ -1793,13 +1797,12 @@ public abstract class World implements IBlockAccess {
         }
         double d = 0.25D;
         List localList = getEntitiesWithinAABBExcludingEntity(paramEntity, paramAxisAlignedBB.expand(d, d, d));
-        for (int i5 = 0; i5 < localList.size(); i5++)
-        {
-            AxisAlignedBB localAxisAlignedBB = ((Entity)localList.get(i5)).getBoundingBox();
+        for (int i5 = 0; i5 < localList.size(); i5++) {
+            AxisAlignedBB localAxisAlignedBB = ((Entity) localList.get(i5)).getBoundingBox();
             if ((localAxisAlignedBB != null) && (localAxisAlignedBB.intersectsWith(paramAxisAlignedBB))) {
                 this.collidingBoundingBoxes.add(localAxisAlignedBB);
             }
-            localAxisAlignedBB = paramEntity.getCollisionBox((Entity)localList.get(i5));
+            localAxisAlignedBB = paramEntity.getCollisionBox((Entity) localList.get(i5));
             if ((localAxisAlignedBB != null) && (localAxisAlignedBB.intersectsWith(paramAxisAlignedBB))) {
                 this.collidingBoundingBoxes.add(localAxisAlignedBB);
             }

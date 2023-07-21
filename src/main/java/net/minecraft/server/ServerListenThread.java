@@ -43,7 +43,7 @@ public class ServerListenThread extends Thread {
         this.myPort = par3;
 
         //TODO ZeyCodeStart
-        if (CoreSettings.getInstance().getSettings().isEnableNetty()) {
+        if (CoreSettings.getInstance().getSettings().isNetty()) {
             this.myServerSocket = null;
             this.myServerAddress = null;
 

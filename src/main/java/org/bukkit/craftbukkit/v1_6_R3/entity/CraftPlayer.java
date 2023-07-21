@@ -2,6 +2,7 @@ package org.bukkit.craftbukkit.v1_6_R3.entity;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.MapMaker;
+import com.zeydie.settings.optimization.CoreSettings;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.Validate;
 import org.bukkit.*;
@@ -201,7 +202,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     public void kickPlayer(String message) {
-        if (Thread.currentThread() != net.minecraft.server.MinecraftServer.getServer().primaryThread) throw new IllegalStateException("Asynchronous player kick!"); // Spigot
+        //TODO ZoomCodeStart
+        if (CoreSettings.getInstance().getSettings().isAsynchronousWarnings())
+            //TODO ZoomCodeEnd
+
+            if (Thread.currentThread() != net.minecraft.server.MinecraftServer.getServer().primaryThread)
+                throw new IllegalStateException("Asynchronous player kick!"); // Spigot
         if (getHandle().playerNetServerHandler == null) return;
 
         getHandle().playerNetServerHandler.kickPlayerFromServer(message == null ? "" : message);
@@ -935,7 +941,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     public void setFlySpeed(float value) {
         validateSpeed(value);
         net.minecraft.entity.player.EntityPlayerMP player = getHandle();
-        player.capabilities.setFlySpeed(Math.max( value, 0.0001f ) / 2f); // Spigot
+        player.capabilities.setFlySpeed(Math.max(value, 0.0001f) / 2f); // Spigot
         player.sendPlayerAbilities();
 
     }
@@ -943,7 +949,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     public void setWalkSpeed(float value) {
         validateSpeed(value);
         net.minecraft.entity.player.EntityPlayerMP player = getHandle();
-        player.capabilities.setPlayerWalkSpeed(Math.max( value, 0.0001f ) / 2f); // Spigot
+        player.capabilities.setPlayerWalkSpeed(Math.max(value, 0.0001f) / 2f); // Spigot
         player.sendPlayerAbilities();
     }
 
@@ -1061,8 +1067,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     // Spigot start
-    private final Player.Spigot spigot = new Player.Spigot()
-    {
+    private final Player.Spigot spigot = new Player.Spigot() {
         /* Cauldron - remove
         @Override
         public InetSocketAddress getRawAddress()
@@ -1072,58 +1077,49 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         */
 
         @Override
-        public void playEffect(Location location, Effect effect, int id, int data, float offsetX, float offsetY, float offsetZ, float speed, int particleCount, int radius)
-        {
-            Validate.notNull( location, "Location cannot be null" );
-            Validate.notNull( effect, "Effect cannot be null" );
-            Validate.notNull( location.getWorld(), "World cannot be null" );
+        public void playEffect(Location location, Effect effect, int id, int data, float offsetX, float offsetY, float offsetZ, float speed, int particleCount, int radius) {
+            Validate.notNull(location, "Location cannot be null");
+            Validate.notNull(effect, "Effect cannot be null");
+            Validate.notNull(location.getWorld(), "World cannot be null");
 
             net.minecraft.network.packet.Packet packet;
-            if ( effect.getType() != Effect.Type.PARTICLE )
-            {
+            if (effect.getType() != Effect.Type.PARTICLE) {
                 int packetData = effect.getId();
-                packet = new net.minecraft.network.packet.Packet61DoorChange( packetData, location.getBlockX(), location.getBlockY(), location.getBlockZ(), id, false );
-            } else
-            {
+                packet = new net.minecraft.network.packet.Packet61DoorChange(packetData, location.getBlockX(), location.getBlockY(), location.getBlockZ(), id, false);
+            } else {
                 StringBuilder particleFullName = new StringBuilder();
-                particleFullName.append( effect.getName() );
+                particleFullName.append(effect.getName());
 
-                if ( effect.getData() != null && ( effect.getData().equals( Material.class ) || effect.getData().equals( org.bukkit.material.MaterialData.class ) ) )
-                {
-                    particleFullName.append( '_' ).append( id );
+                if (effect.getData() != null && (effect.getData().equals(Material.class) || effect.getData().equals(org.bukkit.material.MaterialData.class))) {
+                    particleFullName.append('_').append(id);
                 }
 
-                if ( effect.getData() != null && effect.getData().equals( org.bukkit.material.MaterialData.class ) )
-                {
-                    particleFullName.append( '_' ).append( data );
+                if (effect.getData() != null && effect.getData().equals(org.bukkit.material.MaterialData.class)) {
+                    particleFullName.append('_').append(data);
                 }
-                packet = new net.minecraft.network.packet.Packet63WorldParticles( effect.getName(), (float) location.getX(), (float) location.getY(), (float) location.getZ(), offsetX, offsetY, offsetZ, particleCount, radius );
+                packet = new net.minecraft.network.packet.Packet63WorldParticles(effect.getName(), (float) location.getX(), (float) location.getY(), (float) location.getZ(), offsetX, offsetY, offsetZ, particleCount, radius);
             }
 
-            if ( !location.getWorld().equals( getWorld() ) )
-            {
+            if (!location.getWorld().equals(getWorld())) {
                 return;
             }
 
-            getHandle().playerNetServerHandler.sendPacketToPlayer( packet );
+            getHandle().playerNetServerHandler.sendPacketToPlayer(packet);
         }
 
         @Override
-        public boolean getCollidesWithEntities()
-        {
+        public boolean getCollidesWithEntities() {
             return getHandle().collidesWithEntities;
         }
 
         @Override
-        public void setCollidesWithEntities(boolean collides)
-        {
+        public void setCollidesWithEntities(boolean collides) {
             getHandle().collidesWithEntities = collides;
             getHandle().preventEntitySpawning = collides; // First boolean of Entity
         }
     };
 
-    public Player.Spigot spigot()
-    {
+    public Player.Spigot spigot() {
         return spigot;
     }
     // Spigot end

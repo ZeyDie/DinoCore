@@ -567,9 +567,13 @@ public class EntityTrackerEntry {
     }
 
     public void removePlayerFromTracker(EntityPlayerMP par1EntityPlayerMP) {
-        if (Thread.currentThread() != MinecraftServer.getServer().primaryThread) {
-            throw new IllegalStateException("Asynchronous player tracker clear!");    // Spigot
-        }
+        //TODO ZoomCodeStart
+        if (CoreSettings.getInstance().getSettings().isAsynchronousWarnings())
+            //TODO ZoomCodeEnd
+
+            if (Thread.currentThread() != MinecraftServer.getServer().primaryThread) {
+                throw new IllegalStateException("Asynchronous player tracker clear!");    // Spigot
+            }
 
         if (this.trackingPlayers.contains(par1EntityPlayerMP)) {
             this.trackingPlayers.remove(par1EntityPlayerMP);
