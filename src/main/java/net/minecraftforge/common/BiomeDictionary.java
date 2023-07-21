@@ -1,6 +1,5 @@
 package net.minecraftforge.common;
 
-import com.zeydie.settings.optimization.WorldsSettings;
 import cpw.mods.fml.common.FMLLog;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.event.terraingen.DeferredBiomeDecorator;
@@ -220,13 +219,9 @@ public class BiomeDictionary {
             BiomeDictionary.registerBiomeType(biome, SWAMP);
         }
 
-        //TODO ZeyCodeStart
-        if (WorldsSettings.getInstance().getSettings().isWaterBiomes())
-            //TODO ZeyCodeEnd
-
-            if (biome.minHeight <= -0.5F) {
-                BiomeDictionary.registerBiomeType(biome, WATER);
-            }
+        if (biome.minHeight <= -0.5F) {
+            BiomeDictionary.registerBiomeType(biome, WATER);
+        }
 
         if (biome.maxHeight >= 1.5F) {
             BiomeDictionary.registerBiomeType(biome, MOUNTAIN);
@@ -253,11 +248,7 @@ public class BiomeDictionary {
     }
 
     private static void registerVanillaBiomes() {
-        //TODO ZeyCodeStart
-        if (WorldsSettings.getInstance().getSettings().isWaterBiomes())
-            //TODO ZeyCodeEnd
-
-            registerBiomeType(ocean, WATER);
+        registerBiomeType(ocean, WATER);
         registerBiomeType(plains, PLAINS);
         registerBiomeType(desert, DESERT);
         registerBiomeType(extremeHills, MOUNTAIN);
@@ -265,17 +256,9 @@ public class BiomeDictionary {
         registerBiomeType(taiga, FOREST, FROZEN);
         registerBiomeType(taigaHills, FOREST, FROZEN);
         registerBiomeType(swampland, SWAMP);
-
-        //TODO ZeyCodeStart
-        if (WorldsSettings.getInstance().getSettings().isWaterBiomes()) {
-            //TODO ZeyCodeEnd
-            registerBiomeType(river, WATER);
-            registerBiomeType(frozenOcean, WATER, FROZEN);
-            registerBiomeType(frozenRiver, WATER, FROZEN);
-            //TODO ZeyCodeStart
-        }
-        //TODO ZeyCodeEnd
-
+        registerBiomeType(river, WATER);
+        registerBiomeType(frozenOcean, WATER, FROZEN);
+        registerBiomeType(frozenRiver, WATER, FROZEN);
         registerBiomeType(icePlains, FROZEN);
         registerBiomeType(iceMountains, FROZEN);
         registerBiomeType(beach, BEACH);

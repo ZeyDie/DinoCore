@@ -35,7 +35,7 @@ public class CraftBlock implements Block {
     private static final Biome[] BIOME_MAPPING = new Biome[net.minecraft.world.biome.BiomeGenBase.biomeList.length];
     private static final net.minecraft.world.biome.BiomeGenBase[] BIOMEBASE_MAPPING = new net.minecraft.world.biome.BiomeGenBase[net.minecraft.world.biome.BiomeGenBase.biomeList.length];
     // Cauldron end
-    
+
     public CraftBlock(CraftChunk chunk, int x, int y, int z) {
         this.x = x;
         this.y = y;
@@ -174,8 +174,8 @@ public class CraftBlock implements Block {
 
         for (BlockFace face : values) {
             if ((this.getX() + face.getModX() == block.getX()) &&
-                (this.getY() + face.getModY() == block.getY()) &&
-                (this.getZ() + face.getModZ() == block.getZ())
+                    (this.getY() + face.getModY() == block.getY()) &&
+                    (this.getZ() + face.getModZ() == block.getZ())
             ) {
                 return face;
             }
@@ -197,50 +197,48 @@ public class CraftBlock implements Block {
      */
     public static BlockFace notchToBlockFace(int notch) {
         switch (notch) {
-        case 0:
-            return BlockFace.DOWN;
-        case 1:
-            return BlockFace.UP;
-        case 2:
-            return BlockFace.NORTH;
-        case 3:
-            return BlockFace.SOUTH;
-        case 4:
-            return BlockFace.WEST;
-        case 5:
-            return BlockFace.EAST;
-        default:
-            return BlockFace.SELF;
+            case 0:
+                return BlockFace.DOWN;
+            case 1:
+                return BlockFace.UP;
+            case 2:
+                return BlockFace.NORTH;
+            case 3:
+                return BlockFace.SOUTH;
+            case 4:
+                return BlockFace.WEST;
+            case 5:
+                return BlockFace.EAST;
+            default:
+                return BlockFace.SELF;
         }
     }
 
     public static int blockFaceToNotch(BlockFace face) {
         switch (face) {
-        case DOWN:
-            return 0;
-        case UP:
-            return 1;
-        case NORTH:
-            return 2;
-        case SOUTH:
-            return 3;
-        case WEST:
-            return 4;
-        case EAST:
-            return 5;
-        default:
-            return 7; // Good as anything here, but technically invalid
+            case DOWN:
+                return 0;
+            case UP:
+                return 1;
+            case NORTH:
+                return 2;
+            case SOUTH:
+                return 3;
+            case WEST:
+                return 4;
+            case EAST:
+                return 5;
+            default:
+                return 7; // Good as anything here, but technically invalid
         }
     }
 
     public BlockState getState() {
         Material material = getType();
         // Cauldron start - if null, check for TE that implements IInventory
-        if (material == null)
-        {
-            TileEntity te = ((CraftWorld)this.getWorld()).getHandle().getBlockTileEntity(this.getX(), this.getY(), this.getZ());
-            if (te != null && te instanceof IInventory)
-            {
+        if (material == null) {
+            TileEntity te = ((CraftWorld) this.getWorld()).getHandle().getBlockTileEntity(this.getX(), this.getY(), this.getZ());
+            if (te != null && te instanceof IInventory) {
                 // In order to allow plugins to properly grab the container location, we must pass a class that extends CraftBlockState and implements InventoryHolder.
                 // Note: This will be returned when TileEntity.getOwner() is called
                 return new CraftCustomContainer(this);
@@ -250,48 +248,47 @@ public class CraftBlock implements Block {
         }
         // Cauldron end
         switch (material) {
-        case SIGN:
-        case SIGN_POST:
-        case WALL_SIGN:
-            return new CraftSign(this);
-        case CHEST:
-        case TRAPPED_CHEST:
-            return new CraftChest(this);
-        case BURNING_FURNACE:
-        case FURNACE:
-            return new CraftFurnace(this);
-        case DISPENSER:
-            return new CraftDispenser(this);
-        case DROPPER:
-            return new CraftDropper(this);
-        case HOPPER:
-            return new CraftHopper(this);
-        case MOB_SPAWNER:
-            return new CraftCreatureSpawner(this);
-        case NOTE_BLOCK:
-            return new CraftNoteBlock(this);
-        case JUKEBOX:
-            return new CraftJukebox(this);
-        case BREWING_STAND:
-            return new CraftBrewingStand(this);
-        case SKULL:
-            return new CraftSkull(this);
-        case COMMAND:
-            return new CraftCommandBlock(this);
-        case BEACON:
-            return new CraftBeacon(this);
-        default:
-            // Cauldron start
-            TileEntity te = ((CraftWorld)this.getWorld()).getHandle().getBlockTileEntity(this.getX(), this.getY(), this.getZ());
-            if (te != null && te instanceof IInventory)
-            {
-                // In order to allow plugins to properly grab the container location, we must pass a class that extends CraftBlockState and implements InventoryHolder.
-                // Note: This will be returned when TileEntity.getOwner() is called
-                return new CraftCustomContainer(this);
-            }
-            // pass default state
-            // Cauldron end
-            return new CraftBlockState(this);
+            case SIGN:
+            case SIGN_POST:
+            case WALL_SIGN:
+                return new CraftSign(this);
+            case CHEST:
+            case TRAPPED_CHEST:
+                return new CraftChest(this);
+            case BURNING_FURNACE:
+            case FURNACE:
+                return new CraftFurnace(this);
+            case DISPENSER:
+                return new CraftDispenser(this);
+            case DROPPER:
+                return new CraftDropper(this);
+            case HOPPER:
+                return new CraftHopper(this);
+            case MOB_SPAWNER:
+                return new CraftCreatureSpawner(this);
+            case NOTE_BLOCK:
+                return new CraftNoteBlock(this);
+            case JUKEBOX:
+                return new CraftJukebox(this);
+            case BREWING_STAND:
+                return new CraftBrewingStand(this);
+            case SKULL:
+                return new CraftSkull(this);
+            case COMMAND:
+                return new CraftCommandBlock(this);
+            case BEACON:
+                return new CraftBeacon(this);
+            default:
+                // Cauldron start
+                TileEntity te = ((CraftWorld) this.getWorld()).getHandle().getBlockTileEntity(this.getX(), this.getY(), this.getZ());
+                if (te != null && te instanceof IInventory) {
+                    // In order to allow plugins to properly grab the container location, we must pass a class that extends CraftBlockState and implements InventoryHolder.
+                    // Note: This will be returned when TileEntity.getOwner() is called
+                    return new CraftCustomContainer(this);
+                }
+                // pass default state
+                // Cauldron end
+                return new CraftBlockState(this);
         }
     }
 
@@ -367,12 +364,18 @@ public class CraftBlock implements Block {
         int power = 0;
         net.minecraft.block.BlockRedstoneWire wire = net.minecraft.block.Block.redstoneWire;
         net.minecraft.world.World world = chunk.getHandle().worldObj;
-        if ((face == BlockFace.DOWN || face == BlockFace.SELF) && world.getIndirectPowerOutput(x, y - 1, z, 0)) power = wire.getMaxCurrentStrength(world, x, y - 1, z, power);
-        if ((face == BlockFace.UP || face == BlockFace.SELF) && world.getIndirectPowerOutput(x, y + 1, z, 1)) power = wire.getMaxCurrentStrength(world, x, y + 1, z, power);
-        if ((face == BlockFace.EAST || face == BlockFace.SELF) && world.getIndirectPowerOutput(x + 1, y, z, 2)) power = wire.getMaxCurrentStrength(world, x + 1, y, z, power);
-        if ((face == BlockFace.WEST || face == BlockFace.SELF) && world.getIndirectPowerOutput(x - 1, y, z, 3)) power = wire.getMaxCurrentStrength(world, x - 1, y, z, power);
-        if ((face == BlockFace.NORTH || face == BlockFace.SELF) && world.getIndirectPowerOutput(x, y, z - 1, 4)) power = wire.getMaxCurrentStrength(world, x, y, z - 1, power);
-        if ((face == BlockFace.SOUTH || face == BlockFace.SELF) && world.getIndirectPowerOutput(x, y, z + 1, 5)) power = wire.getMaxCurrentStrength(world, x, y, z - 1, power);
+        if ((face == BlockFace.DOWN || face == BlockFace.SELF) && world.getIndirectPowerOutput(x, y - 1, z, 0))
+            power = wire.getMaxCurrentStrength(world, x, y - 1, z, power);
+        if ((face == BlockFace.UP || face == BlockFace.SELF) && world.getIndirectPowerOutput(x, y + 1, z, 1))
+            power = wire.getMaxCurrentStrength(world, x, y + 1, z, power);
+        if ((face == BlockFace.EAST || face == BlockFace.SELF) && world.getIndirectPowerOutput(x + 1, y, z, 2))
+            power = wire.getMaxCurrentStrength(world, x + 1, y, z, power);
+        if ((face == BlockFace.WEST || face == BlockFace.SELF) && world.getIndirectPowerOutput(x - 1, y, z, 3))
+            power = wire.getMaxCurrentStrength(world, x - 1, y, z, power);
+        if ((face == BlockFace.NORTH || face == BlockFace.SELF) && world.getIndirectPowerOutput(x, y, z - 1, 4))
+            power = wire.getMaxCurrentStrength(world, x, y, z - 1, power);
+        if ((face == BlockFace.SOUTH || face == BlockFace.SELF) && world.getIndirectPowerOutput(x, y, z + 1, 5))
+            power = wire.getMaxCurrentStrength(world, x, y, z - 1, power);
         return power > 0 ? power : (face == BlockFace.SELF ? isBlockIndirectlyPowered() : isBlockFaceIndirectlyPowered(face)) ? 15 : 0;
     }
 
@@ -514,14 +517,11 @@ public class CraftBlock implements Block {
 
     // Cauldron start - if cauldron.dump-materials is true, dump all materials with their corresponding id's
     public static void dumpMaterials() {
-        if (MinecraftServer.getServer().cauldronConfig.dumpMaterials.getValue())
-        {
+        if (MinecraftServer.getServer().cauldronConfig.dumpMaterials.getValue()) {
             FMLLog.info("Cauldron Dump Materials is ENABLED. Starting dump...");
-            for (int i = 0; i < 32000; i++)
-            {
+            for (int i = 0; i < 32000; i++) {
                 Material material = Material.getMaterial(i);
-                if (material != null)
-                {
+                if (material != null) {
                     FMLLog.info("Found material " + material + " with ID " + i);
                 }
             }
