@@ -43,5 +43,6 @@ public final class CoreSettings extends AbstractSettings {
         private boolean unbindPort = true;
         private boolean pvp1_12_2 = false;
         private boolean ignoreSendQueueByteLength = true;
+        private boolean addNBTBlockPlacePlayer = true;
     }
 }
