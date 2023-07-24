@@ -239,8 +239,8 @@ public abstract class BiomeGenBase {
         //TODO ZeyCodeStart
         if (this instanceof BiomeGenOcean || this instanceof BiomeGenRiver)
             if (!WorldsSettings.getInstance().getSettings().isWaterBiomes()) {
-                this.minHeight = 0;
-                this.maxHeight = 0;
+                this.minHeight = -0.1F;
+                this.maxHeight = 0.1F;
                 return this;
             }
         //TODO ZeyCodeEnd
