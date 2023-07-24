@@ -32,12 +32,12 @@ public final class CoreSettings extends AbstractSettings {
     public static final class CoreSettingsData {
         private boolean debug = true;
         private boolean netty = true;
-        private boolean asynchronousPackets = true;
-        private int tps = 25;
+        private boolean asynchronousPackets = false;
+        private int tps = 20;
         private boolean autoSaveAllWorlds = false;
         private boolean reloadCommand = true;
         private boolean executorServiceConnections = false;
-        private boolean shuffleConnections = true;
+        private boolean shuffleConnections = false;
         private boolean asynchronousWarnings = false;
         private boolean fastBukkit = true;
         private boolean unbindPort = true;
