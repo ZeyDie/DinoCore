@@ -1,6 +1,5 @@
 package com.zeydie.netty.server;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.zeydie.netty.handlers.DSLChannelInitializerHandler;
 import cpw.mods.fml.common.FMLLog;
 import io.netty.bootstrap.ServerBootstrap;
@@ -34,27 +33,17 @@ public final class NettyServerListenThread extends Thread {
         this.networkListenThread = networkListenThread;
         this.port = port;
 
-        channelFuture = new ServerBootstrap().group(
-                        new NioEventLoopGroup(
-                                0,
-                                new ThreadFactoryBuilder()
-                                        .setNameFormat("Netty Boss IO #%d")
-                                        .setDaemon(true)
-                                        .build()
-                        ),
-                        new NioEventLoopGroup(
-                                0,
-                                new ThreadFactoryBuilder()
-                                        .setNameFormat("Netty WorkGroup IO #%d")
-                                        .setDaemon(true)
-                                        .build()
-                        )
+        channelFuture = new ServerBootstrap()
+                .group(
+                        new NioEventLoopGroup(1),
+                        new NioEventLoopGroup(12)
                 )
                 .channel(NioServerSocketChannel.class)
                 .childHandler(new DSLChannelInitializerHandler(this))
                 .option(ChannelOption.SO_BACKLOG, 1024 * 20)
                 .childOption(ChannelOption.SO_KEEPALIVE, Boolean.TRUE)
                 .bind(this.port)
+                .sync()
                 .syncUninterruptibly();
     }
 
