@@ -1,6 +1,5 @@
 package net.minecraft.network;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.zeydie.legacy.core.network.TcpConnectionReader;
 import com.zeydie.legacy.core.network.TcpConnectionWriter;
 import com.zeydie.netty.common.CustomSocket;
@@ -11,6 +10,7 @@ import com.zeydie.netty.encoders.NettyPacketEncoder;
 import com.zeydie.netty.wrappers.NettyPacketWrapper;
 import com.zeydie.settings.optimization.CoreSettings;
 import com.zeydie.settings.optimization.NettySettings;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -27,6 +27,7 @@ import net.minecraft.network.packet.Packet252SharedKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.CryptManager;
 import org.jetbrains.annotations.NotNull;
+import org.spigotmc.SpigotConfig;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -53,7 +54,7 @@ public class TcpConnection
         implements INetworkManager {
 
     //TODO ZoomCodeStart
-    private static final ExecutorService service = Executors.newCachedThreadPool(new ThreadFactoryBuilder().setNameFormat("%d read-write thread").setPriority(Thread.MAX_PRIORITY).build());
+    private final ExecutorService service = Executors.newFixedThreadPool(SpigotConfig.nettyThreads);
     //TODO ZoomCodeEnd
 
     public static AtomicInteger field_74471_a = new AtomicInteger();
@@ -190,6 +191,7 @@ public class TcpConnection
             final NetHandler netHandler,
             final PrivateKey privateKey
     ) {
+        this.isRunning = true;
         this.sendQueueLock = null;
         this.tcpConLogAgent = null;
 
@@ -205,6 +207,13 @@ public class TcpConnection
         this.dataPackets = Collections.synchronizedList(new ArrayList());
         this.fastDataPackets = Collections.synchronizedList(new ArrayList());
 
+        if (!NettySettings.getInstance().getSettings().isAsynchronousPackets()) {
+            if (NettySettings.getInstance().getSettings().isDebug())
+                FMLLog.info("Creating executors....");
+
+            this.service.execute(new TcpConnectionWriter(this));
+        }
+
         socketChannel.pipeline()
                 .addLast("timeout", new ReadTimeoutHandler(30))
                 .addLast("wrapper", new NettyPacketWrapper())
@@ -216,6 +225,9 @@ public class TcpConnection
     @Override
     public void channelRead(final ChannelHandlerContext channelHandlerContext, final Object o) {
         final Packet packet = (Packet) o;
+
+        if (NettySettings.getInstance().getSettings().isDebug())
+            FMLLog.info("channelRead " + packet);
 
         if (NettySettings.getInstance().getSettings().isAsynchronousPackets() || (packet.canProcessAsync() && this.theNetHandler.canProcessPacketsAsync())) {
             this.field_74490_x = 0;
@@ -267,8 +279,8 @@ public class TcpConnection
 
         //TODO ZoomCodeStart
         if (CoreSettings.getInstance().getSettings().isExecutorServiceConnections()) {
-            service.execute(new TcpConnectionReader(this));
-            service.execute(new TcpConnectionWriter(this));
+            this.service.execute(new TcpConnectionReader(this));
+            this.service.execute(new TcpConnectionWriter(this));
 
             return;
         }
@@ -314,7 +326,13 @@ public class TcpConnection
     public void addToSendQueue(Packet par1Packet) {
         //TODO ZoomCodeStart
         if (NettySettings.getInstance().getSettings().isEnable()) {
-            this.socketChannel.writeAndFlush(par1Packet);
+            if (NettySettings.getInstance().getSettings().isDebug())
+                FMLLog.info("addToSendQueue " + par1Packet);
+
+            if (NettySettings.getInstance().getSettings().isAsynchronousPackets())
+                this.socketChannel.writeAndFlush(par1Packet);
+            else this.dataPackets.add(par1Packet);
+
             return;
         }
         //TODO ZoomCodeEnd
@@ -333,7 +351,13 @@ public class TcpConnection
     public final void addToSendQueueFast(final Packet packet) {
         //TODO ZoomCodeStart
         if (NettySettings.getInstance().getSettings().isEnable()) {
-            this.socketChannel.writeAndFlush(packet);
+            if (NettySettings.getInstance().getSettings().isDebug())
+                FMLLog.info("addToSendQueueFast " + packet);
+
+            if (NettySettings.getInstance().getSettings().isAsynchronousPackets())
+                this.socketChannel.writeAndFlush(packet);
+            else this.fastDataPackets.add(packet);
+
             return;
         }
         //TODO ZoomCodeEnd
@@ -353,6 +377,19 @@ public class TcpConnection
      */
     //TODO ZoomCodeReplace private on public
     public boolean sendPacket() {
+        //TODO ZeyCodeStart
+        if (NettySettings.getInstance().getSettings().isEnable()) {
+            for (final Packet packet : this.fastDataPackets)
+                this.socketChannel.write(packet);
+            for (final Packet packet : this.dataPackets)
+                this.socketChannel.write(packet);
+
+            this.socketChannel.flush();
+
+            return true;
+        }
+        //TODO ZeyCodeEnd
+
         boolean flag = false;
 
         try {
@@ -529,6 +566,10 @@ public class TcpConnection
      */
     //TODO ZoomCodeReplace private on public
     public boolean readPacket() {
+        //TODO ZoomCodeStart
+        if (NettySettings.getInstance().getSettings().isEnable()) return true;
+        //TODO ZoomCodeEnd
+
         boolean flag = false;
 
         try {
@@ -661,7 +702,8 @@ public class TcpConnection
             this.field_74490_x = 0;
         }
 
-        int i = 1000;
+        //TODO ZeyCodeClear
+        /*int i = 1000;
 
         while (i-- >= 0) {
             Packet packet = this.readPackets.poll();
@@ -669,7 +711,19 @@ public class TcpConnection
             if (packet != null && !this.theNetHandler.isConnectionClosed()) {
                 packet.processPacket(this.theNetHandler);
             }
+        }*/
+
+        //TODO ZeyCodeStart
+        for (int i = this.readPackets.size(); i > 0; i--) {
+            final Packet packet = this.readPackets.poll();
+
+            if (NettySettings.getInstance().getSettings().isDebug())
+                FMLLog.info("processReadPackets " + packet);
+
+            if (packet != null && !this.theNetHandler.isConnectionClosed())
+                packet.processPacket(this.theNetHandler);
         }
+        //TODO ZeyCodeEnd
 
         this.wakeThreads();
 
