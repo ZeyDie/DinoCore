@@ -30,6 +30,7 @@ public final class AuthSettings extends AbstractSettings {
 
     @Data
     public static final class AuthSettingsData {
+        private boolean debug;
         private boolean enable = true;
         @NotNull
         private String url = "http://session.minecraft.net";
@@ -41,7 +42,6 @@ public final class AuthSettings extends AbstractSettings {
         private String query = "user=%s&serverId=%s";
         @NotNull
         private String success = "YES";
-        private boolean debug = false;
 
         @NotNull
         public String getAuthRequest() {

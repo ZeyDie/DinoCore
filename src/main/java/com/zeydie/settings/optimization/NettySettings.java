@@ -32,6 +32,6 @@ public final class NettySettings extends AbstractSettings {
     public static final class NettySettingsData {
         private boolean debug;
         private boolean enable = true;
-        private boolean asynchronousPackets = false;
+        private boolean asynchronousPackets;
     }
 }

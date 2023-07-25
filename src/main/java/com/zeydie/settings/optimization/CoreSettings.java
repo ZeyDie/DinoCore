@@ -30,7 +30,7 @@ public final class CoreSettings extends AbstractSettings {
 
     @Data
     public static final class CoreSettingsData {
-        private boolean debug = true;
+        private boolean debug;
         private int tps = 20;
         private boolean autoSaveAllWorlds = false;
         private boolean reloadCommand = true;
