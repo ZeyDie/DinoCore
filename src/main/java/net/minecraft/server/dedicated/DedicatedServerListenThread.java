@@ -2,6 +2,7 @@ package net.minecraft.server.dedicated;
 
 import com.zeydie.netty.server.NettyServerListenThread;
 import com.zeydie.settings.optimization.CoreSettings;
+import com.zeydie.settings.optimization.NettySettings;
 import mcp.mobius.mobiuscore.profiler.ProfilerSection;
 import net.minecraft.network.NetworkListenThread;
 import net.minecraft.server.MinecraftServer;
@@ -28,7 +29,7 @@ public class DedicatedServerListenThread extends NetworkListenThread {
         //TODO ZeyCodeStart
         this.nettyServerListenThread = new NettyServerListenThread(this, par3);
 
-        if (CoreSettings.getInstance().getSettings().isNetty())
+        if (NettySettings.getInstance().getSettings().isEnable())
             this.nettyServerListenThread.start();
         else
             //TODO ZeyCodeEnd
@@ -41,9 +42,8 @@ public class DedicatedServerListenThread extends NetworkListenThread {
         super.stopListening();
 
         //TODO ZeyCodeStart
-        if (CoreSettings.getInstance().getSettings().isNetty()) {
+        if (NettySettings.getInstance().getSettings().isEnable()) {
             this.nettyServerListenThread.interrupt();
-
             return;
         }
         //TODO ZeyCodeEnd
@@ -60,9 +60,8 @@ public class DedicatedServerListenThread extends NetworkListenThread {
         // Cauldron start - mobius hooks
         ProfilerSection.NETWORK_TICK.start();
 
-
         //TODO ZeyCodeStart
-        if (CoreSettings.getInstance().getSettings().isNetty())
+        if (NettySettings.getInstance().getSettings().isEnable())
             this.nettyServerListenThread.processPendingConnections();
         else
             //TODO ZeyCodeEnd
@@ -79,7 +78,7 @@ public class DedicatedServerListenThread extends NetworkListenThread {
 
     public void func_71761_a(InetAddress par1InetAddress) {
         //TODO ZeyCodeStart
-        if (CoreSettings.getInstance().getSettings().isNetty())
+        if (NettySettings.getInstance().getSettings().isEnable())
             this.nettyServerListenThread.func_71769_a(par1InetAddress);
         else
             //TODO ZeyCodeEnd

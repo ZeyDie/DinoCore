@@ -192,7 +192,8 @@ public class SpigotConfig {
             throw new IllegalArgumentException("May only have one listener!");
         }
 
-        nettyThreads = getInt("settings.netty-threads", 3);
+        //TODO ZeyCodeReplace 3 on 8
+        nettyThreads = getInt("settings.netty-threads", 8);
     }
 
     public static List<String> bungeeAddresses = Arrays.asList(new String[]
@@ -203,7 +204,9 @@ public class SpigotConfig {
 
     private static void bungee() {
         bungeeAddresses = getList("settings.bungeecord-addresses", bungeeAddresses);
-        bungee = getBoolean("settings.bungeecord", true);
+
+        //TODO ZeyCodeReplace true on false
+        bungee = getBoolean("settings.bungeecord", false);
     }
 
     public static List<String> spamExclusions;

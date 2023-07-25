@@ -251,6 +251,7 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
     public final CoreSettings coreSettings = new CoreSettings();
     public final MultiThreadSettings multiThreadSettings = new MultiThreadSettings();
     public final PermissionsSettings permissionsSettings = new PermissionsSettings();
+    public final NettySettings nettySettings = new NettySettings();
     public final WorldsSettings worldsSettings = new WorldsSettings();
     public final WarmRoastSettings warmRoastSettings = new WarmRoastSettings();
 
@@ -267,6 +268,7 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
         this.coreSettings.reload();
         this.multiThreadSettings.reload();
         this.permissionsSettings.reload();
+        this.nettySettings.reload();
         this.worldsSettings.reload();
         this.warmRoastSettings.reload();
 

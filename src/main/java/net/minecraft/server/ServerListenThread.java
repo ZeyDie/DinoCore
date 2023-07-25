@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 import com.zeydie.settings.optimization.CoreSettings;
+import com.zeydie.settings.optimization.NettySettings;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -43,7 +44,7 @@ public class ServerListenThread extends Thread {
         this.myPort = par3;
 
         //TODO ZeyCodeStart
-        if (CoreSettings.getInstance().getSettings().isNetty()) {
+        if (NettySettings.getInstance().getSettings().isEnable()) {
             this.myServerSocket = null;
             this.myServerAddress = null;
 

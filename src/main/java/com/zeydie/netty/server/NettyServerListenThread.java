@@ -10,6 +10,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import net.minecraft.network.NetLoginHandler;
 import net.minecraft.network.NetworkListenThread;
 import org.jetbrains.annotations.NotNull;
+import org.spigotmc.SpigotConfig;
 
 import java.net.InetAddress;
 import java.util.*;
@@ -36,7 +37,7 @@ public final class NettyServerListenThread extends Thread {
         channelFuture = new ServerBootstrap()
                 .group(
                         new NioEventLoopGroup(1),
-                        new NioEventLoopGroup(12)
+                        new NioEventLoopGroup(SpigotConfig.nettyThreads)
                 )
                 .channel(NioServerSocketChannel.class)
                 .childHandler(new DSLChannelInitializerHandler(this))

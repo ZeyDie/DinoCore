@@ -4,6 +4,7 @@ import com.zeydie.netty.handlers.NettyPacketInboundHandler;
 import com.zeydie.netty.handlers.NettyPacketOutboundHandler;
 import com.zeydie.netty.wrappers.NettyPacketWrapperLegacy;
 import com.zeydie.settings.optimization.CoreSettings;
+import com.zeydie.settings.optimization.NettySettings;
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 import io.netty.channel.socket.SocketChannel;
 import net.minecraft.entity.player.EntityPlayer;
@@ -195,7 +196,7 @@ public class NetLoginHandler extends NetHandler {
                 if (entityplayermp != null) {
 
                     //TODO ZeyCodeStart
-                    if (CoreSettings.getInstance().getSettings().isNetty()) {
+                    if (NettySettings.getInstance().getSettings().isEnable()) {
                         this.myTCPConnection.socketChannel
                                 .pipeline()
                                 .addAfter(
@@ -274,7 +275,7 @@ public class NetLoginHandler extends NetHandler {
             }
 
             //TODO ZeyCodeStart
-            if (CoreSettings.getInstance().getSettings().isNetty())
+            if (NettySettings.getInstance().getSettings().isEnable())
                 this.myTCPConnection.socketChannel
                         .pipeline()
                         .replace(

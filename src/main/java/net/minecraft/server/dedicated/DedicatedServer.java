@@ -158,10 +158,12 @@ public class DedicatedServer extends MinecraftServer implements IServer {
 
             if (coreSettingsData.isUnbindPort()) {
                 try {
-                    FMLLog.info("Core will unbinding port %d for start again...", this.getServerPort());
-                    Runtime.getRuntime().exec(String.format("fuser -k %d/tcp", this.getServerPort()));
+                    final int serverPort = this.getServerPort();
 
-                    this.networkThread = new DedicatedServerListenThread(this, inetaddress, this.getServerPort());
+                    FMLLog.info("Core will unbinding port %d for start again...", serverPort);
+                    Runtime.getRuntime().exec(String.format("fuser -k %d/tcp", serverPort));
+
+                    this.networkThread = new DedicatedServerListenThread(this, inetaddress, serverPort);
                 } catch (IOException exception) {
                     exception.printStackTrace();
 

@@ -10,6 +10,7 @@ import com.zeydie.netty.encoders.NettyEncryptingEncoder;
 import com.zeydie.netty.encoders.NettyPacketEncoder;
 import com.zeydie.netty.wrappers.NettyPacketWrapper;
 import com.zeydie.settings.optimization.CoreSettings;
+import com.zeydie.settings.optimization.NettySettings;
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -216,7 +217,7 @@ public class TcpConnection
     public void channelRead(final ChannelHandlerContext channelHandlerContext, final Object o) {
         final Packet packet = (Packet) o;
 
-        if (CoreSettings.getInstance().getSettings().isAsynchronousPackets() || (packet.canProcessAsync() && this.theNetHandler.canProcessPacketsAsync())) {
+        if (NettySettings.getInstance().getSettings().isAsynchronousPackets() || (packet.canProcessAsync() && this.theNetHandler.canProcessPacketsAsync())) {
             this.field_74490_x = 0;
 
             packet.processPacket(this.theNetHandler);
@@ -286,7 +287,7 @@ public class TcpConnection
     @SideOnly(Side.CLIENT)
     public void closeConnections() {
         //TODO ZoomCodeStart
-        if (CoreSettings.getInstance().getSettings().isNetty()) return;
+        if (NettySettings.getInstance().getSettings().isEnable()) return;
         //TODO ZoomCodeEnd
 
         this.wakeThreads();
@@ -312,7 +313,7 @@ public class TcpConnection
      */
     public void addToSendQueue(Packet par1Packet) {
         //TODO ZoomCodeStart
-        if (CoreSettings.getInstance().getSettings().isNetty()) {
+        if (NettySettings.getInstance().getSettings().isEnable()) {
             this.socketChannel.writeAndFlush(par1Packet);
             return;
         }
@@ -331,7 +332,7 @@ public class TcpConnection
     //TODO ZoomCodeStart
     public final void addToSendQueueFast(final Packet packet) {
         //TODO ZoomCodeStart
-        if (CoreSettings.getInstance().getSettings().isNetty()) {
+        if (NettySettings.getInstance().getSettings().isEnable()) {
             this.socketChannel.writeAndFlush(packet);
             return;
         }
@@ -508,7 +509,7 @@ public class TcpConnection
     public void wakeThreads() {
 
         //TODO ZoomCodeStart
-        if (CoreSettings.getInstance().getSettings().isNetty()) return;
+        if (NettySettings.getInstance().getSettings().isEnable()) return;
         if (CoreSettings.getInstance().getSettings().isExecutorServiceConnections())
             return;
         //TODO ZoomCodeEnd
@@ -586,7 +587,7 @@ public class TcpConnection
      */
     public void networkShutdown(String par1Str, Object... par2ArrayOfObj) {
         //TODO ZeyCodeStart
-        if (CoreSettings.getInstance().getSettings().isNetty()) {
+        if (NettySettings.getInstance().getSettings().isEnable()) {
             this.terminationReason = par1Str;
             this.shutdownDescription = par2ArrayOfObj;
             this.socketChannel.close();
@@ -673,7 +674,7 @@ public class TcpConnection
         this.wakeThreads();
 
         //TODO ZeyCodeStart
-        if (CoreSettings.getInstance().getSettings().isNetty())
+        if (NettySettings.getInstance().getSettings().isEnable())
             this.isTerminating = (this.socketChannel == null || !this.socketChannel.isActive());
         //TODO ZeyCodeEnd
 
@@ -695,7 +696,7 @@ public class TcpConnection
      */
     public void serverShutdown() {
         //TODO ZeyCodeStart
-        if (CoreSettings.getInstance().getSettings().isNetty())
+        if (NettySettings.getInstance().getSettings().isEnable())
             this.socketChannel.close();
         else
             //TODO ZeyCodeEnd
@@ -717,7 +718,7 @@ public class TcpConnection
     //TODO ZeyCodeModified from private to public
     public void decryptInputStream() throws IOException {
         //TODO ZoomCodeStart
-        if (CoreSettings.getInstance().getSettings().isNetty()) {
+        if (NettySettings.getInstance().getSettings().isEnable()) {
             this.socketChannel
                     .pipeline()
                     .addFirst("decrypt",
@@ -743,7 +744,7 @@ public class TcpConnection
     //TODO ZeyCodeModified from private to public
     public void encryptOuputStream() throws IOException {
         //TODO ZoomCodeStart
-        if (CoreSettings.getInstance().getSettings().isNetty()) {
+        if (NettySettings.getInstance().getSettings().isEnable()) {
             this.socketChannel
                     .pipeline()
                     .addFirst("encrypt",
