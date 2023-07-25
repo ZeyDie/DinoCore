@@ -33,5 +33,8 @@ public final class NettySettings extends AbstractSettings {
         private boolean debug;
         private boolean enable = true;
         private boolean asynchronousPackets;
+        private int backlogKB = 1024;
+        private int backlogSize = 20;
+        private boolean keepAlive = true;
     }
 }

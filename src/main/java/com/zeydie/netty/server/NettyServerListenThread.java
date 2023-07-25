@@ -1,6 +1,7 @@
 package com.zeydie.netty.server;
 
 import com.zeydie.netty.handlers.DSLChannelInitializerHandler;
+import com.zeydie.settings.optimization.NettySettings;
 import cpw.mods.fml.common.FMLLog;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -23,7 +24,7 @@ public final class NettyServerListenThread extends Thread {
     private final Map<InetAddress, Long> recentConnections = new HashMap<>();
     private final List<NetLoginHandler> pendingConnections = Collections.synchronizedList(new ArrayList<NetLoginHandler>());
 
-    private static ChannelFuture channelFuture;
+    private final ChannelFuture channelFuture;
 
     public NettyServerListenThread(
             @NotNull final NetworkListenThread networkListenThread,
@@ -34,22 +35,23 @@ public final class NettyServerListenThread extends Thread {
         this.networkListenThread = networkListenThread;
         this.port = port;
 
-        channelFuture = new ServerBootstrap()
+        final NettySettings.NettySettingsData nettySettingsData = NettySettings.getInstance().getSettings();
+
+        this.channelFuture = new ServerBootstrap()
                 .group(
                         new NioEventLoopGroup(1),
                         new NioEventLoopGroup(SpigotConfig.nettyThreads)
                 )
                 .channel(NioServerSocketChannel.class)
                 .childHandler(new DSLChannelInitializerHandler(this))
-                .option(ChannelOption.SO_BACKLOG, 1024 * 20)
-                .childOption(ChannelOption.SO_KEEPALIVE, Boolean.TRUE)
-                .bind(this.port)
-                .sync()
-                .syncUninterruptibly();
+                .option(ChannelOption.SO_BACKLOG, nettySettingsData.getBacklogKB() * nettySettingsData.getBacklogSize())
+                .childOption(ChannelOption.SO_KEEPALIVE, nettySettingsData.isKeepAlive())
+                .bind(this.port);
     }
 
     @Override
     public void run() {
+        this.channelFuture.syncUninterruptibly();
     }
 
     public void processPendingConnections() {
