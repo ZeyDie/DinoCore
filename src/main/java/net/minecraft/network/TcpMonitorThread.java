@@ -1,5 +1,6 @@
 package net.minecraft.network;
 
+@Deprecated
 class TcpMonitorThread extends Thread
 {
     final TcpConnection theTcpConnection;

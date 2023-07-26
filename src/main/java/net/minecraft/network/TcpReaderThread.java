@@ -1,5 +1,6 @@
 package net.minecraft.network;
 
+@Deprecated
 public class TcpReaderThread extends Thread {
     final TcpConnection theTcpConnection;
 

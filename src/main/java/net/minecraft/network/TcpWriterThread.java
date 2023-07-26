@@ -2,6 +2,7 @@ package net.minecraft.network;
 
 import java.io.IOException;
 
+@Deprecated
 public class TcpWriterThread extends Thread {
     final TcpConnection theTcpConnection;
 
