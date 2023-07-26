@@ -1,6 +1,5 @@
 package net.minecraft.network;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.zeydie.legacy.core.network.TcpConnectionReader;
 import com.zeydie.legacy.core.network.TcpConnectionWriter;
 import com.zeydie.netty.common.CustomSocket;
@@ -27,6 +26,7 @@ import net.minecraft.network.packet.Packet252SharedKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.CryptManager;
 import org.jetbrains.annotations.NotNull;
+import org.spigotmc.SpigotConfig;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -53,7 +53,7 @@ public class TcpConnection
         implements INetworkManager {
 
     //TODO ZoomCodeStart
-    private static final ExecutorService service = Executors.newCachedThreadPool(new ThreadFactoryBuilder().setNameFormat("%d read-write thread").setPriority(Thread.MAX_PRIORITY).build());
+    private final ExecutorService service = Executors.newFixedThreadPool(SpigotConfig.nettyThreads);
     //TODO ZoomCodeEnd
 
     public static AtomicInteger field_74471_a = new AtomicInteger();
@@ -267,8 +267,8 @@ public class TcpConnection
 
         //TODO ZoomCodeStart
         if (CoreSettings.getInstance().getSettings().isExecutorServiceConnections()) {
-            service.execute(new TcpConnectionReader(this));
-            service.execute(new TcpConnectionWriter(this));
+            this.service.execute(new TcpConnectionReader(this));
+            this.service.execute(new TcpConnectionWriter(this));
 
             return;
         }
