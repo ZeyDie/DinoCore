@@ -667,7 +667,8 @@ public class TcpConnection
             this.field_74490_x = 0;
         }
 
-        int i = 1000;
+        //TODO ZeyCodeClear
+        /*int i = 1000;
 
         while (i-- >= 0) {
             Packet packet = this.readPackets.poll();
@@ -675,7 +676,15 @@ public class TcpConnection
             if (packet != null && !this.theNetHandler.isConnectionClosed()) {
                 packet.processPacket(this.theNetHandler);
             }
+        }*/
+        //TODO ZeyCodeStart
+        for (int i = this.readPackets.size(); i >= 0; i--) {
+            final Packet packet = this.readPackets.poll();
+
+            if (packet != null && !this.theNetHandler.isConnectionClosed())
+                packet.processPacket(this.theNetHandler);
         }
+        //TODO ZeyCodeEnd
 
         this.wakeThreads();
 
