@@ -11,22 +11,25 @@ import java.util.Map.Entry;
 
 public abstract class BaseAttributeMap
 {
-    protected final Map attributes = new HashMap();
-    protected final Map attributesByName = new LowerStringMap();
+    //TODO ZeyCodeReplace Map on Map<Attribute, AttributeInstance>
+    protected final Map<Attribute, AttributeInstance> attributes = new HashMap<>();
+    //TODO ZeyCodeReplace Map on Map<String, AttributeInstance>
+    protected final Map<String, AttributeInstance> attributesByName = new LowerStringMap();
 
     public AttributeInstance getAttributeInstance(Attribute par1Attribute)
     {
-        return (AttributeInstance)this.attributes.get(par1Attribute);
+        return this.attributes.get(par1Attribute);
     }
 
     public AttributeInstance getAttributeInstanceByName(String par1Str)
     {
-        return (AttributeInstance)this.attributesByName.get(par1Str);
+        return this.attributesByName.get(par1Str);
     }
 
     public abstract AttributeInstance func_111150_b(Attribute attribute);
 
-    public Collection getAllAttributes()
+    //TODO ZeyCodeReplace Collection on Collection<AttributeInstance>
+    public Collection<AttributeInstance> getAllAttributes()
     {
         return this.attributesByName.values();
     }

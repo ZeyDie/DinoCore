@@ -14,7 +14,8 @@ public interface AttributeInstance
 
     void setAttribute(double d0);
 
-    Collection func_111122_c();
+    //TODO ZeyCodeReplace Collection on Collection<AttributeModifier>
+    Collection<AttributeModifier> func_111122_c();
 
     /**
      * Returns attribute modifier, if any, by the given UUID
