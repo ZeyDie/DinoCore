@@ -7,8 +7,11 @@ for /r %%f in (asm-debug-all-5.2.jar) do (
 			if exist %%r (
 				echo %%r
 				xcopy /s /y "%%f" "%%r"
-				exit
+				break
 			)
 		)
 	)
 )
+
+echo Patched
+pause

@@ -46,7 +46,7 @@ esac
 if $cygwin ; then
     [ -n "$JAVA_HOME" ] && JAVA_HOME=`cygpath --unix "$JAVA_HOME"`
 fi
-JAVA_HOME="C:/Program Files/Java/jdk1.8.0_202"
+
 # Attempt to set APP_HOME
 # Resolve links: $0 may be a link
 PRG="$0"

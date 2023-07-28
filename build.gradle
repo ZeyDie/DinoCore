@@ -23,7 +23,6 @@ repositories {
     }
 }
 
-apply plugin: 'java'
 apply plugin: 'forge'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 sourceCompatibility = targetCompatibility = '1.8'
@@ -48,7 +47,6 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compile group: 'org.projectlombok', name: 'lombok', version: '1.18.26'
-    //annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.26'
 
     // https://mvnrepository.com/artifact/org.jetbrains/annotations
     compile group: 'org.jetbrains', name: 'annotations', version: '24.0.0'
