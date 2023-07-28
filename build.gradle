@@ -1,10 +1,5 @@
 import joptsimple.internal.Strings
 
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
-import java.nio.file.StandardCopyOption
-
 buildscript {
     repositories {
         mavenCentral()
@@ -28,9 +23,10 @@ repositories {
     }
 }
 
+apply plugin: 'java'
 apply plugin: 'forge'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-sourceCompatibility = targetCompatibility = '1.7'
+sourceCompatibility = targetCompatibility = '1.8'
 
 compileJava {
     sourceCompatibility = targetCompatibility = '1.7'
