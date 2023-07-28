@@ -1085,13 +1085,30 @@ public class WorldServer extends World {
                 par2IProgressUpdate.displayProgressMessage("Saving level");
             }
 
+            //TODO ZeyCodeStart
+            this.timings.syncLevelSave.startTiming();
+            //TODO ZeyCodeEnd
+
             this.saveLevel();
+
+            //TODO ZeyCodeStart
+            this.timings.syncLevelSave.startTiming();
+            //TODO ZeyCodeEnd
 
             if (par2IProgressUpdate != null) {
                 par2IProgressUpdate.resetProgresAndWorkingMessage("Saving chunks");
             }
 
+            //TODO ZeyCodeStart
+            this.timings.syncChunkSave.startTiming();
+            //TODO ZeyCodeEnd
+
             this.chunkProvider.saveChunks(par1, par2IProgressUpdate);
+
+            //TODO ZeyCodeStart
+            this.timings.syncChunkSave.stopTiming();
+            //TODO ZeyCodeEnd
+
             MinecraftForge.EVENT_BUS.post(new WorldEvent.Save(this));
         }
     }

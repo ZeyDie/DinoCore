@@ -22,6 +22,11 @@ public class SpigotTimings {
     public static final CustomTimingsHandler serverCommandTimer = new CustomTimingsHandler("Server Command");
     public static final CustomTimingsHandler worldSaveTimer = new CustomTimingsHandler("World Save");
 
+    //TODO ZeyCodeStart
+    public static final CustomTimingsHandler playersDataSaveTimer = new CustomTimingsHandler("Players Data Save");
+    public static final CustomTimingsHandler worldDataSaveTimer = new CustomTimingsHandler("World Data Save");
+    //TODO ZeyCodeEnd
+
     public static final CustomTimingsHandler entityMoveTimer = new CustomTimingsHandler("** entityMove");
     public static final CustomTimingsHandler tickEntityTimer = new CustomTimingsHandler("** tickEntity");
     public static final CustomTimingsHandler activatedEntityTimer = new CustomTimingsHandler("** activatedTickEntity");
@@ -139,6 +144,11 @@ public class SpigotTimings {
         public final CustomTimingsHandler syncChunkLoadTileTicksTimer;
         public final CustomTimingsHandler syncChunkLoadPostTimer;
 
+        //TODO ZeyCodeStart
+        public final CustomTimingsHandler syncChunkSave;
+        public final CustomTimingsHandler syncLevelSave;
+        //TODO ZeyCodeEnd
+
         public WorldTimingsHandler(final World server) {
             final String name = server.worldInfo.getWorldName() +" - ";
 
@@ -162,6 +172,11 @@ public class SpigotTimings {
             syncChunkLoadTileEntitiesTimer = new CustomTimingsHandler("** " + name + "chunkLoad - TileEntities");
             syncChunkLoadTileTicksTimer = new CustomTimingsHandler("** " + name + "chunkLoad - TileTicks");
             syncChunkLoadPostTimer = new CustomTimingsHandler("** " + name + "chunkLoad - Post");
+
+            //TODO ZeyCodeStart
+            syncChunkSave = new CustomTimingsHandler("** " + name + "Chunk Save");
+            syncLevelSave = new CustomTimingsHandler("** " + name + "Level Save");
+            //TODO ZeyCodeEnd
 
 
             tracker = new CustomTimingsHandler(name + "tracker");

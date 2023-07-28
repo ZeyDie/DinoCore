@@ -831,8 +831,23 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
         {
             SpigotTimings.worldSaveTimer.startTiming(); // Spigot
             this.theProfiler.startSection("save");
+
+            //TODO ZeyCodeStart
+            SpigotTimings.playersDataSaveTimer.startTiming();
+            //TODO ZeyCodeEnd
+
             this.serverConfigManager.saveAllPlayerData();
+
+            //TODO ZeyCodeStart
+            SpigotTimings.playersDataSaveTimer.stopTiming();
+            SpigotTimings.worldDataSaveTimer.startTiming();
+            //TODO ZeyCodeEnd
             this.saveAllWorlds(true);
+
+            //TODO ZeyCodeStart
+            SpigotTimings.worldDataSaveTimer.stopTiming();
+            //TODO ZeyCodeEnd
+
             this.theProfiler.endSection();
             SpigotTimings.worldSaveTimer.stopTiming(); // Spigot
         }
