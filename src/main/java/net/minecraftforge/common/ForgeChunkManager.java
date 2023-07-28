@@ -920,8 +920,7 @@ public class ForgeChunkManager
         dormantChunkCacheSize = dormantChunkCacheSizeProperty.getInt(0);
         FMLLog.info("Configured a dormant chunk cache size of %d", dormantChunkCacheSizeProperty.getInt(0));
 
-        //TODO ZeyCodeReplace true on false
-        Property modOverridesEnabled = config.get("defaults", "enabled", false);
+        Property modOverridesEnabled = config.get("defaults", "enabled", true);
         modOverridesEnabled.comment = "Are mod overrides enabled?";
         overridesEnabled = modOverridesEnabled.getBoolean(true);
 

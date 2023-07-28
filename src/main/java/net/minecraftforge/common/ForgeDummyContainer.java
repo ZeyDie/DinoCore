@@ -45,9 +45,7 @@ public class ForgeDummyContainer extends DummyModContainer implements WorldAcces
     public static double zombieSummonBaseChance = 0.1;
     public static int[] blendRanges = { 20, 15, 10, 5 };
     public static float zombieBabyChance = 0.05f;
-
-    //TODO ZeyCodeReplace false on true
-    public static boolean shouldSortRecipies = true;
+    public static boolean shouldSortRecipies = false;
 
     public ForgeDummyContainer()
     {
@@ -101,8 +99,7 @@ public class ForgeDummyContainer extends DummyModContainer implements WorldAcces
             prop.set(64);
         }
 
-        //TODO ZeyCodeReplace false on true
-        prop = config.get(Configuration.CATEGORY_GENERAL, "removeErroringEntities", true);
+        prop = config.get(Configuration.CATEGORY_GENERAL, "removeErroringEntities", false);
         prop.comment = "Set this to just remove any TileEntity that throws a error in there update method instead of closing the server and reporting a crash log. BE WARNED THIS COULD SCREW UP EVERYTHING USE SPARINGLY WE ARE NOT RESPONSIBLE FOR DAMAGES.";
         removeErroringEntities = prop.getBoolean(false);
 
@@ -111,8 +108,7 @@ public class ForgeDummyContainer extends DummyModContainer implements WorldAcces
             FMLLog.warning("Enabling removal of erroring Entities - USE AT YOUR OWN RISK");
         }
 
-        //TODO ZeyCodeReplace false on true
-        prop = config.get(Configuration.CATEGORY_GENERAL, "removeErroringTileEntities", true);
+        prop = config.get(Configuration.CATEGORY_GENERAL, "removeErroringTileEntities", false);
         prop.comment = "Set this to just remove any TileEntity that throws a error in there update method instead of closing the server and reporting a crash log. BE WARNED THIS COULD SCREW UP EVERYTHING USE SPARINGLY WE ARE NOT RESPONSIBLE FOR DAMAGES.";
         removeErroringTileEntities = prop.getBoolean(false);
 
