@@ -23,7 +23,7 @@ public class WhitelistCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
 
         if (args.length == 1) {
@@ -48,9 +48,9 @@ public class WhitelistCommand extends VanillaCommand {
             } else if (args[0].equalsIgnoreCase("list")) {
                 if (badPerm(sender, "list")) return true;
 
-                StringBuilder result = new StringBuilder();
+                final StringBuilder result = new StringBuilder();
 
-                for (OfflinePlayer player : Bukkit.getWhitelistedPlayers()) {
+                for (final OfflinePlayer player : Bukkit.getWhitelistedPlayers()) {
                     if (result.length() > 0) {
                         result.append(", ");
                     }
@@ -83,7 +83,7 @@ public class WhitelistCommand extends VanillaCommand {
         return false;
     }
 
-    private boolean badPerm(CommandSender sender, String perm) {
+    private boolean badPerm(final CommandSender sender, final String perm) {
         if (!sender.hasPermission("bukkit.command.whitelist." + perm)) {
             sender.sendMessage(ChatColor.RED + "You do not have permission to perform this action.");
             return true;
@@ -93,7 +93,7 @@ public class WhitelistCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");
@@ -102,18 +102,18 @@ public class WhitelistCommand extends VanillaCommand {
             return StringUtil.copyPartialMatches(args[0], WHITELIST_SUBCOMMANDS, new ArrayList<String>(WHITELIST_SUBCOMMANDS.size()));
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("add")) {
-                List<String> completions = new ArrayList<String>();
-                for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
-                    String name = player.getName();
+                final List<String> completions = new ArrayList<String>();
+                for (final OfflinePlayer player : Bukkit.getOfflinePlayers()) {
+                    final String name = player.getName();
                     if (StringUtil.startsWithIgnoreCase(name, args[1]) && !player.isWhitelisted()) {
                         completions.add(name);
                     }
                 }
                 return completions;
             } else if (args[0].equalsIgnoreCase("remove")) {
-                List<String> completions = new ArrayList<String>();
-                for (OfflinePlayer player : Bukkit.getWhitelistedPlayers()) {
-                    String name = player.getName();
+                final List<String> completions = new ArrayList<String>();
+                for (final OfflinePlayer player : Bukkit.getWhitelistedPlayers()) {
+                    final String name = player.getName();
                     if (StringUtil.startsWithIgnoreCase(name, args[1])) {
                         completions.add(name);
                     }

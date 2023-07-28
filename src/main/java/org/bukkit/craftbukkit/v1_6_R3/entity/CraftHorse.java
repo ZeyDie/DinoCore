@@ -10,7 +10,7 @@ import org.bukkit.inventory.HorseInventory;
 
 public class CraftHorse extends CraftAnimals implements Horse {
 
-    public CraftHorse(CraftServer server, net.minecraft.entity.passive.EntityHorse entity) {
+    public CraftHorse(final CraftServer server, final net.minecraft.entity.passive.EntityHorse entity) {
         super(server, entity);
     }
 
@@ -23,7 +23,7 @@ public class CraftHorse extends CraftAnimals implements Horse {
         return Variant.values()[getHandle().getHorseType()];
     }
 
-    public void setVariant(Variant variant) {
+    public void setVariant(final Variant variant) {
         Validate.notNull(variant, "Variant cannot be null");
         getHandle().setHorseType(variant.ordinal());
     }
@@ -32,7 +32,7 @@ public class CraftHorse extends CraftAnimals implements Horse {
         return Color.values()[getHandle().getHorseVariant() & 0xFF];
     }
 
-    public void setColor(Color color) {
+    public void setColor(final Color color) {
         Validate.notNull(color, "Color cannot be null");
         getHandle().setHorseVariant(color.ordinal() & 0xFF | getStyle().ordinal() << 8);
     }
@@ -41,7 +41,7 @@ public class CraftHorse extends CraftAnimals implements Horse {
         return Style.values()[getHandle().getHorseVariant() >>> 8];
     }
 
-    public void setStyle(Style style) {
+    public void setStyle(final Style style) {
         Validate.notNull(style, "Style cannot be null");
         getHandle().setHorseVariant(getColor().ordinal() & 0xFF | style.ordinal() << 8);
     }
@@ -50,7 +50,7 @@ public class CraftHorse extends CraftAnimals implements Horse {
         return getHandle().isChested();
     }
 
-    public void setCarryingChest(boolean chest) {
+    public void setCarryingChest(final boolean chest) {
         if (chest == isCarryingChest()) return;
         getHandle().setChested(chest);
         getHandle().func_110226_cD(); // Should be loadChest
@@ -60,7 +60,7 @@ public class CraftHorse extends CraftAnimals implements Horse {
         return getHandle().getTemper();
     }
 
-    public void setDomestication(int value) {
+    public void setDomestication(final int value) {
         Validate.isTrue(value >= 0, "Domestication cannot be less than zero");
         Validate.isTrue(value <= getMaxDomestication(), "Domestication cannot be greater than the max domestication");
         getHandle().setTemper(value);
@@ -70,7 +70,7 @@ public class CraftHorse extends CraftAnimals implements Horse {
         return getHandle().getMaxTemper(); // Should be getMaxDomestication
     }
 
-    public void setMaxDomestication(int value) {
+    public void setMaxDomestication(final int value) {
         Validate.isTrue(value > 0, "Max domestication cannot be zero or less");
         getHandle().maxDomestication = value;
     }
@@ -79,7 +79,7 @@ public class CraftHorse extends CraftAnimals implements Horse {
         return getHandle().getHorseJumpStrength();
     }
 
-    public void setJumpStrength(double strength) {
+    public void setJumpStrength(final double strength) {
         Validate.isTrue(strength >= 0, "Jump strength cannot be less than zero");
         getHandle().getEntityAttribute(net.minecraft.entity.passive.EntityHorse.horseJumpStrength).setAttribute(strength);
     }
@@ -90,7 +90,7 @@ public class CraftHorse extends CraftAnimals implements Horse {
     }
 
     @Override
-    public void setTamed(boolean tamed) {
+    public void setTamed(final boolean tamed) {
         getHandle().setHorseTamed(tamed);
     }
 
@@ -101,7 +101,7 @@ public class CraftHorse extends CraftAnimals implements Horse {
     }
 
     @Override
-    public void setOwner(AnimalTamer owner) {
+    public void setOwner(final AnimalTamer owner) {
         if (owner != null && !"".equals(owner.getName())) {
             setTamed(true);
             getHandle().setPathToEntity(null);
@@ -116,7 +116,7 @@ public class CraftHorse extends CraftAnimals implements Horse {
         return getHandle().getOwnerName();
     }
 
-    public void setOwnerName(String name) {
+    public void setOwnerName(final String name) {
         getHandle().setOwnerName(name);
     }
 

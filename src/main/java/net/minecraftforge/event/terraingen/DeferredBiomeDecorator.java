@@ -10,14 +10,14 @@ import java.util.Random;
 public class DeferredBiomeDecorator extends BiomeDecorator {
     private BiomeDecorator wrapped;
 
-    public DeferredBiomeDecorator(BiomeGenBase biomeGenBase, BiomeDecorator wrappedOriginal)
+    public DeferredBiomeDecorator(final BiomeGenBase biomeGenBase, final BiomeDecorator wrappedOriginal)
     {
         super(biomeGenBase);
         this.wrapped = wrappedOriginal;
     }
 
     @Override
-    public void decorate(World par1World, Random par2Random, int par3, int par4)
+    public void decorate(final World par1World, final Random par2Random, final int par3, final int par4)
     {
         fireCreateEventAndReplace();
         // On first call to decorate, we fire and substitute ourselves, if we haven't already done so
@@ -40,7 +40,7 @@ public class DeferredBiomeDecorator extends BiomeDecorator {
         wrapped.treesPerChunk = treesPerChunk;
         wrapped.waterlilyPerChunk = waterlilyPerChunk;
         
-        BiomeEvent.CreateDecorator event = new BiomeEvent.CreateDecorator(biome, wrapped);
+        final BiomeEvent.CreateDecorator event = new BiomeEvent.CreateDecorator(biome, wrapped);
         MinecraftForge.TERRAIN_GEN_BUS.post(event);
         biome.theBiomeDecorator = event.newBiomeDecorator;
     }

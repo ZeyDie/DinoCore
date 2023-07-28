@@ -16,7 +16,7 @@ public enum WorldType {
     private final static Map<String, WorldType> BY_NAME = Maps.newHashMap();
     private final String name;
 
-    private WorldType(String name) {
+    private WorldType(final String name) {
         this.name = name;
     }
 
@@ -35,12 +35,12 @@ public enum WorldType {
      * @param name Name of the WorldType to get
      * @return Requested WorldType, or null if not found
      */
-    public static WorldType getByName(String name) {
+    public static WorldType getByName(final String name) {
         return BY_NAME.get(name.toUpperCase());
     }
 
     static {
-        for (WorldType type : values()) {
+        for (final WorldType type : values()) {
             BY_NAME.put(type.name, type);
         }
     }

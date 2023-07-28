@@ -24,7 +24,7 @@ public class BlockTNT extends Block
     @SideOnly(Side.CLIENT)
     private Icon field_94392_b;
 
-    public BlockTNT(int par1)
+    public BlockTNT(final int par1)
     {
         super(par1, Material.tnt);
         this.setCreativeTab(CreativeTabs.tabRedstone);
@@ -35,7 +35,7 @@ public class BlockTNT extends Block
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
         return par1 == 0 ? this.field_94392_b : (par1 == 1 ? this.field_94393_a : this.blockIcon);
     }
@@ -43,7 +43,7 @@ public class BlockTNT extends Block
     /**
      * Called whenever the block is added into the world. Args: world, x, y, z
      */
-    public void onBlockAdded(World par1World, int par2, int par3, int par4)
+    public void onBlockAdded(final World par1World, final int par2, final int par3, final int par4)
     {
         super.onBlockAdded(par1World, par2, par3, par4);
 
@@ -58,7 +58,7 @@ public class BlockTNT extends Block
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         if (par1World.isBlockIndirectlyGettingPowered(par2, par3, par4))
         {
@@ -70,7 +70,7 @@ public class BlockTNT extends Block
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random par1Random)
+    public int quantityDropped(final Random par1Random)
     {
         return 1;
     }
@@ -78,11 +78,11 @@ public class BlockTNT extends Block
     /**
      * Called upon the block being destroyed by an explosion
      */
-    public void onBlockDestroyedByExplosion(World par1World, int par2, int par3, int par4, Explosion par5Explosion)
+    public void onBlockDestroyedByExplosion(final World par1World, final int par2, final int par3, final int par4, final Explosion par5Explosion)
     {
         if (!par1World.isRemote)
         {
-            EntityTNTPrimed entitytntprimed = new EntityTNTPrimed(par1World, (double)((float)par2 + 0.5F), (double)((float)par3 + 0.5F), (double)((float)par4 + 0.5F), par5Explosion.getExplosivePlacedBy());
+            final EntityTNTPrimed entitytntprimed = new EntityTNTPrimed(par1World, (double)((float)par2 + 0.5F), (double)((float)par3 + 0.5F), (double)((float)par4 + 0.5F), par5Explosion.getExplosivePlacedBy());
             entitytntprimed.fuse = par1World.rand.nextInt(entitytntprimed.fuse / 4) + entitytntprimed.fuse / 8;
             par1World.spawnEntityInWorld(entitytntprimed);
         }
@@ -91,7 +91,7 @@ public class BlockTNT extends Block
     /**
      * Called right before the block is destroyed by a player.  Args: world, x, y, z, metaData
      */
-    public void onBlockDestroyedByPlayer(World par1World, int par2, int par3, int par4, int par5)
+    public void onBlockDestroyedByPlayer(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         this.primeTnt(par1World, par2, par3, par4, par5, (EntityLivingBase)null);
     }
@@ -99,13 +99,13 @@ public class BlockTNT extends Block
     /**
      * spawns the primed tnt and plays the fuse sound.
      */
-    public void primeTnt(World par1World, int par2, int par3, int par4, int par5, EntityLivingBase par6EntityLivingBase)
+    public void primeTnt(final World par1World, final int par2, final int par3, final int par4, final int par5, final EntityLivingBase par6EntityLivingBase)
     {
         if (!par1World.isRemote)
         {
             if ((par5 & 1) == 1)
             {
-                EntityTNTPrimed entitytntprimed = new EntityTNTPrimed(par1World, (double)((float)par2 + 0.5F), (double)((float)par3 + 0.5F), (double)((float)par4 + 0.5F), par6EntityLivingBase);
+                final EntityTNTPrimed entitytntprimed = new EntityTNTPrimed(par1World, (double)((float)par2 + 0.5F), (double)((float)par3 + 0.5F), (double)((float)par4 + 0.5F), par6EntityLivingBase);
                 par1World.spawnEntityInWorld(entitytntprimed);
                 par1World.playSoundAtEntity(entitytntprimed, "random.fuse", 1.0F, 1.0F);
             }
@@ -115,7 +115,7 @@ public class BlockTNT extends Block
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9)
     {
         if (par5EntityPlayer.getCurrentEquippedItem() != null && par5EntityPlayer.getCurrentEquippedItem().itemID == Item.flintAndSteel.itemID)
         {
@@ -133,11 +133,11 @@ public class BlockTNT extends Block
     /**
      * Triggered whenever an entity collides with this block (enters into the block). Args: world, x, y, z, entity
      */
-    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
+    public void onEntityCollidedWithBlock(final World par1World, final int par2, final int par3, final int par4, final Entity par5Entity)
     {
         if (par5Entity instanceof EntityArrow && !par1World.isRemote)
         {
-            EntityArrow entityarrow = (EntityArrow)par5Entity;
+            final EntityArrow entityarrow = (EntityArrow)par5Entity;
 
             if (entityarrow.isBurning())
             {
@@ -156,7 +156,7 @@ public class BlockTNT extends Block
     /**
      * Return whether this block can drop from an explosion.
      */
-    public boolean canDropFromExplosion(Explosion par1Explosion)
+    public boolean canDropFromExplosion(final Explosion par1Explosion)
     {
         return false;
     }
@@ -167,7 +167,7 @@ public class BlockTNT extends Block
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.blockIcon = par1IconRegister.registerIcon(this.getTextureName() + "_side");
         this.field_94393_a = par1IconRegister.registerIcon(this.getTextureName() + "_top");

@@ -6,7 +6,7 @@ class ServerBlockEventList extends ArrayList
 {
     private ServerBlockEventList() {}
 
-    ServerBlockEventList(ServerBlockEvent par1ServerBlockEvent)
+    ServerBlockEventList(final ServerBlockEvent par1ServerBlockEvent)
     {
         this();
     }

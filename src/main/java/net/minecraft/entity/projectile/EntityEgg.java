@@ -16,17 +16,17 @@ import org.bukkit.event.player.PlayerEggThrowEvent;
 
 public class EntityEgg extends EntityThrowable
 {
-    public EntityEgg(World par1World)
+    public EntityEgg(final World par1World)
     {
         super(par1World);
     }
 
-    public EntityEgg(World par1World, EntityLivingBase par2EntityLivingBase)
+    public EntityEgg(final World par1World, final EntityLivingBase par2EntityLivingBase)
     {
         super(par1World, par2EntityLivingBase);
     }
 
-    public EntityEgg(World par1World, double par2, double par4, double par6)
+    public EntityEgg(final World par1World, final double par2, final double par4, final double par6)
     {
         super(par1World, par2, par4, par6);
     }
@@ -34,7 +34,7 @@ public class EntityEgg extends EntityThrowable
     /**
      * Called when this EntityThrowable hits a block or entity.
      */
-    protected void onImpact(MovingObjectPosition par1MovingObjectPosition)
+    protected void onImpact(final MovingObjectPosition par1MovingObjectPosition)
     {
         if (par1MovingObjectPosition.entityHit != null)
         {
@@ -51,12 +51,12 @@ public class EntityEgg extends EntityThrowable
         }
 
         EntityType hatchingType = EntityType.CHICKEN;
-        Entity shooter = this.getThrower();
+        final Entity shooter = this.getThrower();
 
         if (shooter instanceof EntityPlayerMP)
         {
-            Player player = (shooter == null) ? null : (Player) shooter.getBukkitEntity();
-            PlayerEggThrowEvent event = new PlayerEggThrowEvent(player, (org.bukkit.entity.Egg) this.getBukkitEntity(), hatching, (byte) numHatching, hatchingType);
+            final Player player = (shooter == null) ? null : (Player) shooter.getBukkitEntity();
+            final PlayerEggThrowEvent event = new PlayerEggThrowEvent(player, (org.bukkit.entity.Egg) this.getBukkitEntity(), hatching, (byte) numHatching, hatchingType);
             this.worldObj.getServer().getPluginManager().callEvent(event);
             hatching = event.isHatching();
             numHatching = event.getNumHatches();
@@ -67,7 +67,7 @@ public class EntityEgg extends EntityThrowable
         {
             for (int k = 0; k < numHatching; k++)
             {
-                org.bukkit.entity.Entity entity = worldObj.getWorld().spawn(new org.bukkit.Location(worldObj.getWorld(), this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F), hatchingType.getEntityClass(), org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.EGG);
+                final org.bukkit.entity.Entity entity = worldObj.getWorld().spawn(new org.bukkit.Location(worldObj.getWorld(), this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F), hatchingType.getEntityClass(), org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.EGG);
 
                 if (entity instanceof Ageable)
                 {

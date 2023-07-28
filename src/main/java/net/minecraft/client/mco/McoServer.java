@@ -44,7 +44,7 @@ public class McoServer
             {
                 this.field_96409_n = URLDecoder.decode(this.field_96407_c, "UTF-8");
             }
-            catch (UnsupportedEncodingException unsupportedencodingexception)
+            catch (final UnsupportedEncodingException unsupportedencodingexception)
             {
                 this.field_96409_n = this.field_96407_c;
             }
@@ -61,7 +61,7 @@ public class McoServer
             {
                 this.field_96410_o = URLDecoder.decode(this.field_96406_b, "UTF-8");
             }
-            catch (UnsupportedEncodingException unsupportedencodingexception)
+            catch (final UnsupportedEncodingException unsupportedencodingexception)
             {
                 this.field_96410_o = this.field_96406_b;
             }
@@ -70,19 +70,19 @@ public class McoServer
         return this.field_96410_o;
     }
 
-    public void func_96399_a(String par1Str)
+    public void func_96399_a(final String par1Str)
     {
         this.field_96406_b = par1Str;
         this.field_96410_o = null;
     }
 
-    public void func_96400_b(String par1Str)
+    public void func_96400_b(final String par1Str)
     {
         this.field_96407_c = par1Str;
         this.field_96409_n = null;
     }
 
-    public void func_96401_a(McoServer par1McoServer)
+    public void func_96401_a(final McoServer par1McoServer)
     {
         this.field_96414_k = par1McoServer.field_96414_k;
         this.field_96412_m = par1McoServer.field_96412_m;
@@ -91,9 +91,9 @@ public class McoServer
         this.field_102022_m = true;
     }
 
-    public static McoServer func_98163_a(JsonNode par0JsonNode)
+    public static McoServer func_98163_a(final JsonNode par0JsonNode)
     {
-        McoServer mcoserver = new McoServer();
+        final McoServer mcoserver = new McoServer();
 
         try
         {
@@ -118,7 +118,7 @@ public class McoServer
             mcoserver.field_110729_i = Integer.parseInt(par0JsonNode.getNumberValue(new Object[] {"difficulty"}));
             mcoserver.field_110728_j = Integer.parseInt(par0JsonNode.getNumberValue(new Object[] {"gameMode"}));
         }
-        catch (IllegalArgumentException illegalargumentexception)
+        catch (final IllegalArgumentException illegalargumentexception)
         {
             ;
         }
@@ -126,21 +126,21 @@ public class McoServer
         return mcoserver;
     }
 
-    private static List func_98164_a(List par0List)
+    private static List func_98164_a(final List par0List)
     {
-        ArrayList arraylist = new ArrayList();
-        Iterator iterator = par0List.iterator();
+        final ArrayList arraylist = new ArrayList();
+        final Iterator iterator = par0List.iterator();
 
         while (iterator.hasNext())
         {
-            JsonNode jsonnode = (JsonNode)iterator.next();
+            final JsonNode jsonnode = (JsonNode)iterator.next();
             arraylist.add(jsonnode.getStringValue(new Object[0]));
         }
 
         return arraylist;
     }
 
-    public static McoServer func_98165_c(String par0Str)
+    public static McoServer func_98165_c(final String par0Str)
     {
         McoServer mcoserver = new McoServer();
 
@@ -148,7 +148,7 @@ public class McoServer
         {
             mcoserver = func_98163_a((new JdomParser()).parse(par0Str));
         }
-        catch (InvalidSyntaxException invalidsyntaxexception)
+        catch (final InvalidSyntaxException invalidsyntaxexception)
         {
             ;
         }
@@ -161,7 +161,7 @@ public class McoServer
         return (new HashCodeBuilder(17, 37)).append(this.field_96408_a).append(this.field_96406_b).append(this.field_96407_c).append(this.field_96404_d).append(this.field_96405_e).append(this.field_98166_h).toHashCode();
     }
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         if (par1Obj == null)
         {
@@ -177,7 +177,7 @@ public class McoServer
         }
         else
         {
-            McoServer mcoserver = (McoServer)par1Obj;
+            final McoServer mcoserver = (McoServer)par1Obj;
             return (new EqualsBuilder()).append(this.field_96408_a, mcoserver.field_96408_a).append(this.field_96406_b, mcoserver.field_96406_b).append(this.field_96407_c, mcoserver.field_96407_c).append(this.field_96404_d, mcoserver.field_96404_d).append(this.field_96405_e, mcoserver.field_96405_e).append(this.field_98166_h, mcoserver.field_98166_h).isEquals();
         }
     }

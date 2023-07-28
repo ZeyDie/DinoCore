@@ -45,7 +45,7 @@ public class ModelRenderer
     public float offsetY;
     public float offsetZ;
 
-    public ModelRenderer(ModelBase par1ModelBase, String par2Str)
+    public ModelRenderer(final ModelBase par1ModelBase, final String par2Str)
     {
         this.textureWidth = 64.0F;
         this.textureHeight = 32.0F;
@@ -57,12 +57,12 @@ public class ModelRenderer
         this.setTextureSize(par1ModelBase.textureWidth, par1ModelBase.textureHeight);
     }
 
-    public ModelRenderer(ModelBase par1ModelBase)
+    public ModelRenderer(final ModelBase par1ModelBase)
     {
         this(par1ModelBase, (String)null);
     }
 
-    public ModelRenderer(ModelBase par1ModelBase, int par2, int par3)
+    public ModelRenderer(final ModelBase par1ModelBase, final int par2, final int par3)
     {
         this(par1ModelBase);
         this.setTextureOffset(par2, par3);
@@ -71,7 +71,7 @@ public class ModelRenderer
     /**
      * Sets the current box's rotation points and rotation angles to another box.
      */
-    public void addChild(ModelRenderer par1ModelRenderer)
+    public void addChild(final ModelRenderer par1ModelRenderer)
     {
         if (this.childModels == null)
         {
@@ -81,23 +81,23 @@ public class ModelRenderer
         this.childModels.add(par1ModelRenderer);
     }
 
-    public ModelRenderer setTextureOffset(int par1, int par2)
+    public ModelRenderer setTextureOffset(final int par1, final int par2)
     {
         this.textureOffsetX = par1;
         this.textureOffsetY = par2;
         return this;
     }
 
-    public ModelRenderer addBox(String par1Str, float par2, float par3, float par4, int par5, int par6, int par7)
+    public ModelRenderer addBox(String par1Str, final float par2, final float par3, final float par4, final int par5, final int par6, final int par7)
     {
-        par1Str = this.boxName + "." + par1Str;
-        TextureOffset textureoffset = this.baseModel.getTextureOffset(par1Str);
+        String par1Str1 = this.boxName + "." + par1Str;
+        final TextureOffset textureoffset = this.baseModel.getTextureOffset(par1Str1);
         this.setTextureOffset(textureoffset.textureOffsetX, textureoffset.textureOffsetY);
-        this.cubeList.add((new ModelBox(this, this.textureOffsetX, this.textureOffsetY, par2, par3, par4, par5, par6, par7, 0.0F)).func_78244_a(par1Str));
+        this.cubeList.add((new ModelBox(this, this.textureOffsetX, this.textureOffsetY, par2, par3, par4, par5, par6, par7, 0.0F)).func_78244_a(par1Str1));
         return this;
     }
 
-    public ModelRenderer addBox(float par1, float par2, float par3, int par4, int par5, int par6)
+    public ModelRenderer addBox(final float par1, final float par2, final float par3, final int par4, final int par5, final int par6)
     {
         this.cubeList.add(new ModelBox(this, this.textureOffsetX, this.textureOffsetY, par1, par2, par3, par4, par5, par6, 0.0F));
         return this;
@@ -106,12 +106,12 @@ public class ModelRenderer
     /**
      * Creates a textured box. Args: originX, originY, originZ, width, height, depth, scaleFactor.
      */
-    public void addBox(float par1, float par2, float par3, int par4, int par5, int par6, float par7)
+    public void addBox(final float par1, final float par2, final float par3, final int par4, final int par5, final int par6, final float par7)
     {
         this.cubeList.add(new ModelBox(this, this.textureOffsetX, this.textureOffsetY, par1, par2, par3, par4, par5, par6, par7));
     }
 
-    public void setRotationPoint(float par1, float par2, float par3)
+    public void setRotationPoint(final float par1, final float par2, final float par3)
     {
         this.rotationPointX = par1;
         this.rotationPointY = par2;
@@ -119,7 +119,7 @@ public class ModelRenderer
     }
     
     @SideOnly(Side.CLIENT)
-    public void render(float par1)
+    public void render(final float par1)
     {
         if (!this.isHidden)
         {
@@ -170,17 +170,17 @@ public class ModelRenderer
 
                     if (this.rotateAngleZ != 0.0F)
                     {
-                        GL11.glRotatef(this.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
+                        GL11.glRotatef(this.rotateAngleZ * (180.0F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
                     }
 
                     if (this.rotateAngleY != 0.0F)
                     {
-                        GL11.glRotatef(this.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
+                        GL11.glRotatef(this.rotateAngleY * (180.0F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
                     }
 
                     if (this.rotateAngleX != 0.0F)
                     {
-                        GL11.glRotatef(this.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
+                        GL11.glRotatef(this.rotateAngleX * (180.0F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
                     }
 
                     GL11.glCallList(this.displayList);
@@ -202,7 +202,7 @@ public class ModelRenderer
     }
 
     @SideOnly(Side.CLIENT)
-    public void renderWithRotation(float par1)
+    public void renderWithRotation(final float par1)
     {
         if (!this.isHidden)
         {
@@ -218,17 +218,17 @@ public class ModelRenderer
 
                 if (this.rotateAngleY != 0.0F)
                 {
-                    GL11.glRotatef(this.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
+                    GL11.glRotatef(this.rotateAngleY * (180.0F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
                 }
 
                 if (this.rotateAngleX != 0.0F)
                 {
-                    GL11.glRotatef(this.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
+                    GL11.glRotatef(this.rotateAngleX * (180.0F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
                 }
 
                 if (this.rotateAngleZ != 0.0F)
                 {
-                    GL11.glRotatef(this.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
+                    GL11.glRotatef(this.rotateAngleZ * (180.0F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
                 }
 
                 GL11.glCallList(this.displayList);
@@ -241,7 +241,7 @@ public class ModelRenderer
      * Allows the changing of Angles after a box has been rendered
      */
     @SideOnly(Side.CLIENT)
-    public void postRender(float par1)
+    public void postRender(final float par1)
     {
         if (!this.isHidden)
         {
@@ -265,17 +265,17 @@ public class ModelRenderer
 
                     if (this.rotateAngleZ != 0.0F)
                     {
-                        GL11.glRotatef(this.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
+                        GL11.glRotatef(this.rotateAngleZ * (180.0F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
                     }
 
                     if (this.rotateAngleY != 0.0F)
                     {
-                        GL11.glRotatef(this.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
+                        GL11.glRotatef(this.rotateAngleY * (180.0F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
                     }
 
                     if (this.rotateAngleX != 0.0F)
                     {
-                        GL11.glRotatef(this.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
+                        GL11.glRotatef(this.rotateAngleX * (180.0F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
                     }
                 }
             }
@@ -286,11 +286,11 @@ public class ModelRenderer
      * Compiles a GL display list for this model
      */
     @SideOnly(Side.CLIENT)
-    private void compileDisplayList(float par1)
+    private void compileDisplayList(final float par1)
     {
         this.displayList = GLAllocation.generateDisplayLists(1);
         GL11.glNewList(this.displayList, GL11.GL_COMPILE);
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
 
         for (int i = 0; i < this.cubeList.size(); ++i)
         {
@@ -304,7 +304,7 @@ public class ModelRenderer
     /**
      * Returns the model renderer with the new texture parameters.
      */
-    public ModelRenderer setTextureSize(int par1, int par2)
+    public ModelRenderer setTextureSize(final int par1, final int par2)
     {
         this.textureWidth = (float)par1;
         this.textureHeight = (float)par2;

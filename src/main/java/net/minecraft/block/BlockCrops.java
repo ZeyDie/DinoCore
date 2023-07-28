@@ -19,11 +19,11 @@ public class BlockCrops extends BlockFlower
     @SideOnly(Side.CLIENT)
     private Icon[] iconArray;
 
-    protected BlockCrops(int par1)
+    protected BlockCrops(final int par1)
     {
         super(par1);
         this.setTickRandomly(true);
-        float f = 0.5F;
+        final float f = 0.5F;
         this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 0.25F, 0.5F + f);
         this.setCreativeTab((CreativeTabs)null);
         this.setHardness(0.0F);
@@ -35,7 +35,7 @@ public class BlockCrops extends BlockFlower
      * Gets passed in the blockID of the block below and supposed to return true if its allowed to grow on the type of
      * blockID passed in. Args: blockID
      */
-    protected boolean canThisPlantGrowOnThisBlockID(int par1)
+    protected boolean canThisPlantGrowOnThisBlockID(final int par1)
     {
         return par1 == Block.tilledField.blockID;
     }
@@ -43,7 +43,7 @@ public class BlockCrops extends BlockFlower
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         super.updateTick(par1World, par2, par3, par4, par5Random);
 
@@ -53,7 +53,7 @@ public class BlockCrops extends BlockFlower
 
             if (l < 7)
             {
-                float f = this.getGrowthRate(par1World, par2, par3, par4);
+                final float f = this.getGrowthRate(par1World, par2, par3, par4);
 
                 if (par5Random.nextInt((int)(par1World.growthOdds / par1World.spigotConfig.wheatModifier * (25.0F / f)) + 1) == 0) // Spigot
                 {
@@ -66,7 +66,7 @@ public class BlockCrops extends BlockFlower
     /**
      * Apply bonemeal to the crops.
      */
-    public void fertilize(World par1World, int par2, int par3, int par4)
+    public void fertilize(final World par1World, final int par2, final int par3, final int par4)
     {
         int l = par1World.getBlockMetadata(par2, par3, par4) + MathHelper.getRandomIntegerInRange(par1World.rand, 2, 5);
 
@@ -83,26 +83,26 @@ public class BlockCrops extends BlockFlower
      * different sides that aren't opposing, and by adding growth for every crop next to this one (and for crop below
      * this one). Args: x, y, z
      */
-    private float getGrowthRate(World par1World, int par2, int par3, int par4)
+    private float getGrowthRate(final World par1World, final int par2, final int par3, final int par4)
     {
         float f = 1.0F;
-        int l = par1World.getBlockId(par2, par3, par4 - 1);
-        int i1 = par1World.getBlockId(par2, par3, par4 + 1);
-        int j1 = par1World.getBlockId(par2 - 1, par3, par4);
-        int k1 = par1World.getBlockId(par2 + 1, par3, par4);
-        int l1 = par1World.getBlockId(par2 - 1, par3, par4 - 1);
-        int i2 = par1World.getBlockId(par2 + 1, par3, par4 - 1);
-        int j2 = par1World.getBlockId(par2 + 1, par3, par4 + 1);
-        int k2 = par1World.getBlockId(par2 - 1, par3, par4 + 1);
-        boolean flag = j1 == this.blockID || k1 == this.blockID;
-        boolean flag1 = l == this.blockID || i1 == this.blockID;
-        boolean flag2 = l1 == this.blockID || i2 == this.blockID || j2 == this.blockID || k2 == this.blockID;
+        final int l = par1World.getBlockId(par2, par3, par4 - 1);
+        final int i1 = par1World.getBlockId(par2, par3, par4 + 1);
+        final int j1 = par1World.getBlockId(par2 - 1, par3, par4);
+        final int k1 = par1World.getBlockId(par2 + 1, par3, par4);
+        final int l1 = par1World.getBlockId(par2 - 1, par3, par4 - 1);
+        final int i2 = par1World.getBlockId(par2 + 1, par3, par4 - 1);
+        final int j2 = par1World.getBlockId(par2 + 1, par3, par4 + 1);
+        final int k2 = par1World.getBlockId(par2 - 1, par3, par4 + 1);
+        final boolean flag = j1 == this.blockID || k1 == this.blockID;
+        final boolean flag1 = l == this.blockID || i1 == this.blockID;
+        final boolean flag2 = l1 == this.blockID || i2 == this.blockID || j2 == this.blockID || k2 == this.blockID;
 
         for (int l2 = par2 - 1; l2 <= par2 + 1; ++l2)
         {
             for (int i3 = par4 - 1; i3 <= par4 + 1; ++i3)
             {
-                int j3 = par1World.getBlockId(l2, par3 - 1, i3);
+                final int j3 = par1World.getBlockId(l2, par3 - 1, i3);
                 float f1 = 0.0F;
 
                 if (blocksList[j3] != null && blocksList[j3].canSustainPlant(par1World, l2, par3 - 1, i3, ForgeDirection.UP, this))
@@ -137,14 +137,15 @@ public class BlockCrops extends BlockFlower
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, int par2)
     {
-        if (par2 < 0 || par2 > 7)
+        int par21 = par2;
+        if (par21 < 0 || par21 > 7)
         {
-            par2 = 7;
+            par21 = 7;
         }
 
-        return this.iconArray[par2];
+        return this.iconArray[par21];
     }
 
     /**
@@ -174,15 +175,15 @@ public class BlockCrops extends BlockFlower
     /**
      * Drops the block items with a specified chance of dropping the specified items
      */
-    public void dropBlockAsItemWithChance(World par1World, int par2, int par3, int par4, int par5, float par6, int par7)
+    public void dropBlockAsItemWithChance(final World par1World, final int par2, final int par3, final int par4, final int par5, final float par6, final int par7)
     {
         super.dropBlockAsItemWithChance(par1World, par2, par3, par4, par5, par6, 0);
     }
 
     @Override 
-    public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune)
+    public ArrayList<ItemStack> getBlockDropped(final World world, final int x, final int y, final int z, final int metadata, final int fortune)
     {
-        ArrayList<ItemStack> ret = super.getBlockDropped(world, x, y, z, metadata, fortune);
+        final ArrayList<ItemStack> ret = super.getBlockDropped(world, x, y, z, metadata, fortune);
 
         if (metadata >= 7)
         {
@@ -201,7 +202,7 @@ public class BlockCrops extends BlockFlower
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return par1 == 7 ? this.getCropItem() : this.getSeedItem();
     }
@@ -209,7 +210,7 @@ public class BlockCrops extends BlockFlower
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random par1Random)
+    public int quantityDropped(final Random par1Random)
     {
         return 1;
     }
@@ -219,7 +220,7 @@ public class BlockCrops extends BlockFlower
     /**
      * only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
      */
-    public int idPicked(World par1World, int par2, int par3, int par4)
+    public int idPicked(final World par1World, final int par2, final int par3, final int par4)
     {
         return this.getSeedItem();
     }
@@ -230,7 +231,7 @@ public class BlockCrops extends BlockFlower
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.iconArray = new Icon[8];
 

@@ -13,7 +13,7 @@ public class EntityDragonPart extends Entity
     /** The name of the Dragon Part */
     public final String name;
 
-    public EntityDragonPart(IEntityMultiPart par1IEntityMultiPart, String par2Str, float par3, float par4)
+    public EntityDragonPart(final IEntityMultiPart par1IEntityMultiPart, final String par2Str, final float par3, final float par4)
     {
         super(par1IEntityMultiPart.func_82194_d());
         this.setSize(par3, par4);
@@ -26,12 +26,12 @@ public class EntityDragonPart extends Entity
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    protected void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {}
+    protected void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound) {}
 
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    protected void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {}
+    protected void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound) {}
 
     /**
      * Returns true if other Entities should be prevented from moving through this Entity.
@@ -44,7 +44,7 @@ public class EntityDragonPart extends Entity
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2)
     {
         return this.isEntityInvulnerable() ? false : this.entityDragonObj.attackEntityFromPart(this, par1DamageSource, par2);
     }
@@ -52,7 +52,7 @@ public class EntityDragonPart extends Entity
     /**
      * Returns true if Entity argument is equal to this Entity
      */
-    public boolean isEntityEqual(Entity par1Entity)
+    public boolean isEntityEqual(final Entity par1Entity)
     {
         return this == par1Entity || this.entityDragonObj == par1Entity;
     }

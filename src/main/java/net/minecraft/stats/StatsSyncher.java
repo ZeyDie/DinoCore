@@ -42,10 +42,10 @@ public class StatsSyncher
     private int field_77433_l;
     private int field_77434_m;
 
-    public StatsSyncher(Session par1Session, StatFileWriter par2StatFileWriter, File par3File)
+    public StatsSyncher(final Session par1Session, final StatFileWriter par2StatFileWriter, final File par3File)
     {
-        String s = par1Session.getUsername();
-        String s1 = s.toLowerCase();
+        final String s = par1Session.getUsername();
+        final String s1 = s.toLowerCase();
         this.unsentDataFile = new File(par3File, "stats_" + s1 + "_unsent.dat");
         this.dataFile = new File(par3File, "stats_" + s1 + ".dat");
         this.unsentOldFile = new File(par3File, "stats_" + s1 + "_unsent.old");
@@ -74,9 +74,9 @@ public class StatsSyncher
         this.beginReceiveStats();
     }
 
-    private void func_77412_a(File par1File, String par2Str, File par3File)
+    private void func_77412_a(final File par1File, final String par2Str, final File par3File)
     {
-        File file3 = new File(par1File, par2Str);
+        final File file3 = new File(par1File, par2Str);
 
         if (file3.exists() && !file3.isDirectory() && !par3File.exists())
         {
@@ -84,12 +84,12 @@ public class StatsSyncher
         }
     }
 
-    private Map func_77417_a(File par1File, File par2File, File par3File)
+    private Map func_77417_a(final File par1File, final File par2File, final File par3File)
     {
         return par1File.exists() ? this.func_77413_a(par1File) : (par3File.exists() ? this.func_77413_a(par3File) : (par2File.exists() ? this.func_77413_a(par2File) : null));
     }
 
-    private Map func_77413_a(File par1File)
+    private Map func_77413_a(final File par1File)
     {
         BufferedReader bufferedreader = null;
 
@@ -97,17 +97,17 @@ public class StatsSyncher
         {
             bufferedreader = new BufferedReader(new FileReader(par1File));
             String s = "";
-            StringBuilder stringbuilder = new StringBuilder();
+            final StringBuilder stringbuilder = new StringBuilder();
 
             while ((s = bufferedreader.readLine()) != null)
             {
                 stringbuilder.append(s);
             }
 
-            Map map = StatFileWriter.func_77453_b(stringbuilder.toString());
+            final Map map = StatFileWriter.func_77453_b(stringbuilder.toString());
             return map;
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             exception.printStackTrace();
         }
@@ -119,7 +119,7 @@ public class StatsSyncher
                 {
                     bufferedreader.close();
                 }
-                catch (Exception exception1)
+                catch (final Exception exception1)
                 {
                     exception1.printStackTrace();
                 }
@@ -129,9 +129,9 @@ public class StatsSyncher
         return null;
     }
 
-    private void func_77421_a(Map par1Map, File par2File, File par3File, File par4File) throws IOException
+    private void func_77421_a(final Map par1Map, final File par2File, final File par3File, final File par4File) throws IOException
     {
-        PrintWriter printwriter = new PrintWriter(new FileWriter(par3File, false));
+        final PrintWriter printwriter = new PrintWriter(new FileWriter(par3File, false));
 
         try
         {
@@ -177,7 +177,7 @@ public class StatsSyncher
      * Attempts to begin sending stats to the server. Will throw an IllegalStateException if the syncher is already
      * busy.
      */
-    public void beginSendStats(Map par1Map)
+    public void beginSendStats(final Map par1Map)
     {
         if (this.isBusy)
         {
@@ -191,7 +191,7 @@ public class StatsSyncher
         }
     }
 
-    public void syncStatsFileWithMap(Map par1Map)
+    public void syncStatsFileWithMap(final Map par1Map)
     {
         int i = 30;
 
@@ -208,7 +208,7 @@ public class StatsSyncher
             {
                 Thread.sleep(100L);
             }
-            catch (InterruptedException interruptedexception)
+            catch (final InterruptedException interruptedexception)
             {
                 interruptedexception.printStackTrace();
             }
@@ -220,7 +220,7 @@ public class StatsSyncher
         {
             this.func_77421_a(par1Map, this.unsentDataFile, this.unsentTempFile, this.unsentOldFile);
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             exception.printStackTrace();
         }
@@ -260,57 +260,57 @@ public class StatsSyncher
         }
     }
 
-    static Map func_77419_a(StatsSyncher par0StatsSyncher)
+    static Map func_77419_a(final StatsSyncher par0StatsSyncher)
     {
         return par0StatsSyncher.field_77430_b;
     }
 
-    static File func_77408_b(StatsSyncher par0StatsSyncher)
+    static File func_77408_b(final StatsSyncher par0StatsSyncher)
     {
         return par0StatsSyncher.dataFile;
     }
 
-    static File func_77407_c(StatsSyncher par0StatsSyncher)
+    static File func_77407_c(final StatsSyncher par0StatsSyncher)
     {
         return par0StatsSyncher.tempFile;
     }
 
-    static File func_77411_d(StatsSyncher par0StatsSyncher)
+    static File func_77411_d(final StatsSyncher par0StatsSyncher)
     {
         return par0StatsSyncher.oldFile;
     }
 
-    static void func_77414_a(StatsSyncher par0StatsSyncher, Map par1Map, File par2File, File par3File, File par4File) throws IOException
+    static void func_77414_a(final StatsSyncher par0StatsSyncher, final Map par1Map, final File par2File, final File par3File, final File par4File) throws IOException
     {
         par0StatsSyncher.func_77421_a(par1Map, par2File, par3File, par4File);
     }
 
-    static Map func_77416_a(StatsSyncher par0StatsSyncher, Map par1Map)
+    static Map func_77416_a(final StatsSyncher par0StatsSyncher, final Map par1Map)
     {
         return par0StatsSyncher.field_77430_b = par1Map;
     }
 
-    static Map func_77410_a(StatsSyncher par0StatsSyncher, File par1File, File par2File, File par3File)
+    static Map func_77410_a(final StatsSyncher par0StatsSyncher, final File par1File, final File par2File, final File par3File)
     {
         return par0StatsSyncher.func_77417_a(par1File, par2File, par3File);
     }
 
-    static boolean setBusy(StatsSyncher par0StatsSyncher, boolean par1)
+    static boolean setBusy(final StatsSyncher par0StatsSyncher, final boolean par1)
     {
         return par0StatsSyncher.isBusy = par1;
     }
 
-    static File getUnsentDataFile(StatsSyncher par0StatsSyncher)
+    static File getUnsentDataFile(final StatsSyncher par0StatsSyncher)
     {
         return par0StatsSyncher.unsentDataFile;
     }
 
-    static File getUnsentTempFile(StatsSyncher par0StatsSyncher)
+    static File getUnsentTempFile(final StatsSyncher par0StatsSyncher)
     {
         return par0StatsSyncher.unsentTempFile;
     }
 
-    static File getUnsentOldFile(StatsSyncher par0StatsSyncher)
+    static File getUnsentOldFile(final StatsSyncher par0StatsSyncher)
     {
         return par0StatsSyncher.unsentOldFile;
     }

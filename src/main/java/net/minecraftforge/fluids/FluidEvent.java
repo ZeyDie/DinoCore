@@ -13,7 +13,7 @@ public class FluidEvent extends Event
     public final int z;
     public final World world;
 
-    public FluidEvent(FluidStack fluid, World world, int x, int y, int z)
+    public FluidEvent(final FluidStack fluid, final World world, final int x, final int y, final int z)
     {
         this.fluid = fluid;
         this.world = world;
@@ -30,7 +30,7 @@ public class FluidEvent extends Event
      */
     public static class FluidMotionEvent extends FluidEvent
     {
-        public FluidMotionEvent(FluidStack fluid, World world, int x, int y, int z)
+        public FluidMotionEvent(final FluidStack fluid, final World world, final int x, final int y, final int z)
         {
             super(fluid, world, x, y, z);
         }
@@ -46,7 +46,7 @@ public class FluidEvent extends Event
     public static class FluidFillingEvent extends FluidEvent
     {
         public final IFluidTank tank;
-        public FluidFillingEvent(FluidStack fluid, World world, int x, int y, int z, IFluidTank tank)
+        public FluidFillingEvent(final FluidStack fluid, final World world, final int x, final int y, final int z, final IFluidTank tank)
         {
             super(fluid, world, x, y, z);
             this.tank = tank;
@@ -63,7 +63,7 @@ public class FluidEvent extends Event
     public static class FluidDrainingEvent extends FluidEvent
     {
         public final IFluidTank tank;
-        public FluidDrainingEvent(FluidStack fluid, World world, int x, int y, int z, IFluidTank tank)
+        public FluidDrainingEvent(final FluidStack fluid, final World world, final int x, final int y, final int z, final IFluidTank tank)
         {
             super(fluid, world, x, y, z);
             this.tank = tank;
@@ -79,7 +79,7 @@ public class FluidEvent extends Event
      */
     public static class FluidSpilledEvent extends FluidEvent
     {
-        public FluidSpilledEvent(FluidStack fluid, World world, int x, int y, int z)
+        public FluidSpilledEvent(final FluidStack fluid, final World world, final int x, final int y, final int z)
         {
             super(fluid, world, x, y, z);
         }
@@ -90,7 +90,7 @@ public class FluidEvent extends Event
      * 
      * @param event
      */
-    public static final void fireEvent(FluidEvent event)
+    public static final void fireEvent(final FluidEvent event)
     {
         MinecraftForge.EVENT_BUS.post(event);
     }

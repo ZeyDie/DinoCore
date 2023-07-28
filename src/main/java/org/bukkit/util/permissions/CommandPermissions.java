@@ -9,8 +9,8 @@ public final class CommandPermissions {
 
     private CommandPermissions() {}
 
-    private static Permission registerWhitelist(Permission parent) {
-        Permission whitelist = DefaultPermissions.registerPermission(PREFIX + "whitelist", "Allows the user to modify the server whitelist", PermissionDefault.OP, parent);
+    private static Permission registerWhitelist(final Permission parent) {
+        final Permission whitelist = DefaultPermissions.registerPermission(PREFIX + "whitelist", "Allows the user to modify the server whitelist", PermissionDefault.OP, parent);
 
         DefaultPermissions.registerPermission(PREFIX + "whitelist.add", "Allows the user to add a player to the server whitelist", whitelist);
         DefaultPermissions.registerPermission(PREFIX + "whitelist.remove", "Allows the user to remove a player from the server whitelist", whitelist);
@@ -24,8 +24,8 @@ public final class CommandPermissions {
         return whitelist;
     }
 
-    private static Permission registerBan(Permission parent) {
-        Permission ban = DefaultPermissions.registerPermission(PREFIX + "ban", "Allows the user to ban people", PermissionDefault.OP, parent);
+    private static Permission registerBan(final Permission parent) {
+        final Permission ban = DefaultPermissions.registerPermission(PREFIX + "ban", "Allows the user to ban people", PermissionDefault.OP, parent);
 
         DefaultPermissions.registerPermission(PREFIX + "ban.player", "Allows the user to ban players", ban);
         DefaultPermissions.registerPermission(PREFIX + "ban.ip", "Allows the user to ban IP addresses", ban);
@@ -35,8 +35,8 @@ public final class CommandPermissions {
         return ban;
     }
 
-    private static Permission registerUnban(Permission parent) {
-        Permission unban = DefaultPermissions.registerPermission(PREFIX + "unban", "Allows the user to unban people", PermissionDefault.OP, parent);
+    private static Permission registerUnban(final Permission parent) {
+        final Permission unban = DefaultPermissions.registerPermission(PREFIX + "unban", "Allows the user to unban people", PermissionDefault.OP, parent);
 
         DefaultPermissions.registerPermission(PREFIX + "unban.player", "Allows the user to unban players", unban);
         DefaultPermissions.registerPermission(PREFIX + "unban.ip", "Allows the user to unban IP addresses", unban);
@@ -46,8 +46,8 @@ public final class CommandPermissions {
         return unban;
     }
 
-    private static Permission registerOp(Permission parent) {
-        Permission op = DefaultPermissions.registerPermission(PREFIX + "op", "Allows the user to change operators", PermissionDefault.OP, parent);
+    private static Permission registerOp(final Permission parent) {
+        final Permission op = DefaultPermissions.registerPermission(PREFIX + "op", "Allows the user to change operators", PermissionDefault.OP, parent);
 
         DefaultPermissions.registerPermission(PREFIX + "op.give", "Allows the user to give a player operator status", op);
         DefaultPermissions.registerPermission(PREFIX + "op.take", "Allows the user to take a players operator status", op);
@@ -57,8 +57,8 @@ public final class CommandPermissions {
         return op;
     }
 
-    private static Permission registerSave(Permission parent) {
-        Permission save = DefaultPermissions.registerPermission(PREFIX + "save", "Allows the user to save the worlds", PermissionDefault.OP, parent);
+    private static Permission registerSave(final Permission parent) {
+        final Permission save = DefaultPermissions.registerPermission(PREFIX + "save", "Allows the user to save the worlds", PermissionDefault.OP, parent);
 
         DefaultPermissions.registerPermission(PREFIX + "save.enable", "Allows the user to enable automatic saving", save);
         DefaultPermissions.registerPermission(PREFIX + "save.disable", "Allows the user to disable automatic saving", save);
@@ -69,8 +69,8 @@ public final class CommandPermissions {
         return save;
     }
 
-    private static Permission registerTime(Permission parent) {
-        Permission time = DefaultPermissions.registerPermission(PREFIX + "time", "Allows the user to alter the time", PermissionDefault.OP, parent);
+    private static Permission registerTime(final Permission parent) {
+        final Permission time = DefaultPermissions.registerPermission(PREFIX + "time", "Allows the user to alter the time", PermissionDefault.OP, parent);
 
         DefaultPermissions.registerPermission(PREFIX + "time.add", "Allows the user to fast-forward time", time);
         DefaultPermissions.registerPermission(PREFIX + "time.set", "Allows the user to change the time", time);
@@ -80,8 +80,8 @@ public final class CommandPermissions {
         return time;
     }
 
-    public static Permission registerPermissions(Permission parent) {
-        Permission commands = DefaultPermissions.registerPermission(ROOT, "Gives the user the ability to use all CraftBukkit commands", parent);
+    public static Permission registerPermissions(final Permission parent) {
+        final Permission commands = DefaultPermissions.registerPermission(ROOT, "Gives the user the ability to use all CraftBukkit commands", parent);
 
         registerWhitelist(commands);
         registerBan(commands);

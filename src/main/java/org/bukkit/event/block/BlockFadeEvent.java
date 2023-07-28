@@ -40,7 +40,7 @@ public class BlockFadeEvent extends BlockEvent implements Cancellable {
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancelled = cancel;
     }
 

@@ -27,9 +27,9 @@ public class StructureVillagePieces
         MapGenStructureIO.func_143031_a(ComponentVillageWell.class, "ViW");
     }
 
-    public static List getStructureVillageWeightedPieceList(Random par0Random, int par1)
+    public static List getStructureVillageWeightedPieceList(final Random par0Random, final int par1)
     {
-        ArrayList arraylist = new ArrayList();
+        final ArrayList arraylist = new ArrayList();
         arraylist.add(new StructureVillagePieceWeight(ComponentVillageHouse4_Garden.class, 4, MathHelper.getRandomIntegerInRange(par0Random, 2 + par1, 4 + par1 * 2)));
         arraylist.add(new StructureVillagePieceWeight(ComponentVillageChurch.class, 20, MathHelper.getRandomIntegerInRange(par0Random, 0 + par1, 1 + par1)));
         arraylist.add(new StructureVillagePieceWeight(ComponentVillageHouse1.class, 20, MathHelper.getRandomIntegerInRange(par0Random, 0 + par1, 2 + par1)));
@@ -41,7 +41,7 @@ public class StructureVillagePieces
         arraylist.add(new StructureVillagePieceWeight(ComponentVillageHouse3.class, 8, MathHelper.getRandomIntegerInRange(par0Random, 0 + par1, 3 + par1 * 2)));
         VillagerRegistry.addExtraVillageComponents(arraylist, par0Random, par1);
 
-        Iterator iterator = arraylist.iterator();
+        final Iterator iterator = arraylist.iterator();
 
         while (iterator.hasNext())
         {
@@ -54,13 +54,13 @@ public class StructureVillagePieces
         return arraylist;
     }
 
-    private static int func_75079_a(List par0List)
+    private static int func_75079_a(final List par0List)
     {
         boolean flag = false;
         int i = 0;
         StructureVillagePieceWeight structurevillagepieceweight;
 
-        for (Iterator iterator = par0List.iterator(); iterator.hasNext(); i += structurevillagepieceweight.villagePieceWeight)
+        for (final Iterator iterator = par0List.iterator(); iterator.hasNext(); i += structurevillagepieceweight.villagePieceWeight)
         {
             structurevillagepieceweight = (StructureVillagePieceWeight)iterator.next();
 
@@ -73,9 +73,9 @@ public class StructureVillagePieces
         return flag ? i : -1;
     }
 
-    private static ComponentVillage func_75083_a(ComponentVillageStartPiece par0ComponentVillageStartPiece, StructureVillagePieceWeight par1StructureVillagePieceWeight, List par2List, Random par3Random, int par4, int par5, int par6, int par7, int par8)
+    private static ComponentVillage func_75083_a(final ComponentVillageStartPiece par0ComponentVillageStartPiece, final StructureVillagePieceWeight par1StructureVillagePieceWeight, final List par2List, final Random par3Random, final int par4, final int par5, final int par6, final int par7, final int par8)
     {
-        Class oclass = par1StructureVillagePieceWeight.villagePieceClass;
+        final Class oclass = par1StructureVillagePieceWeight.villagePieceClass;
         Object object = null;
 
         if (oclass == ComponentVillageHouse4_Garden.class)
@@ -125,9 +125,9 @@ public class StructureVillagePieces
     /**
      * attempts to find a next Village Component to be spawned
      */
-    private static ComponentVillage getNextVillageComponent(ComponentVillageStartPiece par0ComponentVillageStartPiece, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
+    private static ComponentVillage getNextVillageComponent(final ComponentVillageStartPiece par0ComponentVillageStartPiece, final List par1List, final Random par2Random, final int par3, final int par4, final int par5, final int par6, final int par7)
     {
-        int j1 = func_75079_a(par0ComponentVillageStartPiece.structureVillageWeightedPieceList);
+        final int j1 = func_75079_a(par0ComponentVillageStartPiece.structureVillageWeightedPieceList);
 
         if (j1 <= 0)
         {
@@ -141,11 +141,11 @@ public class StructureVillagePieces
             {
                 ++k1;
                 int l1 = par2Random.nextInt(j1);
-                Iterator iterator = par0ComponentVillageStartPiece.structureVillageWeightedPieceList.iterator();
+                final Iterator iterator = par0ComponentVillageStartPiece.structureVillageWeightedPieceList.iterator();
 
                 while (iterator.hasNext())
                 {
-                    StructureVillagePieceWeight structurevillagepieceweight = (StructureVillagePieceWeight)iterator.next();
+                    final StructureVillagePieceWeight structurevillagepieceweight = (StructureVillagePieceWeight)iterator.next();
                     l1 -= structurevillagepieceweight.villagePieceWeight;
 
                     if (l1 < 0)
@@ -155,7 +155,7 @@ public class StructureVillagePieces
                             break;
                         }
 
-                        ComponentVillage componentvillage = func_75083_a(par0ComponentVillageStartPiece, structurevillagepieceweight, par1List, par2Random, par3, par4, par5, par6, par7);
+                        final ComponentVillage componentvillage = func_75083_a(par0ComponentVillageStartPiece, structurevillagepieceweight, par1List, par2Random, par3, par4, par5, par6, par7);
 
                         if (componentvillage != null)
                         {
@@ -173,7 +173,7 @@ public class StructureVillagePieces
                 }
             }
 
-            StructureBoundingBox structureboundingbox = ComponentVillageTorch.func_74904_a(par0ComponentVillageStartPiece, par1List, par2Random, par3, par4, par5, par6);
+            final StructureBoundingBox structureboundingbox = ComponentVillageTorch.func_74904_a(par0ComponentVillageStartPiece, par1List, par2Random, par3, par4, par5, par6);
 
             if (structureboundingbox != null)
             {
@@ -189,7 +189,7 @@ public class StructureVillagePieces
     /**
      * attempts to find a next Structure Component to be spawned, private Village function
      */
-    private static StructureComponent getNextVillageStructureComponent(ComponentVillageStartPiece par0ComponentVillageStartPiece, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
+    private static StructureComponent getNextVillageStructureComponent(final ComponentVillageStartPiece par0ComponentVillageStartPiece, final List par1List, final Random par2Random, final int par3, final int par4, final int par5, final int par6, final int par7)
     {
         if (par7 > 50)
         {
@@ -197,15 +197,15 @@ public class StructureVillagePieces
         }
         else if (Math.abs(par3 - par0ComponentVillageStartPiece.getBoundingBox().minX) <= 112 && Math.abs(par5 - par0ComponentVillageStartPiece.getBoundingBox().minZ) <= 112)
         {
-            ComponentVillage componentvillage = getNextVillageComponent(par0ComponentVillageStartPiece, par1List, par2Random, par3, par4, par5, par6, par7 + 1);
+            final ComponentVillage componentvillage = getNextVillageComponent(par0ComponentVillageStartPiece, par1List, par2Random, par3, par4, par5, par6, par7 + 1);
 
             if (componentvillage != null)
             {
-                int j1 = (componentvillage.boundingBox.minX + componentvillage.boundingBox.maxX) / 2;
-                int k1 = (componentvillage.boundingBox.minZ + componentvillage.boundingBox.maxZ) / 2;
-                int l1 = componentvillage.boundingBox.maxX - componentvillage.boundingBox.minX;
-                int i2 = componentvillage.boundingBox.maxZ - componentvillage.boundingBox.minZ;
-                int j2 = l1 > i2 ? l1 : i2;
+                final int j1 = (componentvillage.boundingBox.minX + componentvillage.boundingBox.maxX) / 2;
+                final int k1 = (componentvillage.boundingBox.minZ + componentvillage.boundingBox.maxZ) / 2;
+                final int l1 = componentvillage.boundingBox.maxX - componentvillage.boundingBox.minX;
+                final int i2 = componentvillage.boundingBox.maxZ - componentvillage.boundingBox.minZ;
+                final int j2 = l1 > i2 ? l1 : i2;
 
                 if (par0ComponentVillageStartPiece.getWorldChunkManager().areBiomesViable(j1, k1, j2 / 2 + 4, MapGenVillage.villageSpawnBiomes))
                 {
@@ -223,7 +223,7 @@ public class StructureVillagePieces
         }
     }
 
-    private static StructureComponent getNextComponentVillagePath(ComponentVillageStartPiece par0ComponentVillageStartPiece, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
+    private static StructureComponent getNextComponentVillagePath(final ComponentVillageStartPiece par0ComponentVillageStartPiece, final List par1List, final Random par2Random, final int par3, final int par4, final int par5, final int par6, final int par7)
     {
         if (par7 > 3 + par0ComponentVillageStartPiece.terrainType)
         {
@@ -231,16 +231,16 @@ public class StructureVillagePieces
         }
         else if (Math.abs(par3 - par0ComponentVillageStartPiece.getBoundingBox().minX) <= 112 && Math.abs(par5 - par0ComponentVillageStartPiece.getBoundingBox().minZ) <= 112)
         {
-            StructureBoundingBox structureboundingbox = ComponentVillagePathGen.func_74933_a(par0ComponentVillageStartPiece, par1List, par2Random, par3, par4, par5, par6);
+            final StructureBoundingBox structureboundingbox = ComponentVillagePathGen.func_74933_a(par0ComponentVillageStartPiece, par1List, par2Random, par3, par4, par5, par6);
 
             if (structureboundingbox != null && structureboundingbox.minY > 10)
             {
-                ComponentVillagePathGen componentvillagepathgen = new ComponentVillagePathGen(par0ComponentVillageStartPiece, par7, par2Random, structureboundingbox, par6);
-                int j1 = (componentvillagepathgen.boundingBox.minX + componentvillagepathgen.boundingBox.maxX) / 2;
-                int k1 = (componentvillagepathgen.boundingBox.minZ + componentvillagepathgen.boundingBox.maxZ) / 2;
-                int l1 = componentvillagepathgen.boundingBox.maxX - componentvillagepathgen.boundingBox.minX;
-                int i2 = componentvillagepathgen.boundingBox.maxZ - componentvillagepathgen.boundingBox.minZ;
-                int j2 = l1 > i2 ? l1 : i2;
+                final ComponentVillagePathGen componentvillagepathgen = new ComponentVillagePathGen(par0ComponentVillageStartPiece, par7, par2Random, structureboundingbox, par6);
+                final int j1 = (componentvillagepathgen.boundingBox.minX + componentvillagepathgen.boundingBox.maxX) / 2;
+                final int k1 = (componentvillagepathgen.boundingBox.minZ + componentvillagepathgen.boundingBox.maxZ) / 2;
+                final int l1 = componentvillagepathgen.boundingBox.maxX - componentvillagepathgen.boundingBox.minX;
+                final int i2 = componentvillagepathgen.boundingBox.maxZ - componentvillagepathgen.boundingBox.minZ;
+                final int j2 = l1 > i2 ? l1 : i2;
 
                 if (par0ComponentVillageStartPiece.getWorldChunkManager().areBiomesViable(j1, k1, j2 / 2 + 4, MapGenVillage.villageSpawnBiomes))
                 {
@@ -261,12 +261,12 @@ public class StructureVillagePieces
     /**
      * attempts to find a next Structure Component to be spawned
      */
-    static StructureComponent getNextStructureComponent(ComponentVillageStartPiece par0ComponentVillageStartPiece, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
+    static StructureComponent getNextStructureComponent(final ComponentVillageStartPiece par0ComponentVillageStartPiece, final List par1List, final Random par2Random, final int par3, final int par4, final int par5, final int par6, final int par7)
     {
         return getNextVillageStructureComponent(par0ComponentVillageStartPiece, par1List, par2Random, par3, par4, par5, par6, par7);
     }
 
-    static StructureComponent getNextStructureComponentVillagePath(ComponentVillageStartPiece par0ComponentVillageStartPiece, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
+    static StructureComponent getNextStructureComponentVillagePath(final ComponentVillageStartPiece par0ComponentVillageStartPiece, final List par1List, final Random par2Random, final int par3, final int par4, final int par5, final int par6, final int par7)
     {
         return getNextComponentVillagePath(par0ComponentVillageStartPiece, par1List, par2Random, par3, par4, par5, par6, par7);
     }

@@ -18,12 +18,12 @@ public class ModLoaderNetworkHandler extends NetworkModHandler
 {
 
     private BaseModProxy baseMod;
-    public ModLoaderNetworkHandler(ModLoaderModContainer mlmc)
+    public ModLoaderNetworkHandler(final ModLoaderModContainer mlmc)
     {
         super(mlmc, null);
     }
 
-    public void setBaseMod(BaseModProxy baseMod)
+    public void setBaseMod(final BaseModProxy baseMod)
     {
         this.baseMod = baseMod;
     }
@@ -41,7 +41,7 @@ public class ModLoaderNetworkHandler extends NetworkModHandler
     }
 
     @Override
-    public boolean acceptVersion(String version)
+    public boolean acceptVersion(final String version)
     {
         return baseMod.getVersion().equals(version);
     }

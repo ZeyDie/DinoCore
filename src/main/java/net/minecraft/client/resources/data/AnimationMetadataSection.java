@@ -17,7 +17,7 @@ public class AnimationMetadataSection implements MetadataSection
     private final int frameHeight;
     private final int frameTime;
 
-    public AnimationMetadataSection(List par1List, int par2, int par3, int par4)
+    public AnimationMetadataSection(final List par1List, final int par2, final int par3, final int par4)
     {
         this.animationFrames = par1List;
         this.frameWidth = par2;
@@ -45,35 +45,35 @@ public class AnimationMetadataSection implements MetadataSection
         return this.frameTime;
     }
 
-    private AnimationFrame getAnimationFrame(int par1)
+    private AnimationFrame getAnimationFrame(final int par1)
     {
         return (AnimationFrame)this.animationFrames.get(par1);
     }
 
-    public int getFrameTimeSingle(int par1)
+    public int getFrameTimeSingle(final int par1)
     {
-        AnimationFrame animationframe = this.getAnimationFrame(par1);
+        final AnimationFrame animationframe = this.getAnimationFrame(par1);
         return animationframe.hasNoTime() ? this.frameTime : animationframe.getFrameTime();
     }
 
-    public boolean frameHasTime(int par1)
+    public boolean frameHasTime(final int par1)
     {
         return !((AnimationFrame)this.animationFrames.get(par1)).hasNoTime();
     }
 
-    public int getFrameIndex(int par1)
+    public int getFrameIndex(final int par1)
     {
         return ((AnimationFrame)this.animationFrames.get(par1)).getFrameIndex();
     }
 
     public Set getFrameIndexSet()
     {
-        HashSet hashset = Sets.newHashSet();
-        Iterator iterator = this.animationFrames.iterator();
+        final HashSet hashset = Sets.newHashSet();
+        final Iterator iterator = this.animationFrames.iterator();
 
         while (iterator.hasNext())
         {
-            AnimationFrame animationframe = (AnimationFrame)iterator.next();
+            final AnimationFrame animationframe = (AnimationFrame)iterator.next();
             hashset.add(Integer.valueOf(animationframe.getFrameIndex()));
         }
 

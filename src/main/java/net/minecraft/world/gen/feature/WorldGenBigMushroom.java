@@ -10,7 +10,7 @@ public class WorldGenBigMushroom extends WorldGenerator
     /** The mushroom type. 0 for brown, 1 for red. */
     private int mushroomType = -1;
 
-    public WorldGenBigMushroom(int par1)
+    public WorldGenBigMushroom(final int par1)
     {
         super(true);
         this.mushroomType = par1;
@@ -21,7 +21,7 @@ public class WorldGenBigMushroom extends WorldGenerator
         super(false);
     }
 
-    public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
+    public boolean generate(final World par1World, final Random par2Random, final int par3, final int par4, final int par5)
     {
         int l = par2Random.nextInt(2);
 
@@ -30,7 +30,7 @@ public class WorldGenBigMushroom extends WorldGenerator
             l = this.mushroomType;
         }
 
-        int i1 = par2Random.nextInt(3) + 4;
+        final int i1 = par2Random.nextInt(3) + 4;
         boolean flag = true;
 
         if (par4 >= 1 && par4 + i1 + 1 < 256)
@@ -57,7 +57,7 @@ public class WorldGenBigMushroom extends WorldGenerator
                         {
                             i2 = par1World.getBlockId(k1, j1, l1);
 
-                            Block block = Block.blocksList[i2];
+                            final Block block = Block.blocksList[i2];
                             
                             if (block != null && !block.isAirBlock(par1World, k1, j1, l1) && !block.isLeaves(par1World, k1, j1, l1))
                             {
@@ -186,7 +186,7 @@ public class WorldGenBigMushroom extends WorldGenerator
                                     l2 = 0;
                                 }
 
-                                Block block = Block.blocksList[par1World.getBlockId(i2, k1, k2)];
+                                final Block block = Block.blocksList[par1World.getBlockId(i2, k1, k2)];
 
                                 if ((l2 != 0 || par4 >= par4 + i1 - 1) && (block == null || block.canBeReplacedByLeaves(par1World, i2, k1, k2)))
                                 {
@@ -200,7 +200,7 @@ public class WorldGenBigMushroom extends WorldGenerator
                     {
                         l1 = par1World.getBlockId(par3, par4 + k1, par5);
 
-                        Block block = Block.blocksList[l1];
+                        final Block block = Block.blocksList[l1];
 
                         if (block == null || block.canBeReplacedByLeaves(par1World, par3, par4 + k1, par5))
                         {

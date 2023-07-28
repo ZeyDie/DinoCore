@@ -13,7 +13,7 @@ public class InitMapGenEvent extends Event
     public final MapGenBase originalGen;
     public MapGenBase newGen;
     
-    InitMapGenEvent(EventType type, MapGenBase original)
+    InitMapGenEvent(final EventType type, final MapGenBase original)
     {
         this.type = type;
         this.originalGen = original;

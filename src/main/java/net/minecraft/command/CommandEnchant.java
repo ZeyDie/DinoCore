@@ -24,12 +24,12 @@ public class CommandEnchant extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.enchant.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         if (par2ArrayOfStr.length < 2)
         {
@@ -37,10 +37,10 @@ public class CommandEnchant extends CommandBase
         }
         else
         {
-            EntityPlayerMP entityplayermp = getPlayer(par1ICommandSender, par2ArrayOfStr[0]);
-            int i = parseIntBounded(par1ICommandSender, par2ArrayOfStr[1], 0, Enchantment.enchantmentsList.length - 1);
+            final EntityPlayerMP entityplayermp = getPlayer(par1ICommandSender, par2ArrayOfStr[0]);
+            final int i = parseIntBounded(par1ICommandSender, par2ArrayOfStr[1], 0, Enchantment.enchantmentsList.length - 1);
             int j = 1;
-            ItemStack itemstack = entityplayermp.getCurrentEquippedItem();
+            final ItemStack itemstack = entityplayermp.getCurrentEquippedItem();
 
             if (itemstack == null)
             {
@@ -48,7 +48,7 @@ public class CommandEnchant extends CommandBase
             }
             else
             {
-                Enchantment enchantment = Enchantment.enchantmentsList[i];
+                final Enchantment enchantment = Enchantment.enchantmentsList[i];
 
                 if (enchantment == null)
                 {
@@ -67,17 +67,17 @@ public class CommandEnchant extends CommandBase
 
                     if (itemstack.hasTagCompound())
                     {
-                        NBTTagList nbttaglist = itemstack.getEnchantmentTagList();
+                        final NBTTagList nbttaglist = itemstack.getEnchantmentTagList();
 
                         if (nbttaglist != null)
                         {
                             for (int k = 0; k < nbttaglist.tagCount(); ++k)
                             {
-                                short short1 = ((NBTTagCompound)nbttaglist.tagAt(k)).getShort("id");
+                                final short short1 = ((NBTTagCompound)nbttaglist.tagAt(k)).getShort("id");
 
                                 if (Enchantment.enchantmentsList[short1] != null)
                                 {
-                                    Enchantment enchantment1 = Enchantment.enchantmentsList[short1];
+                                    final Enchantment enchantment1 = Enchantment.enchantmentsList[short1];
 
                                     if (!enchantment1.canApplyTogether(enchantment))
                                     {
@@ -98,7 +98,7 @@ public class CommandEnchant extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public List addTabCompletionOptions(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         return par2ArrayOfStr.length == 1 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, this.getListOfPlayers()) : null;
     }
@@ -111,7 +111,7 @@ public class CommandEnchant extends CommandBase
     /**
      * Return whether the specified command parameter index is a username parameter.
      */
-    public boolean isUsernameIndex(String[] par1ArrayOfStr, int par2)
+    public boolean isUsernameIndex(final String[] par1ArrayOfStr, final int par2)
     {
         return par2 == 0;
     }

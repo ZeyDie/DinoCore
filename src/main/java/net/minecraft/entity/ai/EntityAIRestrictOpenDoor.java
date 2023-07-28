@@ -10,7 +10,7 @@ public class EntityAIRestrictOpenDoor extends EntityAIBase
     private EntityCreature entityObj;
     private VillageDoorInfo frontDoor;
 
-    public EntityAIRestrictOpenDoor(EntityCreature par1EntityCreature)
+    public EntityAIRestrictOpenDoor(final EntityCreature par1EntityCreature)
     {
         this.entityObj = par1EntityCreature;
     }
@@ -26,7 +26,7 @@ public class EntityAIRestrictOpenDoor extends EntityAIBase
         }
         else
         {
-            Village village = this.entityObj.worldObj.villageCollectionObj.findNearestVillage(MathHelper.floor_double(this.entityObj.posX), MathHelper.floor_double(this.entityObj.posY), MathHelper.floor_double(this.entityObj.posZ), 16);
+            final Village village = this.entityObj.worldObj.villageCollectionObj.findNearestVillage(MathHelper.floor_double(this.entityObj.posX), MathHelper.floor_double(this.entityObj.posY), MathHelper.floor_double(this.entityObj.posZ), 16);
 
             if (village == null)
             {

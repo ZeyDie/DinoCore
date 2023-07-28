@@ -24,7 +24,7 @@ public class MapStorage
      */
     private Map idCounts = new HashMap();
 
-    public MapStorage(ISaveHandler par1ISaveHandler)
+    public MapStorage(final ISaveHandler par1ISaveHandler)
     {
         this.saveHandler = par1ISaveHandler;
         this.loadIdCounts();
@@ -34,7 +34,7 @@ public class MapStorage
      * Loads an existing MapDataBase corresponding to the given String id from disk, instantiating the given Class, or
      * returns null if none such file exists. args: Class to instantiate, String dataid
      */
-    public WorldSavedData loadData(Class par1Class, String par2Str)
+    public WorldSavedData loadData(final Class par1Class, final String par2Str)
     {
         WorldSavedData worldsaveddata = (WorldSavedData)this.loadedDataMap.get(par2Str);
 
@@ -48,7 +48,7 @@ public class MapStorage
             {
                 try
                 {
-                    File file1 = this.saveHandler.getMapFileFromName(par2Str);
+                    final File file1 = this.saveHandler.getMapFileFromName(par2Str);
 
                     if (file1 != null && file1.exists())
                     {
@@ -56,18 +56,18 @@ public class MapStorage
                         {
                             worldsaveddata = (WorldSavedData)par1Class.getConstructor(new Class[] {String.class}).newInstance(new Object[] {par2Str});
                         }
-                        catch (Exception exception)
+                        catch (final Exception exception)
                         {
                             throw new RuntimeException("Failed to instantiate " + par1Class.toString(), exception);
                         }
 
-                        FileInputStream fileinputstream = new FileInputStream(file1);
-                        NBTTagCompound nbttagcompound = CompressedStreamTools.readCompressed(fileinputstream);
+                        final FileInputStream fileinputstream = new FileInputStream(file1);
+                        final NBTTagCompound nbttagcompound = CompressedStreamTools.readCompressed(fileinputstream);
                         fileinputstream.close();
                         worldsaveddata.readFromNBT(nbttagcompound.getCompoundTag("data"));
                     }
                 }
-                catch (Exception exception1)
+                catch (final Exception exception1)
                 {
                     exception1.printStackTrace();
                 }
@@ -86,7 +86,7 @@ public class MapStorage
     /**
      * Assigns the given String id to the given MapDataBase, removing any existing ones of the same id.
      */
-    public void setData(String par1Str, WorldSavedData par2WorldSavedData)
+    public void setData(final String par1Str, final WorldSavedData par2WorldSavedData)
     {
         if (par2WorldSavedData == null)
         {
@@ -111,7 +111,7 @@ public class MapStorage
     {
         for (int i = 0; i < this.loadedDataList.size(); ++i)
         {
-            WorldSavedData worldsaveddata = (WorldSavedData)this.loadedDataList.get(i);
+            final WorldSavedData worldsaveddata = (WorldSavedData)this.loadedDataList.get(i);
 
             if (worldsaveddata.isDirty())
             {
@@ -124,26 +124,26 @@ public class MapStorage
     /**
      * Saves the given MapDataBase to disk.
      */
-    private void saveData(WorldSavedData par1WorldSavedData)
+    private void saveData(final WorldSavedData par1WorldSavedData)
     {
         if (this.saveHandler != null)
         {
             try
             {
-                File file1 = this.saveHandler.getMapFileFromName(par1WorldSavedData.mapName);
+                final File file1 = this.saveHandler.getMapFileFromName(par1WorldSavedData.mapName);
 
                 if (file1 != null)
                 {
-                    NBTTagCompound nbttagcompound = new NBTTagCompound();
+                    final NBTTagCompound nbttagcompound = new NBTTagCompound();
                     par1WorldSavedData.writeToNBT(nbttagcompound);
-                    NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+                    final NBTTagCompound nbttagcompound1 = new NBTTagCompound();
                     nbttagcompound1.setCompoundTag("data", nbttagcompound);
-                    FileOutputStream fileoutputstream = new FileOutputStream(file1);
+                    final FileOutputStream fileoutputstream = new FileOutputStream(file1);
                     CompressedStreamTools.writeCompressed(nbttagcompound1, fileoutputstream);
                     fileoutputstream.close();
                 }
             }
-            catch (Exception exception)
+            catch (final Exception exception)
             {
                 exception.printStackTrace();
             }
@@ -164,30 +164,30 @@ public class MapStorage
                 return;
             }
 
-            File file1 = this.saveHandler.getMapFileFromName("idcounts");
+            final File file1 = this.saveHandler.getMapFileFromName("idcounts");
 
             if (file1 != null && file1.exists())
             {
-                DataInputStream datainputstream = new DataInputStream(new FileInputStream(file1));
-                NBTTagCompound nbttagcompound = CompressedStreamTools.read(datainputstream);
+                final DataInputStream datainputstream = new DataInputStream(new FileInputStream(file1));
+                final NBTTagCompound nbttagcompound = CompressedStreamTools.read(datainputstream);
                 datainputstream.close();
-                Iterator iterator = nbttagcompound.getTags().iterator();
+                final Iterator iterator = nbttagcompound.getTags().iterator();
 
                 while (iterator.hasNext())
                 {
-                    NBTBase nbtbase = (NBTBase)iterator.next();
+                    final NBTBase nbtbase = (NBTBase)iterator.next();
 
                     if (nbtbase instanceof NBTTagShort)
                     {
-                        NBTTagShort nbttagshort = (NBTTagShort)nbtbase;
-                        String s = nbttagshort.getName();
-                        short short1 = nbttagshort.data;
+                        final NBTTagShort nbttagshort = (NBTTagShort)nbtbase;
+                        final String s = nbttagshort.getName();
+                        final short short1 = nbttagshort.data;
                         this.idCounts.put(s, Short.valueOf(short1));
                     }
                 }
             }
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             exception.printStackTrace();
         }
@@ -196,7 +196,7 @@ public class MapStorage
     /**
      * Returns an unique new data id for the given prefix and saves the idCounts map to the 'idcounts' file.
      */
-    public int getUniqueDataId(String par1Str)
+    public int getUniqueDataId(final String par1Str)
     {
         Short oshort = (Short)this.idCounts.get(par1Str);
 
@@ -219,26 +219,26 @@ public class MapStorage
         {
             try
             {
-                File file1 = this.saveHandler.getMapFileFromName("idcounts");
+                final File file1 = this.saveHandler.getMapFileFromName("idcounts");
 
                 if (file1 != null)
                 {
-                    NBTTagCompound nbttagcompound = new NBTTagCompound();
-                    Iterator iterator = this.idCounts.keySet().iterator();
+                    final NBTTagCompound nbttagcompound = new NBTTagCompound();
+                    final Iterator iterator = this.idCounts.keySet().iterator();
 
                     while (iterator.hasNext())
                     {
-                        String s1 = (String)iterator.next();
-                        short short1 = ((Short)this.idCounts.get(s1)).shortValue();
+                        final String s1 = (String)iterator.next();
+                        final short short1 = ((Short)this.idCounts.get(s1)).shortValue();
                         nbttagcompound.setShort(s1, short1);
                     }
 
-                    DataOutputStream dataoutputstream = new DataOutputStream(new FileOutputStream(file1));
+                    final DataOutputStream dataoutputstream = new DataOutputStream(new FileOutputStream(file1));
                     CompressedStreamTools.write(nbttagcompound, dataoutputstream);
                     dataoutputstream.close();
                 }
             }
-            catch (Exception exception)
+            catch (final Exception exception)
             {
                 exception.printStackTrace();
             }

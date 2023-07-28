@@ -16,7 +16,7 @@ import static net.minecraftforge.common.ForgeDirection.*;
 
 public class BlockLever extends Block
 {
-    protected BlockLever(int par1)
+    protected BlockLever(final int par1)
     {
         super(par1, Material.circuits);
         this.setCreativeTab(CreativeTabs.tabRedstone);
@@ -26,7 +26,7 @@ public class BlockLever extends Block
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4)
     {
         return null;
     }
@@ -59,9 +59,9 @@ public class BlockLever extends Block
     /**
      * checks to see if you can place this block can be placed on that side of a block: BlockLever overrides
      */
-    public boolean canPlaceBlockOnSide(World par1World, int par2, int par3, int par4, int par5)
+    public boolean canPlaceBlockOnSide(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
-        ForgeDirection dir = ForgeDirection.getOrientation(par5);
+        final ForgeDirection dir = ForgeDirection.getOrientation(par5);
         return (dir == DOWN  && par1World.isBlockSolidOnSide(par2, par3 + 1, par4, DOWN )) ||
                (dir == UP    && par1World.isBlockSolidOnSide(par2, par3 - 1, par4, UP   )) ||
                (dir == NORTH && par1World.isBlockSolidOnSide(par2, par3, par4 + 1, NORTH)) ||
@@ -73,7 +73,7 @@ public class BlockLever extends Block
     /**
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
      */
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
+    public boolean canPlaceBlockAt(final World par1World, final int par2, final int par3, final int par4)
     {
         return par1World.isBlockSolidOnSide(par2 - 1, par3, par4, EAST ) ||
                par1World.isBlockSolidOnSide(par2 + 1, par3, par4, WEST ) ||
@@ -86,10 +86,10 @@ public class BlockLever extends Block
     /**
      * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
      */
-    public int onBlockPlaced(World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9)
+    public int onBlockPlaced(final World par1World, final int par2, final int par3, final int par4, final int par5, final float par6, final float par7, final float par8, final int par9)
     {
-        int j1 = par9 & 8;
-        int k1 = par9 & 7;
+        final int j1 = par9 & 8;
+        final int k1 = par9 & 7;
         byte b0 = -1;
 
         if (par5 == 0 && par1World.isBlockSolidOnSide(par2, par3 + 1, par4, DOWN))
@@ -128,11 +128,11 @@ public class BlockLever extends Block
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
+    public void onBlockPlacedBy(final World par1World, final int par2, final int par3, final int par4, final EntityLivingBase par5EntityLivingBase, final ItemStack par6ItemStack)
     {
-        int l = par1World.getBlockMetadata(par2, par3, par4);
-        int i1 = l & 7;
-        int j1 = l & 8;
+        final int l = par1World.getBlockMetadata(par2, par3, par4);
+        final int i1 = l & 7;
+        final int j1 = l & 8;
 
         if (i1 == invertMetadata(1))
         {
@@ -161,7 +161,7 @@ public class BlockLever extends Block
     /**
      * only used in ComponentScatteredFeatureJunglePyramid.addComponentParts"
      */
-    public static int invertMetadata(int par0)
+    public static int invertMetadata(final int par0)
     {
         switch (par0)
         {
@@ -186,11 +186,11 @@ public class BlockLever extends Block
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         if (this.checkIfAttachedToBlock(par1World, par2, par3, par4))
         {
-            int i1 = par1World.getBlockMetadata(par2, par3, par4) & 7;
+            final int i1 = par1World.getBlockMetadata(par2, par3, par4) & 7;
             boolean flag = false;
 
             if (!par1World.isBlockSolidOnSide(par2 - 1, par3, par4, EAST) && i1 == 1)
@@ -245,7 +245,7 @@ public class BlockLever extends Block
      * Checks if the block is attached to another block. If it is not, it returns false and drops the block as an item.
      * If it is it returns true.
      */
-    private boolean checkIfAttachedToBlock(World par1World, int par2, int par3, int par4)
+    private boolean checkIfAttachedToBlock(final World par1World, final int par2, final int par3, final int par4)
     {
         if (!this.canPlaceBlockAt(par1World, par2, par3, par4))
         {
@@ -262,9 +262,9 @@ public class BlockLever extends Block
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
-        int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4) & 7;
+        final int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4) & 7;
         float f = 0.1875F;
 
         if (l == 1)
@@ -301,7 +301,7 @@ public class BlockLever extends Block
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9)
     {
         if (par1World.isRemote)
         {
@@ -309,14 +309,14 @@ public class BlockLever extends Block
         }
         else
         {
-            int i1 = par1World.getBlockMetadata(par2, par3, par4);
-            int j1 = i1 & 7;
-            int k1 = 8 - (i1 & 8);
+            final int i1 = par1World.getBlockMetadata(par2, par3, par4);
+            final int j1 = i1 & 7;
+            final int k1 = 8 - (i1 & 8);
             // CraftBukkit start - Interact Lever
-            org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2, par3, par4);
-            int old = (k1 != 8) ? 15 : 0;
-            int current = (k1 == 8) ? 15 : 0;
-            BlockRedstoneEvent eventRedstone = new BlockRedstoneEvent(block, old, current);
+            final org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2, par3, par4);
+            final int old = (k1 != 8) ? 15 : 0;
+            final int current = (k1 == 8) ? 15 : 0;
+            final BlockRedstoneEvent eventRedstone = new BlockRedstoneEvent(block, old, current);
             par1World.getServer().getPluginManager().callEvent(eventRedstone);
 
             if ((eventRedstone.getNewCurrent() > 0) != (k1 == 8))
@@ -365,12 +365,12 @@ public class BlockLever extends Block
      * different metadata value, but before the new metadata value is set. Args: World, x, y, z, old block ID, old
      * metadata
      */
-    public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    public void breakBlock(final World par1World, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         if ((par6 & 8) > 0)
         {
             par1World.notifyBlocksOfNeighborChange(par2, par3, par4, this.blockID);
-            int j1 = par6 & 7;
+            final int j1 = par6 & 7;
 
             if (j1 == 1)
             {
@@ -409,7 +409,7 @@ public class BlockLever extends Block
      * returns true, standard redstone propagation rules will apply instead and this will not be called. Args: World, X,
      * Y, Z, side. Note that the side is reversed - eg it is 1 (up) when checking the bottom of the block.
      */
-    public int isProvidingWeakPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public int isProvidingWeakPower(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
         return (par1IBlockAccess.getBlockMetadata(par2, par3, par4) & 8) > 0 ? 15 : 0;
     }
@@ -418,9 +418,9 @@ public class BlockLever extends Block
      * Returns true if the block is emitting direct/strong redstone power on the specified side. Args: World, X, Y, Z,
      * side. Note that the side is reversed - eg it is 1 (up) when checking the bottom of the block.
      */
-    public int isProvidingStrongPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public int isProvidingStrongPower(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
-        int i1 = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
+        final int i1 = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
 
         if ((i1 & 8) == 0)
         {
@@ -428,7 +428,7 @@ public class BlockLever extends Block
         }
         else
         {
-            int j1 = i1 & 7;
+            final int j1 = i1 & 7;
             return j1 == 0 && par5 == 0 ? 15 : (j1 == 7 && par5 == 0 ? 15 : (j1 == 6 && par5 == 1 ? 15 : (j1 == 5 && par5 == 1 ? 15 : (j1 == 4 && par5 == 2 ? 15 : (j1 == 3 && par5 == 3 ? 15 : (j1 == 2 && par5 == 4 ? 15 : (j1 == 1 && par5 == 5 ? 15 : 0)))))));
         }
     }

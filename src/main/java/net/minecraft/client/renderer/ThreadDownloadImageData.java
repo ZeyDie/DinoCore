@@ -21,7 +21,7 @@ public class ThreadDownloadImageData extends AbstractTexture
     private SimpleTexture imageLocation;
     private boolean textureUploaded;
 
-    public ThreadDownloadImageData(String par1Str, ResourceLocation par2ResourceLocation, IImageBuffer par3IImageBuffer)
+    public ThreadDownloadImageData(final String par1Str, final ResourceLocation par2ResourceLocation, final IImageBuffer par3IImageBuffer)
     {
         this.imageUrl = par1Str;
         this.imageBuffer = par3IImageBuffer;
@@ -30,7 +30,7 @@ public class ThreadDownloadImageData extends AbstractTexture
 
     public int getGlTextureId()
     {
-        int i = super.getGlTextureId();
+        final int i = super.getGlTextureId();
 
         if (!this.textureUploaded && this.bufferedImage != null)
         {
@@ -41,12 +41,12 @@ public class ThreadDownloadImageData extends AbstractTexture
         return i;
     }
 
-    public void getBufferedImage(BufferedImage par1BufferedImage)
+    public void getBufferedImage(final BufferedImage par1BufferedImage)
     {
         this.bufferedImage = par1BufferedImage;
     }
 
-    public void loadTexture(ResourceManager par1ResourceManager) throws IOException
+    public void loadTexture(final ResourceManager par1ResourceManager) throws IOException
     {
         if (this.bufferedImage == null)
         {
@@ -76,12 +76,12 @@ public class ThreadDownloadImageData extends AbstractTexture
         return this.textureUploaded;
     }
 
-    static String getImageUrl(ThreadDownloadImageData par0ThreadDownloadImageData)
+    static String getImageUrl(final ThreadDownloadImageData par0ThreadDownloadImageData)
     {
         return par0ThreadDownloadImageData.imageUrl;
     }
 
-    static IImageBuffer getImageBuffer(ThreadDownloadImageData par0ThreadDownloadImageData)
+    static IImageBuffer getImageBuffer(final ThreadDownloadImageData par0ThreadDownloadImageData)
     {
         return par0ThreadDownloadImageData.imageBuffer;
     }

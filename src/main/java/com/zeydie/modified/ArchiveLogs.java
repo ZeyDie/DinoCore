@@ -20,7 +20,7 @@ public final class ArchiveLogs {
 
                 try {
                     zipFile.addFile(file);
-                } catch (ZipException e) {
+                } catch (final ZipException e) {
                     e.printStackTrace();
                 }
 

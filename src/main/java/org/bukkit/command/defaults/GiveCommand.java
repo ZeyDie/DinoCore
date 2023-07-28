@@ -18,8 +18,8 @@ import java.util.List;
 public class GiveCommand extends VanillaCommand {
     private static List<String> materials;
     static {
-        ArrayList<String> materialList = new ArrayList<String>();
-        for (Material material : Material.values()) {
+        final ArrayList<String> materialList = new ArrayList<String>();
+        for (final Material material : Material.values()) {
             materialList.add(material.name());
         }
         Collections.sort(materialList);
@@ -34,17 +34,17 @@ public class GiveCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
         if ((args.length < 2)) {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
 
-        Player player = Bukkit.getPlayerExact(args[0]);
+        final Player player = Bukkit.getPlayerExact(args[0]);
 
         if (player != null) {
-            Material material = Material.matchMaterial(args[1]);
+            final Material material = Material.matchMaterial(args[1]);
 
             if (material != null) {
                 int amount = 1;
@@ -56,7 +56,7 @@ public class GiveCommand extends VanillaCommand {
                     if (args.length >= 4) {
                         try {
                             data = Short.parseShort(args[3]);
-                        } catch (NumberFormatException ex) {}
+                        } catch (final NumberFormatException ex) {}
                     }
                 }
 
@@ -74,7 +74,7 @@ public class GiveCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) throws IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");
@@ -96,7 +96,7 @@ public class GiveCommand extends VanillaCommand {
             }
 
             for ( ; i < size; i++) {
-                String material = materials.get(i);
+                final String material = materials.get(i);
                 if (StringUtil.startsWithIgnoreCase(material, arg)) {
                     if (completion == null) {
                         completion = new ArrayList<String>();

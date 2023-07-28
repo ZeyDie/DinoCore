@@ -18,7 +18,7 @@ public class WeightedRandomChestContent extends WeightedRandomItem
     /** The maximum chance of item generating. */
     public int theMaximumChanceToGenerateItem;
 
-    public WeightedRandomChestContent(int par1, int par2, int par3, int par4, int par5)
+    public WeightedRandomChestContent(final int par1, final int par2, final int par3, final int par4, final int par5)
     {
         super(par5);
         this.theItemId = new ItemStack(par1, 1, par2);
@@ -26,7 +26,7 @@ public class WeightedRandomChestContent extends WeightedRandomItem
         this.theMaximumChanceToGenerateItem = par4;
     }
 
-    public WeightedRandomChestContent(ItemStack par1ItemStack, int par2, int par3, int par4)
+    public WeightedRandomChestContent(final ItemStack par1ItemStack, final int par2, final int par3, final int par4)
     {
         super(par4);
         this.theItemId = par1ItemStack;
@@ -37,14 +37,14 @@ public class WeightedRandomChestContent extends WeightedRandomItem
     /**
      * Generates the Chest contents.
      */
-    public static void generateChestContents(Random par0Random, WeightedRandomChestContent[] par1ArrayOfWeightedRandomChestContent, IInventory par2IInventory, int par3)
+    public static void generateChestContents(final Random par0Random, final WeightedRandomChestContent[] par1ArrayOfWeightedRandomChestContent, final IInventory par2IInventory, final int par3)
     {
         for (int j = 0; j < par3; ++j)
         {
-            WeightedRandomChestContent weightedrandomchestcontent = (WeightedRandomChestContent)WeightedRandom.getRandomItem(par0Random, par1ArrayOfWeightedRandomChestContent);
-            ItemStack[] stacks = weightedrandomchestcontent.generateChestContent(par0Random, par2IInventory);
+            final WeightedRandomChestContent weightedrandomchestcontent = (WeightedRandomChestContent)WeightedRandom.getRandomItem(par0Random, par1ArrayOfWeightedRandomChestContent);
+            final ItemStack[] stacks = weightedrandomchestcontent.generateChestContent(par0Random, par2IInventory);
 
-            for (ItemStack item : stacks)
+            for (final ItemStack item : stacks)
             {
                 par2IInventory.setInventorySlotContents(par0Random.nextInt(par2IInventory.getSizeInventory()), item);
             }
@@ -54,23 +54,23 @@ public class WeightedRandomChestContent extends WeightedRandomItem
     /**
      * Generates the Dispenser contents.
      */
-    public static void generateDispenserContents(Random par0Random, WeightedRandomChestContent[] par1ArrayOfWeightedRandomChestContent, TileEntityDispenser par2TileEntityDispenser, int par3)
+    public static void generateDispenserContents(final Random par0Random, final WeightedRandomChestContent[] par1ArrayOfWeightedRandomChestContent, final TileEntityDispenser par2TileEntityDispenser, final int par3)
     {
         for (int j = 0; j < par3; ++j)
         {
-            WeightedRandomChestContent weightedrandomchestcontent = (WeightedRandomChestContent)WeightedRandom.getRandomItem(par0Random, par1ArrayOfWeightedRandomChestContent);
-            ItemStack[] stacks = weightedrandomchestcontent.generateChestContent(par0Random, par2TileEntityDispenser);
+            final WeightedRandomChestContent weightedrandomchestcontent = (WeightedRandomChestContent)WeightedRandom.getRandomItem(par0Random, par1ArrayOfWeightedRandomChestContent);
+            final ItemStack[] stacks = weightedrandomchestcontent.generateChestContent(par0Random, par2TileEntityDispenser);
 
-            for (ItemStack item : stacks)
+            for (final ItemStack item : stacks)
             {
                 par2TileEntityDispenser.setInventorySlotContents(par0Random.nextInt(par2TileEntityDispenser.getSizeInventory()), item);
             }
         }
     }
 
-    public static WeightedRandomChestContent[] func_92080_a(WeightedRandomChestContent[] par0ArrayOfWeightedRandomChestContent, WeightedRandomChestContent ... par1ArrayOfWeightedRandomChestContent)
+    public static WeightedRandomChestContent[] func_92080_a(final WeightedRandomChestContent[] par0ArrayOfWeightedRandomChestContent, final WeightedRandomChestContent ... par1ArrayOfWeightedRandomChestContent)
     {
-        WeightedRandomChestContent[] aweightedrandomchestcontent1 = new WeightedRandomChestContent[par0ArrayOfWeightedRandomChestContent.length + par1ArrayOfWeightedRandomChestContent.length];
+        final WeightedRandomChestContent[] aweightedrandomchestcontent1 = new WeightedRandomChestContent[par0ArrayOfWeightedRandomChestContent.length + par1ArrayOfWeightedRandomChestContent.length];
         int i = 0;
 
         for (int j = 0; j < par0ArrayOfWeightedRandomChestContent.length; ++j)
@@ -78,12 +78,12 @@ public class WeightedRandomChestContent extends WeightedRandomItem
             aweightedrandomchestcontent1[i++] = par0ArrayOfWeightedRandomChestContent[j];
         }
 
-        WeightedRandomChestContent[] aweightedrandomchestcontent2 = par1ArrayOfWeightedRandomChestContent;
-        int k = par1ArrayOfWeightedRandomChestContent.length;
+        final WeightedRandomChestContent[] aweightedrandomchestcontent2 = par1ArrayOfWeightedRandomChestContent;
+        final int k = par1ArrayOfWeightedRandomChestContent.length;
 
         for (int l = 0; l < k; ++l)
         {
-            WeightedRandomChestContent weightedrandomchestcontent1 = aweightedrandomchestcontent2[l];
+            final WeightedRandomChestContent weightedrandomchestcontent1 = aweightedrandomchestcontent2[l];
             aweightedrandomchestcontent1[i++] = weightedrandomchestcontent1;
         }
 
@@ -98,7 +98,7 @@ public class WeightedRandomChestContent extends WeightedRandomItem
      * @param newInventory The inventory being generated (do not populate it, but you can refer to it)
      * @return An array of {@link ItemStack} to put into the chest
      */
-    protected ItemStack[] generateChestContent(Random random, IInventory newInventory)
+    protected ItemStack[] generateChestContent(final Random random, final IInventory newInventory)
     {
         return ChestGenHooks.generateStacks(random, theItemId, theMinimumChanceToGenerateItem, theMaximumChanceToGenerateItem);
     }

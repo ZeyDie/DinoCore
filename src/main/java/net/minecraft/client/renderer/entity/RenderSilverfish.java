@@ -22,7 +22,7 @@ public class RenderSilverfish extends RenderLiving
     /**
      * Return the silverfish's maximum death rotation.
      */
-    protected float getSilverfishDeathRotation(EntitySilverfish par1EntitySilverfish)
+    protected float getSilverfishDeathRotation(final EntitySilverfish par1EntitySilverfish)
     {
         return 180.0F;
     }
@@ -30,12 +30,12 @@ public class RenderSilverfish extends RenderLiving
     /**
      * Renders the silverfish.
      */
-    public void renderSilverfish(EntitySilverfish par1EntitySilverfish, double par2, double par4, double par6, float par8, float par9)
+    public void renderSilverfish(final EntitySilverfish par1EntitySilverfish, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         super.doRenderLiving(par1EntitySilverfish, par2, par4, par6, par8, par9);
     }
 
-    protected ResourceLocation getSilverfishTextures(EntitySilverfish par1EntitySilverfish)
+    protected ResourceLocation getSilverfishTextures(final EntitySilverfish par1EntitySilverfish)
     {
         return silverfishTextures;
     }
@@ -43,17 +43,17 @@ public class RenderSilverfish extends RenderLiving
     /**
      * Disallows the silverfish to render the renderPassModel.
      */
-    protected int shouldSilverfishRenderPass(EntitySilverfish par1EntitySilverfish, int par2, float par3)
+    protected int shouldSilverfishRenderPass(final EntitySilverfish par1EntitySilverfish, final int par2, final float par3)
     {
         return -1;
     }
 
-    public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9)
+    public void doRenderLiving(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.renderSilverfish((EntitySilverfish)par1EntityLiving, par2, par4, par6, par8, par9);
     }
 
-    protected float getDeathMaxRotation(EntityLivingBase par1EntityLivingBase)
+    protected float getDeathMaxRotation(final EntityLivingBase par1EntityLivingBase)
     {
         return this.getSilverfishDeathRotation((EntitySilverfish)par1EntityLivingBase);
     }
@@ -61,12 +61,12 @@ public class RenderSilverfish extends RenderLiving
     /**
      * Queries whether should render the specified pass or not.
      */
-    protected int shouldRenderPass(EntityLivingBase par1EntityLivingBase, int par2, float par3)
+    protected int shouldRenderPass(final EntityLivingBase par1EntityLivingBase, final int par2, final float par3)
     {
         return this.shouldSilverfishRenderPass((EntitySilverfish)par1EntityLivingBase, par2, par3);
     }
 
-    public void renderPlayer(EntityLivingBase par1EntityLivingBase, double par2, double par4, double par6, float par8, float par9)
+    public void renderPlayer(final EntityLivingBase par1EntityLivingBase, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.renderSilverfish((EntitySilverfish)par1EntityLivingBase, par2, par4, par6, par8, par9);
     }
@@ -74,7 +74,7 @@ public class RenderSilverfish extends RenderLiving
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.getSilverfishTextures((EntitySilverfish)par1Entity);
     }
@@ -85,7 +85,7 @@ public class RenderSilverfish extends RenderLiving
      * (Render<T extends Entity) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.renderSilverfish((EntitySilverfish)par1Entity, par2, par4, par6, par8, par9);
     }

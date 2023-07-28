@@ -22,10 +22,10 @@ public class SpawnpointCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
 
-        Player player;
+        final Player player;
 
         if (args.length == 0) {
             if (sender instanceof Player) {
@@ -42,7 +42,7 @@ public class SpawnpointCommand extends VanillaCommand {
             }
         }
 
-        World world = player.getWorld();
+        final World world = player.getWorld();
 
         if (args.length == 4) {
             if (world != null) {
@@ -52,7 +52,7 @@ public class SpawnpointCommand extends VanillaCommand {
                     x = getInteger(sender, args[pos++], MIN_COORD, MAX_COORD, true);
                     y = getInteger(sender, args[pos++], 0, world.getMaxHeight());
                     z = getInteger(sender, args[pos], MIN_COORD, MAX_COORD, true);
-                } catch(NumberFormatException ex) {
+                } catch(final NumberFormatException ex) {
                     sender.sendMessage(ex.getMessage());
                     return true;
                 }
@@ -61,7 +61,7 @@ public class SpawnpointCommand extends VanillaCommand {
                 Command.broadcastCommandMessage(sender, "Set " + player.getDisplayName() + "'s spawnpoint to " + x + ", " + y + ", " + z);
             }
         } else if (args.length <= 1) {
-            Location location = player.getLocation();
+            final Location location = player.getLocation();
             player.setBedSpawnLocation(location, true);
             Command.broadcastCommandMessage(sender, "Set " + player.getDisplayName() + "'s spawnpoint to " + location.getX() + ", " + location.getY() + ", " + location.getZ());
         } else {
@@ -73,7 +73,7 @@ public class SpawnpointCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");

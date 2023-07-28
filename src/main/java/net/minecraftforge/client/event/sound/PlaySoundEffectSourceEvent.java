@@ -6,7 +6,7 @@ public class PlaySoundEffectSourceEvent extends SoundEvent
 {
     public final SoundManager manager;
     public final String name;
-    public PlaySoundEffectSourceEvent(SoundManager manager, String name)
+    public PlaySoundEffectSourceEvent(final SoundManager manager, final String name)
     {
         this.manager = manager;
         this.name = name;

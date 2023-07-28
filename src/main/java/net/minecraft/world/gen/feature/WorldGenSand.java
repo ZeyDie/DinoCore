@@ -14,13 +14,13 @@ public class WorldGenSand extends WorldGenerator
     /** The maximum radius used when generating a patch of blocks. */
     private int radius;
 
-    public WorldGenSand(int par1, int par2)
+    public WorldGenSand(final int par1, final int par2)
     {
         this.sandID = par2;
         this.radius = par1;
     }
 
-    public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
+    public boolean generate(final World par1World, final Random par2Random, final int par3, final int par4, final int par5)
     {
         if (par1World.getBlockMaterial(par3, par4, par5) != Material.water)
         {
@@ -28,21 +28,21 @@ public class WorldGenSand extends WorldGenerator
         }
         else
         {
-            int l = par2Random.nextInt(this.radius - 2) + 2;
-            byte b0 = 2;
+            final int l = par2Random.nextInt(this.radius - 2) + 2;
+            final byte b0 = 2;
 
             for (int i1 = par3 - l; i1 <= par3 + l; ++i1)
             {
                 for (int j1 = par5 - l; j1 <= par5 + l; ++j1)
                 {
-                    int k1 = i1 - par3;
-                    int l1 = j1 - par5;
+                    final int k1 = i1 - par3;
+                    final int l1 = j1 - par5;
 
                     if (k1 * k1 + l1 * l1 <= l * l)
                     {
                         for (int i2 = par4 - b0; i2 <= par4 + b0; ++i2)
                         {
-                            int j2 = par1World.getBlockId(i1, i2, j1);
+                            final int j2 = par1World.getBlockId(i1, i2, j1);
 
                             if (j2 == Block.dirt.blockID || j2 == Block.grass.blockID)
                             {

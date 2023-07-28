@@ -34,9 +34,9 @@ public class OpenGuiPacket extends FMLPacket
     }
 
     @Override
-    public byte[] generatePacket(Object... data)
+    public byte[] generatePacket(final Object... data)
     {
-        ByteArrayDataOutput dat = ByteStreams.newDataOutput();
+        final ByteArrayDataOutput dat = ByteStreams.newDataOutput();
         dat.writeInt((Integer) data[0]); // windowId
         dat.writeInt((Integer) data[1]); // networkId
         dat.writeInt((Integer) data[2]); // modGuiId
@@ -47,9 +47,9 @@ public class OpenGuiPacket extends FMLPacket
     }
 
     @Override
-    public FMLPacket consumePacket(byte[] data)
+    public FMLPacket consumePacket(final byte[] data)
     {
-        ByteArrayDataInput dat = ByteStreams.newDataInput(data);
+        final ByteArrayDataInput dat = ByteStreams.newDataInput(data);
         windowId = dat.readInt();
         networkId = dat.readInt();
         modGuiId = dat.readInt();
@@ -60,9 +60,9 @@ public class OpenGuiPacket extends FMLPacket
     }
 
     @Override
-    public void execute(INetworkManager network, FMLNetworkHandler handler, NetHandler netHandler, String userName)
+    public void execute(final INetworkManager network, final FMLNetworkHandler handler, final NetHandler netHandler, final String userName)
     {
-        EntityPlayer player = netHandler.getPlayer();
+        final EntityPlayer player = netHandler.getPlayer();
         player.openGui(networkId, modGuiId, player.worldObj, x, y, z);
         player.openContainer.windowId = windowId;
     }

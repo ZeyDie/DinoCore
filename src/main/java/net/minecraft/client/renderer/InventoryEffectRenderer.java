@@ -17,7 +17,7 @@ public abstract class InventoryEffectRenderer extends GuiContainer
 {
     private boolean field_74222_o;
 
-    public InventoryEffectRenderer(Container par1Container)
+    public InventoryEffectRenderer(final Container par1Container)
     {
         super(par1Container);
     }
@@ -39,7 +39,7 @@ public abstract class InventoryEffectRenderer extends GuiContainer
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         super.drawScreen(par1, par2, par3);
 
@@ -54,10 +54,10 @@ public abstract class InventoryEffectRenderer extends GuiContainer
      */
     private void displayDebuffEffects()
     {
-        int i = this.guiLeft - 124;
+        final int i = this.guiLeft - 124;
         int j = this.guiTop;
-        boolean flag = true;
-        Collection collection = this.mc.thePlayer.getActivePotionEffects();
+        final boolean flag = true;
+        final Collection collection = this.mc.thePlayer.getActivePotionEffects();
 
         if (!collection.isEmpty())
         {
@@ -70,17 +70,17 @@ public abstract class InventoryEffectRenderer extends GuiContainer
                 k = 132 / (collection.size() - 1);
             }
 
-            for (Iterator iterator = this.mc.thePlayer.getActivePotionEffects().iterator(); iterator.hasNext(); j += k)
+            for (final Iterator iterator = this.mc.thePlayer.getActivePotionEffects().iterator(); iterator.hasNext(); j += k)
             {
-                PotionEffect potioneffect = (PotionEffect)iterator.next();
-                Potion potion = Potion.potionTypes[potioneffect.getPotionID()];
+                final PotionEffect potioneffect = (PotionEffect)iterator.next();
+                final Potion potion = Potion.potionTypes[potioneffect.getPotionID()];
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                 this.mc.getTextureManager().bindTexture(field_110408_a);
                 this.drawTexturedModalRect(i, j, 0, 166, 140, 32);
 
                 if (potion.hasStatusIcon())
                 {
-                    int l = potion.getStatusIconIndex();
+                    final int l = potion.getStatusIconIndex();
                     this.drawTexturedModalRect(i + 6, j + 7, 0 + l % 8 * 18, 198 + l / 8 * 18, 18, 18);
                 }
 
@@ -100,7 +100,7 @@ public abstract class InventoryEffectRenderer extends GuiContainer
                 }
 
                 this.fontRenderer.drawStringWithShadow(s, i + 10 + 18, j + 6, 16777215);
-                String s1 = Potion.getDurationString(potioneffect);
+                final String s1 = Potion.getDurationString(potioneffect);
                 this.fontRenderer.drawStringWithShadow(s1, i + 10 + 18, j + 6 + 10, 8355711);
             }
         }

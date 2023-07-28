@@ -33,7 +33,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         this.entity = entity;
     }
 
-    public static CraftEntity getEntity(CraftServer server, net.minecraft.entity.Entity entity) {
+    public static CraftEntity getEntity(final CraftServer server, final net.minecraft.entity.Entity entity) {
         /**
          * Order is *EXTREMELY* important -- keep it right! =D
          */
@@ -122,7 +122,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
             else  { return new CraftLivingEntity(server, (net.minecraft.entity.EntityLivingBase) entity); }
         }
         else if (entity instanceof net.minecraft.entity.boss.EntityDragonPart) {
-            net.minecraft.entity.boss.EntityDragonPart part = (net.minecraft.entity.boss.EntityDragonPart) entity;
+            final net.minecraft.entity.boss.EntityDragonPart part = (net.minecraft.entity.boss.EntityDragonPart) entity;
             if (part.entityDragonObj instanceof net.minecraft.entity.boss.EntityDragon) { return new CraftEnderDragonPart(server, (net.minecraft.entity.boss.EntityDragonPart) entity); }
             else { return new CraftComplexPart(server, (net.minecraft.entity.boss.EntityDragonPart) entity); }
         }
@@ -175,7 +175,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     }
 
     // Cauldron start - copy of getEntity() but operates on classes instead of instances, for EntityRegistry registerBukkitType
-    public static Class<? extends org.bukkit.entity.Entity> getEntityClass(Class<? extends net.minecraft.entity.Entity> nmsClass) {
+    public static Class<? extends org.bukkit.entity.Entity> getEntityClass(final Class<? extends net.minecraft.entity.Entity> nmsClass) {
         /**
          * Order is *EXTREMELY* important -- keep it right! =D
          */
@@ -321,29 +321,29 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     // add Bukkit wrappers
     public static void initMappings() {
-        for (Map.Entry<Class<? extends Entity>, String> entry : cpw.mods.fml.common.registry.EntityRegistry.entityTypeMap.entrySet()) {
-            Class<? extends Entity> entityClass = entry.getKey();
-            String entityName = entry.getValue();
-            int entityId = getEntityTypeIDfromClass(entityClass);
+        for (final Map.Entry<Class<? extends Entity>, String> entry : cpw.mods.fml.common.registry.EntityRegistry.entityTypeMap.entrySet()) {
+            final Class<? extends Entity> entityClass = entry.getKey();
+            final String entityName = entry.getValue();
+            final int entityId = getEntityTypeIDfromClass(entityClass);
 
-            Class<? extends org.bukkit.entity.Entity> bukkitEntityClass = CraftEntity.getEntityClass(entityClass);
+            final Class<? extends org.bukkit.entity.Entity> bukkitEntityClass = CraftEntity.getEntityClass(entityClass);
             EnumHelper.addBukkitEntityType(entityName, bukkitEntityClass, entityId, false);
         }
     }
 
     // Lookup entity id from NMS entity class
-    private static int getEntityTypeIDfromClass(Class entityClass) {
+    private static int getEntityTypeIDfromClass(final Class entityClass) {
         // check both maps, since mods can add to either
 
-        Map<Class, Integer> classToIDMapping = cpw.mods.fml.relauncher.ReflectionHelper.getPrivateValue(net.minecraft.entity.EntityList.class, null, "field_75624_e", "classToIDMapping");
+        final Map<Class, Integer> classToIDMapping = cpw.mods.fml.relauncher.ReflectionHelper.getPrivateValue(net.minecraft.entity.EntityList.class, null, "field_75624_e", "classToIDMapping");
         if (classToIDMapping.containsKey(entityClass)) {
             return classToIDMapping.get(entityClass);
         }
 
-        Map<Integer, Class> IDtoClassMapping = cpw.mods.fml.relauncher.ReflectionHelper.getPrivateValue(net.minecraft.entity.EntityList.class, null, "field_75623_d", "IDtoClassMapping");
-        for (Map.Entry<Integer, Class> entry : IDtoClassMapping.entrySet()) {
-            int entityId = entry.getKey();
-            Class thisEntityClass = entry.getValue();
+        final Map<Integer, Class> IDtoClassMapping = cpw.mods.fml.relauncher.ReflectionHelper.getPrivateValue(net.minecraft.entity.EntityList.class, null, "field_75623_d", "IDtoClassMapping");
+        for (final Map.Entry<Integer, Class> entry : IDtoClassMapping.entrySet()) {
+            final int entityId = entry.getKey();
+            final Class thisEntityClass = entry.getValue();
 
             if (thisEntityClass.getName().equals(entityClass.getName())) {
                 return entityId;
@@ -359,7 +359,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         return new Location(getWorld(), entity.posX, entity.posY, entity.posZ, entity.rotationYaw, entity.rotationPitch);
     }
 
-    public Location getLocation(Location loc) {
+    public Location getLocation(final Location loc) {
         if (loc != null) {
             loc.setWorld(getWorld());
             loc.setX(entity.posX);
@@ -376,7 +376,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         return new Vector(entity.motionX, entity.motionY, entity.motionZ);
     }
 
-    public void setVelocity(Vector vel) {
+    public void setVelocity(final Vector vel) {
         entity.motionX = vel.getX();
         entity.motionY = vel.getY();
         entity.motionZ = vel.getZ();
@@ -400,11 +400,11 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         return entity.worldObj.getWorld();
     }
 
-    public boolean teleport(Location location) {
+    public boolean teleport(final Location location) {
         return teleport(location, TeleportCause.PLUGIN);
     }
 
-    public boolean teleport(Location location, TeleportCause cause) {
+    public boolean teleport(final Location location, final TeleportCause cause) {
         if (entity.ridingEntity != null || entity.riddenByEntity != null || entity.isDead) {
             return false;
         }
@@ -415,20 +415,19 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         return true;
     }
 
-    public boolean teleport(org.bukkit.entity.Entity destination) {
+    public boolean teleport(final org.bukkit.entity.Entity destination) {
         return teleport(destination.getLocation());
     }
 
-    public boolean teleport(org.bukkit.entity.Entity destination, TeleportCause cause) {
+    public boolean teleport(final org.bukkit.entity.Entity destination, final TeleportCause cause) {
         return teleport(destination.getLocation(), cause);
     }
 
-    public List<org.bukkit.entity.Entity> getNearbyEntities(double x, double y, double z) {
-        @SuppressWarnings("unchecked")
-        List<net.minecraft.entity.Entity> notchEntityList = entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity, entity.boundingBox.expand(x, y, z));
-        List<org.bukkit.entity.Entity> bukkitEntityList = new java.util.ArrayList<org.bukkit.entity.Entity>(notchEntityList.size());
+    public List<org.bukkit.entity.Entity> getNearbyEntities(final double x, final double y, final double z) {
+        @SuppressWarnings("unchecked") final List<net.minecraft.entity.Entity> notchEntityList = entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity, entity.boundingBox.expand(x, y, z));
+        final List<org.bukkit.entity.Entity> bukkitEntityList = new java.util.ArrayList<org.bukkit.entity.Entity>(notchEntityList.size());
 
-        for (net.minecraft.entity.Entity e : notchEntityList) {
+        for (final net.minecraft.entity.Entity e : notchEntityList) {
             bukkitEntityList.add(e.getBukkitEntity());
         }
         return bukkitEntityList;
@@ -446,7 +445,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         return entity.fireResistance;
     }
 
-    public void setFireTicks(int ticks) {
+    public void setFireTicks(final int ticks) {
         entity.fire = ticks;
     }
 
@@ -470,7 +469,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         return getVelocity();
     }
 
-    public void setMomentum(Vector value) {
+    public void setMomentum(final Vector value) {
         setVelocity(value);
     }
 
@@ -478,7 +477,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         return isEmpty() ? null : getHandle().riddenByEntity.getBukkitEntity();
     }
 
-    public boolean setPassenger(org.bukkit.entity.Entity passenger) {
+    public boolean setPassenger(final org.bukkit.entity.Entity passenger) {
         if (passenger instanceof CraftEntity) {
             ((CraftEntity) passenger).getHandle().setPassengerOf(getHandle());
             return true;
@@ -504,11 +503,11 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         return getHandle().fallDistance;
     }
 
-    public void setFallDistance(float distance) {
+    public void setFallDistance(final float distance) {
         getHandle().fallDistance = distance;
     }
 
-    public void setLastDamageCause(EntityDamageEvent event) {
+    public void setLastDamageCause(final EntityDamageEvent event) {
         lastDamageEvent = event;
     }
 
@@ -524,7 +523,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         return getHandle().ticksExisted;
     }
 
-    public void setTicksLived(int value) {
+    public void setTicksLived(final int value) {
         if (value <= 0) {
             throw new IllegalArgumentException("Age must be at least 1 tick");
         }
@@ -535,7 +534,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         return entity;
     }
 
-    public void playEffect(EntityEffect type) {
+    public void playEffect(final EntityEffect type) {
         this.getHandle().worldObj.setEntityState(getHandle(), type.getData());
     }
 
@@ -549,7 +548,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
@@ -567,19 +566,19 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         return hash;
     }
 
-    public void setMetadata(String metadataKey, MetadataValue newMetadataValue) {
+    public void setMetadata(final String metadataKey, final MetadataValue newMetadataValue) {
         server.getEntityMetadata().setMetadata(this, metadataKey, newMetadataValue);
     }
 
-    public List<MetadataValue> getMetadata(String metadataKey) {
+    public List<MetadataValue> getMetadata(final String metadataKey) {
         return server.getEntityMetadata().getMetadata(this, metadataKey);
     }
 
-    public boolean hasMetadata(String metadataKey) {
+    public boolean hasMetadata(final String metadataKey) {
         return server.getEntityMetadata().hasMetadata(this, metadataKey);
     }
 
-    public void removeMetadata(String metadataKey, Plugin owningPlugin) {
+    public void removeMetadata(final String metadataKey, final Plugin owningPlugin) {
         server.getEntityMetadata().removeMetadata(this, metadataKey, owningPlugin);
     }
 

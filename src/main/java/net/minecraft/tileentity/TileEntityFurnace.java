@@ -26,9 +26,9 @@ import java.util.List;
 
 public class TileEntityFurnace extends TileEntity implements ISidedInventory
 {
-    private static final int[] slots_top = new int[] {0};
-    private static final int[] slots_bottom = new int[] {2, 1};
-    private static final int[] slots_sides = new int[] {1};
+    private static final int[] slots_top = {0};
+    private static final int[] slots_bottom = {2, 1};
+    private static final int[] slots_sides = {1};
 
     /**
      * The ItemStacks that hold the items currently being used in the furnace
@@ -57,12 +57,12 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
         return this.furnaceItemStacks;
     }
 
-    public void onOpen(CraftHumanEntity who)
+    public void onOpen(final CraftHumanEntity who)
     {
         transaction.add(who);
     }
 
-    public void onClose(CraftHumanEntity who)
+    public void onClose(final CraftHumanEntity who)
     {
         transaction.remove(who);
     }
@@ -72,7 +72,7 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
         return transaction;
     }
 
-    public void setMaxStackSize(int size)
+    public void setMaxStackSize(final int size)
     {
         maxStack = size;
     }
@@ -91,7 +91,7 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
     /**
      * Returns the stack in slot i
      */
-    public ItemStack getStackInSlot(int par1)
+    public ItemStack getStackInSlot(final int par1)
     {
         return this.furnaceItemStacks[par1];
     }
@@ -100,11 +100,11 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
      * new stack.
      */
-    public ItemStack decrStackSize(int par1, int par2)
+    public ItemStack decrStackSize(final int par1, final int par2)
     {
         if (this.furnaceItemStacks[par1] != null)
         {
-            ItemStack itemstack;
+            final ItemStack itemstack;
 
             if (this.furnaceItemStacks[par1].stackSize <= par2)
             {
@@ -134,11 +134,11 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      */
-    public ItemStack getStackInSlotOnClosing(int par1)
+    public ItemStack getStackInSlotOnClosing(final int par1)
     {
         if (this.furnaceItemStacks[par1] != null)
         {
-            ItemStack itemstack = this.furnaceItemStacks[par1];
+            final ItemStack itemstack = this.furnaceItemStacks[par1];
             this.furnaceItemStacks[par1] = null;
             return itemstack;
         }
@@ -151,7 +151,7 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
-    public void setInventorySlotContents(int par1, ItemStack par2ItemStack)
+    public void setInventorySlotContents(final int par1, final ItemStack par2ItemStack)
     {
         this.furnaceItemStacks[par1] = par2ItemStack;
 
@@ -175,13 +175,13 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
      */
     public boolean isInvNameLocalized()
     {
-        return this.field_94130_e != null && this.field_94130_e.length() > 0;
+        return this.field_94130_e != null && !this.field_94130_e.isEmpty();
     }
 
     /**
      * Sets the custom display name to use when opening a GUI linked to this tile entity.
      */
-    public void setGuiDisplayName(String par1Str)
+    public void setGuiDisplayName(final String par1Str)
     {
         this.field_94130_e = par1Str;
     }
@@ -189,16 +189,16 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
     /**
      * Reads a tile entity from NBT.
      */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
-        NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
+        final NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
         this.furnaceItemStacks = new ItemStack[this.getSizeInventory()];
 
         for (int i = 0; i < nbttaglist.tagCount(); ++i)
         {
-            NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
-            byte b0 = nbttagcompound1.getByte("Slot");
+            final NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
+            final byte b0 = nbttagcompound1.getByte("Slot");
 
             if (b0 >= 0 && b0 < this.furnaceItemStacks.length)
             {
@@ -219,18 +219,18 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
     /**
      * Writes a tile entity to NBT.
      */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setShort("BurnTime", (short)this.furnaceBurnTime);
         par1NBTTagCompound.setShort("CookTime", (short)this.furnaceCookTime);
-        NBTTagList nbttaglist = new NBTTagList();
+        final NBTTagList nbttaglist = new NBTTagList();
 
         for (int i = 0; i < this.furnaceItemStacks.length; ++i)
         {
             if (this.furnaceItemStacks[i] != null)
             {
-                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+                final NBTTagCompound nbttagcompound1 = new NBTTagCompound();
                 nbttagcompound1.setByte("Slot", (byte)i);
                 this.furnaceItemStacks[i].writeToNBT(nbttagcompound1);
                 nbttaglist.appendTag(nbttagcompound1);
@@ -260,7 +260,7 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
      * Returns an integer between 0 and the passed value representing how close the current item is to being completely
      * cooked
      */
-    public int getCookProgressScaled(int par1)
+    public int getCookProgressScaled(final int par1)
     {
         return this.furnaceCookTime * par1 / 200;
     }
@@ -271,7 +271,7 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
      * Returns an integer between 0 and the passed value representing how much burn time is left on the current fuel
      * item, where 0 means that the item is exhausted and the passed value means that the item is fresh
      */
-    public int getBurnTimeRemainingScaled(int par1)
+    public int getBurnTimeRemainingScaled(final int par1)
     {
         if (this.currentItemBurnTime == 0)
         {
@@ -295,10 +295,10 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
      */
     public void updateEntity()
     {
-        boolean flag = this.furnaceBurnTime > 0;
+        final boolean flag = this.furnaceBurnTime > 0;
         boolean flag1 = false;
         // CraftBukkit start - Use wall time instead of ticks for cooking
-        int elapsedTicks = MinecraftServer.currentTick - this.lastTick;
+        final int elapsedTicks = MinecraftServer.currentTick - this.lastTick;
         this.lastTick = MinecraftServer.currentTick;
 
         // CraftBukkit - moved from below
@@ -330,8 +330,8 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
             // CraftBukkit start - Handle multiple elapsed ticks
             if (this.furnaceBurnTime <= 0 && this.canSmelt() && this.furnaceItemStacks[1] != null)   // CraftBukkit - == to <=
             {
-                CraftItemStack fuel = CraftItemStack.asCraftMirror(this.furnaceItemStacks[1]);
-                FurnaceBurnEvent furnaceBurnEvent = new FurnaceBurnEvent(this.worldObj.getWorld().getBlockAt(this.xCoord, this.yCoord, this.zCoord), fuel, getItemBurnTime(this.furnaceItemStacks[1]));
+                final CraftItemStack fuel = CraftItemStack.asCraftMirror(this.furnaceItemStacks[1]);
+                final FurnaceBurnEvent furnaceBurnEvent = new FurnaceBurnEvent(this.worldObj.getWorld().getBlockAt(this.xCoord, this.yCoord, this.zCoord), fuel, getItemBurnTime(this.furnaceItemStacks[1]));
                 this.worldObj.getServer().getPluginManager().callEvent(furnaceBurnEvent);
 
                 if (furnaceBurnEvent.isCancelled())
@@ -396,11 +396,11 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
         }
         else
         {
-            ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
+            final ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
             if (itemstack == null) return false;
             if (this.furnaceItemStacks[2] == null) return true;
             if (!this.furnaceItemStacks[2].isItemEqual(itemstack)) return false;
-            int result = furnaceItemStacks[2].stackSize + itemstack.stackSize;
+            final int result = furnaceItemStacks[2].stackSize + itemstack.stackSize;
             return (result <= getInventoryStackLimit() && result <= itemstack.getMaxStackSize());
         }
     }
@@ -414,9 +414,9 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
         {
             ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
             // CraftBukkit start
-            CraftItemStack source = CraftItemStack.asCraftMirror(this.furnaceItemStacks[0]);
-            CraftItemStack result = CraftItemStack.asCraftMirror(itemstack.copy());
-            FurnaceSmeltEvent furnaceSmeltEvent = new FurnaceSmeltEvent(this.worldObj.getWorld().getBlockAt(this.xCoord, this.yCoord, this.zCoord), source, result);
+            final CraftItemStack source = CraftItemStack.asCraftMirror(this.furnaceItemStacks[0]);
+            final CraftItemStack result = CraftItemStack.asCraftMirror(itemstack.copy());
+            final FurnaceSmeltEvent furnaceSmeltEvent = new FurnaceSmeltEvent(this.worldObj.getWorld().getBlockAt(this.xCoord, this.yCoord, this.zCoord), source, result);
             this.worldObj.getServer().getPluginManager().callEvent(furnaceSmeltEvent);
 
             if (furnaceSmeltEvent.isCancelled())
@@ -453,7 +453,7 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
      * Returns the number of ticks that the supplied fuel item will keep the furnace burning, or 0 if the item isn't
      * fuel
      */
-    public static int getItemBurnTime(ItemStack par0ItemStack)
+    public static int getItemBurnTime(final ItemStack par0ItemStack)
     {
         if (par0ItemStack == null)
         {
@@ -461,12 +461,12 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
         }
         else
         {
-            int i = par0ItemStack.getItem().itemID;
-            Item item = par0ItemStack.getItem();
+            final int i = par0ItemStack.getItem().itemID;
+            final Item item = par0ItemStack.getItem();
 
             if (par0ItemStack.getItem() instanceof ItemBlock && Block.blocksList[i] != null)
             {
-                Block block = Block.blocksList[i];
+                final Block block = Block.blocksList[i];
 
                 if (block == Block.woodSingleSlab)
                 {
@@ -499,7 +499,7 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
     /**
      * Return true if item is a fuel source (getItemBurnTime() > 0).
      */
-    public static boolean isItemFuel(ItemStack par0ItemStack)
+    public static boolean isItemFuel(final ItemStack par0ItemStack)
     {
         return getItemBurnTime(par0ItemStack) > 0;
     }
@@ -507,7 +507,7 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
+    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer)
     {
         return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
     }
@@ -519,7 +519,7 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack)
+    public boolean isItemValidForSlot(final int par1, final ItemStack par2ItemStack)
     {
         return par1 == 2 ? false : (par1 == 1 ? isItemFuel(par2ItemStack) : true);
     }
@@ -528,7 +528,7 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
      * Returns an array containing the indices of the slots that can be accessed by automation on the given side of this
      * block.
      */
-    public int[] getAccessibleSlotsFromSide(int par1)
+    public int[] getAccessibleSlotsFromSide(final int par1)
     {
         return par1 == 0 ? slots_bottom : (par1 == 1 ? slots_top : slots_sides);
     }
@@ -537,7 +537,7 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
      * Returns true if automation can insert the given item in the given slot from the given side. Args: Slot, item,
      * side
      */
-    public boolean canInsertItem(int par1, ItemStack par2ItemStack, int par3)
+    public boolean canInsertItem(final int par1, final ItemStack par2ItemStack, final int par3)
     {
         return this.isItemValidForSlot(par1, par2ItemStack);
     }
@@ -546,7 +546,7 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory
      * Returns true if automation can extract the given item in the given slot from the given side. Args: Slot, item,
      * side
      */
-    public boolean canExtractItem(int par1, ItemStack par2ItemStack, int par3)
+    public boolean canExtractItem(final int par1, final ItemStack par2ItemStack, final int par3)
     {
         return par3 != 0 || par1 != 1 || par2ItemStack.itemID == Item.bucketEmpty.itemID;
     }

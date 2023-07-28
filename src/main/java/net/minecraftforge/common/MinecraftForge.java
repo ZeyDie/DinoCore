@@ -41,7 +41,7 @@ public class MinecraftForge
      * @param weight The weight of the plant, where red flowers are
      *               10 and yellow flowers are 20.
      */
-    public static void addGrassPlant(Block block, int metadata, int weight)
+    public static void addGrassPlant(final Block block, final int metadata, final int weight)
     {
         ForgeHooks.grassList.add(new GrassEntry(block, metadata, weight));
     }
@@ -53,7 +53,7 @@ public class MinecraftForge
      * @param weight The relative probability of the seeds,
      *               where wheat seeds are 10.
      */
-    public static void addGrassSeed(ItemStack seed, int weight)
+    public static void addGrassSeed(final ItemStack seed, final int weight)
     {
         ForgeHooks.seedList.add(new SeedEntry(seed, weight));
     }
@@ -68,7 +68,7 @@ public class MinecraftForge
      *                  others for custom tools.
      * @param harvestLevel The harvest level of the tool.
      */
-   public static void setToolClass(Item tool, String toolClass, int harvestLevel)
+   public static void setToolClass(final Item tool, final String toolClass, final int harvestLevel)
    {
        ForgeHooks.toolClasses.put(tool, Arrays.asList(toolClass, harvestLevel));
    }
@@ -87,9 +87,9 @@ public class MinecraftForge
     * harvest the block.
     * @see MinecraftForge#setToolClass for details on tool classes.
     */
-   public static void setBlockHarvestLevel(Block block, int metadata, String toolClass, int harvestLevel)
+   public static void setBlockHarvestLevel(final Block block, final int metadata, final String toolClass, final int harvestLevel)
    {
-       List key = Arrays.asList(block, metadata, toolClass);
+       final List key = Arrays.asList(block, metadata, toolClass);
        ForgeHooks.toolHarvestLevels.put(key, harvestLevel);
        ForgeHooks.toolEffectiveness.add(key);
    }
@@ -106,9 +106,9 @@ public class MinecraftForge
     * @param toolClass The tool class to remove the effectiveness mapping from.
     * @see MinecraftForge#setToolClass for details on tool classes.
     */
-   public static void removeBlockEffectiveness(Block block, int metadata, String toolClass)
+   public static void removeBlockEffectiveness(final Block block, final int metadata, final String toolClass)
    {
-       List key = Arrays.asList(block, metadata, toolClass);
+       final List key = Arrays.asList(block, metadata, toolClass);
        ForgeHooks.toolEffectiveness.remove(key);
    }
 
@@ -124,11 +124,11 @@ public class MinecraftForge
     *                     harvest the block.
     * @see MinecraftForge#setToolClass for details on tool classes.
     */
-   public static void setBlockHarvestLevel(Block block, String toolClass, int harvestLevel)
+   public static void setBlockHarvestLevel(final Block block, final String toolClass, final int harvestLevel)
    {
        for (int metadata = 0; metadata < 16; metadata++)
        {
-           List key = Arrays.asList(block, metadata, toolClass);
+           final List key = Arrays.asList(block, metadata, toolClass);
            ForgeHooks.toolHarvestLevels.put(key, harvestLevel);
            ForgeHooks.toolEffectiveness.add(key);
        }
@@ -143,11 +143,11 @@ public class MinecraftForge
     * @see MinecraftForge#setToolClass for details on tool classes.
     * @return The harvest level or -1 if no mapping exists.
     */
-   public static int getBlockHarvestLevel(Block block, int metadata, String toolClass)
+   public static int getBlockHarvestLevel(final Block block, final int metadata, final String toolClass)
    {
        ForgeHooks.initTools();
-       List key = Arrays.asList(block, metadata, toolClass);
-       Integer harvestLevel = ForgeHooks.toolHarvestLevels.get(key);
+       final List key = Arrays.asList(block, metadata, toolClass);
+       final Integer harvestLevel = ForgeHooks.toolHarvestLevels.get(key);
        return (harvestLevel == null ? -1 : harvestLevel);
    }
 
@@ -162,11 +162,11 @@ public class MinecraftForge
     * @param toolClass The tool class to remove the effectiveness mapping from.
     * @see MinecraftForge#setToolClass for details on tool classes.
     */
-   public static void removeBlockEffectiveness(Block block, String toolClass)
+   public static void removeBlockEffectiveness(final Block block, final String toolClass)
    {
        for (int metadata = 0; metadata < 16; metadata++)
        {
-           List key = Arrays.asList(block, metadata, toolClass);
+           final List key = Arrays.asList(block, metadata, toolClass);
            ForgeHooks.toolEffectiveness.remove(key);
        }
    }
@@ -179,11 +179,11 @@ public class MinecraftForge
        System.out.printf("MinecraftForge v%s Initialized\n", ForgeVersion.getVersion());
        FMLLog.info("MinecraftForge v%s Initialized", ForgeVersion.getVersion());
 
-       Block filler = new Block(0, Material.air)
+       final Block filler = new Block(0, Material.air)
        {
            @SideOnly(Side.CLIENT)
            @Override
-           public void registerIcons(IconRegister register){}
+           public void registerIcons(final IconRegister register){}
        };
        Block.blocksList[0] = null;
        Block.opaqueCubeLookup[0] = false;
@@ -198,7 +198,7 @@ public class MinecraftForge
            }
        }
 
-       boolean[] temp = new boolean[4096];
+       final boolean[] temp = new boolean[4096];
        System.arraycopy(EntityEnderman.carriableBlocks, 0, temp, 0, EntityEnderman.carriableBlocks.length);
        EntityEnderman.carriableBlocks = temp;
 

@@ -18,7 +18,7 @@ import cpw.mods.fml.common.ModContainer;
 public class ModNameFunction implements Function<ModContainer, String>
 {
     @Override
-    public String apply(ModContainer input)
+    public String apply(final ModContainer input)
     {
         return input.getName();
     }

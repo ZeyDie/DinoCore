@@ -16,7 +16,7 @@ public class BanEntry
     private Date banEndDate;
     private String reason = "Banned by an operator.";
 
-    public BanEntry(String par1Str)
+    public BanEntry(final String par1Str)
     {
         this.username = par1Str;
     }
@@ -34,7 +34,7 @@ public class BanEntry
     /**
      * null == start ban now
      */
-    public void setBanStartDate(Date par1Date)
+    public void setBanStartDate(final Date par1Date)
     {
         this.banStartDate = par1Date != null ? par1Date : new Date();
     }
@@ -44,7 +44,7 @@ public class BanEntry
         return this.bannedBy;
     }
 
-    public void setBannedBy(String par1Str)
+    public void setBannedBy(final String par1Str)
     {
         this.bannedBy = par1Str;
     }
@@ -54,7 +54,7 @@ public class BanEntry
         return this.banEndDate;
     }
 
-    public void setBanEndDate(Date par1Date)
+    public void setBanEndDate(final Date par1Date)
     {
         this.banEndDate = par1Date;
     }
@@ -69,14 +69,14 @@ public class BanEntry
         return this.reason;
     }
 
-    public void setBanReason(String par1Str)
+    public void setBanReason(final String par1Str)
     {
         this.reason = par1Str;
     }
 
     public String buildBanString()
     {
-        StringBuilder stringbuilder = new StringBuilder();
+        final StringBuilder stringbuilder = new StringBuilder();
         stringbuilder.append(this.getBannedUsername());
         stringbuilder.append("|");
         stringbuilder.append(dateFormat.format(this.getBanStartDate()));
@@ -89,7 +89,7 @@ public class BanEntry
         return stringbuilder.toString();
     }
 
-    public static BanEntry parse(String par0Str)
+    public static BanEntry parse(final String par0Str)
     {
         if (par0Str.trim().length() < 2)
         {
@@ -97,9 +97,9 @@ public class BanEntry
         }
         else
         {
-            String[] astring = par0Str.trim().split(Pattern.quote("|"), 5);
-            BanEntry banentry = new BanEntry(astring[0].trim());
-            byte b0 = 0;
+            final String[] astring = par0Str.trim().split(Pattern.quote("|"), 5);
+            final BanEntry banentry = new BanEntry(astring[0].trim());
+            final byte b0 = 0;
             int i = astring.length;
             int j = b0 + 1;
 
@@ -113,7 +113,7 @@ public class BanEntry
                 {
                     banentry.setBanStartDate(dateFormat.parse(astring[j].trim()));
                 }
-                catch (ParseException parseexception)
+                catch (final ParseException parseexception)
                 {
                     MinecraftServer.getServer().getLogAgent().logWarningException("Could not read creation date format for ban entry \'" + banentry.getBannedUsername() + "\' (was: \'" + astring[j] + "\')", parseexception);
                 }
@@ -139,14 +139,14 @@ public class BanEntry
                     {
                         try
                         {
-                            String s1 = astring[j].trim();
+                            final String s1 = astring[j].trim();
 
-                            if (!s1.equalsIgnoreCase("Forever") && s1.length() > 0)
+                            if (!s1.equalsIgnoreCase("Forever") && !s1.isEmpty())
                             {
                                 banentry.setBanEndDate(dateFormat.parse(s1));
                             }
                         }
-                        catch (ParseException parseexception1)
+                        catch (final ParseException parseexception1)
                         {
                             MinecraftServer.getServer().getLogAgent().logWarningException("Could not read expiry date format for ban entry \'" + banentry.getBannedUsername() + "\' (was: \'" + astring[j] + "\')", parseexception1);
                         }

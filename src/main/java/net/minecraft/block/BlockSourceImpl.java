@@ -11,7 +11,7 @@ public class BlockSourceImpl implements IBlockSource
     private final int yPos;
     private final int zPos;
 
-    public BlockSourceImpl(World par1World, int par2, int par3, int par4)
+    public BlockSourceImpl(final World par1World, final int par2, final int par3, final int par4)
     {
         this.worldObj = par1World;
         this.xPos = par2;

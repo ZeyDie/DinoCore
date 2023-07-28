@@ -29,7 +29,7 @@ public class ModAnnotation
         private String desc;
         private String value;
 
-        public EnumHolder(String desc, String value)
+        public EnumHolder(final String desc, final String value)
         {
             this.desc = desc;
             this.value = value;
@@ -44,14 +44,14 @@ public class ModAnnotation
     private Object array;
     private String arrayName;
     private ModAnnotation parent;
-    public ModAnnotation(AnnotationType type, Type asmType, String member)
+    public ModAnnotation(final AnnotationType type, final Type asmType, final String member)
     {
         this.type = type;
         this.asmType = asmType;
         this.member = member;
     }
 
-    public ModAnnotation(AnnotationType type, Type asmType, ModAnnotation parent)
+    public ModAnnotation(final AnnotationType type, final Type asmType, final ModAnnotation parent)
     {
         this.type = type;
         this.asmType = asmType;
@@ -83,12 +83,12 @@ public class ModAnnotation
     {
         return values;
     }
-    public void addArray(String name)
+    public void addArray(final String name)
     {
         this.arrayList = Lists.newArrayList();
         this.arrayName = name;
     }
-    public void addProperty(String key, Object value)
+    public void addProperty(final String key, final Object value)
     {
         if (this.arrayList != null)
         {
@@ -100,7 +100,7 @@ public class ModAnnotation
         }
     }
 
-    public void addEnumProperty(String key, String enumName, String value)
+    public void addEnumProperty(final String key, final String enumName, final String value)
     {
         values.put(key, new EnumHolder(enumName, value));
     }
@@ -110,9 +110,9 @@ public class ModAnnotation
         values.put(arrayName, arrayList);
         arrayList = null;
     }
-    public ModAnnotation addChildAnnotation(String name, String desc)
+    public ModAnnotation addChildAnnotation(final String name, final String desc)
     {
-        ModAnnotation child = new ModAnnotation(AnnotationType.SUBTYPE, Type.getType(desc), this);
+        final ModAnnotation child = new ModAnnotation(AnnotationType.SUBTYPE, Type.getType(desc), this);
         if (arrayList != null)
         {
             arrayList.add(child.getValues());

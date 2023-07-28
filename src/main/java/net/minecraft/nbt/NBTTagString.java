@@ -9,12 +9,12 @@ public class NBTTagString extends NBTBase
     /** The string value for the tag (cannot be empty). */
     public String data;
 
-    public NBTTagString(String par1Str)
+    public NBTTagString(final String par1Str)
     {
         super(par1Str);
     }
 
-    public NBTTagString(String par1Str, String par2Str)
+    public NBTTagString(final String par1Str, final String par2Str)
     {
         super(par1Str);
         this.data = par2Str;
@@ -28,7 +28,7 @@ public class NBTTagString extends NBTBase
     /**
      * Write the actual data contents of the tag, implemented in NBT extension classes
      */
-    void write(DataOutput par1DataOutput) throws IOException
+    void write(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeUTF(this.data);
     }
@@ -36,7 +36,7 @@ public class NBTTagString extends NBTBase
     /**
      * Read the actual data contents of the tag, implemented in NBT extension classes
      */
-    void load(DataInput par1DataInput, int par2) throws IOException
+    void load(final DataInput par1DataInput, final int par2) throws IOException
     {
         this.data = par1DataInput.readUTF();
     }
@@ -62,7 +62,7 @@ public class NBTTagString extends NBTBase
         return new NBTTagString(this.getName(), this.data);
     }
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         if (!super.equals(par1Obj))
         {
@@ -70,7 +70,7 @@ public class NBTTagString extends NBTBase
         }
         else
         {
-            NBTTagString nbttagstring = (NBTTagString)par1Obj;
+            final NBTTagString nbttagstring = (NBTTagString)par1Obj;
             return this.data == null && nbttagstring.data == null || this.data != null && this.data.equals(nbttagstring.data);
         }
     }

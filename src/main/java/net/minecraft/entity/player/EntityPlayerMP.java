@@ -136,13 +136,13 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     }
     // Spigot end
 
-    public EntityPlayerMP(MinecraftServer par1MinecraftServer, World par2World, String par3Str, ItemInWorldManager par4ItemInWorldManager)
+    public EntityPlayerMP(final MinecraftServer par1MinecraftServer, final World par2World, final String par3Str, final ItemInWorldManager par4ItemInWorldManager)
     {
         super(par2World, par3Str);
         par4ItemInWorldManager.thisPlayerMP = this;
         this.theItemInWorldManager = par4ItemInWorldManager;
         this.renderDistance = par1MinecraftServer.getConfigurationManager().getViewDistance();
-        ChunkCoordinates chunkcoordinates = par2World.provider.getRandomizedSpawnPoint();
+        final ChunkCoordinates chunkcoordinates = par2World.provider.getRandomizedSpawnPoint();
         if (par1MinecraftServer == null) //ToDo: Remove this in 1.7, Fake players shouldn't be used purely client side.
             this.renderDistance = 0;
         else
@@ -153,7 +153,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
 
         if (!par2World.provider.hasNoSky && par2World.getWorldInfo().getGameType() != EnumGameType.ADVENTURE)
         {
-            int var9 = Math.max(5, par1MinecraftServer.getSpawnProtectionSize() - 6);
+            final int var9 = Math.max(5, par1MinecraftServer.getSpawnProtectionSize() - 6);
             i += this.rand.nextInt(var9 * 2) - var9;
             j += this.rand.nextInt(var9 * 2) - var9;
             k = par2World.getTopSolidOrLiquidBlock(i, j);
@@ -179,7 +179,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
 
@@ -200,7 +200,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setInteger("playerGameType", this.theItemInWorldManager.getGameType().getID());
@@ -214,43 +214,44 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
      */
     public void setWorld(World world)
     {
-        super.setWorld(world);
+        World world1 = world;
+        super.setWorld(world1);
 
-        if (world == null)
+        if (world1 == null)
         {
             this.isDead = false;
             ChunkCoordinates position = null;
 
-            if (this.spawnWorld != null && !this.spawnWorld.equals(""))
+            if (this.spawnWorld != null && !this.spawnWorld.isEmpty())
             {
-                CraftWorld cworld = (CraftWorld) Bukkit.getServer().getWorld(this.spawnWorld);
+                final CraftWorld cworld = (CraftWorld) Bukkit.getServer().getWorld(this.spawnWorld);
 
                 if (cworld != null && this.getBedLocation() != null)
                 {
-                    world = cworld.getHandle();
+                    world1 = cworld.getHandle();
                     position = EntityPlayer.verifyRespawnCoordinates(cworld.getHandle(), this.getBedLocation(), false);
                 }
             }
 
-            if (world == null || position == null)
+            if (world1 == null || position == null)
             {
-                world = ((CraftWorld) Bukkit.getServer().getWorlds().get(0)).getHandle();
-                position = world.getSpawnPoint();
+                world1 = ((CraftWorld) Bukkit.getServer().getWorlds().get(0)).getHandle();
+                position = world1.getSpawnPoint();
             }
 
-            this.worldObj = world;
+            this.worldObj = world1;
             this.setPosition(position.posX + 0.5, position.posY, position.posZ + 0.5);
         }
 
         this.dimension = ((WorldServer) this.worldObj).provider.dimensionId;
-        this.theItemInWorldManager.setWorld((WorldServer) world);
+        this.theItemInWorldManager.setWorld((WorldServer) world1);
     }
     // CraftBukkit end
 
     /**
      * Add experience levels to this player.
      */
-    public void addExperienceLevel(int par1)
+    public void addExperienceLevel(final int par1)
     {
         super.addExperienceLevel(par1);
         this.lastExperience = -1;
@@ -294,9 +295,9 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
 
         while (!this.destroyedItemsNetCache.isEmpty())
         {
-            int i = Math.min(this.destroyedItemsNetCache.size(), 127);
-            int[] aint = new int[i];
-            Iterator iterator = this.destroyedItemsNetCache.iterator();
+            final int i = Math.min(this.destroyedItemsNetCache.size(), 127);
+            final int[] aint = new int[i];
+            final Iterator iterator = this.destroyedItemsNetCache.iterator();
             int j = 0;
 
             while (iterator.hasNext() && j < i)
@@ -310,19 +311,19 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
 
         if (!this.loadedChunks.isEmpty())
         {
-            ArrayList arraylist = new ArrayList();
-            Iterator iterator1 = this.loadedChunks.iterator();
-            ArrayList arraylist1 = new ArrayList();
+            final ArrayList arraylist = new ArrayList();
+            final Iterator iterator1 = this.loadedChunks.iterator();
+            final ArrayList arraylist1 = new ArrayList();
 
             while (iterator1.hasNext() && arraylist.size() < 5)
             {
-                ChunkCoordIntPair chunkcoordintpair = (ChunkCoordIntPair)iterator1.next();
+                final ChunkCoordIntPair chunkcoordintpair = (ChunkCoordIntPair)iterator1.next();
                 iterator1.remove();
 
                 if (chunkcoordintpair != null && this.worldObj.blockExists(chunkcoordintpair.chunkXPos << 4, 0, chunkcoordintpair.chunkZPos << 4))
                 {
                     // CraftBukkit start - Get tile entities directly from the chunk instead of the world
-                    Chunk chunk = this.worldObj.getChunkFromChunkCoords(chunkcoordintpair.chunkXPos, chunkcoordintpair.chunkZPos);
+                    final Chunk chunk = this.worldObj.getChunkFromChunkCoords(chunkcoordintpair.chunkXPos, chunkcoordintpair.chunkZPos);
                     arraylist.add(chunk);
                     arraylist1.addAll(chunk.chunkTileEntityMap.values());
                     // CraftBukkit end
@@ -336,7 +337,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
 
                 while (iterator2.hasNext())
                 {
-                    TileEntity tileentity = (TileEntity)iterator2.next();
+                    final TileEntity tileentity = (TileEntity)iterator2.next();
                     this.sendTileEntityToPlayer(tileentity);
                 }
 
@@ -344,7 +345,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
 
                 while (iterator2.hasNext())
                 {
-                    Chunk chunk = (Chunk)iterator2.next();
+                    final Chunk chunk = (Chunk)iterator2.next();
                     this.getServerForPlayer().getEntityTracker().func_85172_a(this, chunk);
                     MinecraftForge.EVENT_BUS.post(new ChunkWatchEvent.Watch(chunk.getChunkCoordIntPair(), this));
                 }
@@ -365,11 +366,11 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
 
             for (int i = 0; i < this.inventory.getSizeInventory(); ++i)
             {
-                ItemStack itemstack = this.inventory.getStackInSlot(i);
+                final ItemStack itemstack = this.inventory.getStackInSlot(i);
 
                 if (itemstack != null && Item.itemsList[itemstack.itemID].isMap() && this.playerNetServerHandler.packetSize() <= 5)
                 {
-                    Packet packet = ((ItemMapBase)Item.itemsList[itemstack.itemID]).createMapDataPacket(itemstack, this.worldObj, this);
+                    final Packet packet = ((ItemMapBase)Item.itemsList[itemstack.itemID]).createMapDataPacket(itemstack, this.worldObj, this);
 
                     if (packet != null)
                     {
@@ -421,10 +422,10 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
 
             // CraftBukkit end
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
-            CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Ticking player");
-            CrashReportCategory crashreportcategory = crashreport.makeCategory("Player being ticked");
+            final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Ticking player");
+            final CrashReportCategory crashreportcategory = crashreport.makeCategory("Player being ticked");
             this.addEntityCrashInfo(crashreportcategory);
             throw new ReportedException(crashreport);
         }
@@ -433,12 +434,12 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Called when the mob's health reaches 0.
      */
-    public void onDeath(DamageSource par1DamageSource)
+    public void onDeath(final DamageSource par1DamageSource)
     {
         if (ForgeHooks.onLivingDeath(this, par1DamageSource)) return;
         // CraftBukkit start
-        java.util.List<org.bukkit.inventory.ItemStack> loot = new java.util.ArrayList<org.bukkit.inventory.ItemStack>();
-        boolean keepInventory = this.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory");
+        final java.util.List<org.bukkit.inventory.ItemStack> loot = new java.util.ArrayList<org.bukkit.inventory.ItemStack>();
+        final boolean keepInventory = this.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory");
 
         if (!keepInventory)
         {
@@ -456,12 +457,12 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
             // Cauldron end
         }
 
-        ChatMessageComponent chatmessagecomponent = this.func_110142_aN().func_94546_b();
-        String deathmessage = chatmessagecomponent.toString();
-        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, deathmessage);
-        String deathMessage = event.getDeathMessage();
+        final ChatMessageComponent chatmessagecomponent = this.func_110142_aN().func_94546_b();
+        final String deathmessage = chatmessagecomponent.toString();
+        final org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, deathmessage);
+        final String deathMessage = event.getDeathMessage();
 
-        if (deathMessage != null && deathMessage.length() > 0)
+        if (deathMessage != null && !deathMessage.isEmpty())
         {
             if (deathMessage.equals(chatmessagecomponent.toString()))
             {
@@ -478,11 +479,11 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
             // Cauldron start - rework CraftBukkit logic to support Forge better
             this.inventory.clearInventory(-1, -1); // CraftBukkit - we clean the player's inventory after the EntityDeathEvent is called so plugins can get the exact state of the inventory.
             captureDrops = false;
-            PlayerDropsEvent forgeEvent = new PlayerDropsEvent(this, par1DamageSource, capturedDrops, recentlyHit > 0);
+            final PlayerDropsEvent forgeEvent = new PlayerDropsEvent(this, par1DamageSource, capturedDrops, recentlyHit > 0);
 
             if (!MinecraftForge.EVENT_BUS.post(forgeEvent))
             {
-                for (EntityItem item : capturedDrops)
+                for (final EntityItem item : capturedDrops)
                 {
                     joinEntityItemWithWorld(item);
                 }
@@ -493,16 +494,16 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         this.closeScreen();
         // CraftBukkit end
         // CraftBukkit - Get our scores instead
-        Collection<Score> collection = this.worldObj.getServer().getScoreboardManager().getScoreboardScores(ScoreObjectiveCriteria.deathCount, this.getEntityName(), new java.util.ArrayList<Score>());
-        Iterator iterator = collection.iterator();
+        final Collection<Score> collection = this.worldObj.getServer().getScoreboardManager().getScoreboardScores(ScoreObjectiveCriteria.deathCount, this.getEntityName(), new java.util.ArrayList<Score>());
+        final Iterator iterator = collection.iterator();
 
         while (iterator.hasNext())
         {
-            Score score = (Score) iterator.next(); // CraftBukkit - Use our scores instead
+            final Score score = (Score) iterator.next(); // CraftBukkit - Use our scores instead
             score.func_96648_a();
         }
 
-        EntityLivingBase entitylivingbase = this.func_94060_bK();
+        final EntityLivingBase entitylivingbase = this.func_94060_bK();
 
         if (entitylivingbase != null)
         {
@@ -515,7 +516,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2)
     {
         if (this.isEntityInvulnerable())
         {
@@ -524,7 +525,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         else
         {
             // CraftBukkit - this.server.getPvP() -> this.world.pvpMode
-            boolean flag = this.mcServer.isDedicatedServer() && this.worldObj.pvpMode && "fall".equals(par1DamageSource.damageType);
+            final boolean flag = this.mcServer.isDedicatedServer() && this.worldObj.pvpMode && "fall".equals(par1DamageSource.damageType);
 
             if (!flag && this.initialInvulnerability > 0 && par1DamageSource != DamageSource.outOfWorld)
             {
@@ -534,7 +535,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
             {
                 if (par1DamageSource instanceof EntityDamageSource)
                 {
-                    Entity entity = par1DamageSource.getEntity();
+                    final Entity entity = par1DamageSource.getEntity();
 
                     if (entity instanceof EntityPlayer && !this.canAttackPlayer((EntityPlayer)entity))
                     {
@@ -543,7 +544,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
 
                     if (entity instanceof EntityArrow)
                     {
-                        EntityArrow entityarrow = (EntityArrow)entity;
+                        final EntityArrow entityarrow = (EntityArrow)entity;
 
                         if (entityarrow.shootingEntity instanceof EntityPlayer && !this.canAttackPlayer((EntityPlayer)entityarrow.shootingEntity))
                         {
@@ -557,7 +558,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         }
     }
 
-    public boolean canAttackPlayer(EntityPlayer par1EntityPlayer)
+    public boolean canAttackPlayer(final EntityPlayer par1EntityPlayer)
     {
         // CraftBukkit - this.server.getPvP() -> this.world.pvpMode
         return !this.worldObj.pvpMode ? false : super.canAttackPlayer(par1EntityPlayer);
@@ -568,7 +569,8 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
      */
     public void travelToDimension(int par1)
     {
-        if (this.dimension == 1 && par1 == 1)
+        int par11 = par1;
+        if (this.dimension == 1 && par11 == 1)
         {
             this.triggerAchievement(AchievementList.theEnd2);
             this.worldObj.removeEntity(this);
@@ -577,17 +579,17 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         }
         else
         {
-            if (this.dimension == 0 && par1 == 1)
+            if (this.dimension == 0 && par11 == 1)
             {
                 this.triggerAchievement(AchievementList.theEnd);
-                ChunkCoordinates chunkcoordinates = this.mcServer.worldServerForDimension(par1).getEntrancePortalLocation();
+                final ChunkCoordinates chunkcoordinates = this.mcServer.worldServerForDimension(par11).getEntrancePortalLocation();
 
                 if (chunkcoordinates != null)
                 {
                     this.playerNetServerHandler.setPlayerLocation((double)chunkcoordinates.posX, (double)chunkcoordinates.posY, (double)chunkcoordinates.posZ, 0.0F, 0.0F);
                 }
 
-                par1 = 1;
+                par11 = 1;
             }
             else
             {
@@ -595,8 +597,8 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
             }
 
             // CraftBukkit start
-            TeleportCause cause = (this.dimension == 1 || par1 == 1) ? TeleportCause.END_PORTAL : TeleportCause.NETHER_PORTAL;
-            this.mcServer.getConfigurationManager().transferPlayerToDimension(this, par1, cause); // Cauldron
+            final TeleportCause cause = (this.dimension == 1 || par11 == 1) ? TeleportCause.END_PORTAL : TeleportCause.NETHER_PORTAL;
+            this.mcServer.getConfigurationManager().transferPlayerToDimension(this, par11, cause); // Cauldron
             // CraftBukkit end
             this.lastExperience = -1;
             this.lastHealth = -1.0F;
@@ -607,11 +609,11 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * called from onUpdate for all tileEntity in specific chunks
      */
-    private void sendTileEntityToPlayer(TileEntity par1TileEntity)
+    private void sendTileEntityToPlayer(final TileEntity par1TileEntity)
     {
         if (par1TileEntity != null)
         {
-            Packet packet = par1TileEntity.getDescriptionPacket();
+            final Packet packet = par1TileEntity.getDescriptionPacket();
 
             if (packet != null)
             {
@@ -623,7 +625,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Called whenever an item is picked up from walking over it. Args: pickedUpEntity, stackSize
      */
-    public void onItemPickup(Entity par1Entity, int par2)
+    public void onItemPickup(final Entity par1Entity, final int par2)
     {
         super.onItemPickup(par1Entity, par2);
         this.openContainer.detectAndSendChanges();
@@ -632,13 +634,13 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Attempts to have the player sleep in a bed at the specified location.
      */
-    public EnumStatus sleepInBedAt(int par1, int par2, int par3)
+    public EnumStatus sleepInBedAt(final int par1, final int par2, final int par3)
     {
-        EnumStatus enumstatus = super.sleepInBedAt(par1, par2, par3);
+        final EnumStatus enumstatus = super.sleepInBedAt(par1, par2, par3);
 
         if (enumstatus == EnumStatus.OK)
         {
-            Packet17Sleep packet17sleep = new Packet17Sleep(this, 0, par1, par2, par3);
+            final Packet17Sleep packet17sleep = new Packet17Sleep(this, 0, par1, par2, par3);
             this.getServerForPlayer().getEntityTracker().sendPacketToAllPlayersTrackingEntity(this, packet17sleep);
             this.playerNetServerHandler.setPlayerLocation(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
             this.playerNetServerHandler.sendPacketToPlayer(packet17sleep);
@@ -650,7 +652,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Wake up the player if they're sleeping.
      */
-    public void wakeUpPlayer(boolean par1, boolean par2, boolean par3)
+    public void wakeUpPlayer(final boolean par1, final boolean par2, final boolean par3)
     {
         if (this.fauxSleeping && !this.sleeping)
         {
@@ -673,17 +675,17 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Called when a player mounts an entity. e.g. mounts a pig, mounts a boat.
      */
-    public void mountEntity(Entity par1Entity)
+    public void mountEntity(final Entity par1Entity)
     {
         // CraftBukkit start
         this.setPassengerOf(par1Entity);
     }
 
-    public void setPassengerOf(Entity entity)
+    public void setPassengerOf(final Entity entity)
     {
         // mount(null) doesn't really fly for overloaded methods,
         // so this method is needed
-        Entity currentVehicle = this.ridingEntity;
+        final Entity currentVehicle = this.ridingEntity;
         super.setPassengerOf(entity);
 
         // Check if the vehicle actually changed.
@@ -699,12 +701,12 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
      * Takes in the distance the entity has fallen this tick and whether its on the ground to update the fall distance
      * and deal fall damage if landing on the ground.  Args: distanceFallenThisTick, onGround
      */
-    protected void updateFallState(double par1, boolean par3) {}
+    protected void updateFallState(final double par1, final boolean par3) {}
 
     /**
      * likeUpdateFallState, but called from updateFlyingState, rather than moveEntity
      */
-    public void updateFlyingState(double par1, boolean par3)
+    public void updateFlyingState(final double par1, final boolean par3)
     {
         super.updateFallState(par1, par3);
     }
@@ -712,7 +714,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Displays the GUI for editing a sign. Args: tileEntitySign
      */
-    public void displayGUIEditSign(TileEntity par1TileEntity)
+    public void displayGUIEditSign(final TileEntity par1TileEntity)
     {
         if (par1TileEntity instanceof TileEntitySign)
         {
@@ -737,10 +739,10 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Displays the crafting GUI for a workbench.
      */
-    public void displayGUIWorkbench(int par1, int par2, int par3)
+    public void displayGUIWorkbench(final int par1, final int par2, final int par3)
     {
         // CraftBukkit start - Inventory open hook
-        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerWorkbench(this.inventory, this.worldObj, par1, par2, par3));
+        final Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerWorkbench(this.inventory, this.worldObj, par1, par2, par3));
 
         if (container == null)
         {
@@ -755,10 +757,10 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         this.openContainer.addCraftingToCrafters(this);
     }
 
-    public void displayGUIEnchantment(int par1, int par2, int par3, String par4Str)
+    public void displayGUIEnchantment(final int par1, final int par2, final int par3, final String par4Str)
     {
         // CraftBukkit start - Inventory open hook
-        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerEnchantment(this.inventory, this.worldObj, par1, par2, par3));
+        final Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerEnchantment(this.inventory, this.worldObj, par1, par2, par3));
 
         if (container == null)
         {
@@ -776,10 +778,10 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Displays the GUI for interacting with an anvil.
      */
-    public void displayGUIAnvil(int par1, int par2, int par3)
+    public void displayGUIAnvil(final int par1, final int par2, final int par3)
     {
         // CraftBukkit start - Inventory open hook
-        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerRepair(this.inventory, this.worldObj, par1, par2, par3, this));
+        final Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerRepair(this.inventory, this.worldObj, par1, par2, par3, this));
 
         if (container == null)
         {
@@ -797,7 +799,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Displays the GUI for interacting with a chest inventory. Args: chestInventory
      */
-    public void displayGUIChest(IInventory par1IInventory)
+    public void displayGUIChest(final IInventory par1IInventory)
     {
         if (this.openContainer != this.inventoryContainer)
         {
@@ -805,7 +807,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         }
 
         // CraftBukkit start - Inventory open hook
-        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerChest(this.inventory, par1IInventory));
+        final Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerChest(this.inventory, par1IInventory));
 
         if (container == null)
         {
@@ -821,10 +823,10 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         this.openContainer.addCraftingToCrafters(this);
     }
 
-    public void displayGUIHopper(TileEntityHopper par1TileEntityHopper)
+    public void displayGUIHopper(final TileEntityHopper par1TileEntityHopper)
     {
         // CraftBukkit start - Inventory open hook
-        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerHopper(this.inventory, par1TileEntityHopper));
+        final Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerHopper(this.inventory, par1TileEntityHopper));
 
         if (container == null)
         {
@@ -840,10 +842,10 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         this.openContainer.addCraftingToCrafters(this);
     }
 
-    public void displayGUIHopperMinecart(EntityMinecartHopper par1EntityMinecartHopper)
+    public void displayGUIHopperMinecart(final EntityMinecartHopper par1EntityMinecartHopper)
     {
         // CraftBukkit start - Inventory open hook
-        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerHopper(this.inventory, par1EntityMinecartHopper));
+        final Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerHopper(this.inventory, par1EntityMinecartHopper));
 
         if (container == null)
         {
@@ -862,10 +864,10 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Displays the furnace GUI for the passed in furnace entity. Args: tileEntityFurnace
      */
-    public void displayGUIFurnace(TileEntityFurnace par1TileEntityFurnace)
+    public void displayGUIFurnace(final TileEntityFurnace par1TileEntityFurnace)
     {
         // CraftBukkit start - Inventory open hook
-        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerFurnace(this.inventory, par1TileEntityFurnace));
+        final Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerFurnace(this.inventory, par1TileEntityFurnace));
 
         if (container == null)
         {
@@ -884,10 +886,10 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Displays the dipsenser GUI for the passed in dispenser entity. Args: TileEntityDispenser
      */
-    public void displayGUIDispenser(TileEntityDispenser par1TileEntityDispenser)
+    public void displayGUIDispenser(final TileEntityDispenser par1TileEntityDispenser)
     {
         // CraftBukkit start - Inventory open hook
-        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerDispenser(this.inventory, par1TileEntityDispenser));
+        final Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerDispenser(this.inventory, par1TileEntityDispenser));
 
         if (container == null)
         {
@@ -906,10 +908,10 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Displays the GUI for interacting with a brewing stand.
      */
-    public void displayGUIBrewingStand(TileEntityBrewingStand par1TileEntityBrewingStand)
+    public void displayGUIBrewingStand(final TileEntityBrewingStand par1TileEntityBrewingStand)
     {
         // CraftBukkit start - Inventory open hook
-        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerBrewingStand(this.inventory, par1TileEntityBrewingStand));
+        final Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerBrewingStand(this.inventory, par1TileEntityBrewingStand));
 
         if (container == null)
         {
@@ -928,10 +930,10 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Displays the GUI for interacting with a beacon.
      */
-    public void displayGUIBeacon(TileEntityBeacon par1TileEntityBeacon)
+    public void displayGUIBeacon(final TileEntityBeacon par1TileEntityBeacon)
     {
         // CraftBukkit start - Inventory open hook
-        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerBeacon(this.inventory, par1TileEntityBeacon));
+        final Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerBeacon(this.inventory, par1TileEntityBeacon));
 
         if (container == null)
         {
@@ -947,10 +949,10 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         this.openContainer.addCraftingToCrafters(this);
     }
 
-    public void displayGUIMerchant(IMerchant par1IMerchant, String par2Str)
+    public void displayGUIMerchant(final IMerchant par1IMerchant, final String par2Str)
     {
         // CraftBukkit start - Inventory open hook
-        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerMerchant(this.inventory, par1IMerchant, this.worldObj));
+        final Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerMerchant(this.inventory, par1IMerchant, this.worldObj));
 
         if (container == null)
         {
@@ -962,31 +964,31 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         this.openContainer = container; // CraftBukkit - Use container we passed to event
         this.openContainer.windowId = this.currentWindowId;
         this.openContainer.addCraftingToCrafters(this);
-        InventoryMerchant inventorymerchant = ((ContainerMerchant)this.openContainer).getMerchantInventory();
+        final InventoryMerchant inventorymerchant = ((ContainerMerchant)this.openContainer).getMerchantInventory();
         this.playerNetServerHandler.sendPacketToPlayer(new Packet100OpenWindow(this.currentWindowId, 6, par2Str == null ? "" : par2Str, inventorymerchant.getSizeInventory(), par2Str != null));
-        MerchantRecipeList merchantrecipelist = par1IMerchant.getRecipes(this);
+        final MerchantRecipeList merchantrecipelist = par1IMerchant.getRecipes(this);
 
         if (merchantrecipelist != null)
         {
             try
             {
-                ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
-                DataOutputStream dataoutputstream = new DataOutputStream(bytearrayoutputstream);
+                final ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
+                final DataOutputStream dataoutputstream = new DataOutputStream(bytearrayoutputstream);
                 dataoutputstream.writeInt(this.currentWindowId);
                 merchantrecipelist.writeRecipiesToStream(dataoutputstream);
                 this.playerNetServerHandler.sendPacketToPlayer(new Packet250CustomPayload("MC|TrList", bytearrayoutputstream.toByteArray()));
             }
-            catch (IOException ioexception)
+            catch (final IOException ioexception)
             {
                 ioexception.printStackTrace();
             }
         }
     }
 
-    public void displayGUIHorse(EntityHorse par1EntityHorse, IInventory par2IInventory)
+    public void displayGUIHorse(final EntityHorse par1EntityHorse, final IInventory par2IInventory)
     {
         // CraftBukkit start - Inventory open hook
-        Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerHorseInventory(this.inventory, par2IInventory, par1EntityHorse));
+        final Container container = CraftEventFactory.callInventoryOpenEvent(this, new ContainerHorseInventory(this.inventory, par2IInventory, par1EntityHorse));
 
         if (container == null)
         {
@@ -1012,7 +1014,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
      * Sends the contents of an inventory slot to the client-side Container. This doesn't have to match the actual
      * contents of that slot. Args: Container, slot number, slot contents
      */
-    public void sendSlotContents(Container par1Container, int par2, ItemStack par3ItemStack)
+    public void sendSlotContents(final Container par1Container, final int par2, final ItemStack par3ItemStack)
     {
         if (!(par1Container.getSlot(par2) instanceof SlotCrafting))
         {
@@ -1023,12 +1025,12 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         }
     }
 
-    public void sendContainerToPlayer(Container par1Container)
+    public void sendContainerToPlayer(final Container par1Container)
     {
         this.sendContainerAndContentsToPlayer(par1Container, par1Container.getInventory());
     }
 
-    public void sendContainerAndContentsToPlayer(Container par1Container, List par2List)
+    public void sendContainerAndContentsToPlayer(final Container par1Container, final List par2List)
     {
         this.playerNetServerHandler.sendPacketToPlayer(new Packet104WindowItems(par1Container.windowId, par2List));
         this.playerNetServerHandler.sendPacketToPlayer(new Packet103SetSlot(-1, -1, this.inventory.getItemStack()));
@@ -1048,7 +1050,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
      * and enchanting level. Normally the first int identifies which variable to update, and the second contains the new
      * value. Both are truncated to shorts in non-local SMP.
      */
-    public void sendProgressBarUpdate(Container par1Container, int par2, int par3)
+    public void sendProgressBarUpdate(final Container par1Container, final int par2, final int par3)
     {
         this.playerNetServerHandler.sendPacketToPlayer(new Packet105UpdateProgressbar(par1Container.windowId, par2, par3));
     }
@@ -1083,7 +1085,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         this.openContainer = this.inventoryContainer;
     }
 
-    public void setEntityActionState(float par1, float par2, boolean par3, boolean par4)
+    public void setEntityActionState(final float par1, final float par2, final boolean par3, final boolean par4)
     {
         if (this.ridingEntity != null)
         {
@@ -1105,7 +1107,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Adds a value to a statistic field.
      */
-    public void addStat(StatBase par1StatBase, int par2)
+    public void addStat(final StatBase par1StatBase, final int par2)
     {
         if (par1StatBase != null)
         {
@@ -1142,7 +1144,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Add a chat message to the player
      */
-    public void addChatMessage(String par1Str)
+    public void addChatMessage(final String par1Str)
     {
         this.playerNetServerHandler.sendPacketToPlayer(new Packet3Chat(ChatMessageComponent.createFromTranslationKey(par1Str)));
     }
@@ -1159,7 +1161,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * sets the itemInUse when the use item button is clicked. Args: itemstack, int maxItemUseDuration
      */
-    public void setItemInUse(ItemStack par1ItemStack, int par2)
+    public void setItemInUse(final ItemStack par1ItemStack, final int par2)
     {
         super.setItemInUse(par1ItemStack, par2);
 
@@ -1173,7 +1175,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
      * Copies the values from the given player into this player if boolean par2 is true. Always clones Ender Chest
      * Inventory.
      */
-    public void clonePlayer(EntityPlayer par1EntityPlayer, boolean par2)
+    public void clonePlayer(final EntityPlayer par1EntityPlayer, final boolean par2)
     {
         super.clonePlayer(par1EntityPlayer, par2);
         this.lastExperience = -1;
@@ -1182,19 +1184,19 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         this.destroyedItemsNetCache.addAll(((EntityPlayerMP)par1EntityPlayer).destroyedItemsNetCache);
     }
 
-    protected void onNewPotionEffect(PotionEffect par1PotionEffect)
+    protected void onNewPotionEffect(final PotionEffect par1PotionEffect)
     {
         super.onNewPotionEffect(par1PotionEffect);
         this.playerNetServerHandler.sendPacketToPlayer(new Packet41EntityEffect(this.entityId, par1PotionEffect));
     }
 
-    protected void onChangedPotionEffect(PotionEffect par1PotionEffect, boolean par2)
+    protected void onChangedPotionEffect(final PotionEffect par1PotionEffect, final boolean par2)
     {
         super.onChangedPotionEffect(par1PotionEffect, par2);
         this.playerNetServerHandler.sendPacketToPlayer(new Packet41EntityEffect(this.entityId, par1PotionEffect));
     }
 
-    protected void onFinishedPotionEffect(PotionEffect par1PotionEffect)
+    protected void onFinishedPotionEffect(final PotionEffect par1PotionEffect)
     {
         super.onFinishedPotionEffect(par1PotionEffect);
         this.playerNetServerHandler.sendPacketToPlayer(new Packet42RemoveEntityEffect(this.entityId, par1PotionEffect));
@@ -1203,7 +1205,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Move the entity to the coordinates informed, but keep yaw/pitch values.
      */
-    public void setPositionAndUpdate(double par1, double par3, double par5)
+    public void setPositionAndUpdate(final double par1, final double par3, final double par5)
     {
         this.playerNetServerHandler.setPlayerLocation(par1, par3, par5, this.rotationYaw, this.rotationPitch);
     }
@@ -1211,12 +1213,12 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Called when the player performs a critical hit on the Entity. Args: entity that was hit critically
      */
-    public void onCriticalHit(Entity par1Entity)
+    public void onCriticalHit(final Entity par1Entity)
     {
         this.getServerForPlayer().getEntityTracker().sendPacketToAllAssociatedPlayers(this, new Packet18Animation(par1Entity, 6));
     }
 
-    public void onEnchantmentCritical(Entity par1Entity)
+    public void onEnchantmentCritical(final Entity par1Entity)
     {
         this.getServerForPlayer().getEntityTracker().sendPacketToAllAssociatedPlayers(this, new Packet18Animation(par1Entity, 7));
     }
@@ -1240,13 +1242,13 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Sets the player's game mode and sends it to them.
      */
-    public void setGameType(EnumGameType par1EnumGameType)
+    public void setGameType(final EnumGameType par1EnumGameType)
     {
         this.theItemInWorldManager.setGameType(par1EnumGameType);
         this.playerNetServerHandler.sendPacketToPlayer(new Packet70GameEvent(3, par1EnumGameType.getID()));
     }
 
-    public void sendChatToPlayer(ChatMessageComponent par1ChatMessageComponent)
+    public void sendChatToPlayer(final ChatMessageComponent par1ChatMessageComponent)
     {
         this.playerNetServerHandler.sendPacketToPlayer(new Packet3Chat(par1ChatMessageComponent));
     }
@@ -1254,7 +1256,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Returns true if the command sender is allowed to use the given command.
      */
-    public boolean canCommandSenderUseCommand(int par1, String par2Str)
+    public boolean canCommandSenderUseCommand(final int par1, final String par2Str)
     {
         return "seed".equals(par2Str) && !this.mcServer.isDedicatedServer() ? true : (!"tell".equals(par2Str) && !"help".equals(par2Str) && !"me".equals(par2Str) ? (this.mcServer.getConfigurationManager().isPlayerOpped(this.username) ? this.mcServer.func_110455_j() >= par1 : false) : true);
     }
@@ -1270,10 +1272,10 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         return s;
     }
 
-    public void updateClientInfo(Packet204ClientInfo par1Packet204ClientInfo)
+    public void updateClientInfo(final Packet204ClientInfo par1Packet204ClientInfo)
     {
         this.translator = par1Packet204ClientInfo.getLanguage();
-        int i = 256 >> par1Packet204ClientInfo.getRenderDistance();
+        final int i = 256 >> par1Packet204ClientInfo.getRenderDistance();
 
         if (i > 3 && i < 15)
         {
@@ -1299,9 +1301,9 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * on recieving this message the client (if permission is given) will download the requested textures
      */
-    public void requestTexturePackLoad(String par1Str, int par2)
+    public void requestTexturePackLoad(final String par1Str, final int par2)
     {
-        String s1 = par1Str + "\0" + par2; // CraftBukkit - fix decompile error
+        final String s1 = par1Str + "\0" + par2; // CraftBukkit - fix decompile error
         this.playerNetServerHandler.sendPacketToPlayer(new Packet250CustomPayload("MC|TPack", s1.getBytes()));
     }
 
@@ -1343,7 +1345,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         return this.weather;
     }
 
-    public void setPlayerWeather(WeatherType type, boolean plugin)
+    public void setPlayerWeather(final WeatherType type, final boolean plugin)
     {
         if (!plugin && this.weather != null)
         {
@@ -1373,7 +1375,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     public void reset()
     {
         float exp = 0;
-        boolean keepInventory = this.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory");
+        final boolean keepInventory = this.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory");
 
         if (this.keepLevel || keepInventory)
         {

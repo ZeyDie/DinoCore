@@ -11,7 +11,7 @@ public class CommandAliasHelpTopic extends HelpTopic {
     private final String aliasFor;
     private final HelpMap helpMap;
 
-    public CommandAliasHelpTopic(String alias, String aliasFor, HelpMap helpMap) {
+    public CommandAliasHelpTopic(final String alias, final String aliasFor, final HelpMap helpMap) {
         this.aliasFor = aliasFor.startsWith("/") ? aliasFor : "/" + aliasFor;
         this.helpMap = helpMap;
         this.name = alias.startsWith("/") ? alias : "/" + alias;
@@ -20,9 +20,9 @@ public class CommandAliasHelpTopic extends HelpTopic {
     }
 
     @Override
-    public String getFullText(CommandSender forWho) {
-        StringBuilder sb = new StringBuilder(shortText);
-        HelpTopic aliasForTopic = helpMap.getHelpTopic(aliasFor);
+    public String getFullText(final CommandSender forWho) {
+        final StringBuilder sb = new StringBuilder(shortText);
+        final HelpTopic aliasForTopic = helpMap.getHelpTopic(aliasFor);
         if (aliasForTopic != null) {
             sb.append("\n");
             sb.append(aliasForTopic.getFullText(forWho));
@@ -31,9 +31,9 @@ public class CommandAliasHelpTopic extends HelpTopic {
     }
 
     @Override
-    public boolean canSee(CommandSender commandSender) {
+    public boolean canSee(final CommandSender commandSender) {
         if (amendedPermission == null) {
-            HelpTopic aliasForTopic = helpMap.getHelpTopic(aliasFor);
+            final HelpTopic aliasForTopic = helpMap.getHelpTopic(aliasFor);
             if (aliasForTopic != null) {
                 return aliasForTopic.canSee(commandSender);
             } else {

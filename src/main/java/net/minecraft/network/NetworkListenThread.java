@@ -25,7 +25,7 @@ public abstract class NetworkListenThread {
      */
     public volatile boolean isListening;
 
-    public NetworkListenThread(MinecraftServer par1MinecraftServer) throws IOException {
+    public NetworkListenThread(final MinecraftServer par1MinecraftServer) throws IOException {
         this.mcServer = par1MinecraftServer;
         this.isListening = true;
     }
@@ -33,7 +33,7 @@ public abstract class NetworkListenThread {
     /**
      * adds this connection to the list of currently connected players
      */
-    public void addPlayer(NetServerHandler par1NetServerHandler) {
+    public void addPlayer(final NetServerHandler par1NetServerHandler) {
         this.connections.add(par1NetServerHandler);
     }
 
@@ -52,14 +52,14 @@ public abstract class NetworkListenThread {
         //TODO ZoomCodeEnd
 
         for (int i = 0; i < this.connections.size(); ++i) {
-            NetServerHandler netserverhandler = (NetServerHandler) this.connections.get(i);
+            final NetServerHandler netserverhandler = (NetServerHandler) this.connections.get(i);
 
             try {
                 netserverhandler.networkTick();
-            } catch (Exception exception) {
+            } catch (final Exception exception) {
                 if (netserverhandler.netManager instanceof MemoryConnection) {
-                    CrashReport crashreport = CrashReport.makeCrashReport(exception, "Ticking memory connection");
-                    CrashReportCategory crashreportcategory = crashreport.makeCategory("Ticking connection");
+                    final CrashReport crashreport = CrashReport.makeCrashReport(exception, "Ticking memory connection");
+                    final CrashReportCategory crashreportcategory = crashreport.makeCategory("Ticking connection");
                     crashreportcategory.addCrashSectionCallable("Connection", new CallableConnectionName(this, netserverhandler));
                     throw new ReportedException(crashreport);
                 }

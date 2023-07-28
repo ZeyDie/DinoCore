@@ -21,7 +21,7 @@ public class ItemEvent extends EntityEvent
      * 
      * @param itemEntity The EntityItem for this event
      */
-    public ItemEvent(EntityItem itemEntity)
+    public ItemEvent(final EntityItem itemEntity)
     {
         super(itemEntity);
         this.entityItem = itemEntity;

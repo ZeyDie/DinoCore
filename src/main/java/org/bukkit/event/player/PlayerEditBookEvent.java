@@ -20,7 +20,7 @@ public class PlayerEditBookEvent extends PlayerEvent implements Cancellable {
     private boolean isSigning;
     private boolean cancel;
 
-    public PlayerEditBookEvent(Player who, int slot, BookMeta previousBookMeta, BookMeta newBookMeta, boolean isSigning) {
+    public PlayerEditBookEvent(final Player who, final int slot, final BookMeta previousBookMeta, final BookMeta newBookMeta, final boolean isSigning) {
         super(who);
 
         Validate.isTrue(slot >= 0 && slot <=8, "Slot must be in range 0-8 inclusive");
@@ -80,7 +80,7 @@ public class PlayerEditBookEvent extends PlayerEvent implements Cancellable {
      * @param newBookMeta new book meta
      * @throws IllegalArgumentException if the new book meta is null
      */
-    public void setNewBookMeta(BookMeta newBookMeta) throws IllegalArgumentException {
+    public void setNewBookMeta(final BookMeta newBookMeta) throws IllegalArgumentException {
         Validate.notNull(newBookMeta, "New book meta must not be null");
         Bukkit.getItemFactory().equals(newBookMeta, null);
         this.newBookMeta = newBookMeta.clone();
@@ -102,7 +102,7 @@ public class PlayerEditBookEvent extends PlayerEvent implements Cancellable {
      *
      * @param signing whether or not the book is being signed.
      */
-    public void setSigning(boolean signing) {
+    public void setSigning(final boolean signing) {
         isSigning = signing;
     }
 
@@ -119,7 +119,7 @@ public class PlayerEditBookEvent extends PlayerEvent implements Cancellable {
         return cancel;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 }

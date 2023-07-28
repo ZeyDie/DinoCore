@@ -19,7 +19,7 @@ public class FixedMetadataValue extends LazyMetadataValue {
      * @param owningPlugin the {@link Plugin} that created this metadata value.
      * @param value the value assigned to this metadata value.
      */
-    public FixedMetadataValue(Plugin owningPlugin, final Object value) {
+    public FixedMetadataValue(final Plugin owningPlugin, final Object value) {
         super(owningPlugin);
         this.internalValue = value;
     }

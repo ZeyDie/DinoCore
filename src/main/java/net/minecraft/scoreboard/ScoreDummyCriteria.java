@@ -6,7 +6,7 @@ public class ScoreDummyCriteria implements ScoreObjectiveCriteria
 {
     private final String field_96644_g;
 
-    public ScoreDummyCriteria(String par1Str)
+    public ScoreDummyCriteria(final String par1Str)
     {
         this.field_96644_g = par1Str;
         ScoreObjectiveCriteria.field_96643_a.put(par1Str, this);
@@ -17,7 +17,7 @@ public class ScoreDummyCriteria implements ScoreObjectiveCriteria
         return this.field_96644_g;
     }
 
-    public int func_96635_a(List par1List)
+    public int func_96635_a(final List par1List)
     {
         return 0;
     }

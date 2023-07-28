@@ -35,7 +35,7 @@ public abstract class HelpTopic {
      *
      * @param amendedPermission The permission node the server administrator wishes to apply to this topic.
      */
-    public void amendCanSee(String amendedPermission) {
+    public void amendCanSee(final String amendedPermission) {
         this.amendedPermission = amendedPermission;
     }
 
@@ -66,7 +66,7 @@ public abstract class HelpTopic {
      *
      * @return A full topic description.
      */
-    public String getFullText(CommandSender forWho) {
+    public String getFullText(final CommandSender forWho) {
         return fullText;
     }
 
@@ -79,7 +79,7 @@ public abstract class HelpTopic {
      * @param amendedShortText The new topic short text to use, or null to leave alone.
      * @param amendedFullText The new topic full text to use, or null to leave alone.
      */
-    public void amendTopic(String amendedShortText, String amendedFullText) {
+    public void amendTopic(final String amendedShortText, final String amendedFullText) {
         shortText = applyAmendment(shortText, amendedShortText);
         fullText = applyAmendment(fullText, amendedFullText);
     }
@@ -94,7 +94,7 @@ public abstract class HelpTopic {
      * @return The application of the amending text to the existing text, according to the expected rules of
      * amendTopic().
      */
-    protected String applyAmendment(String baseText, String amendment) {
+    protected String applyAmendment(final String baseText, final String amendment) {
         if (amendment == null) {
             return baseText;
         } else {

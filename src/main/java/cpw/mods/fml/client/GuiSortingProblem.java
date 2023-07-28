@@ -9,7 +9,7 @@ public class GuiSortingProblem extends GuiScreen {
     private ModSortingException modSorting;
     private SortingExceptionData<ModContainer> failedList;
 
-    public GuiSortingProblem(ModSortingException modSorting)
+    public GuiSortingProblem(final ModSortingException modSorting)
     {
         this.modSorting = modSorting;
         this.failedList = modSorting.getExceptionData();
@@ -30,7 +30,7 @@ public class GuiSortingProblem extends GuiScreen {
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         int offset = Math.max(85 - (failedList.getVisitedNodes().size() + 3) * 10, 10);
@@ -42,7 +42,7 @@ public class GuiSortingProblem extends GuiScreen {
         offset+=10;
         this.drawCenteredString(this.fontRenderer, "The remainder of the cycle involves these mods", this.width / 2, offset, 0xFFFFFF);
         offset+=5;
-        for (ModContainer mc : failedList.getVisitedNodes())
+        for (final ModContainer mc : failedList.getVisitedNodes())
         {
             offset+=10;
             this.drawCenteredString(this.fontRenderer, String.format("%s : before: %s, after: %s", mc.toString(), mc.getDependants(), mc.getDependencies()), this.width / 2, offset, 0xEEEEEE);

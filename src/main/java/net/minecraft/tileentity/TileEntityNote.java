@@ -16,7 +16,7 @@ public class TileEntityNote extends TileEntity
     /**
      * Writes a tile entity to NBT.
      */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setByte("note", this.note);
@@ -25,7 +25,7 @@ public class TileEntityNote extends TileEntity
     /**
      * Reads a tile entity from NBT.
      */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
         this.note = par1NBTTagCompound.getByte("note");
@@ -53,11 +53,11 @@ public class TileEntityNote extends TileEntity
     /**
      * plays the stored note
      */
-    public void triggerNote(World par1World, int par2, int par3, int par4)
+    public void triggerNote(final World par1World, final int par2, final int par3, final int par4)
     {
         if (par1World.getBlockMaterial(par2, par3 + 1, par4) == Material.air)
         {
-            Material material = par1World.getBlockMaterial(par2, par3 - 1, par4);
+            final Material material = par1World.getBlockMaterial(par2, par3 - 1, par4);
             byte b0 = 0;
 
             if (material == Material.rock)
@@ -81,7 +81,7 @@ public class TileEntityNote extends TileEntity
             }
 
             // CraftBukkit start
-            org.bukkit.event.block.NotePlayEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callNotePlayEvent(this.worldObj, par2, par3, par4, b0, this.note);
+            final org.bukkit.event.block.NotePlayEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callNotePlayEvent(this.worldObj, par2, par3, par4, b0, this.note);
 
             if (!event.isCancelled())
             {

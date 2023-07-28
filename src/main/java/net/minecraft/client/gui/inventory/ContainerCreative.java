@@ -17,9 +17,9 @@ class ContainerCreative extends Container
     /** the list of items in this container */
     public List itemList = new ArrayList();
 
-    public ContainerCreative(EntityPlayer par1EntityPlayer)
+    public ContainerCreative(final EntityPlayer par1EntityPlayer)
     {
-        InventoryPlayer inventoryplayer = par1EntityPlayer.inventory;
+        final InventoryPlayer inventoryplayer = par1EntityPlayer.inventory;
         int i;
 
         for (i = 0; i < 5; ++i)
@@ -38,7 +38,7 @@ class ContainerCreative extends Container
         this.scrollTo(0.0F);
     }
 
-    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
+    public boolean canInteractWith(final EntityPlayer par1EntityPlayer)
     {
         return true;
     }
@@ -46,9 +46,9 @@ class ContainerCreative extends Container
     /**
      * Updates the gui slots ItemStack's based on scroll position.
      */
-    public void scrollTo(float par1)
+    public void scrollTo(final float par1)
     {
-        int i = this.itemList.size() / 9 - 5 + 1;
+        final int i = this.itemList.size() / 9 - 5 + 1;
         int j = (int)((double)(par1 * (float)i) + 0.5D);
 
         if (j < 0)
@@ -60,7 +60,7 @@ class ContainerCreative extends Container
         {
             for (int l = 0; l < 9; ++l)
             {
-                int i1 = l + (k + j) * 9;
+                final int i1 = l + (k + j) * 9;
 
                 if (i1 >= 0 && i1 < this.itemList.size())
                 {
@@ -82,16 +82,16 @@ class ContainerCreative extends Container
         return this.itemList.size() > 45;
     }
 
-    protected void retrySlotClick(int par1, int par2, boolean par3, EntityPlayer par4EntityPlayer) {}
+    protected void retrySlotClick(final int par1, final int par2, final boolean par3, final EntityPlayer par4EntityPlayer) {}
 
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+    public ItemStack transferStackInSlot(final EntityPlayer par1EntityPlayer, final int par2)
     {
         if (par2 >= this.inventorySlots.size() - 9 && par2 < this.inventorySlots.size())
         {
-            Slot slot = (Slot)this.inventorySlots.get(par2);
+            final Slot slot = (Slot)this.inventorySlots.get(par2);
 
             if (slot != null && slot.getHasStack())
             {
@@ -102,7 +102,7 @@ class ContainerCreative extends Container
         return null;
     }
 
-    public boolean func_94530_a(ItemStack par1ItemStack, Slot par2Slot)
+    public boolean func_94530_a(final ItemStack par1ItemStack, final Slot par2Slot)
     {
         return par2Slot.yDisplayPosition > 90;
     }
@@ -111,7 +111,7 @@ class ContainerCreative extends Container
      * Returns true if the player can "drag-spilt" items into this slot,. returns true by default. Called to check if
      * the slot can be added to a list of Slots to split the held ItemStack across.
      */
-    public boolean canDragIntoSlot(Slot par1Slot)
+    public boolean canDragIntoSlot(final Slot par1Slot)
     {
         return par1Slot.inventory instanceof InventoryPlayer || par1Slot.yDisplayPosition > 90 && par1Slot.xDisplayPosition <= 162;
     }

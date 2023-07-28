@@ -8,7 +8,7 @@ public class ConfigurationOptions {
     private boolean copyDefaults = false;
     private final Configuration configuration;
 
-    protected ConfigurationOptions(Configuration configuration) {
+    protected ConfigurationOptions(final Configuration configuration) {
         this.configuration = configuration;
     }
 
@@ -42,7 +42,7 @@ public class ConfigurationOptions {
      * @param value Path separator
      * @return This object, for chaining
      */
-    public ConfigurationOptions pathSeparator(char value) {
+    public ConfigurationOptions pathSeparator(final char value) {
         this.pathSeparator = value;
         return this;
     }
@@ -74,7 +74,7 @@ public class ConfigurationOptions {
      * @param value Whether or not defaults are directly copied
      * @return This object, for chaining
      */
-    public ConfigurationOptions copyDefaults(boolean value) {
+    public ConfigurationOptions copyDefaults(final boolean value) {
         this.copyDefaults = value;
         return this;
     }

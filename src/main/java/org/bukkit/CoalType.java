@@ -44,7 +44,7 @@ public enum CoalType {
     }
 
     static {
-        for (CoalType type : values()) {
+        for (final CoalType type : values()) {
             BY_DATA.put(type.data, type);
         }
     }

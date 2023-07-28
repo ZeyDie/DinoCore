@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class BlockGravel extends BlockSand
 {
-    public BlockGravel(int par1)
+    public BlockGravel(final int par1)
     {
         super(par1);
     }
@@ -14,13 +14,14 @@ public class BlockGravel extends BlockSand
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, int par3)
     {
-        if (par3 > 3)
+        int par31 = par3;
+        if (par31 > 3)
         {
-            par3 = 3;
+            par31 = 3;
         }
 
-        return par2Random.nextInt(10 - par3 * 3) == 0 ? Item.flint.itemID : this.blockID;
+        return par2Random.nextInt(10 - par31 * 3) == 0 ? Item.flint.itemID : this.blockID;
     }
 }

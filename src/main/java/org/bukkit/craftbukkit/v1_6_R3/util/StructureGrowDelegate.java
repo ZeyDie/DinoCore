@@ -12,31 +12,31 @@ public class StructureGrowDelegate implements BlockChangeDelegate {
     private final CraftWorld world;
     private final List<BlockState> blocks = new ArrayList<BlockState>();
 
-    public StructureGrowDelegate(net.minecraft.world.World world) {
+    public StructureGrowDelegate(final net.minecraft.world.World world) {
         this.world = world.getWorld();
     }
 
-    public boolean setRawTypeId(int x, int y, int z, int type) {
+    public boolean setRawTypeId(final int x, final int y, final int z, final int type) {
         return setRawTypeIdAndData(x, y, z, type, 0);
     }
 
-    public boolean setRawTypeIdAndData(int x, int y, int z, int type, int data) {
-        BlockState state = world.getBlockAt(x, y, z).getState();
+    public boolean setRawTypeIdAndData(final int x, final int y, final int z, final int type, final int data) {
+        final BlockState state = world.getBlockAt(x, y, z).getState();
         state.setTypeId(type);
         state.setData(new MaterialData(type, (byte) data));
         blocks.add(state);
         return true;
     }
 
-    public boolean setTypeId(int x, int y, int z, int typeId) {
+    public boolean setTypeId(final int x, final int y, final int z, final int typeId) {
         return setRawTypeId(x, y, z, typeId);
     }
 
-    public boolean setTypeIdAndData(int x, int y, int z, int typeId, int data) {
+    public boolean setTypeIdAndData(final int x, final int y, final int z, final int typeId, final int data) {
         return setRawTypeIdAndData(x, y, z, typeId, data);
     }
 
-    public int getTypeId(int x, int y, int z) {
+    public int getTypeId(final int x, final int y, final int z) {
         return world.getBlockTypeIdAt(x, y, z);
     }
 
@@ -48,7 +48,7 @@ public class StructureGrowDelegate implements BlockChangeDelegate {
         return blocks;
     }
 
-    public boolean isEmpty(int x, int y, int z) {
+    public boolean isEmpty(final int x, final int y, final int z) {
         return world.getBlockAt(x, y, z).isEmpty();
     }
 }

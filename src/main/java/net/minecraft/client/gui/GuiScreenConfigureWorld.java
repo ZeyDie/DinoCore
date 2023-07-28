@@ -35,7 +35,7 @@ public class GuiScreenConfigureWorld extends GuiScreen
     private GuiButton field_110381_z;
     private boolean field_102020_y;
 
-    public GuiScreenConfigureWorld(GuiScreen par1GuiScreen, McoServer par2McoServer)
+    public GuiScreenConfigureWorld(final GuiScreen par1GuiScreen, final McoServer par2McoServer)
     {
         this.field_96285_a = par1GuiScreen;
         this.field_96280_b = par2McoServer;
@@ -83,7 +83,7 @@ public class GuiScreenConfigureWorld extends GuiScreen
         this.field_110381_z.enabled = !this.field_96280_b.field_98166_h;
     }
 
-    private int func_96264_a(int par1)
+    private int func_96264_a(final int par1)
     {
         return 40 + par1 * 13;
     }
@@ -99,7 +99,7 @@ public class GuiScreenConfigureWorld extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
@@ -118,8 +118,8 @@ public class GuiScreenConfigureWorld extends GuiScreen
             }
             else if (par1GuiButton.id == 1)
             {
-                String s = I18n.getString("mco.configure.world.close.question.line1");
-                String s1 = I18n.getString("mco.configure.world.close.question.line2");
+                final String s = I18n.getString("mco.configure.world.close.question.line1");
+                final String s1 = I18n.getString("mco.configure.world.close.question.line2");
                 this.mc.displayGuiScreen(new GuiScreenConfirmation(this, GuiScreenConfirmationType.Info, s, s1, 1));
             }
             else if (par1GuiButton.id == 0)
@@ -151,11 +151,11 @@ public class GuiScreenConfigureWorld extends GuiScreen
 
     private void func_96268_g()
     {
-        McoClient mcoclient = new McoClient(this.mc.getSession());
+        final McoClient mcoclient = new McoClient(this.mc.getSession());
 
         try
         {
-            Boolean obool = mcoclient.func_96383_b(this.field_96280_b.field_96408_a);
+            final Boolean obool = mcoclient.func_96383_b(this.field_96280_b.field_96408_a);
 
             if (obool.booleanValue())
             {
@@ -164,11 +164,11 @@ public class GuiScreenConfigureWorld extends GuiScreen
                 this.initGui();
             }
         }
-        catch (ExceptionMcoService exceptionmcoservice)
+        catch (final ExceptionMcoService exceptionmcoservice)
         {
             this.mc.getLogAgent().logSevere(exceptionmcoservice.toString());
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             this.mc.getLogAgent().logWarning("Realms: could not parse response");
         }
@@ -176,11 +176,11 @@ public class GuiScreenConfigureWorld extends GuiScreen
 
     private void func_96275_h()
     {
-        McoClient mcoclient = new McoClient(this.mc.getSession());
+        final McoClient mcoclient = new McoClient(this.mc.getSession());
 
         try
         {
-            boolean flag = mcoclient.func_96378_c(this.field_96280_b.field_96408_a).booleanValue();
+            final boolean flag = mcoclient.func_96378_c(this.field_96280_b.field_96408_a).booleanValue();
 
             if (flag)
             {
@@ -189,11 +189,11 @@ public class GuiScreenConfigureWorld extends GuiScreen
                 this.initGui();
             }
         }
-        catch (ExceptionMcoService exceptionmcoservice)
+        catch (final ExceptionMcoService exceptionmcoservice)
         {
             this.mc.getLogAgent().logSevere(exceptionmcoservice.toString());
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             this.mc.getLogAgent().logWarning("Realms: could not parse response");
         }
@@ -204,24 +204,24 @@ public class GuiScreenConfigureWorld extends GuiScreen
         if (this.field_96284_p >= 0 && this.field_96284_p < this.field_96280_b.field_96402_f.size())
         {
             this.field_96283_q = (String)this.field_96280_b.field_96402_f.get(this.field_96284_p);
-            GuiYesNo guiyesno = new GuiYesNo(this, "Warning!", I18n.getString("mco.configure.world.uninvite.question") + " \'" + this.field_96283_q + "\'", 3);
+            final GuiYesNo guiyesno = new GuiYesNo(this, "Warning!", I18n.getString("mco.configure.world.uninvite.question") + " \'" + this.field_96283_q + "\'", 3);
             this.mc.displayGuiScreen(guiyesno);
         }
     }
 
-    public void confirmClicked(boolean par1, int par2)
+    public void confirmClicked(final boolean par1, final int par2)
     {
         if (par2 == 3)
         {
             if (par1)
             {
-                McoClient mcoclient = new McoClient(this.mc.getSession());
+                final McoClient mcoclient = new McoClient(this.mc.getSession());
 
                 try
                 {
                     mcoclient.func_96381_a(this.field_96280_b.field_96408_a, this.field_96283_q);
                 }
-                catch (ExceptionMcoService exceptionmcoservice)
+                catch (final ExceptionMcoService exceptionmcoservice)
                 {
                     this.mc.getLogAgent().logSevere(exceptionmcoservice.toString());
                 }
@@ -243,7 +243,7 @@ public class GuiScreenConfigureWorld extends GuiScreen
         }
     }
 
-    private void func_96267_d(int par1)
+    private void func_96267_d(final int par1)
     {
         this.field_96280_b.field_96402_f.remove(par1);
     }
@@ -251,12 +251,12 @@ public class GuiScreenConfigureWorld extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2) {}
+    protected void keyTyped(final char par1, final int par2) {}
 
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int par1, int par2, int par3)
+    protected void mouseClicked(final int par1, final int par2, final int par3)
     {
         super.mouseClicked(par1, par2, par3);
     }
@@ -264,7 +264,7 @@ public class GuiScreenConfigureWorld extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.field_96282_c.func_96612_a(par1, par2, par3);
@@ -287,47 +287,47 @@ public class GuiScreenConfigureWorld extends GuiScreen
         }
         else
         {
-            String s = this.field_96280_b.field_96404_d.toLowerCase();
+            final String s = this.field_96280_b.field_96404_d.toLowerCase();
             return Character.toUpperCase(s.charAt(0)) + s.substring(1);
         }
     }
 
-    static Minecraft getMinecraft(GuiScreenConfigureWorld par0GuiScreenConfigureWorld)
+    static Minecraft getMinecraft(final GuiScreenConfigureWorld par0GuiScreenConfigureWorld)
     {
         return par0GuiScreenConfigureWorld.mc;
     }
 
-    static int func_96271_b(GuiScreenConfigureWorld par0GuiScreenConfigureWorld)
+    static int func_96271_b(final GuiScreenConfigureWorld par0GuiScreenConfigureWorld)
     {
         return par0GuiScreenConfigureWorld.field_96287_o;
     }
 
-    static int func_96274_a(GuiScreenConfigureWorld par0GuiScreenConfigureWorld, int par1)
+    static int func_96274_a(final GuiScreenConfigureWorld par0GuiScreenConfigureWorld, final int par1)
     {
         return par0GuiScreenConfigureWorld.func_96264_a(par1);
     }
 
-    static int func_96269_c(GuiScreenConfigureWorld par0GuiScreenConfigureWorld)
+    static int func_96269_c(final GuiScreenConfigureWorld par0GuiScreenConfigureWorld)
     {
         return par0GuiScreenConfigureWorld.field_96286_n;
     }
 
-    static McoServer func_96266_d(GuiScreenConfigureWorld par0GuiScreenConfigureWorld)
+    static McoServer func_96266_d(final GuiScreenConfigureWorld par0GuiScreenConfigureWorld)
     {
         return par0GuiScreenConfigureWorld.field_96280_b;
     }
 
-    static int func_96270_b(GuiScreenConfigureWorld par0GuiScreenConfigureWorld, int par1)
+    static int func_96270_b(final GuiScreenConfigureWorld par0GuiScreenConfigureWorld, final int par1)
     {
         return par0GuiScreenConfigureWorld.field_96284_p = par1;
     }
 
-    static int func_96263_e(GuiScreenConfigureWorld par0GuiScreenConfigureWorld)
+    static int func_96263_e(final GuiScreenConfigureWorld par0GuiScreenConfigureWorld)
     {
         return par0GuiScreenConfigureWorld.field_96284_p;
     }
 
-    static FontRenderer func_96273_f(GuiScreenConfigureWorld par0GuiScreenConfigureWorld)
+    static FontRenderer func_96273_f(final GuiScreenConfigureWorld par0GuiScreenConfigureWorld)
     {
         return par0GuiScreenConfigureWorld.fontRenderer;
     }

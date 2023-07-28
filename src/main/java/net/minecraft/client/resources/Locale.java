@@ -29,26 +29,26 @@ public class Locale
     /**
      * par2 is a list of languages. For each language $L and domain $D, attempts to load the resource $D:lang/$L.lang
      */
-    public synchronized void loadLocaleDataFiles(ResourceManager par1ResourceManager, List par2List)
+    public synchronized void loadLocaleDataFiles(final ResourceManager par1ResourceManager, final List par2List)
     {
         this.field_135032_a.clear();
-        Iterator iterator = par2List.iterator();
+        final Iterator iterator = par2List.iterator();
 
         while (iterator.hasNext())
         {
-            String s = (String)iterator.next();
-            String s1 = String.format("lang/%s.lang", new Object[] {s});
-            Iterator iterator1 = par1ResourceManager.getResourceDomains().iterator();
+            final String s = (String)iterator.next();
+            final String s1 = String.format("lang/%s.lang", new Object[] {s});
+            final Iterator iterator1 = par1ResourceManager.getResourceDomains().iterator();
 
             while (iterator1.hasNext())
             {
-                String s2 = (String)iterator1.next();
+                final String s2 = (String)iterator1.next();
 
                 try
                 {
                     this.loadLocaleData(par1ResourceManager.getAllResources(new ResourceLocation(s2, s1)));
                 }
-                catch (IOException ioexception)
+                catch (final IOException ioexception)
                 {
                     ;
                 }
@@ -66,11 +66,11 @@ public class Locale
     private void checkUnicode()
     {
         this.field_135029_d = false;
-        Iterator iterator = this.field_135032_a.values().iterator();
+        final Iterator iterator = this.field_135032_a.values().iterator();
 
         while (iterator.hasNext())
         {
-            String s = (String)iterator.next();
+            final String s = (String)iterator.next();
 
             for (int i = 0; i < s.length(); ++i)
             {
@@ -86,33 +86,33 @@ public class Locale
     /**
      * par1 is a list of Resources
      */
-    private void loadLocaleData(List par1List) throws IOException
+    private void loadLocaleData(final List par1List) throws IOException
     {
-        Iterator iterator = par1List.iterator();
+        final Iterator iterator = par1List.iterator();
 
         while (iterator.hasNext())
         {
-            Resource resource = (Resource)iterator.next();
+            final Resource resource = (Resource)iterator.next();
             this.loadLocaleData(resource.getInputStream());
         }
     }
 
-    private void loadLocaleData(InputStream par1InputStream) throws IOException
+    private void loadLocaleData(final InputStream par1InputStream) throws IOException
     {
-        Iterator iterator = IOUtils.readLines(par1InputStream, Charsets.UTF_8).iterator();
+        final Iterator iterator = IOUtils.readLines(par1InputStream, Charsets.UTF_8).iterator();
 
         while (iterator.hasNext())
         {
-            String s = (String)iterator.next();
+            final String s = (String)iterator.next();
 
             if (!s.isEmpty() && s.charAt(0) != 35)
             {
-                String[] astring = (String[])Iterables.toArray(splitter.split(s), String.class);
+                final String[] astring = (String[])Iterables.toArray(splitter.split(s), String.class);
 
                 if (astring != null && astring.length == 2)
                 {
-                    String s1 = astring[0];
-                    String s2 = field_135031_c.matcher(astring[1]).replaceAll("%$1s");
+                    final String s1 = astring[0];
+                    final String s2 = field_135031_c.matcher(astring[1]).replaceAll("%$1s");
                     this.field_135032_a.put(s1, s2);
                 }
             }
@@ -122,16 +122,16 @@ public class Locale
     /**
      * Returns the translation, or the key itself if the key could not be translated.
      */
-    private String translateKeyPrivate(String par1Str)
+    private String translateKeyPrivate(final String par1Str)
     {
-        String s1 = (String)this.field_135032_a.get(par1Str);
+        final String s1 = (String)this.field_135032_a.get(par1Str);
         return s1 == null ? par1Str : s1;
     }
 
     /**
      * Returns the translation, or the key itself if the key could not be translated.
      */
-    public String translateKey(String par1Str)
+    public String translateKey(final String par1Str)
     {
         return this.translateKeyPrivate(par1Str);
     }
@@ -139,15 +139,15 @@ public class Locale
     /**
      * Calls String.format(translateKey(key), params)
      */
-    public String formatMessage(String par1Str, Object[] par2ArrayOfObj)
+    public String formatMessage(final String par1Str, final Object[] par2ArrayOfObj)
     {
-        String s1 = this.translateKeyPrivate(par1Str);
+        final String s1 = this.translateKeyPrivate(par1Str);
 
         try
         {
             return String.format(s1, par2ArrayOfObj);
         }
-        catch (IllegalFormatException illegalformatexception)
+        catch (final IllegalFormatException illegalformatexception)
         {
             return "Format error: " + s1;
         }

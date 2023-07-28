@@ -11,7 +11,7 @@ public class Packet32EntityLook extends Packet30Entity
         this.rotating = true;
     }
 
-    public Packet32EntityLook(int par1, byte par2, byte par3)
+    public Packet32EntityLook(final int par1, final byte par2, final byte par3)
     {
         super(par1);
         this.yaw = par2;
@@ -22,7 +22,7 @@ public class Packet32EntityLook extends Packet30Entity
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         super.readPacketData(par1DataInput);
         this.yaw = par1DataInput.readByte();
@@ -32,7 +32,7 @@ public class Packet32EntityLook extends Packet30Entity
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         super.writePacketData(par1DataOutput);
         par1DataOutput.writeByte(this.yaw);

@@ -68,7 +68,7 @@ public abstract class GuiSlot
     private boolean field_77243_s;
     private int field_77242_t;
 
-    public GuiSlot(Minecraft par1Minecraft, int par2, int par3, int par4, int par5, int par6)
+    public GuiSlot(final Minecraft par1Minecraft, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         this.mc = par1Minecraft;
         this.width = par2;
@@ -80,7 +80,7 @@ public abstract class GuiSlot
         this.right = par2;
     }
 
-    public void func_77207_a(int par1, int par2, int par3, int par4)
+    public void func_77207_a(final int par1, final int par2, final int par3, final int par4)
     {
         this.width = par1;
         this.height = par2;
@@ -90,12 +90,12 @@ public abstract class GuiSlot
         this.right = par1;
     }
 
-    public void setShowSelectionBox(boolean par1)
+    public void setShowSelectionBox(final boolean par1)
     {
         this.showSelectionBox = par1;
     }
 
-    protected void func_77223_a(boolean par1, int par2)
+    protected void func_77223_a(final boolean par1, final int par2)
     {
         this.field_77243_s = par1;
         this.field_77242_t = par2;
@@ -133,25 +133,25 @@ public abstract class GuiSlot
 
     protected abstract void drawSlot(int i, int j, int k, int l, Tessellator tessellator);
 
-    protected void func_77222_a(int par1, int par2, Tessellator par3Tessellator) {}
+    protected void func_77222_a(final int par1, final int par2, final Tessellator par3Tessellator) {}
 
-    protected void func_77224_a(int par1, int par2) {}
+    protected void func_77224_a(final int par1, final int par2) {}
 
-    protected void func_77215_b(int par1, int par2) {}
+    protected void func_77215_b(final int par1, final int par2) {}
 
-    public int func_77210_c(int par1, int par2)
+    public int func_77210_c(final int par1, final int par2)
     {
-        int k = this.width / 2 - 110;
-        int l = this.width / 2 + 110;
-        int i1 = par2 - this.top - this.field_77242_t + (int)this.amountScrolled - 4;
-        int j1 = i1 / this.slotHeight;
+        final int k = this.width / 2 - 110;
+        final int l = this.width / 2 + 110;
+        final int i1 = par2 - this.top - this.field_77242_t + (int)this.amountScrolled - 4;
+        final int j1 = i1 / this.slotHeight;
         return par1 >= k && par1 <= l && j1 >= 0 && i1 >= 0 && j1 < this.getSize() ? j1 : -1;
     }
 
     /**
      * Registers the IDs that can be used for the scrollbar's buttons.
      */
-    public void registerScrollButtons(int par1, int par2)
+    public void registerScrollButtons(final int par1, final int par2)
     {
         this.scrollUpButtonID = par1;
         this.scrollDownButtonID = par2;
@@ -185,14 +185,14 @@ public abstract class GuiSlot
         return this.getContentHeight() - (this.bottom - this.top - 4);
     }
 
-    public void func_77208_b(int par1)
+    public void func_77208_b(final int par1)
     {
         this.amountScrolled += (float)par1;
         this.bindAmountScrolled();
         this.initialClickY = -2.0F;
     }
 
-    public void actionPerformed(GuiButton par1GuiButton)
+    public void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
@@ -214,14 +214,14 @@ public abstract class GuiSlot
     /**
      * draws the slot to the screen, pass in mouse's current x and y and partial ticks
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.mouseX = par1;
         this.mouseY = par2;
         this.drawBackground();
-        int k = this.getSize();
-        int l = this.getScrollBarX();
-        int i1 = l + 6;
+        final int k = this.getSize();
+        final int l = this.getScrollBarX();
+        final int i1 = l + 6;
         int j1;
         int k1;
         int l1;
@@ -236,14 +236,14 @@ public abstract class GuiSlot
 
                 if (par2 >= this.top && par2 <= this.bottom)
                 {
-                    int k2 = this.width / 2 - 110;
+                    final int k2 = this.width / 2 - 110;
                     j1 = this.width / 2 + 110;
                     k1 = par2 - this.top - this.field_77242_t + (int)this.amountScrolled - 4;
                     l1 = k1 / this.slotHeight;
 
                     if (par1 >= k2 && par1 <= j1 && l1 >= 0 && k1 >= 0 && l1 < k)
                     {
-                        boolean flag1 = l1 == this.selectedElement && Minecraft.getSystemTime() - this.lastClicked < 250L;
+                        final boolean flag1 = l1 == this.selectedElement && Minecraft.getSystemTime() - this.lastClicked < 250L;
                         this.elementClicked(l1, flag1);
                         this.selectedElement = l1;
                         this.lastClicked = Minecraft.getSystemTime();
@@ -330,7 +330,7 @@ public abstract class GuiSlot
         this.bindAmountScrolled();
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_FOG);
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         drawContainerBackground(tessellator);
         j1 = this.width / 2 - 92 - 16;
         k1 = this.top + 4 - (int)this.amountScrolled;
@@ -352,7 +352,7 @@ public abstract class GuiSlot
                 if (this.showSelectionBox && this.isSelected(l1))
                 {
                     i3 = this.width / 2 - 110;
-                    int j3 = this.width / 2 + 110;
+                    final int j3 = this.width / 2 + 110;
                     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                     GL11.glDisable(GL11.GL_TEXTURE_2D);
                     tessellator.startDrawingQuads();
@@ -375,7 +375,7 @@ public abstract class GuiSlot
         }
 
         GL11.glDisable(GL11.GL_DEPTH_TEST);
-        byte b0 = 4;
+        final byte b0 = 4;
         this.overlayBackground(0, this.top, 255, 255);
         this.overlayBackground(this.bottom, this.height, 255, 255);
         GL11.glEnable(GL11.GL_BLEND);
@@ -460,12 +460,12 @@ public abstract class GuiSlot
     /**
      * Overlays the background to hide scrolled items
      */
-    protected void overlayBackground(int par1, int par2, int par3, int par4)
+    protected void overlayBackground(final int par1, final int par2, final int par3, final int par4)
     {
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         this.mc.getTextureManager().bindTexture(Gui.optionsBackground);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        float f = 32.0F;
+        final float f = 32.0F;
         tessellator.startDrawingQuads();
         tessellator.setColorRGBA_I(4210752, par4);
         tessellator.addVertexWithUV(0.0D, (double)par2, 0.0D, 0.0D, (double)((float)par2 / f));
@@ -476,11 +476,11 @@ public abstract class GuiSlot
         tessellator.draw();
     }
 
-    protected void drawContainerBackground(Tessellator tess)
+    protected void drawContainerBackground(final Tessellator tess)
     {
         this.mc.getTextureManager().bindTexture(Gui.optionsBackground);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        float height = 32.0F;
+        final float height = 32.0F;
         tess.startDrawingQuads();
         tess.setColorOpaque_I(2105376);
         tess.addVertexWithUV((double)left,  (double)bottom, 0.0D, (double)(left  / height), (double)((bottom + (int)amountScrolled) / height));

@@ -6,7 +6,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
 
 public class CraftProjectile extends AbstractProjectile implements Projectile { // Cauldron - concrete
-    public CraftProjectile(CraftServer server, net.minecraft.entity.Entity entity) {
+    public CraftProjectile(final CraftServer server, final net.minecraft.entity.Entity entity) {
         super(server, entity);
     }
 
@@ -18,7 +18,7 @@ public class CraftProjectile extends AbstractProjectile implements Projectile { 
         return null;
     }
 
-    public void setShooter(LivingEntity shooter) {
+    public void setShooter(final LivingEntity shooter) {
         if (shooter instanceof CraftLivingEntity) {
             getHandle().thrower = (net.minecraft.entity.EntityLivingBase) ((CraftLivingEntity) shooter).entity;
             if (shooter instanceof CraftHumanEntity) {

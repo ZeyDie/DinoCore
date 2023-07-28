@@ -12,7 +12,7 @@ public abstract class SoundResultEvent extends SoundEvent
     public final float pitch;
     public SoundPoolEntry result;
     
-    public SoundResultEvent(SoundManager manager, SoundPoolEntry source, String name, float volume, float pitch)
+    public SoundResultEvent(final SoundManager manager, final SoundPoolEntry source, final String name, final float volume, final float pitch)
     {
         this.manager = manager;
         this.source = source;

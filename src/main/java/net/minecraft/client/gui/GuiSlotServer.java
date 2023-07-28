@@ -16,7 +16,7 @@ class GuiSlotServer extends GuiSlot
     /** Instance to the GUI this list is on. */
     final GuiMultiplayer parentGui;
 
-    public GuiSlotServer(GuiMultiplayer par1GuiMultiplayer)
+    public GuiSlotServer(final GuiMultiplayer par1GuiMultiplayer)
     {
         super(par1GuiMultiplayer.mc, par1GuiMultiplayer.width, par1GuiMultiplayer.height, 32, par1GuiMultiplayer.height - 64, 36);
         this.parentGui = par1GuiMultiplayer;
@@ -33,15 +33,15 @@ class GuiSlotServer extends GuiSlot
     /**
      * the element in the slot that was clicked, boolean for wether it was double clicked or not
      */
-    protected void elementClicked(int par1, boolean par2)
+    protected void elementClicked(final int par1, final boolean par2)
     {
         if (par1 < GuiMultiplayer.getInternetServerList(this.parentGui).countServers() + GuiMultiplayer.getListOfLanServers(this.parentGui).size())
         {
-            int j = GuiMultiplayer.getSelectedServer(this.parentGui);
+            final int j = GuiMultiplayer.getSelectedServer(this.parentGui);
             GuiMultiplayer.getAndSetSelectedServer(this.parentGui, par1);
-            ServerData serverdata = GuiMultiplayer.getInternetServerList(this.parentGui).countServers() > par1 ? GuiMultiplayer.getInternetServerList(this.parentGui).getServerData(par1) : null;
-            boolean flag1 = GuiMultiplayer.getSelectedServer(this.parentGui) >= 0 && GuiMultiplayer.getSelectedServer(this.parentGui) < this.getSize() && (serverdata == null || serverdata.field_82821_f == 78);
-            boolean flag2 = GuiMultiplayer.getSelectedServer(this.parentGui) < GuiMultiplayer.getInternetServerList(this.parentGui).countServers();
+            final ServerData serverdata = GuiMultiplayer.getInternetServerList(this.parentGui).countServers() > par1 ? GuiMultiplayer.getInternetServerList(this.parentGui).getServerData(par1) : null;
+            final boolean flag1 = GuiMultiplayer.getSelectedServer(this.parentGui) >= 0 && GuiMultiplayer.getSelectedServer(this.parentGui) < this.getSize() && (serverdata == null || serverdata.field_82821_f == 78);
+            final boolean flag2 = GuiMultiplayer.getSelectedServer(this.parentGui) < GuiMultiplayer.getInternetServerList(this.parentGui).countServers();
             GuiMultiplayer.getButtonSelect(this.parentGui).enabled = flag1;
             GuiMultiplayer.getButtonEdit(this.parentGui).enabled = flag2;
             GuiMultiplayer.getButtonDelete(this.parentGui).enabled = flag2;
@@ -60,7 +60,7 @@ class GuiSlotServer extends GuiSlot
     /**
      * returns true if the element passed in is currently selected
      */
-    protected boolean isSelected(int par1)
+    protected boolean isSelected(final int par1)
     {
         return par1 == GuiMultiplayer.getSelectedServer(this.parentGui);
     }
@@ -78,7 +78,7 @@ class GuiSlotServer extends GuiSlot
         this.parentGui.drawDefaultBackground();
     }
 
-    protected void drawSlot(int par1, int par2, int par3, int par4, Tessellator par5Tessellator)
+    protected void drawSlot(final int par1, final int par2, final int par3, final int par4, final Tessellator par5Tessellator)
     {
         if (par1 < GuiMultiplayer.getInternetServerList(this.parentGui).countServers())
         {
@@ -94,9 +94,9 @@ class GuiSlotServer extends GuiSlot
         }
     }
 
-    private void func_77248_b(int par1, int par2, int par3, int par4, Tessellator par5Tessellator)
+    private void func_77248_b(final int par1, final int par2, final int par3, final int par4, final Tessellator par5Tessellator)
     {
-        LanServer lanserver = (LanServer)GuiMultiplayer.getListOfLanServers(this.parentGui).get(par1 - GuiMultiplayer.getInternetServerList(this.parentGui).countServers());
+        final LanServer lanserver = (LanServer)GuiMultiplayer.getListOfLanServers(this.parentGui).get(par1 - GuiMultiplayer.getInternetServerList(this.parentGui).countServers());
         this.parentGui.drawString(this.parentGui.fontRenderer, I18n.getString("lanServer.title"), par2 + 2, par3 + 1, 16777215);
         this.parentGui.drawString(this.parentGui.fontRenderer, lanserver.getServerMotd(), par2 + 2, par3 + 12, 8421504);
 
@@ -110,10 +110,10 @@ class GuiSlotServer extends GuiSlot
         }
     }
 
-    private void func_77249_c(int par1, int par2, int par3, int par4, Tessellator par5Tessellator)
+    private void func_77249_c(final int par1, final int par2, final int par3, final int par4, final Tessellator par5Tessellator)
     {
         this.parentGui.drawCenteredString(this.parentGui.fontRenderer, I18n.getString("lanServer.scanning"), this.parentGui.width / 2, par3 + 1, 16777215);
-        String s;
+        final String s;
 
         switch (GuiMultiplayer.getTicksOpened(this.parentGui) / 3 % 4)
         {
@@ -132,9 +132,9 @@ class GuiSlotServer extends GuiSlot
         this.parentGui.drawCenteredString(this.parentGui.fontRenderer, s, this.parentGui.width / 2, par3 + 12, 8421504);
     }
 
-    private void func_77247_d(int par1, int par2, int par3, int par4, Tessellator par5Tessellator)
+    private void func_77247_d(final int par1, final int par2, final int par3, final int par4, final Tessellator par5Tessellator)
     {
-        ServerData serverdata = GuiMultiplayer.getInternetServerList(this.parentGui).getServerData(par1);
+        final ServerData serverdata = GuiMultiplayer.getInternetServerList(this.parentGui).getServerData(par1);
 
         synchronized (GuiMultiplayer.getLock())
         {
@@ -149,16 +149,16 @@ class GuiSlotServer extends GuiSlot
             }
         }
 
-        boolean flag = serverdata.field_82821_f > 78;
-        boolean flag1 = serverdata.field_82821_f < 78;
-        boolean flag2 = flag || flag1;
+        final boolean flag = serverdata.field_82821_f > 78;
+        final boolean flag1 = serverdata.field_82821_f < 78;
+        final boolean flag2 = flag || flag1;
         this.parentGui.drawString(this.parentGui.fontRenderer, serverdata.serverName, par2 + 2, par3 + 1, 16777215);
         this.parentGui.drawString(this.parentGui.fontRenderer, serverdata.serverMOTD, par2 + 2, par3 + 12, 8421504);
         this.parentGui.drawString(this.parentGui.fontRenderer, serverdata.populationInfo, par2 + 215 - this.parentGui.fontRenderer.getStringWidth(serverdata.populationInfo), par3 + 12, 8421504);
 
         if (flag2)
         {
-            String s = EnumChatFormatting.DARK_RED + serverdata.gameVersion;
+            final String s = EnumChatFormatting.DARK_RED + serverdata.gameVersion;
             this.parentGui.drawString(this.parentGui.fontRenderer, s, par2 + 200 - this.parentGui.fontRenderer.getStringWidth(s), par3 + 1, 8421504);
         }
 
@@ -174,7 +174,7 @@ class GuiSlotServer extends GuiSlot
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.parentGui.mc.getTextureManager().bindTexture(Gui.icons);
         byte b0 = 0;
-        boolean flag3 = false;
+        final boolean flag3 = false;
         String s1 = "";
         int i1;
 
@@ -233,7 +233,7 @@ class GuiSlotServer extends GuiSlot
         }
 
         this.parentGui.drawTexturedModalRect(par2 + 205, par3, 0 + b0 * 10, 176 + i1 * 8, 10, 8);
-        byte b1 = 4;
+        final byte b1 = 4;
 
         if (this.mouseX >= par2 + 205 - b1 && this.mouseY >= par3 - b1 && this.mouseX <= par2 + 205 + 10 + b1 && this.mouseY <= par3 + 8 + b1)
         {

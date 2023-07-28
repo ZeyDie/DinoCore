@@ -10,7 +10,7 @@ class CallableClientProfiler implements Callable
 {
     final Minecraft theMinecraft;
 
-    CallableClientProfiler(Minecraft par1Minecraft)
+    CallableClientProfiler(final Minecraft par1Minecraft)
     {
         this.theMinecraft = par1Minecraft;
     }

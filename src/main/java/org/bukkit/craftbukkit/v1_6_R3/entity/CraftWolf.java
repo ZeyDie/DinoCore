@@ -6,7 +6,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Wolf;
 
 public class CraftWolf extends CraftTameableAnimal implements Wolf {
-    public CraftWolf(CraftServer server, net.minecraft.entity.passive.EntityWolf wolf) {
+    public CraftWolf(final CraftServer server, final net.minecraft.entity.passive.EntityWolf wolf) {
         super(server, wolf);
     }
 
@@ -14,7 +14,7 @@ public class CraftWolf extends CraftTameableAnimal implements Wolf {
         return getHandle().isAngry();
     }
 
-    public void setAngry(boolean angry) {
+    public void setAngry(final boolean angry) {
         getHandle().setAngry(angry);
     }
 
@@ -32,7 +32,7 @@ public class CraftWolf extends CraftTameableAnimal implements Wolf {
         return DyeColor.getByWoolData((byte) getHandle().getCollarColor());
     }
 
-    public void setCollarColor(DyeColor color) {
+    public void setCollarColor(final DyeColor color) {
         getHandle().setCollarColor(color.getWoolData());
     }
 }

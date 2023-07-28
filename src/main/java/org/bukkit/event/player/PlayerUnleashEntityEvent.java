@@ -12,7 +12,7 @@ public class PlayerUnleashEntityEvent extends EntityUnleashEvent implements Canc
     private final Player player;
     private boolean cancelled = false;
 
-    public PlayerUnleashEntityEvent(Entity entity, Player player) {
+    public PlayerUnleashEntityEvent(final Entity entity, final Player player) {
         super(entity, UnleashReason.PLAYER_UNLEASH);
         this.player = player;
     }
@@ -30,7 +30,7 @@ public class PlayerUnleashEntityEvent extends EntityUnleashEvent implements Canc
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancelled = cancel;
     }
 }

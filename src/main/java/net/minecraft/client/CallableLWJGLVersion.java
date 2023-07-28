@@ -12,7 +12,7 @@ class CallableLWJGLVersion implements Callable
     /** Reference to the Minecraft object. */
     final Minecraft mc;
 
-    CallableLWJGLVersion(Minecraft par1Minecraft)
+    CallableLWJGLVersion(final Minecraft par1Minecraft)
     {
         this.mc = par1Minecraft;
     }

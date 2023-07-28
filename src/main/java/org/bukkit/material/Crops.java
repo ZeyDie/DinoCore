@@ -11,7 +11,7 @@ public class Crops extends MaterialData {
         super(Material.CROPS);
     }
 
-    public Crops(CropState state) {
+    public Crops(final CropState state) {
         this();
         setState(state);
     }
@@ -61,7 +61,7 @@ public class Crops extends MaterialData {
      *
      * @param state New growth state of this crop
      */
-    public void setState(CropState state) {
+    public void setState(final CropState state) {
         setData(state.getData());
     }
 

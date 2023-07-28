@@ -111,9 +111,9 @@ public abstract class JavaPlugin extends PluginBase {
     public void reloadConfig() {
         newConfig = YamlConfiguration.loadConfiguration(configFile);
 
-        InputStream defConfigStream = getResource("config.yml");
+        final InputStream defConfigStream = getResource("config.yml");
         if (defConfigStream != null) {
-            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+            final YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
 
             newConfig.setDefaults(defConfig);
         }
@@ -122,7 +122,7 @@ public abstract class JavaPlugin extends PluginBase {
     public void saveConfig() {
         try {
             getConfig().save(configFile);
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             logger.log(Level.SEVERE, "Could not save config to " + configFile, ex);
         }
     }
@@ -133,20 +133,20 @@ public abstract class JavaPlugin extends PluginBase {
         }
     }
 
-    public void saveResource(String resourcePath, boolean replace) {
-        if (resourcePath == null || resourcePath.equals("")) {
+    public void saveResource(String resourcePath, final boolean replace) {
+        if (resourcePath == null || resourcePath.isEmpty()) {
             throw new IllegalArgumentException("ResourcePath cannot be null or empty");
         }
 
-        resourcePath = resourcePath.replace('\\', '/');
-        InputStream in = getResource(resourcePath);
+        String resourcePath1 = resourcePath.replace('\\', '/');
+        final InputStream in = getResource(resourcePath1);
         if (in == null) {
-            throw new IllegalArgumentException("The embedded resource '" + resourcePath + "' cannot be found in " + file);
+            throw new IllegalArgumentException("The embedded resource '" + resourcePath1 + "' cannot be found in " + file);
         }
 
-        File outFile = new File(dataFolder, resourcePath);
-        int lastIndex = resourcePath.lastIndexOf('/');
-        File outDir = new File(dataFolder, resourcePath.substring(0, lastIndex >= 0 ? lastIndex : 0));
+        final File outFile = new File(dataFolder, resourcePath1);
+        final int lastIndex = resourcePath1.lastIndexOf('/');
+        final File outDir = new File(dataFolder, resourcePath1.substring(0, lastIndex >= 0 ? lastIndex : 0));
 
         if (!outDir.exists()) {
             outDir.mkdirs();
@@ -154,8 +154,8 @@ public abstract class JavaPlugin extends PluginBase {
 
         try {
             if (!outFile.exists() || replace) {
-                OutputStream out = new FileOutputStream(outFile);
-                byte[] buf = new byte[1024];
+                final OutputStream out = new FileOutputStream(outFile);
+                final byte[] buf = new byte[1024];
                 int len;
                 while ((len = in.read(buf)) > 0) {
                     out.write(buf, 0, len);
@@ -165,27 +165,27 @@ public abstract class JavaPlugin extends PluginBase {
             } else {
                 logger.log(Level.WARNING, "Could not save " + outFile.getName() + " to " + outFile + " because " + outFile.getName() + " already exists.");
             }
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             logger.log(Level.SEVERE, "Could not save " + outFile.getName() + " to " + outFile, ex);
         }
     }
 
-    public InputStream getResource(String filename) {
+    public InputStream getResource(final String filename) {
         if (filename == null) {
             throw new IllegalArgumentException("Filename cannot be null");
         }
 
         try {
-            URL url = getClassLoader().getResource(filename);
+            final URL url = getClassLoader().getResource(filename);
 
             if (url == null) {
                 return null;
             }
 
-            URLConnection connection = url.openConnection();
+            final URLConnection connection = url.openConnection();
             connection.setUseCaches(false);
             return connection.getInputStream();
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             return null;
         }
     }
@@ -228,7 +228,7 @@ public abstract class JavaPlugin extends PluginBase {
      * @param file File containing this plugin
      * @param classLoader ClassLoader which holds this plugin
      */
-    protected final void initialize(PluginLoader loader, Server server, PluginDescriptionFile description, File dataFolder, File file, ClassLoader classLoader) {
+    protected final void initialize(final PluginLoader loader, final Server server, final PluginDescriptionFile description, final File dataFolder, final File file, final ClassLoader classLoader) {
         if (!initialized) {
             this.initialized = true;
             this.loader = loader;
@@ -241,7 +241,7 @@ public abstract class JavaPlugin extends PluginBase {
             this.logger = new PluginLogger(this);
 
             if (description.isDatabaseEnabled()) {
-                ServerConfig db = new ServerConfig();
+                final ServerConfig db = new ServerConfig();
 
                 db.setDefaultServer(false);
                 db.setRegister(false);
@@ -249,12 +249,12 @@ public abstract class JavaPlugin extends PluginBase {
                 db.setName(description.getName());
                 server.configureDbConfig(db);
 
-                DataSourceConfig ds = db.getDataSourceConfig();
+                final DataSourceConfig ds = db.getDataSourceConfig();
 
                 ds.setUrl(replaceDatabaseString(ds.getUrl()));
                 dataFolder.mkdirs();
 
-                ClassLoader previous = Thread.currentThread().getContextClassLoader();
+                final ClassLoader previous = Thread.currentThread().getContextClassLoader();
 
                 Thread.currentThread().setContextClassLoader(classLoader);
                 ebean = EbeanServerFactory.create(db);
@@ -273,9 +273,9 @@ public abstract class JavaPlugin extends PluginBase {
     }
 
     private String replaceDatabaseString(String input) {
-        input = input.replaceAll("\\{DIR\\}", dataFolder.getPath().replaceAll("\\\\", "/") + "/");
-        input = input.replaceAll("\\{NAME\\}", description.getName().replaceAll("[^\\w_-]", ""));
-        return input;
+        String input2 = input.replaceAll("\\{DIR\\}", dataFolder.getPath().replaceAll("\\\\", "/") + "/");
+        String input1 = input2.replaceAll("\\{NAME\\}", description.getName().replaceAll("[^\\w_-]", ""));
+        return input1;
     }
 
     /**
@@ -290,14 +290,14 @@ public abstract class JavaPlugin extends PluginBase {
     /**
      * {@inheritDoc}
      */
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
         return false;
     }
 
     /**
      * {@inheritDoc}
      */
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public List<String> onTabComplete(final CommandSender sender, final Command command, final String alias, final String[] args) {
         return null;
     }
 
@@ -309,8 +309,8 @@ public abstract class JavaPlugin extends PluginBase {
      * @param name name or alias of the command
      * @return the plugin command if found, otherwise null
      */
-    public PluginCommand getCommand(String name) {
-        String alias = name.toLowerCase();
+    public PluginCommand getCommand(final String name) {
+        final String alias = name.toLowerCase();
         PluginCommand command = getServer().getPluginCommand(alias);
 
         if ((command != null) && (command.getPlugin() != this)) {
@@ -330,7 +330,7 @@ public abstract class JavaPlugin extends PluginBase {
 
     public void onEnable() {}
 
-    public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
+    public ChunkGenerator getDefaultWorldGenerator(final String worldName, final String id) {
         return null;
     }
 
@@ -338,7 +338,7 @@ public abstract class JavaPlugin extends PluginBase {
         return naggable;
     }
 
-    public final void setNaggable(boolean canNag) {
+    public final void setNaggable(final boolean canNag) {
         this.naggable = canNag;
     }
 
@@ -347,15 +347,15 @@ public abstract class JavaPlugin extends PluginBase {
     }
 
     protected void installDDL() {
-        SpiEbeanServer serv = (SpiEbeanServer) getDatabase();
-        DdlGenerator gen = serv.getDdlGenerator();
+        final SpiEbeanServer serv = (SpiEbeanServer) getDatabase();
+        final DdlGenerator gen = serv.getDdlGenerator();
 
         gen.runScript(false, gen.generateCreateDdl());
     }
 
     protected void removeDDL() {
-        SpiEbeanServer serv = (SpiEbeanServer) getDatabase();
-        DdlGenerator gen = serv.getDdlGenerator();
+        final SpiEbeanServer serv = (SpiEbeanServer) getDatabase();
+        final DdlGenerator gen = serv.getDdlGenerator();
 
         gen.runScript(true, gen.generateDropDdl());
     }

@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 public class InventoryCreativeEvent extends InventoryClickEvent {
     private ItemStack item;
 
-    public InventoryCreativeEvent(InventoryView what, SlotType type, int slot, ItemStack newItem) {
+    public InventoryCreativeEvent(final InventoryView what, final SlotType type, final int slot, final ItemStack newItem) {
         super(what, type, slot, ClickType.CREATIVE, InventoryAction.PLACE_ALL);
         this.item = newItem;
     }
@@ -21,7 +21,7 @@ public class InventoryCreativeEvent extends InventoryClickEvent {
         return item;
     }
 
-    public void setCursor(ItemStack item) {
+    public void setCursor(final ItemStack item) {
         this.item = item;
     }
 }

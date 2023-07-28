@@ -19,14 +19,14 @@ import java.util.List;
 public class BlockAnvil extends BlockSand
 {
     /** List of types/statues the Anvil can be in. */
-    public static final String[] statuses = new String[] {"intact", "slightlyDamaged", "veryDamaged"};
-    private static final String[] anvilIconNames = new String[] {"anvil_top_damaged_0", "anvil_top_damaged_1", "anvil_top_damaged_2"};
+    public static final String[] statuses = {"intact", "slightlyDamaged", "veryDamaged"};
+    private static final String[] anvilIconNames = {"anvil_top_damaged_0", "anvil_top_damaged_1", "anvil_top_damaged_2"};
     @SideOnly(Side.CLIENT)
     public int field_82521_b;
     @SideOnly(Side.CLIENT)
     private Icon[] iconArray;
 
-    protected BlockAnvil(int par1)
+    protected BlockAnvil(final int par1)
     {
         super(par1, Material.anvil);
         this.setLightOpacity(0);
@@ -55,11 +55,11 @@ public class BlockAnvil extends BlockSand
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
         if (this.field_82521_b == 3 && par1 == 1)
         {
-            int k = (par2 >> 2) % this.iconArray.length;
+            final int k = (par2 >> 2) % this.iconArray.length;
             return this.iconArray[k];
         }
         else
@@ -74,7 +74,7 @@ public class BlockAnvil extends BlockSand
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.blockIcon = par1IconRegister.registerIcon("anvil_base");
         this.iconArray = new Icon[anvilIconNames.length];
@@ -88,10 +88,10 @@ public class BlockAnvil extends BlockSand
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
+    public void onBlockPlacedBy(final World par1World, final int par2, final int par3, final int par4, final EntityLivingBase par5EntityLivingBase, final ItemStack par6ItemStack)
     {
         int l = MathHelper.floor_double((double)(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-        int i1 = par1World.getBlockMetadata(par2, par3, par4) >> 2;
+        final int i1 = par1World.getBlockMetadata(par2, par3, par4) >> 2;
         ++l;
         l %= 4;
 
@@ -119,7 +119,7 @@ public class BlockAnvil extends BlockSand
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9)
     {
         if (par1World.isRemote)
         {
@@ -143,7 +143,7 @@ public class BlockAnvil extends BlockSand
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int par1)
+    public int damageDropped(final int par1)
     {
         return par1 >> 2;
     }
@@ -151,9 +151,9 @@ public class BlockAnvil extends BlockSand
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
-        int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4) & 3;
+        final int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4) & 3;
 
         if (l != 3 && l != 1)
         {
@@ -170,7 +170,7 @@ public class BlockAnvil extends BlockSand
     /**
      * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
      */
-    public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubBlocks(final int par1, final CreativeTabs par2CreativeTabs, final List par3List)
     {
         par3List.add(new ItemStack(par1, 1, 0));
         par3List.add(new ItemStack(par1, 1, 1));
@@ -180,7 +180,7 @@ public class BlockAnvil extends BlockSand
     /**
      * Called when the falling block entity for this block is created
      */
-    protected void onStartFalling(EntityFallingSand par1EntityFallingSand)
+    protected void onStartFalling(final EntityFallingSand par1EntityFallingSand)
     {
         par1EntityFallingSand.setIsAnvil(true);
     }
@@ -188,7 +188,7 @@ public class BlockAnvil extends BlockSand
     /**
      * Called when the falling block entity for this block hits the ground and turns back into a block
      */
-    public void onFinishFalling(World par1World, int par2, int par3, int par4, int par5)
+    public void onFinishFalling(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         par1World.playAuxSFX(1022, par2, par3, par4, 0);
     }
@@ -199,7 +199,7 @@ public class BlockAnvil extends BlockSand
      * Returns true if the given side of this block type should be rendered, if the adjacent block is at the given
      * coordinates.  Args: blockAccess, x, y, z, side
      */
-    public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public boolean shouldSideBeRendered(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
         return true;
     }

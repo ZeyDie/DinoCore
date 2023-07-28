@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 
 
 public class CraftInventoryFurnace extends CraftInventory implements FurnaceInventory {
-    public CraftInventoryFurnace(net.minecraft.tileentity.TileEntityFurnace inventory) {
+    public CraftInventoryFurnace(final net.minecraft.tileentity.TileEntityFurnace inventory) {
         super(inventory);
     }
 
@@ -22,15 +22,15 @@ public class CraftInventoryFurnace extends CraftInventory implements FurnaceInve
         return getItem(0);
     }
 
-    public void setFuel(ItemStack stack) {
+    public void setFuel(final ItemStack stack) {
         setItem(1,stack);
     }
 
-    public void setResult(ItemStack stack) {
+    public void setResult(final ItemStack stack) {
         setItem(2,stack);
     }
 
-    public void setSmelting(ItemStack stack) {
+    public void setSmelting(final ItemStack stack) {
         setItem(0,stack);
     }
 

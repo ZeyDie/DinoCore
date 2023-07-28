@@ -40,15 +40,15 @@ public class MarkerTransformer implements IClassTransformer
     {
         this("fml_marker.cfg");
     }
-    protected MarkerTransformer(String rulesFile) throws IOException
+    protected MarkerTransformer(final String rulesFile) throws IOException
     {
         readMapFile(rulesFile);
     }
 
-    private void readMapFile(String rulesFile) throws IOException
+    private void readMapFile(final String rulesFile) throws IOException
     {
-        File file = new File(rulesFile);
-        URL rulesResource;
+        final File file = new File(rulesFile);
+        final URL rulesResource;
         if (file.exists())
         {
             rulesResource = file.toURI().toURL();
@@ -66,20 +66,20 @@ public class MarkerTransformer implements IClassTransformer
             }
 
             @Override
-            public boolean processLine(String input) throws IOException
+            public boolean processLine(final String input) throws IOException
             {
-                String line = Iterables.getFirst(Splitter.on('#').limit(2).split(input), "").trim();
-                if (line.length()==0)
+                final String line = Iterables.getFirst(Splitter.on('#').limit(2).split(input), "").trim();
+                if (line.isEmpty())
                 {
                     return true;
                 }
-                List<String> parts = Lists.newArrayList(Splitter.on(" ").trimResults().split(line));
+                final List<String> parts = Lists.newArrayList(Splitter.on(" ").trimResults().split(line));
                 if (parts.size()!=2)
                 {
                     throw new RuntimeException("Invalid config file line "+ input);
                 }
-                List<String> markerInterfaces = Lists.newArrayList(Splitter.on(",").trimResults().split(parts.get(1)));
-                for (String marker : markerInterfaces)
+                final List<String> markerInterfaces = Lists.newArrayList(Splitter.on(",").trimResults().split(parts.get(1)));
+                for (final String marker : markerInterfaces)
                 {
                     markers.put(parts.get(0), marker);
                 }
@@ -89,26 +89,23 @@ public class MarkerTransformer implements IClassTransformer
     }
 
     @Override
-    public byte[] transform(String name, String transformedName, byte[] bytes)
+    public byte[] transform(final String name, final String transformedName, final byte[] bytes)
     {
     	if (bytes == null) { return null; }
         if (!markers.containsKey(name)) { return bytes; }
 
-        ClassNode classNode = new ClassNode();
-        ClassReader classReader = new ClassReader(bytes);
+        final ClassNode classNode = new ClassNode();
+        final ClassReader classReader = new ClassReader(bytes);
         classReader.accept(classNode, 0);
 
-        for (String marker : markers.get(name))
-        {
-            classNode.interfaces.add(marker);
-        }
+        classNode.interfaces.addAll(markers.get(name));
 
-        ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        final ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         classNode.accept(writer);
         return writer.toByteArray();
     }
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         if (args.length < 2)
         {
@@ -117,7 +114,7 @@ public class MarkerTransformer implements IClassTransformer
         }
 
         boolean hasTransformer = false;
-        MarkerTransformer[] trans = new MarkerTransformer[args.length - 1];
+        final MarkerTransformer[] trans = new MarkerTransformer[args.length - 1];
         for (int x = 1; x < args.length; x++)
         {
             try
@@ -125,7 +122,7 @@ public class MarkerTransformer implements IClassTransformer
                 trans[x - 1] = new MarkerTransformer(args[x]);
                 hasTransformer = true;
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 System.out.println("Could not read Transformer Map: " + args[x]);
                 e.printStackTrace();
@@ -138,8 +135,8 @@ public class MarkerTransformer implements IClassTransformer
             return;
         }
 
-        File orig = new File(args[0]);
-        File temp = new File(args[0] + ".ATBack");
+        final File orig = new File(args[0]);
+        final File temp = new File(args[0] + ".ATBack");
         if (!orig.exists() && !temp.exists())
         {
             System.out.println("Could not find target jar: " + orig);
@@ -170,7 +167,7 @@ public class MarkerTransformer implements IClassTransformer
         {
             processJar(temp, orig, trans);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             e.printStackTrace();
         }
@@ -181,7 +178,7 @@ public class MarkerTransformer implements IClassTransformer
         }
     }
 
-    private static void processJar(File inFile, File outFile, MarkerTransformer[] transformers) throws IOException
+    private static void processJar(final File inFile, final File outFile, final MarkerTransformer[] transformers) throws IOException
     {
         ZipInputStream inJar = null;
         ZipOutputStream outJar = null;
@@ -192,7 +189,7 @@ public class MarkerTransformer implements IClassTransformer
             {
                 inJar = new ZipInputStream(new BufferedInputStream(new FileInputStream(inFile)));
             }
-            catch (FileNotFoundException e)
+            catch (final FileNotFoundException e)
             {
                 throw new FileNotFoundException("Could not open input file: " + e.getMessage());
             }
@@ -201,7 +198,7 @@ public class MarkerTransformer implements IClassTransformer
             {
                 outJar = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(outFile)));
             }
-            catch (FileNotFoundException e)
+            catch (final FileNotFoundException e)
             {
                 throw new FileNotFoundException("Could not open output file: " + e.getMessage());
             }
@@ -215,8 +212,8 @@ public class MarkerTransformer implements IClassTransformer
                     continue;
                 }
 
-                byte[] data = new byte[4096];
-                ByteArrayOutputStream entryBuffer = new ByteArrayOutputStream();
+                final byte[] data = new byte[4096];
+                final ByteArrayOutputStream entryBuffer = new ByteArrayOutputStream();
 
                 int len;
                 do
@@ -231,22 +228,22 @@ public class MarkerTransformer implements IClassTransformer
 
                 byte[] entryData = entryBuffer.toByteArray();
 
-                String entryName = entry.getName();
+                final String entryName = entry.getName();
 
                 if (entryName.endsWith(".class") && !entryName.startsWith("."))
                 {
-                    ClassNode cls = new ClassNode();
-                    ClassReader rdr = new ClassReader(entryData);
+                    final ClassNode cls = new ClassNode();
+                    final ClassReader rdr = new ClassReader(entryData);
                     rdr.accept(cls, 0);
-                    String name = cls.name.replace('/', '.').replace('\\', '.');
+                    final String name = cls.name.replace('/', '.').replace('\\', '.');
 
-                    for (MarkerTransformer trans : transformers)
+                    for (final MarkerTransformer trans : transformers)
                     {
                         entryData = trans.transform(name, name, entryData);
                     }
                 }
 
-                ZipEntry newEntry = new ZipEntry(entryName);
+                final ZipEntry newEntry = new ZipEntry(entryName);
                 outJar.putNextEntry(newEntry);
                 outJar.write(entryData);
             }
@@ -259,7 +256,7 @@ public class MarkerTransformer implements IClassTransformer
                 {
                     outJar.close();
                 }
-                catch (IOException e)
+                catch (final IOException e)
                 {
                 }
             }
@@ -270,7 +267,7 @@ public class MarkerTransformer implements IClassTransformer
                 {
                     inJar.close();
                 }
-                catch (IOException e)
+                catch (final IOException e)
                 {
                 }
             }

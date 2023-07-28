@@ -12,7 +12,7 @@ public class CommandEvent extends Event
     public String[] parameters;
     public Throwable exception;
 
-    public CommandEvent(ICommand command, ICommandSender sender, String[] parameters)
+    public CommandEvent(final ICommand command, final ICommandSender sender, final String[] parameters)
     {
         this.command = command;
         this.sender = sender;

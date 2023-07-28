@@ -14,7 +14,7 @@ public class PlayerListComponent extends JList implements IUpdatePlayerListBox
     private MinecraftServer field_120015_a;
     private int field_120014_b;
 
-    public PlayerListComponent(MinecraftServer par1MinecraftServer)
+    public PlayerListComponent(final MinecraftServer par1MinecraftServer)
     {
         this.field_120015_a = par1MinecraftServer;
         par1MinecraftServer.func_82010_a(this);
@@ -27,7 +27,7 @@ public class PlayerListComponent extends JList implements IUpdatePlayerListBox
     {
         if (this.field_120014_b++ % 20 == 0)
         {
-            Vector vector = new Vector();
+            final Vector vector = new Vector();
 
             for (int i = 0; i < this.field_120015_a.getConfigurationManager().playerEntityList.size(); ++i)
             {

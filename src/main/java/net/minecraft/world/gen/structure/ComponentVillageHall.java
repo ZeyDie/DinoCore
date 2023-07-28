@@ -10,16 +10,16 @@ public class ComponentVillageHall extends ComponentVillage
 {
     public ComponentVillageHall() {}
 
-    public ComponentVillageHall(ComponentVillageStartPiece par1ComponentVillageStartPiece, int par2, Random par3Random, StructureBoundingBox par4StructureBoundingBox, int par5)
+    public ComponentVillageHall(final ComponentVillageStartPiece par1ComponentVillageStartPiece, final int par2, final Random par3Random, final StructureBoundingBox par4StructureBoundingBox, final int par5)
     {
         super(par1ComponentVillageStartPiece, par2);
         this.coordBaseMode = par5;
         this.boundingBox = par4StructureBoundingBox;
     }
 
-    public static ComponentVillageHall func_74906_a(ComponentVillageStartPiece par0ComponentVillageStartPiece, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
+    public static ComponentVillageHall func_74906_a(final ComponentVillageStartPiece par0ComponentVillageStartPiece, final List par1List, final Random par2Random, final int par3, final int par4, final int par5, final int par6, final int par7)
     {
-        StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(par3, par4, par5, 0, 0, 0, 9, 7, 11, par6);
+        final StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(par3, par4, par5, 0, 0, 0, 9, 7, 11, par6);
         return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(par1List, structureboundingbox) == null ? new ComponentVillageHall(par0ComponentVillageStartPiece, par7, par2Random, structureboundingbox, par6) : null;
     }
 
@@ -27,7 +27,7 @@ public class ComponentVillageHall extends ComponentVillage
      * second Part of Structure generating, this for example places Spiderwebs, Mob Spawners, it closes Mineshafts at
      * the end, it adds Fences...
      */
-    public boolean addComponentParts(World par1World, Random par2Random, StructureBoundingBox par3StructureBoundingBox)
+    public boolean addComponentParts(final World par1World, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox)
     {
         if (this.field_143015_k < 0)
         {
@@ -62,8 +62,8 @@ public class ComponentVillageHall extends ComponentVillage
         this.placeBlockAtCurrentPosition(par1World, Block.planks.blockID, 0, 0, 4, 3, par3StructureBoundingBox);
         this.placeBlockAtCurrentPosition(par1World, Block.planks.blockID, 0, 8, 4, 2, par3StructureBoundingBox);
         this.placeBlockAtCurrentPosition(par1World, Block.planks.blockID, 0, 8, 4, 3, par3StructureBoundingBox);
-        int i = this.getMetadataWithOffset(Block.stairsWoodOak.blockID, 3);
-        int j = this.getMetadataWithOffset(Block.stairsWoodOak.blockID, 2);
+        final int i = this.getMetadataWithOffset(Block.stairsWoodOak.blockID, 3);
+        final int j = this.getMetadataWithOffset(Block.stairsWoodOak.blockID, 2);
         int k;
         int l;
 
@@ -127,7 +127,7 @@ public class ComponentVillageHall extends ComponentVillage
     /**
      * Returns the villager type to spawn in this component, based on the number of villagers already spawned.
      */
-    protected int getVillagerType(int par1)
+    protected int getVillagerType(final int par1)
     {
         return par1 == 0 ? 4 : 0;
     }

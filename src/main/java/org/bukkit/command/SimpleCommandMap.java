@@ -74,9 +74,9 @@ public class SimpleCommandMap implements CommandMap {
     /**
      * {@inheritDoc}
      */
-    public void registerAll(String fallbackPrefix, List<Command> commands) {
+    public void registerAll(final String fallbackPrefix, final List<Command> commands) {
         if (commands != null) {
-            for (Command c : commands) {
+            for (final Command c : commands) {
                 register(fallbackPrefix, c);
             }
         }
@@ -85,17 +85,17 @@ public class SimpleCommandMap implements CommandMap {
     /**
      * {@inheritDoc}
      */
-    public boolean register(String fallbackPrefix, Command command) {
+    public boolean register(final String fallbackPrefix, final Command command) {
         return register(command.getName(), fallbackPrefix, command);
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean register(String label, String fallbackPrefix, Command command) {
-        boolean registeredPassedLabel = register(label, fallbackPrefix, command, false);
+    public boolean register(final String label, final String fallbackPrefix, final Command command) {
+        final boolean registeredPassedLabel = register(label, fallbackPrefix, command, false);
 
-        Iterator<String> iterator = command.getAliases().iterator();
+        final Iterator<String> iterator = command.getAliases().iterator();
         while (iterator.hasNext()) {
             if (!register(iterator.next(), fallbackPrefix, command, true)) {
                 iterator.remove();
@@ -118,7 +118,7 @@ public class SimpleCommandMap implements CommandMap {
      * If isAlias was true a return of false indicates no command was registerd
      * If isAlias was false a return of false indicates the fallbackPrefix was used one or more times to create a unique name for the command
      */
-    private synchronized boolean register(String label, String fallbackPrefix, Command command, boolean isAlias) {
+    private synchronized boolean register(final String label, final String fallbackPrefix, final Command command, final boolean isAlias) {
         String lowerLabel = label.trim().toLowerCase();
 
         if (isAlias && knownCommands.containsKey(lowerLabel)) {
@@ -127,7 +127,7 @@ public class SimpleCommandMap implements CommandMap {
             return false;
         }
 
-        String lowerPrefix = fallbackPrefix.trim().toLowerCase();
+        final String lowerPrefix = fallbackPrefix.trim().toLowerCase();
         boolean registerdPassedLabel = true;
 
         // If the command exists but is an alias we overwrite it, otherwise we rename it based on the fallbackPrefix
@@ -148,8 +148,8 @@ public class SimpleCommandMap implements CommandMap {
         return registerdPassedLabel;
     }
 
-    protected Command getFallback(String label) {
-        for (VanillaCommand cmd : fallbackCommands) {
+    protected Command getFallback(final String label) {
+        for (final VanillaCommand cmd : fallbackCommands) {
             if (cmd.matches(label)) {
                 return cmd;
             }
@@ -165,15 +165,15 @@ public class SimpleCommandMap implements CommandMap {
     /**
      * {@inheritDoc}
      */
-    public boolean dispatch(CommandSender sender, String commandLine) throws CommandException {
-        String[] args = PATTERN_ON_SPACE.split(commandLine);
+    public boolean dispatch(final CommandSender sender, final String commandLine) throws CommandException {
+        final String[] args = PATTERN_ON_SPACE.split(commandLine);
 
         if (args.length == 0) {
             return false;
         }
 
-        String sentCommandLabel = args[0].toLowerCase();
-        Command target = getCommand(sentCommandLabel);
+        final String sentCommandLabel = args[0].toLowerCase();
+        final Command target = getCommand(sentCommandLabel);
 
         if (target == null) {
             return false;
@@ -184,10 +184,10 @@ public class SimpleCommandMap implements CommandMap {
             // Note: we don't return the result of target.execute as thats success / failure, we return handled (true) or not handled (false)
             target.execute(sender, sentCommandLabel, Arrays_copyOfRange(args, 1, args.length));
             target.timings.stopTiming(); // Spigot
-        } catch (CommandException ex) {
+        } catch (final CommandException ex) {
             target.timings.stopTiming(); // Spigot
             throw ex;
-        } catch (Throwable ex) {
+        } catch (final Throwable ex) {
             target.timings.stopTiming(); // Spigot
             throw new CommandException("Unhandled exception executing '" + commandLine + "' in " + target, ex);
         }
@@ -197,7 +197,7 @@ public class SimpleCommandMap implements CommandMap {
     }
 
     public synchronized void clearCommands() {
-        for (Map.Entry<String, Command> entry : knownCommands.entrySet()) {
+        for (final Map.Entry<String, Command> entry : knownCommands.entrySet()) {
             entry.getValue().unregister(this);
         }
         knownCommands.clear();
@@ -205,7 +205,7 @@ public class SimpleCommandMap implements CommandMap {
         setDefaultCommands(server);
     }
 
-    public Command getCommand(String name) {
+    public Command getCommand(final String name) {
         Command target = knownCommands.get(name.toLowerCase());
         if (target == null) {
             target = getFallback(name);
@@ -213,20 +213,20 @@ public class SimpleCommandMap implements CommandMap {
         return target;
     }
 
-    public List<String> tabComplete(CommandSender sender, String cmdLine) {
+    public List<String> tabComplete(final CommandSender sender, final String cmdLine) {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(cmdLine, "Command line cannot null");
 
-        int spaceIndex = cmdLine.indexOf(' ');
+        final int spaceIndex = cmdLine.indexOf(' ');
 
         if (spaceIndex == -1) {
-            ArrayList<String> completions = new ArrayList<String>();
-            Map<String, Command> knownCommands = this.knownCommands;
+            final ArrayList<String> completions = new ArrayList<String>();
+            final Map<String, Command> knownCommands = this.knownCommands;
 
             final String prefix = (sender instanceof Player ? "/" : "");
 
-            for (VanillaCommand command : fallbackCommands) {
-                String name = command.getName();
+            for (final VanillaCommand command : fallbackCommands) {
+                final String name = command.getName();
 
                 if (!command.testPermissionSilent(sender)) {
                     continue;
@@ -243,14 +243,14 @@ public class SimpleCommandMap implements CommandMap {
                 completions.add(prefix + name);
             }
 
-            for (Map.Entry<String, Command> commandEntry : knownCommands.entrySet()) {
-                Command command = commandEntry.getValue();
+            for (final Map.Entry<String, Command> commandEntry : knownCommands.entrySet()) {
+                final Command command = commandEntry.getValue();
 
                 if (!command.testPermissionSilent(sender)) {
                     continue;
                 }
 
-                String name = commandEntry.getKey(); // Use the alias, not command name
+                final String name = commandEntry.getKey(); // Use the alias, not command name
 
                 if (StringUtil.startsWithIgnoreCase(name, cmdLine)) {
                     completions.add(prefix + name);
@@ -261,8 +261,8 @@ public class SimpleCommandMap implements CommandMap {
             return completions;
         }
 
-        String commandName = cmdLine.substring(0, spaceIndex);
-        Command target = getCommand(commandName);
+        final String commandName = cmdLine.substring(0, spaceIndex);
+        final Command target = getCommand(commandName);
 
         if (target == null) {
             return null;
@@ -272,14 +272,14 @@ public class SimpleCommandMap implements CommandMap {
             return null;
         }
 
-        String argLine = cmdLine.substring(spaceIndex + 1, cmdLine.length());
-        String[] args = PATTERN_ON_SPACE.split(argLine, -1);
+        final String argLine = cmdLine.substring(spaceIndex + 1, cmdLine.length());
+        final String[] args = PATTERN_ON_SPACE.split(argLine, -1);
 
         try {
             return target.tabComplete(sender, commandName, args);
-        } catch (CommandException ex) {
+        } catch (final CommandException ex) {
             throw ex;
-        } catch (Throwable ex) {
+        } catch (final Throwable ex) {
             throw new CommandException("Unhandled exception executing tab-completer for '" + cmdLine + "' in " + target, ex);
         }
     }
@@ -289,15 +289,15 @@ public class SimpleCommandMap implements CommandMap {
     }
 
     public void registerServerAliases() {
-        Map<String, String[]> values = server.getCommandAliases();
+        final Map<String, String[]> values = server.getCommandAliases();
 
-        for (String alias : values.keySet()) {
-            String[] targetNames = values.get(alias);
-            List<Command> targets = new ArrayList<Command>();
-            StringBuilder bad = new StringBuilder();
+        for (final String alias : values.keySet()) {
+            final String[] targetNames = values.get(alias);
+            final List<Command> targets = new ArrayList<Command>();
+            final StringBuilder bad = new StringBuilder();
 
-            for (String name : targetNames) {
-                Command command = getCommand(name);
+            for (final String name : targetNames) {
+                final Command command = getCommand(name);
 
                 if (command == null) {
                     if (bad.length() > 0) {
@@ -311,7 +311,7 @@ public class SimpleCommandMap implements CommandMap {
 
             // We register these as commands so they have absolute priority.
 
-            if (targets.size() > 0) {
+            if (!targets.isEmpty()) {
                 knownCommands.put(alias.toLowerCase(), new MultipleCommandAlias(alias.toLowerCase(), targets.toArray(new Command[0])));
             } else {
                 knownCommands.remove(alias.toLowerCase());

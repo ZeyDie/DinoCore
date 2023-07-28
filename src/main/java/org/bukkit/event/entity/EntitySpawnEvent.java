@@ -21,7 +21,7 @@ public class EntitySpawnEvent extends EntityEvent implements org.bukkit.event.Ca
         return canceled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         canceled = cancel;
     }
 

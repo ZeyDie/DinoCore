@@ -28,7 +28,7 @@ public class Packet53BlockChange extends Packet
         this.isChunkDataPacket = true;
     }
 
-    public Packet53BlockChange(int par1, int par2, int par3, World par4World)
+    public Packet53BlockChange(final int par1, final int par2, final int par3, final World par4World)
     {
         this.isChunkDataPacket = true;
         this.xPosition = par1;
@@ -41,7 +41,7 @@ public class Packet53BlockChange extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.xPosition = par1DataInput.readInt();
         this.yPosition = par1DataInput.readUnsignedByte();
@@ -53,7 +53,7 @@ public class Packet53BlockChange extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.xPosition);
         par1DataOutput.write(this.yPosition);
@@ -65,7 +65,7 @@ public class Packet53BlockChange extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleBlockChange(this);
     }

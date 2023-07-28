@@ -11,13 +11,13 @@ public final class FluidTankInfo
     public final FluidStack fluid;
     public final int capacity;
 
-    public FluidTankInfo(FluidStack fluid, int capacity)
+    public FluidTankInfo(final FluidStack fluid, final int capacity)
     {
         this.fluid = fluid;
         this.capacity = capacity;
     }
 
-    public FluidTankInfo(IFluidTank tank)
+    public FluidTankInfo(final IFluidTank tank)
     {
         this.fluid = tank.getFluid();
         this.capacity = tank.getCapacity();

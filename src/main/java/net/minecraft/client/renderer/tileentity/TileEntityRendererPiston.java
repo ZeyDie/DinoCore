@@ -20,13 +20,13 @@ public class TileEntityRendererPiston extends TileEntitySpecialRenderer
     /** instance of RenderBlocks used to draw the piston base and extension. */
     private RenderBlocks blockRenderer;
 
-    public void renderPiston(TileEntityPiston par1TileEntityPiston, double par2, double par4, double par6, float par8)
+    public void renderPiston(final TileEntityPiston par1TileEntityPiston, final double par2, final double par4, final double par6, final float par8)
     {
-        Block block = Block.blocksList[par1TileEntityPiston.getStoredBlockID()];
+        final Block block = Block.blocksList[par1TileEntityPiston.getStoredBlockID()];
 
         if (block != null && par1TileEntityPiston.getProgress(par8) < 1.0F)
         {
-            Tessellator tessellator = Tessellator.instance;
+            final Tessellator tessellator = Tessellator.instance;
             this.bindTexture(TextureMap.locationBlocksTexture);
             RenderHelper.disableStandardItemLighting();
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -73,12 +73,12 @@ public class TileEntityRendererPiston extends TileEntitySpecialRenderer
      * Called when the ingame world being rendered changes (e.g. on world -> nether travel) due to using one renderer
      * per tile entity type, rather than instance
      */
-    public void onWorldChange(World par1World)
+    public void onWorldChange(final World par1World)
     {
         this.blockRenderer = new RenderBlocks(par1World);
     }
 
-    public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8)
+    public void renderTileEntityAt(final TileEntity par1TileEntity, final double par2, final double par4, final double par6, final float par8)
     {
         this.renderPiston((TileEntityPiston)par1TileEntity, par2, par4, par6, par8);
     }

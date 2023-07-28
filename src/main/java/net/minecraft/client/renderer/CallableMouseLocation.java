@@ -15,7 +15,7 @@ class CallableMouseLocation implements Callable
 
     final EntityRenderer theEntityRenderer;
 
-    CallableMouseLocation(EntityRenderer par1EntityRenderer, int par2, int par3)
+    CallableMouseLocation(final EntityRenderer par1EntityRenderer, final int par2, final int par3)
     {
         this.theEntityRenderer = par1EntityRenderer;
         this.field_90026_a = par2;

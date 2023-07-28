@@ -9,13 +9,13 @@ public class ContainerHorseInventory extends Container
     private IInventory field_111243_a;
     private EntityHorse theHorse;
 
-    public ContainerHorseInventory(IInventory par1IInventory, IInventory par2IInventory, EntityHorse par3EntityHorse)
+    public ContainerHorseInventory(final IInventory par1IInventory, final IInventory par2IInventory, final EntityHorse par3EntityHorse)
     {
         this.field_111243_a = par2IInventory;
         this.theHorse = par3EntityHorse;
-        byte b0 = 3;
+        final byte b0 = 3;
         par2IInventory.openChest();
-        int i = (b0 - 4) * 18;
+        final int i = (b0 - 4) * 18;
         this.addSlotToContainer(new ContainerHorseInventorySlotSaddle(this, par2IInventory, 0, 8, 18));
         this.addSlotToContainer(new ContainerHorseInventorySlotArmor(this, par2IInventory, 1, 8, 36, par3EntityHorse));
         int j;
@@ -46,7 +46,7 @@ public class ContainerHorseInventory extends Container
         }
     }
 
-    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
+    public boolean canInteractWith(final EntityPlayer par1EntityPlayer)
     {
         return this.field_111243_a.isUseableByPlayer(par1EntityPlayer) && this.theHorse.isEntityAlive() && this.theHorse.getDistanceToEntity(par1EntityPlayer) < 8.0F;
     }
@@ -54,14 +54,14 @@ public class ContainerHorseInventory extends Container
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+    public ItemStack transferStackInSlot(final EntityPlayer par1EntityPlayer, final int par2)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(par2);
+        final Slot slot = (Slot)this.inventorySlots.get(par2);
 
         if (slot != null && slot.getHasStack())
         {
-            ItemStack itemstack1 = slot.getStack();
+            final ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
             if (par2 < this.field_111243_a.getSizeInventory())
@@ -106,7 +106,7 @@ public class ContainerHorseInventory extends Container
     /**
      * Called when the container is closed.
      */
-    public void onContainerClosed(EntityPlayer par1EntityPlayer)
+    public void onContainerClosed(final EntityPlayer par1EntityPlayer)
     {
         super.onContainerClosed(par1EntityPlayer);
         this.field_111243_a.closeChest();

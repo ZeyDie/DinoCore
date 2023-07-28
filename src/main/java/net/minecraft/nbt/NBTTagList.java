@@ -22,7 +22,7 @@ public class NBTTagList extends NBTBase
         super("");
     }
 
-    public NBTTagList(String par1Str)
+    public NBTTagList(final String par1Str)
     {
         super(par1Str);
     }
@@ -30,7 +30,7 @@ public class NBTTagList extends NBTBase
     /**
      * Write the actual data contents of the tag, implemented in NBT extension classes
      */
-    void write(DataOutput par1DataOutput) throws IOException
+    void write(final DataOutput par1DataOutput) throws IOException
     {
         if (!this.tagList.isEmpty())
         {
@@ -53,7 +53,7 @@ public class NBTTagList extends NBTBase
     /**
      * Read the actual data contents of the tag, implemented in NBT extension classes
      */
-    void load(DataInput par1DataInput, int par2) throws IOException
+    void load(final DataInput par1DataInput, final int par2) throws IOException
     {
         if (par2 > 512)
         {
@@ -62,12 +62,12 @@ public class NBTTagList extends NBTBase
         else
         {
             this.tagType = par1DataInput.readByte();
-            int j = par1DataInput.readInt();
+            final int j = par1DataInput.readInt();
             this.tagList = new ArrayList();
 
             for (int k = 0; k < j; ++k)
             {
-                NBTBase nbtbase = NBTBase.newTag(this.tagType, (String)null);
+                final NBTBase nbtbase = NBTBase.newTag(this.tagType, (String)null);
                 nbtbase.load(par1DataInput, par2 + 1);
                 this.tagList.add(nbtbase);
             }
@@ -91,7 +91,7 @@ public class NBTTagList extends NBTBase
      * Adds the provided tag to the end of the list. There is no check to verify this tag is of the same type as any
      * previous tag.
      */
-    public void appendTag(NBTBase par1NBTBase)
+    public void appendTag(final NBTBase par1NBTBase)
     {
         this.tagType = par1NBTBase.getId();
         this.tagList.add(par1NBTBase);
@@ -100,7 +100,7 @@ public class NBTTagList extends NBTBase
     /**
      * Removes a tag at the given index.
      */
-    public NBTBase removeTag(int par1)
+    public NBTBase removeTag(final int par1)
     {
         return (NBTBase)this.tagList.remove(par1);
     }
@@ -108,7 +108,7 @@ public class NBTTagList extends NBTBase
     /**
      * Retrieves the tag at the specified index from the list.
      */
-    public NBTBase tagAt(int par1)
+    public NBTBase tagAt(final int par1)
     {
         return (NBTBase)this.tagList.get(par1);
     }
@@ -126,25 +126,25 @@ public class NBTTagList extends NBTBase
      */
     public NBTBase copy()
     {
-        NBTTagList nbttaglist = new NBTTagList(this.getName());
+        final NBTTagList nbttaglist = new NBTTagList(this.getName());
         nbttaglist.tagType = this.tagType;
-        Iterator iterator = this.tagList.iterator();
+        final Iterator iterator = this.tagList.iterator();
 
         while (iterator.hasNext())
         {
-            NBTBase nbtbase = (NBTBase)iterator.next();
-            NBTBase nbtbase1 = nbtbase.copy();
+            final NBTBase nbtbase = (NBTBase)iterator.next();
+            final NBTBase nbtbase1 = nbtbase.copy();
             nbttaglist.tagList.add(nbtbase1);
         }
 
         return nbttaglist;
     }
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         if (super.equals(par1Obj))
         {
-            NBTTagList nbttaglist = (NBTTagList)par1Obj;
+            final NBTTagList nbttaglist = (NBTTagList)par1Obj;
 
             if (this.tagType == nbttaglist.tagType)
             {

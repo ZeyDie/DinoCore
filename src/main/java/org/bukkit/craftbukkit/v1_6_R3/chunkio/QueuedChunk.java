@@ -9,7 +9,7 @@ class QueuedChunk {
     final net.minecraft.world.gen.ChunkProviderServer provider;
     net.minecraft.nbt.NBTTagCompound compound;
 
-    public QueuedChunk(int x, int z, net.minecraft.world.chunk.storage.AnvilChunkLoader loader, net.minecraft.world.World world, net.minecraft.world.gen.ChunkProviderServer provider) {
+    public QueuedChunk(final int x, final int z, final net.minecraft.world.chunk.storage.AnvilChunkLoader loader, final net.minecraft.world.World world, final net.minecraft.world.gen.ChunkProviderServer provider) {
         this.x = x;
         this.z = z;
         this.loader = loader;
@@ -23,9 +23,9 @@ class QueuedChunk {
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         if (object instanceof QueuedChunk) {
-            QueuedChunk other = (QueuedChunk) object;
+            final QueuedChunk other = (QueuedChunk) object;
             return x == other.x && z == other.z && world == other.world;
         }
 
@@ -36,16 +36,16 @@ class QueuedChunk {
     @Override
     public String toString()
     {
-        StringBuilder result = new StringBuilder();
-        String NEW_LINE = System.getProperty("line.separator");
+        final StringBuilder result = new StringBuilder();
+        final String NEW_LINE = System.getProperty("line.separator");
 
-        result.append(this.getClass().getName() + " {" + NEW_LINE);
-        result.append(" x: " + x + NEW_LINE);
-        result.append(" z: " + z + NEW_LINE);
-        result.append(" loader: " + loader + NEW_LINE );
-        result.append(" world: " + world.getWorldInfo().getWorldName() + NEW_LINE);
-        result.append(" dimension: " + world.provider.dimensionId + NEW_LINE);
-        result.append(" provider: " + world.provider.getClass().getName() + NEW_LINE);
+        result.append(this.getClass().getName()).append(" {").append(NEW_LINE);
+        result.append(" x: ").append(x).append(NEW_LINE);
+        result.append(" z: ").append(z).append(NEW_LINE);
+        result.append(" loader: ").append(loader).append(NEW_LINE);
+        result.append(" world: ").append(world.getWorldInfo().getWorldName()).append(NEW_LINE);
+        result.append(" dimension: ").append(world.provider.dimensionId).append(NEW_LINE);
+        result.append(" provider: ").append(world.provider.getClass().getName()).append(NEW_LINE);
         result.append("}");
 
         return result.toString();

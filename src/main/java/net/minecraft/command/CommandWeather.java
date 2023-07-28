@@ -22,12 +22,12 @@ public class CommandWeather extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.weather.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         if (par2ArrayOfStr.length >= 1 && par2ArrayOfStr.length <= 2)
         {
@@ -38,8 +38,8 @@ public class CommandWeather extends CommandBase
                 i = parseIntBounded(par1ICommandSender, par2ArrayOfStr[1], 1, 1000000) * 20;
             }
 
-            WorldServer worldserver = MinecraftServer.getServer().worldServers[0];
-            WorldInfo worldinfo = worldserver.getWorldInfo();
+            final WorldServer worldserver = MinecraftServer.getServer().worldServers[0];
+            final WorldInfo worldinfo = worldserver.getWorldInfo();
             worldinfo.setRainTime(i);
             worldinfo.setThunderTime(i);
 
@@ -76,7 +76,7 @@ public class CommandWeather extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public List addTabCompletionOptions(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         return par2ArrayOfStr.length == 1 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, new String[] {"clear", "rain", "thunder"}): null;
     }

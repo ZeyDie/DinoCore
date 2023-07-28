@@ -22,7 +22,7 @@ public class GuiCommandBlock extends GuiScreen
     private GuiButton doneBtn;
     private GuiButton cancelBtn;
 
-    public GuiCommandBlock(TileEntityCommandBlock par1TileEntityCommandBlock)
+    public GuiCommandBlock(final TileEntityCommandBlock par1TileEntityCommandBlock)
     {
         this.commandBlock = par1TileEntityCommandBlock;
     }
@@ -48,7 +48,7 @@ public class GuiCommandBlock extends GuiScreen
         this.commandTextField.setMaxStringLength(32767);
         this.commandTextField.setFocused(true);
         this.commandTextField.setText(this.commandBlock.getCommand());
-        this.doneBtn.enabled = this.commandTextField.getText().trim().length() > 0;
+        this.doneBtn.enabled = !this.commandTextField.getText().trim().isEmpty();
     }
 
     /**
@@ -62,7 +62,7 @@ public class GuiCommandBlock extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
@@ -72,9 +72,9 @@ public class GuiCommandBlock extends GuiScreen
             }
             else if (par1GuiButton.id == 0)
             {
-                String s = "MC|AdvCdm";
-                ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
-                DataOutputStream dataoutputstream = new DataOutputStream(bytearrayoutputstream);
+                final String s = "MC|AdvCdm";
+                final ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
+                final DataOutputStream dataoutputstream = new DataOutputStream(bytearrayoutputstream);
 
                 try
                 {
@@ -84,7 +84,7 @@ public class GuiCommandBlock extends GuiScreen
                     Packet.writeString(this.commandTextField.getText(), dataoutputstream);
                     this.mc.getNetHandler().addToSendQueue(new Packet250CustomPayload(s, bytearrayoutputstream.toByteArray()));
                 }
-                catch (Exception exception)
+                catch (final Exception exception)
                 {
                     exception.printStackTrace();
                 }
@@ -97,10 +97,10 @@ public class GuiCommandBlock extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         this.commandTextField.textboxKeyTyped(par1, par2);
-        this.doneBtn.enabled = this.commandTextField.getText().trim().length() > 0;
+        this.doneBtn.enabled = !this.commandTextField.getText().trim().isEmpty();
 
         if (par2 != 28 && par2 != 156)
         {
@@ -118,7 +118,7 @@ public class GuiCommandBlock extends GuiScreen
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int par1, int par2, int par3)
+    protected void mouseClicked(final int par1, final int par2, final int par3)
     {
         super.mouseClicked(par1, par2, par3);
         this.commandTextField.mouseClicked(par1, par2, par3);
@@ -127,7 +127,7 @@ public class GuiCommandBlock extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRenderer, I18n.getString("advMode.setCommand"), this.width / 2, 20, 16777215);

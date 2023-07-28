@@ -46,19 +46,19 @@ public class ModListResponsePacket extends FMLPacket
     }
 
     @Override
-    public byte[] generatePacket(Object... data)
+    public byte[] generatePacket(final Object... data)
     {
-        Map<String,String> modVersions = (Map<String, String>) data[0];
-        List<String> missingMods = (List<String>) data[1];
-        ByteArrayDataOutput dat = ByteStreams.newDataOutput();
+        final Map<String,String> modVersions = (Map<String, String>) data[0];
+        final List<String> missingMods = (List<String>) data[1];
+        final ByteArrayDataOutput dat = ByteStreams.newDataOutput();
         dat.writeInt(modVersions.size());
-        for (Entry<String, String> version : modVersions.entrySet())
+        for (final Entry<String, String> version : modVersions.entrySet())
         {
             dat.writeUTF(version.getKey());
             dat.writeUTF(version.getValue());
         }
         dat.writeInt(missingMods.size());
-        for (String missing : missingMods)
+        for (final String missing : missingMods)
         {
             dat.writeUTF(missing);
         }
@@ -66,19 +66,19 @@ public class ModListResponsePacket extends FMLPacket
     }
 
     @Override
-    public FMLPacket consumePacket(byte[] data)
+    public FMLPacket consumePacket(final byte[] data)
     {
-        ByteArrayDataInput dat = ByteStreams.newDataInput(data);
-        int versionListSize = dat.readInt();
+        final ByteArrayDataInput dat = ByteStreams.newDataInput(data);
+        final int versionListSize = dat.readInt();
         modVersions = Maps.newHashMapWithExpectedSize(versionListSize);
         for (int i = 0; i < versionListSize; i++)
         {
-            String modName = dat.readUTF();
-            String modVersion = dat.readUTF();
+            final String modName = dat.readUTF();
+            final String modVersion = dat.readUTF();
             modVersions.put(modName, modVersion);
         }
 
-        int missingModSize = dat.readInt();
+        final int missingModSize = dat.readInt();
         missingMods = Lists.newArrayListWithExpectedSize(missingModSize);
 
         for (int i = 0; i < missingModSize; i++)
@@ -89,35 +89,35 @@ public class ModListResponsePacket extends FMLPacket
     }
 
     @Override
-    public void execute(INetworkManager network, FMLNetworkHandler handler, NetHandler netHandler, String userName)
+    public void execute(final INetworkManager network, final FMLNetworkHandler handler, final NetHandler netHandler, final String userName)
     {
-        Map<String, ModContainer> indexedModList = Maps.newHashMap(Loader.instance().getIndexedModList());
-        List<String> missingClientMods = Lists.newArrayList();
-        List<String> versionIncorrectMods = Lists.newArrayList();
+        final Map<String, ModContainer> indexedModList = Maps.newHashMap(Loader.instance().getIndexedModList());
+        final List<String> missingClientMods = Lists.newArrayList();
+        final List<String> versionIncorrectMods = Lists.newArrayList();
 
-        for (String m : missingMods)
+        for (final String m : missingMods)
         {
-            ModContainer mc = indexedModList.get(m);
-            NetworkModHandler networkMod = handler.findNetworkModHandler(mc);
+            final ModContainer mc = indexedModList.get(m);
+            final NetworkModHandler networkMod = handler.findNetworkModHandler(mc);
             if (networkMod.requiresClientSide())
             {
                 missingClientMods.add(m);
             }
         }
 
-        for (Entry<String,String> modVersion : modVersions.entrySet())
+        for (final Entry<String,String> modVersion : modVersions.entrySet())
         {
-            ModContainer mc = indexedModList.get(modVersion.getKey());
-            NetworkModHandler networkMod = handler.findNetworkModHandler(mc);
+            final ModContainer mc = indexedModList.get(modVersion.getKey());
+            final NetworkModHandler networkMod = handler.findNetworkModHandler(mc);
             if (!networkMod.acceptVersion(modVersion.getValue()))
             {
                 versionIncorrectMods.add(modVersion.getKey());
             }
         }
 
-        Packet250CustomPayload pkt = new Packet250CustomPayload();
+        final Packet250CustomPayload pkt = new Packet250CustomPayload();
         pkt.channel = "FML";
-        if (missingClientMods.size()>0 || versionIncorrectMods.size() > 0)
+        if (!missingClientMods.isEmpty() || !versionIncorrectMods.isEmpty())
         {
             pkt.data = FMLPacket.makePacket(MOD_MISSING, missingClientMods, versionIncorrectMods);
             // Cauldron start - disable unneeded console spam
@@ -141,9 +141,9 @@ public class ModListResponsePacket extends FMLPacket
             // Cauldron end
             pkt.length = pkt.data.length;
             network.addToSendQueue(pkt);
-            NBTTagList itemList = new NBTTagList();
+            final NBTTagList itemList = new NBTTagList();
             GameData.writeItemData(itemList);
-            byte[][] registryPackets = FMLPacket.makePacketSet(MOD_IDMAP, itemList);
+            final byte[][] registryPackets = FMLPacket.makePacketSet(MOD_IDMAP, itemList);
             for (int i = 0; i < registryPackets.length; i++)
             {
                 network.addToSendQueue(PacketDispatcher.getPacket("FML", registryPackets[i]));

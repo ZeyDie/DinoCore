@@ -24,11 +24,11 @@ class RConThreadQueryAuth
     /** The RConThreadQuery that this is probably an inner class of */
     final RConThreadQuery queryThread;
 
-    public RConThreadQueryAuth(RConThreadQuery par1RConThreadQuery, DatagramPacket par2DatagramPacket)
+    public RConThreadQueryAuth(final RConThreadQuery par1RConThreadQuery, final DatagramPacket par2DatagramPacket)
     {
         this.queryThread = par1RConThreadQuery;
         this.timestamp = (new Date()).getTime();
-        byte[] abyte = par2DatagramPacket.getData();
+        final byte[] abyte = par2DatagramPacket.getData();
         this.requestId = new byte[4];
         this.requestId[0] = abyte[3];
         this.requestId[1] = abyte[4];
@@ -42,7 +42,7 @@ class RConThreadQueryAuth
     /**
      * Returns true if the auth's creation timestamp is less than the given time, otherwise false
      */
-    public Boolean hasExpired(long par1)
+    public Boolean hasExpired(final long par1)
     {
         return Boolean.valueOf(this.timestamp < par1);
     }

@@ -35,7 +35,7 @@ public class Packet1Login extends Packet
         this.vanillaCompatible = FMLNetworkHandler.vanillaLoginPacketCompatibility();
     }
 
-    public Packet1Login(int par1, WorldType par2WorldType, EnumGameType par3EnumGameType, boolean par4, int par5, int par6, int par7, int par8)
+    public Packet1Login(final int par1, final WorldType par2WorldType, final EnumGameType par3EnumGameType, final boolean par4, final int par5, final int par6, final int par7, final int par8)
     {
         this.clientEntityId = par1;
         this.terrainType = par2WorldType;
@@ -51,10 +51,10 @@ public class Packet1Login extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.clientEntityId = par1DataInput.readInt();
-        String s = readString(par1DataInput, 16);
+        final String s = readString(par1DataInput, 16);
         this.terrainType = WorldType.parseWorldType(s);
 
         if (this.terrainType == null)
@@ -62,9 +62,9 @@ public class Packet1Login extends Packet
             this.terrainType = WorldType.DEFAULT;
         }
 
-        byte b0 = par1DataInput.readByte();
+        final byte b0 = par1DataInput.readByte();
         this.hardcoreMode = (b0 & 8) == 8;
-        int i = b0 & -9;
+        final int i = b0 & -9;
         this.gameType = EnumGameType.getByID(i);
 
         if (vanillaCompatible)
@@ -84,7 +84,7 @@ public class Packet1Login extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.clientEntityId);
         writeString(this.terrainType == null ? "" : this.terrainType.getWorldTypeName(), par1DataOutput);
@@ -114,7 +114,7 @@ public class Packet1Login extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleLogin(this);
     }

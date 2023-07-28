@@ -53,20 +53,20 @@ public class ForgeHooksClient
     }
 
     @Deprecated
-    public static String getArmorTexture(Entity entity, ItemStack armor, String _default, int slot, int layer, String type)
+    public static String getArmorTexture(final Entity entity, final ItemStack armor, final String _default, final int slot, final int layer, final String type)
     {
         return getArmorTexture(entity, armor, _default, slot, type);
     }
 
-    public static String getArmorTexture(Entity entity, ItemStack armor, String _default, int slot, String type)
+    public static String getArmorTexture(final Entity entity, final ItemStack armor, final String _default, final int slot, final String type)
     {
-        String result = armor.getItem().getArmorTexture(armor, entity, slot, type);
+        final String result = armor.getItem().getArmorTexture(armor, entity, slot, type);
         return result != null ? result : _default;
     }
 
-    public static boolean renderEntityItem(EntityItem entity, ItemStack item, float bobing, float rotation, Random random, TextureManager engine, RenderBlocks renderBlocks)
+    public static boolean renderEntityItem(final EntityItem entity, final ItemStack item, final float bobing, final float rotation, final Random random, final TextureManager engine, final RenderBlocks renderBlocks)
     {
-        IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(item, ENTITY);
+        final IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(item, ENTITY);
         if (customRenderer == null)
         {
             return false;
@@ -80,14 +80,14 @@ public class ForgeHooksClient
         {
             GL11.glTranslatef(0.0F, -bobing, 0.0F);
         }
-        boolean is3D = customRenderer.shouldUseRenderHelper(ENTITY, item, BLOCK_3D);
+        final boolean is3D = customRenderer.shouldUseRenderHelper(ENTITY, item, BLOCK_3D);
 
         engine.bindTexture(item.getItemSpriteNumber() == 0 ? TextureMap.locationBlocksTexture : TextureMap.locationItemsTexture);
-        Block block = (item.itemID < Block.blocksList.length ? Block.blocksList[item.itemID] : null);
+        final Block block = (item.itemID < Block.blocksList.length ? Block.blocksList[item.itemID] : null);
         if (is3D || (block != null && RenderBlocks.renderItemIn3d(block.getRenderType())))
         {
-            int renderType = (block != null ? block.getRenderType() : 1);
-            float scale = (renderType == 1 || renderType == 19 || renderType == 12 || renderType == 2 ? 0.5F : 0.25F);
+            final int renderType = (block != null ? block.getRenderType() : 1);
+            final float scale = (renderType == 1 || renderType == 19 || renderType == 12 || renderType == 2 ? 0.5F : 0.25F);
 
             if (RenderItem.renderInFrame)
             {
@@ -98,8 +98,8 @@ public class ForgeHooksClient
 
             GL11.glScalef(scale, scale, scale);
 
-            int size = item.stackSize;
-            int count = (size > 40 ? 5 : (size > 20 ? 4 : (size > 5 ? 3 : (size > 1 ? 2 : 1))));
+            final int size = item.stackSize;
+            final int count = (size > 40 ? 5 : (size > 20 ? 4 : (size > 5 ? 3 : (size > 1 ? 2 : 1))));
 
             for(int j = 0; j < count; j++)
             {
@@ -123,9 +123,9 @@ public class ForgeHooksClient
         return true;
     }
 
-    public static boolean renderInventoryItem(RenderBlocks renderBlocks, TextureManager engine, ItemStack item, boolean inColor, float zLevel, float x, float y)
+    public static boolean renderInventoryItem(final RenderBlocks renderBlocks, final TextureManager engine, final ItemStack item, final boolean inColor, final float zLevel, final float x, final float y)
     {
-        IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(item, INVENTORY);
+        final IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(item, INVENTORY);
         if (customRenderer == null)
         {
             return false;
@@ -136,22 +136,22 @@ public class ForgeHooksClient
         {
             GL11.glPushMatrix();
             GL11.glTranslatef(x - 2, y + 3, -3.0F + zLevel);
-            GL11.glScalef(10F, 10F, 10F);
+            GL11.glScalef(10.0F, 10.0F, 10.0F);
             GL11.glTranslatef(1.0F, 0.5F, 1.0F);
-            GL11.glScalef(1.0F, 1.0F, -1F);
-            GL11.glRotatef(210F, 1.0F, 0.0F, 0.0F);
-            GL11.glRotatef(45F, 0.0F, 1.0F, 0.0F);
+            GL11.glScalef(1.0F, 1.0F, -1.0F);
+            GL11.glRotatef(210.0F, 1.0F, 0.0F, 0.0F);
+            GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
 
             if(inColor)
             {
-                int color = Item.itemsList[item.itemID].getColorFromItemStack(item, 0);
-                float r = (float)(color >> 16 & 0xff) / 255F;
-                float g = (float)(color >> 8 & 0xff) / 255F;
-                float b = (float)(color & 0xff) / 255F;
+                final int color = Item.itemsList[item.itemID].getColorFromItemStack(item, 0);
+                final float r = (float)(color >> 16 & 0xff) / 255.0F;
+                final float g = (float)(color >> 8 & 0xff) / 255.0F;
+                final float b = (float)(color & 0xff) / 255.0F;
                 GL11.glColor4f(r, g, b, 1.0F);
             }
 
-            GL11.glRotatef(-90F, 0.0F, 1.0F, 0.0F);
+            GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
             renderBlocks.useInventoryTint = inColor;
             customRenderer.renderItem(INVENTORY, item, renderBlocks);
             renderBlocks.useInventoryTint = true;
@@ -165,10 +165,10 @@ public class ForgeHooksClient
 
             if (inColor)
             {
-                int color = Item.itemsList[item.itemID].getColorFromItemStack(item, 0);
-                float r = (float)(color >> 16 & 255) / 255.0F;
-                float g = (float)(color >> 8 & 255) / 255.0F;
-                float b = (float)(color & 255) / 255.0F;
+                final int color = Item.itemsList[item.itemID].getColorFromItemStack(item, 0);
+                final float r = (float)(color >> 16 & 255) / 255.0F;
+                final float g = (float)(color >> 8 & 255) / 255.0F;
+                final float b = (float)(color & 255) / 255.0F;
                 GL11.glColor4f(r, g, b, 1.0F);
             }
 
@@ -180,11 +180,11 @@ public class ForgeHooksClient
         return true;
     }
 
-    public static void renderEffectOverlay(TextureManager manager, RenderItem render)
+    public static void renderEffectOverlay(final TextureManager manager, final RenderItem render)
     {
     }
 
-    public static void renderEquippedItem(ItemRenderType type, IItemRenderer customRenderer, RenderBlocks renderBlocks, EntityLivingBase entity, ItemStack item)
+    public static void renderEquippedItem(final ItemRenderType type, final IItemRenderer customRenderer, final RenderBlocks renderBlocks, final EntityLivingBase entity, final ItemStack item)
     {
         if (customRenderer.shouldUseRenderHelper(type, item, EQUIPPED_BLOCK))
         {
@@ -211,36 +211,36 @@ public class ForgeHooksClient
     //Optifine Helper Functions u.u, these are here specifically for Optifine
     //Note: When using Optfine, these methods are invoked using reflection, which
     //incurs a major performance penalty.
-    public static void orientBedCamera(Minecraft mc, EntityLivingBase entity)
+    public static void orientBedCamera(final Minecraft mc, final EntityLivingBase entity)
     {
-        int x = MathHelper.floor_double(entity.posX);
-        int y = MathHelper.floor_double(entity.posY);
-        int z = MathHelper.floor_double(entity.posZ);
-        Block block = Block.blocksList[mc.theWorld.getBlockId(x, y, z)];
+        final int x = MathHelper.floor_double(entity.posX);
+        final int y = MathHelper.floor_double(entity.posY);
+        final int z = MathHelper.floor_double(entity.posZ);
+        final Block block = Block.blocksList[mc.theWorld.getBlockId(x, y, z)];
 
         if (block != null && block.isBed(mc.theWorld, x, y, z, entity))
         {
-            int var12 = block.getBedDirection(mc.theWorld, x, y, z);
+            final int var12 = block.getBedDirection(mc.theWorld, x, y, z);
             GL11.glRotatef((float)(var12 * 90), 0.0F, 1.0F, 0.0F);
         }
     }
 
-    public static boolean onDrawBlockHighlight(RenderGlobal context, EntityPlayer player, MovingObjectPosition target, int subID, ItemStack currentItem, float partialTicks)
+    public static boolean onDrawBlockHighlight(final RenderGlobal context, final EntityPlayer player, final MovingObjectPosition target, final int subID, final ItemStack currentItem, final float partialTicks)
     {
         return MinecraftForge.EVENT_BUS.post(new DrawBlockHighlightEvent(context, player, target, subID, currentItem, partialTicks));
     }
 
-    public static void dispatchRenderLast(RenderGlobal context, float partialTicks)
+    public static void dispatchRenderLast(final RenderGlobal context, final float partialTicks)
     {
         MinecraftForge.EVENT_BUS.post(new RenderWorldLastEvent(context, partialTicks));
     }
 
-    public static void onTextureStitchedPre(TextureMap map)
+    public static void onTextureStitchedPre(final TextureMap map)
     {
         MinecraftForge.EVENT_BUS.post(new TextureStitchEvent.Pre(map));
     }
 
-    public static void onTextureStitchedPost(TextureMap map)
+    public static void onTextureStitchedPost(final TextureMap map)
     {
         MinecraftForge.EVENT_BUS.post(new TextureStitchEvent.Post(map));
 
@@ -252,17 +252,17 @@ public class ForgeHooksClient
      * This is added for Optifine's convenience. And to explode if a ModMaker is developing.
      * @param texture
      */
-    public static void onTextureLoadPre(String texture)
+    public static void onTextureLoadPre(final String texture)
     {
         if (Tessellator.renderingWorldRenderer)
         {
-            String msg = String.format("Warning: Texture %s not preloaded, will cause render glitches!", texture);
+            final String msg = String.format("Warning: Texture %s not preloaded, will cause render glitches!", texture);
             System.out.println(msg);
             if (Tessellator.class.getPackage() != null)
             {
                 if (Tessellator.class.getPackage().getName().startsWith("net.minecraft."))
                 {
-                    Minecraft mc = FMLClientHandler.instance().getClient();
+                    final Minecraft mc = FMLClientHandler.instance().getClient();
                     if (mc.ingameGUI != null)
                     {
                         mc.ingameGUI.getChatGUI().printChatMessage(msg);
@@ -273,14 +273,14 @@ public class ForgeHooksClient
     }
 
     static int renderPass = -1;
-    public static void setRenderPass(int pass)
+    public static void setRenderPass(final int pass)
     {
         renderPass = pass;
     }
 
-    public static ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, int slotID, ModelBiped _default)
+    public static ModelBiped getArmorModel(final EntityLivingBase entityLiving, final ItemStack itemStack, final int slotID, final ModelBiped _default)
     {
-        ModelBiped modelbiped = itemStack.getItem().getArmorModel(entityLiving, itemStack, slotID);
+        final ModelBiped modelbiped = itemStack.getItem().getArmorModel(entityLiving, itemStack, slotID);
         return modelbiped == null ? _default : modelbiped;
     }
 
@@ -288,14 +288,14 @@ public class ForgeHooksClient
     public static void createDisplay() throws LWJGLException
     {
         ImageIO.setUseCache(false); //Disable on-disc stream cache should speed up texture pack reloading.
-        PixelFormat format = new PixelFormat().withDepthBits(24);
+        final PixelFormat format = new PixelFormat().withDepthBits(24);
         try
         {
             //TODO: Figure out how to determine the max bits.
             Display.create(format.withStencilBits(8));
             stencilBits = 8;
         }
-        catch(LWJGLException e)
+        catch(final LWJGLException e)
         {
             Display.create(format);
             stencilBits = 0;
@@ -303,18 +303,18 @@ public class ForgeHooksClient
     }
 
     //This properly moves the domain, if provided, to the front of the string before concatenating
-    public static String fixDomain(String base, String complex)
+    public static String fixDomain(final String base, final String complex)
     {
-        int idx = complex.indexOf(':');
+        final int idx = complex.indexOf(':');
         if (idx == -1)
         {
             return base + complex;
         }
 
-        String name = complex.substring(idx + 1, complex.length());
+        final String name = complex.substring(idx + 1, complex.length());
         if (idx > 1)
         {
-            String domain = complex.substring(0, idx);
+            final String domain = complex.substring(0, idx);
             return domain + ':' + base + name;
         }
         else
@@ -328,9 +328,9 @@ public class ForgeHooksClient
         return MinecraftForge.EVENT_BUS.post(new MouseEvent());
     }
 
-    public static float getOffsetFOV(EntityPlayerSP entity, float fov)
+    public static float getOffsetFOV(final EntityPlayerSP entity, final float fov)
     {
-        FOVUpdateEvent fovUpdateEvent = new FOVUpdateEvent(entity, fov);
+        final FOVUpdateEvent fovUpdateEvent = new FOVUpdateEvent(entity, fov);
         MinecraftForge.EVENT_BUS.post(fovUpdateEvent);
         return fovUpdateEvent.newfov;
     }
@@ -340,7 +340,7 @@ public class ForgeHooksClient
     private static boolean skyInit;
     private static int skyRGBMultiplier;
     
-    public static int getSkyBlendColour(World world, int playerX, int playerZ)
+    public static int getSkyBlendColour(final World world, final int playerX, final int playerZ)
     {
         if (playerX == skyX && playerZ == skyZ && skyInit)
         {
@@ -348,7 +348,7 @@ public class ForgeHooksClient
         }
         skyInit = true;
         
-        int distance = Minecraft.getMinecraft().gameSettings.fancyGraphics ? ForgeDummyContainer.blendRanges[Minecraft.getMinecraft().gameSettings.renderDistance] : 0;
+        final int distance = Minecraft.getMinecraft().gameSettings.fancyGraphics ? ForgeDummyContainer.blendRanges[Minecraft.getMinecraft().gameSettings.renderDistance] : 0;
         
         int r = 0;
         int g = 0;
@@ -359,8 +359,8 @@ public class ForgeHooksClient
         {
             for (int z = -distance; z <= distance; ++z)
             {
-                BiomeGenBase biome = world.getBiomeGenForCoords(playerX + x, playerZ + z);
-                int colour = biome.getSkyColorByTemp(biome.getFloatTemperature());
+                final BiomeGenBase biome = world.getBiomeGenForCoords(playerX + x, playerZ + z);
+                final int colour = biome.getSkyColorByTemp(biome.getFloatTemperature());
                 r += (colour & 0xFF0000) >> 16;
                 g += (colour & 0x00FF00) >> 8;
                 b += colour & 0x0000FF;
@@ -368,7 +368,7 @@ public class ForgeHooksClient
             }
         }
 
-        int multiplier = (r / divider & 255) << 16 | (g / divider & 255) << 8 | b / divider & 255;
+        final int multiplier = (r / divider & 255) << 16 | (g / divider & 255) << 8 | b / divider & 255;
 
         skyX = playerX;
         skyZ = playerZ;

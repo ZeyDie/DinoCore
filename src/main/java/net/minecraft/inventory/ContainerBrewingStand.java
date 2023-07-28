@@ -24,7 +24,7 @@ public class ContainerBrewingStand extends Container
     private InventoryPlayer player;
     // CraftBukkit end
 
-    public ContainerBrewingStand(InventoryPlayer par1InventoryPlayer, TileEntityBrewingStand par2TileEntityBrewingStand)
+    public ContainerBrewingStand(final InventoryPlayer par1InventoryPlayer, final TileEntityBrewingStand par2TileEntityBrewingStand)
     {
         player = par1InventoryPlayer; // CraftBukkit
         this.tileBrewingStand = par2TileEntityBrewingStand;
@@ -48,7 +48,7 @@ public class ContainerBrewingStand extends Container
         }
     }
 
-    public void addCraftingToCrafters(ICrafting par1ICrafting)
+    public void addCraftingToCrafters(final ICrafting par1ICrafting)
     {
         super.addCraftingToCrafters(par1ICrafting);
         par1ICrafting.sendProgressBarUpdate(this, 0, this.tileBrewingStand.getBrewTime());
@@ -63,7 +63,7 @@ public class ContainerBrewingStand extends Container
 
         for (int i = 0; i < this.crafters.size(); ++i)
         {
-            ICrafting icrafting = (ICrafting)this.crafters.get(i);
+            final ICrafting icrafting = (ICrafting)this.crafters.get(i);
 
             if (this.brewTime != this.tileBrewingStand.getBrewTime())
             {
@@ -74,7 +74,7 @@ public class ContainerBrewingStand extends Container
         this.brewTime = this.tileBrewingStand.getBrewTime();
     }
 
-    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
+    public boolean canInteractWith(final EntityPlayer par1EntityPlayer)
     {
         if (!this.checkReachable)
         {
@@ -85,7 +85,7 @@ public class ContainerBrewingStand extends Container
     }
 
     @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2)
+    public void updateProgressBar(final int par1, final int par2)
     {
         if (par1 == 0)
         {
@@ -96,14 +96,14 @@ public class ContainerBrewingStand extends Container
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+    public ItemStack transferStackInSlot(final EntityPlayer par1EntityPlayer, final int par2)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(par2);
+        final Slot slot = (Slot)this.inventorySlots.get(par2);
 
         if (slot != null && slot.getHasStack())
         {
-            ItemStack itemstack1 = slot.getStack();
+            final ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
             if ((par2 < 0 || par2 > 2) && par2 != 3)
@@ -179,7 +179,7 @@ public class ContainerBrewingStand extends Container
             return bukkitEntity;
         }
 
-        CraftInventoryBrewer inventory = new CraftInventoryBrewer(this.tileBrewingStand);
+        final CraftInventoryBrewer inventory = new CraftInventoryBrewer(this.tileBrewingStand);
         bukkitEntity = new CraftInventoryView(this.player.player.getBukkitEntity(), inventory, this);
         return bukkitEntity;
     }

@@ -12,7 +12,7 @@ class ThreadStatSyncherSend extends Thread
 
     final StatsSyncher syncher;
 
-    ThreadStatSyncherSend(StatsSyncher par1StatsSyncher, Map par2Map)
+    ThreadStatSyncherSend(final StatsSyncher par1StatsSyncher, final Map par2Map)
     {
         this.syncher = par1StatsSyncher;
         this.field_77483_a = par2Map;
@@ -24,7 +24,7 @@ class ThreadStatSyncherSend extends Thread
         {
             StatsSyncher.func_77414_a(this.syncher, this.field_77483_a, StatsSyncher.getUnsentDataFile(this.syncher), StatsSyncher.getUnsentTempFile(this.syncher), StatsSyncher.getUnsentOldFile(this.syncher));
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             exception.printStackTrace();
         }

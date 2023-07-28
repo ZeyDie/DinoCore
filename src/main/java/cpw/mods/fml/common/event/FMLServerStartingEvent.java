@@ -23,7 +23,7 @@ public class FMLServerStartingEvent extends FMLStateEvent
 
     private MinecraftServer server;
 
-    public FMLServerStartingEvent(Object... data)
+    public FMLServerStartingEvent(final Object... data)
     {
         super(data);
         this.server = (MinecraftServer) data[0];
@@ -39,16 +39,16 @@ public class FMLServerStartingEvent extends FMLStateEvent
         return server;
     }
 
-    public void registerServerCommand(ICommand command)
+    public void registerServerCommand(final ICommand command)
     {
-        CommandHandler ch = (CommandHandler) getServer().getCommandManager();
+        final CommandHandler ch = (CommandHandler) getServer().getCommandManager();
         ch.registerCommand(command);
     }
 
     // Cauldron start - used for mods to register a Bukkit command
-    public void registerServerCommand(String fallbackPrefix, Command command)
+    public void registerServerCommand(final String fallbackPrefix, final Command command)
     {
-        org.bukkit.command.SimpleCommandMap commandMap = getServer().server.getCommandMap();
+        final org.bukkit.command.SimpleCommandMap commandMap = getServer().server.getCommandMap();
         commandMap.register(fallbackPrefix, command);
     }
     // Cauldron end 

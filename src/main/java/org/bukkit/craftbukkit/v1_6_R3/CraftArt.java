@@ -5,7 +5,7 @@ import org.bukkit.Art;
 // Safety class, will break if either side changes
 public class CraftArt {
 
-    public static Art NotchToBukkit(net.minecraft.util.EnumArt art) {
+    public static Art NotchToBukkit(final net.minecraft.util.EnumArt art) {
         switch (art) {
             case Kebab: return Art.KEBAB;
             case Aztec: return Art.AZTEC;
@@ -38,7 +38,7 @@ public class CraftArt {
         }
     }
 
-    public static net.minecraft.util.EnumArt BukkitToNotch(Art art) {
+    public static net.minecraft.util.EnumArt BukkitToNotch(final Art art) {
         switch (art) {
             case KEBAB: return net.minecraft.util.EnumArt.Kebab;
             case AZTEC: return net.minecraft.util.EnumArt.Aztec;

@@ -5,7 +5,7 @@ import org.bukkit.entity.Flying;
 
 public class CraftFlying extends CraftLivingEntity implements Flying {
 
-    public CraftFlying(CraftServer server, net.minecraft.entity.EntityFlying entity) {
+    public CraftFlying(final CraftServer server, final net.minecraft.entity.EntityFlying entity) {
         super(server, entity);
     }
 

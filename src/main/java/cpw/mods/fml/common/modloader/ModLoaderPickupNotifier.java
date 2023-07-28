@@ -21,13 +21,13 @@ public class ModLoaderPickupNotifier implements IPickupNotifier
 
     private BaseModProxy mod;
 
-    public ModLoaderPickupNotifier(BaseModProxy mod)
+    public ModLoaderPickupNotifier(final BaseModProxy mod)
     {
         this.mod = mod;
     }
 
     @Override
-    public void notifyPickup(EntityItem item, EntityPlayer player)
+    public void notifyPickup(final EntityItem item, final EntityPlayer player)
     {
         mod.onItemPickup(player, item.getEntityItem());
     }

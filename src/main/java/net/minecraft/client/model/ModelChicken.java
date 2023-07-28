@@ -20,7 +20,7 @@ public class ModelChicken extends ModelBase
 
     public ModelChicken()
     {
-        byte b0 = 16;
+        final byte b0 = 16;
         this.head = new ModelRenderer(this, 0, 0);
         this.head.addBox(-2.0F, -6.0F, -2.0F, 4, 6, 3, 0.0F);
         this.head.setRotationPoint(0.0F, (float)(-1 + b0), -4.0F);
@@ -50,13 +50,13 @@ public class ModelChicken extends ModelBase
     /**
      * Sets the models various rotation angles then renders the model.
      */
-    public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7)
+    public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7)
     {
         this.setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 
         if (this.isChild)
         {
-            float f6 = 2.0F;
+            final float f6 = 2.0F;
             GL11.glPushMatrix();
             GL11.glTranslatef(0.0F, 5.0F * par7, 2.0F * par7);
             this.head.render(par7);
@@ -91,15 +91,15 @@ public class ModelChicken extends ModelBase
      * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how
      * "far" arms and legs can swing at most.
      */
-    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity)
+    public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity)
     {
-        this.head.rotateAngleX = par5 / (180F / (float)Math.PI);
-        this.head.rotateAngleY = par4 / (180F / (float)Math.PI);
+        this.head.rotateAngleX = par5 / (180.0F / (float)Math.PI);
+        this.head.rotateAngleY = par4 / (180.0F / (float)Math.PI);
         this.bill.rotateAngleX = this.head.rotateAngleX;
         this.bill.rotateAngleY = this.head.rotateAngleY;
         this.chin.rotateAngleX = this.head.rotateAngleX;
         this.chin.rotateAngleY = this.head.rotateAngleY;
-        this.body.rotateAngleX = ((float)Math.PI / 2F);
+        this.body.rotateAngleX = ((float)Math.PI / 2.0F);
         this.rightLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
         this.leftLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 1.4F * par2;
         this.rightWing.rotateAngleZ = par3;

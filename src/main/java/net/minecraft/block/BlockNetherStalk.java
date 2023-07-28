@@ -17,13 +17,13 @@ public class BlockNetherStalk extends BlockFlower
 {
     @SideOnly(Side.CLIENT)
     private Icon[] iconArray;
-    private static final String[] field_94373_a = new String[] {"netherStalk_0", "netherStalk_1", "netherStalk_2"};
+    private static final String[] field_94373_a = {"netherStalk_0", "netherStalk_1", "netherStalk_2"};
 
-    protected BlockNetherStalk(int par1)
+    protected BlockNetherStalk(final int par1)
     {
         super(par1);
         this.setTickRandomly(true);
-        float f = 0.5F;
+        final float f = 0.5F;
         this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 0.25F, 0.5F + f);
         this.setCreativeTab((CreativeTabs)null);
     }
@@ -32,7 +32,7 @@ public class BlockNetherStalk extends BlockFlower
      * Gets passed in the blockID of the block below and supposed to return true if its allowed to grow on the type of
      * blockID passed in. Args: blockID
      */
-    protected boolean canThisPlantGrowOnThisBlockID(int par1)
+    protected boolean canThisPlantGrowOnThisBlockID(final int par1)
     {
         return par1 == Block.slowSand.blockID;
     }
@@ -40,16 +40,16 @@ public class BlockNetherStalk extends BlockFlower
     /**
      * Can this block stay at this position.  Similar to canPlaceBlockAt except gets checked often with plants.
      */
-    public boolean canBlockStay(World par1World, int par2, int par3, int par4)
+    public boolean canBlockStay(final World par1World, final int par2, final int par3, final int par4)
     {
-        Block block = Block.blocksList[par1World.getBlockId(par2, par3 - 1, par4)];
+        final Block block = Block.blocksList[par1World.getBlockId(par2, par3 - 1, par4)];
         return (block != null && block.canSustainPlant(par1World, par2, par3 - 1, par4, ForgeDirection.UP, this));
     }
 
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         int l = par1World.getBlockMetadata(par2, par3, par4);
 
@@ -66,7 +66,7 @@ public class BlockNetherStalk extends BlockFlower
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
         return par2 >= 3 ? this.iconArray[2] : (par2 > 0 ? this.iconArray[1] : this.iconArray[0]);
     }
@@ -82,7 +82,7 @@ public class BlockNetherStalk extends BlockFlower
     /**
      * Drops the block items with a specified chance of dropping the specified items
      */
-    public void dropBlockAsItemWithChance(World par1World, int par2, int par3, int par4, int par5, float par6, int par7)
+    public void dropBlockAsItemWithChance(final World par1World, final int par2, final int par3, final int par4, final int par5, final float par6, final int par7)
     {
         super.dropBlockAsItemWithChance(par1World, par2, par3, par4, par5, par6, par7);
     }
@@ -90,7 +90,7 @@ public class BlockNetherStalk extends BlockFlower
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return 0;
     }
@@ -98,7 +98,7 @@ public class BlockNetherStalk extends BlockFlower
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random par1Random)
+    public int quantityDropped(final Random par1Random)
     {
         return 0;
     }
@@ -108,7 +108,7 @@ public class BlockNetherStalk extends BlockFlower
     /**
      * only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
      */
-    public int idPicked(World par1World, int par2, int par3, int par4)
+    public int idPicked(final World par1World, final int par2, final int par3, final int par4)
     {
         return Item.netherStalkSeeds.itemID;
     }
@@ -119,7 +119,7 @@ public class BlockNetherStalk extends BlockFlower
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.iconArray = new Icon[3];
 
@@ -130,9 +130,9 @@ public class BlockNetherStalk extends BlockFlower
     }
 
     @Override
-    public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune)
+    public ArrayList<ItemStack> getBlockDropped(final World world, final int x, final int y, final int z, final int metadata, final int fortune)
     {
-        ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+        final ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
         int count = 1;
 
         if (metadata >= 3)

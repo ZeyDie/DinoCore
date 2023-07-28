@@ -18,7 +18,7 @@ public class Packet71Weather extends Packet
 
     public Packet71Weather() {}
 
-    public Packet71Weather(Entity par1Entity)
+    public Packet71Weather(final Entity par1Entity)
     {
         this.entityID = par1Entity.entityId;
         this.posX = MathHelper.floor_double(par1Entity.posX * 32.0D);
@@ -34,7 +34,7 @@ public class Packet71Weather extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.entityID = par1DataInput.readInt();
         this.isLightningBolt = par1DataInput.readByte();
@@ -46,7 +46,7 @@ public class Packet71Weather extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.entityID);
         par1DataOutput.writeByte(this.isLightningBolt);
@@ -58,7 +58,7 @@ public class Packet71Weather extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleWeather(this);
     }

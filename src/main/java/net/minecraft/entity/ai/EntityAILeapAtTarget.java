@@ -15,7 +15,7 @@ public class EntityAILeapAtTarget extends EntityAIBase
     /** The entity's motionY after leaping. */
     float leapMotionY;
 
-    public EntityAILeapAtTarget(EntityLiving par1EntityLiving, float par2)
+    public EntityAILeapAtTarget(final EntityLiving par1EntityLiving, final float par2)
     {
         this.leaper = par1EntityLiving;
         this.leapMotionY = par2;
@@ -35,7 +35,7 @@ public class EntityAILeapAtTarget extends EntityAIBase
         }
         else
         {
-            double d0 = this.leaper.getDistanceSqToEntity(this.leapTarget);
+            final double d0 = this.leaper.getDistanceSqToEntity(this.leapTarget);
             return d0 >= 4.0D && d0 <= 16.0D ? (!this.leaper.onGround ? false : this.leaper.getRNG().nextInt(5) == 0) : false;
         }
     }
@@ -53,9 +53,9 @@ public class EntityAILeapAtTarget extends EntityAIBase
      */
     public void startExecuting()
     {
-        double d0 = this.leapTarget.posX - this.leaper.posX;
-        double d1 = this.leapTarget.posZ - this.leaper.posZ;
-        float f = MathHelper.sqrt_double(d0 * d0 + d1 * d1);
+        final double d0 = this.leapTarget.posX - this.leaper.posX;
+        final double d1 = this.leapTarget.posZ - this.leaper.posZ;
+        final float f = MathHelper.sqrt_double(d0 * d0 + d1 * d1);
         this.leaper.motionX += d0 / (double)f * 0.5D * 0.800000011920929D + this.leaper.motionX * 0.20000000298023224D;
         this.leaper.motionZ += d1 / (double)f * 0.5D * 0.800000011920929D + this.leaper.motionZ * 0.20000000298023224D;
         this.leaper.motionY = (double)this.leapMotionY;

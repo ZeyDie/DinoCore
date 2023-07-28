@@ -16,7 +16,7 @@ public class BlockColored extends Block
     @SideOnly(Side.CLIENT)
     private Icon[] iconArray;
 
-    public BlockColored(int par1, Material par2Material)
+    public BlockColored(final int par1, final Material par2Material)
     {
         super(par1, par2Material);
         this.setCreativeTab(CreativeTabs.tabBlock);
@@ -27,7 +27,7 @@ public class BlockColored extends Block
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
         return this.iconArray[par2 % this.iconArray.length];
     }
@@ -35,7 +35,7 @@ public class BlockColored extends Block
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int par1)
+    public int damageDropped(final int par1)
     {
         return par1;
     }
@@ -43,7 +43,7 @@ public class BlockColored extends Block
     /**
      * Takes a dye damage value and returns the block damage value to match
      */
-    public static int getBlockFromDye(int par0)
+    public static int getBlockFromDye(final int par0)
     {
         return ~par0 & 15;
     }
@@ -51,7 +51,7 @@ public class BlockColored extends Block
     /**
      * Takes a block damage value and returns the dye damage value to match
      */
-    public static int getDyeFromBlock(int par0)
+    public static int getDyeFromBlock(final int par0)
     {
         return ~par0 & 15;
     }
@@ -61,7 +61,7 @@ public class BlockColored extends Block
     /**
      * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
      */
-    public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubBlocks(final int par1, final CreativeTabs par2CreativeTabs, final List par3List)
     {
         for (int j = 0; j < 16; ++j)
         {
@@ -75,7 +75,7 @@ public class BlockColored extends Block
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.iconArray = new Icon[16];
 

@@ -22,7 +22,7 @@ public class SlotCrafting extends Slot
      */
     private int amountCrafted;
 
-    public SlotCrafting(EntityPlayer par1EntityPlayer, IInventory par2IInventory, IInventory par3IInventory, int par4, int par5, int par6)
+    public SlotCrafting(final EntityPlayer par1EntityPlayer, final IInventory par2IInventory, final IInventory par3IInventory, final int par4, final int par5, final int par6)
     {
         super(par3IInventory, par4, par5, par6);
         this.thePlayer = par1EntityPlayer;
@@ -32,7 +32,7 @@ public class SlotCrafting extends Slot
     /**
      * Check if the stack is a valid item for this slot. Always true beside for the armor slots.
      */
-    public boolean isItemValid(ItemStack par1ItemStack)
+    public boolean isItemValid(final ItemStack par1ItemStack)
     {
         return false;
     }
@@ -41,7 +41,7 @@ public class SlotCrafting extends Slot
      * Decrease the size of the stack in slot (first int arg) by the amount of the second int arg. Returns the new
      * stack.
      */
-    public ItemStack decrStackSize(int par1)
+    public ItemStack decrStackSize(final int par1)
     {
         if (this.getHasStack())
         {
@@ -55,7 +55,7 @@ public class SlotCrafting extends Slot
      * the itemStack passed in is the output - ie, iron ingots, and pickaxes, not ore and wood. Typically increases an
      * internal count then calls onCrafting(item).
      */
-    protected void onCrafting(ItemStack par1ItemStack, int par2)
+    protected void onCrafting(final ItemStack par1ItemStack, final int par2)
     {
         this.amountCrafted += par2;
         this.onCrafting(par1ItemStack);
@@ -64,7 +64,7 @@ public class SlotCrafting extends Slot
     /**
      * the itemStack passed in is the output - ie, iron ingots, and pickaxes, not ore and wood.
      */
-    protected void onCrafting(ItemStack par1ItemStack)
+    protected void onCrafting(final ItemStack par1ItemStack)
     {
         par1ItemStack.onCrafting(this.thePlayer.worldObj, this.thePlayer, this.amountCrafted);
         this.amountCrafted = 0;
@@ -111,14 +111,14 @@ public class SlotCrafting extends Slot
         }
     }
 
-    public void onPickupFromSlot(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack)
+    public void onPickupFromSlot(final EntityPlayer par1EntityPlayer, final ItemStack par2ItemStack)
     {
         GameRegistry.onItemCrafted(par1EntityPlayer, par2ItemStack, craftMatrix);
         this.onCrafting(par2ItemStack);
 
         for (int i = 0; i < this.craftMatrix.getSizeInventory(); ++i)
         {
-            ItemStack itemstack1 = this.craftMatrix.getStackInSlot(i);
+            final ItemStack itemstack1 = this.craftMatrix.getStackInSlot(i);
 
             if (itemstack1 != null)
             {

@@ -17,7 +17,7 @@ public class PropertyManager
     private final ILogAgent logger;
     private final File associatedFile;
 
-    public PropertyManager(File par1File, ILogAgent par2ILogAgent)
+    public PropertyManager(final File par1File, final ILogAgent par2ILogAgent)
     {
         this.associatedFile = par1File;
         this.logger = par2ILogAgent;
@@ -31,7 +31,7 @@ public class PropertyManager
                 fileinputstream = new FileInputStream(par1File);
                 this.properties.load(fileinputstream);
             }
-            catch (Exception exception)
+            catch (final Exception exception)
             {
                 par2ILogAgent.logWarningException("Failed to load " + par1File, exception);
                 this.logMessageAndSave();
@@ -44,7 +44,7 @@ public class PropertyManager
                     {
                         fileinputstream.close();
                     }
-                    catch (IOException ioexception)
+                    catch (final IOException ioexception)
                     {
                         ;
                     }
@@ -61,13 +61,13 @@ public class PropertyManager
     // CraftBukkit start
     private OptionSet options = null;
 
-    public PropertyManager(final OptionSet options, ILogAgent ilogagent)
+    public PropertyManager(final OptionSet options, final ILogAgent ilogagent)
     {
         this((File) options.valueOf("config"), ilogagent);
         this.options = options;
     }
 
-    private <T> T getOverride(String name, T value)
+    private <T> T getOverride(final String name, final T value)
     {
         if ((this.options != null) && (this.options.has(name)) && !name.equals("online-mode"))    // Spigot
         {
@@ -107,7 +107,7 @@ public class PropertyManager
             fileoutputstream = new FileOutputStream(this.associatedFile);
             this.properties.store(fileoutputstream, "Minecraft server properties");
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             this.logger.logWarningException("Failed to save " + this.associatedFile, exception);
             this.logMessageAndSave();
@@ -120,7 +120,7 @@ public class PropertyManager
                 {
                     fileoutputstream.close();
                 }
-                catch (IOException ioexception)
+                catch (final IOException ioexception)
                 {
                     ;
                 }
@@ -139,7 +139,7 @@ public class PropertyManager
     /**
      * Gets a property. If it does not exist, set it to the specified value.
      */
-    public String getProperty(String par1Str, String par2Str)
+    public String getProperty(final String par1Str, final String par2Str)
     {
         if (!this.properties.containsKey(par1Str))
         {
@@ -153,13 +153,13 @@ public class PropertyManager
     /**
      * Gets an integer property. If it does not exist, set it to the specified value.
      */
-    public int getIntProperty(String par1Str, int par2)
+    public int getIntProperty(final String par1Str, final int par2)
     {
         try
         {
             return this.getOverride(par1Str, Integer.parseInt(this.getProperty(par1Str, "" + par2))); // CraftBukkit
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             this.properties.setProperty(par1Str, "" + par2);
             return this.getOverride(par1Str, par2); // CraftBukkit
@@ -169,13 +169,13 @@ public class PropertyManager
     /**
      * Gets a boolean property. If it does not exist, set it to the specified value.
      */
-    public boolean getBooleanProperty(String par1Str, boolean par2)
+    public boolean getBooleanProperty(final String par1Str, final boolean par2)
     {
         try
         {
             return this.getOverride(par1Str, Boolean.parseBoolean(this.getProperty(par1Str, "" + par2))); // CraftBukkit
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             this.properties.setProperty(par1Str, "" + par2);
             return this.getOverride(par1Str, par2); // CraftBukkit
@@ -185,7 +185,7 @@ public class PropertyManager
     /**
      * Saves an Object with the given property name.
      */
-    public void setProperty(String par1Str, Object par2Obj)
+    public void setProperty(final String par1Str, final Object par2Obj)
     {
         this.properties.setProperty(par1Str, "" + par2Obj);
     }

@@ -16,12 +16,12 @@ public abstract class BaseAttributeMap
     //TODO ZeyCodeReplace Map on Map<String, AttributeInstance>
     protected final Map<String, AttributeInstance> attributesByName = new LowerStringMap();
 
-    public AttributeInstance getAttributeInstance(Attribute par1Attribute)
+    public AttributeInstance getAttributeInstance(final Attribute par1Attribute)
     {
         return this.attributes.get(par1Attribute);
     }
 
-    public AttributeInstance getAttributeInstanceByName(String par1Str)
+    public AttributeInstance getAttributeInstanceByName(final String par1Str)
     {
         return this.attributesByName.get(par1Str);
     }
@@ -34,16 +34,16 @@ public abstract class BaseAttributeMap
         return this.attributesByName.values();
     }
 
-    public void func_111149_a(ModifiableAttributeInstance par1ModifiableAttributeInstance) {}
+    public void func_111149_a(final ModifiableAttributeInstance par1ModifiableAttributeInstance) {}
 
-    public void removeAttributeModifiers(Multimap par1Multimap)
+    public void removeAttributeModifiers(final Multimap par1Multimap)
     {
-        Iterator iterator = par1Multimap.entries().iterator();
+        final Iterator iterator = par1Multimap.entries().iterator();
 
         while (iterator.hasNext())
         {
-            Entry entry = (Entry)iterator.next();
-            AttributeInstance attributeinstance = this.getAttributeInstanceByName((String)entry.getKey());
+            final Entry entry = (Entry)iterator.next();
+            final AttributeInstance attributeinstance = this.getAttributeInstanceByName((String)entry.getKey());
 
             if (attributeinstance != null)
             {
@@ -52,14 +52,14 @@ public abstract class BaseAttributeMap
         }
     }
 
-    public void applyAttributeModifiers(Multimap par1Multimap)
+    public void applyAttributeModifiers(final Multimap par1Multimap)
     {
-        Iterator iterator = par1Multimap.entries().iterator();
+        final Iterator iterator = par1Multimap.entries().iterator();
 
         while (iterator.hasNext())
         {
-            Entry entry = (Entry)iterator.next();
-            AttributeInstance attributeinstance = this.getAttributeInstanceByName((String)entry.getKey());
+            final Entry entry = (Entry)iterator.next();
+            final AttributeInstance attributeinstance = this.getAttributeInstanceByName((String)entry.getKey());
 
             if (attributeinstance != null)
             {

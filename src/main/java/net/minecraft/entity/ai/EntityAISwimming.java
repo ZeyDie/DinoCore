@@ -6,7 +6,7 @@ public class EntityAISwimming extends EntityAIBase
 {
     private EntityLiving theEntity;
 
-    public EntityAISwimming(EntityLiving par1EntityLiving)
+    public EntityAISwimming(final EntityLiving par1EntityLiving)
     {
         this.theEntity = par1EntityLiving;
         this.setMutexBits(4);

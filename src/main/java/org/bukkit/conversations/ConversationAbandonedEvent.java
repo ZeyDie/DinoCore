@@ -10,11 +10,11 @@ public class ConversationAbandonedEvent extends EventObject {
     private ConversationContext context;
     private ConversationCanceller canceller;
 
-    public ConversationAbandonedEvent(Conversation conversation) {
+    public ConversationAbandonedEvent(final Conversation conversation) {
         this(conversation, null);
     }
 
-    public ConversationAbandonedEvent(Conversation conversation, ConversationCanceller canceller) {
+    public ConversationAbandonedEvent(final Conversation conversation, final ConversationCanceller canceller) {
         super(conversation);
         this.context = conversation.getContext();
         this.canceller = canceller;

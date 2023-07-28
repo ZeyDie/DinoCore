@@ -26,21 +26,21 @@ public class GameRuleCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
 
         if (args.length > 0) {
-            String rule = args[0];
-            World world = getGameWorld(sender);
+            final String rule = args[0];
+            final World world = getGameWorld(sender);
 
             if (world.isGameRule(rule)) {
                 if (args.length > 1) {
-                    String value = args[1];
+                    final String value = args[1];
 
                     world.setGameRuleValue(rule, value);
                     Command.broadcastCommandMessage(sender, "Game rule " + rule + " has been set to: " + value);
                 } else {
-                    String value = world.getGameRuleValue(rule);
+                    final String value = world.getGameRuleValue(rule);
                     sender.sendMessage(rule + " = " + value);
                 }
             } else {
@@ -56,9 +56,9 @@ public class GameRuleCommand extends VanillaCommand {
         }
     }
 
-    private World getGameWorld(CommandSender sender) {
+    private World getGameWorld(final CommandSender sender) {
         if (sender instanceof HumanEntity) {
-            World world = ((HumanEntity) sender).getWorld();
+            final World world = ((HumanEntity) sender).getWorld();
             if (world != null) {
                 return world;
             }
@@ -70,7 +70,7 @@ public class GameRuleCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) throws IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");

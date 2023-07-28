@@ -21,15 +21,15 @@ public class DefaultResourcePack implements ResourcePack
     private final Map mapResourceFiles = Maps.newHashMap();
     private final File fileAssets;
 
-    public DefaultResourcePack(File par1File)
+    public DefaultResourcePack(final File par1File)
     {
         this.fileAssets = par1File;
         this.readAssetsDir(this.fileAssets);
     }
 
-    public InputStream getInputStream(ResourceLocation par1ResourceLocation) throws IOException
+    public InputStream getInputStream(final ResourceLocation par1ResourceLocation) throws IOException
     {
-        InputStream inputstream = this.getResourceStream(par1ResourceLocation);
+        final InputStream inputstream = this.getResourceStream(par1ResourceLocation);
 
         if (inputstream != null)
         {
@@ -37,7 +37,7 @@ public class DefaultResourcePack implements ResourcePack
         }
         else
         {
-            File file1 = (File)this.mapResourceFiles.get(par1ResourceLocation.toString());
+            final File file1 = (File)this.mapResourceFiles.get(par1ResourceLocation.toString());
 
             if (file1 != null)
             {
@@ -50,17 +50,17 @@ public class DefaultResourcePack implements ResourcePack
         }
     }
 
-    private InputStream getResourceStream(ResourceLocation par1ResourceLocation)
+    private InputStream getResourceStream(final ResourceLocation par1ResourceLocation)
     {
         return DefaultResourcePack.class.getResourceAsStream("/assets/minecraft/" + par1ResourceLocation.getResourcePath());
     }
 
-    public void addResourceFile(String par1Str, File par2File)
+    public void addResourceFile(final String par1Str, final File par2File)
     {
         this.mapResourceFiles.put((new ResourceLocation(par1Str)).toString(), par2File);
     }
 
-    public boolean resourceExists(ResourceLocation par1ResourceLocation)
+    public boolean resourceExists(final ResourceLocation par1ResourceLocation)
     {
         return this.getResourceStream(par1ResourceLocation) != null || this.mapResourceFiles.containsKey(par1ResourceLocation.toString());
     }
@@ -70,16 +70,16 @@ public class DefaultResourcePack implements ResourcePack
         return defaultResourceDomains;
     }
 
-    public void readAssetsDir(File par1File)
+    public void readAssetsDir(final File par1File)
     {
         if (par1File.isDirectory())
         {
-            File[] afile = par1File.listFiles();
-            int i = afile.length;
+            final File[] afile = par1File.listFiles();
+            final int i = afile.length;
 
             for (int j = 0; j < i; ++j)
             {
-                File file2 = afile[j];
+                final File file2 = afile[j];
                 this.readAssetsDir(file2);
             }
         }
@@ -89,7 +89,7 @@ public class DefaultResourcePack implements ResourcePack
         }
     }
 
-    public MetadataSection getPackMetadata(MetadataSerializer par1MetadataSerializer, String par2Str) throws IOException
+    public MetadataSection getPackMetadata(final MetadataSerializer par1MetadataSerializer, final String par2Str) throws IOException
     {
         return AbstractResourcePack.readMetadata(par1MetadataSerializer, DefaultResourcePack.class.getResourceAsStream("/" + (new ResourceLocation("pack.mcmeta")).getResourcePath()), par2Str);
     }

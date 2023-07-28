@@ -57,7 +57,7 @@ public class PlayerControllerMP
     /** Index of the current item held by the player in the inventory hotbar */
     private int currentPlayerItem;
 
-    public PlayerControllerMP(Minecraft par1Minecraft, NetClientHandler par2NetClientHandler)
+    public PlayerControllerMP(final Minecraft par1Minecraft, final NetClientHandler par2NetClientHandler)
     {
         this.currentGameType = EnumGameType.SURVIVAL;
         this.mc = par1Minecraft;
@@ -67,7 +67,7 @@ public class PlayerControllerMP
     /**
      * Block dig operation in creative mode (instantly digs the block).
      */
-    public static void clickBlockCreative(Minecraft par0Minecraft, PlayerControllerMP par1PlayerControllerMP, int par2, int par3, int par4, int par5)
+    public static void clickBlockCreative(final Minecraft par0Minecraft, final PlayerControllerMP par1PlayerControllerMP, final int par2, final int par3, final int par4, final int par5)
     {
         if (!par0Minecraft.theWorld.extinguishFire(par0Minecraft.thePlayer, par2, par3, par4, par5))
         {
@@ -78,7 +78,7 @@ public class PlayerControllerMP
     /**
      * Sets player capabilities depending on current gametype. params: player
      */
-    public void setPlayerCapabilities(EntityPlayer par1EntityPlayer)
+    public void setPlayerCapabilities(final EntityPlayer par1EntityPlayer)
     {
         this.currentGameType.configurePlayerCapabilities(par1EntityPlayer.capabilities);
     }
@@ -97,7 +97,7 @@ public class PlayerControllerMP
     /**
      * Sets the game type for the player.
      */
-    public void setGameType(EnumGameType par1EnumGameType)
+    public void setGameType(final EnumGameType par1EnumGameType)
     {
         this.currentGameType = par1EnumGameType;
         this.currentGameType.configurePlayerCapabilities(this.mc.thePlayer.capabilities);
@@ -106,7 +106,7 @@ public class PlayerControllerMP
     /**
      * Flips the player around. Args: player
      */
-    public void flipPlayer(EntityPlayer par1EntityPlayer)
+    public void flipPlayer(final EntityPlayer par1EntityPlayer)
     {
         par1EntityPlayer.rotationYaw = -180.0F;
     }
@@ -119,9 +119,9 @@ public class PlayerControllerMP
     /**
      * Called when a player completes the destruction of a block
      */
-    public boolean onPlayerDestroyBlock(int par1, int par2, int par3, int par4)
+    public boolean onPlayerDestroyBlock(final int par1, final int par2, final int par3, final int par4)
     {
-        ItemStack stack = mc.thePlayer.getCurrentEquippedItem();
+        final ItemStack stack = mc.thePlayer.getCurrentEquippedItem();
         if (stack != null && stack.getItem() != null && stack.getItem().onBlockStartBreak(stack, par1, par2, par3, mc.thePlayer))
         {
             return false;
@@ -137,8 +137,8 @@ public class PlayerControllerMP
         }
         else
         {
-            WorldClient worldclient = this.mc.theWorld;
-            Block block = Block.blocksList[worldclient.getBlockId(par1, par2, par3)];
+            final WorldClient worldclient = this.mc.theWorld;
+            final Block block = Block.blocksList[worldclient.getBlockId(par1, par2, par3)];
 
             if (block == null)
             {
@@ -147,8 +147,8 @@ public class PlayerControllerMP
             else
             {
                 worldclient.playAuxSFX(2001, par1, par2, par3, block.blockID + (worldclient.getBlockMetadata(par1, par2, par3) << 12));
-                int i1 = worldclient.getBlockMetadata(par1, par2, par3);
-                boolean flag = block.removeBlockByPlayer(worldclient, mc.thePlayer, par1, par2, par3);
+                final int i1 = worldclient.getBlockMetadata(par1, par2, par3);
+                final boolean flag = block.removeBlockByPlayer(worldclient, mc.thePlayer, par1, par2, par3);
 
                 if (flag)
                 {
@@ -159,7 +159,7 @@ public class PlayerControllerMP
 
                 if (!this.currentGameType.isCreative())
                 {
-                    ItemStack itemstack = this.mc.thePlayer.getCurrentEquippedItem();
+                    final ItemStack itemstack = this.mc.thePlayer.getCurrentEquippedItem();
 
                     if (itemstack != null)
                     {
@@ -180,7 +180,7 @@ public class PlayerControllerMP
     /**
      * Called by Minecraft class when the player is hitting a block with an item. Args: x, y, z, side
      */
-    public void clickBlock(int par1, int par2, int par3, int par4)
+    public void clickBlock(final int par1, final int par2, final int par3, final int par4)
     {
         if (!this.currentGameType.isAdventure() || this.mc.thePlayer.isCurrentToolAdventureModeExempt(par1, par2, par3))
         {
@@ -198,7 +198,7 @@ public class PlayerControllerMP
                 }
 
                 this.netClientHandler.addToSendQueue(new Packet14BlockDig(0, par1, par2, par3, par4));
-                int i1 = this.mc.theWorld.getBlockId(par1, par2, par3);
+                final int i1 = this.mc.theWorld.getBlockId(par1, par2, par3);
 
                 if (i1 > 0 && this.curBlockDamageMP == 0.0F)
                 {
@@ -242,7 +242,7 @@ public class PlayerControllerMP
     /**
      * Called when a player damages a block and updates damage counters
      */
-    public void onPlayerDamageBlock(int par1, int par2, int par3, int par4)
+    public void onPlayerDamageBlock(final int par1, final int par2, final int par3, final int par4)
     {
         this.syncCurrentPlayItem();
 
@@ -260,7 +260,7 @@ public class PlayerControllerMP
         {
             if (this.sameToolAndBlock(par1, par2, par3))
             {
-                int i1 = this.mc.theWorld.getBlockId(par1, par2, par3);
+                final int i1 = this.mc.theWorld.getBlockId(par1, par2, par3);
 
                 if (i1 == 0)
                 {
@@ -268,7 +268,7 @@ public class PlayerControllerMP
                     return;
                 }
 
-                Block block = Block.blocksList[i1];
+                final Block block = Block.blocksList[i1];
                 this.curBlockDamageMP += block.getPlayerRelativeBlockHardness(this.mc.thePlayer, this.mc.thePlayer.worldObj, par1, par2, par3);
 
                 if (this.stepSoundTickCounter % 4.0F == 0.0F && block != null)
@@ -311,9 +311,9 @@ public class PlayerControllerMP
         this.mc.sndManager.playRandomMusicIfReady();
     }
 
-    private boolean sameToolAndBlock(int par1, int par2, int par3)
+    private boolean sameToolAndBlock(final int par1, final int par2, final int par3)
     {
-        ItemStack itemstack = this.mc.thePlayer.getHeldItem();
+        final ItemStack itemstack = this.mc.thePlayer.getHeldItem();
         boolean flag = this.field_85183_f == null && itemstack == null;
 
         if (this.field_85183_f != null && itemstack != null)
@@ -329,7 +329,7 @@ public class PlayerControllerMP
      */
     private void syncCurrentPlayItem()
     {
-        int i = this.mc.thePlayer.inventory.currentItem;
+        final int i = this.mc.thePlayer.inventory.currentItem;
 
         if (i != this.currentPlayerItem)
         {
@@ -341,12 +341,12 @@ public class PlayerControllerMP
     /**
      * Handles a players right click. Args: player, world, x, y, z, side, hitVec
      */
-    public boolean onPlayerRightClick(EntityPlayer par1EntityPlayer, World par2World, ItemStack par3ItemStack, int par4, int par5, int par6, int par7, Vec3 par8Vec3)
+    public boolean onPlayerRightClick(final EntityPlayer par1EntityPlayer, final World par2World, final ItemStack par3ItemStack, final int par4, final int par5, final int par6, final int par7, final Vec3 par8Vec3)
     {
         this.syncCurrentPlayItem();
-        float f = (float)par8Vec3.xCoord - (float)par4;
-        float f1 = (float)par8Vec3.yCoord - (float)par5;
-        float f2 = (float)par8Vec3.zCoord - (float)par6;
+        final float f = (float)par8Vec3.xCoord - (float)par4;
+        final float f1 = (float)par8Vec3.yCoord - (float)par5;
+        final float f2 = (float)par8Vec3.zCoord - (float)par6;
         boolean flag = false;
         int i1;
         if (par3ItemStack != null &&
@@ -368,7 +368,7 @@ public class PlayerControllerMP
 
         if (!flag && par3ItemStack != null && par3ItemStack.getItem() instanceof ItemBlock)
         {
-            ItemBlock itemblock = (ItemBlock)par3ItemStack.getItem();
+            final ItemBlock itemblock = (ItemBlock)par3ItemStack.getItem();
 
             if (!itemblock.canPlaceItemBlockOnSide(par2World, par4, par5, par6, par7, par1EntityPlayer, par3ItemStack))
             {
@@ -389,8 +389,8 @@ public class PlayerControllerMP
         else if (this.currentGameType.isCreative())
         {
             i1 = par3ItemStack.getItemDamage();
-            int j1 = par3ItemStack.stackSize;
-            boolean flag1 = par3ItemStack.tryPlaceItemIntoWorld(par1EntityPlayer, par2World, par4, par5, par6, par7, f, f1, f2);
+            final int j1 = par3ItemStack.stackSize;
+            final boolean flag1 = par3ItemStack.tryPlaceItemIntoWorld(par1EntityPlayer, par2World, par4, par5, par6, par7, f, f1, f2);
             par3ItemStack.setItemDamage(i1);
             par3ItemStack.stackSize = j1;
             return flag1;
@@ -412,12 +412,12 @@ public class PlayerControllerMP
     /**
      * Notifies the server of things like consuming food, etc...
      */
-    public boolean sendUseItem(EntityPlayer par1EntityPlayer, World par2World, ItemStack par3ItemStack)
+    public boolean sendUseItem(final EntityPlayer par1EntityPlayer, final World par2World, final ItemStack par3ItemStack)
     {
         this.syncCurrentPlayItem();
         this.netClientHandler.addToSendQueue(new Packet15Place(-1, -1, -1, 255, par1EntityPlayer.inventory.getCurrentItem(), 0.0F, 0.0F, 0.0F));
-        int i = par3ItemStack.stackSize;
-        ItemStack itemstack1 = par3ItemStack.useItemRightClick(par2World, par1EntityPlayer);
+        final int i = par3ItemStack.stackSize;
+        final ItemStack itemstack1 = par3ItemStack.useItemRightClick(par2World, par1EntityPlayer);
 
         if (itemstack1 == par3ItemStack && (itemstack1 == null || itemstack1.stackSize == i))
         {
@@ -437,7 +437,7 @@ public class PlayerControllerMP
         }
     }
 
-    public EntityClientPlayerMP func_78754_a(World par1World)
+    public EntityClientPlayerMP func_78754_a(final World par1World)
     {
         return new EntityClientPlayerMP(this.mc, par1World, this.mc.getSession(), this.netClientHandler);
     }
@@ -445,24 +445,24 @@ public class PlayerControllerMP
     /**
      * Attacks an entity
      */
-    public void attackEntity(EntityPlayer par1EntityPlayer, Entity par2Entity)
+    public void attackEntity(final EntityPlayer par1EntityPlayer, final Entity par2Entity)
     {
         this.syncCurrentPlayItem();
         this.netClientHandler.addToSendQueue(new Packet7UseEntity(par1EntityPlayer.entityId, par2Entity.entityId, 1));
         par1EntityPlayer.attackTargetEntityWithCurrentItem(par2Entity);
     }
 
-    public boolean func_78768_b(EntityPlayer par1EntityPlayer, Entity par2Entity)
+    public boolean func_78768_b(final EntityPlayer par1EntityPlayer, final Entity par2Entity)
     {
         this.syncCurrentPlayItem();
         this.netClientHandler.addToSendQueue(new Packet7UseEntity(par1EntityPlayer.entityId, par2Entity.entityId, 0));
         return par1EntityPlayer.interactWith(par2Entity);
     }
 
-    public ItemStack windowClick(int par1, int par2, int par3, int par4, EntityPlayer par5EntityPlayer)
+    public ItemStack windowClick(final int par1, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer)
     {
-        short short1 = par5EntityPlayer.openContainer.getNextTransactionID(par5EntityPlayer.inventory);
-        ItemStack itemstack = par5EntityPlayer.openContainer.slotClick(par2, par3, par4, par5EntityPlayer);
+        final short short1 = par5EntityPlayer.openContainer.getNextTransactionID(par5EntityPlayer.inventory);
+        final ItemStack itemstack = par5EntityPlayer.openContainer.slotClick(par2, par3, par4, par5EntityPlayer);
         this.netClientHandler.addToSendQueue(new Packet102WindowClick(par1, par2, par3, par4, itemstack, short1));
         return itemstack;
     }
@@ -471,7 +471,7 @@ public class PlayerControllerMP
      * GuiEnchantment uses this during multiplayer to tell PlayerControllerMP to send a packet indicating the
      * enchantment action the player has taken.
      */
-    public void sendEnchantPacket(int par1, int par2)
+    public void sendEnchantPacket(final int par1, final int par2)
     {
         this.netClientHandler.addToSendQueue(new Packet108EnchantItem(par1, par2));
     }
@@ -479,7 +479,7 @@ public class PlayerControllerMP
     /**
      * Used in PlayerControllerMP to update the server with an ItemStack in a slot.
      */
-    public void sendSlotPacket(ItemStack par1ItemStack, int par2)
+    public void sendSlotPacket(final ItemStack par1ItemStack, final int par2)
     {
         if (this.currentGameType.isCreative())
         {
@@ -487,7 +487,7 @@ public class PlayerControllerMP
         }
     }
 
-    public void func_78752_a(ItemStack par1ItemStack)
+    public void func_78752_a(final ItemStack par1ItemStack)
     {
         if (this.currentGameType.isCreative() && par1ItemStack != null)
         {
@@ -495,7 +495,7 @@ public class PlayerControllerMP
         }
     }
 
-    public void onStoppedUsingItem(EntityPlayer par1EntityPlayer)
+    public void onStoppedUsingItem(final EntityPlayer par1EntityPlayer)
     {
         this.syncCurrentPlayItem();
         this.netClientHandler.addToSendQueue(new Packet14BlockDig(5, 0, 0, 0, 255));

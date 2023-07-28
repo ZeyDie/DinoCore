@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 
 public class ItemMapBase extends Item
 {
-    protected ItemMapBase(int par1)
+    protected ItemMapBase(final int par1)
     {
         super(par1);
     }
@@ -22,7 +22,7 @@ public class ItemMapBase extends Item
     /**
      * returns null if no update is to be sent
      */
-    public Packet createMapDataPacket(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public Packet createMapDataPacket(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         return null;
     }

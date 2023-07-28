@@ -58,7 +58,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /** The amount of time an entity has been in a Portal the previous tick */
     public float prevTimeInPortal;
 
-    public EntityPlayerSP(Minecraft par1Minecraft, World par2World, Session par3Session, int par4)
+    public EntityPlayerSP(final Minecraft par1Minecraft, final World par2World, final Session par3Session, final int par4)
     {
         super(par2World, par3Session.getUsername());
         this.mc = par1Minecraft;
@@ -164,9 +164,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
                 --this.timeUntilPortal;
             }
 
-            boolean flag = this.movementInput.jump;
-            float f = 0.8F;
-            boolean flag1 = this.movementInput.moveForward >= f;
+            final boolean flag = this.movementInput.jump;
+            final float f = 0.8F;
+            final boolean flag1 = this.movementInput.moveForward >= f;
             this.movementInput.updatePlayerMoveState();
 
             if (this.isUsingItem() && !this.isRiding())
@@ -185,7 +185,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
             this.pushOutOfBlocks(this.posX - (double)this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ - (double)this.width * 0.35D);
             this.pushOutOfBlocks(this.posX + (double)this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ - (double)this.width * 0.35D);
             this.pushOutOfBlocks(this.posX + (double)this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ + (double)this.width * 0.35D);
-            boolean flag2 = (float)this.getFoodStats().getFoodLevel() > 6.0F || this.capabilities.allowFlying;
+            final boolean flag2 = (float)this.getFoodStats().getFoodLevel() > 6.0F || this.capabilities.allowFlying;
 
             if (this.onGround && !flag1 && this.movementInput.moveForward >= f && !this.isSprinting() && flag2 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness))
             {
@@ -300,12 +300,12 @@ public class EntityPlayerSP extends AbstractClientPlayer
             f *= 1.1F;
         }
 
-        AttributeInstance attributeinstance = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
+        final AttributeInstance attributeinstance = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
         f = (float)((double)f * ((attributeinstance.getAttributeValue() / (double)this.capabilities.getWalkSpeed() + 1.0D) / 2.0D));
 
         if (this.isUsingItem() && this.getItemInUse().itemID == Item.bow.itemID)
         {
-            int i = this.getItemInUseDuration();
+            final int i = this.getItemInUseDuration();
             float f1 = (float)i / 20.0F;
 
             if (f1 > 1.0F)
@@ -335,7 +335,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Displays the GUI for editing a sign. Args: tileEntitySign
      */
-    public void displayGUIEditSign(TileEntity par1TileEntity)
+    public void displayGUIEditSign(final TileEntity par1TileEntity)
     {
         if (par1TileEntity instanceof TileEntitySign)
         {
@@ -350,9 +350,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Displays the GUI for interacting with a book.
      */
-    public void displayGUIBook(ItemStack par1ItemStack)
+    public void displayGUIBook(final ItemStack par1ItemStack)
     {
-        Item item = par1ItemStack.getItem();
+        final Item item = par1ItemStack.getItem();
 
         if (item == Item.writtenBook)
         {
@@ -367,22 +367,22 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Displays the GUI for interacting with a chest inventory. Args: chestInventory
      */
-    public void displayGUIChest(IInventory par1IInventory)
+    public void displayGUIChest(final IInventory par1IInventory)
     {
         this.mc.displayGuiScreen(new GuiChest(this.inventory, par1IInventory));
     }
 
-    public void displayGUIHopper(TileEntityHopper par1TileEntityHopper)
+    public void displayGUIHopper(final TileEntityHopper par1TileEntityHopper)
     {
         this.mc.displayGuiScreen(new GuiHopper(this.inventory, par1TileEntityHopper));
     }
 
-    public void displayGUIHopperMinecart(EntityMinecartHopper par1EntityMinecartHopper)
+    public void displayGUIHopperMinecart(final EntityMinecartHopper par1EntityMinecartHopper)
     {
         this.mc.displayGuiScreen(new GuiHopper(this.inventory, par1EntityMinecartHopper));
     }
 
-    public void displayGUIHorse(EntityHorse par1EntityHorse, IInventory par2IInventory)
+    public void displayGUIHorse(final EntityHorse par1EntityHorse, final IInventory par2IInventory)
     {
         this.mc.displayGuiScreen(new GuiScreenHorseInventory(this.inventory, par2IInventory, par1EntityHorse));
     }
@@ -390,12 +390,12 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Displays the crafting GUI for a workbench.
      */
-    public void displayGUIWorkbench(int par1, int par2, int par3)
+    public void displayGUIWorkbench(final int par1, final int par2, final int par3)
     {
         this.mc.displayGuiScreen(new GuiCrafting(this.inventory, this.worldObj, par1, par2, par3));
     }
 
-    public void displayGUIEnchantment(int par1, int par2, int par3, String par4Str)
+    public void displayGUIEnchantment(final int par1, final int par2, final int par3, final String par4Str)
     {
         this.mc.displayGuiScreen(new GuiEnchantment(this.inventory, this.worldObj, par1, par2, par3, par4Str));
     }
@@ -403,7 +403,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Displays the GUI for interacting with an anvil.
      */
-    public void displayGUIAnvil(int par1, int par2, int par3)
+    public void displayGUIAnvil(final int par1, final int par2, final int par3)
     {
         this.mc.displayGuiScreen(new GuiRepair(this.inventory, this.worldObj, par1, par2, par3));
     }
@@ -411,7 +411,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Displays the furnace GUI for the passed in furnace entity. Args: tileEntityFurnace
      */
-    public void displayGUIFurnace(TileEntityFurnace par1TileEntityFurnace)
+    public void displayGUIFurnace(final TileEntityFurnace par1TileEntityFurnace)
     {
         this.mc.displayGuiScreen(new GuiFurnace(this.inventory, par1TileEntityFurnace));
     }
@@ -419,7 +419,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Displays the GUI for interacting with a brewing stand.
      */
-    public void displayGUIBrewingStand(TileEntityBrewingStand par1TileEntityBrewingStand)
+    public void displayGUIBrewingStand(final TileEntityBrewingStand par1TileEntityBrewingStand)
     {
         this.mc.displayGuiScreen(new GuiBrewingStand(this.inventory, par1TileEntityBrewingStand));
     }
@@ -427,7 +427,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Displays the GUI for interacting with a beacon.
      */
-    public void displayGUIBeacon(TileEntityBeacon par1TileEntityBeacon)
+    public void displayGUIBeacon(final TileEntityBeacon par1TileEntityBeacon)
     {
         this.mc.displayGuiScreen(new GuiBeacon(this.inventory, par1TileEntityBeacon));
     }
@@ -435,12 +435,12 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Displays the dipsenser GUI for the passed in dispenser entity. Args: TileEntityDispenser
      */
-    public void displayGUIDispenser(TileEntityDispenser par1TileEntityDispenser)
+    public void displayGUIDispenser(final TileEntityDispenser par1TileEntityDispenser)
     {
         this.mc.displayGuiScreen(new GuiDispenser(this.inventory, par1TileEntityDispenser));
     }
 
-    public void displayGUIMerchant(IMerchant par1IMerchant, String par2Str)
+    public void displayGUIMerchant(final IMerchant par1IMerchant, final String par2Str)
     {
         this.mc.displayGuiScreen(new GuiMerchant(this.inventory, par1IMerchant, this.worldObj, par2Str));
     }
@@ -448,21 +448,21 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Called when the player performs a critical hit on the Entity. Args: entity that was hit critically
      */
-    public void onCriticalHit(Entity par1Entity)
+    public void onCriticalHit(final Entity par1Entity)
     {
         this.mc.effectRenderer.addEffect(new EntityCrit2FX(this.mc.theWorld, par1Entity));
     }
 
-    public void onEnchantmentCritical(Entity par1Entity)
+    public void onEnchantmentCritical(final Entity par1Entity)
     {
-        EntityCrit2FX entitycrit2fx = new EntityCrit2FX(this.mc.theWorld, par1Entity, "magicCrit");
+        final EntityCrit2FX entitycrit2fx = new EntityCrit2FX(this.mc.theWorld, par1Entity, "magicCrit");
         this.mc.effectRenderer.addEffect(entitycrit2fx);
     }
 
     /**
      * Called whenever an item is picked up from walking over it. Args: pickedUpEntity, stackSize
      */
-    public void onItemPickup(Entity par1Entity, int par2)
+    public void onItemPickup(final Entity par1Entity, final int par2)
     {
         this.mc.effectRenderer.addEffect(new EntityPickupFX(this.mc.theWorld, par1Entity, this, -0.5F));
     }
@@ -478,9 +478,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Updates health locally.
      */
-    public void setPlayerSPHealth(float par1)
+    public void setPlayerSPHealth(final float par1)
     {
-        float f1 = this.getHealth() - par1;
+        final float f1 = this.getHealth() - par1;
 
         if (f1 <= 0.0F)
         {
@@ -504,7 +504,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Add a chat message to the player
      */
-    public void addChatMessage(String par1Str)
+    public void addChatMessage(final String par1Str)
     {
         this.mc.ingameGUI.getChatGUI().addTranslatedMessage(par1Str, new Object[0]);
     }
@@ -512,13 +512,13 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Adds a value to a statistic field.
      */
-    public void addStat(StatBase par1StatBase, int par2)
+    public void addStat(final StatBase par1StatBase, final int par2)
     {
         if (par1StatBase != null)
         {
             if (par1StatBase.isAchievement())
             {
-                Achievement achievement = (Achievement)par1StatBase;
+                final Achievement achievement = (Achievement)par1StatBase;
 
                 if (achievement.parentAchievement == null || this.mc.statFileWriter.hasAchievementUnlocked(achievement.parentAchievement))
                 {
@@ -537,7 +537,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
         }
     }
 
-    private boolean isBlockTranslucent(int par1, int par2, int par3)
+    private boolean isBlockTranslucent(final int par1, final int par2, final int par3)
     {
         return this.worldObj.isBlockNormalCube(par1, par2, par3);
     }
@@ -545,19 +545,19 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Adds velocity to push the entity out of blocks at the specified x, y, z position Args: x, y, z
      */
-    protected boolean pushOutOfBlocks(double par1, double par3, double par5)
+    protected boolean pushOutOfBlocks(final double par1, final double par3, final double par5)
     {
         if (this.noClip)
         {
             return false;
         }
-        int i = MathHelper.floor_double(par1);
-        int j = MathHelper.floor_double(par3);
-        int k = MathHelper.floor_double(par5);
-        double d3 = par1 - (double)i;
-        double d4 = par5 - (double)k;
+        final int i = MathHelper.floor_double(par1);
+        final int j = MathHelper.floor_double(par3);
+        final int k = MathHelper.floor_double(par5);
+        final double d3 = par1 - (double)i;
+        final double d4 = par5 - (double)k;
 
-        int entHeight = Math.max(Math.round(this.height), 1);
+        final int entHeight = Math.max(Math.round(this.height), 1);
         
         boolean inTranslucentBlock = true;
         
@@ -634,7 +634,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
                 b0 = 5;
             }
 
-            float f = 0.1F;
+            final float f = 0.1F;
 
             if (b0 == 0)
             {
@@ -663,7 +663,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Set sprinting switch for Entity.
      */
-    public void setSprinting(boolean par1)
+    public void setSprinting(final boolean par1)
     {
         super.setSprinting(par1);
         this.sprintingTicksLeft = par1 ? 600 : 0;
@@ -672,14 +672,14 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Sets the current XP, total XP, and level number.
      */
-    public void setXPStats(float par1, int par2, int par3)
+    public void setXPStats(final float par1, final int par2, final int par3)
     {
         this.experience = par1;
         this.experienceTotal = par2;
         this.experienceLevel = par3;
     }
 
-    public void sendChatToPlayer(ChatMessageComponent par1ChatMessageComponent)
+    public void sendChatToPlayer(final ChatMessageComponent par1ChatMessageComponent)
     {
         this.mc.ingameGUI.getChatGUI().printChatMessage(par1ChatMessageComponent.toStringWithFormatting(true));
     }
@@ -687,7 +687,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Returns true if the command sender is allowed to use the given command.
      */
-    public boolean canCommandSenderUseCommand(int par1, String par2Str)
+    public boolean canCommandSenderUseCommand(final int par1, final String par2Str)
     {
         return par1 <= 0;
     }
@@ -708,15 +708,15 @@ public class EntityPlayerSP extends AbstractClientPlayer
         return this.inventory.getCurrentItem();
     }
 
-    public void playSound(String par1Str, float par2, float par3)
+    public void playSound(String par1Str, final float par2, final float par3)
     {
-        PlaySoundAtEntityEvent event = new PlaySoundAtEntityEvent(this, par1Str, par2, par3);
+        final PlaySoundAtEntityEvent event = new PlaySoundAtEntityEvent(this, par1Str, par2, par3);
         if (MinecraftForge.EVENT_BUS.post(event))
         {
             return;
         }
-        par1Str = event.name;
-        this.worldObj.playSound(this.posX, this.posY - (double)this.yOffset, this.posZ, par1Str, par2, par3, false);
+        String par1Str1 = event.name;
+        this.worldObj.playSound(this.posX, this.posY - (double)this.yOffset, this.posZ, par1Str1, par2, par3, false);
     }
 
     /**

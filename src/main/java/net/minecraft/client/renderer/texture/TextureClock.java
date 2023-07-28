@@ -10,7 +10,7 @@ public class TextureClock extends TextureAtlasSprite
     private double field_94239_h;
     private double field_94240_i;
 
-    public TextureClock(String par1Str)
+    public TextureClock(final String par1Str)
     {
         super(par1Str);
     }
@@ -19,12 +19,12 @@ public class TextureClock extends TextureAtlasSprite
     {
         if (!this.framesTextureData.isEmpty())
         {
-            Minecraft minecraft = Minecraft.getMinecraft();
+            final Minecraft minecraft = Minecraft.getMinecraft();
             double d0 = 0.0D;
 
             if (minecraft.theWorld != null && minecraft.thePlayer != null)
             {
-                float f = minecraft.theWorld.getCelestialAngle(1.0F);
+                final float f = minecraft.theWorld.getCelestialAngle(1.0F);
                 d0 = (double)f;
 
                 if (!minecraft.theWorld.provider.isSurfaceWorld())

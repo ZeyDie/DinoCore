@@ -19,7 +19,7 @@ public class WorldUnloadEvent extends WorldEvent implements Cancellable {
         return this.isCancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.isCancelled = cancel;
     }
 

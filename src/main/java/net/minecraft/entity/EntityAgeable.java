@@ -12,7 +12,7 @@ public abstract class EntityAgeable extends EntityCreature
     private float field_98057_e;
     public boolean ageLocked = false; // CraftBukkit
 
-    public EntityAgeable(World par1World)
+    public EntityAgeable(final World par1World)
     {
         super(par1World);
     }
@@ -22,19 +22,19 @@ public abstract class EntityAgeable extends EntityCreature
     /**
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
-    public boolean interact(EntityPlayer par1EntityPlayer)
+    public boolean interact(final EntityPlayer par1EntityPlayer)
     {
-        ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
+        final ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
 
         if (itemstack != null && itemstack.itemID == Item.monsterPlacer.itemID)
         {
             if (!this.worldObj.isRemote)
             {
-                Class oclass = EntityList.getClassFromID(itemstack.getItemDamage());
+                final Class oclass = EntityList.getClassFromID(itemstack.getItemDamage());
 
                 if (oclass != null && oclass.isAssignableFrom(this.getClass()))
                 {
-                    EntityAgeable entityageable = this.createChild(this);
+                    final EntityAgeable entityageable = this.createChild(this);
 
                     if (entityageable != null)
                     {
@@ -88,7 +88,7 @@ public abstract class EntityAgeable extends EntityCreature
      * "Adds the value of the parameter times 20 to the age of this entity. If the entity is an adult (if the entity's
      * age is greater than 0), it will have no effect."
      */
-    public void addGrowth(int par1)
+    public void addGrowth(final int par1)
     {
         int j = this.getGrowingAge();
         j += par1 * 20;
@@ -105,7 +105,7 @@ public abstract class EntityAgeable extends EntityCreature
      * The age value may be negative or positive or zero. If it's negative, it get's incremented on each tick, if it's
      * positive, it get's decremented each tick. With a negative value the Entity is considered a child.
      */
-    public void setGrowingAge(int par1)
+    public void setGrowingAge(final int par1)
     {
         this.dataWatcher.updateObject(12, Integer.valueOf(par1));
         this.setScaleForAge(this.isChild());
@@ -114,7 +114,7 @@ public abstract class EntityAgeable extends EntityCreature
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setInteger("Age", this.getGrowingAge());
@@ -124,7 +124,7 @@ public abstract class EntityAgeable extends EntityCreature
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.setGrowingAge(par1NBTTagCompound.getInteger("Age"));
@@ -171,7 +171,7 @@ public abstract class EntityAgeable extends EntityCreature
     /**
      * "Sets the scale for an ageable entity according to the boolean parameter, which says if it's a child."
      */
-    public void setScaleForAge(boolean par1)
+    public void setScaleForAge(final boolean par1)
     {
         this.setScale(par1 ? 0.5F : 1.0F);
     }
@@ -179,9 +179,9 @@ public abstract class EntityAgeable extends EntityCreature
     /**
      * Sets the width and height of the entity. Args: width, height
      */
-    protected final void setSize(float par1, float par2)
+    protected final void setSize(final float par1, final float par2)
     {
-        boolean flag = this.field_98056_d > 0.0F;
+        final boolean flag = this.field_98056_d > 0.0F;
         this.field_98056_d = par1;
         this.field_98057_e = par2;
 
@@ -191,7 +191,7 @@ public abstract class EntityAgeable extends EntityCreature
         }
     }
 
-    protected final void setScale(float par1)
+    protected final void setScale(final float par1)
     {
         super.setSize(this.field_98056_d * par1, this.field_98057_e * par1);
     }

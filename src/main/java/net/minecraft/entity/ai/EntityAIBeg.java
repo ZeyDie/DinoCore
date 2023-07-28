@@ -14,7 +14,7 @@ public class EntityAIBeg extends EntityAIBase
     private float minPlayerDistance;
     private int field_75384_e;
 
-    public EntityAIBeg(EntityWolf par1EntityWolf, float par2)
+    public EntityAIBeg(final EntityWolf par1EntityWolf, final float par2)
     {
         this.theWolf = par1EntityWolf;
         this.worldObject = par1EntityWolf.worldObj;
@@ -69,9 +69,9 @@ public class EntityAIBeg extends EntityAIBase
     /**
      * Gets if the Player has the Bone in the hand.
      */
-    private boolean hasPlayerGotBoneInHand(EntityPlayer par1EntityPlayer)
+    private boolean hasPlayerGotBoneInHand(final EntityPlayer par1EntityPlayer)
     {
-        ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
+        final ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
         return itemstack == null ? false : (!this.theWolf.isTamed() && itemstack.itemID == Item.bone.itemID ? true : this.theWolf.isBreedingItem(itemstack));
     }
 }

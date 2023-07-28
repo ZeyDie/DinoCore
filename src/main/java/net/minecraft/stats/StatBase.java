@@ -27,14 +27,14 @@ public class StatBase
     public static IStatType distanceStatType = new StatTypeDistance();
     public static IStatType field_111202_k = new StatTypeFloat();
 
-    public StatBase(int par1, String par2Str, IStatType par3IStatType)
+    public StatBase(final int par1, final String par2Str, final IStatType par3IStatType)
     {
         this.statId = par1;
         this.statName = par2Str;
         this.type = par3IStatType;
     }
 
-    public StatBase(int par1, String par2Str)
+    public StatBase(final int par1, final String par2Str)
     {
         this(par1, par2Str, simpleStatType);
     }
@@ -78,7 +78,7 @@ public class StatBase
     }
 
     @SideOnly(Side.CLIENT)
-    public String func_75968_a(int par1)
+    public String func_75968_a(final int par1)
     {
         return this.type.format(par1);
     }

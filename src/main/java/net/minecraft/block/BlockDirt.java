@@ -5,7 +5,7 @@ import net.minecraft.creativetab.CreativeTabs;
 
 public class BlockDirt extends Block
 {
-    protected BlockDirt(int par1)
+    protected BlockDirt(final int par1)
     {
         super(par1, Material.ground);
         this.setCreativeTab(CreativeTabs.tabBlock);

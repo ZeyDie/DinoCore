@@ -41,7 +41,7 @@ public final class NettyPacketDecoder extends ByteToMessageDecoder {
         try {
             if (object == null)
                 throw new IOException("Bad packet id " + s);
-            Packet packet = ((Class<Packet>) object).newInstance();
+            final Packet packet = ((Class<Packet>) object).newInstance();
 
             packet.readPacketData(new ByteBufInputStream(paramByteBuf));
 
@@ -60,7 +60,7 @@ public final class NettyPacketDecoder extends ByteToMessageDecoder {
 
                 this.tcpConnection.decryptInputStream();
             }
-        } catch (IOException | IllegalAccessException | InstantiationException exception) {
+        } catch (final IOException | IllegalAccessException | InstantiationException exception) {
             exception.printStackTrace();
         }
     }

@@ -17,6 +17,7 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Consumer;
 
 @SideOnly(Side.CLIENT)
 public class WorldRenderer
@@ -90,7 +91,7 @@ public class WorldRenderer
     /** Bytes sent to the GPU */
     private int bytesDrawn;
 
-    public WorldRenderer(World par1World, List par2List, int par3, int par4, int par5, int par6)
+    public WorldRenderer(final World par1World, final List par2List, final int par3, final int par4, final int par5, final int par6)
     {
         this.worldObj = par1World;
         this.tileEntities = par2List;
@@ -103,7 +104,7 @@ public class WorldRenderer
     /**
      * Sets a new position for the renderer and setting it up so it can be reloaded with the new data for that position
      */
-    public void setPosition(int par1, int par2, int par3)
+    public void setPosition(final int par1, final int par2, final int par3)
     {
         if (par1 != this.posX || par2 != this.posY || par3 != this.posZ)
         {
@@ -120,7 +121,7 @@ public class WorldRenderer
             this.posXMinus = par1 - this.posXClip;
             this.posYMinus = par2 - this.posYClip;
             this.posZMinus = par3 - this.posZClip;
-            float f = 6.0F;
+            final float f = 6.0F;
             this.rendererBoundingBox = AxisAlignedBB.getBoundingBox((double)((float)par1 - f), (double)((float)par2 - f), (double)((float)par3 - f), (double)((float)(par1 + 16) + f), (double)((float)(par2 + 16) + f), (double)((float)(par3 + 16) + f));
             GL11.glNewList(this.glRenderList + 2, GL11.GL_COMPILE);
             RenderItem.renderAABB(AxisAlignedBB.getAABBPool().getAABB((double)((float)this.posXClip - f), (double)((float)this.posYClip - f), (double)((float)this.posZClip - f), (double)((float)(this.posXClip + 16) + f), (double)((float)(this.posYClip + 16) + f), (double)((float)(this.posZClip + 16) + f)));
@@ -142,12 +143,12 @@ public class WorldRenderer
         if (this.needsUpdate)
         {
             this.needsUpdate = false;
-            int i = this.posX;
-            int j = this.posY;
-            int k = this.posZ;
-            int l = this.posX + 16;
-            int i1 = this.posY + 16;
-            int j1 = this.posZ + 16;
+            final int i = this.posX;
+            final int j = this.posY;
+            final int k = this.posZ;
+            final int l = this.posX + 16;
+            final int i1 = this.posY + 16;
+            final int j1 = this.posZ + 16;
 
             for (int k1 = 0; k1 < 2; ++k1)
             {
@@ -155,16 +156,15 @@ public class WorldRenderer
             }
 
             Chunk.isLit = false;
-            HashSet hashset = new HashSet();
-            hashset.addAll(this.tileEntityRenderers);
+            final HashSet hashset = new HashSet(this.tileEntityRenderers);
             this.tileEntityRenderers.clear();
-            byte b0 = 1;
-            ChunkCache chunkcache = new ChunkCache(this.worldObj, i - b0, j - b0, k - b0, l + b0, i1 + b0, j1 + b0, b0);
+            final byte b0 = 1;
+            final ChunkCache chunkcache = new ChunkCache(this.worldObj, i - b0, j - b0, k - b0, l + b0, i1 + b0, j1 + b0, b0);
 
             if (!chunkcache.extendedLevelsInChunkCache())
             {
                 ++chunksUpdated;
-                RenderBlocks renderblocks = new RenderBlocks(chunkcache);
+                final RenderBlocks renderblocks = new RenderBlocks(chunkcache);
                 this.bytesDrawn = 0;
 
                 for (int l1 = 0; l1 < 2; ++l1)
@@ -179,7 +179,7 @@ public class WorldRenderer
                         {
                             for (int k2 = i; k2 < l; ++k2)
                             {
-                                int l2 = chunkcache.getBlockId(k2, i2, j2);
+                                final int l2 = chunkcache.getBlockId(k2, i2, j2);
 
                                 if (l2 > 0)
                                 {
@@ -189,7 +189,7 @@ public class WorldRenderer
                                         GL11.glNewList(this.glRenderList + l1, GL11.GL_COMPILE);
                                         GL11.glPushMatrix();
                                         this.setupGLTranslation();
-                                        float f = 1.000001F;
+                                        final float f = 1.000001F;
                                         GL11.glTranslatef(-8.0F, -8.0F, -8.0F);
                                         GL11.glScalef(f, f, f);
                                         GL11.glTranslatef(8.0F, 8.0F, 8.0F);
@@ -198,13 +198,13 @@ public class WorldRenderer
                                         Tessellator.instance.setTranslation((double)(-this.posX), (double)(-this.posY), (double)(-this.posZ));
                                     }
 
-                                    Block block = Block.blocksList[l2];
+                                    final Block block = Block.blocksList[l2];
 
                                     if (block != null)
                                     {
                                         if (l1 == 0 && block.hasTileEntity(chunkcache.getBlockMetadata(k2, i2, j2)))
                                         {
-                                            TileEntity tileentity = chunkcache.getBlockTileEntity(k2, i2, j2);
+                                            final TileEntity tileentity = chunkcache.getBlockTileEntity(k2, i2, j2);
 
                                             if (TileEntityRenderer.instance.hasSpecialRenderer(tileentity))
                                             {
@@ -212,7 +212,7 @@ public class WorldRenderer
                                             }
                                         }
 
-                                        int i3 = block.getRenderBlockPass();
+                                        final int i3 = block.getRenderBlockPass();
 
                                         if (i3 > l1)
                                         {
@@ -254,8 +254,7 @@ public class WorldRenderer
                 }
             }
 
-            HashSet hashset1 = new HashSet();
-            hashset1.addAll(this.tileEntityRenderers);
+            final HashSet hashset1 = new HashSet(this.tileEntityRenderers);
             hashset1.removeAll(hashset);
             this.tileEntities.addAll(hashset1);
             hashset.removeAll(this.tileEntityRenderers);
@@ -269,11 +268,11 @@ public class WorldRenderer
      * Returns the distance of this chunk renderer to the entity without performing the final normalizing square root,
      * for performance reasons.
      */
-    public float distanceToEntitySquared(Entity par1Entity)
+    public float distanceToEntitySquared(final Entity par1Entity)
     {
-        float f = (float)(par1Entity.posX - (double)this.posXPlus);
-        float f1 = (float)(par1Entity.posY - (double)this.posYPlus);
-        float f2 = (float)(par1Entity.posZ - (double)this.posZPlus);
+        final float f = (float)(par1Entity.posX - (double)this.posXPlus);
+        final float f1 = (float)(par1Entity.posY - (double)this.posYPlus);
+        final float f2 = (float)(par1Entity.posZ - (double)this.posZPlus);
         return f * f + f1 * f1 + f2 * f2;
     }
 
@@ -300,12 +299,12 @@ public class WorldRenderer
     /**
      * Takes in the pass the call list is being requested for. Args: renderPass
      */
-    public int getGLCallListForPass(int par1)
+    public int getGLCallListForPass(final int par1)
     {
         return !this.isInFrustum ? -1 : (!this.skipRenderPass[par1] ? this.glRenderList + par1 : -1);
     }
 
-    public void updateInFrustum(ICamera par1ICamera)
+    public void updateInFrustum(final ICamera par1ICamera)
     {
         this.isInFrustum = par1ICamera.isBoundingBoxInFrustum(this.rendererBoundingBox);
     }

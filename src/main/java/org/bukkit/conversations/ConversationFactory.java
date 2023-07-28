@@ -32,7 +32,7 @@ public class ConversationFactory {
      *
      * @param plugin The plugin that owns the factory.
      */
-    public ConversationFactory(Plugin plugin)
+    public ConversationFactory(final Plugin plugin)
     {
         this.plugin = plugin;
         isModal = true;
@@ -54,7 +54,7 @@ public class ConversationFactory {
      * @param modal The modality of all conversations to be created.
      * @return This object.
      */
-    public ConversationFactory withModality(boolean modal)
+    public ConversationFactory withModality(final boolean modal)
     {
         isModal = modal;
         return this;
@@ -67,7 +67,7 @@ public class ConversationFactory {
      * @param localEchoEnabled The status of local echo.
      * @return This object.
      */
-    public ConversationFactory withLocalEcho(boolean localEchoEnabled) {
+    public ConversationFactory withLocalEcho(final boolean localEchoEnabled) {
         this.localEchoEnabled = localEchoEnabled;
         return this;
     }
@@ -80,7 +80,7 @@ public class ConversationFactory {
      * @param prefix The ConversationPrefix to use.
      * @return This object.
      */
-    public ConversationFactory withPrefix(ConversationPrefix prefix) {
+    public ConversationFactory withPrefix(final ConversationPrefix prefix) {
         this.prefix = prefix;
         return this;
     }
@@ -93,7 +93,7 @@ public class ConversationFactory {
      * @param timeoutSeconds The number of seconds to wait.
      * @return This object.
      */
-    public ConversationFactory withTimeout(int timeoutSeconds) {
+    public ConversationFactory withTimeout(final int timeoutSeconds) {
         return withConversationCanceller(new InactivityConversationCanceller(plugin, timeoutSeconds));
     }
 
@@ -105,7 +105,7 @@ public class ConversationFactory {
      * @param firstPrompt The first prompt.
      * @return This object.
      */
-    public ConversationFactory withFirstPrompt(Prompt firstPrompt) {
+    public ConversationFactory withFirstPrompt(final Prompt firstPrompt) {
         this.firstPrompt = firstPrompt;
         return this;
     }
@@ -116,7 +116,7 @@ public class ConversationFactory {
      * @param initialSessionData The conversation context's initial sessionData.
      * @return This object.
      */
-    public ConversationFactory withInitialSessionData(Map<Object, Object> initialSessionData) {
+    public ConversationFactory withInitialSessionData(final Map<Object, Object> initialSessionData) {
         this.initialSessionData = initialSessionData;
         return this;
     }
@@ -127,7 +127,7 @@ public class ConversationFactory {
      * @param escapeSequence Input to terminate the conversation.
      * @return This object.
      */
-    public ConversationFactory withEscapeSequence(String escapeSequence) {
+    public ConversationFactory withEscapeSequence(final String escapeSequence) {
         return withConversationCanceller(new ExactMatchConversationCanceller(escapeSequence));
     }
 
@@ -138,7 +138,7 @@ public class ConversationFactory {
      * @param canceller The {@link ConversationCanceller to add.}
      * @return This object.
      */
-    public ConversationFactory withConversationCanceller(ConversationCanceller canceller) {
+    public ConversationFactory withConversationCanceller(final ConversationCanceller canceller) {
         cancellers.add(canceller);
         return this;
     }
@@ -149,7 +149,7 @@ public class ConversationFactory {
      * @param playerOnlyMessage The message to return to a non-play in lieu of starting a conversation.
      * @return This object.
      */
-    public ConversationFactory thatExcludesNonPlayersWithMessage(String playerOnlyMessage) {
+    public ConversationFactory thatExcludesNonPlayersWithMessage(final String playerOnlyMessage) {
         this.playerOnlyMessage = playerOnlyMessage;
         return this;
     }
@@ -160,7 +160,7 @@ public class ConversationFactory {
      * @param listener The listener to add.
      * @return This object.
      */
-    public ConversationFactory addConversationAbandonedListener(ConversationAbandonedListener listener) {
+    public ConversationFactory addConversationAbandonedListener(final ConversationAbandonedListener listener) {
         abandonedListeners.add(listener);
         return this;
     }
@@ -171,29 +171,28 @@ public class ConversationFactory {
      * @param forWhom The entity for whom the new conversation is mediating.
      * @return A new conversation.
      */
-    public Conversation buildConversation(Conversable forWhom) {
+    public Conversation buildConversation(final Conversable forWhom) {
         //Abort conversation construction if we aren't supposed to talk to non-players
         if (playerOnlyMessage != null && !(forWhom instanceof Player)) {
             return new Conversation(plugin, forWhom, new NotPlayerMessagePrompt());
         }
 
         //Clone any initial session data
-        Map<Object, Object> copiedInitialSessionData = new HashMap<Object, Object>();
-        copiedInitialSessionData.putAll(initialSessionData);
+        final Map<Object, Object> copiedInitialSessionData = new HashMap<Object, Object>(initialSessionData);
 
         //Build and return a conversation
-        Conversation conversation = new Conversation(plugin, forWhom, firstPrompt, copiedInitialSessionData);
+        final Conversation conversation = new Conversation(plugin, forWhom, firstPrompt, copiedInitialSessionData);
         conversation.setModal(isModal);
         conversation.setLocalEchoEnabled(localEchoEnabled);
         conversation.setPrefix(prefix);
 
         //Clone the conversation cancellers
-        for (ConversationCanceller canceller : cancellers) {
+        for (final ConversationCanceller canceller : cancellers) {
             conversation.addConversationCanceller(canceller.clone());
         }
 
         //Add the ConversationAbandonedListeners
-        for (ConversationAbandonedListener listener : abandonedListeners) {
+        for (final ConversationAbandonedListener listener : abandonedListeners) {
             conversation.addConversationAbandonedListener(listener);
         }
 
@@ -202,12 +201,12 @@ public class ConversationFactory {
 
     private class NotPlayerMessagePrompt extends MessagePrompt {
 
-        public String getPromptText(ConversationContext context) {
+        public String getPromptText(final ConversationContext context) {
             return playerOnlyMessage;
         }
 
         @Override
-        protected Prompt getNextPrompt(ConversationContext context) {
+        protected Prompt getNextPrompt(final ConversationContext context) {
             return Prompt.END_OF_CONVERSATION;
         }
     }

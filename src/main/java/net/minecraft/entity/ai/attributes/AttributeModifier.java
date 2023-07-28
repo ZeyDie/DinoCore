@@ -16,12 +16,12 @@ public class AttributeModifier
      */
     private boolean isSaved;
 
-    public AttributeModifier(String par1Str, double par2, int par4)
+    public AttributeModifier(final String par1Str, final double par2, final int par4)
     {
         this(UUID.randomUUID(), par1Str, par2, par4);
     }
 
-    public AttributeModifier(UUID par1UUID, String par2Str, double par3, int par5)
+    public AttributeModifier(final UUID par1UUID, final String par2Str, final double par3, final int par5)
     {
         this.isSaved = true;
         this.id = par1UUID;
@@ -63,13 +63,13 @@ public class AttributeModifier
     /**
      * @see #isSaved
      */
-    public AttributeModifier setSaved(boolean par1)
+    public AttributeModifier setSaved(final boolean par1)
     {
         this.isSaved = par1;
         return this;
     }
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         if (this == par1Obj)
         {
@@ -77,7 +77,7 @@ public class AttributeModifier
         }
         else if (par1Obj != null && this.getClass() == par1Obj.getClass())
         {
-            AttributeModifier attributemodifier = (AttributeModifier)par1Obj;
+            final AttributeModifier attributemodifier = (AttributeModifier)par1Obj;
 
             if (this.id != null)
             {

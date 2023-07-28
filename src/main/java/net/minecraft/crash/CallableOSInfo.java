@@ -7,7 +7,7 @@ class CallableOSInfo implements Callable
     /** Reference to the CrashReport object. */
     final CrashReport theCrashReport;
 
-    CallableOSInfo(CrashReport par1CrashReport)
+    CallableOSInfo(final CrashReport par1CrashReport)
     {
         this.theCrashReport = par1CrashReport;
     }

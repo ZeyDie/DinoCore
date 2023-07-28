@@ -9,6 +9,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class RecipeFireworks extends ShapelessRecipes implements IRecipe   // CraftBukkit - added extends
 {
@@ -17,14 +18,14 @@ public class RecipeFireworks extends ShapelessRecipes implements IRecipe   // Cr
     // CraftBukkit start - Delegate to new parent class with bogus info
     public RecipeFireworks()
     {
-        super(new ItemStack(Item.firework, 0, 0), java.util.Arrays.asList(new ItemStack(Item.gunpowder, 0, 5)));
+        super(new ItemStack(Item.firework, 0, 0), Collections.singletonList(new ItemStack(Item.gunpowder, 0, 5)));
     }
     // CraftBukkit end
 
     /**
      * Used to check if a recipe matches current crafting inventory
      */
-    public boolean matches(InventoryCrafting par1InventoryCrafting, World par2World)
+    public boolean matches(final InventoryCrafting par1InventoryCrafting, final World par2World)
     {
         this.field_92102_a = null;
         int i = 0;
@@ -36,7 +37,7 @@ public class RecipeFireworks extends ShapelessRecipes implements IRecipe   // Cr
 
         for (int k1 = 0; k1 < par1InventoryCrafting.getSizeInventory(); ++k1)
         {
-            ItemStack itemstack = par1InventoryCrafting.getStackInSlot(k1);
+            final ItemStack itemstack = par1InventoryCrafting.getStackInSlot(k1);
 
             if (itemstack != null)
             {
@@ -92,8 +93,8 @@ public class RecipeFireworks extends ShapelessRecipes implements IRecipe   // Cr
 
         if (j <= 3 && i <= 1)
         {
-            NBTTagCompound nbttagcompound;
-            NBTTagCompound nbttagcompound1;
+            final NBTTagCompound nbttagcompound;
+            final NBTTagCompound nbttagcompound1;
 
             if (j >= 1 && i == 1 && i1 == 0)
             {
@@ -103,11 +104,11 @@ public class RecipeFireworks extends ShapelessRecipes implements IRecipe   // Cr
                 if (l > 0)
                 {
                     nbttagcompound1 = new NBTTagCompound("Fireworks");
-                    NBTTagList nbttaglist = new NBTTagList("Explosions");
+                    final NBTTagList nbttaglist = new NBTTagList("Explosions");
 
                     for (int l1 = 0; l1 < par1InventoryCrafting.getSizeInventory(); ++l1)
                     {
-                        ItemStack itemstack1 = par1InventoryCrafting.getStackInSlot(l1);
+                        final ItemStack itemstack1 = par1InventoryCrafting.getStackInSlot(l1);
 
                         if (itemstack1 != null && itemstack1.itemID == Item.fireworkCharge.itemID && itemstack1.hasTagCompound() && itemstack1.getTagCompound().hasKey("Explosion"))
                         {
@@ -129,11 +130,11 @@ public class RecipeFireworks extends ShapelessRecipes implements IRecipe   // Cr
                 nbttagcompound = new NBTTagCompound();
                 nbttagcompound1 = new NBTTagCompound("Explosion");
                 byte b0 = 0;
-                ArrayList arraylist = new ArrayList();
+                final ArrayList arraylist = new ArrayList();
 
                 for (int i2 = 0; i2 < par1InventoryCrafting.getSizeInventory(); ++i2)
                 {
-                    ItemStack itemstack2 = par1InventoryCrafting.getStackInSlot(i2);
+                    final ItemStack itemstack2 = par1InventoryCrafting.getStackInSlot(i2);
 
                     if (itemstack2 != null)
                     {
@@ -168,7 +169,7 @@ public class RecipeFireworks extends ShapelessRecipes implements IRecipe   // Cr
                     }
                 }
 
-                int[] aint = new int[arraylist.size()];
+                final int[] aint = new int[arraylist.size()];
 
                 for (int j2 = 0; j2 < aint.length; ++j2)
                 {
@@ -183,11 +184,11 @@ public class RecipeFireworks extends ShapelessRecipes implements IRecipe   // Cr
             }
             else if (j == 0 && i == 0 && l == 1 && k > 0 && k == i1)
             {
-                ArrayList arraylist1 = new ArrayList();
+                final ArrayList arraylist1 = new ArrayList();
 
                 for (int k2 = 0; k2 < par1InventoryCrafting.getSizeInventory(); ++k2)
                 {
-                    ItemStack itemstack3 = par1InventoryCrafting.getStackInSlot(k2);
+                    final ItemStack itemstack3 = par1InventoryCrafting.getStackInSlot(k2);
 
                     if (itemstack3 != null)
                     {
@@ -203,7 +204,7 @@ public class RecipeFireworks extends ShapelessRecipes implements IRecipe   // Cr
                     }
                 }
 
-                int[] aint1 = new int[arraylist1.size()];
+                final int[] aint1 = new int[arraylist1.size()];
 
                 for (int l2 = 0; l2 < aint1.length; ++l2)
                 {
@@ -212,7 +213,7 @@ public class RecipeFireworks extends ShapelessRecipes implements IRecipe   // Cr
 
                 if (this.field_92102_a != null && this.field_92102_a.hasTagCompound())
                 {
-                    NBTTagCompound nbttagcompound2 = this.field_92102_a.getTagCompound().getCompoundTag("Explosion");
+                    final NBTTagCompound nbttagcompound2 = this.field_92102_a.getTagCompound().getCompoundTag("Explosion");
 
                     if (nbttagcompound2 == null)
                     {
@@ -243,7 +244,7 @@ public class RecipeFireworks extends ShapelessRecipes implements IRecipe   // Cr
     /**
      * Returns an Item that is the result of this recipe
      */
-    public ItemStack getCraftingResult(InventoryCrafting par1InventoryCrafting)
+    public ItemStack getCraftingResult(final InventoryCrafting par1InventoryCrafting)
     {
         return this.field_92102_a.copy();
     }

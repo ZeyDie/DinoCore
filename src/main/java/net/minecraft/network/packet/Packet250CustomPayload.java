@@ -17,7 +17,7 @@ public class Packet250CustomPayload extends Packet
 
     public Packet250CustomPayload() {}
 
-    public Packet250CustomPayload(String par1Str, byte[] par2ArrayOfByte)
+    public Packet250CustomPayload(final String par1Str, final byte[] par2ArrayOfByte)
     {
         this.channel = par1Str;
         this.data = par2ArrayOfByte;
@@ -36,7 +36,7 @@ public class Packet250CustomPayload extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.channel = readString(par1DataInput, 20);
         this.length = par1DataInput.readShort();
@@ -51,7 +51,7 @@ public class Packet250CustomPayload extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         writeString(this.channel, par1DataOutput);
         par1DataOutput.writeShort((short)this.length);
@@ -65,7 +65,7 @@ public class Packet250CustomPayload extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleCustomPayload(this);
     }

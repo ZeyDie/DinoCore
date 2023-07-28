@@ -19,14 +19,14 @@ public class CommandServerDeop extends CommandBase
         return 3;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.deop.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
-        if (par2ArrayOfStr.length == 1 && par2ArrayOfStr[0].length() > 0)
+        if (par2ArrayOfStr.length == 1 && !par2ArrayOfStr[0].isEmpty())
         {
             MinecraftServer.getServer().getConfigurationManager().removeOp(par2ArrayOfStr[0]);
             notifyAdmins(par1ICommandSender, "commands.deop.success", new Object[] {par2ArrayOfStr[0]});
@@ -40,7 +40,7 @@ public class CommandServerDeop extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public List addTabCompletionOptions(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         return par2ArrayOfStr.length == 1 ? getListOfStringsFromIterableMatchingLastWord(par2ArrayOfStr, MinecraftServer.getServer().getConfigurationManager().getOps()) : null;
     }

@@ -22,9 +22,9 @@ public class EffectCommand extends VanillaCommand {
     }
 
     static {
-        ImmutableList.Builder<String> builder = ImmutableList.<String>builder();
+        final ImmutableList.Builder<String> builder = ImmutableList.<String>builder();
 
-        for (PotionEffectType type : PotionEffectType.values()) {
+        for (final PotionEffectType type : PotionEffectType.values()) {
             if (type != null) {
                 builder.add(type.getName());
             }
@@ -34,7 +34,7 @@ public class EffectCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String commandLabel, String[] args) {
+    public boolean execute(final CommandSender sender, final String commandLabel, final String[] args) {
         if (!testPermission(sender)) {
             return true;
         }
@@ -52,7 +52,7 @@ public class EffectCommand extends VanillaCommand {
         }
 
         if ("clear".equalsIgnoreCase(args[1])) {
-            for (PotionEffect effect : player.getActivePotionEffects()) {
+            for (final PotionEffect effect : player.getActivePotionEffects()) {
                 player.removePotionEffect(effect.getType());
             }
             sender.sendMessage(String.format("Took all effects from %s", args[0]));
@@ -108,7 +108,7 @@ public class EffectCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String commandLabel, String[] args) {
+    public List<String> tabComplete(final CommandSender sender, final String commandLabel, final String[] args) {
         if (args.length == 1) {
             return super.tabComplete(sender, commandLabel, args);
         } else if (args.length == 2) {

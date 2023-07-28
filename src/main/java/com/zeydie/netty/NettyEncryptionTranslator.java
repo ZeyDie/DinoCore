@@ -18,7 +18,7 @@ public final class NettyEncryptionTranslator {
     }
 
     private byte[] readBytes(@NotNull final ByteBuf byteBuf) {
-        int var2 = byteBuf.readableBytes();
+        final int var2 = byteBuf.readableBytes();
 
         if (this.bytesA.length < var2)
             this.bytesA = new byte[var2];

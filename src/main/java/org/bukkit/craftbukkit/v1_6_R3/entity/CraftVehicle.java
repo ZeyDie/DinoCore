@@ -4,7 +4,7 @@ import org.bukkit.craftbukkit.v1_6_R3.CraftServer;
 import org.bukkit.entity.Vehicle;
 
 public abstract class CraftVehicle extends CraftEntity implements Vehicle {
-    public CraftVehicle(CraftServer server, net.minecraft.entity.Entity entity) {
+    public CraftVehicle(final CraftServer server, final net.minecraft.entity.Entity entity) {
         super(server, entity);
     }
 

@@ -6,7 +6,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.minecart.RideableMinecart;
 
 public class CraftMinecartRideable extends CraftMinecart implements RideableMinecart {
-    public CraftMinecartRideable(CraftServer server, net.minecraft.entity.item.EntityMinecart entity) {
+    public CraftMinecartRideable(final CraftServer server, final net.minecraft.entity.item.EntityMinecart entity) {
         super(server, entity);
     }
 

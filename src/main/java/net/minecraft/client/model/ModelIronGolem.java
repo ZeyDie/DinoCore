@@ -32,15 +32,15 @@ public class ModelIronGolem extends ModelBase
         this(0.0F);
     }
 
-    public ModelIronGolem(float par1)
+    public ModelIronGolem(final float par1)
     {
         this(par1, -7.0F);
     }
 
-    public ModelIronGolem(float par1, float par2)
+    public ModelIronGolem(final float par1, final float par2)
     {
-        short short1 = 128;
-        short short2 = 128;
+        final short short1 = 128;
+        final short short2 = 128;
         this.ironGolemHead = (new ModelRenderer(this)).setTextureSize(short1, short2);
         this.ironGolemHead.setRotationPoint(0.0F, 0.0F + par2, -2.0F);
         this.ironGolemHead.setTextureOffset(0, 0).addBox(-4.0F, -12.0F, -5.5F, 8, 10, 8, par1);
@@ -67,7 +67,7 @@ public class ModelIronGolem extends ModelBase
     /**
      * Sets the models various rotation angles then renders the model.
      */
-    public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7)
+    public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7)
     {
         this.setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
         this.ironGolemHead.render(par7);
@@ -83,10 +83,10 @@ public class ModelIronGolem extends ModelBase
      * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how
      * "far" arms and legs can swing at most.
      */
-    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity)
+    public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity)
     {
-        this.ironGolemHead.rotateAngleY = par4 / (180F / (float)Math.PI);
-        this.ironGolemHead.rotateAngleX = par5 / (180F / (float)Math.PI);
+        this.ironGolemHead.rotateAngleY = par4 / (180.0F / (float)Math.PI);
+        this.ironGolemHead.rotateAngleX = par5 / (180.0F / (float)Math.PI);
         this.ironGolemLeftLeg.rotateAngleX = -1.5F * this.func_78172_a(par1, 13.0F) * par2;
         this.ironGolemRightLeg.rotateAngleX = 1.5F * this.func_78172_a(par1, 13.0F) * par2;
         this.ironGolemLeftLeg.rotateAngleY = 0.0F;
@@ -97,10 +97,10 @@ public class ModelIronGolem extends ModelBase
      * Used for easily adding entity-dependent animations. The second and third float params here are the same second
      * and third as in the setRotationAngles method.
      */
-    public void setLivingAnimations(EntityLivingBase par1EntityLivingBase, float par2, float par3, float par4)
+    public void setLivingAnimations(final EntityLivingBase par1EntityLivingBase, final float par2, final float par3, final float par4)
     {
-        EntityIronGolem entityirongolem = (EntityIronGolem)par1EntityLivingBase;
-        int i = entityirongolem.getAttackTimer();
+        final EntityIronGolem entityirongolem = (EntityIronGolem)par1EntityLivingBase;
+        final int i = entityirongolem.getAttackTimer();
 
         if (i > 0)
         {
@@ -109,7 +109,7 @@ public class ModelIronGolem extends ModelBase
         }
         else
         {
-            int j = entityirongolem.getHoldRoseTick();
+            final int j = entityirongolem.getHoldRoseTick();
 
             if (j > 0)
             {
@@ -124,7 +124,7 @@ public class ModelIronGolem extends ModelBase
         }
     }
 
-    private float func_78172_a(float par1, float par2)
+    private float func_78172_a(final float par1, final float par2)
     {
         return (Math.abs(par1 % par2 - par2 * 0.5F) - par2 * 0.25F) / (par2 * 0.25F);
     }

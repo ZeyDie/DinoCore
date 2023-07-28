@@ -24,7 +24,7 @@ public class EntityCombustEvent extends EntityEvent implements Cancellable {
         return cancel;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 
@@ -42,7 +42,7 @@ public class EntityCombustEvent extends EntityEvent implements Cancellable {
      *
      * @param duration the time in seconds to be alight for.
      */
-    public void setDuration(int duration) {
+    public void setDuration(final int duration) {
         this.duration = duration;
     }
 

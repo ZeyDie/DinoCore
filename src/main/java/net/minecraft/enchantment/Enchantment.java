@@ -101,7 +101,7 @@ public abstract class Enchantment
     /** Used in localisation and stats. */
     protected String name;
 
-    protected Enchantment(int par1, int par2, EnumEnchantmentType par3EnumEnchantmentType)
+    protected Enchantment(final int par1, final int par2, final EnumEnchantmentType par3EnumEnchantmentType)
     {
         this.effectId = par1;
         this.weight = par2;
@@ -143,7 +143,7 @@ public abstract class Enchantment
     /**
      * Returns the minimal value of enchantability needed on the enchantment level passed.
      */
-    public int getMinEnchantability(int par1)
+    public int getMinEnchantability(final int par1)
     {
         return 1 + par1 * 10;
     }
@@ -151,7 +151,7 @@ public abstract class Enchantment
     /**
      * Returns the maximum value of enchantability nedded on the enchantment level passed.
      */
-    public int getMaxEnchantability(int par1)
+    public int getMaxEnchantability(final int par1)
     {
         return this.getMinEnchantability(par1) + 5;
     }
@@ -159,7 +159,7 @@ public abstract class Enchantment
     /**
      * Calculates de damage protection of the enchantment based on level and damage source passed.
      */
-    public int calcModifierDamage(int par1, DamageSource par2DamageSource)
+    public int calcModifierDamage(final int par1, final DamageSource par2DamageSource)
     {
         return 0;
     }
@@ -167,7 +167,7 @@ public abstract class Enchantment
     /**
      * Calculates de (magic) damage done by the enchantment on a living entity based on level and entity passed.
      */
-    public float calcModifierLiving(int par1, EntityLivingBase par2EntityLivingBase)
+    public float calcModifierLiving(final int par1, final EntityLivingBase par2EntityLivingBase)
     {
         return 0.0F;
     }
@@ -175,7 +175,7 @@ public abstract class Enchantment
     /**
      * Determines if the enchantment passed can be applyied together with this enchantment.
      */
-    public boolean canApplyTogether(Enchantment par1Enchantment)
+    public boolean canApplyTogether(final Enchantment par1Enchantment)
     {
         return this != par1Enchantment;
     }
@@ -183,7 +183,7 @@ public abstract class Enchantment
     /**
      * Sets the enchantment name
      */
-    public Enchantment setName(String par1Str)
+    public Enchantment setName(final String par1Str)
     {
         this.name = par1Str;
         return this;
@@ -200,13 +200,13 @@ public abstract class Enchantment
     /**
      * Returns the correct traslated name of the enchantment and the level in roman numbers.
      */
-    public String getTranslatedName(int par1)
+    public String getTranslatedName(final int par1)
     {
-        String s = StatCollector.translateToLocal(this.getName());
+        final String s = StatCollector.translateToLocal(this.getName());
         return s + " " + StatCollector.translateToLocal("enchantment.level." + par1);
     }
 
-    public boolean canApply(ItemStack par1ItemStack)
+    public boolean canApply(final ItemStack par1ItemStack)
     {
         return this.type.canEnchantItem(par1ItemStack.getItem());
     }
@@ -217,7 +217,7 @@ public abstract class Enchantment
      * @param stack
      * @return
      */
-    public boolean canApplyAtEnchantingTable(ItemStack stack)
+    public boolean canApplyAtEnchantingTable(final ItemStack stack)
     {
         return this.type.canEnchantItem(stack.getItem());
     }
@@ -227,7 +227,7 @@ public abstract class Enchantment
      *
      * @param enchantment
      */
-    public static void addToBookList(Enchantment enchantment)
+    public static void addToBookList(final Enchantment enchantment)
     {
         ObjectArrays.concat(enchantmentsBookList, enchantment);
     }
@@ -243,13 +243,13 @@ public abstract class Enchantment
 
     static
     {
-        ArrayList arraylist = new ArrayList();
-        Enchantment[] aenchantment = enchantmentsList;
-        int i = aenchantment.length;
+        final ArrayList arraylist = new ArrayList();
+        final Enchantment[] aenchantment = enchantmentsList;
+        final int i = aenchantment.length;
 
         for (int j = 0; j < i; ++j)
         {
-            Enchantment enchantment = aenchantment[j];
+            final Enchantment enchantment = aenchantment[j];
 
             if (enchantment != null)
             {

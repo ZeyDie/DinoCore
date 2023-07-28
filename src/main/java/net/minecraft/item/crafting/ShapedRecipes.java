@@ -28,7 +28,7 @@ public class ShapedRecipes implements IRecipe
     public final int recipeOutputItemID;
     private boolean field_92101_f;
 
-    public ShapedRecipes(int par1, int par2, ItemStack[] par3ArrayOfItemStack, ItemStack par4ItemStack)
+    public ShapedRecipes(final int par1, final int par2, final ItemStack[] par3ArrayOfItemStack, final ItemStack par4ItemStack)
     {
         this.recipeOutputItemID = par4ItemStack.itemID;
         this.recipeWidth = par1;
@@ -40,8 +40,8 @@ public class ShapedRecipes implements IRecipe
     // CraftBukkit start
     public org.bukkit.inventory.ShapedRecipe toBukkitRecipe()
     {
-        CraftItemStack result = CraftItemStack.asCraftMirror(this.recipeOutput);
-        CraftShapedRecipe recipe = new CraftShapedRecipe(result, this);
+        final CraftItemStack result = CraftItemStack.asCraftMirror(this.recipeOutput);
+        final CraftShapedRecipe recipe = new CraftShapedRecipe(result, this);
 
         switch (this.recipeHeight)
         {
@@ -94,7 +94,7 @@ public class ShapedRecipes implements IRecipe
 
         char c = 'a';
 
-        for (ItemStack stack : this.recipeItems)
+        for (final ItemStack stack : this.recipeItems)
         {
             if (stack != null)
             {
@@ -116,7 +116,7 @@ public class ShapedRecipes implements IRecipe
     /**
      * Used to check if a recipe matches current crafting inventory
      */
-    public boolean matches(InventoryCrafting par1InventoryCrafting, World par2World)
+    public boolean matches(final InventoryCrafting par1InventoryCrafting, final World par2World)
     {
         for (int i = 0; i <= 3 - this.recipeWidth; ++i)
         {
@@ -140,14 +140,14 @@ public class ShapedRecipes implements IRecipe
     /**
      * Checks if the region of a crafting inventory is match for the recipe.
      */
-    private boolean checkMatch(InventoryCrafting par1InventoryCrafting, int par2, int par3, boolean par4)
+    private boolean checkMatch(final InventoryCrafting par1InventoryCrafting, final int par2, final int par3, final boolean par4)
     {
         for (int k = 0; k < 3; ++k)
         {
             for (int l = 0; l < 3; ++l)
             {
-                int i1 = k - par2;
-                int j1 = l - par3;
+                final int i1 = k - par2;
+                final int j1 = l - par3;
                 ItemStack itemstack = null;
 
                 if (i1 >= 0 && j1 >= 0 && i1 < this.recipeWidth && j1 < this.recipeHeight)
@@ -162,7 +162,7 @@ public class ShapedRecipes implements IRecipe
                     }
                 }
 
-                ItemStack itemstack1 = par1InventoryCrafting.getStackInRowAndColumn(k, l);
+                final ItemStack itemstack1 = par1InventoryCrafting.getStackInRowAndColumn(k, l);
 
                 if (itemstack1 != null || itemstack != null)
                 {
@@ -190,15 +190,15 @@ public class ShapedRecipes implements IRecipe
     /**
      * Returns an Item that is the result of this recipe
      */
-    public ItemStack getCraftingResult(InventoryCrafting par1InventoryCrafting)
+    public ItemStack getCraftingResult(final InventoryCrafting par1InventoryCrafting)
     {
-        ItemStack itemstack = this.getRecipeOutput().copy();
+        final ItemStack itemstack = this.getRecipeOutput().copy();
 
         if (this.field_92101_f)
         {
             for (int i = 0; i < par1InventoryCrafting.getSizeInventory(); ++i)
             {
-                ItemStack itemstack1 = par1InventoryCrafting.getStackInSlot(i);
+                final ItemStack itemstack1 = par1InventoryCrafting.getStackInSlot(i);
 
                 if (itemstack1 != null && itemstack1.hasTagCompound())
                 {

@@ -8,22 +8,22 @@ import java.util.List;
 
 public class ScoreHealthCriteria extends ScoreDummyCriteria
 {
-    public ScoreHealthCriteria(String par1Str)
+    public ScoreHealthCriteria(final String par1Str)
     {
         super(par1Str);
     }
 
-    public int func_96635_a(List par1List)
+    public int func_96635_a(final List par1List)
     {
         float f = 0.0F;
         EntityPlayer entityplayer;
 
-        for (Iterator iterator = par1List.iterator(); iterator.hasNext(); f += entityplayer.getHealth() + entityplayer.getAbsorptionAmount())
+        for (final Iterator iterator = par1List.iterator(); iterator.hasNext(); f += entityplayer.getHealth() + entityplayer.getAbsorptionAmount())
         {
             entityplayer = (EntityPlayer)iterator.next();
         }
 
-        if (par1List.size() > 0)
+        if (!par1List.isEmpty())
         {
             f /= (float)par1List.size();
         }

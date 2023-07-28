@@ -6,7 +6,7 @@ import org.bukkit.entity.Monster;
 
 public class CraftMonster extends CraftCreature implements Monster {
 
-    public CraftMonster(CraftServer server, net.minecraft.entity.monster.EntityMob entity) {
+    public CraftMonster(final CraftServer server, final net.minecraft.entity.monster.EntityMob entity) {
         super(server, entity);
     }
 

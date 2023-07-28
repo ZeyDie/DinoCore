@@ -20,7 +20,7 @@ public class LogAgent implements ILogAgent {
     public static Logger global = Logger.getLogger(""); // CraftBukkit
     private static final String LOG_CONFIG_PREFIX = "cauldron.loglevels."; // Cauldron
 
-    public LogAgent(String par1Str, String par2Str, String par3Str) {
+    public LogAgent(final String par1Str, final String par2Str, final String par3Str) {
         this.serverLogger = Logger.getLogger(par1Str);
         this.loggerName = par1Str;
         this.loggerPrefix = par2Str;
@@ -34,18 +34,18 @@ public class LogAgent implements ILogAgent {
     private void setupLogger() {
         this.serverLogger.setUseParentHandlers(false);
         //this.serverLogger.setParent(FMLLog.getLogger()); // Cauldron - do not send to FML log, only CB
-        Handler[] ahandler = this.serverLogger.getHandlers();
-        int i = ahandler.length;
+        final Handler[] ahandler = this.serverLogger.getHandlers();
+        final int i = ahandler.length;
 
         for (int j = 0; j < i; ++j) {
-            Handler handler = ahandler[j];
+            final Handler handler = ahandler[j];
             this.serverLogger.removeHandler(handler);
         }
 
-        LogFormatter logformatter = new LogFormatter(this, (LogAgentEmptyAnon) null);
+        final LogFormatter logformatter = new LogFormatter(this, (LogAgentEmptyAnon) null);
         //Cauldron start - use Forge's async console handler
-        MinecraftServer server = MinecraftServer.getServer();
-        ConsoleHandler wrappedHandler = new org.bukkit.craftbukkit.v1_6_R3.util.TerminalConsoleHandler(server.reader);
+        final MinecraftServer server = MinecraftServer.getServer();
+        final ConsoleHandler wrappedHandler = new org.bukkit.craftbukkit.v1_6_R3.util.TerminalConsoleHandler(server.reader);
 
         //TODO ZoomCodeStart
         wrappedHandler.setFilter(new LogAgentFilter());
@@ -71,13 +71,13 @@ public class LogAgent implements ILogAgent {
         });*/
 
         FMLRelaunchLog.ConsoleLogThread.wrappedHandler = wrappedHandler;
-        Handler consolehandler = new FMLRelaunchLog.ConsoleLogWrapper();
+        final Handler consolehandler = new FMLRelaunchLog.ConsoleLogWrapper();
         wrappedHandler.setFormatter(new org.bukkit.craftbukkit.v1_6_R3.util.ShortConsoleLogFormatter(server));
         this.serverLogger.addHandler(consolehandler);
         // Cauldron end
 
         // CraftBukkit start
-        for (java.util.logging.Handler handler : global.getHandlers()) {
+        for (final java.util.logging.Handler handler : global.getHandlers()) {
             global.removeHandler(handler);
         }
         global.addHandler(consolehandler);
@@ -85,10 +85,10 @@ public class LogAgent implements ILogAgent {
 
         try {
             // CraftBukkit start
-            String pattern = (String) server.options.valueOf("log-pattern");
+            final String pattern = (String) server.options.valueOf("log-pattern");
             // We have to parse the pattern ourself so we can create directories as needed (java #6244047)
             String tmpDir = System.getProperty("java.io.tmpdir");
-            String homeDir = System.getProperty("user.home");
+            final String homeDir = System.getProperty("user.home");
 
             if (tmpDir == null) {
                 tmpDir = homeDir;
@@ -96,7 +96,7 @@ public class LogAgent implements ILogAgent {
 
             // We only care about parsing for directories, FileHandler can do file names by itself
             File parent = new File(pattern).getParentFile();
-            StringBuilder fixedPattern = new StringBuilder();
+            final StringBuilder fixedPattern = new StringBuilder();
             String parentPath = "";
 
             if (parent != null) {
@@ -106,7 +106,7 @@ public class LogAgent implements ILogAgent {
             int j = 0;
 
             while (j < parentPath.length()) {
-                char ch = parentPath.charAt(j);
+                final char ch = parentPath.charAt(j);
                 char ch2 = 0;
 
                 if (j + 1 < parentPath.length()) {
@@ -141,20 +141,20 @@ public class LogAgent implements ILogAgent {
 
             parent.mkdirs();
 
-            int limit = (Integer) server.options.valueOf("log-limit");
-            int count = (Integer) server.options.valueOf("log-count");
-            boolean append = (Boolean) server.options.valueOf("log-append");
-            FileHandler filehandler = new FileHandler(pattern, limit, count, append);
+            final int limit = (Integer) server.options.valueOf("log-limit");
+            final int count = (Integer) server.options.valueOf("log-count");
+            final boolean append = (Boolean) server.options.valueOf("log-append");
+            final FileHandler filehandler = new FileHandler(pattern, limit, count, append);
             // CraftBukkit end
             filehandler.setFormatter(logformatter);
             this.serverLogger.addHandler(filehandler);
             global.addHandler(filehandler); // CraftBukkit
-        } catch (Exception exception) {
+        } catch (final Exception exception) {
             this.serverLogger.log(Level.WARNING, "Failed to log " + this.loggerName + " to " + this.logFile, exception);
         }
     }
 
-    public void logInfo(String par1Str) {
+    public void logInfo(final String par1Str) {
         this.serverLogger.log(Level.INFO, par1Str);
     }
 
@@ -163,32 +163,32 @@ public class LogAgent implements ILogAgent {
         return this.serverLogger;
     }
 
-    public void logWarning(String par1Str) {
+    public void logWarning(final String par1Str) {
         this.serverLogger.log(Level.WARNING, par1Str);
     }
 
-    public void logWarningFormatted(String par1Str, Object... par2ArrayOfObj) {
+    public void logWarningFormatted(final String par1Str, final Object... par2ArrayOfObj) {
         this.serverLogger.log(Level.WARNING, String.format(par1Str, par2ArrayOfObj));
     }
 
-    public void logWarningException(String par1Str, Throwable par2Throwable) {
+    public void logWarningException(final String par1Str, final Throwable par2Throwable) {
         this.serverLogger.log(Level.WARNING, par1Str, par2Throwable);
     }
 
-    public void logSevere(String par1Str) {
+    public void logSevere(final String par1Str) {
         this.serverLogger.log(Level.SEVERE, par1Str);
     }
 
-    public void logSevereException(String par1Str, Throwable par2Throwable) {
+    public void logSevereException(final String par1Str, final Throwable par2Throwable) {
         this.serverLogger.log(Level.SEVERE, par1Str, par2Throwable);
     }
 
     @SideOnly(Side.CLIENT)
-    public void logFine(String par1Str) {
+    public void logFine(final String par1Str) {
         this.serverLogger.log(Level.FINE, par1Str);
     }
 
-    static String func_98237_a(LogAgent par0LogAgent) {
+    static String func_98237_a(final LogAgent par0LogAgent) {
         return par0LogAgent.loggerPrefix;
     }
 }

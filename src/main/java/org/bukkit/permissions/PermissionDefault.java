@@ -15,7 +15,7 @@ public enum PermissionDefault {
     private final String[] names;
     private final static Map<String, PermissionDefault> lookup = new HashMap<String, PermissionDefault>();
 
-    private PermissionDefault(String... names) {
+    private PermissionDefault(final String... names) {
         this.names = names;
     }
 
@@ -25,7 +25,7 @@ public enum PermissionDefault {
      * @param op If the target is op
      * @return True if the default should be true, or false
      */
-    public boolean getValue(boolean op) {
+    public boolean getValue(final boolean op) {
         switch (this) {
         case TRUE:
             return true;
@@ -46,7 +46,7 @@ public enum PermissionDefault {
      * @param name Name of the default
      * @return Specified value, or null if not found
      */
-    public static PermissionDefault getByName(String name) {
+    public static PermissionDefault getByName(final String name) {
         return lookup.get(name.toLowerCase().replaceAll("[^a-z!]", ""));
     }
 
@@ -56,8 +56,8 @@ public enum PermissionDefault {
     }
 
     static {
-        for (PermissionDefault value : values()) {
-            for (String name : value.names) {
+        for (final PermissionDefault value : values()) {
+            for (final String name : value.names) {
                 lookup.put(name, value);
             }
         }

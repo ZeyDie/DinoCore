@@ -16,7 +16,7 @@ public class Skull extends MaterialData implements Directional {
      *
      * @param direction the direction the skull's face is facing
      */
-    public Skull(BlockFace direction) {
+    public Skull(final BlockFace direction) {
         this();
         setFacingDirection(direction);
     }
@@ -52,8 +52,8 @@ public class Skull extends MaterialData implements Directional {
         super(type, data);
     }
 
-    public void setFacingDirection(BlockFace face) {
-        int data;
+    public void setFacingDirection(final BlockFace face) {
+        final int data;
 
         switch (face) {
             case SELF:
@@ -81,7 +81,7 @@ public class Skull extends MaterialData implements Directional {
     }
 
     public BlockFace getFacing() {
-        int data = getData();
+        final int data = getData();
 
         switch (data) {
             case 0x1:

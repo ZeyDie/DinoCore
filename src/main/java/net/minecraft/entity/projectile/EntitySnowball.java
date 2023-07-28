@@ -8,17 +8,17 @@ import net.minecraft.world.World;
 
 public class EntitySnowball extends EntityThrowable
 {
-    public EntitySnowball(World par1World)
+    public EntitySnowball(final World par1World)
     {
         super(par1World);
     }
 
-    public EntitySnowball(World par1World, EntityLivingBase par2EntityLivingBase)
+    public EntitySnowball(final World par1World, final EntityLivingBase par2EntityLivingBase)
     {
         super(par1World, par2EntityLivingBase);
     }
 
-    public EntitySnowball(World par1World, double par2, double par4, double par6)
+    public EntitySnowball(final World par1World, final double par2, final double par4, final double par6)
     {
         super(par1World, par2, par4, par6);
     }
@@ -26,7 +26,7 @@ public class EntitySnowball extends EntityThrowable
     /**
      * Called when this EntityThrowable hits a block or entity.
      */
-    protected void onImpact(MovingObjectPosition par1MovingObjectPosition)
+    protected void onImpact(final MovingObjectPosition par1MovingObjectPosition)
     {
         if (par1MovingObjectPosition.entityHit != null)
         {

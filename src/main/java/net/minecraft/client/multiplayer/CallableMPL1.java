@@ -11,7 +11,7 @@ class CallableMPL1 implements Callable
     /** Reference to the WorldClient object. */
     final WorldClient theWorldClient;
 
-    CallableMPL1(WorldClient par1WorldClient)
+    CallableMPL1(final WorldClient par1WorldClient)
     {
         this.theWorldClient = par1WorldClient;
     }

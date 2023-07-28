@@ -33,14 +33,14 @@ public final class CraftItemFactory implements ItemFactory {
     private CraftItemFactory() {
     }
 
-    public boolean isApplicable(ItemMeta meta, ItemStack itemstack) {
+    public boolean isApplicable(final ItemMeta meta, final ItemStack itemstack) {
         if (itemstack == null) {
             return false;
         }
         return isApplicable(meta, itemstack.getType());
     }
 
-    public boolean isApplicable(ItemMeta meta, Material type) {
+    public boolean isApplicable(final ItemMeta meta, final Material type) {
         if (type == null || meta == null) {
             return false;
         }
@@ -51,12 +51,12 @@ public final class CraftItemFactory implements ItemFactory {
         return ((CraftMetaItem) meta).applicableTo(type);
     }
 
-    public ItemMeta getItemMeta(Material material) {
+    public ItemMeta getItemMeta(final Material material) {
         Validate.notNull(material, "Material cannot be null");
         return getItemMeta(material, null);
     }
 
-    private ItemMeta getItemMeta(Material material, CraftMetaItem meta) {
+    private ItemMeta getItemMeta(final Material material, final CraftMetaItem meta) {
         switch (material) {
         case AIR:
             return null;
@@ -85,7 +85,7 @@ public final class CraftItemFactory implements ItemFactory {
         }
     }
 
-    public boolean equals(ItemMeta meta1, ItemMeta meta2) {
+    public boolean equals(final ItemMeta meta1, final ItemMeta meta2) {
         if (meta1 == meta2) {
             return true;
         }
@@ -105,7 +105,7 @@ public final class CraftItemFactory implements ItemFactory {
         return equals((CraftMetaItem) meta1, (CraftMetaItem) meta2);
     }
 
-    boolean equals(CraftMetaItem meta1, CraftMetaItem meta2) {
+    boolean equals(final CraftMetaItem meta1, final CraftMetaItem meta2) {
         /*
          * This couldn't be done inside of the objects themselves, else force recursion.
          * This is a fairly clean way of implementing it, by dividing the methods into purposes and letting each method perform its own function.
@@ -122,12 +122,12 @@ public final class CraftItemFactory implements ItemFactory {
         return instance;
     }
 
-    public ItemMeta asMetaFor(ItemMeta meta, ItemStack stack) {
+    public ItemMeta asMetaFor(final ItemMeta meta, final ItemStack stack) {
         Validate.notNull(stack, "Stack cannot be null");
         return asMetaFor(meta, stack.getType());
     }
 
-    public ItemMeta asMetaFor(ItemMeta meta, Material material) {
+    public ItemMeta asMetaFor(final ItemMeta meta, final Material material) {
         Validate.notNull(material, "Material cannot be null");
         if (!(meta instanceof CraftMetaItem)) {
             throw new IllegalArgumentException("Meta of " + (meta != null ? meta.getClass().toString() : "null") + " not created by " + CraftItemFactory.class.getName());

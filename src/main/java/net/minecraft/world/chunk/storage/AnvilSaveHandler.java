@@ -10,7 +10,7 @@ import java.io.File;
 
 public class AnvilSaveHandler extends SaveHandler
 {
-    public AnvilSaveHandler(File par1File, String par2Str, boolean par3)
+    public AnvilSaveHandler(final File par1File, final String par2Str, final boolean par3)
     {
         super(par1File, par2Str, par3);
     }
@@ -18,9 +18,9 @@ public class AnvilSaveHandler extends SaveHandler
     /**
      * Returns the chunk loader with the provided world provider
      */
-    public IChunkLoader getChunkLoader(WorldProvider par1WorldProvider)
+    public IChunkLoader getChunkLoader(final WorldProvider par1WorldProvider)
     {
-        File file1 = this.getWorldDirectory();
+        final File file1 = this.getWorldDirectory();
         File file2;
         // Cauldron start
         // To workaround the issue of Bukkit relying on every world having a seperate container
@@ -33,7 +33,7 @@ public class AnvilSaveHandler extends SaveHandler
     /**
      * Saves the given World Info with the given NBTTagCompound as the Player.
      */
-    public void saveWorldInfoWithPlayer(WorldInfo par1WorldInfo, NBTTagCompound par2NBTTagCompound)
+    public void saveWorldInfoWithPlayer(final WorldInfo par1WorldInfo, final NBTTagCompound par2NBTTagCompound)
     {
         par1WorldInfo.setSaveVersion(19133);
         super.saveWorldInfoWithPlayer(par1WorldInfo, par2NBTTagCompound);
@@ -48,7 +48,7 @@ public class AnvilSaveHandler extends SaveHandler
         {
             ThreadedFileIOBase.threadedIOInstance.waitForFinish();
         }
-        catch (InterruptedException interruptedexception)
+        catch (final InterruptedException interruptedexception)
         {
             interruptedexception.printStackTrace();
         }

@@ -6,7 +6,7 @@ import org.bukkit.entity.CaveSpider;
 import org.bukkit.entity.EntityType;
 
 public class CraftCaveSpider extends CraftSpider implements CaveSpider {
-    public CraftCaveSpider(CraftServer server, net.minecraft.entity.monster.EntityCaveSpider entity) {
+    public CraftCaveSpider(final CraftServer server, final net.minecraft.entity.monster.EntityCaveSpider entity) {
         super(server, entity);
     }
 

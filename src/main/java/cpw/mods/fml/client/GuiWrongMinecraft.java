@@ -19,7 +19,7 @@ import net.minecraft.client.gui.GuiErrorScreen;
 public class GuiWrongMinecraft extends GuiErrorScreen
 {
     private WrongMinecraftVersionException wrongMC;
-    public GuiWrongMinecraft(WrongMinecraftVersionException wrongMC)
+    public GuiWrongMinecraft(final WrongMinecraftVersionException wrongMC)
     {
         super(null,null);
         this.wrongMC = wrongMC;
@@ -38,7 +38,7 @@ public class GuiWrongMinecraft extends GuiErrorScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         int offset = 75;

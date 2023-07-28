@@ -18,20 +18,20 @@ public class SimpleTexture extends AbstractTexture
 {
     private final ResourceLocation textureLocation;
 
-    public SimpleTexture(ResourceLocation par1ResourceLocation)
+    public SimpleTexture(final ResourceLocation par1ResourceLocation)
     {
         this.textureLocation = par1ResourceLocation;
     }
 
-    public void loadTexture(ResourceManager par1ResourceManager) throws IOException
+    public void loadTexture(final ResourceManager par1ResourceManager) throws IOException
     {
         InputStream inputstream = null;
 
         try
         {
-            Resource resource = par1ResourceManager.getResource(this.textureLocation);
+            final Resource resource = par1ResourceManager.getResource(this.textureLocation);
             inputstream = resource.getInputStream();
-            BufferedImage bufferedimage = ImageIO.read(inputstream);
+            final BufferedImage bufferedimage = ImageIO.read(inputstream);
             boolean flag = false;
             boolean flag1 = false;
 
@@ -39,7 +39,7 @@ public class SimpleTexture extends AbstractTexture
             {
                 try
                 {
-                    TextureMetadataSection texturemetadatasection = (TextureMetadataSection)resource.getMetadata("texture");
+                    final TextureMetadataSection texturemetadatasection = (TextureMetadataSection)resource.getMetadata("texture");
 
                     if (texturemetadatasection != null)
                     {
@@ -47,7 +47,7 @@ public class SimpleTexture extends AbstractTexture
                         flag1 = texturemetadatasection.getTextureClamp();
                     }
                 }
-                catch (RuntimeException runtimeexception)
+                catch (final RuntimeException runtimeexception)
                 {
                     Minecraft.getMinecraft().getLogAgent().logWarningException("Failed reading metadata of: " + this.textureLocation, runtimeexception);
                 }

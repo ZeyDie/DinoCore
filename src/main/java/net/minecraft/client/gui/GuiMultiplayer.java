@@ -72,7 +72,7 @@ public class GuiMultiplayer extends GuiScreen
     private boolean field_74024_A;
     private List listofLanServers = Collections.emptyList();
 
-    public GuiMultiplayer(GuiScreen par1GuiScreen)
+    public GuiMultiplayer(final GuiScreen par1GuiScreen)
     {
         this.parentScreen = par1GuiScreen;
     }
@@ -97,7 +97,7 @@ public class GuiMultiplayer extends GuiScreen
                 this.localServerFindThread = new ThreadLanServerFind(this.localNetworkServerList);
                 this.localServerFindThread.start();
             }
-            catch (Exception exception)
+            catch (final Exception exception)
             {
                 this.mc.getLogAgent().logWarning("Unable to start LAN server detection: " + exception.getMessage());
             }
@@ -124,7 +124,7 @@ public class GuiMultiplayer extends GuiScreen
         this.buttonList.add(new GuiButton(3, this.width / 2 + 4 + 50, this.height - 52, 100, 20, I18n.getString("selectServer.add")));
         this.buttonList.add(new GuiButton(8, this.width / 2 + 4, this.height - 28, 70, 20, I18n.getString("selectServer.refresh")));
         this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 76, this.height - 28, 75, 20, I18n.getString("gui.cancel")));
-        boolean flag = this.selectedServer >= 0 && this.selectedServer < this.serverSlotContainer.getSize();
+        final boolean flag = this.selectedServer >= 0 && this.selectedServer < this.serverSlotContainer.getSize();
         this.buttonSelect.enabled = flag;
         this.field_96289_p.enabled = flag;
         this.buttonDelete.enabled = flag;
@@ -162,22 +162,22 @@ public class GuiMultiplayer extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
             if (par1GuiButton.id == 2)
             {
-                String s = this.internetServerList.getServerData(this.selectedServer).serverName;
+                final String s = this.internetServerList.getServerData(this.selectedServer).serverName;
 
                 if (s != null)
                 {
                     this.deleteClicked = true;
-                    String s1 = I18n.getString("selectServer.deleteQuestion");
-                    String s2 = "\'" + s + "\' " + I18n.getString("selectServer.deleteWarning");
-                    String s3 = I18n.getString("selectServer.deleteButton");
-                    String s4 = I18n.getString("gui.cancel");
-                    GuiYesNo guiyesno = new GuiYesNo(this, s1, s2, s3, s4, this.selectedServer);
+                    final String s1 = I18n.getString("selectServer.deleteQuestion");
+                    final String s2 = "\'" + s + "\' " + I18n.getString("selectServer.deleteWarning");
+                    final String s3 = I18n.getString("selectServer.deleteButton");
+                    final String s4 = I18n.getString("gui.cancel");
+                    final GuiYesNo guiyesno = new GuiYesNo(this, s1, s2, s3, s4, this.selectedServer);
                     this.mc.displayGuiScreen(guiyesno);
                 }
             }
@@ -198,7 +198,7 @@ public class GuiMultiplayer extends GuiScreen
             else if (par1GuiButton.id == 7)
             {
                 this.editClicked = true;
-                ServerData serverdata = this.internetServerList.getServerData(this.selectedServer);
+                final ServerData serverdata = this.internetServerList.getServerData(this.selectedServer);
                 this.theServerData = new ServerData(serverdata.serverName, serverdata.serverIP);
                 this.theServerData.setHideAddress(serverdata.isHidingAddress());
                 this.mc.displayGuiScreen(new GuiScreenAddServer(this, this.theServerData));
@@ -218,7 +218,7 @@ public class GuiMultiplayer extends GuiScreen
         }
     }
 
-    public void confirmClicked(boolean par1, int par2)
+    public void confirmClicked(final boolean par1, final int par2)
     {
         if (this.deleteClicked)
         {
@@ -265,7 +265,7 @@ public class GuiMultiplayer extends GuiScreen
 
             if (par1)
             {
-                ServerData serverdata = this.internetServerList.getServerData(this.selectedServer);
+                final ServerData serverdata = this.internetServerList.getServerData(this.selectedServer);
                 serverdata.serverName = this.theServerData.serverName;
                 serverdata.serverIP = this.theServerData.serverIP;
                 serverdata.setHideAddress(this.theServerData.isHidingAddress());
@@ -279,9 +279,9 @@ public class GuiMultiplayer extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
-        int j = this.selectedServer;
+        final int j = this.selectedServer;
 
         if (par2 == 59)
         {
@@ -330,7 +330,7 @@ public class GuiMultiplayer extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.lagTooltip = null;
         this.drawDefaultBackground();
@@ -349,30 +349,31 @@ public class GuiMultiplayer extends GuiScreen
      */
     private void joinServer(int par1)
     {
-        if (par1 < this.internetServerList.countServers())
+        int par11 = par1;
+        if (par11 < this.internetServerList.countServers())
         {
-            this.connectToServer(this.internetServerList.getServerData(par1));
+            this.connectToServer(this.internetServerList.getServerData(par11));
         }
         else
         {
-            par1 -= this.internetServerList.countServers();
+            par11 -= this.internetServerList.countServers();
 
-            if (par1 < this.listofLanServers.size())
+            if (par11 < this.listofLanServers.size())
             {
-                LanServer lanserver = (LanServer)this.listofLanServers.get(par1);
+                final LanServer lanserver = (LanServer)this.listofLanServers.get(par11);
                 this.connectToServer(new ServerData(lanserver.getServerMotd(), lanserver.getServerIpPort()));
             }
         }
     }
 
-    private void connectToServer(ServerData par1ServerData)
+    private void connectToServer(final ServerData par1ServerData)
     {
         this.mc.displayGuiScreen(new GuiConnecting(this, this.mc, par1ServerData));
     }
 
-    private static void func_74017_b(ServerData par0ServerData) throws IOException
+    private static void func_74017_b(final ServerData par0ServerData) throws IOException
     {
-        ServerAddress serveraddress = ServerAddress.func_78860_a(par0ServerData.serverIP);
+        final ServerAddress serveraddress = ServerAddress.func_78860_a(par0ServerData.serverIP);
         Socket socket = null;
         DataInputStream datainputstream = null;
         DataOutputStream dataoutputstream = null;
@@ -386,7 +387,7 @@ public class GuiMultiplayer extends GuiScreen
             socket.connect(new InetSocketAddress(serveraddress.getIP(), serveraddress.getPort()), 3000);
             datainputstream = new DataInputStream(socket.getInputStream());
             dataoutputstream = new DataOutputStream(socket.getOutputStream());
-            Packet254ServerPing packet254serverping = new Packet254ServerPing(78, serveraddress.getIP(), serveraddress.getPort());
+            final Packet254ServerPing packet254serverping = new Packet254ServerPing(78, serveraddress.getIP(), serveraddress.getPort());
             dataoutputstream.writeByte(packet254serverping.getPacketId());
             packet254serverping.writePacketData(dataoutputstream);
 
@@ -396,7 +397,7 @@ public class GuiMultiplayer extends GuiScreen
             }
 
             String s = Packet.readString(datainputstream, 256);
-            char[] achar = s.toCharArray();
+            final char[] achar = s.toCharArray();
 
             for (int i = 0; i < achar.length; ++i)
             {
@@ -409,7 +410,7 @@ public class GuiMultiplayer extends GuiScreen
             s = new String(achar);
             int j;
             int k;
-            String[] astring;
+            final String[] astring;
 
             if (s.startsWith("\u00a7") && s.length() > 1)
             {
@@ -452,7 +453,7 @@ public class GuiMultiplayer extends GuiScreen
                     j = Integer.parseInt(astring[1]);
                     k = Integer.parseInt(astring[2]);
                 }
-                catch (Exception exception)
+                catch (final Exception exception)
                 {
                     ;
                 }
@@ -481,7 +482,7 @@ public class GuiMultiplayer extends GuiScreen
                     datainputstream.close();
                 }
             }
-            catch (Throwable throwable)
+            catch (final Throwable throwable)
             {
                 ;
             }
@@ -493,7 +494,7 @@ public class GuiMultiplayer extends GuiScreen
                     dataoutputstream.close();
                 }
             }
-            catch (Throwable throwable1)
+            catch (final Throwable throwable1)
             {
                 ;
             }
@@ -505,41 +506,41 @@ public class GuiMultiplayer extends GuiScreen
                     socket.close();
                 }
             }
-            catch (Throwable throwable2)
+            catch (final Throwable throwable2)
             {
                 ;
             }
         }
     }
 
-    protected void func_74007_a(String par1Str, int par2, int par3)
+    protected void func_74007_a(final String par1Str, final int par2, final int par3)
     {
         if (par1Str != null)
         {
-            int k = par2 + 12;
-            int l = par3 - 12;
-            int i1 = this.fontRenderer.getStringWidth(par1Str);
+            final int k = par2 + 12;
+            final int l = par3 - 12;
+            final int i1 = this.fontRenderer.getStringWidth(par1Str);
             this.drawGradientRect(k - 3, l - 3, k + i1 + 3, l + 8 + 3, -1073741824, -1073741824);
             this.fontRenderer.drawStringWithShadow(par1Str, k, l, -1);
         }
     }
 
-    static ServerList getInternetServerList(GuiMultiplayer par0GuiMultiplayer)
+    static ServerList getInternetServerList(final GuiMultiplayer par0GuiMultiplayer)
     {
         return par0GuiMultiplayer.internetServerList;
     }
 
-    static List getListOfLanServers(GuiMultiplayer par0GuiMultiplayer)
+    static List getListOfLanServers(final GuiMultiplayer par0GuiMultiplayer)
     {
         return par0GuiMultiplayer.listofLanServers;
     }
 
-    static int getSelectedServer(GuiMultiplayer par0GuiMultiplayer)
+    static int getSelectedServer(final GuiMultiplayer par0GuiMultiplayer)
     {
         return par0GuiMultiplayer.selectedServer;
     }
 
-    static int getAndSetSelectedServer(GuiMultiplayer par0GuiMultiplayer, int par1)
+    static int getAndSetSelectedServer(final GuiMultiplayer par0GuiMultiplayer, final int par1)
     {
         return par0GuiMultiplayer.selectedServer = par1;
     }
@@ -547,7 +548,7 @@ public class GuiMultiplayer extends GuiScreen
     /**
      * Return buttonSelect GuiButton
      */
-    static GuiButton getButtonSelect(GuiMultiplayer par0GuiMultiplayer)
+    static GuiButton getButtonSelect(final GuiMultiplayer par0GuiMultiplayer)
     {
         return par0GuiMultiplayer.buttonSelect;
     }
@@ -555,7 +556,7 @@ public class GuiMultiplayer extends GuiScreen
     /**
      * Return buttonEdit GuiButton
      */
-    static GuiButton getButtonEdit(GuiMultiplayer par0GuiMultiplayer)
+    static GuiButton getButtonEdit(final GuiMultiplayer par0GuiMultiplayer)
     {
         return par0GuiMultiplayer.field_96289_p;
     }
@@ -563,17 +564,17 @@ public class GuiMultiplayer extends GuiScreen
     /**
      * Return buttonDelete GuiButton
      */
-    static GuiButton getButtonDelete(GuiMultiplayer par0GuiMultiplayer)
+    static GuiButton getButtonDelete(final GuiMultiplayer par0GuiMultiplayer)
     {
         return par0GuiMultiplayer.buttonDelete;
     }
 
-    static void func_74008_b(GuiMultiplayer par0GuiMultiplayer, int par1)
+    static void func_74008_b(final GuiMultiplayer par0GuiMultiplayer, final int par1)
     {
         par0GuiMultiplayer.joinServer(par1);
     }
 
-    static int getTicksOpened(GuiMultiplayer par0GuiMultiplayer)
+    static int getTicksOpened(final GuiMultiplayer par0GuiMultiplayer)
     {
         return par0GuiMultiplayer.ticksOpened;
     }
@@ -596,7 +597,7 @@ public class GuiMultiplayer extends GuiScreen
         return threadsPending++;
     }
 
-    static void func_82291_a(ServerData par0ServerData) throws IOException
+    static void func_82291_a(final ServerData par0ServerData) throws IOException
     {
         func_74017_b(par0ServerData);
     }
@@ -606,7 +607,7 @@ public class GuiMultiplayer extends GuiScreen
         return threadsPending--;
     }
 
-    static String getAndSetLagTooltip(GuiMultiplayer par0GuiMultiplayer, String par1Str)
+    static String getAndSetLagTooltip(final GuiMultiplayer par0GuiMultiplayer, final String par1Str)
     {
         return par0GuiMultiplayer.lagTooltip = par1Str;
     }

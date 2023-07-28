@@ -41,7 +41,7 @@ public class EntityFallingSand extends Entity
     private float fallHurtAmount;
     public NBTTagCompound fallingBlockTileEntityData;
 
-    public EntityFallingSand(World par1World)
+    public EntityFallingSand(final World par1World)
     {
         super(par1World);
         this.shouldDropItem = true;
@@ -49,12 +49,12 @@ public class EntityFallingSand extends Entity
         this.fallHurtAmount = 2.0F;
     }
 
-    public EntityFallingSand(World par1World, double par2, double par4, double par6, int par8)
+    public EntityFallingSand(final World par1World, final double par2, final double par4, final double par6, final int par8)
     {
         this(par1World, par2, par4, par6, par8, 0);
     }
 
-    public EntityFallingSand(World par1World, double par2, double par4, double par6, int par8, int par9)
+    public EntityFallingSand(final World par1World, final double par2, final double par4, final double par6, final int par8, final int par9)
     {
         super(par1World);
         this.shouldDropItem = true;
@@ -116,9 +116,9 @@ public class EntityFallingSand extends Entity
 
             if (!this.worldObj.isRemote)
             {
-                int i = MathHelper.floor_double(this.posX);
-                int j = MathHelper.floor_double(this.posY);
-                int k = MathHelper.floor_double(this.posZ);
+                final int i = MathHelper.floor_double(this.posX);
+                final int j = MathHelper.floor_double(this.posY);
+                final int k = MathHelper.floor_double(this.posZ);
 
                 if (this.fallTime == 1)
                 {
@@ -162,17 +162,17 @@ public class EntityFallingSand extends Entity
 
                             if (this.fallingBlockTileEntityData != null && Block.blocksList[this.blockID] instanceof ITileEntityProvider)
                             {
-                                TileEntity tileentity = this.worldObj.getBlockTileEntity(i, j, k);
+                                final TileEntity tileentity = this.worldObj.getBlockTileEntity(i, j, k);
 
                                 if (tileentity != null)
                                 {
-                                    NBTTagCompound nbttagcompound = new NBTTagCompound();
+                                    final NBTTagCompound nbttagcompound = new NBTTagCompound();
                                     tileentity.writeToNBT(nbttagcompound);
-                                    Iterator iterator = this.fallingBlockTileEntityData.getTags().iterator();
+                                    final Iterator iterator = this.fallingBlockTileEntityData.getTags().iterator();
 
                                     while (iterator.hasNext())
                                     {
-                                        NBTBase nbtbase = (NBTBase)iterator.next();
+                                        final NBTBase nbtbase = (NBTBase)iterator.next();
 
                                         if (!nbtbase.getName().equals("x") && !nbtbase.getName().equals("y") && !nbtbase.getName().equals("z"))
                                         {
@@ -207,24 +207,24 @@ public class EntityFallingSand extends Entity
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float par1)
+    protected void fall(final float par1)
     {
         if (this.isAnvil)
         {
-            int i = MathHelper.ceiling_float_int(par1 - 1.0F);
+            final int i = MathHelper.ceiling_float_int(par1 - 1.0F);
 
             if (i > 0)
             {
-                ArrayList arraylist = new ArrayList(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox));
-                DamageSource damagesource = this.blockID == Block.anvil.blockID ? DamageSource.anvil : DamageSource.fallingBlock;
-                Iterator iterator = arraylist.iterator();
+                final ArrayList arraylist = new ArrayList(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox));
+                final DamageSource damagesource = this.blockID == Block.anvil.blockID ? DamageSource.anvil : DamageSource.fallingBlock;
+                final Iterator iterator = arraylist.iterator();
 
                 while (iterator.hasNext())
                 {
-                    Entity entity = (Entity)iterator.next();
+                    final Entity entity = (Entity)iterator.next();
                     // CraftBukkit start
-                    float damage = (float) Math.min(MathHelper.floor_float((float) i * this.fallHurtAmount), this.fallHurtMax);
-                    EntityDamageEvent event = CraftEventFactory.callEntityDamageEvent(this, entity, EntityDamageEvent.DamageCause.FALLING_BLOCK, damage);
+                    final float damage = (float) Math.min(MathHelper.floor_float((float) i * this.fallHurtAmount), this.fallHurtMax);
+                    final EntityDamageEvent event = CraftEventFactory.callEntityDamageEvent(this, entity, EntityDamageEvent.DamageCause.FALLING_BLOCK, damage);
 
                     if (event.isCancelled())
                     {
@@ -238,7 +238,7 @@ public class EntityFallingSand extends Entity
                 if (this.blockID == Block.anvil.blockID && (double)this.rand.nextFloat() < 0.05000000074505806D + (double)i * 0.05D)
                 {
                     int j = this.metadata >> 2;
-                    int k = this.metadata & 3;
+                    final int k = this.metadata & 3;
                     ++j;
 
                     if (j > 2)
@@ -257,7 +257,7 @@ public class EntityFallingSand extends Entity
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    protected void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    protected void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         par1NBTTagCompound.setByte("Tile", (byte)this.blockID);
         par1NBTTagCompound.setInteger("TileID", this.blockID);
@@ -277,7 +277,7 @@ public class EntityFallingSand extends Entity
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    protected void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    protected void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         if (par1NBTTagCompound.hasKey("TileID"))
         {
@@ -324,12 +324,12 @@ public class EntityFallingSand extends Entity
         }
     }
 
-    public void setIsAnvil(boolean par1)
+    public void setIsAnvil(final boolean par1)
     {
         this.isAnvil = par1;
     }
 
-    public void addEntityCrashInfo(CrashReportCategory par1CrashReportCategory)
+    public void addEntityCrashInfo(final CrashReportCategory par1CrashReportCategory)
     {
         super.addEntityCrashInfo(par1CrashReportCategory);
         par1CrashReportCategory.addCrashSection("Immitating block ID", Integer.valueOf(this.blockID));

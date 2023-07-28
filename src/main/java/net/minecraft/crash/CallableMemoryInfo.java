@@ -7,7 +7,7 @@ class CallableMemoryInfo implements Callable
     /** Reference to the CrashReport object. */
     final CrashReport theCrashReport;
 
-    CallableMemoryInfo(CrashReport par1CrashReport)
+    CallableMemoryInfo(final CrashReport par1CrashReport)
     {
         this.theCrashReport = par1CrashReport;
     }
@@ -18,13 +18,13 @@ class CallableMemoryInfo implements Callable
      */
     public String getMemoryInfoAsString()
     {
-        Runtime runtime = Runtime.getRuntime();
-        long i = runtime.maxMemory();
-        long j = runtime.totalMemory();
-        long k = runtime.freeMemory();
-        long l = i / 1024L / 1024L;
-        long i1 = j / 1024L / 1024L;
-        long j1 = k / 1024L / 1024L;
+        final Runtime runtime = Runtime.getRuntime();
+        final long i = runtime.maxMemory();
+        final long j = runtime.totalMemory();
+        final long k = runtime.freeMemory();
+        final long l = i / 1024L / 1024L;
+        final long i1 = j / 1024L / 1024L;
+        final long j1 = k / 1024L / 1024L;
         return k + " bytes (" + j1 + " MB) / " + j + " bytes (" + i1 + " MB) up to " + i + " bytes (" + l + " MB)";
     }
 

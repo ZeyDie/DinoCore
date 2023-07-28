@@ -17,7 +17,7 @@ public class EnderChest extends DirectionalContainer {
      *
      * @param direction the direction the ender chest's lid opens towards
      */
-    public EnderChest(BlockFace direction) {
+    public EnderChest(final BlockFace direction) {
         this();
         setFacingDirection(direction);
     }

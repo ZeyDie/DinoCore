@@ -10,7 +10,7 @@ public final class ThreadDedicatedServer extends Thread
 {
     final DedicatedServer field_96244_a;
 
-    public ThreadDedicatedServer(DedicatedServer par1DedicatedServer)
+    public ThreadDedicatedServer(final DedicatedServer par1DedicatedServer)
     {
         this.field_96244_a = par1DedicatedServer;
     }
@@ -21,7 +21,7 @@ public final class ThreadDedicatedServer extends Thread
         {
             this.field_96244_a.stopServer();
         }
-        catch (MinecraftException e)
+        catch (final MinecraftException e)
         {
             // TODO Auto-generated catch block
             e.printStackTrace();

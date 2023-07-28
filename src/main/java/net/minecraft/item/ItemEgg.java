@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 
 public class ItemEgg extends Item
 {
-    public ItemEgg(int par1)
+    public ItemEgg(final int par1)
     {
         super(par1);
         this.maxStackSize = 16;
@@ -17,7 +17,7 @@ public class ItemEgg extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         if (!par3EntityPlayer.capabilities.isCreativeMode)
         {

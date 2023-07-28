@@ -22,26 +22,26 @@ public class BlockFluidClassic extends BlockFluidBase
 
     protected FluidStack stack;
 
-    public BlockFluidClassic(int id, Fluid fluid, Material material)
+    public BlockFluidClassic(final int id, final Fluid fluid, final Material material)
     {
         super(id, fluid, material);
         stack = new FluidStack(fluid, FluidContainerRegistry.BUCKET_VOLUME);
     }
 
-    public BlockFluidClassic setFluidStack(FluidStack stack)
+    public BlockFluidClassic setFluidStack(final FluidStack stack)
     {
         this.stack = stack;
         return this;
     }
 
-    public BlockFluidClassic setFluidStackAmount(int amount)
+    public BlockFluidClassic setFluidStackAmount(final int amount)
     {
         this.stack.amount = amount;
         return this;
     }
 
     @Override
-    public int getQuantaValue(IBlockAccess world, int x, int y, int z)
+    public int getQuantaValue(final IBlockAccess world, final int x, final int y, final int z)
     {
         if (world.getBlockId(x, y, z) == 0)
         {
@@ -53,12 +53,12 @@ public class BlockFluidClassic extends BlockFluidBase
             return -1;
         }
 
-        int quantaRemaining = quantaPerBlock - world.getBlockMetadata(x, y, z);
+        final int quantaRemaining = quantaPerBlock - world.getBlockMetadata(x, y, z);
         return quantaRemaining;
     }
 
     @Override
-    public boolean canCollideCheck(int meta, boolean fullHit)
+    public boolean canCollideCheck(final int meta, final boolean fullHit)
     {
         return fullHit && meta == 0;
     }
@@ -70,18 +70,18 @@ public class BlockFluidClassic extends BlockFluidBase
     }
 
     @Override
-    public int getLightValue(IBlockAccess world, int x, int y, int z)
+    public int getLightValue(final IBlockAccess world, final int x, final int y, final int z)
     {
         if (maxScaledLight == 0)
         {
             return super.getLightValue(world, x, y, z);
         }
-        int data = quantaPerBlock - world.getBlockMetadata(x, y, z) - 1;
+        final int data = quantaPerBlock - world.getBlockMetadata(x, y, z) - 1;
         return (int) (data / quantaPerBlockFloat * maxScaledLight);
     }
 
     @Override
-    public void updateTick(World world, int x, int y, int z, Random rand)
+    public void updateTick(final World world, final int x, final int y, final int z, final Random rand)
     {
         int quantaRemaining = quantaPerBlock - world.getBlockMetadata(x, y, z);
         int expQuanta = -101;
@@ -89,7 +89,7 @@ public class BlockFluidClassic extends BlockFluidBase
         // check adjacent block levels if non-source
         if (quantaRemaining < quantaPerBlock)
         {
-            int y2 = y - densityDir;
+            final int y2 = y - densityDir;
 
             if (world.getBlockId(x,     y2, z    ) == blockID ||
                 world.getBlockId(x - 1, y2, z    ) == blockID ||
@@ -153,7 +153,7 @@ public class BlockFluidClassic extends BlockFluidBase
             {
                 flowMeta = 1;
             }
-            boolean flowTo[] = getOptimalFlowDirections(world, x, y, z);
+            final boolean[] flowTo = getOptimalFlowDirections(world, x, y, z);
 
             if (flowTo[0]) flowIntoBlock(world, x - 1, y, z,     flowMeta);
             if (flowTo[1]) flowIntoBlock(world, x + 1, y, z,     flowMeta);
@@ -162,25 +162,25 @@ public class BlockFluidClassic extends BlockFluidBase
         }
     }
 
-    public boolean isFlowingVertically(IBlockAccess world, int x, int y, int z)
+    public boolean isFlowingVertically(final IBlockAccess world, final int x, final int y, final int z)
     {
         return world.getBlockId(x, y + densityDir, z) == blockID ||
             (world.getBlockId(x, y, z) == blockID && canFlowInto(world, x, y + densityDir, z));
     }
 
-    public boolean isSourceBlock(IBlockAccess world, int x, int y, int z)
+    public boolean isSourceBlock(final IBlockAccess world, final int x, final int y, final int z)
     {
         return world.getBlockId(x, y, z) == blockID && world.getBlockMetadata(x, y, z) == 0;
     }
 
-    protected boolean[] getOptimalFlowDirections(World world, int x, int y, int z)
+    protected boolean[] getOptimalFlowDirections(final World world, final int x, final int y, final int z)
     {
         for (int side = 0; side < 4; side++)
         {
             flowCost[side] = 1000;
 
             int x2 = x;
-            int y2 = y;
+            final int y2 = y;
             int z2 = z;
 
             switch (side)
@@ -221,7 +221,7 @@ public class BlockFluidClassic extends BlockFluidBase
         return isOptimalFlowDirection;
     }
 
-    protected int calculateFlowCost(World world, int x, int y, int z, int recurseDepth, int side)
+    protected int calculateFlowCost(final World world, final int x, final int y, final int z, final int recurseDepth, final int side)
     {
         int cost = 1000;
         for (int adjSide = 0; adjSide < 4; adjSide++)
@@ -235,7 +235,7 @@ public class BlockFluidClassic extends BlockFluidBase
             }
 
             int x2 = x;
-            int y2 = y;
+            final int y2 = y;
             int z2 = z;
 
             switch (adjSide)
@@ -261,7 +261,7 @@ public class BlockFluidClassic extends BlockFluidBase
                 continue;
             }
 
-            int min = calculateFlowCost(world, x2, y2, z2, recurseDepth + 1, adjSide);
+            final int min = calculateFlowCost(world, x2, y2, z2, recurseDepth + 1, adjSide);
             if (min < cost)
             {
                 cost = min;
@@ -270,7 +270,7 @@ public class BlockFluidClassic extends BlockFluidBase
         return cost;
     }
 
-    protected void flowIntoBlock(World world, int x, int y, int z, int meta)
+    protected void flowIntoBlock(final World world, final int x, final int y, final int z, final int meta)
     {
         if (meta < 0) return;
         if (displaceIfPossible(world, x, y, z))
@@ -279,11 +279,11 @@ public class BlockFluidClassic extends BlockFluidBase
         }
     }
 
-    protected boolean canFlowInto(IBlockAccess world, int x, int y, int z)
+    protected boolean canFlowInto(final IBlockAccess world, final int x, final int y, final int z)
     {
         if (world.isAirBlock(x, y, z)) return true;
 
-        int bId = world.getBlockId(x, y, z);
+        final int bId = world.getBlockId(x, y, z);
         if (bId == blockID)
         {
             return true;
@@ -294,7 +294,7 @@ public class BlockFluidClassic extends BlockFluidBase
             return displacementIds.get(bId);
         }
 
-        Material material = Block.blocksList[bId].blockMaterial;
+        final Material material = Block.blocksList[bId].blockMaterial;
         if (material.blocksMovement()  ||
             material == Material.water ||
             material == Material.lava  ||
@@ -303,7 +303,7 @@ public class BlockFluidClassic extends BlockFluidBase
             return false;
         }
 
-        int density = getDensity(world, x, y, z);
+        final int density = getDensity(world, x, y, z);
         if (density == Integer.MAX_VALUE) 
         {
              return true;
@@ -319,9 +319,9 @@ public class BlockFluidClassic extends BlockFluidBase
         }
     }
 
-    protected int getLargerQuanta(IBlockAccess world, int x, int y, int z, int compare)
+    protected int getLargerQuanta(final IBlockAccess world, final int x, final int y, final int z, final int compare)
     {
-        int quantaRemaining = getQuantaValue(world, x, y, z);
+        final int quantaRemaining = getQuantaValue(world, x, y, z);
         if (quantaRemaining <= 0)
         {
             return compare;
@@ -331,7 +331,7 @@ public class BlockFluidClassic extends BlockFluidBase
 
     /* IFluidBlock */
     @Override
-    public FluidStack drain(World world, int x, int y, int z, boolean doDrain)
+    public FluidStack drain(final World world, final int x, final int y, final int z, final boolean doDrain)
     {
         if (!isSourceBlock(world, x, y, z))
         {
@@ -347,7 +347,7 @@ public class BlockFluidClassic extends BlockFluidBase
     }
 
     @Override
-    public boolean canDrain(World world, int x, int y, int z)
+    public boolean canDrain(final World world, final int x, final int y, final int z)
     {
         return isSourceBlock(world, x, y, z);
     }

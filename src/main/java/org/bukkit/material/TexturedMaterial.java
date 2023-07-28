@@ -9,7 +9,7 @@ import java.util.List;
  */
 public abstract class TexturedMaterial extends MaterialData {
 
-    public TexturedMaterial(Material m) {
+    public TexturedMaterial(final Material m) {
         super(m);
     }
 
@@ -18,7 +18,7 @@ public abstract class TexturedMaterial extends MaterialData {
      * @deprecated Magic value
      */
     @Deprecated
-    public TexturedMaterial(int type) {
+    public TexturedMaterial(final int type) {
         super(type);
     }
 
@@ -67,7 +67,7 @@ public abstract class TexturedMaterial extends MaterialData {
      * @param material
      *            New material of this block
      */
-    public void setMaterial(Material material) {
+    public void setMaterial(final Material material) {
         if (getTextures().contains(material)) {
             setTextureIndex(getTextures().indexOf(material));
         } else {
@@ -93,7 +93,7 @@ public abstract class TexturedMaterial extends MaterialData {
      * @deprecated Magic value
      */
     @Deprecated
-    protected void setTextureIndex(int idx) {
+    protected void setTextureIndex(final int idx) {
         setData((byte) idx); // Defult to using all bits - override for other mappings
     }
 

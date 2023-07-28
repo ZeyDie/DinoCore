@@ -25,7 +25,7 @@ public class ChatMessageComponent
 
     public ChatMessageComponent() {}
 
-    public ChatMessageComponent(ChatMessageComponent par1ChatMessageComponent)
+    public ChatMessageComponent(final ChatMessageComponent par1ChatMessageComponent)
     {
         this.color = par1ChatMessageComponent.color;
         this.bold = par1ChatMessageComponent.bold;
@@ -37,7 +37,7 @@ public class ChatMessageComponent
         this.field_111091_i = par1ChatMessageComponent.field_111091_i == null ? null : Lists.newArrayList(par1ChatMessageComponent.field_111091_i);
     }
 
-    public ChatMessageComponent setColor(EnumChatFormatting par1EnumChatFormatting)
+    public ChatMessageComponent setColor(final EnumChatFormatting par1EnumChatFormatting)
     {
         if (par1EnumChatFormatting != null && !par1EnumChatFormatting.isColor())
         {
@@ -55,7 +55,7 @@ public class ChatMessageComponent
         return this.color;
     }
 
-    public ChatMessageComponent setBold(Boolean par1)
+    public ChatMessageComponent setBold(final Boolean par1)
     {
         this.bold = par1;
         return this;
@@ -66,7 +66,7 @@ public class ChatMessageComponent
         return this.bold;
     }
 
-    public ChatMessageComponent setItalic(Boolean par1)
+    public ChatMessageComponent setItalic(final Boolean par1)
     {
         this.italic = par1;
         return this;
@@ -77,7 +77,7 @@ public class ChatMessageComponent
         return this.italic;
     }
 
-    public ChatMessageComponent setUnderline(Boolean par1)
+    public ChatMessageComponent setUnderline(final Boolean par1)
     {
         this.underline = par1;
         return this;
@@ -88,7 +88,7 @@ public class ChatMessageComponent
         return this.underline;
     }
 
-    public ChatMessageComponent setObfuscated(Boolean par1)
+    public ChatMessageComponent setObfuscated(final Boolean par1)
     {
         this.obfuscated = par1;
         return this;
@@ -114,7 +114,7 @@ public class ChatMessageComponent
         return this.field_111091_i;
     }
 
-    public ChatMessageComponent appendComponent(ChatMessageComponent par1ChatMessageComponent)
+    public ChatMessageComponent appendComponent(final ChatMessageComponent par1ChatMessageComponent)
     {
         if (this.text == null && this.translationKey == null)
         {
@@ -137,7 +137,7 @@ public class ChatMessageComponent
         return this;
     }
 
-    public ChatMessageComponent addText(String par1Str)
+    public ChatMessageComponent addText(final String par1Str)
     {
         if (this.text == null && this.translationKey == null)
         {
@@ -163,7 +163,7 @@ public class ChatMessageComponent
     /**
      * Appends a translated string.
      */
-    public ChatMessageComponent addKey(String par1Str)
+    public ChatMessageComponent addKey(final String par1Str)
     {
         if (this.text == null && this.translationKey == null)
         {
@@ -190,7 +190,7 @@ public class ChatMessageComponent
      * Appends a formatted translation key. Args: key, params. The text ultimately displayed is
      * String.format(translate(key), params)
      */
-    public ChatMessageComponent addFormatted(String par1Str, Object ... par2ArrayOfObj)
+    public ChatMessageComponent addFormatted(final String par1Str, final Object ... par2ArrayOfObj)
     {
         if (this.text == null && this.translationKey == null)
         {
@@ -202,12 +202,12 @@ public class ChatMessageComponent
             {
                 this.translationKey = par1Str;
                 this.field_111091_i = Lists.newArrayList();
-                Object[] aobject = par2ArrayOfObj;
-                int i = par2ArrayOfObj.length;
+                final Object[] aobject = par2ArrayOfObj;
+                final int i = par2ArrayOfObj.length;
 
                 for (int j = 0; j < i; ++j)
                 {
-                    Object object1 = aobject[j];
+                    final Object object1 = aobject[j];
 
                     if (object1 instanceof ChatMessageComponent)
                     {
@@ -235,7 +235,7 @@ public class ChatMessageComponent
         return this.toStringWithFormatting(false);
     }
 
-    public String toStringWithFormatting(boolean par1)
+    public String toStringWithFormatting(final boolean par1)
     {
         return this.toStringWithDefaultFormatting(par1, (EnumChatFormatting)null, false, false, false, false);
     }
@@ -243,14 +243,14 @@ public class ChatMessageComponent
     /**
      * args: enableFormat, defaultColor, defaultBold, defaultItalic, defaultUnderline, defaultObfuscated
      */
-    public String toStringWithDefaultFormatting(boolean par1, EnumChatFormatting par2EnumChatFormatting, boolean par3, boolean par4, boolean par5, boolean par6)
+    public String toStringWithDefaultFormatting(final boolean par1, final EnumChatFormatting par2EnumChatFormatting, final boolean par3, final boolean par4, final boolean par5, final boolean par6)
     {
-        StringBuilder stringbuilder = new StringBuilder();
-        EnumChatFormatting enumchatformatting1 = this.color == null ? par2EnumChatFormatting : this.color;
-        boolean flag5 = this.bold == null ? par3 : this.bold.booleanValue();
-        boolean flag6 = this.italic == null ? par4 : this.italic.booleanValue();
-        boolean flag7 = this.underline == null ? par5 : this.underline.booleanValue();
-        boolean flag8 = this.obfuscated == null ? par6 : this.obfuscated.booleanValue();
+        final StringBuilder stringbuilder = new StringBuilder();
+        final EnumChatFormatting enumchatformatting1 = this.color == null ? par2EnumChatFormatting : this.color;
+        final boolean flag5 = this.bold == null ? par3 : this.bold.booleanValue();
+        final boolean flag6 = this.italic == null ? par4 : this.italic.booleanValue();
+        final boolean flag7 = this.underline == null ? par5 : this.underline.booleanValue();
+        final boolean flag8 = this.obfuscated == null ? par6 : this.obfuscated.booleanValue();
 
         if (this.translationKey != null)
         {
@@ -261,7 +261,7 @@ public class ChatMessageComponent
 
             if (this.field_111091_i != null)
             {
-                String[] astring = new String[this.field_111091_i.size()];
+                final String[] astring = new String[this.field_111091_i.size()];
 
                 for (int i = 0; i < this.field_111091_i.size(); ++i)
                 {
@@ -290,7 +290,7 @@ public class ChatMessageComponent
 
             if (this.field_111091_i != null)
             {
-                for (Iterator iterator = this.field_111091_i.iterator(); iterator.hasNext(); stringbuilder.append(chatmessagecomponent.toStringWithDefaultFormatting(par1, enumchatformatting1, flag5, flag6, flag7, flag8)))
+                for (final Iterator iterator = this.field_111091_i.iterator(); iterator.hasNext(); stringbuilder.append(chatmessagecomponent.toStringWithDefaultFormatting(par1, enumchatformatting1, flag5, flag6, flag7, flag8)))
                 {
                     chatmessagecomponent = (ChatMessageComponent)iterator.next();
 
@@ -305,7 +305,7 @@ public class ChatMessageComponent
         return stringbuilder.toString();
     }
 
-    private static void appendFormattingToString(StringBuilder par0StringBuilder, EnumChatFormatting par1EnumChatFormatting, boolean par2, boolean par3, boolean par4, boolean par5)
+    private static void appendFormattingToString(final StringBuilder par0StringBuilder, final EnumChatFormatting par1EnumChatFormatting, final boolean par2, final boolean par3, final boolean par4, final boolean par5)
     {
         if (par1EnumChatFormatting != null)
         {
@@ -338,38 +338,38 @@ public class ChatMessageComponent
     }
 
     @SideOnly(Side.CLIENT)
-    public static ChatMessageComponent createFromJson(String par0Str)
+    public static ChatMessageComponent createFromJson(final String par0Str)
     {
         try
         {
             return (ChatMessageComponent)field_111089_a.fromJson(par0Str, ChatMessageComponent.class);
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
-            CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Deserializing Message");
-            CrashReportCategory crashreportcategory = crashreport.makeCategory("Serialized Message");
+            final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Deserializing Message");
+            final CrashReportCategory crashreportcategory = crashreport.makeCategory("Serialized Message");
             crashreportcategory.addCrashSection("JSON string", par0Str);
             throw new ReportedException(crashreport);
         }
     }
 
-    public static ChatMessageComponent createFromText(String par0Str)
+    public static ChatMessageComponent createFromText(final String par0Str)
     {
-        ChatMessageComponent chatmessagecomponent = new ChatMessageComponent();
+        final ChatMessageComponent chatmessagecomponent = new ChatMessageComponent();
         chatmessagecomponent.addText(par0Str);
         return chatmessagecomponent;
     }
 
-    public static ChatMessageComponent createFromTranslationKey(String par0Str)
+    public static ChatMessageComponent createFromTranslationKey(final String par0Str)
     {
-        ChatMessageComponent chatmessagecomponent = new ChatMessageComponent();
+        final ChatMessageComponent chatmessagecomponent = new ChatMessageComponent();
         chatmessagecomponent.addKey(par0Str);
         return chatmessagecomponent;
     }
 
-    public static ChatMessageComponent createFromTranslationWithSubstitutions(String par0Str, Object ... par1ArrayOfObj)
+    public static ChatMessageComponent createFromTranslationWithSubstitutions(final String par0Str, final Object ... par1ArrayOfObj)
     {
-        ChatMessageComponent chatmessagecomponent = new ChatMessageComponent();
+        final ChatMessageComponent chatmessagecomponent = new ChatMessageComponent();
         chatmessagecomponent.addFormatted(par0Str, par1ArrayOfObj);
         return chatmessagecomponent;
     }

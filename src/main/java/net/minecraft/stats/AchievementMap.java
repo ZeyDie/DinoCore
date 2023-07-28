@@ -17,19 +17,19 @@ public class AchievementMap
     {
         try
         {
-            BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(AchievementMap.class.getResourceAsStream("/achievement/map.txt")));
+            final BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(AchievementMap.class.getResourceAsStream("/achievement/map.txt")));
             String s;
 
             while ((s = bufferedreader.readLine()) != null)
             {
-                String[] astring = s.split(",");
-                int i = Integer.parseInt(astring[0]);
+                final String[] astring = s.split(",");
+                final int i = Integer.parseInt(astring[0]);
                 this.guidMap.put(Integer.valueOf(i), astring[1]);
             }
 
             bufferedreader.close();
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             exception.printStackTrace();
         }
@@ -38,7 +38,7 @@ public class AchievementMap
     /**
      * Returns the unique GUID of a achievement id.
      */
-    public static String getGuid(int par0)
+    public static String getGuid(final int par0)
     {
         return (String)instance.guidMap.get(Integer.valueOf(par0));
     }

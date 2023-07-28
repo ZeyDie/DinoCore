@@ -24,7 +24,7 @@ public class WeatherCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length == 0) {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
@@ -36,7 +36,7 @@ public class WeatherCommand extends VanillaCommand {
             duration = getInteger(sender, args[1], 1, 1000000) * 20;
         }
 
-        World world = Bukkit.getWorlds().get(0);
+        final World world = Bukkit.getWorlds().get(0);
 
         world.setWeatherDuration(duration);
         world.setThunderDuration(duration);
@@ -59,7 +59,7 @@ public class WeatherCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");

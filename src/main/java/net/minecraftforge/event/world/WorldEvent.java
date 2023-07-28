@@ -13,24 +13,24 @@ public class WorldEvent extends Event
 {
     public final World world;
 
-    public WorldEvent(World world)
+    public WorldEvent(final World world)
     {
         this.world = world;
     }
 
     public static class Load extends WorldEvent
     {
-        public Load(World world) { super(world); }
+        public Load(final World world) { super(world); }
     }
 
     public static class Unload extends WorldEvent
     {
-        public Unload(World world) { super(world); }
+        public Unload(final World world) { super(world); }
     }
 
     public static class Save extends WorldEvent
     {
-        public Save(World world) { super(world); }
+        public Save(final World world) { super(world); }
     }
 
     /**
@@ -46,7 +46,7 @@ public class WorldEvent extends Event
         public final int z;
         public final List<SpawnListEntry> list;
 
-        public PotentialSpawns(World world, EnumCreatureType type, int x, int y, int z, List oldList)
+        public PotentialSpawns(final World world, final EnumCreatureType type, final int x, final int y, final int z, final List oldList)
         {
             super(world);
             this.x = x;

@@ -33,41 +33,44 @@ public class ModelBox
     public final float posZ2;
     public String field_78247_g;
 
-    public ModelBox(ModelRenderer par1ModelRenderer, int par2, int par3, float par4, float par5, float par6, int par7, int par8, int par9, float par10)
+    public ModelBox(final ModelRenderer par1ModelRenderer, final int par2, final int par3, float par4, float par5, float par6, final int par7, final int par8, final int par9, final float par10)
     {
-        this.posX1 = par4;
-        this.posY1 = par5;
-        this.posZ1 = par6;
-        this.posX2 = par4 + (float)par7;
-        this.posY2 = par5 + (float)par8;
-        this.posZ2 = par6 + (float)par9;
+        float par51 = par5;
+        float par61 = par6;
+        float par41 = par4;
+        this.posX1 = par41;
+        this.posY1 = par51;
+        this.posZ1 = par61;
+        this.posX2 = par41 + (float)par7;
+        this.posY2 = par51 + (float)par8;
+        this.posZ2 = par61 + (float)par9;
         this.vertexPositions = new PositionTextureVertex[8];
         this.quadList = new TexturedQuad[6];
-        float f4 = par4 + (float)par7;
-        float f5 = par5 + (float)par8;
-        float f6 = par6 + (float)par9;
-        par4 -= par10;
-        par5 -= par10;
-        par6 -= par10;
+        float f4 = par41 + (float)par7;
+        float f5 = par51 + (float)par8;
+        float f6 = par61 + (float)par9;
+        par41 -= par10;
+        par51 -= par10;
+        par61 -= par10;
         f4 += par10;
         f5 += par10;
         f6 += par10;
 
         if (par1ModelRenderer.mirror)
         {
-            float f7 = f4;
-            f4 = par4;
-            par4 = f7;
+            final float f7 = f4;
+            f4 = par41;
+            par41 = f7;
         }
 
-        PositionTextureVertex positiontexturevertex = new PositionTextureVertex(par4, par5, par6, 0.0F, 0.0F);
-        PositionTextureVertex positiontexturevertex1 = new PositionTextureVertex(f4, par5, par6, 0.0F, 8.0F);
-        PositionTextureVertex positiontexturevertex2 = new PositionTextureVertex(f4, f5, par6, 8.0F, 8.0F);
-        PositionTextureVertex positiontexturevertex3 = new PositionTextureVertex(par4, f5, par6, 8.0F, 0.0F);
-        PositionTextureVertex positiontexturevertex4 = new PositionTextureVertex(par4, par5, f6, 0.0F, 0.0F);
-        PositionTextureVertex positiontexturevertex5 = new PositionTextureVertex(f4, par5, f6, 0.0F, 8.0F);
-        PositionTextureVertex positiontexturevertex6 = new PositionTextureVertex(f4, f5, f6, 8.0F, 8.0F);
-        PositionTextureVertex positiontexturevertex7 = new PositionTextureVertex(par4, f5, f6, 8.0F, 0.0F);
+        final PositionTextureVertex positiontexturevertex = new PositionTextureVertex(par41, par51, par61, 0.0F, 0.0F);
+        final PositionTextureVertex positiontexturevertex1 = new PositionTextureVertex(f4, par51, par61, 0.0F, 8.0F);
+        final PositionTextureVertex positiontexturevertex2 = new PositionTextureVertex(f4, f5, par61, 8.0F, 8.0F);
+        final PositionTextureVertex positiontexturevertex3 = new PositionTextureVertex(par41, f5, par61, 8.0F, 0.0F);
+        final PositionTextureVertex positiontexturevertex4 = new PositionTextureVertex(par41, par51, f6, 0.0F, 0.0F);
+        final PositionTextureVertex positiontexturevertex5 = new PositionTextureVertex(f4, par51, f6, 0.0F, 8.0F);
+        final PositionTextureVertex positiontexturevertex6 = new PositionTextureVertex(f4, f5, f6, 8.0F, 8.0F);
+        final PositionTextureVertex positiontexturevertex7 = new PositionTextureVertex(par41, f5, f6, 8.0F, 0.0F);
         this.vertexPositions[0] = positiontexturevertex;
         this.vertexPositions[1] = positiontexturevertex1;
         this.vertexPositions[2] = positiontexturevertex2;
@@ -96,7 +99,7 @@ public class ModelBox
      * Draw the six sided box defined by this ModelBox
      */
     @SideOnly(Side.CLIENT)
-    public void render(Tessellator par1Tessellator, float par2)
+    public void render(final Tessellator par1Tessellator, final float par2)
     {
         for (int i = 0; i < this.quadList.length; ++i)
         {
@@ -104,7 +107,7 @@ public class ModelBox
         }
     }
 
-    public ModelBox func_78244_a(String par1Str)
+    public ModelBox func_78244_a(final String par1Str)
     {
         this.field_78247_g = par1Str;
         return this;

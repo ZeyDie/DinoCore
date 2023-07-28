@@ -24,28 +24,28 @@ public class GameModeCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length == 0) {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
 
-        String modeArg = args[0];
+        final String modeArg = args[0];
         String playerArg = sender.getName();
 
         if (args.length == 2) {
             playerArg = args[1];
         }
 
-        Player player = Bukkit.getPlayerExact(playerArg);
+        final Player player = Bukkit.getPlayerExact(playerArg);
 
         if (player != null) {
             int value = -1;
 
             try {
                 value = Integer.parseInt(modeArg);
-            } catch (NumberFormatException ex) {}
+            } catch (final NumberFormatException ex) {}
 
             GameMode mode = GameMode.getByValue(value);
 
@@ -82,7 +82,7 @@ public class GameModeCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");

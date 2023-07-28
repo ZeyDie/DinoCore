@@ -19,7 +19,7 @@ public class BlockDaylightDetector extends BlockContainer
 {
     private Icon[] iconArray = new Icon[2];
 
-    public BlockDaylightDetector(int par1)
+    public BlockDaylightDetector(final int par1)
     {
         super(par1, Material.wood);
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.375F, 1.0F);
@@ -29,7 +29,7 @@ public class BlockDaylightDetector extends BlockContainer
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.375F, 1.0F);
     }
@@ -39,7 +39,7 @@ public class BlockDaylightDetector extends BlockContainer
      * returns true, standard redstone propagation rules will apply instead and this will not be called. Args: World, X,
      * Y, Z, side. Note that the side is reversed - eg it is 1 (up) when checking the bottom of the block.
      */
-    public int isProvidingWeakPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public int isProvidingWeakPower(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
         return par1IBlockAccess.getBlockMetadata(par2, par3, par4);
     }
@@ -47,24 +47,24 @@ public class BlockDaylightDetector extends BlockContainer
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random) {}
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random) {}
 
     /**
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5) {}
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5) {}
 
     /**
      * Called whenever the block is added into the world. Args: world, x, y, z
      */
-    public void onBlockAdded(World par1World, int par2, int par3, int par4) {}
+    public void onBlockAdded(final World par1World, final int par2, final int par3, final int par4) {}
 
-    public void updateLightLevel(World par1World, int par2, int par3, int par4)
+    public void updateLightLevel(final World par1World, final int par2, final int par3, final int par4)
     {
         if (!par1World.provider.hasNoSky)
         {
-            int l = par1World.getBlockMetadata(par2, par3, par4);
+            final int l = par1World.getBlockMetadata(par2, par3, par4);
             int i1 = par1World.getSavedLightValue(EnumSkyBlock.Sky, par2, par3, par4) - par1World.skylightSubtracted;
             float f = par1World.getCelestialAngleRadians(1.0F);
 
@@ -74,7 +74,7 @@ public class BlockDaylightDetector extends BlockContainer
             }
             else
             {
-                f += (((float)Math.PI * 2F) - f) * 0.2F;
+                f += (((float)Math.PI * 2.0F) - f) * 0.2F;
             }
 
             i1 = Math.round((float)i1 * MathHelper.cos(f));
@@ -125,7 +125,7 @@ public class BlockDaylightDetector extends BlockContainer
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World par1World)
+    public TileEntity createNewTileEntity(final World par1World)
     {
         return new TileEntityDaylightDetector();
     }
@@ -135,7 +135,7 @@ public class BlockDaylightDetector extends BlockContainer
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
         return par1 == 1 ? this.iconArray[0] : this.iconArray[1];
     }
@@ -146,7 +146,7 @@ public class BlockDaylightDetector extends BlockContainer
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.iconArray[0] = par1IconRegister.registerIcon(this.getTextureName() + "_top");
         this.iconArray[1] = par1IconRegister.registerIcon(this.getTextureName() + "_side");

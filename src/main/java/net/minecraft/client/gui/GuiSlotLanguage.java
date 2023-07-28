@@ -20,17 +20,17 @@ class GuiSlotLanguage extends GuiSlot
 
     final GuiLanguage languageGui;
 
-    public GuiSlotLanguage(GuiLanguage par1GuiLanguage)
+    public GuiSlotLanguage(final GuiLanguage par1GuiLanguage)
     {
         super(par1GuiLanguage.mc, par1GuiLanguage.width, par1GuiLanguage.height, 32, par1GuiLanguage.height - 65 + 4, 18);
         this.languageGui = par1GuiLanguage;
         this.field_77251_g = Lists.newArrayList();
         this.field_77253_h = Maps.newHashMap();
-        Iterator iterator = GuiLanguage.func_135011_a(par1GuiLanguage).getLanguages().iterator();
+        final Iterator iterator = GuiLanguage.func_135011_a(par1GuiLanguage).getLanguages().iterator();
 
         while (iterator.hasNext())
         {
-            Language language = (Language)iterator.next();
+            final Language language = (Language)iterator.next();
             this.field_77253_h.put(language.getLanguageCode(), language);
             this.field_77251_g.add(language.getLanguageCode());
         }
@@ -47,9 +47,9 @@ class GuiSlotLanguage extends GuiSlot
     /**
      * the element in the slot that was clicked, boolean for wether it was double clicked or not
      */
-    protected void elementClicked(int par1, boolean par2)
+    protected void elementClicked(final int par1, final boolean par2)
     {
-        Language language = (Language)this.field_77253_h.get(this.field_77251_g.get(par1));
+        final Language language = (Language)this.field_77253_h.get(this.field_77251_g.get(par1));
         GuiLanguage.func_135011_a(this.languageGui).setCurrentLanguage(language);
         GuiLanguage.getGameSettings(this.languageGui).language = language.getLanguageCode();
         this.languageGui.mc.refreshResources();
@@ -62,7 +62,7 @@ class GuiSlotLanguage extends GuiSlot
     /**
      * returns true if the element passed in is currently selected
      */
-    protected boolean isSelected(int par1)
+    protected boolean isSelected(final int par1)
     {
         return ((String)this.field_77251_g.get(par1)).equals(GuiLanguage.func_135011_a(this.languageGui).getCurrentLanguage().getLanguageCode());
     }
@@ -80,7 +80,7 @@ class GuiSlotLanguage extends GuiSlot
         this.languageGui.drawDefaultBackground();
     }
 
-    protected void drawSlot(int par1, int par2, int par3, int par4, Tessellator par5Tessellator)
+    protected void drawSlot(final int par1, final int par2, final int par3, final int par4, final Tessellator par5Tessellator)
     {
         this.languageGui.fontRenderer.setBidiFlag(true);
         this.languageGui.drawCenteredString(this.languageGui.fontRenderer, ((Language)this.field_77253_h.get(this.field_77251_g.get(par1))).toString(), this.languageGui.width / 2, par3 + 1, 16777215);

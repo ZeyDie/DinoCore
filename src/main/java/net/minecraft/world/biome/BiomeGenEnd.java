@@ -7,7 +7,7 @@ import net.minecraft.entity.monster.EntityEnderman;
 
 public class BiomeGenEnd extends BiomeGenBase
 {
-    public BiomeGenEnd(int par1)
+    public BiomeGenEnd(final int par1)
     {
         super(par1);
         this.spawnableMonsterList.clear();
@@ -25,7 +25,7 @@ public class BiomeGenEnd extends BiomeGenBase
     /**
      * takes temperature, returns color
      */
-    public int getSkyColorByTemp(float par1)
+    public int getSkyColorByTemp(final float par1)
     {
         return 0;
     }

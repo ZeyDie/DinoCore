@@ -32,7 +32,7 @@ public class ModLoaderBlockRendererHandler implements ISimpleBlockRenderingHandl
      * @param mod
      *
      */
-    public ModLoaderBlockRendererHandler(int renderId, boolean render3dInInventory, BaseMod mod)
+    public ModLoaderBlockRendererHandler(final int renderId, final boolean render3dInInventory, final BaseMod mod)
     {
         this.renderId=renderId;
         this.render3dInInventory=render3dInInventory;
@@ -61,7 +61,7 @@ public class ModLoaderBlockRendererHandler implements ISimpleBlockRenderingHandl
      * @param renderer
      */
     @Override
-    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer)
+    public boolean renderWorldBlock(final IBlockAccess world, final int x, final int y, final int z, final Block block, final int modelId, final RenderBlocks renderer)
     {
         return mod.renderWorldBlock(renderer, world, x, y, z, block, modelId);
     }
@@ -73,7 +73,7 @@ public class ModLoaderBlockRendererHandler implements ISimpleBlockRenderingHandl
      * @param renderer
      */
     @Override
-    public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer)
+    public void renderInventoryBlock(final Block block, final int metadata, final int modelID, final RenderBlocks renderer)
     {
         mod.renderInvBlock(renderer, block, metadata, modelID);
     }

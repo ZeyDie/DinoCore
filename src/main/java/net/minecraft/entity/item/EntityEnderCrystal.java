@@ -16,7 +16,7 @@ public class EntityEnderCrystal extends Entity
     public int innerRotation;
     public int health;
 
-    public EntityEnderCrystal(World par1World)
+    public EntityEnderCrystal(final World par1World)
     {
         super(par1World);
         this.preventEntitySpawning = true;
@@ -27,7 +27,7 @@ public class EntityEnderCrystal extends Entity
     }
 
     @SideOnly(Side.CLIENT)
-    public EntityEnderCrystal(World par1World, double par2, double par4, double par6)
+    public EntityEnderCrystal(final World par1World, final double par2, final double par4, final double par6)
     {
         this(par1World);
         this.setPosition(par2, par4, par6);
@@ -57,9 +57,9 @@ public class EntityEnderCrystal extends Entity
         this.prevPosZ = this.posZ;
         ++this.innerRotation;
         this.dataWatcher.updateObject(8, Integer.valueOf(this.health));
-        int i = MathHelper.floor_double(this.posX);
-        int j = MathHelper.floor_double(this.posY);
-        int k = MathHelper.floor_double(this.posZ);
+        final int i = MathHelper.floor_double(this.posX);
+        final int j = MathHelper.floor_double(this.posY);
+        final int k = MathHelper.floor_double(this.posZ);
 
         if (this.worldObj.getBlockId(i, j, k) != Block.fire.blockID)
         {
@@ -75,12 +75,12 @@ public class EntityEnderCrystal extends Entity
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    protected void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {}
+    protected void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound) {}
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    protected void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {}
+    protected void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound) {}
 
     @SideOnly(Side.CLIENT)
     public float getShadowSize()
@@ -99,7 +99,7 @@ public class EntityEnderCrystal extends Entity
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2)
     {
         if (this.isEntityInvulnerable())
         {

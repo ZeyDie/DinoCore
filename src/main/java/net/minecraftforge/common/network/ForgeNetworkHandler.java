@@ -6,14 +6,14 @@ import net.minecraftforge.common.ForgeDummyContainer;
 
 public class ForgeNetworkHandler extends NetworkModHandler
 {
-    public ForgeNetworkHandler(ForgeDummyContainer container)
+    public ForgeNetworkHandler(final ForgeDummyContainer container)
     {
         super(container,container.getClass().getAnnotation(NetworkMod.class));
         configureNetworkMod(container);
     }
 
     @Override
-    public boolean acceptVersion(String version)
+    public boolean acceptVersion(final String version)
     {
         return true;
     }

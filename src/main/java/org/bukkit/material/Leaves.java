@@ -11,7 +11,7 @@ public class Leaves extends MaterialData {
         super(Material.LEAVES);
     }
 
-    public Leaves(TreeSpecies species) {
+    public Leaves(final TreeSpecies species) {
         this();
         setSpecies(species);
     }
@@ -61,7 +61,7 @@ public class Leaves extends MaterialData {
      *
      * @param species New species of this leave
      */
-    public void setSpecies(TreeSpecies species) {
+    public void setSpecies(final TreeSpecies species) {
         setData(species.getData());
     }
 

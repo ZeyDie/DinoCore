@@ -19,7 +19,7 @@ public class BanCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length == 0)  {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
@@ -29,7 +29,7 @@ public class BanCommand extends VanillaCommand {
         // TODO: Ban Reason support
         Bukkit.getOfflinePlayer(args[0]).setBanned(true);
 
-        Player player = Bukkit.getPlayer(args[0]);
+        final Player player = Bukkit.getPlayer(args[0]);
         if (player != null) {
             player.kickPlayer("Banned by admin.");
         }
@@ -39,7 +39,7 @@ public class BanCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) throws IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");

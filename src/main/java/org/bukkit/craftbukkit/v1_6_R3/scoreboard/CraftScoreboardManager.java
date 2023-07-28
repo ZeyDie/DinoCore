@@ -14,7 +14,7 @@ public final class CraftScoreboardManager implements ScoreboardManager {
     private final Collection<CraftScoreboard> scoreboards = new WeakCollection<CraftScoreboard>();
     private final Map<CraftPlayer, CraftScoreboard> playerBoards = new HashMap<CraftPlayer, CraftScoreboard>();
 
-    public CraftScoreboardManager(net.minecraft.server.MinecraftServer minecraftserver, net.minecraft.scoreboard.Scoreboard scoreboardServer) {
+    public CraftScoreboardManager(final net.minecraft.server.MinecraftServer minecraftserver, final net.minecraft.scoreboard.Scoreboard scoreboardServer) {
         mainScoreboard = new CraftScoreboard(scoreboardServer);
         server = minecraftserver;
         scoreboards.add(mainScoreboard);
@@ -25,25 +25,25 @@ public final class CraftScoreboardManager implements ScoreboardManager {
     }
 
     public CraftScoreboard getNewScoreboard() {
-        CraftScoreboard scoreboard = new CraftScoreboard(new net.minecraft.scoreboard.ServerScoreboard(server));
+        final CraftScoreboard scoreboard = new CraftScoreboard(new net.minecraft.scoreboard.ServerScoreboard(server));
         scoreboards.add(scoreboard);
         return scoreboard;
     }
 
     // CraftBukkit method
-    public CraftScoreboard getPlayerBoard(CraftPlayer player) {
-        CraftScoreboard board = playerBoards.get(player);
+    public CraftScoreboard getPlayerBoard(final CraftPlayer player) {
+        final CraftScoreboard board = playerBoards.get(player);
         return (CraftScoreboard) (board == null ? getMainScoreboard() : board);
     }
 
     // CraftBukkit method
-    public void setPlayerBoard(CraftPlayer player, org.bukkit.scoreboard.Scoreboard bukkitScoreboard) throws IllegalArgumentException {
+    public void setPlayerBoard(final CraftPlayer player, final org.bukkit.scoreboard.Scoreboard bukkitScoreboard) throws IllegalArgumentException {
         Validate.isTrue(bukkitScoreboard instanceof CraftScoreboard, "Cannot set player scoreboard to an unregistered Scoreboard");
 
-        CraftScoreboard scoreboard = (CraftScoreboard) bukkitScoreboard;
-        net.minecraft.scoreboard.Scoreboard oldboard = getPlayerBoard(player).getHandle();
-        net.minecraft.scoreboard.Scoreboard newboard = scoreboard.getHandle();
-        net.minecraft.entity.player.EntityPlayerMP entityplayer = player.getHandle();
+        final CraftScoreboard scoreboard = (CraftScoreboard) bukkitScoreboard;
+        final net.minecraft.scoreboard.Scoreboard oldboard = getPlayerBoard(player).getHandle();
+        final net.minecraft.scoreboard.Scoreboard newboard = scoreboard.getHandle();
+        final net.minecraft.entity.player.EntityPlayerMP entityplayer = player.getHandle();
 
         if (oldboard == newboard) {
             return;
@@ -56,9 +56,9 @@ public final class CraftScoreboardManager implements ScoreboardManager {
         }
 
         // Old objective tracking
-        HashSet<net.minecraft.scoreboard.ScoreObjective> removed = new HashSet<net.minecraft.scoreboard.ScoreObjective>();
+        final HashSet<net.minecraft.scoreboard.ScoreObjective> removed = new HashSet<net.minecraft.scoreboard.ScoreObjective>();
         for (int i = 0; i < 3; ++i) {
-            net.minecraft.scoreboard.ScoreObjective scoreboardobjective = oldboard.func_96539_a(i);
+            final net.minecraft.scoreboard.ScoreObjective scoreboardobjective = oldboard.func_96539_a(i);
             if (scoreboardobjective != null && !removed.contains(scoreboardobjective)) {
                 entityplayer.playerNetServerHandler.sendPacketToPlayer(new net.minecraft.network.packet.Packet206SetObjective(scoreboardobjective, 1));
                 removed.add(scoreboardobjective);
@@ -66,9 +66,9 @@ public final class CraftScoreboardManager implements ScoreboardManager {
         }
 
         // Old team tracking
-        Iterator<?> iterator = oldboard.func_96525_g().iterator();
+        final Iterator<?> iterator = oldboard.func_96525_g().iterator();
         while (iterator.hasNext()) {
-            net.minecraft.scoreboard.ScorePlayerTeam scoreboardteam = (net.minecraft.scoreboard.ScorePlayerTeam) iterator.next();
+            final net.minecraft.scoreboard.ScorePlayerTeam scoreboardteam = (net.minecraft.scoreboard.ScorePlayerTeam) iterator.next();
             entityplayer.playerNetServerHandler.sendPacketToPlayer(new net.minecraft.network.packet.Packet209SetPlayerTeam(scoreboardteam, 1));
         }
 
@@ -77,15 +77,15 @@ public final class CraftScoreboardManager implements ScoreboardManager {
     }
 
     // CraftBukkit method
-    public void removePlayer(Player player) {
+    public void removePlayer(final Player player) {
         playerBoards.remove(player);
     }
 
     // CraftBukkit method
-    public Collection<net.minecraft.scoreboard.Score> getScoreboardScores(net.minecraft.scoreboard.ScoreObjectiveCriteria criteria, String name, Collection<net.minecraft.scoreboard.Score> collection) {
-        for (CraftScoreboard scoreboard : scoreboards) {
-            net.minecraft.scoreboard.Scoreboard board = scoreboard.board;
-            for (net.minecraft.scoreboard.ScoreObjective objective : (Iterable<net.minecraft.scoreboard.ScoreObjective>) board.func_96520_a(criteria)) {
+    public Collection<net.minecraft.scoreboard.Score> getScoreboardScores(final net.minecraft.scoreboard.ScoreObjectiveCriteria criteria, final String name, final Collection<net.minecraft.scoreboard.Score> collection) {
+        for (final CraftScoreboard scoreboard : scoreboards) {
+            final net.minecraft.scoreboard.Scoreboard board = scoreboard.board;
+            for (final net.minecraft.scoreboard.ScoreObjective objective : (Iterable<net.minecraft.scoreboard.ScoreObjective>) board.func_96520_a(criteria)) {
                 collection.add(board.func_96529_a(name, objective));
             }
         }
@@ -93,8 +93,8 @@ public final class CraftScoreboardManager implements ScoreboardManager {
     }
 
     // CraftBukkit method
-    public void updateAllScoresForList(net.minecraft.scoreboard.ScoreObjectiveCriteria criteria, String name, List<net.minecraft.entity.player.EntityPlayerMP> of) {
-        for (net.minecraft.scoreboard.Score score : getScoreboardScores(criteria, name, new ArrayList<net.minecraft.scoreboard.Score>())) {
+    public void updateAllScoresForList(final net.minecraft.scoreboard.ScoreObjectiveCriteria criteria, final String name, final List<net.minecraft.entity.player.EntityPlayerMP> of) {
+        for (final net.minecraft.scoreboard.Score score : getScoreboardScores(criteria, name, new ArrayList<net.minecraft.scoreboard.Score>())) {
             score.func_96651_a(of);
         }
     }

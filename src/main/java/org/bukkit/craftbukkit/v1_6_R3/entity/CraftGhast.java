@@ -7,7 +7,7 @@ import org.bukkit.entity.Ghast;
 
 public class CraftGhast extends CraftFlying implements Ghast {
 
-    public CraftGhast(CraftServer server, net.minecraft.entity.monster.EntityGhast entity) {
+    public CraftGhast(final CraftServer server, final net.minecraft.entity.monster.EntityGhast entity) {
         super(server, entity);
     }
 

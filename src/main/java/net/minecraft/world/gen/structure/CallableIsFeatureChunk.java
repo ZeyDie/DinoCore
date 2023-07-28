@@ -10,7 +10,7 @@ class CallableIsFeatureChunk implements Callable
 
     final MapGenStructure theMapStructureGenerator;
 
-    CallableIsFeatureChunk(MapGenStructure par1MapGenStructure, int par2, int par3)
+    CallableIsFeatureChunk(final MapGenStructure par1MapGenStructure, final int par2, final int par3)
     {
         this.theMapStructureGenerator = par1MapGenStructure;
         this.field_85169_a = par2;

@@ -28,25 +28,25 @@ public class GuiIdMismatchScreen extends GuiYesNo {
     private List<String> mismatchedIds = Lists.newArrayList();
     private boolean allowContinue;
 
-    public GuiIdMismatchScreen(MapDifference<Integer, ItemData> idDifferences, boolean allowContinue)
+    public GuiIdMismatchScreen(final MapDifference<Integer, ItemData> idDifferences, final boolean allowContinue)
     {
         super(null,"ID mismatch", "Should I continue?", 1);
         parentScreen = this;
-        for (Entry<Integer, ItemData> entry : idDifferences.entriesOnlyOnLeft().entrySet())
+        for (final Entry<Integer, ItemData> entry : idDifferences.entriesOnlyOnLeft().entrySet())
         {
             missingIds.add(String.format("ID %d from Mod %s is missing", entry.getValue().getItemId(), entry.getValue().getModId(), entry.getValue().getItemType()));
         }
-        for (Entry<Integer, ValueDifference<ItemData>> entry : idDifferences.entriesDiffering().entrySet())
+        for (final Entry<Integer, ValueDifference<ItemData>> entry : idDifferences.entriesDiffering().entrySet())
         {
-            ItemData world = entry.getValue().leftValue();
-            ItemData game = entry.getValue().rightValue();
+            final ItemData world = entry.getValue().leftValue();
+            final ItemData game = entry.getValue().rightValue();
             mismatchedIds.add(String.format("ID %d is mismatched between world and game", world.getItemId()));
         }
         this.allowContinue = allowContinue;
     }
 
     @Override
-    public void confirmClicked(boolean choice, int par2)
+    public void confirmClicked(final boolean choice, final int par2)
     {
         FMLClientHandler.instance().callbackIdDifferenceResponse(choice);
     }
@@ -56,7 +56,7 @@ public class GuiIdMismatchScreen extends GuiYesNo {
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         if (!allowContinue && buttonList.size() == 2)
@@ -67,7 +67,7 @@ public class GuiIdMismatchScreen extends GuiYesNo {
         this.drawCenteredString(this.fontRenderer, "Forge Mod Loader has found ID mismatches", this.width / 2, 10, 0xFFFFFF);
         this.drawCenteredString(this.fontRenderer, "Complete details are in the log file", this.width / 2, 20, 0xFFFFFF);
         int maxLines = 20;
-        for (String s: missingIds) {
+        for (final String s: missingIds) {
             this.drawCenteredString(this.fontRenderer, s, this.width / 2, offset, 0xEEEEEE);
             offset += 10;
             maxLines --;
@@ -76,7 +76,7 @@ public class GuiIdMismatchScreen extends GuiYesNo {
         }
         if (maxLines > 0 && offset < this.height - 30)
         {
-            for (String s: mismatchedIds) {
+            for (final String s: mismatchedIds) {
                 this.drawCenteredString(this.fontRenderer, s, this.width / 2, offset, 0xEEEEEE);
                 offset += 10;
                 maxLines --;
@@ -95,7 +95,7 @@ public class GuiIdMismatchScreen extends GuiYesNo {
         // super.super. Grrr
         for (int var4 = 0; var4 < this.buttonList.size(); ++var4)
         {
-            GuiButton var5 = (GuiButton)this.buttonList.get(var4);
+            final GuiButton var5 = (GuiButton)this.buttonList.get(var4);
             var5.yPosition = this.height - 20;
             if (!allowContinue)
             {

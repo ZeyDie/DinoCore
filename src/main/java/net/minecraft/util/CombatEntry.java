@@ -11,7 +11,7 @@ public class CombatEntry
     private final String field_94566_e;
     private final float field_94564_f;
 
-    public CombatEntry(DamageSource par1DamageSource, int par2, float par3, float par4, String par5Str, float par6)
+    public CombatEntry(final DamageSource par1DamageSource, final int par2, final float par3, final float par4, final String par5Str, final float par6)
     {
         this.damageSrc = par1DamageSource;
         this.field_94567_b = par2;

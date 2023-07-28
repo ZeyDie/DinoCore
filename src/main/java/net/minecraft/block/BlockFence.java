@@ -18,7 +18,7 @@ public class BlockFence extends Block
 {
     private final String field_94464_a;
 
-    public BlockFence(int par1, String par2Str, Material par3Material)
+    public BlockFence(final int par1, final String par2Str, final Material par3Material)
     {
         super(par1, par3Material);
         this.field_94464_a = par2Str;
@@ -29,12 +29,12 @@ public class BlockFence extends Block
      * Adds all intersecting collision boxes to a list. (Be sure to only add boxes to the list if they intersect the
      * mask.) Parameters: World, X, Y, Z, mask, list, colliding entity
      */
-    public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity)
+    public void addCollisionBoxesToList(final World par1World, final int par2, final int par3, final int par4, final AxisAlignedBB par5AxisAlignedBB, final List par6List, final Entity par7Entity)
     {
-        boolean flag = this.canConnectFenceTo(par1World, par2, par3, par4 - 1);
-        boolean flag1 = this.canConnectFenceTo(par1World, par2, par3, par4 + 1);
-        boolean flag2 = this.canConnectFenceTo(par1World, par2 - 1, par3, par4);
-        boolean flag3 = this.canConnectFenceTo(par1World, par2 + 1, par3, par4);
+        final boolean flag = this.canConnectFenceTo(par1World, par2, par3, par4 - 1);
+        final boolean flag1 = this.canConnectFenceTo(par1World, par2, par3, par4 + 1);
+        final boolean flag2 = this.canConnectFenceTo(par1World, par2 - 1, par3, par4);
+        final boolean flag3 = this.canConnectFenceTo(par1World, par2 + 1, par3, par4);
         float f = 0.375F;
         float f1 = 0.625F;
         float f2 = 0.375F;
@@ -91,12 +91,12 @@ public class BlockFence extends Block
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
-        boolean flag = this.canConnectFenceTo(par1IBlockAccess, par2, par3, par4 - 1);
-        boolean flag1 = this.canConnectFenceTo(par1IBlockAccess, par2, par3, par4 + 1);
-        boolean flag2 = this.canConnectFenceTo(par1IBlockAccess, par2 - 1, par3, par4);
-        boolean flag3 = this.canConnectFenceTo(par1IBlockAccess, par2 + 1, par3, par4);
+        final boolean flag = this.canConnectFenceTo(par1IBlockAccess, par2, par3, par4 - 1);
+        final boolean flag1 = this.canConnectFenceTo(par1IBlockAccess, par2, par3, par4 + 1);
+        final boolean flag2 = this.canConnectFenceTo(par1IBlockAccess, par2 - 1, par3, par4);
+        final boolean flag3 = this.canConnectFenceTo(par1IBlockAccess, par2 + 1, par3, par4);
         float f = 0.375F;
         float f1 = 0.625F;
         float f2 = 0.375F;
@@ -142,7 +142,7 @@ public class BlockFence extends Block
         return false;
     }
 
-    public boolean getBlocksMovement(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public boolean getBlocksMovement(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         return false;
     }
@@ -158,13 +158,13 @@ public class BlockFence extends Block
     /**
      * Returns true if the specified block can be connected by a fence
      */
-    public boolean canConnectFenceTo(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public boolean canConnectFenceTo(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
-        int l = par1IBlockAccess.getBlockId(par2, par3, par4);
+        final int l = par1IBlockAccess.getBlockId(par2, par3, par4);
 
         if (l != this.blockID && l != Block.fenceGate.blockID)
         {
-            Block block = Block.blocksList[l];
+            final Block block = Block.blocksList[l];
             return block != null && block.blockMaterial.isOpaque() && block.renderAsNormalBlock() ? block.blockMaterial != Material.pumpkin : false;
         }
         else
@@ -173,7 +173,7 @@ public class BlockFence extends Block
         }
     }
 
-    public static boolean isIdAFence(int par0)
+    public static boolean isIdAFence(final int par0)
     {
         return par0 == Block.fence.blockID || par0 == Block.netherFence.blockID;
     }
@@ -184,7 +184,7 @@ public class BlockFence extends Block
      * Returns true if the given side of this block type should be rendered, if the adjacent block is at the given
      * coordinates.  Args: blockAccess, x, y, z, side
      */
-    public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public boolean shouldSideBeRendered(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
         return true;
     }
@@ -195,7 +195,7 @@ public class BlockFence extends Block
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.blockIcon = par1IconRegister.registerIcon(this.field_94464_a);
     }
@@ -203,7 +203,7 @@ public class BlockFence extends Block
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9)
     {
         return par1World.isRemote ? true : ItemLeash.func_135066_a(par5EntityPlayer, par1World, par2, par3, par4);
     }

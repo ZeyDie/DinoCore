@@ -33,7 +33,7 @@ public class EntityPortalEvent extends EntityTeleportEvent {
      *
      * @param useTravelAgent whether to use the Travel Agent
      */
-    public void useTravelAgent(boolean useTravelAgent) {
+    public void useTravelAgent(final boolean useTravelAgent) {
         this.useTravelAgent = useTravelAgent;
     }
 
@@ -67,7 +67,7 @@ public class EntityPortalEvent extends EntityTeleportEvent {
      *
      * @param travelAgent the Travel Agent used (or not) in this event
      */
-    public void setPortalTravelAgent(TravelAgent travelAgent) {
+    public void setPortalTravelAgent(final TravelAgent travelAgent) {
         this.travelAgent = travelAgent;
     }
 

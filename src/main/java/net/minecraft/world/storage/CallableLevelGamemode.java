@@ -6,7 +6,7 @@ class CallableLevelGamemode implements Callable
 {
     final WorldInfo worldInfoInstance;
 
-    CallableLevelGamemode(WorldInfo par1WorldInfo)
+    CallableLevelGamemode(final WorldInfo par1WorldInfo)
     {
         this.worldInfoInstance = par1WorldInfo;
     }

@@ -15,14 +15,14 @@ public class TextureCompass extends TextureAtlasSprite
     /** Speed and direction of compass rotation */
     public double angleDelta;
 
-    public TextureCompass(String par1Str)
+    public TextureCompass(final String par1Str)
     {
         super(par1Str);
     }
 
     public void updateAnimation()
     {
-        Minecraft minecraft = Minecraft.getMinecraft();
+        final Minecraft minecraft = Minecraft.getMinecraft();
 
         if (minecraft.theWorld != null && minecraft.thePlayer != null)
         {
@@ -37,19 +37,20 @@ public class TextureCompass extends TextureAtlasSprite
     /**
      * Updates the compass based on the given x,z coords and camera direction
      */
-    public void updateCompass(World par1World, double par2, double par4, double par6, boolean par8, boolean par9)
+    public void updateCompass(final World par1World, final double par2, final double par4, double par6, final boolean par8, final boolean par9)
     {
+        double par61 = par6;
         if (!this.framesTextureData.isEmpty())
         {
             double d3 = 0.0D;
 
             if (par1World != null && !par8)
             {
-                ChunkCoordinates chunkcoordinates = par1World.getSpawnPoint();
-                double d4 = (double)chunkcoordinates.posX - par2;
-                double d5 = (double)chunkcoordinates.posZ - par4;
-                par6 %= 360.0D;
-                d3 = -((par6 - 90.0D) * Math.PI / 180.0D - Math.atan2(d5, d4));
+                final ChunkCoordinates chunkcoordinates = par1World.getSpawnPoint();
+                final double d4 = (double)chunkcoordinates.posX - par2;
+                final double d5 = (double)chunkcoordinates.posZ - par4;
+                par61 %= 360.0D;
+                d3 = -((par61 - 90.0D) * Math.PI / 180.0D - Math.atan2(d5, d4));
 
                 if (!par1World.provider.isSurfaceWorld())
                 {
@@ -65,14 +66,14 @@ public class TextureCompass extends TextureAtlasSprite
             {
                 double d6;
 
-                for (d6 = d3 - this.currentAngle; d6 < -Math.PI; d6 += (Math.PI * 2D))
+                for (d6 = d3 - this.currentAngle; d6 < -Math.PI; d6 += (Math.PI * 2.0D))
                 {
                     ;
                 }
 
                 while (d6 >= Math.PI)
                 {
-                    d6 -= (Math.PI * 2D);
+                    d6 -= (Math.PI * 2.0D);
                 }
 
                 if (d6 < -1.0D)
@@ -92,7 +93,7 @@ public class TextureCompass extends TextureAtlasSprite
 
             int i;
 
-            for (i = (int)((this.currentAngle / (Math.PI * 2D) + 1.0D) * (double)this.framesTextureData.size()) % this.framesTextureData.size(); i < 0; i = (i + this.framesTextureData.size()) % this.framesTextureData.size())
+            for (i = (int)((this.currentAngle / (Math.PI * 2.0D) + 1.0D) * (double)this.framesTextureData.size()) % this.framesTextureData.size(); i < 0; i = (i + this.framesTextureData.size()) % this.framesTextureData.size())
             {
                 ;
             }

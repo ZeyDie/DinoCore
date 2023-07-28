@@ -6,7 +6,7 @@ import org.bukkit.entity.Creature;
 import org.bukkit.entity.Tameable;
 
 public class CraftTameableAnimal extends CraftAnimals implements Tameable, Creature {
-    public CraftTameableAnimal(CraftServer server, net.minecraft.entity.passive.EntityTameable entity) {
+    public CraftTameableAnimal(final CraftServer server, final net.minecraft.entity.passive.EntityTameable entity) {
         super(server, entity);
     }
 
@@ -34,7 +34,7 @@ public class CraftTameableAnimal extends CraftAnimals implements Tameable, Creat
         return getHandle().isTamed();
     }
 
-    public void setOwner(AnimalTamer tamer) {
+    public void setOwner(final AnimalTamer tamer) {
         if (tamer != null) {
             setTamed(true);
             getHandle().setPathToEntity(null);
@@ -45,11 +45,11 @@ public class CraftTameableAnimal extends CraftAnimals implements Tameable, Creat
         }
     }
 
-    public void setOwnerName(String ownerName) {
+    public void setOwnerName(final String ownerName) {
         getHandle().setOwner(ownerName == null ? "" : ownerName);
     }
 
-    public void setTamed(boolean tame) {
+    public void setTamed(final boolean tame) {
         getHandle().setTamed(tame);
         if (!tame) {
             setOwnerName("");
@@ -60,7 +60,7 @@ public class CraftTameableAnimal extends CraftAnimals implements Tameable, Creat
         return getHandle().isSitting();
     }
 
-    public void setSitting(boolean sitting) {
+    public void setSitting(final boolean sitting) {
         getHandle().func_70907_r().setSitting(sitting);
     }
 

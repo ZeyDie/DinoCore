@@ -10,7 +10,7 @@ public class ItemMultiTextureTile extends ItemBlock
     private final Block theBlock;
     private final String[] field_82804_b;
 
-    public ItemMultiTextureTile(int par1, Block par2Block, String[] par3ArrayOfStr)
+    public ItemMultiTextureTile(final int par1, final Block par2Block, final String[] par3ArrayOfStr)
     {
         super(par1);
         this.theBlock = par2Block;
@@ -24,7 +24,7 @@ public class ItemMultiTextureTile extends ItemBlock
     /**
      * Gets an icon index based on an item's damage value
      */
-    public Icon getIconFromDamage(int par1)
+    public Icon getIconFromDamage(final int par1)
     {
         return this.theBlock.getIcon(2, par1);
     }
@@ -32,7 +32,7 @@ public class ItemMultiTextureTile extends ItemBlock
     /**
      * Returns the metadata of the block which this Item (ItemBlock) can place
      */
-    public int getMetadata(int par1)
+    public int getMetadata(final int par1)
     {
         return par1;
     }
@@ -41,7 +41,7 @@ public class ItemMultiTextureTile extends ItemBlock
      * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
      * different names based on their damage or NBT.
      */
-    public String getUnlocalizedName(ItemStack par1ItemStack)
+    public String getUnlocalizedName(final ItemStack par1ItemStack)
     {
         int i = par1ItemStack.getItemDamage();
 

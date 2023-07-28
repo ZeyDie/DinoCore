@@ -45,7 +45,7 @@ public enum SandstoneType {
     }
 
     static {
-        for (SandstoneType type : values()) {
+        for (final SandstoneType type : values()) {
             BY_DATA.put(type.data, type);
         }
     }

@@ -54,24 +54,24 @@ public class GameData {
     private static Map<String,String> ignoredMods;
     private static boolean validated;
 
-    private static boolean isModIgnoredForIdValidation(String modId)
+    private static boolean isModIgnoredForIdValidation(final String modId)
     {
         if (ignoredMods == null)
         {
-            File f = new File(Loader.instance().getConfigDir(),"fmlIDChecking.properties");
+            final File f = new File(Loader.instance().getConfigDir(),"fmlIDChecking.properties");
             if (f.exists())
             {
-                Properties p = new Properties();
+                final Properties p = new Properties();
                 try
                 {
                     p.load(new FileInputStream(f));
                     ignoredMods = Maps.fromProperties(p);
-                    if (ignoredMods.size()>0)
+                    if (!ignoredMods.isEmpty())
                     {
                         FMLLog.log("fml.ItemTracker", Level.WARNING, "Using non-empty ignored mods configuration file %s", ignoredMods.keySet());
                     }
                 }
-                catch (Exception e)
+                catch (final Exception e)
                 {
                     Throwables.propagateIfPossible(e);
                     FMLLog.log("fml.ItemTracker", Level.SEVERE, e, "Failed to read ignored ID checker mods properties file");
@@ -86,7 +86,7 @@ public class GameData {
         return ignoredMods.containsKey(modId);
     }
 
-    public static void newItemAdded(Item item)
+    public static void newItemAdded(final Item item)
     {
         ModContainer mc = Loader.instance().activeModContainer();
         if (mc == null)
@@ -97,11 +97,11 @@ public class GameData {
                 FMLLog.severe("It appears something has tried to allocate an Item or Block outside of the preinitialization phase for mods. This will NOT work in 1.7 and beyond!");
             }
         }
-        String itemType = item.getClass().getName();
-        ItemData itemData = new ItemData(item, mc);
+        final String itemType = item.getClass().getName();
+        final ItemData itemData = new ItemData(item, mc);
         if (idMap.containsKey(item.itemID))
         {
-            ItemData id = idMap.get(item.itemID);
+            final ItemData id = idMap.get(item.itemID);
             FMLLog.log("fml.ItemTracker", Level.INFO, "The mod %s is overwriting existing item at %d (%s from %s) with %s", mc.getModId(), id.getItemId(), id.getItemType(), id.getModId(), itemType);
         }
         idMap.put(item.itemID, itemData);
@@ -111,7 +111,7 @@ public class GameData {
         }
     }
 
-    public static void validateWorldSave(Set<ItemData> worldSaveItems)
+    public static void validateWorldSave(final Set<ItemData> worldSaveItems)
     {
         isSaveValid = true;
         shouldContinue = true;
@@ -123,19 +123,19 @@ public class GameData {
             {
                 clientValidationLatch.await();
             }
-            catch (InterruptedException e)
+            catch (final InterruptedException e)
             {
             }
             return;
         }
 
-        Function<? super ItemData, Integer> idMapFunction = new Function<ItemData, Integer>() {
-            public Integer apply(ItemData input) {
+        final Function<? super ItemData, Integer> idMapFunction = new Function<ItemData, Integer>() {
+            public Integer apply(final ItemData input) {
                 return input.getItemId();
             };
         };
 
-        Map<Integer,ItemData> worldMap = Maps.uniqueIndex(worldSaveItems,idMapFunction);
+        final Map<Integer,ItemData> worldMap = Maps.uniqueIndex(worldSaveItems,idMapFunction);
         difference = Maps.difference(worldMap, idMap);
         FMLLog.log("fml.ItemTracker", Level.FINE, "The difference set is %s", difference);
         if (!difference.entriesDiffering().isEmpty() || !difference.entriesOnlyOnLeft().isEmpty())
@@ -144,14 +144,14 @@ public class GameData {
             FMLLog.log("fml.ItemTracker", Level.SEVERE, "Missing items : %s", difference.entriesOnlyOnLeft());
             FMLLog.log("fml.ItemTracker", Level.SEVERE, "Mismatched items : %s", difference.entriesDiffering());
             boolean foundNonIgnored = false;
-            for (ItemData diff : difference.entriesOnlyOnLeft().values())
+            for (final ItemData diff : difference.entriesOnlyOnLeft().values())
             {
                 if (!isModIgnoredForIdValidation(diff.getModId()))
                 {
                     foundNonIgnored = true;
                 }
             }
-            for (ValueDifference<ItemData> diff : difference.entriesDiffering().values())
+            for (final ValueDifference<ItemData> diff : difference.entriesDiffering().values())
             {
                 if (! ( isModIgnoredForIdValidation(diff.leftValue().getModId()) || isModIgnoredForIdValidation(diff.rightValue().getModId()) ) )
                 {
@@ -178,14 +178,14 @@ public class GameData {
                 throw new RuntimeException("This server instance is going to stop abnormally because of a fatal ID mismatch");
             }
         }
-        catch (InterruptedException e)
+        catch (final InterruptedException e)
         {
         }
     }
 
-    public static void writeItemData(NBTTagList itemList)
+    public static void writeItemData(final NBTTagList itemList)
     {
-        for (ItemData dat : idMap.values())
+        for (final ItemData dat : idMap.values())
         {
             itemList.appendTag(dat.toNBT());
         }
@@ -196,7 +196,7 @@ public class GameData {
      * @param gateCount the countdown amount. If it's 2 we're on the client and the client and server
      * will wait at the latch. 1 is a server and the server will proceed
      */
-    public static void initializeServerGate(int gateCount)
+    public static void initializeServerGate(final int gateCount)
     {
         serverValidationLatch = new CountDownLatch(gateCount - 1);
         clientValidationLatch = new CountDownLatch(gateCount - 1);
@@ -212,7 +212,7 @@ public class GameData {
                 return difference;
             }
         }
-        catch (InterruptedException e)
+        catch (final InterruptedException e)
         {
         }
         difference = null;
@@ -220,28 +220,28 @@ public class GameData {
     }
 
 
-    public static void releaseGate(boolean carryOn)
+    public static void releaseGate(final boolean carryOn)
     {
         shouldContinue = carryOn;
         clientValidationLatch.countDown();
     }
 
-    public static Set<ItemData> buildWorldItemData(NBTTagList modList)
+    public static Set<ItemData> buildWorldItemData(final NBTTagList modList)
     {
-        Set<ItemData> worldSaveItems = Sets.newHashSet();
+        final Set<ItemData> worldSaveItems = Sets.newHashSet();
         for (int i = 0; i < modList.tagCount(); i++)
         {
-            NBTTagCompound mod = (NBTTagCompound) modList.tagAt(i);
-            ItemData dat = new ItemData(mod);
+            final NBTTagCompound mod = (NBTTagCompound) modList.tagAt(i);
+            final ItemData dat = new ItemData(mod);
             worldSaveItems.add(dat);
         }
         return worldSaveItems;
     }
 
-    static void setName(Item item, String name, String modId)
+    static void setName(final Item item, final String name, final String modId)
     {
-        int id = item.itemID;
-        ItemData itemData = idMap.get(id);
+        final int id = item.itemID;
+        final ItemData itemData = idMap.get(id);
         itemData.setName(name,modId);
     }
 
@@ -252,8 +252,8 @@ public class GameData {
             throw new IllegalStateException("Illegal call to buildModObjectTable!");
         }
 
-        Map<Integer, Cell<String, String, Integer>> map = Maps.transformValues(idMap, new Function<ItemData,Cell<String,String,Integer>>() {
-            public Cell<String,String,Integer> apply(ItemData data)
+        final Map<Integer, Cell<String, String, Integer>> map = Maps.transformValues(idMap, new Function<ItemData,Cell<String,String,Integer>>() {
+            public Cell<String,String,Integer> apply(final ItemData data)
             {
                 if ("Minecraft".equals(data.getModId()) || !data.isOveridden())
                 {
@@ -263,8 +263,8 @@ public class GameData {
             }
         });
 
-        Builder<String, String, Integer> tBuilder = ImmutableTable.builder();
-        for (Cell<String, String, Integer> c : map.values())
+        final Builder<String, String, Integer> tBuilder = ImmutableTable.builder();
+        for (final Cell<String, String, Integer> c : map.values())
         {
             if (c!=null)
             {
@@ -273,7 +273,7 @@ public class GameData {
         }
         modObjectTable = tBuilder.build();
     }
-    static Item findItem(String modId, String name)
+    static Item findItem(final String modId, final String name)
     {
         if (modObjectTable == null || !modObjectTable.contains(modId, name))
         {
@@ -283,14 +283,14 @@ public class GameData {
         return Item.itemsList[modObjectTable.get(modId, name)];
     }
 
-    static Block findBlock(String modId, String name)
+    static Block findBlock(final String modId, final String name)
     {
         if (modObjectTable == null)
         {
             return null;
         }
 
-        Integer blockId = modObjectTable.get(modId, name);
+        final Integer blockId = modObjectTable.get(modId, name);
         if (blockId == null || blockId >= Block.blocksList.length)
         {
             return null;
@@ -298,12 +298,12 @@ public class GameData {
         return Block.blocksList[blockId];
     }
 
-    static ItemStack findItemStack(String modId, String name)
+    static ItemStack findItemStack(final String modId, final String name)
     {
         ItemStack is = customItemStacks.get(modId, name);
         if (is == null)
         {
-            Item i = findItem(modId, name);
+            final Item i = findItem(modId, name);
             if (i != null)
             {
                 is = new ItemStack(i, 0 ,0);
@@ -311,7 +311,7 @@ public class GameData {
         }
         if (is == null)
         {
-            Block b = findBlock(modId, name);
+            final Block b = findBlock(modId, name);
             if (b != null)
             {
                 is = new ItemStack(b, 0, Short.MAX_VALUE);
@@ -320,12 +320,12 @@ public class GameData {
         return is;
     }
 
-    static void registerCustomItemStack(String name, ItemStack itemStack)
+    static void registerCustomItemStack(final String name, final ItemStack itemStack)
     {
         customItemStacks.put(Loader.instance().activeModContainer().getModId(), name, itemStack);
     }
 
-    public static void dumpRegistry(File minecraftDir)
+    public static void dumpRegistry(final File minecraftDir)
     {
         if (customItemStacks == null)
         {
@@ -333,30 +333,30 @@ public class GameData {
         }
         if (Boolean.valueOf(System.getProperty("fml.dumpRegistry", "false")).booleanValue())
         {
-            ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.builder();
-            for (String modId : customItemStacks.rowKeySet())
+            final ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.builder();
+            for (final String modId : customItemStacks.rowKeySet())
             {
                 builder.putAll(modId, customItemStacks.row(modId).keySet());
             }
 
-            File f = new File(minecraftDir, "itemStackRegistry.csv");
-            MapJoiner mapJoiner = Joiner.on("\n").withKeyValueSeparator(",");
+            final File f = new File(minecraftDir, "itemStackRegistry.csv");
+            final MapJoiner mapJoiner = Joiner.on("\n").withKeyValueSeparator(",");
             try
             {
                 Files.write(mapJoiner.join(builder.build().entries()), f, Charsets.UTF_8);
                 FMLLog.log(Level.INFO, "Dumped item registry data to %s", f.getAbsolutePath());
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 FMLLog.log(Level.SEVERE, e, "Failed to write registry data to %s", f.getAbsolutePath());
             }
         }
     }
 
-    static UniqueIdentifier getUniqueName(Block block)
+    static UniqueIdentifier getUniqueName(final Block block)
     {
         if (block == null) return null;
-        ItemData itemData = idMap.get(block.blockID);
+        final ItemData itemData = idMap.get(block.blockID);
         if (itemData == null || !itemData.isOveridden() || customItemStacks.contains(itemData.getModId(), itemData.getItemType()))
         {
             return null;
@@ -365,10 +365,10 @@ public class GameData {
         return new UniqueIdentifier(itemData.getModId(), itemData.getItemType());
     }
 
-    static UniqueIdentifier getUniqueName(Item item)
+    static UniqueIdentifier getUniqueName(final Item item)
     {
         if (item == null) return null;
-        ItemData itemData = idMap.get(item.itemID);
+        final ItemData itemData = idMap.get(item.itemID);
         if (itemData == null || !itemData.isOveridden() || customItemStacks.contains(itemData.getModId(), itemData.getItemType()))
         {
             return null;
@@ -383,7 +383,7 @@ public class GameData {
         {
             if (Item.itemsList[i] != null)
             {
-                ItemData itemData = idMap.get(i);
+                final ItemData itemData = idMap.get(i);
                 if (itemData == null)
                 {
                     FMLLog.severe("Found completely unknown item of class %s with ID %d, this will NOT work for a 1.7 upgrade", Item.itemsList[i].getClass().getName(), i);

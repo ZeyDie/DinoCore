@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class BiomeGenSwamp extends BiomeGenBase
 {
-    protected BiomeGenSwamp(int par1)
+    protected BiomeGenSwamp(final int par1)
     {
         super(par1);
         this.theBiomeDecorator.treesPerChunk = 2;
@@ -28,7 +28,7 @@ public class BiomeGenSwamp extends BiomeGenBase
     /**
      * Gets a WorldGen appropriate for this biome.
      */
-    public WorldGenerator getRandomWorldGenForTrees(Random par1Random)
+    public WorldGenerator getRandomWorldGenForTrees(final Random par1Random)
     {
         return this.worldGeneratorSwamp;
     }
@@ -40,8 +40,8 @@ public class BiomeGenSwamp extends BiomeGenBase
      */
     public int getBiomeGrassColor()
     {
-        double d0 = (double)this.getFloatTemperature();
-        double d1 = (double)this.getFloatRainfall();
+        final double d0 = (double)this.getFloatTemperature();
+        final double d1 = (double)this.getFloatRainfall();
         return ((ColorizerGrass.getGrassColor(d0, d1) & 16711422) + 5115470) / 2;
     }
 
@@ -52,8 +52,8 @@ public class BiomeGenSwamp extends BiomeGenBase
      */
     public int getBiomeFoliageColor()
     {
-        double d0 = (double)this.getFloatTemperature();
-        double d1 = (double)this.getFloatRainfall();
+        final double d0 = (double)this.getFloatTemperature();
+        final double d1 = (double)this.getFloatRainfall();
         return ((ColorizerFoliage.getFoliageColor(d0, d1) & 16711422) + 5115470) / 2;
     }
 }

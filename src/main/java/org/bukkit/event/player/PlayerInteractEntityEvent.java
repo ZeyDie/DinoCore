@@ -22,7 +22,7 @@ public class PlayerInteractEntityEvent extends PlayerEvent implements Cancellabl
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancelled = cancel;
     }
 

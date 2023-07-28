@@ -17,7 +17,7 @@ class GuiScreenBackupRestoreTask extends TaskLongRunning
     /** The screen running this task */
     final GuiScreenBackup theBackupScreen;
 
-    private GuiScreenBackupRestoreTask(GuiScreenBackup par1GuiScreenBackup, Backup par2Backup)
+    private GuiScreenBackupRestoreTask(final GuiScreenBackup par1GuiScreenBackup, final Backup par2Backup)
     {
         this.theBackupScreen = par1GuiScreenBackup;
         this.theBackup = par2Backup;
@@ -29,32 +29,32 @@ class GuiScreenBackupRestoreTask extends TaskLongRunning
 
         try
         {
-            McoClient mcoclient = new McoClient(this.getMinecraft().getSession());
+            final McoClient mcoclient = new McoClient(this.getMinecraft().getSession());
             mcoclient.func_111235_c(GuiScreenBackup.func_110367_b(this.theBackupScreen), this.theBackup.field_110727_a);
 
             try
             {
                 Thread.sleep(1000L);
             }
-            catch (InterruptedException interruptedexception)
+            catch (final InterruptedException interruptedexception)
             {
                 Thread.currentThread().interrupt();
             }
 
             this.getMinecraft().displayGuiScreen(GuiScreenBackup.func_130031_d(this.theBackupScreen));
         }
-        catch (ExceptionMcoService exceptionmcoservice)
+        catch (final ExceptionMcoService exceptionmcoservice)
         {
             GuiScreenBackup.func_130035_e(this.theBackupScreen).getLogAgent().logSevere(exceptionmcoservice.toString());
             this.setFailedMessage(exceptionmcoservice.toString());
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             this.setFailedMessage(exception.getLocalizedMessage());
         }
     }
 
-    GuiScreenBackupRestoreTask(GuiScreenBackup par1GuiScreenBackup, Backup par2Backup, GuiScreenBackupDownloadThread par3GuiScreenBackupDownloadThread)
+    GuiScreenBackupRestoreTask(final GuiScreenBackup par1GuiScreenBackup, final Backup par2Backup, final GuiScreenBackupDownloadThread par3GuiScreenBackupDownloadThread)
     {
         this(par1GuiScreenBackup, par2Backup);
     }

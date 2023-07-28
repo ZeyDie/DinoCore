@@ -5,11 +5,11 @@ import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 
 public class CraftFurnaceRecipe extends FurnaceRecipe implements CraftRecipe {
-    public CraftFurnaceRecipe(ItemStack result, ItemStack source) {
+    public CraftFurnaceRecipe(final ItemStack result, final ItemStack source) {
         super(result, source.getType(), source.getDurability());
     }
 
-    public static CraftFurnaceRecipe fromBukkitRecipe(FurnaceRecipe recipe) {
+    public static CraftFurnaceRecipe fromBukkitRecipe(final FurnaceRecipe recipe) {
         if (recipe instanceof CraftFurnaceRecipe) {
             return (CraftFurnaceRecipe) recipe;
         }
@@ -17,8 +17,8 @@ public class CraftFurnaceRecipe extends FurnaceRecipe implements CraftRecipe {
     }
 
     public void addToCraftingManager() {
-        ItemStack result = this.getResult();
-        ItemStack input = this.getInput();
+        final ItemStack result = this.getResult();
+        final ItemStack input = this.getInput();
         net.minecraft.item.crafting.FurnaceRecipes.smelting().addSmelting(input.getTypeId(), CraftItemStack.asNMSCopy(result), 0.1f);
     }
 }

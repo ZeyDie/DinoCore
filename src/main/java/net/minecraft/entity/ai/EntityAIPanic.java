@@ -12,7 +12,7 @@ public class EntityAIPanic extends EntityAIBase
     private double randPosY;
     private double randPosZ;
 
-    public EntityAIPanic(EntityCreature par1EntityCreature, double par2)
+    public EntityAIPanic(final EntityCreature par1EntityCreature, final double par2)
     {
         this.theEntityCreature = par1EntityCreature;
         this.speed = par2;
@@ -30,7 +30,7 @@ public class EntityAIPanic extends EntityAIBase
         }
         else
         {
-            Vec3 vec3 = RandomPositionGenerator.findRandomTarget(this.theEntityCreature, 5, 4);
+            final Vec3 vec3 = RandomPositionGenerator.findRandomTarget(this.theEntityCreature, 5, 4);
 
             if (vec3 == null)
             {

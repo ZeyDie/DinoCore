@@ -21,7 +21,7 @@ public class BlockBaseRailLogic
 
     final BlockRailBase theRail;
 
-    public BlockBaseRailLogic(BlockRailBase par1BlockRailBase, World par2World, int par3, int par4, int par5)
+    public BlockBaseRailLogic(final BlockRailBase par1BlockRailBase, final World par2World, final int par3, final int par4, final int par5)
     {
         this.theRail = par1BlockRailBase;
         this.railChunkPosition = new ArrayList();
@@ -29,17 +29,17 @@ public class BlockBaseRailLogic
         this.railX = par3;
         this.railY = par4;
         this.railZ = par5;
-        int l = par2World.getBlockId(par3, par4, par5);
+        final int l = par2World.getBlockId(par3, par4, par5);
 
-        BlockRailBase target = (BlockRailBase)Block.blocksList[l];
-        int i1 = target.getBasicRailMetadata(par2World, null, par3, par4, par5);
+        final BlockRailBase target = (BlockRailBase)Block.blocksList[l];
+        final int i1 = target.getBasicRailMetadata(par2World, null, par3, par4, par5);
         isStraightRail = !target.isFlexibleRail(par2World, par3, par4, par5);
         canMakeSlopes = target.canMakeSlopes(par2World, par3, par4, par5);
 
         this.setBasicRail(i1);
     }
 
-    private void setBasicRail(int par1)
+    private void setBasicRail(final int par1)
     {
         this.railChunkPosition.clear();
 
@@ -99,7 +99,7 @@ public class BlockBaseRailLogic
     {
         for (int i = 0; i < this.railChunkPosition.size(); ++i)
         {
-            BlockBaseRailLogic blockbaseraillogic = this.getRailLogic((ChunkPosition)this.railChunkPosition.get(i));
+            final BlockBaseRailLogic blockbaseraillogic = this.getRailLogic((ChunkPosition)this.railChunkPosition.get(i));
 
             if (blockbaseraillogic != null && blockbaseraillogic.isRailChunkPositionCorrect(this))
             {
@@ -112,12 +112,12 @@ public class BlockBaseRailLogic
         }
     }
 
-    private boolean isMinecartTrack(int par1, int par2, int par3)
+    private boolean isMinecartTrack(final int par1, final int par2, final int par3)
     {
         return BlockRailBase.isRailBlockAt(this.logicWorld, par1, par2, par3) ? true : (BlockRailBase.isRailBlockAt(this.logicWorld, par1, par2 + 1, par3) ? true : BlockRailBase.isRailBlockAt(this.logicWorld, par1, par2 - 1, par3));
     }
 
-    private BlockBaseRailLogic getRailLogic(ChunkPosition par1ChunkPosition)
+    private BlockBaseRailLogic getRailLogic(final ChunkPosition par1ChunkPosition)
     {
         return BlockRailBase.isRailBlockAt(this.logicWorld, par1ChunkPosition.x, par1ChunkPosition.y, par1ChunkPosition.z) ? new BlockBaseRailLogic(this.theRail, this.logicWorld, par1ChunkPosition.x, par1ChunkPosition.y, par1ChunkPosition.z) : (BlockRailBase.isRailBlockAt(this.logicWorld, par1ChunkPosition.x, par1ChunkPosition.y + 1, par1ChunkPosition.z) ? new BlockBaseRailLogic(this.theRail, this.logicWorld, par1ChunkPosition.x, par1ChunkPosition.y + 1, par1ChunkPosition.z) : (BlockRailBase.isRailBlockAt(this.logicWorld, par1ChunkPosition.x, par1ChunkPosition.y - 1, par1ChunkPosition.z) ? new BlockBaseRailLogic(this.theRail, this.logicWorld, par1ChunkPosition.x, par1ChunkPosition.y - 1, par1ChunkPosition.z) : null));
     }
@@ -125,11 +125,11 @@ public class BlockBaseRailLogic
     /**
      * Checks if the rail is at the chunk position it is expected to be.
      */
-    private boolean isRailChunkPositionCorrect(BlockBaseRailLogic par1BlockBaseRailLogic)
+    private boolean isRailChunkPositionCorrect(final BlockBaseRailLogic par1BlockBaseRailLogic)
     {
         for (int i = 0; i < this.railChunkPosition.size(); ++i)
         {
-            ChunkPosition chunkposition = (ChunkPosition)this.railChunkPosition.get(i);
+            final ChunkPosition chunkposition = (ChunkPosition)this.railChunkPosition.get(i);
 
             if (chunkposition.x == par1BlockBaseRailLogic.railX && chunkposition.z == par1BlockBaseRailLogic.railZ)
             {
@@ -140,11 +140,11 @@ public class BlockBaseRailLogic
         return false;
     }
 
-    private boolean isPartOfTrack(int par1, int par2, int par3)
+    private boolean isPartOfTrack(final int par1, final int par2, final int par3)
     {
         for (int l = 0; l < this.railChunkPosition.size(); ++l)
         {
-            ChunkPosition chunkposition = (ChunkPosition)this.railChunkPosition.get(l);
+            final ChunkPosition chunkposition = (ChunkPosition)this.railChunkPosition.get(l);
 
             if (chunkposition.x == par1 && chunkposition.z == par3)
             {
@@ -182,18 +182,18 @@ public class BlockBaseRailLogic
         return i;
     }
 
-    private boolean canConnectTo(BlockBaseRailLogic par1BlockBaseRailLogic)
+    private boolean canConnectTo(final BlockBaseRailLogic par1BlockBaseRailLogic)
     {
         return this.isRailChunkPositionCorrect(par1BlockBaseRailLogic) ? true : (this.railChunkPosition.size() == 2 ? false : (this.railChunkPosition.isEmpty() ? true : true));
     }
 
-    private void connectToNeighbor(BlockBaseRailLogic par1BlockBaseRailLogic)
+    private void connectToNeighbor(final BlockBaseRailLogic par1BlockBaseRailLogic)
     {
         this.railChunkPosition.add(new ChunkPosition(par1BlockBaseRailLogic.railX, par1BlockBaseRailLogic.railY, par1BlockBaseRailLogic.railZ));
-        boolean flag = this.isPartOfTrack(this.railX, this.railY, this.railZ - 1);
-        boolean flag1 = this.isPartOfTrack(this.railX, this.railY, this.railZ + 1);
-        boolean flag2 = this.isPartOfTrack(this.railX - 1, this.railY, this.railZ);
-        boolean flag3 = this.isPartOfTrack(this.railX + 1, this.railY, this.railZ);
+        final boolean flag = this.isPartOfTrack(this.railX, this.railY, this.railZ - 1);
+        final boolean flag1 = this.isPartOfTrack(this.railX, this.railY, this.railZ + 1);
+        final boolean flag2 = this.isPartOfTrack(this.railX - 1, this.railY, this.railZ);
+        final boolean flag3 = this.isPartOfTrack(this.railX + 1, this.railY, this.railZ);
         byte b0 = -1;
 
         if (flag || flag1)
@@ -270,9 +270,9 @@ public class BlockBaseRailLogic
         this.logicWorld.setBlockMetadataWithNotify(this.railX, this.railY, this.railZ, i, 3);
     }
 
-    private boolean canConnectFrom(int par1, int par2, int par3)
+    private boolean canConnectFrom(final int par1, final int par2, final int par3)
     {
-        BlockBaseRailLogic blockbaseraillogic = this.getRailLogic(new ChunkPosition(par1, par2, par3));
+        final BlockBaseRailLogic blockbaseraillogic = this.getRailLogic(new ChunkPosition(par1, par2, par3));
 
         if (blockbaseraillogic == null)
         {
@@ -285,12 +285,12 @@ public class BlockBaseRailLogic
         }
     }
 
-    public void func_94511_a(boolean par1, boolean par2)
+    public void func_94511_a(final boolean par1, final boolean par2)
     {
-        boolean flag2 = this.canConnectFrom(this.railX, this.railY, this.railZ - 1);
-        boolean flag3 = this.canConnectFrom(this.railX, this.railY, this.railZ + 1);
-        boolean flag4 = this.canConnectFrom(this.railX - 1, this.railY, this.railZ);
-        boolean flag5 = this.canConnectFrom(this.railX + 1, this.railY, this.railZ);
+        final boolean flag2 = this.canConnectFrom(this.railX, this.railY, this.railZ - 1);
+        final boolean flag3 = this.canConnectFrom(this.railX, this.railY, this.railZ + 1);
+        final boolean flag4 = this.canConnectFrom(this.railX - 1, this.railY, this.railZ);
+        final boolean flag5 = this.canConnectFrom(this.railX + 1, this.railY, this.railZ);
         byte b0 = -1;
 
         if ((flag2 || flag3) && !flag4 && !flag5)
@@ -432,7 +432,7 @@ public class BlockBaseRailLogic
 
             for (int j = 0; j < this.railChunkPosition.size(); ++j)
             {
-                BlockBaseRailLogic blockbaseraillogic = this.getRailLogic((ChunkPosition)this.railChunkPosition.get(j));
+                final BlockBaseRailLogic blockbaseraillogic = this.getRailLogic((ChunkPosition)this.railChunkPosition.get(j));
 
                 if (blockbaseraillogic != null)
                 {

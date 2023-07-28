@@ -58,7 +58,7 @@ public class FurnaceBurnEvent extends BlockEvent implements Cancellable {
      *
      * @param burnTime the burn time for this fuel
      */
-    public void setBurnTime(int burnTime) {
+    public void setBurnTime(final int burnTime) {
         this.burnTime = burnTime;
     }
 
@@ -76,7 +76,7 @@ public class FurnaceBurnEvent extends BlockEvent implements Cancellable {
      *
      * @param burning true if the furnace's fuel is burning
      */
-    public void setBurning(boolean burning) {
+    public void setBurning(final boolean burning) {
         this.burning = burning;
     }
 
@@ -84,7 +84,7 @@ public class FurnaceBurnEvent extends BlockEvent implements Cancellable {
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancelled = cancel;
     }
 

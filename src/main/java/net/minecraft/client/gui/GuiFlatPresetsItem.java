@@ -15,7 +15,7 @@ class GuiFlatPresetsItem
     /** Data for this preset. */
     public String presetData;
 
-    public GuiFlatPresetsItem(int par1, String par2Str, String par3Str)
+    public GuiFlatPresetsItem(final int par1, final String par2Str, final String par3Str)
     {
         this.iconId = par1;
         this.presetName = par2Str;

@@ -18,16 +18,16 @@ public abstract class BlockFluid extends Block
     @SideOnly(Side.CLIENT)
     protected Icon[] theIcon;
 
-    protected BlockFluid(int par1, Material par2Material)
+    protected BlockFluid(final int par1, final Material par2Material)
     {
         super(par1, par2Material);
-        float f = 0.0F;
-        float f1 = 0.0F;
+        final float f = 0.0F;
+        final float f1 = 0.0F;
         this.setBlockBounds(0.0F + f1, 0.0F + f, 0.0F + f1, 1.0F + f1, 1.0F + f, 1.0F + f1);
         this.setTickRandomly(true);
     }
 
-    public boolean getBlocksMovement(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public boolean getBlocksMovement(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         return this.blockMaterial != Material.lava;
     }
@@ -44,7 +44,7 @@ public abstract class BlockFluid extends Block
      * Returns a integer with hex for 0xrrggbb with this color multiplied against the blocks color. Note only called
      * when first determining what to render.
      */
-    public int colorMultiplier(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public int colorMultiplier(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         if (this.blockMaterial != Material.water)
         {
@@ -60,7 +60,7 @@ public abstract class BlockFluid extends Block
             {
                 for (int l1 = -1; l1 <= 1; ++l1)
                 {
-                    int i2 = par1IBlockAccess.getBiomeGenForCoords(par2 + l1, par4 + k1).getWaterColorMultiplier();
+                    final int i2 = par1IBlockAccess.getBiomeGenForCoords(par2 + l1, par4 + k1).getWaterColorMultiplier();
                     l += (i2 & 16711680) >> 16;
                     i1 += (i2 & 65280) >> 8;
                     j1 += i2 & 255;
@@ -76,17 +76,18 @@ public abstract class BlockFluid extends Block
      */
     public static float getFluidHeightPercent(int par0)
     {
-        if (par0 >= 8)
+        int par01 = par0;
+        if (par01 >= 8)
         {
-            par0 = 0;
+            par01 = 0;
         }
 
-        return (float)(par0 + 1) / 9.0F;
+        return (float)(par01 + 1) / 9.0F;
     }
 
 
     @Deprecated //Implemented here for compatibility, need to change this when we make vanilla fluids use our fluid methods.
-    public float getFilledPercentage(IBlockAccess world, int x, int y, int z)
+    public float getFilledPercentage(final IBlockAccess world, final int x, final int y, final int z)
     {
         return 1 - BlockFluid.getFluidHeightPercent(world.getBlockMetadata(x, y, z));
     }
@@ -96,7 +97,7 @@ public abstract class BlockFluid extends Block
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
         return par1 != 0 && par1 != 1 ? this.theIcon[1] : this.theIcon[0];
     }
@@ -105,7 +106,7 @@ public abstract class BlockFluid extends Block
      * Returns the amount of fluid decay at the coordinates, or -1 if the block at the coordinates is not the same
      * material as the fluid.
      */
-    protected int getFlowDecay(World par1World, int par2, int par3, int par4)
+    protected int getFlowDecay(final World par1World, final int par2, final int par3, final int par4)
     {
         return par1World.getBlockMaterial(par2, par3, par4) == this.blockMaterial ? par1World.getBlockMetadata(par2, par3, par4) : -1;
     }
@@ -114,7 +115,7 @@ public abstract class BlockFluid extends Block
      * Returns the flow decay but converts values indicating falling liquid (values >=8) to their effective source block
      * value of zero.
      */
-    protected int getEffectiveFlowDecay(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    protected int getEffectiveFlowDecay(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         if (par1IBlockAccess.getBlockMaterial(par2, par3, par4) != this.blockMaterial)
         {
@@ -154,7 +155,7 @@ public abstract class BlockFluid extends Block
      * Returns whether this block is collideable based on the arguments passed in \n@param par1 block metaData \n@param
      * par2 whether the player right-clicked while holding a boat
      */
-    public boolean canCollideCheck(int par1, boolean par2)
+    public boolean canCollideCheck(final int par1, final boolean par2)
     {
         return par2 && par1 == 0;
     }
@@ -163,9 +164,9 @@ public abstract class BlockFluid extends Block
      * Returns Returns true if the given side of this block type should be rendered (if it's solid or not), if the
      * adjacent block is at the given coordinates. Args: blockAccess, x, y, z, side
      */
-    public boolean isBlockSolid(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public boolean isBlockSolid(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
-        Material material = par1IBlockAccess.getBlockMaterial(par2, par3, par4);
+        final Material material = par1IBlockAccess.getBlockMaterial(par2, par3, par4);
         return material == this.blockMaterial ? false : (par5 == 1 ? true : (material == Material.ice ? false : super.isBlockSolid(par1IBlockAccess, par2, par3, par4, par5)));
     }
 
@@ -175,9 +176,9 @@ public abstract class BlockFluid extends Block
      * Returns true if the given side of this block type should be rendered, if the adjacent block is at the given
      * coordinates.  Args: blockAccess, x, y, z, side
      */
-    public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public boolean shouldSideBeRendered(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
-        Material material = par1IBlockAccess.getBlockMaterial(par2, par3, par4);
+        final Material material = par1IBlockAccess.getBlockMaterial(par2, par3, par4);
         return material == this.blockMaterial ? false : (par5 == 1 ? true : (material == Material.ice ? false : super.shouldSideBeRendered(par1IBlockAccess, par2, par3, par4, par5)));
     }
 
@@ -185,7 +186,7 @@ public abstract class BlockFluid extends Block
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4)
     {
         return null;
     }
@@ -201,7 +202,7 @@ public abstract class BlockFluid extends Block
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return 0;
     }
@@ -209,7 +210,7 @@ public abstract class BlockFluid extends Block
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random par1Random)
+    public int quantityDropped(final Random par1Random)
     {
         return 0;
     }
@@ -217,10 +218,10 @@ public abstract class BlockFluid extends Block
     /**
      * Returns a vector indicating the direction and intensity of fluid flow.
      */
-    private Vec3 getFlowVector(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    private Vec3 getFlowVector(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         Vec3 vec3 = par1IBlockAccess.getWorldVec3Pool().getVecFromPool(0.0D, 0.0D, 0.0D);
-        int l = this.getEffectiveFlowDecay(par1IBlockAccess, par2, par3, par4);
+        final int l = this.getEffectiveFlowDecay(par1IBlockAccess, par2, par3, par4);
 
         for (int i1 = 0; i1 < 4; ++i1)
         {
@@ -248,7 +249,7 @@ public abstract class BlockFluid extends Block
             }
 
             int l1 = this.getEffectiveFlowDecay(par1IBlockAccess, j1, par3, k1);
-            int i2;
+            final int i2;
 
             if (l1 < 0)
             {
@@ -327,9 +328,9 @@ public abstract class BlockFluid extends Block
     /**
      * Can add to the passed in vector for a movement vector to be applied to the entity. Args: x, y, z, entity, vec3d
      */
-    public void velocityToAddToEntity(World par1World, int par2, int par3, int par4, Entity par5Entity, Vec3 par6Vec3)
+    public void velocityToAddToEntity(final World par1World, final int par2, final int par3, final int par4, final Entity par5Entity, final Vec3 par6Vec3)
     {
-        Vec3 vec31 = this.getFlowVector(par1World, par2, par3, par4);
+        final Vec3 vec31 = this.getFlowVector(par1World, par2, par3, par4);
         par6Vec3.xCoord += vec31.xCoord;
         par6Vec3.yCoord += vec31.yCoord;
         par6Vec3.zCoord += vec31.zCoord;
@@ -338,7 +339,7 @@ public abstract class BlockFluid extends Block
     /**
      * How many world ticks before ticking
      */
-    public int tickRate(World par1World)
+    public int tickRate(final World par1World)
     {
         return this.blockMaterial == Material.water ? 5 : (this.blockMaterial == Material.lava ? (par1World.provider.hasNoSky ? 10 : 30) : 0);
     }
@@ -346,7 +347,7 @@ public abstract class BlockFluid extends Block
     /**
      * Called whenever the block is added into the world. Args: world, x, y, z
      */
-    public void onBlockAdded(World par1World, int par2, int par3, int par4)
+    public void onBlockAdded(final World par1World, final int par2, final int par3, final int par4)
     {
         this.checkForHarden(par1World, par2, par3, par4);
     }
@@ -355,7 +356,7 @@ public abstract class BlockFluid extends Block
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         this.checkForHarden(par1World, par2, par3, par4);
     }
@@ -365,14 +366,14 @@ public abstract class BlockFluid extends Block
     /**
      * Goes straight to getLightBrightnessForSkyBlocks for Blocks, does some fancy computing for Fluids
      */
-    public int getMixedBrightnessForBlock(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public int getMixedBrightnessForBlock(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
-        int l = par1IBlockAccess.getLightBrightnessForSkyBlocks(par2, par3, par4, 0);
-        int i1 = par1IBlockAccess.getLightBrightnessForSkyBlocks(par2, par3 + 1, par4, 0);
-        int j1 = l & 255;
-        int k1 = i1 & 255;
-        int l1 = l >> 16 & 255;
-        int i2 = i1 >> 16 & 255;
+        final int l = par1IBlockAccess.getLightBrightnessForSkyBlocks(par2, par3, par4, 0);
+        final int i1 = par1IBlockAccess.getLightBrightnessForSkyBlocks(par2, par3 + 1, par4, 0);
+        final int j1 = l & 255;
+        final int k1 = i1 & 255;
+        final int l1 = l >> 16 & 255;
+        final int i2 = i1 >> 16 & 255;
         return (j1 > k1 ? j1 : k1) | (l1 > i2 ? l1 : i2) << 16;
     }
 
@@ -381,10 +382,10 @@ public abstract class BlockFluid extends Block
     /**
      * How bright to render this block based on the light its receiving. Args: iBlockAccess, x, y, z
      */
-    public float getBlockBrightness(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public float getBlockBrightness(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
-        float f = par1IBlockAccess.getLightBrightness(par2, par3, par4);
-        float f1 = par1IBlockAccess.getLightBrightness(par2, par3 + 1, par4);
+        final float f = par1IBlockAccess.getLightBrightness(par2, par3, par4);
+        final float f1 = par1IBlockAccess.getLightBrightness(par2, par3 + 1, par4);
         return f > f1 ? f : f1;
     }
 
@@ -403,7 +404,7 @@ public abstract class BlockFluid extends Block
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void randomDisplayTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         int l;
 
@@ -421,7 +422,7 @@ public abstract class BlockFluid extends Block
 
             for (l = 0; l < 0; ++l)
             {
-                int i1 = par5Random.nextInt(4);
+                final int i1 = par5Random.nextInt(4);
                 int j1 = par2;
                 int k1 = par4;
 
@@ -447,9 +448,9 @@ public abstract class BlockFluid extends Block
 
                 if (par1World.getBlockMaterial(j1, par3, k1) == Material.air && (par1World.getBlockMaterial(j1, par3 - 1, k1).blocksMovement() || par1World.getBlockMaterial(j1, par3 - 1, k1).isLiquid()))
                 {
-                    float f = 0.0625F;
+                    final float f = 0.0625F;
                     double d0 = (double)((float)par2 + par5Random.nextFloat());
-                    double d1 = (double)((float)par3 + par5Random.nextFloat());
+                    final double d1 = (double)((float)par3 + par5Random.nextFloat());
                     double d2 = (double)((float)par4 + par5Random.nextFloat());
 
                     if (i1 == 0)
@@ -553,7 +554,7 @@ public abstract class BlockFluid extends Block
     /**
      * the sin and cos of this number determine the surface gradient of the flowing block.
      */
-    public static double getFlowDirection(IBlockAccess par0IBlockAccess, int par1, int par2, int par3, Material par4Material)
+    public static double getFlowDirection(final IBlockAccess par0IBlockAccess, final int par1, final int par2, final int par3, final Material par4Material)
     {
         Vec3 vec3 = null;
 
@@ -567,13 +568,13 @@ public abstract class BlockFluid extends Block
             vec3 = Block.lavaMoving.getFlowVector(par0IBlockAccess, par1, par2, par3);
         }
 
-        return vec3.xCoord == 0.0D && vec3.zCoord == 0.0D ? -1000.0D : Math.atan2(vec3.zCoord, vec3.xCoord) - (Math.PI / 2D);
+        return vec3.xCoord == 0.0D && vec3.zCoord == 0.0D ? -1000.0D : Math.atan2(vec3.zCoord, vec3.xCoord) - (Math.PI / 2.0D);
     }
 
     /**
      * Forces lava to check to see if it is colliding with water, and then decide what it should harden to.
      */
-    private void checkForHarden(World par1World, int par2, int par3, int par4)
+    private void checkForHarden(final World par1World, final int par2, final int par3, final int par4)
     {
         if (par1World.getBlockId(par2, par3, par4) == this.blockID)
         {
@@ -608,7 +609,7 @@ public abstract class BlockFluid extends Block
 
                 if (flag)
                 {
-                    int l = par1World.getBlockMetadata(par2, par3, par4);
+                    final int l = par1World.getBlockMetadata(par2, par3, par4);
 
                     if (l == 0)
                     {
@@ -628,7 +629,7 @@ public abstract class BlockFluid extends Block
     /**
      * Creates fizzing sound and smoke. Used when lava flows over block or mixes with water.
      */
-    protected void triggerLavaMixEffects(World par1World, int par2, int par3, int par4)
+    protected void triggerLavaMixEffects(final World par1World, final int par2, final int par3, final int par4)
     {
         par1World.playSoundEffect((double)((float)par2 + 0.5F), (double)((float)par3 + 0.5F), (double)((float)par4 + 0.5F), "random.fizz", 0.5F, 2.6F + (par1World.rand.nextFloat() - par1World.rand.nextFloat()) * 0.8F);
 
@@ -644,7 +645,7 @@ public abstract class BlockFluid extends Block
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         if (this.blockMaterial == Material.lava)
         {
@@ -657,7 +658,7 @@ public abstract class BlockFluid extends Block
     }
 
     @SideOnly(Side.CLIENT)
-    public static Icon getFluidIcon(String par0Str)
+    public static Icon getFluidIcon(final String par0Str)
     {
         return par0Str == "water_still" ? Block.waterMoving.theIcon[0] : (par0Str == "water_flow" ? Block.waterMoving.theIcon[1] : (par0Str == "lava_still" ? Block.lavaMoving.theIcon[0] : (par0Str == "lava_flow" ? Block.lavaMoving.theIcon[1] : null)));
     }

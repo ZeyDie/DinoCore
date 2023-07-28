@@ -25,31 +25,31 @@ public class ModLoaderConnectionHandler implements IConnectionHandler
 {
     private BaseModProxy mod;
 
-    public ModLoaderConnectionHandler(BaseModProxy mod)
+    public ModLoaderConnectionHandler(final BaseModProxy mod)
     {
         this.mod = mod;
     }
 
     @Override
-    public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager)
+    public void playerLoggedIn(final Player player, final NetHandler netHandler, final INetworkManager manager)
     {
         mod.onClientLogin((EntityPlayer)player);
     }
 
     @Override
-    public String connectionReceived(NetLoginHandler netHandler, INetworkManager manager)
+    public String connectionReceived(final NetLoginHandler netHandler, final INetworkManager manager)
     {
         return null;
     }
 
     @Override
-    public void connectionOpened(NetHandler netClientHandler, String server, int port, INetworkManager manager)
+    public void connectionOpened(final NetHandler netClientHandler, final String server, final int port, final INetworkManager manager)
     {
         ModLoaderHelper.sidedHelper.clientConnectionOpened(netClientHandler, manager, mod);
     }
 
     @Override
-    public void connectionClosed(INetworkManager manager)
+    public void connectionClosed(final INetworkManager manager)
     {
         if (ModLoaderHelper.sidedHelper==null || !ModLoaderHelper.sidedHelper.clientConnectionClosed(manager, mod))
         {
@@ -59,13 +59,13 @@ public class ModLoaderConnectionHandler implements IConnectionHandler
     }
 
     @Override
-    public void clientLoggedIn(NetHandler nh, INetworkManager manager, Packet1Login login)
+    public void clientLoggedIn(final NetHandler nh, final INetworkManager manager, final Packet1Login login)
     {
         mod.serverConnect(nh);
     }
 
     @Override
-    public void connectionOpened(NetHandler netClientHandler, MinecraftServer server, INetworkManager manager)
+    public void connectionOpened(final NetHandler netClientHandler, final MinecraftServer server, final INetworkManager manager)
     {
         ModLoaderHelper.sidedHelper.clientConnectionOpened(netClientHandler, manager, mod);
     }

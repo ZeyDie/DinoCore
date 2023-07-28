@@ -16,9 +16,9 @@ import java.util.List;
 public class BlockWall extends Block
 {
     /** The types of the wall. */
-    public static final String[] types = new String[] {"normal", "mossy"};
+    public static final String[] types = {"normal", "mossy"};
 
-    public BlockWall(int par1, Block par2Block)
+    public BlockWall(final int par1, final Block par2Block)
     {
         super(par1, par2Block.blockMaterial);
         this.setHardness(par2Block.blockHardness);
@@ -32,7 +32,7 @@ public class BlockWall extends Block
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
         return par2 == 1 ? Block.cobblestoneMossy.getBlockTextureFromSide(par1) : Block.cobblestone.getBlockTextureFromSide(par1);
     }
@@ -53,7 +53,7 @@ public class BlockWall extends Block
         return false;
     }
 
-    public boolean getBlocksMovement(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public boolean getBlocksMovement(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         return false;
     }
@@ -70,12 +70,12 @@ public class BlockWall extends Block
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
-        boolean flag = this.canConnectWallTo(par1IBlockAccess, par2, par3, par4 - 1);
-        boolean flag1 = this.canConnectWallTo(par1IBlockAccess, par2, par3, par4 + 1);
-        boolean flag2 = this.canConnectWallTo(par1IBlockAccess, par2 - 1, par3, par4);
-        boolean flag3 = this.canConnectWallTo(par1IBlockAccess, par2 + 1, par3, par4);
+        final boolean flag = this.canConnectWallTo(par1IBlockAccess, par2, par3, par4 - 1);
+        final boolean flag1 = this.canConnectWallTo(par1IBlockAccess, par2, par3, par4 + 1);
+        final boolean flag2 = this.canConnectWallTo(par1IBlockAccess, par2 - 1, par3, par4);
+        final boolean flag3 = this.canConnectWallTo(par1IBlockAccess, par2 + 1, par3, par4);
         float f = 0.25F;
         float f1 = 0.75F;
         float f2 = 0.25F;
@@ -122,7 +122,7 @@ public class BlockWall extends Block
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4)
     {
         this.setBlockBoundsBasedOnState(par1World, par2, par3, par4);
         this.maxY = 1.5D;
@@ -132,13 +132,13 @@ public class BlockWall extends Block
     /**
      * Return whether an adjacent block can connect to a wall.
      */
-    public boolean canConnectWallTo(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public boolean canConnectWallTo(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
-        int l = par1IBlockAccess.getBlockId(par2, par3, par4);
+        final int l = par1IBlockAccess.getBlockId(par2, par3, par4);
 
         if (l != this.blockID && l != Block.fenceGate.blockID)
         {
-            Block block = Block.blocksList[l];
+            final Block block = Block.blocksList[l];
             return block != null && block.blockMaterial.isOpaque() && block.renderAsNormalBlock() ? block.blockMaterial != Material.pumpkin : false;
         }
         else
@@ -152,7 +152,7 @@ public class BlockWall extends Block
     /**
      * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
      */
-    public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubBlocks(final int par1, final CreativeTabs par2CreativeTabs, final List par3List)
     {
         par3List.add(new ItemStack(par1, 1, 0));
         par3List.add(new ItemStack(par1, 1, 1));
@@ -161,7 +161,7 @@ public class BlockWall extends Block
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int par1)
+    public int damageDropped(final int par1)
     {
         return par1;
     }
@@ -172,7 +172,7 @@ public class BlockWall extends Block
      * Returns true if the given side of this block type should be rendered, if the adjacent block is at the given
      * coordinates.  Args: blockAccess, x, y, z, side
      */
-    public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public boolean shouldSideBeRendered(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
         return par5 == 0 ? super.shouldSideBeRendered(par1IBlockAccess, par2, par3, par4, par5) : true;
     }
@@ -183,5 +183,5 @@ public class BlockWall extends Block
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister) {}
+    public void registerIcons(final IconRegister par1IconRegister) {}
 }

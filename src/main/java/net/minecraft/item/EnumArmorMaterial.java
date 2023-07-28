@@ -27,7 +27,7 @@ public enum EnumArmorMaterial {
     //Added by forge for custom Armor materials.
     public Item customCraftingMaterial = null;
 
-    private EnumArmorMaterial(int par3, int[] par4ArrayOfInteger, int par5) {
+    private EnumArmorMaterial(final int par3, final int[] par4ArrayOfInteger, final int par5) {
         this.maxDamageFactor = par3;
         this.damageReductionAmountArray = par4ArrayOfInteger;
         this.enchantability = par5;
@@ -36,7 +36,7 @@ public enum EnumArmorMaterial {
     /**
      * Returns the durability for a armor slot of for this type.
      */
-    public int getDurability(int par1) {
+    public int getDurability(final int par1) {
         return ItemArmor.getMaxDamageArray()[par1] * this.maxDamageFactor;
     }
 
@@ -44,7 +44,7 @@ public enum EnumArmorMaterial {
      * Return the damage reduction (each 1 point is a half a shield on gui) of the piece index passed (0 = helmet, 1 =
      * plate, 2 = legs and 3 = boots)
      */
-    public int getDamageReductionAmount(int par1) {
+    public int getDamageReductionAmount(final int par1) {
         return this.damageReductionAmountArray[par1];
     }
 

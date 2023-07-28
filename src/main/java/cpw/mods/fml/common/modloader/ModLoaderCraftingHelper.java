@@ -22,19 +22,19 @@ public class ModLoaderCraftingHelper implements ICraftingHandler
 
     private BaseModProxy mod;
 
-    public ModLoaderCraftingHelper(BaseModProxy mod)
+    public ModLoaderCraftingHelper(final BaseModProxy mod)
     {
         this.mod = mod;
     }
 
     @Override
-    public void onCrafting(EntityPlayer player, ItemStack item, IInventory craftMatrix)
+    public void onCrafting(final EntityPlayer player, final ItemStack item, final IInventory craftMatrix)
     {
         mod.takenFromCrafting(player, item, craftMatrix);
     }
 
     @Override
-    public void onSmelting(EntityPlayer player, ItemStack item)
+    public void onSmelting(final EntityPlayer player, final ItemStack item)
     {
         mod.takenFromFurnace(player, item);
     }

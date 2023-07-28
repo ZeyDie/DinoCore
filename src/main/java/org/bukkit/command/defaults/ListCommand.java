@@ -17,14 +17,14 @@ public class ListCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
 
-        StringBuilder online = new StringBuilder();
+        final StringBuilder online = new StringBuilder();
 
-        Player[] players = Bukkit.getOnlinePlayers();
+        final Player[] players = Bukkit.getOnlinePlayers();
 
-        for (Player player : players) {
+        for (final Player player : players) {
             // If a player is hidden from the sender don't show them in the list
             if (sender instanceof Player && !((Player) sender).canSee(player))
                 continue;
@@ -42,7 +42,7 @@ public class ListCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) throws IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");

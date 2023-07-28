@@ -15,7 +15,7 @@ public class GuiBrewingStand extends GuiContainer
     private static final ResourceLocation brewingStandGuiTextures = new ResourceLocation("textures/gui/container/brewing_stand.png");
     private TileEntityBrewingStand brewingStand;
 
-    public GuiBrewingStand(InventoryPlayer par1InventoryPlayer, TileEntityBrewingStand par2TileEntityBrewingStand)
+    public GuiBrewingStand(final InventoryPlayer par1InventoryPlayer, final TileEntityBrewingStand par2TileEntityBrewingStand)
     {
         super(new ContainerBrewingStand(par1InventoryPlayer, par2TileEntityBrewingStand));
         this.brewingStand = par2TileEntityBrewingStand;
@@ -24,9 +24,9 @@ public class GuiBrewingStand extends GuiContainer
     /**
      * Draw the foreground layer for the GuiContainer (everything in front of the items)
      */
-    protected void drawGuiContainerForegroundLayer(int par1, int par2)
+    protected void drawGuiContainerForegroundLayer(final int par1, final int par2)
     {
-        String s = this.brewingStand.isInvNameLocalized() ? this.brewingStand.getInvName() : I18n.getString(this.brewingStand.getInvName());
+        final String s = this.brewingStand.isInvNameLocalized() ? this.brewingStand.getInvName() : I18n.getString(this.brewingStand.getInvName());
         this.fontRenderer.drawString(s, this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, 6, 4210752);
         this.fontRenderer.drawString(I18n.getString("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
     }
@@ -34,14 +34,14 @@ public class GuiBrewingStand extends GuiContainer
     /**
      * Draw the background layer for the GuiContainer (everything behind the items)
      */
-    protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
+    protected void drawGuiContainerBackgroundLayer(final float par1, final int par2, final int par3)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(brewingStandGuiTextures);
-        int k = (this.width - this.xSize) / 2;
-        int l = (this.height - this.ySize) / 2;
+        final int k = (this.width - this.xSize) / 2;
+        final int l = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
-        int i1 = this.brewingStand.getBrewTime();
+        final int i1 = this.brewingStand.getBrewTime();
 
         if (i1 > 0)
         {
@@ -52,7 +52,7 @@ public class GuiBrewingStand extends GuiContainer
                 this.drawTexturedModalRect(k + 97, l + 16, 176, 0, 9, j1);
             }
 
-            int k1 = i1 / 2 % 7;
+            final int k1 = i1 / 2 % 7;
 
             switch (k1)
             {

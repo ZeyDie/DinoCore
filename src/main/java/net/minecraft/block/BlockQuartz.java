@@ -13,8 +13,8 @@ import java.util.List;
 
 public class BlockQuartz extends Block
 {
-    public static final String[] quartzBlockTypes = new String[] {"default", "chiseled", "lines"};
-    private static final String[] quartzBlockTextureTypes = new String[] {"side", "chiseled", "lines", null, null};
+    public static final String[] quartzBlockTypes = {"default", "chiseled", "lines"};
+    private static final String[] quartzBlockTextureTypes = {"side", "chiseled", "lines", null, null};
     @SideOnly(Side.CLIENT)
     private Icon[] quartzblockIcons;
     @SideOnly(Side.CLIENT)
@@ -26,7 +26,7 @@ public class BlockQuartz extends Block
     @SideOnly(Side.CLIENT)
     private Icon quartzblock_bottom;
 
-    public BlockQuartz(int par1)
+    public BlockQuartz(final int par1)
     {
         super(par1, Material.rock);
         this.setCreativeTab(CreativeTabs.tabBlock);
@@ -37,11 +37,12 @@ public class BlockQuartz extends Block
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, int par2)
     {
-        if (par2 != 2 && par2 != 3 && par2 != 4)
+        int par21 = par2;
+        if (par21 != 2 && par21 != 3 && par21 != 4)
         {
-            if (par1 != 1 && (par1 != 0 || par2 != 1))
+            if (par1 != 1 && (par1 != 0 || par21 != 1))
             {
                 if (par1 == 0)
                 {
@@ -49,55 +50,56 @@ public class BlockQuartz extends Block
                 }
                 else
                 {
-                    if (par2 < 0 || par2 >= this.quartzblockIcons.length)
+                    if (par21 < 0 || par21 >= this.quartzblockIcons.length)
                     {
-                        par2 = 0;
+                        par21 = 0;
                     }
 
-                    return this.quartzblockIcons[par2];
+                    return this.quartzblockIcons[par21];
                 }
             }
             else
             {
-                return par2 == 1 ? this.quartzblock_chiseled_top : this.quartzblock_top;
+                return par21 == 1 ? this.quartzblock_chiseled_top : this.quartzblock_top;
             }
         }
         else
         {
-            return par2 == 2 && (par1 == 1 || par1 == 0) ? this.quartzblock_lines_top : (par2 == 3 && (par1 == 5 || par1 == 4) ? this.quartzblock_lines_top : (par2 == 4 && (par1 == 2 || par1 == 3) ? this.quartzblock_lines_top : this.quartzblockIcons[par2]));
+            return par21 == 2 && (par1 == 1 || par1 == 0) ? this.quartzblock_lines_top : (par21 == 3 && (par1 == 5 || par1 == 4) ? this.quartzblock_lines_top : (par21 == 4 && (par1 == 2 || par1 == 3) ? this.quartzblock_lines_top : this.quartzblockIcons[par21]));
         }
     }
 
     /**
      * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
      */
-    public int onBlockPlaced(World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9)
+    public int onBlockPlaced(final World par1World, final int par2, final int par3, final int par4, final int par5, final float par6, final float par7, final float par8, int par9)
     {
-        if (par9 == 2)
+        int par91 = par9;
+        if (par91 == 2)
         {
             switch (par5)
             {
                 case 0:
                 case 1:
-                    par9 = 2;
+                    par91 = 2;
                     break;
                 case 2:
                 case 3:
-                    par9 = 4;
+                    par91 = 4;
                     break;
                 case 4:
                 case 5:
-                    par9 = 3;
+                    par91 = 3;
             }
         }
 
-        return par9;
+        return par91;
     }
 
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int par1)
+    public int damageDropped(final int par1)
     {
         return par1 != 3 && par1 != 4 ? par1 : 2;
     }
@@ -106,7 +108,7 @@ public class BlockQuartz extends Block
      * Returns an item stack containing a single instance of the current block type. 'i' is the block's subtype/damage
      * and is ignored for blocks which do not support subtypes. Blocks which cannot be harvested should return null.
      */
-    protected ItemStack createStackedBlock(int par1)
+    protected ItemStack createStackedBlock(final int par1)
     {
         return par1 != 3 && par1 != 4 ? super.createStackedBlock(par1) : new ItemStack(this.blockID, 1, 2);
     }
@@ -124,7 +126,7 @@ public class BlockQuartz extends Block
     /**
      * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
      */
-    public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubBlocks(final int par1, final CreativeTabs par2CreativeTabs, final List par3List)
     {
         par3List.add(new ItemStack(par1, 1, 0));
         par3List.add(new ItemStack(par1, 1, 1));
@@ -137,7 +139,7 @@ public class BlockQuartz extends Block
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.quartzblockIcons = new Icon[quartzBlockTextureTypes.length];
 

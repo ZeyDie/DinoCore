@@ -6,7 +6,7 @@ import org.bukkit.entity.WaterMob;
 
 public class CraftWaterMob extends CraftCreature implements WaterMob {
 
-    public CraftWaterMob(CraftServer server, net.minecraft.entity.passive.EntityWaterMob entity) {
+    public CraftWaterMob(final CraftServer server, final net.minecraft.entity.passive.EntityWaterMob entity) {
         super(server, entity);
     }
 

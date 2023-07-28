@@ -23,27 +23,27 @@ import org.objectweb.asm.commons.RemappingClassAdapter;
 public class DeobfuscationTransformer implements IClassTransformer, IClassNameTransformer {
 
     @Override
-    public byte[] transform(String name, String transformedName, byte[] bytes)
+    public byte[] transform(final String name, final String transformedName, final byte[] bytes)
     {
         if (bytes == null)
         {
             return null;
         }
-        ClassReader classReader = new ClassReader(bytes);
-        ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-        RemappingClassAdapter remapAdapter = new FMLRemappingAdapter(classWriter);
+        final ClassReader classReader = new ClassReader(bytes);
+        final ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        final RemappingClassAdapter remapAdapter = new FMLRemappingAdapter(classWriter);
         classReader.accept(remapAdapter, ClassReader.EXPAND_FRAMES);
         return classWriter.toByteArray();
     }
 
     @Override
-    public String remapClassName(String name)
+    public String remapClassName(final String name)
     {
         return FMLDeobfuscatingRemapper.INSTANCE.map(name.replace('.','/')).replace('/', '.');
     }
 
     @Override
-    public String unmapClassName(String name)
+    public String unmapClassName(final String name)
     {
         return FMLDeobfuscatingRemapper.INSTANCE.unmap(name.replace('.', '/')).replace('/','.');
     }

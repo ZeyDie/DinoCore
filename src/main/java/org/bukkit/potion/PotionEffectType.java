@@ -127,7 +127,7 @@ public abstract class PotionEffectType {
 
     private final int id;
 
-    protected PotionEffectType(int id) {
+    protected PotionEffectType(final int id) {
         this.id = id;
     }
 
@@ -139,7 +139,7 @@ public abstract class PotionEffectType {
      * @param amplifier the effect's amplifier
      * @return a resulting potion effect
      */
-    public PotionEffect createEffect(int duration, int amplifier) {
+    public PotionEffect createEffect(final int duration, final int amplifier) {
         return Potion.getBrewer().createEffect(this, duration, amplifier);
     }
 
@@ -176,7 +176,7 @@ public abstract class PotionEffectType {
     public abstract boolean isInstant();
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
@@ -213,7 +213,7 @@ public abstract class PotionEffectType {
      * @deprecated Magic value
      */
     @Deprecated
-    public static PotionEffectType getById(int id) {
+    public static PotionEffectType getById(final int id) {
         if (id >= byId.size() || id < 0)
             return null;
         return byId.get(id);
@@ -225,7 +225,7 @@ public abstract class PotionEffectType {
      * @param name Name of PotionEffectType to fetch
      * @return Resulting PotionEffectType, or null if not found.
      */
-    public static PotionEffectType getByName(String name) {
+    public static PotionEffectType getByName(final String name) {
         Validate.notNull(name, "name cannot be null");
         return byName.get(name.toLowerCase());
     }
@@ -237,7 +237,7 @@ public abstract class PotionEffectType {
      *
      * @param type PotionType to register
      */
-    public static void registerPotionEffectType(PotionEffectType type) {
+    public static void registerPotionEffectType(final PotionEffectType type) {
         /* Cauldron start - allow vanilla to replace potions, Fixes issue #1
         if (byId[type.id] != null || byName.containsKey(type.getName().toLowerCase())) {
             throw new IllegalArgumentException("Cannot set already-set type");
@@ -264,8 +264,8 @@ public abstract class PotionEffectType {
      */
     public static PotionEffectType[] values() {
         int maxId = 0;
-        for(int id : byId.keySet()) maxId = Math.max(maxId, id);
-        PotionEffectType[] result = new PotionEffectType[maxId + 1]; // Cauldron change underlying storage to map
+        for(final int id : byId.keySet()) maxId = Math.max(maxId, id);
+        final PotionEffectType[] result = new PotionEffectType[maxId + 1]; // Cauldron change underlying storage to map
         return byId.values().toArray(result); // Cauldron change underlying storage to map
     }
 }

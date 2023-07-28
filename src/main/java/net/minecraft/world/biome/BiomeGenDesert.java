@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class BiomeGenDesert extends BiomeGenBase
 {
-    public BiomeGenDesert(int par1)
+    public BiomeGenDesert(final int par1)
     {
         super(par1);
         this.spawnableCreatureList.clear();
@@ -20,15 +20,15 @@ public class BiomeGenDesert extends BiomeGenBase
         this.theBiomeDecorator.cactiPerChunk = 10;
     }
 
-    public void decorate(World par1World, Random par2Random, int par3, int par4)
+    public void decorate(final World par1World, final Random par2Random, final int par3, final int par4)
     {
         super.decorate(par1World, par2Random, par3, par4);
 
         if (par2Random.nextInt(1000) == 0)
         {
-            int k = par3 + par2Random.nextInt(16) + 8;
-            int l = par4 + par2Random.nextInt(16) + 8;
-            WorldGenDesertWells worldgendesertwells = new WorldGenDesertWells();
+            final int k = par3 + par2Random.nextInt(16) + 8;
+            final int l = par4 + par2Random.nextInt(16) + 8;
+            final WorldGenDesertWells worldgendesertwells = new WorldGenDesertWells();
             worldgendesertwells.generate(par1World, par2Random, k, par1World.getHeightValue(k, l) + 1, l);
         }
     }

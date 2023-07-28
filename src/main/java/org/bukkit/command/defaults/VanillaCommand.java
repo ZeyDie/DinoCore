@@ -10,32 +10,32 @@ public abstract class VanillaCommand extends Command {
     static final int MIN_COORD_MINUS_ONE = -30000001;
     static final int MIN_COORD = -30000000;
 
-    protected VanillaCommand(String name) {
+    protected VanillaCommand(final String name) {
         super(name);
     }
 
-    protected VanillaCommand(String name, String description, String usageMessage, List<String> aliases) {
+    protected VanillaCommand(final String name, final String description, final String usageMessage, final List<String> aliases) {
         super(name, description, usageMessage, aliases);
     }
 
-    public boolean matches(String input) {
+    public boolean matches(final String input) {
         return input.equalsIgnoreCase(this.getName());
     }
 
-    protected int getInteger(CommandSender sender, String value, int min) {
+    protected int getInteger(final CommandSender sender, final String value, final int min) {
         return getInteger(sender, value, min, Integer.MAX_VALUE);
     }
 
-    int getInteger(CommandSender sender, String value, int min, int max) {
+    int getInteger(final CommandSender sender, final String value, final int min, final int max) {
         return getInteger(sender, value, min, max, false);
     }
 
-    int getInteger(CommandSender sender, String value, int min, int max, boolean Throws) {
+    int getInteger(final CommandSender sender, final String value, final int min, final int max, final boolean Throws) {
         int i = min;
 
         try {
             i = Integer.valueOf(value);
-        } catch (NumberFormatException ex) {
+        } catch (final NumberFormatException ex) {
             if (Throws) {
                 throw new NumberFormatException(String.format("%s is not a valid number", value));
             }
@@ -50,17 +50,17 @@ public abstract class VanillaCommand extends Command {
         return i;
     }
 
-    Integer getInteger(String value) {
+    Integer getInteger(final String value) {
         try {
             return Integer.valueOf(value);
-        } catch (NumberFormatException ex) {
+        } catch (final NumberFormatException ex) {
             return null;
         }
     }
 
-    public static double getRelativeDouble(double original, CommandSender sender, String input) {
+    public static double getRelativeDouble(final double original, final CommandSender sender, final String input) {
         if (input.startsWith("~")) {
-            double value = getDouble(sender, input.substring(1));
+            final double value = getDouble(sender, input.substring(1));
             if (value == MIN_COORD_MINUS_ONE) {
                 return MIN_COORD_MINUS_ONE;
             }
@@ -70,15 +70,15 @@ public abstract class VanillaCommand extends Command {
         }
     }
 
-    public static double getDouble(CommandSender sender, String input) {
+    public static double getDouble(final CommandSender sender, final String input) {
         try {
             return Double.parseDouble(input);
-        } catch (NumberFormatException ex) {
+        } catch (final NumberFormatException ex) {
             return MIN_COORD_MINUS_ONE;
         }
     }
 
-    public static double getDouble(CommandSender sender, String input, double min, double max) {
+    public static double getDouble(final CommandSender sender, final String input, final double min, final double max) {
         double result = getDouble(sender, input);
 
         // TODO: This should throw an exception instead.
@@ -91,12 +91,12 @@ public abstract class VanillaCommand extends Command {
         return result;
     }
 
-    String createString(String[] args, int start) {
+    String createString(final String[] args, final int start) {
         return createString(args, start, " ");
     }
 
-    String createString(String[] args, int start, String glue) {
-        StringBuilder string = new StringBuilder();
+    String createString(final String[] args, final int start, final String glue) {
+        final StringBuilder string = new StringBuilder();
 
         for (int x = start; x < args.length; x++) {
             string.append(args[x]);

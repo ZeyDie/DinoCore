@@ -34,7 +34,7 @@ public class PathPoint
     /** Indicates this is the origin */
     public boolean isFirst;
 
-    public PathPoint(int par1, int par2, int par3)
+    public PathPoint(final int par1, final int par2, final int par3)
     {
         this.xCoord = par1;
         this.yCoord = par2;
@@ -42,7 +42,7 @@ public class PathPoint
         this.hash = makeHash(par1, par2, par3);
     }
 
-    public static int makeHash(int par0, int par1, int par2)
+    public static int makeHash(final int par0, final int par1, final int par2)
     {
         return par1 & 255 | (par0 & 32767) << 8 | (par2 & 32767) << 24 | (par0 < 0 ? Integer.MIN_VALUE : 0) | (par2 < 0 ? 32768 : 0);
     }
@@ -50,23 +50,23 @@ public class PathPoint
     /**
      * Returns the linear distance to another path point
      */
-    public float distanceTo(PathPoint par1PathPoint)
+    public float distanceTo(final PathPoint par1PathPoint)
     {
-        float f = (float)(par1PathPoint.xCoord - this.xCoord);
-        float f1 = (float)(par1PathPoint.yCoord - this.yCoord);
-        float f2 = (float)(par1PathPoint.zCoord - this.zCoord);
+        final float f = (float)(par1PathPoint.xCoord - this.xCoord);
+        final float f1 = (float)(par1PathPoint.yCoord - this.yCoord);
+        final float f2 = (float)(par1PathPoint.zCoord - this.zCoord);
         return MathHelper.sqrt_float(f * f + f1 * f1 + f2 * f2);
     }
 
-    public float func_75832_b(PathPoint par1PathPoint)
+    public float func_75832_b(final PathPoint par1PathPoint)
     {
-        float f = (float)(par1PathPoint.xCoord - this.xCoord);
-        float f1 = (float)(par1PathPoint.yCoord - this.yCoord);
-        float f2 = (float)(par1PathPoint.zCoord - this.zCoord);
+        final float f = (float)(par1PathPoint.xCoord - this.xCoord);
+        final float f1 = (float)(par1PathPoint.yCoord - this.yCoord);
+        final float f2 = (float)(par1PathPoint.zCoord - this.zCoord);
         return f * f + f1 * f1 + f2 * f2;
     }
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         if (!(par1Obj instanceof PathPoint))
         {
@@ -74,7 +74,7 @@ public class PathPoint
         }
         else
         {
-            PathPoint pathpoint = (PathPoint)par1Obj;
+            final PathPoint pathpoint = (PathPoint)par1Obj;
             return this.hash == pathpoint.hash && this.xCoord == pathpoint.xCoord && this.yCoord == pathpoint.yCoord && this.zCoord == pathpoint.zCoord;
         }
     }

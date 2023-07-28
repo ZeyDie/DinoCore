@@ -37,26 +37,27 @@ public class BukkitObjectInputStream extends ObjectInputStream {
      * @throws IOException
      * @see ObjectInputStream#ObjectInputStream(InputStream)
      */
-    public BukkitObjectInputStream(InputStream in) throws IOException {
+    public BukkitObjectInputStream(final InputStream in) throws IOException {
         super(in);
         super.enableResolveObject(true);
     }
 
     @Override
     protected Object resolveObject(Object obj) throws IOException {
-        if (obj instanceof Wrapper) {
+        Object obj1 = obj;
+        if (obj1 instanceof Wrapper) {
             try {
-                (obj = ConfigurationSerialization.deserializeObject(((Wrapper<?>) obj).map)).getClass(); // NPE
-            } catch (Throwable ex) {
+                (obj1 = ConfigurationSerialization.deserializeObject(((Wrapper<?>) obj1).map)).getClass(); // NPE
+            } catch (final Throwable ex) {
                 throw newIOException("Failed to deserialize object", ex);
             }
         }
 
-        return super.resolveObject(obj);
+        return super.resolveObject(obj1);
     }
 
-    private static IOException newIOException(String string, Throwable cause) {
-        IOException exception = new IOException(string);
+    private static IOException newIOException(final String string, final Throwable cause) {
+        final IOException exception = new IOException(string);
         exception.initCause(cause);
         return exception;
     }

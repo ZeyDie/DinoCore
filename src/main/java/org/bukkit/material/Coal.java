@@ -11,7 +11,7 @@ public class Coal extends MaterialData {
         super(Material.COAL);
     }
 
-    public Coal(CoalType type) {
+    public Coal(final CoalType type) {
         this();
         setType(type);
     }
@@ -61,7 +61,7 @@ public class Coal extends MaterialData {
      *
      * @param type New type of this coal
      */
-    public void setType(CoalType type) {
+    public void setType(final CoalType type) {
         setData(type.getData());
     }
 

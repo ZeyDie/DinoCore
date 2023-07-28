@@ -17,17 +17,17 @@ public class GuiConnecting extends GuiScreen
     private boolean cancelled;
     private final GuiScreen field_98098_c;
 
-    public GuiConnecting(GuiScreen par1GuiScreen, Minecraft par2Minecraft, ServerData par3ServerData)
+    public GuiConnecting(final GuiScreen par1GuiScreen, final Minecraft par2Minecraft, final ServerData par3ServerData)
     {
         this.mc = par2Minecraft;
         this.field_98098_c = par1GuiScreen;
-        ServerAddress serveraddress = ServerAddress.func_78860_a(par3ServerData.serverIP);
+        final ServerAddress serveraddress = ServerAddress.func_78860_a(par3ServerData.serverIP);
         par2Minecraft.loadWorld((WorldClient)null);
         par2Minecraft.setServerData(par3ServerData);
         this.spawnNewServerThread(serveraddress.getIP(), serveraddress.getPort());
     }
 
-    public GuiConnecting(GuiScreen par1GuiScreen, Minecraft par2Minecraft, String par3Str, int par4)
+    public GuiConnecting(final GuiScreen par1GuiScreen, final Minecraft par2Minecraft, final String par3Str, final int par4)
     {
         this.mc = par2Minecraft;
         this.field_98098_c = par1GuiScreen;
@@ -35,7 +35,7 @@ public class GuiConnecting extends GuiScreen
         this.spawnNewServerThread(par3Str, par4);
     }
 
-    private void spawnNewServerThread(String par1Str, int par2)
+    private void spawnNewServerThread(final String par1Str, final int par2)
     {
         this.mc.getLogAgent().logInfo("Connecting to " + par1Str + ", " + par2);
         (new ThreadConnectToServer(this, par1Str, par2)).start();
@@ -55,7 +55,7 @@ public class GuiConnecting extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2) {}
+    protected void keyTyped(final char par1, final int par2) {}
 
     /**
      * Adds the buttons (and other controls) to the screen in question.
@@ -69,7 +69,7 @@ public class GuiConnecting extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.id == 0)
         {
@@ -87,7 +87,7 @@ public class GuiConnecting extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
 
@@ -108,22 +108,22 @@ public class GuiConnecting extends GuiScreen
     /**
      * Sets the NetClientHandler.
      */
-    static NetClientHandler setNetClientHandler(GuiConnecting par0GuiConnecting, NetClientHandler par1NetClientHandler)
+    static NetClientHandler setNetClientHandler(final GuiConnecting par0GuiConnecting, final NetClientHandler par1NetClientHandler)
     {
         return par0GuiConnecting.clientHandler = par1NetClientHandler;
     }
 
-    static Minecraft func_74256_a(GuiConnecting par0GuiConnecting)
+    static Minecraft func_74256_a(final GuiConnecting par0GuiConnecting)
     {
         return par0GuiConnecting.mc;
     }
 
-    static boolean isCancelled(GuiConnecting par0GuiConnecting)
+    static boolean isCancelled(final GuiConnecting par0GuiConnecting)
     {
         return par0GuiConnecting.cancelled;
     }
 
-    static Minecraft func_74254_c(GuiConnecting par0GuiConnecting)
+    static Minecraft func_74254_c(final GuiConnecting par0GuiConnecting)
     {
         return par0GuiConnecting.mc;
     }
@@ -131,32 +131,32 @@ public class GuiConnecting extends GuiScreen
     /**
      * Gets the NetClientHandler.
      */
-    static NetClientHandler getNetClientHandler(GuiConnecting par0GuiConnecting)
+    static NetClientHandler getNetClientHandler(final GuiConnecting par0GuiConnecting)
     {
         return par0GuiConnecting.clientHandler;
     }
 
-    static GuiScreen func_98097_e(GuiConnecting par0GuiConnecting)
+    static GuiScreen func_98097_e(final GuiConnecting par0GuiConnecting)
     {
         return par0GuiConnecting.field_98098_c;
     }
 
-    static Minecraft func_74250_f(GuiConnecting par0GuiConnecting)
+    static Minecraft func_74250_f(final GuiConnecting par0GuiConnecting)
     {
         return par0GuiConnecting.mc;
     }
 
-    static Minecraft func_74251_g(GuiConnecting par0GuiConnecting)
+    static Minecraft func_74251_g(final GuiConnecting par0GuiConnecting)
     {
         return par0GuiConnecting.mc;
     }
 
-    static Minecraft func_98096_h(GuiConnecting par0GuiConnecting)
+    static Minecraft func_98096_h(final GuiConnecting par0GuiConnecting)
     {
         return par0GuiConnecting.mc;
     }
     
-    public static void forceTermination(GuiConnecting gui)
+    public static void forceTermination(final GuiConnecting gui)
     {
         gui.cancelled = true;
         gui.clientHandler = null;

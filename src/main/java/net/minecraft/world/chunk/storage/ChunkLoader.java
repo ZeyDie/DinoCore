@@ -7,11 +7,11 @@ import net.minecraft.world.chunk.NibbleArray;
 
 public class ChunkLoader
 {
-    public static AnvilConverterData load(NBTTagCompound par0NBTTagCompound)
+    public static AnvilConverterData load(final NBTTagCompound par0NBTTagCompound)
     {
-        int i = par0NBTTagCompound.getInteger("xPos");
-        int j = par0NBTTagCompound.getInteger("zPos");
-        AnvilConverterData anvilconverterdata = new AnvilConverterData(i, j);
+        final int i = par0NBTTagCompound.getInteger("xPos");
+        final int j = par0NBTTagCompound.getInteger("zPos");
+        final AnvilConverterData anvilconverterdata = new AnvilConverterData(i, j);
         anvilconverterdata.blocks = par0NBTTagCompound.getByteArray("Blocks");
         anvilconverterdata.data = new NibbleArrayReader(par0NBTTagCompound.getByteArray("Data"), 7);
         anvilconverterdata.skyLight = new NibbleArrayReader(par0NBTTagCompound.getByteArray("SkyLight"), 7);
@@ -26,7 +26,7 @@ public class ChunkLoader
         {
             anvilconverterdata.lastUpdated = par0NBTTagCompound.getLong("LastUpdate");
         }
-        catch (ClassCastException classcastexception)
+        catch (final ClassCastException classcastexception)
         {
             anvilconverterdata.lastUpdated = (long)par0NBTTagCompound.getInteger("LastUpdate");
         }
@@ -34,12 +34,12 @@ public class ChunkLoader
         return anvilconverterdata;
     }
 
-    public static void convertToAnvilFormat(AnvilConverterData par0AnvilConverterData, NBTTagCompound par1NBTTagCompound, WorldChunkManager par2WorldChunkManager)
+    public static void convertToAnvilFormat(final AnvilConverterData par0AnvilConverterData, final NBTTagCompound par1NBTTagCompound, final WorldChunkManager par2WorldChunkManager)
     {
         par1NBTTagCompound.setInteger("xPos", par0AnvilConverterData.x);
         par1NBTTagCompound.setInteger("zPos", par0AnvilConverterData.z);
         par1NBTTagCompound.setLong("LastUpdate", par0AnvilConverterData.lastUpdated);
-        int[] aint = new int[par0AnvilConverterData.heightmap.length];
+        final int[] aint = new int[par0AnvilConverterData.heightmap.length];
 
         for (int i = 0; i < par0AnvilConverterData.heightmap.length; ++i)
         {
@@ -48,7 +48,7 @@ public class ChunkLoader
 
         par1NBTTagCompound.setIntArray("HeightMap", aint);
         par1NBTTagCompound.setBoolean("TerrainPopulated", par0AnvilConverterData.terrainPopulated);
-        NBTTagList nbttaglist = new NBTTagList("Sections");
+        final NBTTagList nbttaglist = new NBTTagList("Sections");
         int j;
 
         for (int k = 0; k < 8; ++k)
@@ -67,8 +67,8 @@ public class ChunkLoader
                     {
                         if (i1 < 16)
                         {
-                            int j1 = j << 11 | i1 << 7 | l + (k << 4);
-                            byte b0 = par0AnvilConverterData.blocks[j1];
+                            final int j1 = j << 11 | i1 << 7 | l + (k << 4);
+                            final byte b0 = par0AnvilConverterData.blocks[j1];
 
                             if (b0 == 0)
                             {
@@ -87,10 +87,10 @@ public class ChunkLoader
 
             if (!flag)
             {
-                byte[] abyte = new byte[4096];
-                NibbleArray nibblearray = new NibbleArray(abyte.length, 4);
-                NibbleArray nibblearray1 = new NibbleArray(abyte.length, 4);
-                NibbleArray nibblearray2 = new NibbleArray(abyte.length, 4);
+                final byte[] abyte = new byte[4096];
+                final NibbleArray nibblearray = new NibbleArray(abyte.length, 4);
+                final NibbleArray nibblearray1 = new NibbleArray(abyte.length, 4);
+                final NibbleArray nibblearray2 = new NibbleArray(abyte.length, 4);
 
                 for (int k1 = 0; k1 < 16; ++k1)
                 {
@@ -98,8 +98,8 @@ public class ChunkLoader
                     {
                         for (int i2 = 0; i2 < 16; ++i2)
                         {
-                            int j2 = k1 << 11 | i2 << 7 | l1 + (k << 4);
-                            byte b1 = par0AnvilConverterData.blocks[j2];
+                            final int j2 = k1 << 11 | i2 << 7 | l1 + (k << 4);
+                            final byte b1 = par0AnvilConverterData.blocks[j2];
                             abyte[l1 << 8 | i2 << 4 | k1] = (byte)(b1 & 255);
                             nibblearray.set(k1, l1, i2, par0AnvilConverterData.data.get(k1, l1 + (k << 4), i2));
                             nibblearray1.set(k1, l1, i2, par0AnvilConverterData.skyLight.get(k1, l1 + (k << 4), i2));
@@ -108,7 +108,7 @@ public class ChunkLoader
                     }
                 }
 
-                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+                final NBTTagCompound nbttagcompound1 = new NBTTagCompound();
                 nbttagcompound1.setByte("Y", (byte)(k & 255));
                 nbttagcompound1.setByteArray("Blocks", abyte);
                 // Spigot start - data -> getValueArray() accessor
@@ -121,7 +121,7 @@ public class ChunkLoader
         }
 
         par1NBTTagCompound.setTag("Sections", nbttaglist);
-        byte[] abyte1 = new byte[256];
+        final byte[] abyte1 = new byte[256];
 
         for (int k2 = 0; k2 < 16; ++k2)
         {

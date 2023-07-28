@@ -26,24 +26,24 @@ public class RenderWitch extends RenderLiving
         this.witchModel = (ModelWitch)this.mainModel;
     }
 
-    public void func_82412_a(EntityWitch par1EntityWitch, double par2, double par4, double par6, float par8, float par9)
+    public void func_82412_a(final EntityWitch par1EntityWitch, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
-        ItemStack itemstack = par1EntityWitch.getHeldItem();
+        final ItemStack itemstack = par1EntityWitch.getHeldItem();
         this.witchModel.field_82900_g = itemstack != null;
         super.doRenderLiving(par1EntityWitch, par2, par4, par6, par8, par9);
     }
 
-    protected ResourceLocation getWitchTextures(EntityWitch par1EntityWitch)
+    protected ResourceLocation getWitchTextures(final EntityWitch par1EntityWitch)
     {
         return witchTextures;
     }
 
-    protected void func_82411_a(EntityWitch par1EntityWitch, float par2)
+    protected void func_82411_a(final EntityWitch par1EntityWitch, final float par2)
     {
-        float f1 = 1.0F;
+        final float f1 = 1.0F;
         GL11.glColor3f(f1, f1, f1);
         super.renderEquippedItems(par1EntityWitch, par2);
-        ItemStack itemstack = par1EntityWitch.getHeldItem();
+        final ItemStack itemstack = par1EntityWitch.getHeldItem();
 
         if (itemstack != null)
         {
@@ -122,13 +122,13 @@ public class RenderWitch extends RenderLiving
         GL11.glTranslatef(0.0F, 0.1875F, 0.0F);
     }
 
-    protected void func_82409_b(EntityWitch par1EntityWitch, float par2)
+    protected void func_82409_b(final EntityWitch par1EntityWitch, final float par2)
     {
-        float f1 = 0.9375F;
+        final float f1 = 0.9375F;
         GL11.glScalef(f1, f1, f1);
     }
 
-    public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9)
+    public void doRenderLiving(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.func_82412_a((EntityWitch)par1EntityLiving, par2, par4, par6, par8, par9);
     }
@@ -137,17 +137,17 @@ public class RenderWitch extends RenderLiving
      * Allows the render to do any OpenGL state modifications necessary before the model is rendered. Args:
      * entityLiving, partialTickTime
      */
-    protected void preRenderCallback(EntityLivingBase par1EntityLivingBase, float par2)
+    protected void preRenderCallback(final EntityLivingBase par1EntityLivingBase, final float par2)
     {
         this.func_82409_b((EntityWitch)par1EntityLivingBase, par2);
     }
 
-    protected void renderEquippedItems(EntityLivingBase par1EntityLivingBase, float par2)
+    protected void renderEquippedItems(final EntityLivingBase par1EntityLivingBase, final float par2)
     {
         this.func_82411_a((EntityWitch)par1EntityLivingBase, par2);
     }
 
-    public void renderPlayer(EntityLivingBase par1EntityLivingBase, double par2, double par4, double par6, float par8, float par9)
+    public void renderPlayer(final EntityLivingBase par1EntityLivingBase, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.func_82412_a((EntityWitch)par1EntityLivingBase, par2, par4, par6, par8, par9);
     }
@@ -155,7 +155,7 @@ public class RenderWitch extends RenderLiving
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.getWitchTextures((EntityWitch)par1Entity);
     }
@@ -166,7 +166,7 @@ public class RenderWitch extends RenderLiving
      * (Render<T extends Entity) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.func_82412_a((EntityWitch)par1Entity, par2, par4, par6, par8, par9);
     }

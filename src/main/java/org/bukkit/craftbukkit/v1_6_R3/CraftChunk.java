@@ -20,7 +20,7 @@ public class CraftChunk implements Chunk {
     private static final short[] emptyBlockIDs = new short[4096];
     private static final byte[] emptySkyLight = new byte[2048];
 
-    public CraftChunk(net.minecraft.world.chunk.Chunk chunk) {
+    public CraftChunk(final net.minecraft.world.chunk.Chunk chunk) {
         if (!(chunk instanceof net.minecraft.world.chunk.EmptyChunk)) {
             this.weakChunk = new WeakReference<net.minecraft.world.chunk.Chunk>(chunk);
         }
@@ -69,22 +69,22 @@ public class CraftChunk implements Chunk {
         return "CraftChunk{" + "x=" + getX() + "z=" + getZ() + '}';
     }
 
-    public Block getBlock(int x, int y, int z) {
+    public Block getBlock(final int x, final int y, final int z) {
         return new CraftBlock(this, (getX() << 4) | (x & 0xF), y & 0xFF, (getZ() << 4) | (z & 0xF));
     }
 
     public Entity[] getEntities() {
         int count = 0, index = 0;
-        net.minecraft.world.chunk.Chunk chunk = getHandle();
+        final net.minecraft.world.chunk.Chunk chunk = getHandle();
 
         for (int i = 0; i < 16; i++) {
             count += chunk.entityLists[i].size();
         }
 
-        Entity[] entities = new Entity[count];
+        final Entity[] entities = new Entity[count];
 
         for (int i = 0; i < 16; i++) {
-            for (Object obj : chunk.entityLists[i].toArray()) {
+            for (final Object obj : chunk.entityLists[i].toArray()) {
                 if (!(obj instanceof net.minecraft.entity.Entity)) {
                     continue;
                 }
@@ -98,15 +98,15 @@ public class CraftChunk implements Chunk {
 
     public BlockState[] getTileEntities() {
         int index = 0;
-        net.minecraft.world.chunk.Chunk chunk = getHandle();
-        BlockState[] entities = new BlockState[chunk.chunkTileEntityMap.size()];
+        final net.minecraft.world.chunk.Chunk chunk = getHandle();
+        final BlockState[] entities = new BlockState[chunk.chunkTileEntityMap.size()];
 
-        for (Object obj : chunk.chunkTileEntityMap.keySet().toArray()) {
+        for (final Object obj : chunk.chunkTileEntityMap.keySet().toArray()) {
             if (!(obj instanceof net.minecraft.world.ChunkPosition)) {
                 continue;
             }
 
-            net.minecraft.world.ChunkPosition position = (net.minecraft.world.ChunkPosition) obj;
+            final net.minecraft.world.ChunkPosition position = (net.minecraft.world.ChunkPosition) obj;
             entities[index++] = worldServer.getWorld().getBlockAt(position.x + (chunk.xPosition << 4), position.y, position.z + (chunk.zPosition << 4)).getState();
         }
         return entities;
@@ -120,7 +120,7 @@ public class CraftChunk implements Chunk {
         return getWorld().loadChunk(getX(), getZ(), true);
     }
 
-    public boolean load(boolean generate) {
+    public boolean load(final boolean generate) {
         return getWorld().loadChunk(getX(), getZ(), generate);
     }
 
@@ -128,11 +128,11 @@ public class CraftChunk implements Chunk {
         return getWorld().unloadChunk(getX(), getZ());
     }
 
-    public boolean unload(boolean save) {
+    public boolean unload(final boolean save) {
         return getWorld().unloadChunk(getX(), getZ(), save);
     }
 
-    public boolean unload(boolean save, boolean safe) {
+    public boolean unload(final boolean save, final boolean safe) {
         return getWorld().unloadChunk(getX(), getZ(), save, safe);
     }
 
@@ -140,15 +140,15 @@ public class CraftChunk implements Chunk {
         return getChunkSnapshot(true, false, false);
     }
 
-    public ChunkSnapshot getChunkSnapshot(boolean includeMaxBlockY, boolean includeBiome, boolean includeBiomeTempRain) {
-        net.minecraft.world.chunk.Chunk chunk = getHandle();
+    public ChunkSnapshot getChunkSnapshot(final boolean includeMaxBlockY, final boolean includeBiome, final boolean includeBiomeTempRain) {
+        final net.minecraft.world.chunk.Chunk chunk = getHandle();
 
-        net.minecraft.world.chunk.storage.ExtendedBlockStorage[] cs = chunk.getBlockStorageArray(); /* Get sections */
-        short[][] sectionBlockIDs = new short[cs.length][];
-        byte[][] sectionBlockData = new byte[cs.length][];
-        byte[][] sectionSkyLights = new byte[cs.length][];
-        byte[][] sectionEmitLights = new byte[cs.length][];
-        boolean[] sectionEmpty = new boolean[cs.length];
+        final net.minecraft.world.chunk.storage.ExtendedBlockStorage[] cs = chunk.getBlockStorageArray(); /* Get sections */
+        final short[][] sectionBlockIDs = new short[cs.length][];
+        final byte[][] sectionBlockData = new byte[cs.length][];
+        final byte[][] sectionSkyLights = new byte[cs.length][];
+        final byte[][] sectionEmitLights = new byte[cs.length][];
+        final boolean[] sectionEmpty = new boolean[cs.length];
 
         for (int i = 0; i < cs.length; i++) {
             if (cs[i] == null) { /* Section is empty? */
@@ -158,8 +158,8 @@ public class CraftChunk implements Chunk {
                 sectionEmitLights[i] = emptyData;
                 sectionEmpty[i] = true;
             } else { /* Not empty */
-                short[] blockids = new short[4096];
-                byte[] baseids = cs[i].getBlockLSBArray();
+                final short[] blockids = new short[4096];
+                final byte[] baseids = cs[i].getBlockLSBArray();
 
                 /* Copy base IDs */
                 for (int j = 0; j < 4096; j++) {
@@ -177,11 +177,11 @@ public class CraftChunk implements Chunk {
                                 }
                         }
                     } else {
-                        byte[] extids = cs[i].getBlockMSBArray().getValueArray();
+                        final byte[] extids = cs[i].getBlockMSBArray().getValueArray();
                         // Spigot end
     
                         for (int j = 0; j < 2048; j++) {
-                            short b = (short) (extids[j] & 0xFF);
+                            final short b = (short) (extids[j] & 0xFF);
     
                             if (b == 0) {
                                 continue;
@@ -241,7 +241,7 @@ public class CraftChunk implements Chunk {
         double[] biomeRain = null;
 
         if (includeBiome || includeBiomeTempRain) {
-            net.minecraft.world.biome.WorldChunkManager wcm = chunk.worldObj.getWorldChunkManager();
+            final net.minecraft.world.biome.WorldChunkManager wcm = chunk.worldObj.getWorldChunkManager();
 
             if (includeBiome) {
                 biome = new net.minecraft.world.biome.BiomeGenBase[256];
@@ -267,17 +267,17 @@ public class CraftChunk implements Chunk {
             }
         }
 
-        World world = getWorld();
+        final World world = getWorld();
         return new CraftChunkSnapshot(getX(), getZ(), world.getName(), world.getFullTime(), sectionBlockIDs, sectionBlockData, sectionSkyLights, sectionEmitLights, sectionEmpty, hmap, biome, biomeTemp, biomeRain);
     }
 
-    public static ChunkSnapshot getEmptyChunkSnapshot(int x, int z, CraftWorld world, boolean includeBiome, boolean includeBiomeTempRain) {
+    public static ChunkSnapshot getEmptyChunkSnapshot(final int x, final int z, final CraftWorld world, final boolean includeBiome, final boolean includeBiomeTempRain) {
         net.minecraft.world.biome.BiomeGenBase[] biome = null;
         double[] biomeTemp = null;
         double[] biomeRain = null;
 
         if (includeBiome || includeBiomeTempRain) {
-            net.minecraft.world.biome.WorldChunkManager wcm = world.getHandle().getWorldChunkManager();
+            final net.minecraft.world.biome.WorldChunkManager wcm = world.getHandle().getWorldChunkManager();
 
             if (includeBiome) {
                 biome = new net.minecraft.world.biome.BiomeGenBase[256];
@@ -304,12 +304,12 @@ public class CraftChunk implements Chunk {
         }
 
         /* Fill with empty data */
-        int hSection = world.getMaxHeight() >> 4;
-        short[][] blockIDs = new short[hSection][];
-        byte[][] skyLight = new byte[hSection][];
-        byte[][] emitLight = new byte[hSection][];
-        byte[][] blockData = new byte[hSection][];
-        boolean[] empty = new boolean[hSection];
+        final int hSection = world.getMaxHeight() >> 4;
+        final short[][] blockIDs = new short[hSection][];
+        final byte[][] skyLight = new byte[hSection][];
+        final byte[][] emitLight = new byte[hSection][];
+        final byte[][] blockData = new byte[hSection][];
+        final boolean[] empty = new boolean[hSection];
 
         for (int i = 0; i < hSection; i++) {
             blockIDs[i] = emptyBlockIDs;

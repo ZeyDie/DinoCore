@@ -17,7 +17,7 @@ import cpw.mods.fml.common.LoaderState.ModState;
 public class FMLLoadCompleteEvent extends FMLStateEvent
 {
 
-    public FMLLoadCompleteEvent(Object... data)
+    public FMLLoadCompleteEvent(final Object... data)
     {
         super(data);
     }

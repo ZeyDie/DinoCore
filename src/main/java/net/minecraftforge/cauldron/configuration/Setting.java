@@ -7,7 +7,7 @@ public abstract class Setting<T>
     public final T def;
     public final String description;
 
-    public Setting(String path, T def, String description)
+    public Setting(final String path, final T def, final String description)
     {
         this.path = path;
         this.def = def;

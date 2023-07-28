@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
  * A simple wrapper for ease of selecting {@link Enchantment}s
  */
 public class EnchantmentWrapper extends Enchantment {
-    public EnchantmentWrapper(int id) {
+    public EnchantmentWrapper(final int id) {
         super(id);
     }
 
@@ -35,7 +35,7 @@ public class EnchantmentWrapper extends Enchantment {
     }
 
     @Override
-    public boolean canEnchantItem(ItemStack item) {
+    public boolean canEnchantItem(final ItemStack item) {
         return getEnchantment().canEnchantItem(item);
     }
 
@@ -45,7 +45,7 @@ public class EnchantmentWrapper extends Enchantment {
     }
 
     @Override
-    public boolean conflictsWith(Enchantment other) {
+    public boolean conflictsWith(final Enchantment other) {
         return getEnchantment().conflictsWith(other);
     }
 }

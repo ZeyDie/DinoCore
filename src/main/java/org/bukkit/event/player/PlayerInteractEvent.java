@@ -61,7 +61,7 @@ public class PlayerInteractEvent extends PlayerEvent implements Cancellable {
      *
      * @param cancel true if you wish to cancel this event
      */
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         setUseInteractedBlock(cancel ? Result.DENY : useInteractedBlock() == Result.DENY ? Result.DEFAULT : useInteractedBlock());
         setUseItemInHand(cancel ? Result.DENY : useItemInHand() == Result.DENY ? Result.DEFAULT : useItemInHand());
     }
@@ -152,7 +152,7 @@ public class PlayerInteractEvent extends PlayerEvent implements Cancellable {
     /**
      * @param useInteractedBlock the action to take with the interacted block
      */
-    public void setUseInteractedBlock(Result useInteractedBlock) {
+    public void setUseInteractedBlock(final Result useInteractedBlock) {
         this.useClickedBlock = useInteractedBlock;
     }
 
@@ -170,7 +170,7 @@ public class PlayerInteractEvent extends PlayerEvent implements Cancellable {
     /**
      * @param useItemInHand the action to take with the item in hand
      */
-    public void setUseItemInHand(Result useItemInHand) {
+    public void setUseItemInHand(final Result useItemInHand) {
         this.useItemInHand = useItemInHand;
     }
 

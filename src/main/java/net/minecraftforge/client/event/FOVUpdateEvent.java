@@ -13,7 +13,7 @@ public class FOVUpdateEvent extends Event
     public final float fov;
     public float newfov;
 
-    public FOVUpdateEvent(EntityPlayerSP entity, float fov)
+    public FOVUpdateEvent(final EntityPlayerSP entity, final float fov)
     {
         this.entity = entity;
         this.fov = fov;

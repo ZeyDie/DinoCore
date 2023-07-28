@@ -8,7 +8,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 public class PlayerEvent extends LivingEvent
 {
     public final EntityPlayer entityPlayer;
-    public PlayerEvent(EntityPlayer player)
+    public PlayerEvent(final EntityPlayer player)
     {
         super(player);
         entityPlayer = player;
@@ -19,7 +19,7 @@ public class PlayerEvent extends LivingEvent
         public final Block block;
         public boolean success;
 
-        public HarvestCheck(EntityPlayer player, Block block, boolean success)
+        public HarvestCheck(final EntityPlayer player, final Block block, final boolean success)
         {
             super(player);
             this.block = block;
@@ -35,7 +35,7 @@ public class PlayerEvent extends LivingEvent
         public final float originalSpeed;
         public float newSpeed = 0.0f;
 
-        public BreakSpeed(EntityPlayer player, Block block, int metadata, float original)
+        public BreakSpeed(final EntityPlayer player, final Block block, final int metadata, final float original)
         {
             super(player);
             this.block = block;
@@ -50,7 +50,7 @@ public class PlayerEvent extends LivingEvent
         public final String username;
         public String displayname;
 
-        public NameFormat(EntityPlayer player, String username) {
+        public NameFormat(final EntityPlayer player, final String username) {
             super(player);
             this.username = username;
             this.displayname = username;

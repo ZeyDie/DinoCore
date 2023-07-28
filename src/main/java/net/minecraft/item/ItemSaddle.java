@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class ItemSaddle extends Item
 {
-    public ItemSaddle(int par1)
+    public ItemSaddle(final int par1)
     {
         super(par1);
         this.maxStackSize = 1;
@@ -17,11 +17,11 @@ public class ItemSaddle extends Item
     /**
      * Returns true if the item can be used on the given entity, e.g. shears on sheep.
      */
-    public boolean itemInteractionForEntity(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, EntityLivingBase par3EntityLivingBase)
+    public boolean itemInteractionForEntity(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final EntityLivingBase par3EntityLivingBase)
     {
         if (par3EntityLivingBase instanceof EntityPig)
         {
-            EntityPig entitypig = (EntityPig)par3EntityLivingBase;
+            final EntityPig entitypig = (EntityPig)par3EntityLivingBase;
 
             if (!entitypig.getSaddled() && !entitypig.isChild())
             {
@@ -41,7 +41,7 @@ public class ItemSaddle extends Item
      * Current implementations of this method in child classes do not use the entry argument beside ev. They just raise
      * the damage on the stack.
      */
-    public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase)
+    public boolean hitEntity(final ItemStack par1ItemStack, final EntityLivingBase par2EntityLivingBase, final EntityLivingBase par3EntityLivingBase)
     {
         this.itemInteractionForEntity(par1ItemStack, (EntityPlayer)null, par2EntityLivingBase);
         return true;

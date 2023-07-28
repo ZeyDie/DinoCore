@@ -57,7 +57,7 @@ public class Command extends MaterialData implements Redstone {
      * @param bool
      *            whether or not the command block is powered
      */
-    public void setPowered(boolean bool) {
+    public void setPowered(final boolean bool) {
         setData((byte) (bool ? (getData() | 1) : (getData() & -2)));
     }
 

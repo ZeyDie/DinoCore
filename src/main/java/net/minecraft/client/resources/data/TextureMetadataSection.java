@@ -9,7 +9,7 @@ public class TextureMetadataSection implements MetadataSection
     private final boolean textureBlur;
     private final boolean textureClamp;
 
-    public TextureMetadataSection(boolean par1, boolean par2)
+    public TextureMetadataSection(final boolean par1, final boolean par2)
     {
         this.textureBlur = par1;
         this.textureClamp = par2;

@@ -21,7 +21,7 @@ public interface MapView {
 
         private byte value;
 
-        private Scale(int value) {
+        private Scale(final int value) {
             this.value = (byte) value;
         }
 
@@ -33,7 +33,7 @@ public interface MapView {
          * @deprecated Magic value
          */
         @Deprecated
-        public static Scale valueOf(byte value) {
+        public static Scale valueOf(final byte value) {
             switch (value) {
             case 0: return CLOSEST;
             case 1: return CLOSE;

@@ -4,7 +4,7 @@ import com.google.common.base.Function;
 import cpw.mods.fml.common.versioning.ArtifactVersion;
 
 public class ArtifactVersionNameFunction implements Function<ArtifactVersion, String> {
-    public String apply(ArtifactVersion v)
+    public String apply(final ArtifactVersion v)
     {
         return v.getLabel();
     }

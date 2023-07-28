@@ -7,13 +7,13 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 public class CraftComplexPart extends CraftEntity implements ComplexEntityPart {
-    public CraftComplexPart(CraftServer server, net.minecraft.entity.boss.EntityDragonPart entity) {
+    public CraftComplexPart(final CraftServer server, final net.minecraft.entity.boss.EntityDragonPart entity) {
         super(server, entity);
     }
 
     public ComplexLivingEntity getParent() {
         // Cauldron start - Fix twilight Hydra crashes
-        org.bukkit.entity.Entity result = getParentEntity();
+        final org.bukkit.entity.Entity result = getParentEntity();
         return (result instanceof ComplexLivingEntity) ? (ComplexLivingEntity)result : null;
     }
 
@@ -22,7 +22,7 @@ public class CraftComplexPart extends CraftEntity implements ComplexEntityPart {
     }
 
     @Override
-    public void setLastDamageCause(EntityDamageEvent cause) {
+    public void setLastDamageCause(final EntityDamageEvent cause) {
         getParentEntity().setLastDamageCause(cause);
     }
 

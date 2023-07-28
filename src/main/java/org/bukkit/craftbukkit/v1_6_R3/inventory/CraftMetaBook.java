@@ -25,19 +25,19 @@ class CraftMetaBook extends CraftMetaItem implements BookMeta {
     private String author;
     private List<String> pages = new ArrayList<String>();
 
-    CraftMetaBook(CraftMetaItem meta) {
+    CraftMetaBook(final CraftMetaItem meta) {
         super(meta);
 
         if (!(meta instanceof CraftMetaBook)) {
             return;
         }
-        CraftMetaBook bookMeta = (CraftMetaBook) meta;
+        final CraftMetaBook bookMeta = (CraftMetaBook) meta;
         this.title = bookMeta.title;
         this.author = bookMeta.author;
         pages.addAll(bookMeta.pages);
     }
 
-    CraftMetaBook(net.minecraft.nbt.NBTTagCompound tag) {
+    CraftMetaBook(final net.minecraft.nbt.NBTTagCompound tag) {
         super(tag);
 
         if (tag.hasKey(BOOK_TITLE.NBT)) {
@@ -49,11 +49,11 @@ class CraftMetaBook extends CraftMetaItem implements BookMeta {
         }
 
         if (tag.hasKey(BOOK_PAGES.NBT)) {
-            net.minecraft.nbt.NBTTagList pages = tag.getTagList(BOOK_PAGES.NBT);
-            String[] pageArray = new String[pages.tagCount()];
+            final net.minecraft.nbt.NBTTagList pages = tag.getTagList(BOOK_PAGES.NBT);
+            final String[] pageArray = new String[pages.tagCount()];
 
             for (int i = 0; i < pages.tagCount(); i++) {
-                String page = ((net.minecraft.nbt.NBTTagString) pages.tagAt(i)).data;
+                final String page = ((net.minecraft.nbt.NBTTagString) pages.tagAt(i)).data;
                 pageArray[i] = page;
             }
 
@@ -61,19 +61,19 @@ class CraftMetaBook extends CraftMetaItem implements BookMeta {
         }
     }
 
-    CraftMetaBook(Map<String, Object> map) {
+    CraftMetaBook(final Map<String, Object> map) {
         super(map);
 
         setAuthor(SerializableMeta.getString(map, BOOK_AUTHOR.BUKKIT, true));
 
         setTitle(SerializableMeta.getString(map, BOOK_TITLE.BUKKIT, true));
 
-        Iterable<?> pages = SerializableMeta.getObject(Iterable.class, map, BOOK_PAGES.BUKKIT, true);
+        final Iterable<?> pages = SerializableMeta.getObject(Iterable.class, map, BOOK_PAGES.BUKKIT, true);
         CraftMetaItem.safelyAdd(pages, this.pages, MAX_PAGE_LENGTH);
     }
 
     @Override
-    void applyToItem(net.minecraft.nbt.NBTTagCompound itemData) {
+    void applyToItem(final net.minecraft.nbt.NBTTagCompound itemData) {
         super.applyToItem(itemData);
 
         if (hasTitle()) {
@@ -99,7 +99,7 @@ class CraftMetaBook extends CraftMetaItem implements BookMeta {
     }
 
     @Override
-    boolean applicableTo(Material type) {
+    boolean applicableTo(final Material type) {
         switch (type) {
         case WRITTEN_BOOK:
         case BOOK_AND_QUILL:
@@ -166,13 +166,14 @@ class CraftMetaBook extends CraftMetaItem implements BookMeta {
 
     public void addPage(final String... pages) {
         for (String page : pages) {
-            if (page == null) {
-                page = "";
-            } else if (page.length() > MAX_PAGE_LENGTH) {
-                page = page.substring(0, MAX_PAGE_LENGTH);
+            String page1 = page;
+            if (page1 == null) {
+                page1 = "";
+            } else if (page1.length() > MAX_PAGE_LENGTH) {
+                page1 = page1.substring(0, MAX_PAGE_LENGTH);
             }
 
-            this.pages.add(page);
+            this.pages.add(page1);
         }
     }
 
@@ -184,18 +185,18 @@ class CraftMetaBook extends CraftMetaItem implements BookMeta {
         return ImmutableList.copyOf(pages);
     }
 
-    public void setPages(List<String> pages) {
+    public void setPages(final List<String> pages) {
         this.pages.clear();
         CraftMetaItem.safelyAdd(pages, this.pages, MAX_PAGE_LENGTH);
     }
 
-    private boolean isValidPage(int page) {
+    private boolean isValidPage(final int page) {
         return page > 0 && page <= pages.size();
     }
 
     @Override
     public CraftMetaBook clone() {
-        CraftMetaBook meta = (CraftMetaBook) super.clone();
+        final CraftMetaBook meta = (CraftMetaBook) super.clone();
         meta.pages = new ArrayList<String>(pages);
         return meta;
     }
@@ -217,12 +218,12 @@ class CraftMetaBook extends CraftMetaItem implements BookMeta {
     }
 
     @Override
-    boolean equalsCommon(CraftMetaItem meta) {
+    boolean equalsCommon(final CraftMetaItem meta) {
         if (!super.equalsCommon(meta)) {
             return false;
         }
         if (meta instanceof CraftMetaBook) {
-            CraftMetaBook that = (CraftMetaBook) meta;
+            final CraftMetaBook that = (CraftMetaBook) meta;
 
             return (hasTitle() ? that.hasTitle() && this.title.equals(that.title) : !that.hasTitle())
                     && (hasAuthor() ? that.hasAuthor() && this.author.equals(that.author) : !that.hasAuthor())
@@ -232,12 +233,12 @@ class CraftMetaBook extends CraftMetaItem implements BookMeta {
     }
 
     @Override
-    boolean notUncommon(CraftMetaItem meta) {
+    boolean notUncommon(final CraftMetaItem meta) {
         return super.notUncommon(meta) && (meta instanceof CraftMetaBook || isBookEmpty());
     }
 
     @Override
-    Builder<String, Object> serialize(Builder<String, Object> builder) {
+    Builder<String, Object> serialize(final Builder<String, Object> builder) {
         super.serialize(builder);
 
         if (hasTitle()) {

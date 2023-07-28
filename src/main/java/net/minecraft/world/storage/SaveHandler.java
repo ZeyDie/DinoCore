@@ -35,7 +35,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
     private final String saveDirectoryName;
     private UUID uuid = null; // CraftBukkit
 
-    public SaveHandler(File par1File, String par2Str, boolean par3)
+    public SaveHandler(final File par1File, final String par2Str, final boolean par3)
     {
         this.worldDirectory = new File(par1File, par2Str);
         this.worldDirectory.mkdirs();
@@ -59,8 +59,8 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
     {
         try
         {
-            File file1 = new File(this.worldDirectory, "session.lock");
-            DataOutputStream dataoutputstream = new DataOutputStream(new FileOutputStream(file1));
+            final File file1 = new File(this.worldDirectory, "session.lock");
+            final DataOutputStream dataoutputstream = new DataOutputStream(new FileOutputStream(file1));
 
             try
             {
@@ -71,7 +71,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
                 dataoutputstream.close();
             }
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             ioexception.printStackTrace();
             throw new RuntimeException("Failed to check session lock for world " + this.worldDirectory + ", aborting"); // Cauldron
@@ -93,8 +93,8 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
     {
         try
         {
-            File file1 = new File(this.worldDirectory, "session.lock");
-            DataInputStream datainputstream = new DataInputStream(new FileInputStream(file1));
+            final File file1 = new File(this.worldDirectory, "session.lock");
+            final DataInputStream datainputstream = new DataInputStream(new FileInputStream(file1));
 
             try
             {
@@ -108,7 +108,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
                 datainputstream.close();
             }
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             // Cauldron start
             ioexception.printStackTrace();
@@ -120,7 +120,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
     /**
      * Returns the chunk loader with the provided world provider
      */
-    public IChunkLoader getChunkLoader(WorldProvider par1WorldProvider)
+    public IChunkLoader getChunkLoader(final WorldProvider par1WorldProvider)
     {
         throw new RuntimeException("Old Chunk Storage is no longer supported.");
     }
@@ -146,7 +146,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
                 FMLCommonHandler.instance().handleWorldDataLoad(this, worldInfo, nbttagcompound);
                 return worldInfo;
             }
-            catch (Exception exception)
+            catch (final Exception exception)
             {
                 if (FMLCommonHandler.instance().shouldServerBeKilledQuietly())
                 {
@@ -168,7 +168,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
                 FMLCommonHandler.instance().handleWorldDataLoad(this, worldInfo, nbttagcompound);
                 return worldInfo;
             }
-            catch (Exception exception1)
+            catch (final Exception exception1)
             {
                 exception1.printStackTrace();
             }
@@ -180,19 +180,19 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
     /**
      * Saves the given World Info with the given NBTTagCompound as the Player.
      */
-    public void saveWorldInfoWithPlayer(WorldInfo par1WorldInfo, NBTTagCompound par2NBTTagCompound)
+    public void saveWorldInfoWithPlayer(final WorldInfo par1WorldInfo, final NBTTagCompound par2NBTTagCompound)
     {
-        NBTTagCompound nbttagcompound1 = par1WorldInfo.cloneNBTCompound(par2NBTTagCompound);
-        NBTTagCompound nbttagcompound2 = new NBTTagCompound();
+        final NBTTagCompound nbttagcompound1 = par1WorldInfo.cloneNBTCompound(par2NBTTagCompound);
+        final NBTTagCompound nbttagcompound2 = new NBTTagCompound();
         nbttagcompound2.setTag("Data", nbttagcompound1);
 
         FMLCommonHandler.instance().handleWorldDataSave(this, par1WorldInfo, nbttagcompound2);
 
         try
         {
-            File file1 = new File(this.worldDirectory, "level.dat_new");
-            File file2 = new File(this.worldDirectory, "level.dat_old");
-            File file3 = new File(this.worldDirectory, "level.dat");
+            final File file1 = new File(this.worldDirectory, "level.dat_new");
+            final File file2 = new File(this.worldDirectory, "level.dat_old");
+            final File file3 = new File(this.worldDirectory, "level.dat");
             CompressedStreamTools.writeCompressed(nbttagcompound2, new FileOutputStream(file1));
 
             if (file2.exists())
@@ -214,7 +214,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
                 file1.delete();
             }
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             exception.printStackTrace();
         }
@@ -223,19 +223,19 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
     /**
      * Saves the passed in world info.
      */
-    public void saveWorldInfo(WorldInfo par1WorldInfo)
+    public void saveWorldInfo(final WorldInfo par1WorldInfo)
     {
-        NBTTagCompound nbttagcompound = par1WorldInfo.getNBTTagCompound();
-        NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+        final NBTTagCompound nbttagcompound = par1WorldInfo.getNBTTagCompound();
+        final NBTTagCompound nbttagcompound1 = new NBTTagCompound();
         nbttagcompound1.setTag("Data", nbttagcompound);
 
         FMLCommonHandler.instance().handleWorldDataSave(this, par1WorldInfo, nbttagcompound1);
 
         try
         {
-            File file1 = new File(this.worldDirectory, "level.dat_new");
-            File file2 = new File(this.worldDirectory, "level.dat_old");
-            File file3 = new File(this.worldDirectory, "level.dat");
+            final File file1 = new File(this.worldDirectory, "level.dat_new");
+            final File file2 = new File(this.worldDirectory, "level.dat_old");
+            final File file3 = new File(this.worldDirectory, "level.dat");
             CompressedStreamTools.writeCompressed(nbttagcompound1, new FileOutputStream(file1));
 
             if (file2.exists())
@@ -257,7 +257,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
                 file1.delete();
             }
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             exception.printStackTrace();
         }
@@ -266,14 +266,14 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
     /**
      * Writes the player data to disk from the specified PlayerEntityMP.
      */
-    public void writePlayerData(EntityPlayer par1EntityPlayer)
+    public void writePlayerData(final EntityPlayer par1EntityPlayer)
     {
         try
         {
-            NBTTagCompound nbttagcompound = new NBTTagCompound();
+            final NBTTagCompound nbttagcompound = new NBTTagCompound();
             par1EntityPlayer.writeToNBT(nbttagcompound);
-            File file1 = new File(this.playersDirectory, par1EntityPlayer.getCommandSenderName() + ".dat.tmp");
-            File file2 = new File(this.playersDirectory, par1EntityPlayer.getCommandSenderName() + ".dat");
+            final File file1 = new File(this.playersDirectory, par1EntityPlayer.getCommandSenderName() + ".dat.tmp");
+            final File file2 = new File(this.playersDirectory, par1EntityPlayer.getCommandSenderName() + ".dat");
             CompressedStreamTools.writeCompressed(nbttagcompound, new FileOutputStream(file1));
 
             if (file2.exists())
@@ -283,7 +283,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
 
             file1.renameTo(file2);
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             MinecraftServer.getServer().getLogAgent().logWarning("Failed to save player data for " + par1EntityPlayer.getCommandSenderName());
         }
@@ -292,16 +292,16 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
     /**
      * Reads the player data from disk into the specified PlayerEntityMP.
      */
-    public NBTTagCompound readPlayerData(EntityPlayer par1EntityPlayer)
+    public NBTTagCompound readPlayerData(final EntityPlayer par1EntityPlayer)
     {
-        NBTTagCompound nbttagcompound = this.getPlayerData(par1EntityPlayer.getCommandSenderName());
+        final NBTTagCompound nbttagcompound = this.getPlayerData(par1EntityPlayer.getCommandSenderName());
 
         if (nbttagcompound != null)
         {
             // CraftBukkit start
             if (par1EntityPlayer instanceof EntityPlayerMP)
             {
-                CraftPlayer player = (CraftPlayer) par1EntityPlayer.getBukkitEntity(); // Cauldron - make sure we set our bukkitEntity to avoid null
+                final CraftPlayer player = (CraftPlayer) par1EntityPlayer.getBukkitEntity(); // Cauldron - make sure we set our bukkitEntity to avoid null
                 player.setFirstPlayed(new File(playersDirectory, par1EntityPlayer.username + ".dat").lastModified());
             }
 
@@ -315,18 +315,18 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
     /**
      * Gets the player data for the given playername as a NBTTagCompound.
      */
-    public NBTTagCompound getPlayerData(String par1Str)
+    public NBTTagCompound getPlayerData(final String par1Str)
     {
         try
         {
-            File file1 = new File(this.playersDirectory, par1Str + ".dat");
+            final File file1 = new File(this.playersDirectory, par1Str + ".dat");
 
             if (file1.exists())
             {
                 return CompressedStreamTools.readCompressed(new FileInputStream(file1));
             }
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             MinecraftServer.getServer().getLogAgent().logWarning("Failed to load player data for " + par1Str);
         }
@@ -347,7 +347,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
      */
     public String[] getAvailablePlayerDat()
     {
-        String[] astring = this.playersDirectory.list();
+        final String[] astring = this.playersDirectory.list();
 
         for (int i = 0; i < astring.length; ++i)
         {
@@ -368,7 +368,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
     /**
      * Gets the file location of the given map
      */
-    public File getMapFileFromName(String par1Str)
+    public File getMapFileFromName(final String par1Str)
     {
         return new File(this.mapDataDir, par1Str + ".dat");
     }
@@ -389,7 +389,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
             return uuid;
         }
 
-        File file1 = new File(this.worldDirectory, "uid.dat");
+        final File file1 = new File(this.worldDirectory, "uid.dat");
 
         if (file1.exists())
         {
@@ -400,7 +400,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
                 dis = new DataInputStream(new FileInputStream(file1));
                 return uuid = new UUID(dis.readLong(), dis.readLong());
             }
-            catch (IOException ex)
+            catch (final IOException ex)
             {
                 MinecraftServer.getServer().getLogAgent().logSevereException("Failed to read " + file1 + ", generating new random UUID", ex);
             }
@@ -412,7 +412,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
                     {
                         dis.close();
                     }
-                    catch (IOException ex)
+                    catch (final IOException ex)
                     {
                         // NOOP
                     }
@@ -429,7 +429,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
             dos.writeLong(uuid.getMostSignificantBits());
             dos.writeLong(uuid.getLeastSignificantBits());
         }
-        catch (IOException ex)
+        catch (final IOException ex)
         {
             MinecraftServer.getServer().getLogAgent().logSevereException("Failed to write " + file1, ex);
         }
@@ -441,7 +441,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
                 {
                     dos.close();
                 }
-                catch (IOException ex)
+                catch (final IOException ex)
                 {
                     // NOOP
                 }

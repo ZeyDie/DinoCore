@@ -34,12 +34,12 @@ public interface Villager extends Ageable, NPC {
         private final int id;
 
         static {
-            for (Profession type : values()) {
+            for (final Profession type : values()) {
                 professions[type.getId()] = type;
             }
         }
 
-        private Profession(int id) {
+        private Profession(final int id) {
             this.id = id;
         }
 
@@ -62,7 +62,7 @@ public interface Villager extends Ageable, NPC {
          * @deprecated Magic value
          */
         @Deprecated
-        public static Profession getProfession(int id) {
+        public static Profession getProfession(final int id) {
             return (id >= professions.length) ? null : professions[id];
         }
     }

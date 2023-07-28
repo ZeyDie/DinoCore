@@ -21,27 +21,27 @@ public abstract class AbstractResourcePack implements ResourcePack
     protected static final ILogAgent resourceLog = Minecraft.getMinecraft().getLogAgent();
     protected final File resourcePackFile;
 
-    public AbstractResourcePack(File par1File)
+    public AbstractResourcePack(final File par1File)
     {
         this.resourcePackFile = par1File;
     }
 
-    private static String locationToName(ResourceLocation par0ResourceLocation)
+    private static String locationToName(final ResourceLocation par0ResourceLocation)
     {
         return String.format("%s/%s/%s", new Object[] {"assets", par0ResourceLocation.getResourceDomain(), par0ResourceLocation.getResourcePath()});
     }
 
-    protected static String getRelativeName(File par0File, File par1File)
+    protected static String getRelativeName(final File par0File, final File par1File)
     {
         return par0File.toURI().relativize(par1File.toURI()).getPath();
     }
 
-    public InputStream getInputStream(ResourceLocation par1ResourceLocation) throws IOException
+    public InputStream getInputStream(final ResourceLocation par1ResourceLocation) throws IOException
     {
         return this.getInputStreamByName(locationToName(par1ResourceLocation));
     }
 
-    public boolean resourceExists(ResourceLocation par1ResourceLocation)
+    public boolean resourceExists(final ResourceLocation par1ResourceLocation)
     {
         return this.hasResourceName(locationToName(par1ResourceLocation));
     }
@@ -50,17 +50,17 @@ public abstract class AbstractResourcePack implements ResourcePack
 
     protected abstract boolean hasResourceName(String s);
 
-    protected void logNameNotLowercase(String par1Str)
+    protected void logNameNotLowercase(final String par1Str)
     {
         resourceLog.logWarningFormatted("ResourcePack: ignored non-lowercase namespace: %s in %s", new Object[] {par1Str, this.resourcePackFile});
     }
 
-    public MetadataSection getPackMetadata(MetadataSerializer par1MetadataSerializer, String par2Str) throws IOException
+    public MetadataSection getPackMetadata(final MetadataSerializer par1MetadataSerializer, final String par2Str) throws IOException
     {
         return readMetadata(par1MetadataSerializer, this.getInputStreamByName("pack.mcmeta"), par2Str);
     }
 
-    static MetadataSection readMetadata(MetadataSerializer par0MetadataSerializer, InputStream par1InputStream, String par2Str)
+    static MetadataSection readMetadata(final MetadataSerializer par0MetadataSerializer, final InputStream par1InputStream, final String par2Str)
     {
         JsonObject jsonobject = null;
         BufferedReader bufferedreader = null;

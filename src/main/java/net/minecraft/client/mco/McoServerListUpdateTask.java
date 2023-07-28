@@ -16,7 +16,7 @@ class McoServerListUpdateTask extends TimerTask
 
     final McoServerList field_140067_a;
 
-    private McoServerListUpdateTask(McoServerList par1McoServerList)
+    private McoServerListUpdateTask(final McoServerList par1McoServerList)
     {
         this.field_140067_a = par1McoServerList;
     }
@@ -38,7 +38,7 @@ class McoServerListUpdateTask extends TimerTask
             if (McoServerList.func_100014_a(this.field_140067_a) != null)
             {
                 this.field_140066_b = new McoClient(McoServerList.func_100014_a(this.field_140067_a));
-                List list = this.field_140066_b.func_96382_a().field_96430_d;
+                final List list = this.field_140066_b.func_96382_a().field_96430_d;
 
                 if (list != null)
                 {
@@ -47,11 +47,11 @@ class McoServerListUpdateTask extends TimerTask
                 }
             }
         }
-        catch (ExceptionMcoService exceptionmcoservice)
+        catch (final ExceptionMcoService exceptionmcoservice)
         {
             Minecraft.getMinecraft().getLogAgent().logSevere(exceptionmcoservice.toString());
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             Minecraft.getMinecraft().getLogAgent().logWarning("Realms: could not parse response from server");
         }
@@ -63,11 +63,11 @@ class McoServerListUpdateTask extends TimerTask
         {
             if (McoServerList.func_100014_a(this.field_140067_a) != null)
             {
-                int i = this.field_140066_b.func_130106_e();
+                final int i = this.field_140066_b.func_130106_e();
                 McoServerList.func_130122_a(this.field_140067_a, i);
             }
         }
-        catch (ExceptionMcoService exceptionmcoservice)
+        catch (final ExceptionMcoService exceptionmcoservice)
         {
             Minecraft.getMinecraft().getLogAgent().logSevere(exceptionmcoservice.toString());
         }
@@ -79,23 +79,23 @@ class McoServerListUpdateTask extends TimerTask
         {
             if (McoServerList.func_100014_a(this.field_140067_a) != null)
             {
-                McoClient mcoclient = new McoClient(McoServerList.func_100014_a(this.field_140067_a));
+                final McoClient mcoclient = new McoClient(McoServerList.func_100014_a(this.field_140067_a));
                 McoServerList.func_140057_b(this.field_140067_a, mcoclient.func_96379_c());
             }
         }
-        catch (ExceptionMcoService exceptionmcoservice)
+        catch (final ExceptionMcoService exceptionmcoservice)
         {
             Minecraft.getMinecraft().getLogAgent().logSevere(exceptionmcoservice.toString());
             McoServerList.func_140057_b(this.field_140067_a, 0);
         }
     }
 
-    private void func_140065_a(List par1List)
+    private void func_140065_a(final List par1List)
     {
         Collections.sort(par1List, new McoServerListUpdateTaskComparator(this, McoServerList.func_100014_a(this.field_140067_a).getUsername(), (McoServerListEmptyAnon)null));
     }
 
-    McoServerListUpdateTask(McoServerList par1McoServerList, McoServerListEmptyAnon par2McoServerListEmptyAnon)
+    McoServerListUpdateTask(final McoServerList par1McoServerList, final McoServerListEmptyAnon par2McoServerListEmptyAnon)
     {
         this(par1McoServerList);
     }

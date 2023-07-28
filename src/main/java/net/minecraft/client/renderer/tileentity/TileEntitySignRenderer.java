@@ -18,23 +18,23 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer
     /** The ModelSign instance used by the TileEntitySignRenderer */
     private final ModelSign modelSign = new ModelSign();
 
-    public void renderTileEntitySignAt(TileEntitySign par1TileEntitySign, double par2, double par4, double par6, float par8)
+    public void renderTileEntitySignAt(final TileEntitySign par1TileEntitySign, final double par2, final double par4, final double par6, final float par8)
     {
-        Block block = par1TileEntitySign.getBlockType();
+        final Block block = par1TileEntitySign.getBlockType();
         GL11.glPushMatrix();
-        float f1 = 0.6666667F;
+        final float f1 = 0.6666667F;
         float f2;
 
         if (block == Block.signPost)
         {
             GL11.glTranslatef((float)par2 + 0.5F, (float)par4 + 0.75F * f1, (float)par6 + 0.5F);
-            float f3 = (float)(par1TileEntitySign.getBlockMetadata() * 360) / 16.0F;
+            final float f3 = (float)(par1TileEntitySign.getBlockMetadata() * 360) / 16.0F;
             GL11.glRotatef(-f3, 0.0F, 1.0F, 0.0F);
             this.modelSign.signStick.showModel = true;
         }
         else
         {
-            int i = par1TileEntitySign.getBlockMetadata();
+            final int i = par1TileEntitySign.getBlockMetadata();
             f2 = 0.0F;
 
             if (i == 2)
@@ -63,13 +63,13 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer
         GL11.glScalef(f1, -f1, -f1);
         this.modelSign.renderSign();
         GL11.glPopMatrix();
-        FontRenderer fontrenderer = this.getFontRenderer();
+        final FontRenderer fontrenderer = this.getFontRenderer();
         f2 = 0.016666668F * f1;
         GL11.glTranslatef(0.0F, 0.5F * f1, 0.07F * f1);
         GL11.glScalef(f2, -f2, f2);
         GL11.glNormal3f(0.0F, 0.0F, -1.0F * f2);
         GL11.glDepthMask(false);
-        byte b0 = 0;
+        final byte b0 = 0;
 
         for (int j = 0; j < par1TileEntitySign.signText.length; ++j)
         {
@@ -91,7 +91,7 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer
         GL11.glPopMatrix();
     }
 
-    public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8)
+    public void renderTileEntityAt(final TileEntity par1TileEntity, final double par2, final double par4, final double par6, final float par8)
     {
         this.renderTileEntitySignAt((TileEntitySign)par1TileEntity, par2, par4, par6, par8);
     }

@@ -7,7 +7,7 @@ public class EntityAIBreakDoor extends EntityAIDoorInteract
     private int breakingTime;
     private int field_75358_j = -1;
 
-    public EntityAIBreakDoor(EntityLiving par1EntityLiving)
+    public EntityAIBreakDoor(final EntityLiving par1EntityLiving)
     {
         super(par1EntityLiving);
     }
@@ -34,7 +34,7 @@ public class EntityAIBreakDoor extends EntityAIDoorInteract
      */
     public boolean continueExecuting()
     {
-        double d0 = this.theEntity.getDistanceSq((double)this.entityPosX, (double)this.entityPosY, (double)this.entityPosZ);
+        final double d0 = this.theEntity.getDistanceSq((double)this.entityPosX, (double)this.entityPosY, (double)this.entityPosZ);
         return this.breakingTime <= 240 && !this.targetDoor.isDoorOpen(this.theEntity.worldObj, this.entityPosX, this.entityPosY, this.entityPosZ) && d0 < 4.0D;
     }
 
@@ -60,7 +60,7 @@ public class EntityAIBreakDoor extends EntityAIDoorInteract
         }
 
         ++this.breakingTime;
-        int i = (int)((float)this.breakingTime / 240.0F * 10.0F);
+        final int i = (int)((float)this.breakingTime / 240.0F * 10.0F);
 
         if (i != this.field_75358_j)
         {

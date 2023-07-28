@@ -10,7 +10,7 @@ public class ComponentNetherBridgeCorridor5 extends ComponentNetherBridgePiece
 {
     public ComponentNetherBridgeCorridor5() {}
 
-    public ComponentNetherBridgeCorridor5(int par1, Random par2Random, StructureBoundingBox par3StructureBoundingBox, int par4)
+    public ComponentNetherBridgeCorridor5(final int par1, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox, final int par4)
     {
         super(par1);
         this.coordBaseMode = par4;
@@ -20,7 +20,7 @@ public class ComponentNetherBridgeCorridor5 extends ComponentNetherBridgePiece
     /**
      * Initiates construction of the Structure Component picked, at the current Location of StructGen
      */
-    public void buildComponent(StructureComponent par1StructureComponent, List par2List, Random par3Random)
+    public void buildComponent(final StructureComponent par1StructureComponent, final List par2List, final Random par3Random)
     {
         this.getNextComponentNormal((ComponentNetherBridgeStartPiece)par1StructureComponent, par2List, par3Random, 1, 0, true);
     }
@@ -28,9 +28,9 @@ public class ComponentNetherBridgeCorridor5 extends ComponentNetherBridgePiece
     /**
      * Creates and returns a new component piece. Or null if it could not find enough room to place it.
      */
-    public static ComponentNetherBridgeCorridor5 createValidComponent(List par0List, Random par1Random, int par2, int par3, int par4, int par5, int par6)
+    public static ComponentNetherBridgeCorridor5 createValidComponent(final List par0List, final Random par1Random, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
-        StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(par2, par3, par4, -1, 0, 0, 5, 7, 5, par5);
+        final StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(par2, par3, par4, -1, 0, 0, 5, 7, 5, par5);
         return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(par0List, structureboundingbox) == null ? new ComponentNetherBridgeCorridor5(par6, par1Random, structureboundingbox, par5) : null;
     }
 
@@ -38,7 +38,7 @@ public class ComponentNetherBridgeCorridor5 extends ComponentNetherBridgePiece
      * second Part of Structure generating, this for example places Spiderwebs, Mob Spawners, it closes Mineshafts at
      * the end, it adds Fences...
      */
-    public boolean addComponentParts(World par1World, Random par2Random, StructureBoundingBox par3StructureBoundingBox)
+    public boolean addComponentParts(final World par1World, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox)
     {
         this.fillWithBlocks(par1World, par3StructureBoundingBox, 0, 0, 0, 4, 1, 4, Block.netherBrick.blockID, Block.netherBrick.blockID, false);
         this.fillWithBlocks(par1World, par3StructureBoundingBox, 0, 2, 0, 4, 5, 4, 0, 0, false);

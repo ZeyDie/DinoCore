@@ -27,7 +27,7 @@ public class Packet14BlockDig extends Packet
     public Packet14BlockDig() {}
 
     @SideOnly(Side.CLIENT)
-    public Packet14BlockDig(int par1, int par2, int par3, int par4, int par5)
+    public Packet14BlockDig(final int par1, final int par2, final int par3, final int par4, final int par5)
     {
         this.status = par1;
         this.xPosition = par2;
@@ -39,7 +39,7 @@ public class Packet14BlockDig extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.status = par1DataInput.readUnsignedByte();
         this.xPosition = par1DataInput.readInt();
@@ -51,7 +51,7 @@ public class Packet14BlockDig extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.write(this.status);
         par1DataOutput.writeInt(this.xPosition);
@@ -63,7 +63,7 @@ public class Packet14BlockDig extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleBlockDig(this);
     }

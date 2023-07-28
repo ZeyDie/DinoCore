@@ -22,14 +22,14 @@ public class TeleportCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length < 1 || args.length > 4) {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
 
-        Player player;
+        final Player player;
 
         if (args.length == 1 || args.length == 3) {
             if (sender instanceof Player) {
@@ -48,7 +48,7 @@ public class TeleportCommand extends VanillaCommand {
         }
 
         if (args.length < 3) {
-            Player target = Bukkit.getPlayerExact(args[args.length - 1]);
+            final Player target = Bukkit.getPlayerExact(args[args.length - 1]);
             if (target == null) {
                 sender.sendMessage("Can't find player " + args[args.length - 1] + ". No tp.");
                 return true;
@@ -56,10 +56,10 @@ public class TeleportCommand extends VanillaCommand {
             player.teleport(target, TeleportCause.COMMAND);
             Command.broadcastCommandMessage(sender, "Teleported " + player.getDisplayName() + " to " + target.getDisplayName());
         } else if (player.getWorld() != null) {
-            Location playerLocation = player.getLocation();
-            double x = getCoordinate(sender, playerLocation.getX(), args[args.length - 3]);
-            double y = getCoordinate(sender, playerLocation.getY(), args[args.length - 2], 0, 0);
-            double z = getCoordinate(sender, playerLocation.getZ(), args[args.length - 1]);
+            final Location playerLocation = player.getLocation();
+            final double x = getCoordinate(sender, playerLocation.getX(), args[args.length - 3]);
+            final double y = getCoordinate(sender, playerLocation.getY(), args[args.length - 2], 0, 0);
+            final double z = getCoordinate(sender, playerLocation.getZ(), args[args.length - 1]);
 
             if (x == MIN_COORD_MINUS_ONE || y == MIN_COORD_MINUS_ONE || z == MIN_COORD_MINUS_ONE) {
                 sender.sendMessage("Please provide a valid location!");
@@ -76,19 +76,20 @@ public class TeleportCommand extends VanillaCommand {
         return true;
     }
 
-    private double getCoordinate(CommandSender sender, double current, String input) {
+    private double getCoordinate(final CommandSender sender, final double current, final String input) {
         return getCoordinate(sender, current, input, MIN_COORD, MAX_COORD);
     }
 
-    private double getCoordinate(CommandSender sender, double current, String input, int min, int max) {
-        boolean relative = input.startsWith("~");
+    private double getCoordinate(final CommandSender sender, final double current, String input, final int min, final int max) {
+        String input1 = input;
+        final boolean relative = input1.startsWith("~");
         double result = relative ? current : 0;
 
-        if (!relative || input.length() > 1) {
-            boolean exact = input.contains(".");
-            if (relative) input = input.substring(1);
+        if (!relative || input1.length() > 1) {
+            final boolean exact = input1.contains(".");
+            if (relative) input1 = input1.substring(1);
 
-            double testResult = getDouble(sender, input);
+            final double testResult = getDouble(sender, input1);
             if (testResult == MIN_COORD_MINUS_ONE) {
                 return MIN_COORD_MINUS_ONE;
             }
@@ -110,7 +111,7 @@ public class TeleportCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) throws IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");

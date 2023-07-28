@@ -20,7 +20,7 @@ public class PlayerChatTabCompleteEvent extends PlayerEvent {
         Validate.notNull(message, "Message cannot be null");
         Validate.notNull(completions, "Completions cannot be null");
         this.message = message;
-        int i = message.lastIndexOf(' ');
+        final int i = message.lastIndexOf(' ');
         if (i < 0) {
             this.lastToken = message;
         } else {

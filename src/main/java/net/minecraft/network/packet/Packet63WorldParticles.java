@@ -47,7 +47,7 @@ public class Packet63WorldParticles extends Packet
     public Packet63WorldParticles() {}
 
     // Spigot start - Added constructor
-    public Packet63WorldParticles(String particleName, float x, float y, float z, float offsetX, float offsetY, float offsetZ, float speed, int count)
+    public Packet63WorldParticles(final String particleName, final float x, final float y, final float z, final float offsetX, final float offsetY, final float offsetZ, final float speed, final int count)
     {
         this.particleName = particleName;
         this.posX = x;
@@ -64,7 +64,7 @@ public class Packet63WorldParticles extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.particleName = readString(par1DataInput, 64);
         this.posX = par1DataInput.readFloat();
@@ -80,7 +80,7 @@ public class Packet63WorldParticles extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         writeString(this.particleName, par1DataOutput);
         par1DataOutput.writeFloat(this.posX);
@@ -96,7 +96,7 @@ public class Packet63WorldParticles extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleWorldParticles(this);
     }

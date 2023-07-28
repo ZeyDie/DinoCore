@@ -23,8 +23,8 @@ public class CraftBeacon extends CraftBlockState implements Beacon {
     }
 
     @Override
-    public boolean update(boolean force, boolean applyPhysics) {
-        boolean result = super.update(force, applyPhysics);
+    public boolean update(final boolean force, final boolean applyPhysics) {
+        final boolean result = super.update(force, applyPhysics);
 
         if (result) {
             beacon.onInventoryChanged();

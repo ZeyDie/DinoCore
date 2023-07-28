@@ -19,7 +19,7 @@ public class RenderWitherSkull extends Render
     /** The Skeleton's head model. */
     private final ModelSkeletonHead skeletonHeadModel = new ModelSkeletonHead();
 
-    private float func_82400_a(float par1, float par2, float par3)
+    private float func_82400_a(final float par1, final float par2, final float par3)
     {
         float f3;
 
@@ -36,14 +36,14 @@ public class RenderWitherSkull extends Render
         return par1 + par3 * f3;
     }
 
-    public void func_82399_a(EntityWitherSkull par1EntityWitherSkull, double par2, double par4, double par6, float par8, float par9)
+    public void func_82399_a(final EntityWitherSkull par1EntityWitherSkull, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_CULL_FACE);
-        float f2 = this.func_82400_a(par1EntityWitherSkull.prevRotationYaw, par1EntityWitherSkull.rotationYaw, par9);
-        float f3 = par1EntityWitherSkull.prevRotationPitch + (par1EntityWitherSkull.rotationPitch - par1EntityWitherSkull.prevRotationPitch) * par9;
+        final float f2 = this.func_82400_a(par1EntityWitherSkull.prevRotationYaw, par1EntityWitherSkull.rotationYaw, par9);
+        final float f3 = par1EntityWitherSkull.prevRotationPitch + (par1EntityWitherSkull.rotationPitch - par1EntityWitherSkull.prevRotationPitch) * par9;
         GL11.glTranslatef((float)par2, (float)par4, (float)par6);
-        float f4 = 0.0625F;
+        final float f4 = 0.0625F;
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glScalef(-1.0F, -1.0F, 1.0F);
         GL11.glEnable(GL11.GL_ALPHA_TEST);
@@ -52,7 +52,7 @@ public class RenderWitherSkull extends Render
         GL11.glPopMatrix();
     }
 
-    protected ResourceLocation func_110809_a(EntityWitherSkull par1EntityWitherSkull)
+    protected ResourceLocation func_110809_a(final EntityWitherSkull par1EntityWitherSkull)
     {
         return par1EntityWitherSkull.isInvulnerable() ? invulnerableWitherTextures : witherTextures;
     }
@@ -60,7 +60,7 @@ public class RenderWitherSkull extends Render
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.func_110809_a((EntityWitherSkull)par1Entity);
     }
@@ -71,7 +71,7 @@ public class RenderWitherSkull extends Render
      * (Render<T extends Entity) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.func_82399_a((EntityWitherSkull)par1Entity, par2, par4, par6, par8, par9);
     }

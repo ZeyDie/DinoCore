@@ -18,9 +18,9 @@ public abstract class TileEntitySpecialRenderer
 
     public abstract void renderTileEntityAt(TileEntity tileentity, double d0, double d1, double d2, float f);
 
-    protected void bindTexture(ResourceLocation par1ResourceLocation)
+    protected void bindTexture(final ResourceLocation par1ResourceLocation)
     {
-        TextureManager texturemanager = this.tileEntityRenderer.renderEngine;
+        final TextureManager texturemanager = this.tileEntityRenderer.renderEngine;
 
         if (texturemanager != null)
         {
@@ -31,7 +31,7 @@ public abstract class TileEntitySpecialRenderer
     /**
      * Associate a TileEntityRenderer with this TileEntitySpecialRenderer
      */
-    public void setTileEntityRenderer(TileEntityRenderer par1TileEntityRenderer)
+    public void setTileEntityRenderer(final TileEntityRenderer par1TileEntityRenderer)
     {
         this.tileEntityRenderer = par1TileEntityRenderer;
     }
@@ -40,7 +40,7 @@ public abstract class TileEntitySpecialRenderer
      * Called when the ingame world being rendered changes (e.g. on world -> nether travel) due to using one renderer
      * per tile entity type, rather than instance
      */
-    public void onWorldChange(World par1World) {}
+    public void onWorldChange(final World par1World) {}
 
     public FontRenderer getFontRenderer()
     {

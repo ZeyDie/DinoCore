@@ -15,23 +15,23 @@ import static org.bukkit.craftbukkit.v1_6_R3.inventory.CraftMetaItem.*;
 @DelegateDeserialization(ItemStack.class)
 public final class CraftItemStack extends ItemStack {
 
-    public static net.minecraft.item.ItemStack asNMSCopy(ItemStack original) {
+    public static net.minecraft.item.ItemStack asNMSCopy(final ItemStack original) {
         if (original instanceof CraftItemStack) {
-            CraftItemStack stack = (CraftItemStack) original;
+            final CraftItemStack stack = (CraftItemStack) original;
             return stack.handle == null ? null : stack.handle.copy();
         }
         if (original == null || original.getTypeId() <= 0) {
             return null;
         }
-        net.minecraft.item.ItemStack stack = new net.minecraft.item.ItemStack(original.getTypeId(), original.getAmount(), original.getDurability());
+        final net.minecraft.item.ItemStack stack = new net.minecraft.item.ItemStack(original.getTypeId(), original.getAmount(), original.getDurability());
         if (original.hasItemMeta()) {
             setItemMeta(stack, original.getItemMeta());
         }
         return stack;
     }
 
-    public static net.minecraft.item.ItemStack copyNMSStack(net.minecraft.item.ItemStack original, int amount) {
-        net.minecraft.item.ItemStack stack = original.copy();
+    public static net.minecraft.item.ItemStack copyNMSStack(final net.minecraft.item.ItemStack original, final int amount) {
+        final net.minecraft.item.ItemStack stack = original.copy();
         stack.stackSize = amount;
         return stack;
     }
@@ -39,7 +39,7 @@ public final class CraftItemStack extends ItemStack {
     /**
      * Copies the NMS stack to return as a strictly-Bukkit stack
      */
-    public static ItemStack asBukkitCopy(net.minecraft.item.ItemStack original) {
+    public static ItemStack asBukkitCopy(final net.minecraft.item.ItemStack original) {
         if (original == null) {
             return new ItemStack(Material.AIR);
         }
@@ -57,23 +57,23 @@ public final class CraftItemStack extends ItemStack {
         // Cauldron end
     }
 
-    public static CraftItemStack asCraftMirror(net.minecraft.item.ItemStack original) {
+    public static CraftItemStack asCraftMirror(final net.minecraft.item.ItemStack original) {
         return new CraftItemStack(original);
     }
 
-    public static CraftItemStack asCraftCopy(ItemStack original) {
+    public static CraftItemStack asCraftCopy(final ItemStack original) {
         if (original instanceof CraftItemStack) {
-            CraftItemStack stack = (CraftItemStack) original;
+            final CraftItemStack stack = (CraftItemStack) original;
             return new CraftItemStack(stack.handle == null ? null : stack.handle.copy());
         }
         return new CraftItemStack(original);
     }
 
-    public static CraftItemStack asNewCraftStack(net.minecraft.item.Item item) {
+    public static CraftItemStack asNewCraftStack(final net.minecraft.item.Item item) {
         return asNewCraftStack(item, 1);
     }
 
-    public static CraftItemStack asNewCraftStack(net.minecraft.item.Item item, int amount) {
+    public static CraftItemStack asNewCraftStack(final net.minecraft.item.Item item, final int amount) {
         return new CraftItemStack(item.itemID, amount, (short) 0, null);
     }
 
@@ -82,15 +82,15 @@ public final class CraftItemStack extends ItemStack {
     /**
      * Mirror
      */
-    private CraftItemStack(net.minecraft.item.ItemStack item) {
+    private CraftItemStack(final net.minecraft.item.ItemStack item) {
         this.handle = item;
     }
 
-    private CraftItemStack(ItemStack item) {
+    private CraftItemStack(final ItemStack item) {
         this(item.getTypeId(), item.getAmount(), item.getDurability(), item.hasItemMeta() ? item.getItemMeta() : null);
     }
 
-    private CraftItemStack(int typeId, int amount, short durability, ItemMeta itemMeta) {
+    private CraftItemStack(final int typeId, final int amount, final short durability, final ItemMeta itemMeta) {
         setTypeId(typeId);
         setAmount(amount);
         setDurability(durability);
@@ -103,7 +103,7 @@ public final class CraftItemStack extends ItemStack {
     }
 
     @Override
-    public void setTypeId(int type) {
+    public void setTypeId(final int type) {
         if (getTypeId() == type) {
             return;
         } else if (type == 0) {
@@ -126,7 +126,7 @@ public final class CraftItemStack extends ItemStack {
     }
 
     @Override
-    public void setAmount(int amount) {
+    public void setAmount(final int amount) {
         if (handle == null) {
             return;
         }
@@ -160,7 +160,7 @@ public final class CraftItemStack extends ItemStack {
     }
 
     @Override
-    public void addUnsafeEnchantment(Enchantment ench, int level) {
+    public void addUnsafeEnchantment(final Enchantment ench, final int level) {
         Validate.notNull(ench, "Cannot add null enchantment");
 
         if (!makeTag(handle)) {
@@ -171,23 +171,23 @@ public final class CraftItemStack extends ItemStack {
             list = new net.minecraft.nbt.NBTTagList(ENCHANTMENTS.NBT);
             handle.stackTagCompound.setTag(ENCHANTMENTS.NBT, list);
         }
-        int size = list.tagCount();
+        final int size = list.tagCount();
 
         for (int i = 0; i < size; i++) {
-            net.minecraft.nbt.NBTTagCompound tag = (net.minecraft.nbt.NBTTagCompound) list.tagAt(i);
-            short id = tag.getShort(ENCHANTMENTS_ID.NBT);
+            final net.minecraft.nbt.NBTTagCompound tag = (net.minecraft.nbt.NBTTagCompound) list.tagAt(i);
+            final short id = tag.getShort(ENCHANTMENTS_ID.NBT);
             if (id == ench.getId()) {
                 tag.setShort(ENCHANTMENTS_LVL.NBT, (short) level);
                 return;
             }
         }
-        net.minecraft.nbt.NBTTagCompound tag = new net.minecraft.nbt.NBTTagCompound();
+        final net.minecraft.nbt.NBTTagCompound tag = new net.minecraft.nbt.NBTTagCompound();
         tag.setShort(ENCHANTMENTS_ID.NBT, (short) ench.getId());
         tag.setShort(ENCHANTMENTS_LVL.NBT, (short) level);
         list.appendTag(tag);
     }
 
-    static boolean makeTag(net.minecraft.item.ItemStack item) {
+    static boolean makeTag(final net.minecraft.item.ItemStack item) {
         if (item == null) {
             return false;
         }
@@ -200,12 +200,12 @@ public final class CraftItemStack extends ItemStack {
     }
 
     @Override
-    public boolean containsEnchantment(Enchantment ench) {
+    public boolean containsEnchantment(final Enchantment ench) {
         return getEnchantmentLevel(ench) > 0;
     }
 
     @Override
-    public int getEnchantmentLevel(Enchantment ench) {
+    public int getEnchantmentLevel(final Enchantment ench) {
         Validate.notNull(ench, "Cannot find null enchantment");
         if (handle == null) {
             return 0;
@@ -214,20 +214,21 @@ public final class CraftItemStack extends ItemStack {
     }
 
     @Override
-    public int removeEnchantment(Enchantment ench) {
+    public int removeEnchantment(final Enchantment ench) {
         Validate.notNull(ench, "Cannot remove null enchantment");
 
-        net.minecraft.nbt.NBTTagList list = getEnchantmentList(handle), listCopy;
+        final net.minecraft.nbt.NBTTagList list = getEnchantmentList(handle);
+        final net.minecraft.nbt.NBTTagList listCopy;
         if (list == null) {
             return 0;
         }
         int index = Integer.MIN_VALUE;
         int level = Integer.MIN_VALUE;
-        int size = list.tagCount();
+        final int size = list.tagCount();
 
         for (int i = 0; i < size; i++) {
-            net.minecraft.nbt.NBTTagCompound enchantment = (net.minecraft.nbt.NBTTagCompound) list.tagAt(i);
-            int id = 0xffff & enchantment.getShort(ENCHANTMENTS_ID.NBT);
+            final net.minecraft.nbt.NBTTagCompound enchantment = (net.minecraft.nbt.NBTTagCompound) list.tagAt(i);
+            final int id = 0xffff & enchantment.getShort(ENCHANTMENTS_ID.NBT);
             if (id == ench.getId()) {
                 index = i;
                 level = 0xffff & enchantment.getShort(ENCHANTMENTS_LVL.NBT);
@@ -263,17 +264,17 @@ public final class CraftItemStack extends ItemStack {
         return getEnchantments(handle);
     }
 
-    static Map<Enchantment, Integer> getEnchantments(net.minecraft.item.ItemStack item) {
-        ImmutableMap.Builder<Enchantment, Integer> result = ImmutableMap.builder();
-        net.minecraft.nbt.NBTTagList list = (item == null) ? null : item.getEnchantmentTagList();
+    static Map<Enchantment, Integer> getEnchantments(final net.minecraft.item.ItemStack item) {
+        final ImmutableMap.Builder<Enchantment, Integer> result = ImmutableMap.builder();
+        final net.minecraft.nbt.NBTTagList list = (item == null) ? null : item.getEnchantmentTagList();
 
         if (list == null) {
             return result.build();
         }
 
         for (int i = 0; i < list.tagCount(); i++) {
-            int id = 0xffff & ((net.minecraft.nbt.NBTTagCompound) list.tagAt(i)).getShort(ENCHANTMENTS_ID.NBT);
-            int level = 0xffff & ((net.minecraft.nbt.NBTTagCompound) list.tagAt(i)).getShort(ENCHANTMENTS_LVL.NBT);
+            final int id = 0xffff & ((net.minecraft.nbt.NBTTagCompound) list.tagAt(i)).getShort(ENCHANTMENTS_ID.NBT);
+            final int level = 0xffff & ((net.minecraft.nbt.NBTTagCompound) list.tagAt(i)).getShort(ENCHANTMENTS_LVL.NBT);
 
             result.put(Enchantment.getById(id), level);
         }
@@ -281,13 +282,13 @@ public final class CraftItemStack extends ItemStack {
         return result.build();
     }
 
-    static net.minecraft.nbt.NBTTagList getEnchantmentList(net.minecraft.item.ItemStack item) {
+    static net.minecraft.nbt.NBTTagList getEnchantmentList(final net.minecraft.item.ItemStack item) {
         return item == null ? null : item.getEnchantmentTagList();
     }
 
     @Override
     public CraftItemStack clone() {
-        CraftItemStack itemStack = (CraftItemStack) super.clone();
+        final CraftItemStack itemStack = (CraftItemStack) super.clone();
         if (this.handle != null) {
             itemStack.handle = this.handle.copy();
         }
@@ -299,7 +300,7 @@ public final class CraftItemStack extends ItemStack {
         return getItemMeta(handle);
     }
 
-    public static ItemMeta getItemMeta(net.minecraft.item.ItemStack item) {
+    public static ItemMeta getItemMeta(final net.minecraft.item.ItemStack item) {
         if (!hasItemMeta(item)) {
             return CraftItemFactory.instance().getItemMeta(getType(item));
         }
@@ -329,17 +330,17 @@ public final class CraftItemStack extends ItemStack {
         }
     }
 
-    static Material getType(net.minecraft.item.ItemStack item) {
-        Material material = Material.getMaterial(item == null ? 0 : item.itemID);
+    static Material getType(final net.minecraft.item.ItemStack item) {
+        final Material material = Material.getMaterial(item == null ? 0 : item.itemID);
         return material == null ? Material.AIR : material;
     }
 
     @Override
-    public boolean setItemMeta(ItemMeta itemMeta) {
+    public boolean setItemMeta(final ItemMeta itemMeta) {
         return setItemMeta(handle, itemMeta);
     }
 
-    public static boolean setItemMeta(net.minecraft.item.ItemStack item, ItemMeta itemMeta) {
+    public static boolean setItemMeta(final net.minecraft.item.ItemStack item, final ItemMeta itemMeta) {
         if (item == null) {
             return false;
         }
@@ -351,7 +352,7 @@ public final class CraftItemStack extends ItemStack {
             return false;
         }
 
-        net.minecraft.nbt.NBTTagCompound tag = new net.minecraft.nbt.NBTTagCompound("tag");
+        final net.minecraft.nbt.NBTTagCompound tag = new net.minecraft.nbt.NBTTagCompound("tag");
         item.setTagCompound(tag);
 
         ((CraftMetaItem) itemMeta).applyToItem(tag);
@@ -359,7 +360,7 @@ public final class CraftItemStack extends ItemStack {
     }
 
     @Override
-    public boolean isSimilar(ItemStack stack) {
+    public boolean isSimilar(final ItemStack stack) {
         if (stack == null) {
             return false;
         }
@@ -370,7 +371,7 @@ public final class CraftItemStack extends ItemStack {
             return stack.getClass() == ItemStack.class && stack.isSimilar(this);
         }
 
-        CraftItemStack that = (CraftItemStack) stack;
+        final CraftItemStack that = (CraftItemStack) stack;
         if (handle == that.handle) {
             return true;
         }
@@ -388,7 +389,7 @@ public final class CraftItemStack extends ItemStack {
         return hasItemMeta(handle);
     }
 
-    static boolean hasItemMeta(net.minecraft.item.ItemStack item) {
+    static boolean hasItemMeta(final net.minecraft.item.ItemStack item) {
         return !(item == null || item.stackTagCompound == null || item.stackTagCompound.hasNoTags());
     }
 }

@@ -6,17 +6,17 @@ import net.minecraft.world.World;
 
 public class EntityMinecartChest extends EntityMinecartContainer
 {
-    public EntityMinecartChest(World par1World)
+    public EntityMinecartChest(final World par1World)
     {
         super(par1World);
     }
 
-    public EntityMinecartChest(World par1World, double par2, double par4, double par6)
+    public EntityMinecartChest(final World par1World, final double par2, final double par4, final double par6)
     {
         super(par1World, par2, par4, par6);
     }
 
-    public void killMinecart(DamageSource par1DamageSource)
+    public void killMinecart(final DamageSource par1DamageSource)
     {
         super.killMinecart(par1DamageSource);
         this.dropItemWithOffset(Block.chest.blockID, 1, 0.0F);

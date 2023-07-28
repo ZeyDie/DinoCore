@@ -70,7 +70,7 @@ public enum InventoryType {
     private final int size;
     private final String title;
 
-    private InventoryType(int defaultSize, String defaultTitle) {
+    private InventoryType(final int defaultSize, final String defaultTitle) {
         size = defaultSize;
         title = defaultTitle;
     }

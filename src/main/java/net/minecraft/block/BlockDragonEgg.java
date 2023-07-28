@@ -13,7 +13,7 @@ import java.util.Random;
 
 public class BlockDragonEgg extends Block
 {
-    public BlockDragonEgg(int par1)
+    public BlockDragonEgg(final int par1)
     {
         super(par1, Material.dragonEgg);
         this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 1.0F, 0.9375F);
@@ -22,7 +22,7 @@ public class BlockDragonEgg extends Block
     /**
      * Called whenever the block is added into the world. Args: world, x, y, z
      */
-    public void onBlockAdded(World par1World, int par2, int par3, int par4)
+    public void onBlockAdded(final World par1World, final int par2, final int par3, final int par4)
     {
         par1World.scheduleBlockUpdate(par2, par3, par4, this.blockID, this.tickRate(par1World));
     }
@@ -31,7 +31,7 @@ public class BlockDragonEgg extends Block
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         par1World.scheduleBlockUpdate(par2, par3, par4, this.blockID, this.tickRate(par1World));
     }
@@ -39,7 +39,7 @@ public class BlockDragonEgg extends Block
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         this.fallIfPossible(par1World, par2, par3, par4);
     }
@@ -47,30 +47,31 @@ public class BlockDragonEgg extends Block
     /**
      * Checks if the dragon egg can fall down, and if so, makes it fall.
      */
-    private void fallIfPossible(World par1World, int par2, int par3, int par4)
+    private void fallIfPossible(final World par1World, final int par2, int par3, final int par4)
     {
-        if (BlockSand.canFallBelow(par1World, par2, par3 - 1, par4) && par3 >= 0)
+        int par31 = par3;
+        if (BlockSand.canFallBelow(par1World, par2, par31 - 1, par4) && par31 >= 0)
         {
-            byte b0 = 32;
+            final byte b0 = 32;
 
-            if (!BlockSand.fallInstantly && par1World.checkChunksExist(par2 - b0, par3 - b0, par4 - b0, par2 + b0, par3 + b0, par4 + b0))
+            if (!BlockSand.fallInstantly && par1World.checkChunksExist(par2 - b0, par31 - b0, par4 - b0, par2 + b0, par31 + b0, par4 + b0))
             {
                 // CraftBukkit - added data
-                EntityFallingSand entityfallingsand = new EntityFallingSand(par1World, (double)((float) par2 + 0.5F), (double)((float) par3 + 0.5F), (double)((float) par4 + 0.5F), this.blockID, par1World.getBlockMetadata(par2, par3, par4));
+                final EntityFallingSand entityfallingsand = new EntityFallingSand(par1World, (double)((float) par2 + 0.5F), (double)((float) par31 + 0.5F), (double)((float) par4 + 0.5F), this.blockID, par1World.getBlockMetadata(par2, par31, par4));
                 par1World.spawnEntityInWorld(entityfallingsand);
             }
             else
             {
-                par1World.setBlockToAir(par2, par3, par4);
+                par1World.setBlockToAir(par2, par31, par4);
 
-                while (BlockSand.canFallBelow(par1World, par2, par3 - 1, par4) && par3 > 0)
+                while (BlockSand.canFallBelow(par1World, par2, par31 - 1, par4) && par31 > 0)
                 {
-                    --par3;
+                    --par31;
                 }
 
-                if (par3 > 0)
+                if (par31 > 0)
                 {
-                    par1World.setBlock(par2, par3, par4, this.blockID, 0, 2);
+                    par1World.setBlock(par2, par31, par4, this.blockID, 0, 2);
                 }
             }
         }
@@ -79,7 +80,7 @@ public class BlockDragonEgg extends Block
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9)
     {
         this.teleportNearby(par1World, par2, par3, par4);
         return true;
@@ -88,7 +89,7 @@ public class BlockDragonEgg extends Block
     /**
      * Called when the block is clicked by a player. Args: x, y, z, entityPlayer
      */
-    public void onBlockClicked(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer)
+    public void onBlockClicked(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer)
     {
         this.teleportNearby(par1World, par2, par3, par4);
     }
@@ -96,7 +97,7 @@ public class BlockDragonEgg extends Block
     /**
      * Teleports the dragon egg somewhere else in a 31x19x31 area centered on the egg.
      */
-    private void teleportNearby(World par1World, int par2, int par3, int par4)
+    private void teleportNearby(final World par1World, final int par2, final int par3, final int par4)
     {
         if (par1World.getBlockId(par2, par3, par4) == this.blockID)
         {
@@ -109,9 +110,9 @@ public class BlockDragonEgg extends Block
                 if (par1World.getBlockId(i1, j1, k1) == 0)
                 {
                     // CraftBukkit start
-                    org.bukkit.block.Block from = par1World.getWorld().getBlockAt(par2, par3, par4);
-                    org.bukkit.block.Block to = par1World.getWorld().getBlockAt(i1, j1, k1);
-                    BlockFromToEvent event = new BlockFromToEvent(from, to);
+                    final org.bukkit.block.Block from = par1World.getWorld().getBlockAt(par2, par3, par4);
+                    final org.bukkit.block.Block to = par1World.getWorld().getBlockAt(i1, j1, k1);
+                    final BlockFromToEvent event = new BlockFromToEvent(from, to);
                     org.bukkit.Bukkit.getPluginManager().callEvent(event);
 
                     if (event.isCancelled())
@@ -130,17 +131,17 @@ public class BlockDragonEgg extends Block
                     }
                     else
                     {
-                        short short1 = 128;
+                        final short short1 = 128;
 
                         for (int l1 = 0; l1 < short1; ++l1)
                         {
-                            double d0 = par1World.rand.nextDouble();
-                            float f = (par1World.rand.nextFloat() - 0.5F) * 0.2F;
-                            float f1 = (par1World.rand.nextFloat() - 0.5F) * 0.2F;
-                            float f2 = (par1World.rand.nextFloat() - 0.5F) * 0.2F;
-                            double d1 = (double)i1 + (double)(par2 - i1) * d0 + (par1World.rand.nextDouble() - 0.5D) * 1.0D + 0.5D;
-                            double d2 = (double)j1 + (double)(par3 - j1) * d0 + par1World.rand.nextDouble() * 1.0D - 0.5D;
-                            double d3 = (double)k1 + (double)(par4 - k1) * d0 + (par1World.rand.nextDouble() - 0.5D) * 1.0D + 0.5D;
+                            final double d0 = par1World.rand.nextDouble();
+                            final float f = (par1World.rand.nextFloat() - 0.5F) * 0.2F;
+                            final float f1 = (par1World.rand.nextFloat() - 0.5F) * 0.2F;
+                            final float f2 = (par1World.rand.nextFloat() - 0.5F) * 0.2F;
+                            final double d1 = (double)i1 + (double)(par2 - i1) * d0 + (par1World.rand.nextDouble() - 0.5D) * 1.0D + 0.5D;
+                            final double d2 = (double)j1 + (double)(par3 - j1) * d0 + par1World.rand.nextDouble() * 1.0D - 0.5D;
+                            final double d3 = (double)k1 + (double)(par4 - k1) * d0 + (par1World.rand.nextDouble() - 0.5D) * 1.0D + 0.5D;
                             par1World.spawnParticle("portal", d1, d2, d3, (double)f, (double)f1, (double)f2);
                         }
                     }
@@ -154,7 +155,7 @@ public class BlockDragonEgg extends Block
     /**
      * How many world ticks before ticking
      */
-    public int tickRate(World par1World)
+    public int tickRate(final World par1World)
     {
         return 5;
     }
@@ -182,7 +183,7 @@ public class BlockDragonEgg extends Block
      * Returns true if the given side of this block type should be rendered, if the adjacent block is at the given
      * coordinates.  Args: blockAccess, x, y, z, side
      */
-    public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public boolean shouldSideBeRendered(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
         return true;
     }
@@ -200,7 +201,7 @@ public class BlockDragonEgg extends Block
     /**
      * only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
      */
-    public int idPicked(World par1World, int par2, int par3, int par4)
+    public int idPicked(final World par1World, final int par2, final int par3, final int par4)
     {
         return 0;
     }

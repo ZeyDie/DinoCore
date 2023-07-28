@@ -23,10 +23,10 @@ public class CraftDispenser extends CraftBlockState implements Dispenser {
     }
 
     public boolean dispense() {
-        Block block = getBlock();
+        final Block block = getBlock();
 
         if (block.getType() == Material.DISPENSER) {
-            net.minecraft.block.BlockDispenser dispense = (net.minecraft.block.BlockDispenser) net.minecraft.block.Block.dispenser;
+            final net.minecraft.block.BlockDispenser dispense = (net.minecraft.block.BlockDispenser) net.minecraft.block.Block.dispenser;
 
             dispense.dispense(world.getHandle(), getX(), getY(), getZ());
             return true;
@@ -36,8 +36,8 @@ public class CraftDispenser extends CraftBlockState implements Dispenser {
     }
 
     @Override
-    public boolean update(boolean force, boolean applyPhysics) {
-        boolean result = super.update(force, applyPhysics);
+    public boolean update(final boolean force, final boolean applyPhysics) {
+        final boolean result = super.update(force, applyPhysics);
 
         if (result) {
             dispenser.onInventoryChanged();

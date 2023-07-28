@@ -77,7 +77,7 @@ public class EnchantItemEvent extends InventoryEvent implements Cancellable {
      *
      * @param level - cost in levels
      */
-    public void setExpLevelCost(int level) {
+    public void setExpLevelCost(final int level) {
         this.level = level;
     }
 
@@ -104,7 +104,7 @@ public class EnchantItemEvent extends InventoryEvent implements Cancellable {
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancelled = cancel;
     }
 

@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 public class ItemLilyPad extends ItemColored
 {
-    public ItemLilyPad(int par1)
+    public ItemLilyPad(final int par1)
     {
         super(par1, false);
     }
@@ -19,9 +19,9 @@ public class ItemLilyPad extends ItemColored
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
-        MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, true);
+        final MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, true);
 
         if (movingobjectposition == null)
         {
@@ -31,9 +31,9 @@ public class ItemLilyPad extends ItemColored
         {
             if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE)
             {
-                int i = movingobjectposition.blockX;
-                int j = movingobjectposition.blockY;
-                int k = movingobjectposition.blockZ;
+                final int i = movingobjectposition.blockX;
+                final int j = movingobjectposition.blockY;
+                final int k = movingobjectposition.blockZ;
 
                 if (!par2World.canMineBlock(par3EntityPlayer, i, j, k))
                 {
@@ -61,7 +61,7 @@ public class ItemLilyPad extends ItemColored
     }
 
     @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack par1ItemStack, int par2)
+    public int getColorFromItemStack(final ItemStack par1ItemStack, final int par2)
     {
         return Block.waterlily.getRenderColor(par1ItemStack.getItemDamage());
     }

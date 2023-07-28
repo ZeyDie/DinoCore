@@ -31,21 +31,22 @@ public class ShapedOreRecipe implements IRecipe
     private boolean mirrored = true;
     private ShapedRecipes vanillaRecipe = null; // Cauldron - bukkit compatibility
 
-    public ShapedOreRecipe(Block     result, Object... recipe){ this(new ItemStack(result), recipe); }
-    public ShapedOreRecipe(Item      result, Object... recipe){ this(new ItemStack(result), recipe); }
-    public ShapedOreRecipe(ItemStack result, Object... recipe)
+    public ShapedOreRecipe(final Block     result, final Object... recipe){ this(new ItemStack(result), recipe); }
+    public ShapedOreRecipe(final Item      result, final Object... recipe){ this(new ItemStack(result), recipe); }
+    public ShapedOreRecipe(final ItemStack result, Object... recipe)
     {
+        Object[] recipe1 = recipe;
         output = result.copy();
 
         String shape = "";
         int idx = 0;
 
-        if (recipe[idx] instanceof Boolean)
+        if (recipe1[idx] instanceof Boolean)
         {
-            mirrored = (Boolean)recipe[idx];
-            if (recipe[idx+1] instanceof Object[])
+            mirrored = (Boolean) recipe1[idx];
+            if (recipe1[idx+1] instanceof Object[])
             {
-                recipe = (Object[])recipe[idx+1];
+                recipe1 = (Object[]) recipe1[idx+1];
             }
             else
             {
@@ -53,11 +54,11 @@ public class ShapedOreRecipe implements IRecipe
             }
         }
 
-        if (recipe[idx] instanceof String[])
+        if (recipe1[idx] instanceof String[])
         {
-            String[] parts = ((String[])recipe[idx++]);
+            final String[] parts = ((String[]) recipe1[idx++]);
 
-            for (String s : parts)
+            for (final String s : parts)
             {
                 width = s.length();
                 shape += s;
@@ -67,9 +68,9 @@ public class ShapedOreRecipe implements IRecipe
         }
         else
         {
-            while (recipe[idx] instanceof String)
+            while (recipe1[idx] instanceof String)
             {
-                String s = (String)recipe[idx++];
+                final String s = (String) recipe1[idx++];
                 shape += s;
                 width = s.length();
                 height++;
@@ -79,7 +80,7 @@ public class ShapedOreRecipe implements IRecipe
         if (width * height != shape.length())
         {
             String ret = "Invalid shaped ore recipe: ";
-            for (Object tmp :  recipe)
+            for (final Object tmp : recipe1)
             {
                 ret += tmp + ", ";
             }
@@ -87,12 +88,12 @@ public class ShapedOreRecipe implements IRecipe
             throw new RuntimeException(ret);
         }
 
-        HashMap<Character, Object> itemMap = new HashMap<Character, Object>();
+        final HashMap<Character, Object> itemMap = new HashMap<Character, Object>();
 
-        for (; idx < recipe.length; idx += 2)
+        for (; idx < recipe1.length; idx += 2)
         {
-            Character chr = (Character)recipe[idx];
-            Object in = recipe[idx + 1];
+            final Character chr = (Character) recipe1[idx];
+            final Object in = recipe1[idx + 1];
 
             if (in instanceof ItemStack)
             {
@@ -113,7 +114,7 @@ public class ShapedOreRecipe implements IRecipe
             else
             {
                 String ret = "Invalid shaped ore recipe: ";
-                for (Object tmp :  recipe)
+                for (final Object tmp : recipe1)
                 {
                     ret += tmp + ", ";
                 }
@@ -124,13 +125,13 @@ public class ShapedOreRecipe implements IRecipe
 
         input = new Object[width * height];
         int x = 0;
-        for (char chr : shape.toCharArray())
+        for (final char chr : shape.toCharArray())
         {
             input[x++] = itemMap.get(chr);
         }
     }
 
-    ShapedOreRecipe(ShapedRecipes recipe, Map<ItemStack, String> replacements)
+    ShapedOreRecipe(final ShapedRecipes recipe, final Map<ItemStack, String> replacements)
     {
         vanillaRecipe = recipe; // Cauldron - bukkit compatibility
         output = recipe.getRecipeOutput();
@@ -141,13 +142,13 @@ public class ShapedOreRecipe implements IRecipe
 
         for(int i = 0; i < input.length; i++)
         {
-            ItemStack ingred = recipe.recipeItems[i];
+            final ItemStack ingred = recipe.recipeItems[i];
 
             if(ingred == null) continue;
 
             input[i] = recipe.recipeItems[i];
 
-            for(Entry<ItemStack, String> replace : replacements.entrySet())
+            for(final Entry<ItemStack, String> replace : replacements.entrySet())
             {
                 if(OreDictionary.itemMatches(replace.getKey(), ingred, true))
                 {
@@ -159,7 +160,7 @@ public class ShapedOreRecipe implements IRecipe
     }
 
     @Override
-    public ItemStack getCraftingResult(InventoryCrafting var1){ return output.copy(); }
+    public ItemStack getCraftingResult(final InventoryCrafting var1){ return output.copy(); }
 
     @Override
     public int getRecipeSize(){ return input.length; }
@@ -168,7 +169,7 @@ public class ShapedOreRecipe implements IRecipe
     public ItemStack getRecipeOutput(){ return output; }
 
     @Override
-    public boolean matches(InventoryCrafting inv, World world)
+    public boolean matches(final InventoryCrafting inv, final World world)
     {
         for (int x = 0; x <= MAX_CRAFT_GRID_WIDTH - width; x++)
         {
@@ -189,14 +190,14 @@ public class ShapedOreRecipe implements IRecipe
         return false;
     }
 
-    private boolean checkMatch(InventoryCrafting inv, int startX, int startY, boolean mirror)
+    private boolean checkMatch(final InventoryCrafting inv, final int startX, final int startY, final boolean mirror)
     {
         for (int x = 0; x < MAX_CRAFT_GRID_WIDTH; x++)
         {
             for (int y = 0; y < MAX_CRAFT_GRID_HEIGHT; y++)
             {
-                int subX = x - startX;
-                int subY = y - startY;
+                final int subX = x - startX;
+                final int subY = y - startY;
                 Object target = null;
 
                 if (subX >= 0 && subY >= 0 && subX < width && subY < height)
@@ -211,7 +212,7 @@ public class ShapedOreRecipe implements IRecipe
                     }
                 }
 
-                ItemStack slot = inv.getStackInRowAndColumn(x, y);
+                final ItemStack slot = inv.getStackInRowAndColumn(x, y);
 
                 if (target instanceof ItemStack)
                 {
@@ -224,7 +225,7 @@ public class ShapedOreRecipe implements IRecipe
                 {
                     boolean matched = false;
 
-                    for (ItemStack item : (ArrayList<ItemStack>)target)
+                    for (final ItemStack item : (ArrayList<ItemStack>)target)
                     {
                         matched = matched || checkItemEquals(item, slot);
                     }
@@ -244,7 +245,7 @@ public class ShapedOreRecipe implements IRecipe
         return true;
     }
 
-    private boolean checkItemEquals(ItemStack target, ItemStack input)
+    private boolean checkItemEquals(final ItemStack target, final ItemStack input)
     {
         if (input == null && target != null || input != null && target == null)
         {
@@ -253,7 +254,7 @@ public class ShapedOreRecipe implements IRecipe
         return (target.itemID == input.itemID && (target.getItemDamage() == OreDictionary.WILDCARD_VALUE|| target.getItemDamage() == input.getItemDamage()));
     }
 
-    public ShapedOreRecipe setMirrored(boolean mirror)
+    public ShapedOreRecipe setMirrored(final boolean mirror)
     {
         mirrored = mirror;
         return this;

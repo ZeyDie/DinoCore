@@ -147,8 +147,8 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
         return getType0(this.type);
     }
 
-    private static Material getType0(int id) {
-        Material material = Material.getMaterial(id);
+    private static Material getType0(final int id) {
+        final Material material = Material.getMaterial(id);
         return material == null ? Material.AIR : material;
     }
 
@@ -160,7 +160,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @param type New type to set the items in this stack to
      */
     @Utility
-    public void setType(Material type) {
+    public void setType(final Material type) {
         Validate.notNull(type, "Material cannot be null");
         setTypeId(type.getId());
     }
@@ -185,7 +185,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @deprecated Magic value
      */
     @Deprecated
-    public void setTypeId(int type) {
+    public void setTypeId(final int type) {
         this.type = type;
         if (this.meta != null) {
             this.meta = Bukkit.getItemFactory().asMetaFor(meta, getType0());
@@ -207,7 +207,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      *
      * @param amount New amount of items in this stack
      */
-    public void setAmount(int amount) {
+    public void setAmount(final int amount) {
         this.amount = amount;
     }
 
@@ -217,7 +217,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @return MaterialData for this item
      */
     public MaterialData getData() {
-        Material mat = getType();
+        final Material mat = getType();
         if (data == null && mat != null && mat.getData() != null) {
             data = mat.getNewData((byte) this.getDurability());
         }
@@ -230,8 +230,8 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      *
      * @param data New MaterialData for this item
      */
-    public void setData(MaterialData data) {
-        Material mat = getType();
+    public void setData(final MaterialData data) {
+        final Material mat = getType();
 
         if (data == null || mat == null || mat.getData() == null) {
             this.data = data;
@@ -270,7 +270,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      */
     @Utility
     public int getMaxStackSize() {
-        Material material = getType();
+        final Material material = getType();
         if (material != null) {
             return material.getMaxStackSize();
         }
@@ -278,7 +278,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     }
 
     private void createData(final byte data) {
-        Material mat = Material.getMaterial(type);
+        final Material mat = Material.getMaterial(type);
 
         if (mat == null) {
             this.data = new MaterialData(type, data);
@@ -290,7 +290,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     @Override
     @Utility
     public String toString() {
-        StringBuilder toString = new StringBuilder("ItemStack{").append(getType().name()).append(" x ").append(getAmount());
+        final StringBuilder toString = new StringBuilder("ItemStack{").append(getType().name()).append(" x ").append(getAmount());
         if (hasItemMeta()) {
             toString.append(", ").append(getItemMeta());
         }
@@ -299,7 +299,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
 
     @Override
     @Utility
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -307,7 +307,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
             return false;
         }
 
-        ItemStack stack = (ItemStack) obj;
+        final ItemStack stack = (ItemStack) obj;
         return getAmount() == stack.getAmount() && isSimilar(stack);
     }
 
@@ -318,7 +318,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @return true if the two stacks are equal, ignoring the amount
      */
     @Utility
-    public boolean isSimilar(ItemStack stack) {
+    public boolean isSimilar(final ItemStack stack) {
         if (stack == null) {
             return false;
         }
@@ -331,7 +331,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
     @Override
     public ItemStack clone() {
         try {
-            ItemStack itemStack = (ItemStack) super.clone();
+            final ItemStack itemStack = (ItemStack) super.clone();
 
             if (this.meta != null) {
                 itemStack.meta = this.meta.clone();
@@ -342,7 +342,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
             }
 
             return itemStack;
-        } catch (CloneNotSupportedException e) {
+        } catch (final CloneNotSupportedException e) {
             throw new Error(e);
         }
     }
@@ -366,7 +366,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @param ench Enchantment to test
      * @return True if this has the given enchantment
      */
-    public boolean containsEnchantment(Enchantment ench) {
+    public boolean containsEnchantment(final Enchantment ench) {
         return meta == null ? false : meta.hasEnchant(ench);
     }
 
@@ -376,7 +376,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @param ench Enchantment to check
      * @return Level of the enchantment, or 0
      */
-    public int getEnchantmentLevel(Enchantment ench) {
+    public int getEnchantmentLevel(final Enchantment ench) {
         return meta == null ? 0 : meta.getEnchantLevel(ench);
     }
 
@@ -401,9 +401,9 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      *          <b>Warning</b>: Some enchantments may be added before this exception is thrown.
      */
     @Utility
-    public void addEnchantments(Map<Enchantment, Integer> enchantments) {
+    public void addEnchantments(final Map<Enchantment, Integer> enchantments) {
         Validate.notNull(enchantments, "Enchantments cannot be null");
-        for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+        for (final Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
             addEnchantment(entry.getKey(), entry.getValue());
         }
     }
@@ -418,7 +418,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @throws IllegalArgumentException if enchantment null, or enchantment is not applicable
      */
     @Utility
-    public void addEnchantment(Enchantment ench, int level) {
+    public void addEnchantment(final Enchantment ench, final int level) {
         Validate.notNull(ench, "Enchantment cannot be null");
         if ((level < ench.getStartLevel()) || (level > ench.getMaxLevel())) {
             throw new IllegalArgumentException("Enchantment level is either too low or too high (given " + level + ", bounds are " + ench.getStartLevel() + " to " + ench.getMaxLevel() + ")");
@@ -438,8 +438,8 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @param enchantments Enchantments to add
      */
     @Utility
-    public void addUnsafeEnchantments(Map<Enchantment, Integer> enchantments) {
-        for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+    public void addUnsafeEnchantments(final Map<Enchantment, Integer> enchantments) {
+        for (final Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
             addUnsafeEnchantment(entry.getKey(), entry.getValue());
         }
     }
@@ -455,7 +455,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @param ench Enchantment to add
      * @param level Level of the enchantment
      */
-    public void addUnsafeEnchantment(Enchantment ench, int level) {
+    public void addUnsafeEnchantment(final Enchantment ench, final int level) {
         (meta == null ? meta = Bukkit.getItemFactory().getItemMeta(getType0()) : meta).addEnchant(ench, level, true);
     }
 
@@ -465,8 +465,8 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @param ench Enchantment to remove
      * @return Previous level, or 0
      */
-    public int removeEnchantment(Enchantment ench) {
-        int level = getEnchantmentLevel(ench);
+    public int removeEnchantment(final Enchantment ench) {
+        final int level = getEnchantmentLevel(ench);
         if (level == 0 || meta == null) {
             return level;
         }
@@ -476,7 +476,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
 
     @Utility
     public Map<String, Object> serialize() {
-        Map<String, Object> result = new LinkedHashMap<String, Object>();
+        final Map<String, Object> result = new LinkedHashMap<String, Object>();
 
         result.put("type", getType().name());
 
@@ -488,7 +488,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
             result.put("amount", getAmount());
         }
 
-        ItemMeta meta = getItemMeta();
+        final ItemMeta meta = getItemMeta();
         if (!Bukkit.getItemFactory().equals(meta, null)) {
             result.put("meta", meta);
         }
@@ -503,8 +503,8 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @return deserialized item stack
      * @see ConfigurationSerializable
      */
-    public static ItemStack deserialize(Map<String, Object> args) {
-        Material type = Material.getMaterial((String) args.get("type"));
+    public static ItemStack deserialize(final Map<String, Object> args) {
+        final Material type = Material.getMaterial((String) args.get("type"));
         short damage = 0;
         int amount = 1;
 
@@ -516,16 +516,16 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
             amount = (Integer) args.get("amount");
         }
 
-        ItemStack result = new ItemStack(type, amount, damage);
+        final ItemStack result = new ItemStack(type, amount, damage);
 
         if (args.containsKey("enchantments")) { // Backward compatiblity, @deprecated
-            Object raw = args.get("enchantments");
+            final Object raw = args.get("enchantments");
 
             if (raw instanceof Map) {
-                Map<?, ?> map = (Map<?, ?>) raw;
+                final Map<?, ?> map = (Map<?, ?>) raw;
 
-                for (Map.Entry<?, ?> entry : map.entrySet()) {
-                    Enchantment enchantment = Enchantment.getByName(entry.getKey().toString());
+                for (final Map.Entry<?, ?> entry : map.entrySet()) {
+                    final Enchantment enchantment = Enchantment.getByName(entry.getKey().toString());
 
                     if ((enchantment != null) && (entry.getValue() instanceof Integer)) {
                         result.addUnsafeEnchantment(enchantment, (Integer) entry.getValue());
@@ -533,7 +533,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
                 }
             }
         } else if (args.containsKey("meta")) { // We cannot and will not have meta when enchantments (pre-ItemMeta) exist
-            Object raw = args.get("meta");
+            final Object raw = args.get("meta");
             if (raw instanceof ItemMeta) {
                 result.setItemMeta((ItemMeta) raw);
             }
@@ -567,14 +567,14 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @return True if successfully applied ItemMeta, see {@link ItemFactory#isApplicable(ItemMeta, ItemStack)}
      * @throws IllegalArgumentException if the item meta was not created by the {@link ItemFactory}
      */
-    public boolean setItemMeta(ItemMeta itemMeta) {
+    public boolean setItemMeta(final ItemMeta itemMeta) {
         return setItemMeta0(itemMeta, getType0());
     }
 
     /*
      * Cannot be overridden, so it's safe for constructor call
      */
-    private boolean setItemMeta0(ItemMeta itemMeta, Material material) {
+    private boolean setItemMeta0(final ItemMeta itemMeta, final Material material) {
         if (itemMeta == null) {
             this.meta = null;
             return true;

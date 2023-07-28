@@ -18,7 +18,7 @@ import org.bukkit.event.entity.EntityTargetEvent;
 
 public abstract class EntityMob extends EntityCreature implements IMob
 {
-    public EntityMob(World par1World)
+    public EntityMob(final World par1World)
     {
         super(par1World);
         this.experienceValue = 5;
@@ -31,7 +31,7 @@ public abstract class EntityMob extends EntityCreature implements IMob
     public void onLivingUpdate()
     {
         this.updateArmSwingProgress();
-        float f = this.getBrightness(1.0F);
+        final float f = this.getBrightness(1.0F);
 
         if (f > 0.5F)
         {
@@ -60,14 +60,14 @@ public abstract class EntityMob extends EntityCreature implements IMob
      */
     protected Entity findPlayerToAttack()
     {
-        EntityPlayer entityplayer = this.worldObj.getClosestVulnerablePlayerToEntity(this, 16.0D);
+        final EntityPlayer entityplayer = this.worldObj.getClosestVulnerablePlayerToEntity(this, 16.0D);
         return entityplayer != null && this.canEntityBeSeen(entityplayer) ? entityplayer : null;
     }
 
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2)
     {
         if (this.isEntityInvulnerable())
         {
@@ -75,7 +75,7 @@ public abstract class EntityMob extends EntityCreature implements IMob
         }
         else if (super.attackEntityFrom(par1DamageSource, par2))
         {
-            Entity entity = par1DamageSource.getEntity();
+            final Entity entity = par1DamageSource.getEntity();
 
             if (this.riddenByEntity != entity && this.ridingEntity != entity)
             {
@@ -84,7 +84,7 @@ public abstract class EntityMob extends EntityCreature implements IMob
                     // CraftBukkit start - We still need to call events for entities without goals
                     if (entity != this.entityToAttack && (this instanceof EntityBlaze || this instanceof EntityEnderman || this instanceof EntitySpider || this instanceof EntityGiantZombie || this instanceof EntitySilverfish))
                     {
-                        EntityTargetEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callEntityTargetEvent(this, entity, EntityTargetEvent.TargetReason.TARGET_ATTACKED_ENTITY);
+                        final EntityTargetEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callEntityTargetEvent(this, entity, EntityTargetEvent.TargetReason.TARGET_ATTACKED_ENTITY);
 
                         if (!event.isCancelled())
                         {
@@ -118,7 +118,7 @@ public abstract class EntityMob extends EntityCreature implements IMob
         }
     }
 
-    public boolean attackEntityAsMob(Entity par1Entity)
+    public boolean attackEntityAsMob(final Entity par1Entity)
     {
         float f = (float)this.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
         int i = 0;
@@ -129,7 +129,7 @@ public abstract class EntityMob extends EntityCreature implements IMob
             i += EnchantmentHelper.getKnockbackModifier(this, (EntityLivingBase)par1Entity);
         }
 
-        boolean flag = par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), f);
+        final boolean flag = par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), f);
 
         if (flag)
         {
@@ -140,7 +140,7 @@ public abstract class EntityMob extends EntityCreature implements IMob
                 this.motionZ *= 0.6D;
             }
 
-            int j = EnchantmentHelper.getFireAspectModifier(this);
+            final int j = EnchantmentHelper.getFireAspectModifier(this);
 
             if (j > 0)
             {
@@ -159,7 +159,7 @@ public abstract class EntityMob extends EntityCreature implements IMob
     /**
      * Basic mob attack. Default to touch of death in EntityCreature. Overridden by each mob to define their attack.
      */
-    protected void attackEntity(Entity par1Entity, float par2)
+    protected void attackEntity(final Entity par1Entity, final float par2)
     {
         if (this.attackTime <= 0 && par2 < 2.0F && par1Entity.boundingBox.maxY > this.boundingBox.minY && par1Entity.boundingBox.minY < this.boundingBox.maxY)
         {
@@ -172,7 +172,7 @@ public abstract class EntityMob extends EntityCreature implements IMob
      * Takes a coordinate in and returns a weight to determine how likely this creature will try to path to the block.
      * Args: x, y, z
      */
-    public float getBlockPathWeight(int par1, int par2, int par3)
+    public float getBlockPathWeight(final int par1, final int par2, final int par3)
     {
         return 0.5F - this.worldObj.getLightBrightness(par1, par2, par3);
     }
@@ -182,9 +182,9 @@ public abstract class EntityMob extends EntityCreature implements IMob
      */
     protected boolean isValidLightLevel()
     {
-        int i = MathHelper.floor_double(this.posX);
-        int j = MathHelper.floor_double(this.boundingBox.minY);
-        int k = MathHelper.floor_double(this.posZ);
+        final int i = MathHelper.floor_double(this.posX);
+        final int j = MathHelper.floor_double(this.boundingBox.minY);
+        final int k = MathHelper.floor_double(this.posZ);
 
         if (this.worldObj.getSavedLightValue(EnumSkyBlock.Sky, i, j, k) > this.rand.nextInt(32))
         {
@@ -196,7 +196,7 @@ public abstract class EntityMob extends EntityCreature implements IMob
 
             if (this.worldObj.isThundering())
             {
-                int i1 = this.worldObj.skylightSubtracted;
+                final int i1 = this.worldObj.skylightSubtracted;
                 this.worldObj.skylightSubtracted = 10;
                 l = this.worldObj.getBlockLightValue(i, j, k);
                 this.worldObj.skylightSubtracted = i1;

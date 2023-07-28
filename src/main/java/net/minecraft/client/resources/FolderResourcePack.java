@@ -12,35 +12,35 @@ import java.util.Set;
 @SideOnly(Side.CLIENT)
 public class FolderResourcePack extends AbstractResourcePack
 {
-    public FolderResourcePack(File par1File)
+    public FolderResourcePack(final File par1File)
     {
         super(par1File);
     }
 
-    protected InputStream getInputStreamByName(String par1Str) throws IOException
+    protected InputStream getInputStreamByName(final String par1Str) throws IOException
     {
         return new BufferedInputStream(new FileInputStream(new File(this.resourcePackFile, par1Str)));
     }
 
-    protected boolean hasResourceName(String par1Str)
+    protected boolean hasResourceName(final String par1Str)
     {
         return (new File(this.resourcePackFile, par1Str)).isFile();
     }
 
     public Set getResourceDomains()
     {
-        HashSet hashset = Sets.newHashSet();
-        File file1 = new File(this.resourcePackFile, "assets/");
+        final HashSet hashset = Sets.newHashSet();
+        final File file1 = new File(this.resourcePackFile, "assets/");
 
         if (file1.isDirectory())
         {
-            File[] afile = file1.listFiles((java.io.FileFilter)DirectoryFileFilter.DIRECTORY);
-            int i = afile.length;
+            final File[] afile = file1.listFiles((java.io.FileFilter)DirectoryFileFilter.DIRECTORY);
+            final int i = afile.length;
 
             for (int j = 0; j < i; ++j)
             {
-                File file2 = afile[j];
-                String s = getRelativeName(file1, file2);
+                final File file2 = afile[j];
+                final String s = getRelativeName(file1, file2);
 
                 if (!s.equals(s.toLowerCase()))
                 {

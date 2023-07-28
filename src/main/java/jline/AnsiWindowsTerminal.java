@@ -36,7 +36,7 @@ public class AnsiWindowsTerminal
     private final boolean ansiSupported = detectAnsiSupport();
 
     @Override
-    public OutputStream wrapOutIfNeeded(OutputStream out) {
+    public OutputStream wrapOutIfNeeded(final OutputStream out) {
         return wrapOutputStream(out);
     }
 
@@ -48,12 +48,12 @@ public class AnsiWindowsTerminal
      * stream.
      */
     private static OutputStream wrapOutputStream(final OutputStream stream) {
-        String os = System.getProperty("os.name");
+        final String os = System.getProperty("os.name");
         if( os.startsWith("Windows") ) {
             // On windows we know the console does not interpret ANSI codes..
             try {
                 return new WindowsAnsiOutputStream(stream);
-            } catch (Throwable ignore) {
+            } catch (final Throwable ignore) {
                 // this happens when JNA is not in the path.. or
                 // this happens when the stdout is being redirected to a file.
             }
@@ -65,11 +65,11 @@ public class AnsiWindowsTerminal
 
     private static boolean detectAnsiSupport() {
         AnsiConsole.systemInstall(); // CraftBukkit - install Windows JNI library
-        OutputStream out = AnsiConsole.wrapOutputStream(new ByteArrayOutputStream());
+        final OutputStream out = AnsiConsole.wrapOutputStream(new ByteArrayOutputStream());
         try {
             out.close();
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // ignore;
         }
         return out instanceof WindowsAnsiOutputStream;

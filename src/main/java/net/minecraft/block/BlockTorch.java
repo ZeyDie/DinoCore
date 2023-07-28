@@ -15,7 +15,7 @@ import static net.minecraftforge.common.ForgeDirection.*;
 
 public class BlockTorch extends Block
 {
-    protected BlockTorch(int par1)
+    protected BlockTorch(final int par1)
     {
         super(par1, Material.circuits);
         this.setTickRandomly(true);
@@ -26,7 +26,7 @@ public class BlockTorch extends Block
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4)
     {
         return null;
     }
@@ -59,7 +59,7 @@ public class BlockTorch extends Block
     /**
      * Gets if we can place a torch on a block.
      */
-    private boolean canPlaceTorchOn(World par1World, int par2, int par3, int par4)
+    private boolean canPlaceTorchOn(final World par1World, final int par2, final int par3, final int par4)
     {
         if (par1World.doesBlockHaveSolidTopSurface(par2, par3, par4))
         {
@@ -67,7 +67,7 @@ public class BlockTorch extends Block
         }
         else
         {
-            int l = par1World.getBlockId(par2, par3, par4);
+            final int l = par1World.getBlockId(par2, par3, par4);
             return (Block.blocksList[l] != null && Block.blocksList[l].canPlaceTorchOnTop(par1World, par2, par3, par4));
         }
     }
@@ -75,7 +75,7 @@ public class BlockTorch extends Block
     /**
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
      */
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
+    public boolean canPlaceBlockAt(final World par1World, final int par2, final int par3, final int par4)
     {
         return par1World.isBlockSolidOnSide(par2 - 1, par3, par4, EAST,  true) ||
                par1World.isBlockSolidOnSide(par2 + 1, par3, par4, WEST,  true) ||
@@ -87,7 +87,7 @@ public class BlockTorch extends Block
     /**
      * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
      */
-    public int onBlockPlaced(World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9)
+    public int onBlockPlaced(final World par1World, final int par2, final int par3, final int par4, final int par5, final float par6, final float par7, final float par8, final int par9)
     {
         int j1 = par9;
 
@@ -122,7 +122,7 @@ public class BlockTorch extends Block
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         super.updateTick(par1World, par2, par3, par4, par5Random);
 
@@ -135,7 +135,7 @@ public class BlockTorch extends Block
     /**
      * Called whenever the block is added into the world. Args: world, x, y, z
      */
-    public void onBlockAdded(World par1World, int par2, int par3, int par4)
+    public void onBlockAdded(final World par1World, final int par2, final int par3, final int par4)
     {
         if (par1World.getBlockMetadata(par2, par3, par4) == 0)
         {
@@ -168,16 +168,16 @@ public class BlockTorch extends Block
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         this.func_94397_d(par1World, par2, par3, par4, par5);
     }
 
-    protected boolean func_94397_d(World par1World, int par2, int par3, int par4, int par5)
+    protected boolean func_94397_d(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         if (this.dropTorchIfCantStay(par1World, par2, par3, par4))
         {
-            int i1 = par1World.getBlockMetadata(par2, par3, par4);
+            final int i1 = par1World.getBlockMetadata(par2, par3, par4);
             boolean flag = false;
 
             if (!par1World.isBlockSolidOnSide(par2 - 1, par3, par4, EAST, true) && i1 == 1)
@@ -226,7 +226,7 @@ public class BlockTorch extends Block
      * Tests if the block can remain at its current location and will drop as an item if it is unable to stay. Returns
      * True if it can stay and False if it drops. Args: world, x, y, z
      */
-    protected boolean dropTorchIfCantStay(World par1World, int par2, int par3, int par4)
+    protected boolean dropTorchIfCantStay(final World par1World, final int par2, final int par3, final int par4)
     {
         if (!this.canPlaceBlockAt(par1World, par2, par3, par4))
         {
@@ -248,9 +248,9 @@ public class BlockTorch extends Block
      * Ray traces through the blocks collision from start vector to end vector returning a ray trace hit. Args: world,
      * x, y, z, startVec, endVec
      */
-    public MovingObjectPosition collisionRayTrace(World par1World, int par2, int par3, int par4, Vec3 par5Vec3, Vec3 par6Vec3)
+    public MovingObjectPosition collisionRayTrace(final World par1World, final int par2, final int par3, final int par4, final Vec3 par5Vec3, final Vec3 par6Vec3)
     {
-        int l = par1World.getBlockMetadata(par2, par3, par4) & 7;
+        final int l = par1World.getBlockMetadata(par2, par3, par4) & 7;
         float f = 0.15F;
 
         if (l == 1)
@@ -283,14 +283,14 @@ public class BlockTorch extends Block
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void randomDisplayTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
-        int l = par1World.getBlockMetadata(par2, par3, par4);
-        double d0 = (double)((float)par2 + 0.5F);
-        double d1 = (double)((float)par3 + 0.7F);
-        double d2 = (double)((float)par4 + 0.5F);
-        double d3 = 0.2199999988079071D;
-        double d4 = 0.27000001072883606D;
+        final int l = par1World.getBlockMetadata(par2, par3, par4);
+        final double d0 = (double)((float)par2 + 0.5F);
+        final double d1 = (double)((float)par3 + 0.7F);
+        final double d2 = (double)((float)par4 + 0.5F);
+        final double d3 = 0.2199999988079071D;
+        final double d4 = 0.27000001072883606D;
 
         if (l == 1)
         {

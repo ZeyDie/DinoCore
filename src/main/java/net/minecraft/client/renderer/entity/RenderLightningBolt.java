@@ -16,18 +16,18 @@ public class RenderLightningBolt extends Render
     /**
      * Actually renders the lightning bolt. This method is called through the doRender method.
      */
-    public void doRenderLightningBolt(EntityLightningBolt par1EntityLightningBolt, double par2, double par4, double par6, float par8, float par9)
+    public void doRenderLightningBolt(final EntityLightningBolt par1EntityLightningBolt, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-        double[] adouble = new double[8];
-        double[] adouble1 = new double[8];
+        final double[] adouble = new double[8];
+        final double[] adouble1 = new double[8];
         double d3 = 0.0D;
         double d4 = 0.0D;
-        Random random = new Random(par1EntityLightningBolt.boltVertex);
+        final Random random = new Random(par1EntityLightningBolt.boltVertex);
 
         for (int i = 7; i >= 0; --i)
         {
@@ -39,7 +39,7 @@ public class RenderLightningBolt extends Render
 
         for (int j = 0; j < 4; ++j)
         {
-            Random random1 = new Random(par1EntityLightningBolt.boltVertex);
+            final Random random1 = new Random(par1EntityLightningBolt.boltVertex);
 
             for (int k = 0; k < 3; ++k)
             {
@@ -61,8 +61,8 @@ public class RenderLightningBolt extends Render
 
                 for (int j1 = l; j1 >= i1; --j1)
                 {
-                    double d7 = d5;
-                    double d8 = d6;
+                    final double d7 = d5;
+                    final double d8 = d6;
 
                     if (k == 0)
                     {
@@ -76,7 +76,7 @@ public class RenderLightningBolt extends Render
                     }
 
                     tessellator.startDrawing(5);
-                    float f2 = 0.5F;
+                    final float f2 = 0.5F;
                     tessellator.setColorRGBA_F(0.9F * f2, 0.9F * f2, 1.0F * f2, 0.3F);
                     double d9 = 0.1D + (double)j * 0.2D;
 
@@ -134,7 +134,7 @@ public class RenderLightningBolt extends Render
         GL11.glEnable(GL11.GL_TEXTURE_2D);
     }
 
-    protected ResourceLocation func_110805_a(EntityLightningBolt par1EntityLightningBolt)
+    protected ResourceLocation func_110805_a(final EntityLightningBolt par1EntityLightningBolt)
     {
         return null;
     }
@@ -142,7 +142,7 @@ public class RenderLightningBolt extends Render
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.func_110805_a((EntityLightningBolt)par1Entity);
     }
@@ -153,7 +153,7 @@ public class RenderLightningBolt extends Render
      * (Render<T extends Entity) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.doRenderLightningBolt((EntityLightningBolt)par1Entity, par2, par4, par6, par8, par9);
     }

@@ -27,7 +27,7 @@ public class ModProperty
     private String name;
     private Field field;
 
-    public ModProperty(Field f, String info, Double min, Double max, String name)
+    public ModProperty(final Field f, final String info, final Double min, final Double max, final String name)
     {
         this.field = f;
         this.info = info;
@@ -35,7 +35,7 @@ public class ModProperty
         this.max = max != null ? max : Double.MAX_VALUE;
         this.name = name;
     }
-    public ModProperty(Field field, Map<String, Object> annotationInfo)
+    public ModProperty(final Field field, final Map<String, Object> annotationInfo)
     {
         this(field, (String)annotationInfo.get("info"), (Double)annotationInfo.get("min"), (Double)annotationInfo.get("max"), (String)annotationInfo.get("name"));
     }

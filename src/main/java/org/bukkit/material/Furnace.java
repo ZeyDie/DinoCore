@@ -17,7 +17,7 @@ public class Furnace extends FurnaceAndDispenser {
      *
      * @param direction the direction the furnace's "opening" is facing
      */
-    public Furnace(BlockFace direction) {
+    public Furnace(final BlockFace direction) {
         this();
         setFacingDirection(direction);
     }

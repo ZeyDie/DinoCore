@@ -2,7 +2,7 @@ package net.minecraft.block;
 
 final class StepSoundStone extends StepSound
 {
-    StepSoundStone(String par1Str, float par2, float par3)
+    StepSoundStone(final String par1Str, final float par2, final float par3)
     {
         super(par1Str, par2, par3);
     }

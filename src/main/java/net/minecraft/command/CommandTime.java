@@ -20,16 +20,16 @@ public class CommandTime extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.time.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         if (par2ArrayOfStr.length > 1)
         {
-            int i;
+            final int i;
 
             if (par2ArrayOfStr[0].equals("set"))
             {
@@ -66,7 +66,7 @@ public class CommandTime extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public List addTabCompletionOptions(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         return par2ArrayOfStr.length == 1 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, new String[] {"set", "add"}): (par2ArrayOfStr.length == 2 && par2ArrayOfStr[0].equals("set") ? getListOfStringsMatchingLastWord(par2ArrayOfStr, new String[] {"day", "night"}): null);
     }
@@ -74,7 +74,7 @@ public class CommandTime extends CommandBase
     /**
      * Set the time in the server object.
      */
-    protected void setTime(ICommandSender par1ICommandSender, int par2)
+    protected void setTime(final ICommandSender par1ICommandSender, final int par2)
     {
         for (int j = 0; j < MinecraftServer.getServer().worldServers.length; ++j)
         {
@@ -85,11 +85,11 @@ public class CommandTime extends CommandBase
     /**
      * Adds (or removes) time in the server object.
      */
-    protected void addTime(ICommandSender par1ICommandSender, int par2)
+    protected void addTime(final ICommandSender par1ICommandSender, final int par2)
     {
         for (int j = 0; j < MinecraftServer.getServer().worldServers.length; ++j)
         {
-            WorldServer worldserver = MinecraftServer.getServer().worldServers[j];
+            final WorldServer worldserver = MinecraftServer.getServer().worldServers[j];
             worldserver.setWorldTime(worldserver.getWorldTime() + (long)par2);
         }
     }

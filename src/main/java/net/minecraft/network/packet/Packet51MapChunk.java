@@ -53,14 +53,14 @@ public class Packet51MapChunk extends Packet
         this.isChunkDataPacket = true;
     }
 
-    public Packet51MapChunk(Chunk par1Chunk, boolean par2, int par3)
+    public Packet51MapChunk(final Chunk par1Chunk, final boolean par2, final int par3)
     {
         this.isChunkDataPacket = true;
         this.xCh = par1Chunk.xPosition;
         this.zCh = par1Chunk.zPosition;
         this.includeInitialize = par2;
-        Packet51MapChunkData packet51mapchunkdata = getMapChunkData(par1Chunk, par2, par3);
-        Deflater deflater = new Deflater(4);
+        final Packet51MapChunkData packet51mapchunkdata = getMapChunkData(par1Chunk, par2, par3);
+        final Deflater deflater = new Deflater(4);
         this.yChMax = packet51mapchunkdata.chunkHasAddSectionFlag;
         this.yChMin = packet51mapchunkdata.chunkExistFlag;
         par1Chunk.worldObj.spigotConfig.antiXrayInstance.obfuscateSync(par1Chunk.xPosition, par1Chunk.zPosition, par3, packet51mapchunkdata.compressedData, par1Chunk.worldObj); // Spigot
@@ -82,7 +82,7 @@ public class Packet51MapChunk extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.xCh = par1DataInput.readInt();
         this.zCh = par1DataInput.readInt();
@@ -116,14 +116,14 @@ public class Packet51MapChunk extends Packet
         }
 
         this.compressedChunkData = new byte[j];
-        Inflater inflater = new Inflater();
+        final Inflater inflater = new Inflater();
         inflater.setInput(temp, 0, this.tempLength);
 
         try
         {
             inflater.inflate(this.compressedChunkData);
         }
-        catch (DataFormatException dataformatexception)
+        catch (final DataFormatException dataformatexception)
         {
             throw new IOException("Bad compressed data format");
         }
@@ -136,7 +136,7 @@ public class Packet51MapChunk extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.xCh);
         par1DataOutput.writeInt(this.zCh);
@@ -150,7 +150,7 @@ public class Packet51MapChunk extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleMapChunk(this);
     }
@@ -163,13 +163,13 @@ public class Packet51MapChunk extends Packet
         return 17 + this.tempLength;
     }
 
-    public static Packet51MapChunkData getMapChunkData(Chunk par0Chunk, boolean par1, int par2)
+    public static Packet51MapChunkData getMapChunkData(final Chunk par0Chunk, final boolean par1, final int par2)
     {
         int j = 0;
-        ExtendedBlockStorage[] aextendedblockstorage = par0Chunk.getBlockStorageArray();
+        final ExtendedBlockStorage[] aextendedblockstorage = par0Chunk.getBlockStorageArray();
         int k = 0;
-        Packet51MapChunkData packet51mapchunkdata = new Packet51MapChunkData();
-        byte[] abyte = temp;
+        final Packet51MapChunkData packet51mapchunkdata = new Packet51MapChunkData();
+        final byte[] abyte = temp;
 
         if (par1)
         {
@@ -196,7 +196,7 @@ public class Packet51MapChunk extends Packet
         {
             if (aextendedblockstorage[l] != null && (!par1 || !aextendedblockstorage[l].isEmpty()) && (par2 & 1 << l) != 0)
             {
-                byte[] abyte1 = aextendedblockstorage[l].getBlockLSBArray();
+                final byte[] abyte1 = aextendedblockstorage[l].getBlockLSBArray();
                 System.arraycopy(abyte1, 0, abyte, j, abyte1.length);
                 j += abyte1.length;
             }
@@ -264,7 +264,7 @@ public class Packet51MapChunk extends Packet
 
         if (par1)
         {
-            byte[] abyte2 = par0Chunk.getBiomeArray();
+            final byte[] abyte2 = par0Chunk.getBiomeArray();
             System.arraycopy(abyte2, 0, abyte, j, abyte2.length);
             j += abyte2.length;
         }

@@ -8,7 +8,7 @@ public class TextureStitchEvent extends Event
 {
     public final TextureMap map;
 
-    public TextureStitchEvent(TextureMap map)
+    public TextureStitchEvent(final TextureMap map)
     {
         this.map = map;
     }
@@ -20,7 +20,7 @@ public class TextureStitchEvent extends Event
      */
     public static class Pre extends TextureStitchEvent
     {
-        public Pre(TextureMap map){ super(map); }
+        public Pre(final TextureMap map){ super(map); }
     }
 
     /**
@@ -30,6 +30,6 @@ public class TextureStitchEvent extends Event
      */
     public static class Post extends TextureStitchEvent
     {
-        public Post(TextureMap map){ super(map); }
+        public Post(final TextureMap map){ super(map); }
     }
 }

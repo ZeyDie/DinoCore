@@ -25,7 +25,7 @@ public class GuiControls extends GuiScreen
 
     private GuiControlsScrollPanel scrollPane;
 
-    public GuiControls(GuiScreen par1GuiScreen, GameSettings par2GameSettings)
+    public GuiControls(final GuiScreen par1GuiScreen, final GameSettings par2GameSettings)
     {
         this.parentScreen = par1GuiScreen;
         this.options = par2GameSettings;
@@ -53,7 +53,7 @@ public class GuiControls extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.id == 200)
         {
@@ -64,7 +64,7 @@ public class GuiControls extends GuiScreen
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int par1, int par2, int par3)
+    protected void mouseClicked(final int par1, final int par2, final int par3)
     {
         super.mouseClicked(par1, par2, par3);
     }
@@ -72,7 +72,7 @@ public class GuiControls extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         if (scrollPane.keyTyped(par1, par2))
         {
@@ -83,7 +83,7 @@ public class GuiControls extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         /* Forge Start: Moved all rendering to GuiControlsScrollPanel

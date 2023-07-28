@@ -7,7 +7,7 @@ public class CallableServerMemoryStats implements Callable
     /** Reference to the MinecraftServer object. */
     final MinecraftServer mcServer;
 
-    public CallableServerMemoryStats(MinecraftServer par1MinecraftServer)
+    public CallableServerMemoryStats(final MinecraftServer par1MinecraftServer)
     {
         this.mcServer = par1MinecraftServer;
     }

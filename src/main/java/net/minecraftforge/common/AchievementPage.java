@@ -14,7 +14,7 @@ public class AchievementPage
     private String name;
     private LinkedList<Achievement> achievements;
 
-    public AchievementPage(String name, Achievement... achievements)
+    public AchievementPage(final String name, final Achievement... achievements)
     {
         this.name = name;
         this.achievements = new LinkedList<Achievement>(Arrays.asList(achievements));
@@ -36,7 +36,7 @@ public class AchievementPage
      * Registers an achievement page.
      * @param page The page.
      */
-    public static void registerAchievementPage(AchievementPage page)
+    public static void registerAchievementPage(final AchievementPage page)
     {
         if (getAchievementPage(page.getName()) != null)
         {
@@ -50,7 +50,7 @@ public class AchievementPage
      * @param index The page's index.
      * @return the achievement page corresponding to the index or null if invalid index
      */
-    public static AchievementPage getAchievementPage(int index)
+    public static AchievementPage getAchievementPage(final int index)
     {
         return achievementPages.get(index);
     }
@@ -60,9 +60,9 @@ public class AchievementPage
      * @param name The page's name.
      * @return the achievement page with the given name or null if no such page
      */
-    public static AchievementPage getAchievementPage(String name)
+    public static AchievementPage getAchievementPage(final String name)
     {
-        for (AchievementPage page : achievementPages)
+        for (final AchievementPage page : achievementPages)
         {
             if (page.getName().equals(name))
             {
@@ -85,9 +85,9 @@ public class AchievementPage
      * Will return whether an achievement is in any page or not.
      * @param achievement The achievement.
      */
-    public static boolean isAchievementInPages(Achievement achievement)
+    public static boolean isAchievementInPages(final Achievement achievement)
     {
-        for (AchievementPage page : achievementPages)
+        for (final AchievementPage page : achievementPages)
         {
             if (page.getAchievements().contains(achievement)) 
             {
@@ -97,7 +97,7 @@ public class AchievementPage
         return false;
     }
     
-    public static String getTitle(int index)
+    public static String getTitle(final int index)
     {
         return index == -1 ? "Minecraft" : getAchievementPage(index).getName();
     }

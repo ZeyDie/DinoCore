@@ -16,7 +16,7 @@ public class Packet17Sleep extends Packet
 
     public Packet17Sleep() {}
 
-    public Packet17Sleep(Entity par1Entity, int par2, int par3, int par4, int par5)
+    public Packet17Sleep(final Entity par1Entity, final int par2, final int par3, final int par4, final int par5)
     {
         this.field_73622_e = par2;
         this.bedX = par3;
@@ -28,7 +28,7 @@ public class Packet17Sleep extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.entityID = par1DataInput.readInt();
         this.field_73622_e = par1DataInput.readByte();
@@ -40,7 +40,7 @@ public class Packet17Sleep extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.entityID);
         par1DataOutput.writeByte(this.field_73622_e);
@@ -52,7 +52,7 @@ public class Packet17Sleep extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleSleep(this);
     }

@@ -7,7 +7,7 @@ import org.bukkit.entity.EntityType;
 
 public class CraftChicken extends CraftAnimals implements Chicken {
 
-    public CraftChicken(CraftServer server, net.minecraft.entity.passive.EntityChicken entity) {
+    public CraftChicken(final CraftServer server, final net.minecraft.entity.passive.EntityChicken entity) {
         super(server, entity);
     }
 

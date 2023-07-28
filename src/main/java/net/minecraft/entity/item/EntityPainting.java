@@ -17,22 +17,22 @@ public class EntityPainting extends EntityHanging
 {
     public EnumArt art;
 
-    public EntityPainting(World par1World)
+    public EntityPainting(final World par1World)
     {
         super(par1World);
         this.art = EnumArt.values()[this.rand.nextInt(EnumArt.values().length)]; // CraftBukkit - generate a non-null painting
     }
 
-    public EntityPainting(World par1World, int par2, int par3, int par4, int par5)
+    public EntityPainting(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         super(par1World, par2, par3, par4, par5);
-        ArrayList arraylist = new ArrayList();
-        EnumArt[] aenumart = EnumArt.values();
-        int i1 = aenumart.length;
+        final ArrayList arraylist = new ArrayList();
+        final EnumArt[] aenumart = EnumArt.values();
+        final int i1 = aenumart.length;
 
         for (int j1 = 0; j1 < i1; ++j1)
         {
-            EnumArt enumart = aenumart[j1];
+            final EnumArt enumart = aenumart[j1];
             this.art = enumart;
             this.setDirection(par5);
 
@@ -51,15 +51,15 @@ public class EntityPainting extends EntityHanging
     }
 
     @SideOnly(Side.CLIENT)
-    public EntityPainting(World par1World, int par2, int par3, int par4, int par5, String par6Str)
+    public EntityPainting(final World par1World, final int par2, final int par3, final int par4, final int par5, final String par6Str)
     {
         this(par1World, par2, par3, par4, par5);
-        EnumArt[] aenumart = EnumArt.values();
-        int i1 = aenumart.length;
+        final EnumArt[] aenumart = EnumArt.values();
+        final int i1 = aenumart.length;
 
         for (int j1 = 0; j1 < i1; ++j1)
         {
-            EnumArt enumart = aenumart[j1];
+            final EnumArt enumart = aenumart[j1];
 
             if (enumart.title.equals(par6Str))
             {
@@ -74,7 +74,7 @@ public class EntityPainting extends EntityHanging
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         par1NBTTagCompound.setString("Motive", this.art.title);
         super.writeEntityToNBT(par1NBTTagCompound);
@@ -83,15 +83,15 @@ public class EntityPainting extends EntityHanging
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
-        String s = par1NBTTagCompound.getString("Motive");
-        EnumArt[] aenumart = EnumArt.values();
-        int i = aenumart.length;
+        final String s = par1NBTTagCompound.getString("Motive");
+        final EnumArt[] aenumart = EnumArt.values();
+        final int i = aenumart.length;
 
         for (int j = 0; j < i; ++j)
         {
-            EnumArt enumart = aenumart[j];
+            final EnumArt enumart = aenumart[j];
 
             if (enumart.title.equals(s))
             {
@@ -120,11 +120,11 @@ public class EntityPainting extends EntityHanging
     /**
      * Called when this entity is broken. Entity parameter may be null.
      */
-    public void onBroken(Entity par1Entity)
+    public void onBroken(final Entity par1Entity)
     {
         if (par1Entity instanceof EntityPlayer)
         {
-            EntityPlayer entityplayer = (EntityPlayer)par1Entity;
+            final EntityPlayer entityplayer = (EntityPlayer)par1Entity;
 
             if (entityplayer.capabilities.isCreativeMode)
             {

@@ -21,9 +21,9 @@ public class TrackingRange
      * @param defaultRange Default range defined by Mojang
      * @return
      */
-    public static int getEntityTrackingRange(Entity entity, int defaultRange)
+    public static int getEntityTrackingRange(final Entity entity, final int defaultRange)
     {
-        SpigotWorldConfig config = entity.worldObj.spigotConfig;
+        final SpigotWorldConfig config = entity.worldObj.spigotConfig;
         int range = defaultRange;
         if ( entity instanceof EntityPlayerMP )
         {

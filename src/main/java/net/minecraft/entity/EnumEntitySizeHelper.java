@@ -10,7 +10,7 @@ class EnumEntitySizeHelper
         {
             field_96565_a[EnumEntitySize.SIZE_1.ordinal()] = 1;
         }
-        catch (NoSuchFieldError nosuchfielderror)
+        catch (final NoSuchFieldError nosuchfielderror)
         {
             ;
         }
@@ -19,7 +19,7 @@ class EnumEntitySizeHelper
         {
             field_96565_a[EnumEntitySize.SIZE_2.ordinal()] = 2;
         }
-        catch (NoSuchFieldError nosuchfielderror1)
+        catch (final NoSuchFieldError nosuchfielderror1)
         {
             ;
         }
@@ -28,7 +28,7 @@ class EnumEntitySizeHelper
         {
             field_96565_a[EnumEntitySize.SIZE_3.ordinal()] = 3;
         }
-        catch (NoSuchFieldError nosuchfielderror2)
+        catch (final NoSuchFieldError nosuchfielderror2)
         {
             ;
         }
@@ -37,7 +37,7 @@ class EnumEntitySizeHelper
         {
             field_96565_a[EnumEntitySize.SIZE_4.ordinal()] = 4;
         }
-        catch (NoSuchFieldError nosuchfielderror3)
+        catch (final NoSuchFieldError nosuchfielderror3)
         {
             ;
         }
@@ -46,7 +46,7 @@ class EnumEntitySizeHelper
         {
             field_96565_a[EnumEntitySize.SIZE_5.ordinal()] = 5;
         }
-        catch (NoSuchFieldError nosuchfielderror4)
+        catch (final NoSuchFieldError nosuchfielderror4)
         {
             ;
         }
@@ -55,7 +55,7 @@ class EnumEntitySizeHelper
         {
             field_96565_a[EnumEntitySize.SIZE_6.ordinal()] = 6;
         }
-        catch (NoSuchFieldError nosuchfielderror5)
+        catch (final NoSuchFieldError nosuchfielderror5)
         {
             ;
         }

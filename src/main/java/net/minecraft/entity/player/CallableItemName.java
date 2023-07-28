@@ -10,7 +10,7 @@ class CallableItemName implements Callable
 
     final InventoryPlayer playerInventory;
 
-    CallableItemName(InventoryPlayer par1InventoryPlayer, ItemStack par2ItemStack)
+    CallableItemName(final InventoryPlayer par1InventoryPlayer, final ItemStack par2ItemStack)
     {
         this.playerInventory = par1InventoryPlayer;
         this.theItemStack = par2ItemStack;

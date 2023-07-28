@@ -33,7 +33,7 @@ public class CryptManager
      */
     public static SecretKey createNewSharedKey()
     {
-        CipherKeyGenerator cipherkeygenerator = new CipherKeyGenerator();
+        final CipherKeyGenerator cipherkeygenerator = new CipherKeyGenerator();
         cipherkeygenerator.init(new KeyGenerationParameters(new SecureRandom(), 128));
         return new SecretKeySpec(cipherkeygenerator.generateKey(), "AES");
     }
@@ -42,11 +42,11 @@ public class CryptManager
     {
         try
         {
-            KeyPairGenerator keypairgenerator = KeyPairGenerator.getInstance("RSA");
+            final KeyPairGenerator keypairgenerator = KeyPairGenerator.getInstance("RSA");
             keypairgenerator.initialize(1024);
             return keypairgenerator.generateKeyPair();
         }
-        catch (NoSuchAlgorithmException nosuchalgorithmexception)
+        catch (final NoSuchAlgorithmException nosuchalgorithmexception)
         {
             nosuchalgorithmexception.printStackTrace();
             System.err.println("Key pair generation failed!");
@@ -57,13 +57,13 @@ public class CryptManager
     /**
      * Compute a serverId hash for use by sendSessionRequest()
      */
-    public static byte[] getServerIdHash(String par0Str, PublicKey par1PublicKey, SecretKey par2SecretKey)
+    public static byte[] getServerIdHash(final String par0Str, final PublicKey par1PublicKey, final SecretKey par2SecretKey)
     {
         try
         {
             return digestOperation("SHA-1", new byte[][] {par0Str.getBytes("ISO_8859_1"), par2SecretKey.getEncoded(), par1PublicKey.getEncoded()});
         }
-        catch (UnsupportedEncodingException unsupportedencodingexception)
+        catch (final UnsupportedEncodingException unsupportedencodingexception)
         {
             unsupportedencodingexception.printStackTrace();
             return null;
@@ -73,23 +73,23 @@ public class CryptManager
     /**
      * Compute a message digest on arbitrary byte[] data
      */
-    private static byte[] digestOperation(String par0Str, byte[] ... par1ArrayOfByte)
+    private static byte[] digestOperation(final String par0Str, final byte[] ... par1ArrayOfByte)
     {
         try
         {
-            MessageDigest messagedigest = MessageDigest.getInstance(par0Str);
-            byte[][] abyte = par1ArrayOfByte;
-            int i = par1ArrayOfByte.length;
+            final MessageDigest messagedigest = MessageDigest.getInstance(par0Str);
+            final byte[][] abyte = par1ArrayOfByte;
+            final int i = par1ArrayOfByte.length;
 
             for (int j = 0; j < i; ++j)
             {
-                byte[] abyte1 = abyte[j];
+                final byte[] abyte1 = abyte[j];
                 messagedigest.update(abyte1);
             }
 
             return messagedigest.digest();
         }
-        catch (NoSuchAlgorithmException nosuchalgorithmexception)
+        catch (final NoSuchAlgorithmException nosuchalgorithmexception)
         {
             nosuchalgorithmexception.printStackTrace();
             return null;
@@ -99,19 +99,19 @@ public class CryptManager
     /**
      * Create a new PublicKey from encoded X.509 data
      */
-    public static PublicKey decodePublicKey(byte[] par0ArrayOfByte)
+    public static PublicKey decodePublicKey(final byte[] par0ArrayOfByte)
     {
         try
         {
-            X509EncodedKeySpec x509encodedkeyspec = new X509EncodedKeySpec(par0ArrayOfByte);
-            KeyFactory keyfactory = KeyFactory.getInstance("RSA");
+            final X509EncodedKeySpec x509encodedkeyspec = new X509EncodedKeySpec(par0ArrayOfByte);
+            final KeyFactory keyfactory = KeyFactory.getInstance("RSA");
             return keyfactory.generatePublic(x509encodedkeyspec);
         }
-        catch (NoSuchAlgorithmException nosuchalgorithmexception)
+        catch (final NoSuchAlgorithmException nosuchalgorithmexception)
         {
             nosuchalgorithmexception.printStackTrace();
         }
-        catch (InvalidKeySpecException invalidkeyspecexception)
+        catch (final InvalidKeySpecException invalidkeyspecexception)
         {
             invalidkeyspecexception.printStackTrace();
         }
@@ -123,7 +123,7 @@ public class CryptManager
     /**
      * Decrypt shared secret AES key using RSA private key
      */
-    public static SecretKey decryptSharedKey(PrivateKey par0PrivateKey, byte[] par1ArrayOfByte)
+    public static SecretKey decryptSharedKey(final PrivateKey par0PrivateKey, final byte[] par1ArrayOfByte)
     {
         return new SecretKeySpec(decryptData(par0PrivateKey, par1ArrayOfByte), "AES");
     }
@@ -133,7 +133,7 @@ public class CryptManager
     /**
      * Encrypt byte[] data with RSA public key
      */
-    public static byte[] encryptData(Key par0Key, byte[] par1ArrayOfByte)
+    public static byte[] encryptData(final Key par0Key, final byte[] par1ArrayOfByte)
     {
         return cipherOperation(1, par0Key, par1ArrayOfByte);
     }
@@ -141,7 +141,7 @@ public class CryptManager
     /**
      * Decrypt byte[] data with RSA private key
      */
-    public static byte[] decryptData(Key par0Key, byte[] par1ArrayOfByte)
+    public static byte[] decryptData(final Key par0Key, final byte[] par1ArrayOfByte)
     {
         return cipherOperation(2, par0Key, par1ArrayOfByte);
     }
@@ -149,17 +149,17 @@ public class CryptManager
     /**
      * Encrypt or decrypt byte[] data using the specified key
      */
-    private static byte[] cipherOperation(int par0, Key par1Key, byte[] par2ArrayOfByte)
+    private static byte[] cipherOperation(final int par0, final Key par1Key, final byte[] par2ArrayOfByte)
     {
         try
         {
             return createTheCipherInstance(par0, par1Key.getAlgorithm(), par1Key).doFinal(par2ArrayOfByte);
         }
-        catch (IllegalBlockSizeException illegalblocksizeexception)
+        catch (final IllegalBlockSizeException illegalblocksizeexception)
         {
             illegalblocksizeexception.printStackTrace();
         }
-        catch (BadPaddingException badpaddingexception)
+        catch (final BadPaddingException badpaddingexception)
         {
             badpaddingexception.printStackTrace();
         }
@@ -171,23 +171,23 @@ public class CryptManager
     /**
      * Creates the Cipher Instance.
      */
-    private static Cipher createTheCipherInstance(int par0, String par1Str, Key par2Key)
+    private static Cipher createTheCipherInstance(final int par0, final String par1Str, final Key par2Key)
     {
         try
         {
-            Cipher cipher = Cipher.getInstance(par1Str);
+            final Cipher cipher = Cipher.getInstance(par1Str);
             cipher.init(par0, par2Key);
             return cipher;
         }
-        catch (InvalidKeyException invalidkeyexception)
+        catch (final InvalidKeyException invalidkeyexception)
         {
             invalidkeyexception.printStackTrace();
         }
-        catch (NoSuchAlgorithmException nosuchalgorithmexception)
+        catch (final NoSuchAlgorithmException nosuchalgorithmexception)
         {
             nosuchalgorithmexception.printStackTrace();
         }
-        catch (NoSuchPaddingException nosuchpaddingexception)
+        catch (final NoSuchPaddingException nosuchpaddingexception)
         {
             nosuchpaddingexception.printStackTrace();
         }
@@ -199,19 +199,19 @@ public class CryptManager
     /**
      * Create a new BufferedBlockCipher instance
      */
-    private static BufferedBlockCipher createBufferedBlockCipher(boolean par0, Key par1Key)
+    private static BufferedBlockCipher createBufferedBlockCipher(final boolean par0, final Key par1Key)
     {
-        BufferedBlockCipher bufferedblockcipher = new BufferedBlockCipher(new CFBBlockCipher(new AESFastEngine(), 8));
+        final BufferedBlockCipher bufferedblockcipher = new BufferedBlockCipher(new CFBBlockCipher(new AESFastEngine(), 8));
         bufferedblockcipher.init(par0, new ParametersWithIV(new KeyParameter(par1Key.getEncoded()), par1Key.getEncoded(), 0, 16));
         return bufferedblockcipher;
     }
 
-    public static OutputStream encryptOuputStream(SecretKey par0SecretKey, OutputStream par1OutputStream)
+    public static OutputStream encryptOuputStream(final SecretKey par0SecretKey, final OutputStream par1OutputStream)
     {
         return new CipherOutputStream(par1OutputStream, createBufferedBlockCipher(true, par0SecretKey));
     }
 
-    public static InputStream decryptInputStream(SecretKey par0SecretKey, InputStream par1InputStream)
+    public static InputStream decryptInputStream(final SecretKey par0SecretKey, final InputStream par1InputStream)
     {
         return new CipherInputStream(par1InputStream, createBufferedBlockCipher(false, par0SecretKey));
     }

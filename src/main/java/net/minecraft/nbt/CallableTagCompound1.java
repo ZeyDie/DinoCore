@@ -8,7 +8,7 @@ class CallableTagCompound1 implements Callable
 
     final NBTTagCompound theNBTTagCompound;
 
-    CallableTagCompound1(NBTTagCompound par1NBTTagCompound, String par2Str)
+    CallableTagCompound1(final NBTTagCompound par1NBTTagCompound, final String par2Str)
     {
         this.theNBTTagCompound = par1NBTTagCompound;
         this.field_82585_a = par2Str;

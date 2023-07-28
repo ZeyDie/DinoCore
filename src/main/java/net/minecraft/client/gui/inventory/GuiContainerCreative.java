@@ -65,7 +65,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
     private static int tabPage = 0;
     private int maxPages = 0;
 
-    public GuiContainerCreative(EntityPlayer par1EntityPlayer)
+    public GuiContainerCreative(final EntityPlayer par1EntityPlayer)
     {
         super(new ContainerCreative(par1EntityPlayer));
         par1EntityPlayer.openContainer = this.inventorySlots;
@@ -86,15 +86,15 @@ public class GuiContainerCreative extends InventoryEffectRenderer
         }
     }
 
-    protected void handleMouseClick(Slot par1Slot, int par2, int par3, int par4)
+    protected void handleMouseClick(final Slot par1Slot, final int par2, final int par3, int par4)
     {
         this.field_74234_w = true;
-        boolean flag = par4 == 1;
-        par4 = par2 == -999 && par4 == 0 ? 4 : par4;
+        final boolean flag = par4 == 1;
+        int par41 = par2 == -999 && par4 == 0 ? 4 : par4;
         ItemStack itemstack;
-        InventoryPlayer inventoryplayer;
+        final InventoryPlayer inventoryplayer;
 
-        if (par1Slot == null && selectedTabIndex != CreativeTabs.tabInventory.getTabIndex() && par4 != 5)
+        if (par1Slot == null && selectedTabIndex != CreativeTabs.tabInventory.getTabIndex() && par41 != 5)
         {
             inventoryplayer = this.mc.thePlayer.inventory;
 
@@ -133,7 +133,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
             }
             else
             {
-                ItemStack itemstack1;
+                final ItemStack itemstack1;
 
                 if (selectedTabIndex == CreativeTabs.tabInventory.getTabIndex())
                 {
@@ -141,13 +141,13 @@ public class GuiContainerCreative extends InventoryEffectRenderer
                     {
                         this.mc.thePlayer.inventory.setItemStack((ItemStack)null);
                     }
-                    else if (par4 == 4 && par1Slot != null && par1Slot.getHasStack())
+                    else if (par41 == 4 && par1Slot != null && par1Slot.getHasStack())
                     {
                         itemstack1 = par1Slot.decrStackSize(par3 == 0 ? 1 : par1Slot.getStack().getMaxStackSize());
                         this.mc.thePlayer.dropPlayerItem(itemstack1);
                         this.mc.playerController.func_78752_a(itemstack1);
                     }
-                    else if (par4 == 4 && this.mc.thePlayer.inventory.getItemStack() != null)
+                    else if (par41 == 4 && this.mc.thePlayer.inventory.getItemStack() != null)
                     {
                         this.mc.thePlayer.dropPlayerItem(this.mc.thePlayer.inventory.getItemStack());
                         this.mc.playerController.func_78752_a(this.mc.thePlayer.inventory.getItemStack());
@@ -155,18 +155,18 @@ public class GuiContainerCreative extends InventoryEffectRenderer
                     }
                     else
                     {
-                        this.mc.thePlayer.inventoryContainer.slotClick(par1Slot == null ? par2 : SlotCreativeInventory.func_75240_a((SlotCreativeInventory)par1Slot).slotNumber, par3, par4, this.mc.thePlayer);
+                        this.mc.thePlayer.inventoryContainer.slotClick(par1Slot == null ? par2 : SlotCreativeInventory.func_75240_a((SlotCreativeInventory)par1Slot).slotNumber, par3, par41, this.mc.thePlayer);
                         this.mc.thePlayer.inventoryContainer.detectAndSendChanges();
                     }
                 }
-                else if (par4 != 5 && par1Slot.inventory == inventory)
+                else if (par41 != 5 && par1Slot.inventory == inventory)
                 {
                     inventoryplayer = this.mc.thePlayer.inventory;
                     itemstack = inventoryplayer.getItemStack();
-                    ItemStack itemstack2 = par1Slot.getStack();
-                    ItemStack itemstack3;
+                    final ItemStack itemstack2 = par1Slot.getStack();
+                    final ItemStack itemstack3;
 
-                    if (par4 == 2)
+                    if (par41 == 2)
                     {
                         if (itemstack2 != null && par3 >= 0 && par3 < 9)
                         {
@@ -179,7 +179,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
                         return;
                     }
 
-                    if (par4 == 3)
+                    if (par41 == 3)
                     {
                         if (inventoryplayer.getItemStack() == null && par1Slot.getHasStack())
                         {
@@ -191,7 +191,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
                         return;
                     }
 
-                    if (par4 == 4)
+                    if (par41 == 4)
                     {
                         if (itemstack2 != null)
                         {
@@ -243,7 +243,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
                 }
                 else
                 {
-                    this.inventorySlots.slotClick(par1Slot == null ? par2 : par1Slot.slotNumber, par3, par4, this.mc.thePlayer);
+                    this.inventorySlots.slotClick(par1Slot == null ? par2 : par1Slot.slotNumber, par3, par41, this.mc.thePlayer);
 
                     if (Container.func_94532_c(par3) == 2)
                     {
@@ -277,12 +277,12 @@ public class GuiContainerCreative extends InventoryEffectRenderer
             this.searchField.setEnableBackgroundDrawing(false);
             this.searchField.setVisible(false);
             this.searchField.setTextColor(16777215);
-            int i = selectedTabIndex;
+            final int i = selectedTabIndex;
             selectedTabIndex = -1;
             this.setCurrentCreativeTab(CreativeTabs.creativeTabArray[i]);
             this.field_82324_x = new CreativeCrafting(this.mc);
             this.mc.thePlayer.inventoryContainer.addCraftingToCrafters(this.field_82324_x);
-            int tabCount = CreativeTabs.creativeTabArray.length;
+            final int tabCount = CreativeTabs.creativeTabArray.length;
             if (tabCount > 12)
             {
                 buttonList.add(new GuiButton(101, guiLeft,              guiTop - 50, 20, 20, "<"));
@@ -314,7 +314,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         if (!CreativeTabs.creativeTabArray[selectedTabIndex].hasSearchBar())
         {
@@ -351,10 +351,10 @@ public class GuiContainerCreative extends InventoryEffectRenderer
 
     private void updateCreativeSearch()
     {
-        ContainerCreative containercreative = (ContainerCreative)this.inventorySlots;
+        final ContainerCreative containercreative = (ContainerCreative)this.inventorySlots;
         containercreative.itemList.clear();
 
-        CreativeTabs tab = CreativeTabs.creativeTabArray[selectedTabIndex];
+        final CreativeTabs tab = CreativeTabs.creativeTabArray[selectedTabIndex];
         if (tab.hasSearchBar() && tab != CreativeTabs.tabAllSearch)
         {
             tab.displayAllReleventItems(containercreative.itemList);
@@ -362,13 +362,13 @@ public class GuiContainerCreative extends InventoryEffectRenderer
             return;
         }
 
-        Item[] aitem = Item.itemsList;
+        final Item[] aitem = Item.itemsList;
         int i = aitem.length;
         int j;
 
         for (j = 0; j < i; ++j)
         {
-            Item item = aitem[j];
+            final Item item = aitem[j];
 
             if (item != null && item.getCreativeTab() != null)
             {
@@ -376,12 +376,12 @@ public class GuiContainerCreative extends InventoryEffectRenderer
             }
         }
 
-        Enchantment[] aenchantment = Enchantment.enchantmentsList;
+        final Enchantment[] aenchantment = Enchantment.enchantmentsList;
         i = aenchantment.length;
 
         for (j = 0; j < i; ++j)
         {
-            Enchantment enchantment = aenchantment[j];
+            final Enchantment enchantment = aenchantment[j];
 
             if (enchantment != null && enchantment.type != null)
             {
@@ -392,22 +392,22 @@ public class GuiContainerCreative extends InventoryEffectRenderer
     }
 
     //split from above for custom search tabs
-    private void updateFilteredItems(ContainerCreative containercreative)
+    private void updateFilteredItems(final ContainerCreative containercreative)
     {
-        Iterator iterator = containercreative.itemList.iterator();
-        String s = this.searchField.getText().toLowerCase();
+        final Iterator iterator = containercreative.itemList.iterator();
+        final String s = this.searchField.getText().toLowerCase();
 
         while (iterator.hasNext())
         {
-            ItemStack itemstack = (ItemStack)iterator.next();
+            final ItemStack itemstack = (ItemStack)iterator.next();
             boolean flag = false;
-            Iterator iterator1 = itemstack.getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips).iterator();
+            final Iterator iterator1 = itemstack.getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips).iterator();
 
             while (true)
             {
                 if (iterator1.hasNext())
                 {
-                    String s1 = (String)iterator1.next();
+                    final String s1 = (String)iterator1.next();
 
                     if (!s1.toLowerCase().contains(s))
                     {
@@ -433,9 +433,9 @@ public class GuiContainerCreative extends InventoryEffectRenderer
     /**
      * Draw the foreground layer for the GuiContainer (everything in front of the items)
      */
-    protected void drawGuiContainerForegroundLayer(int par1, int par2)
+    protected void drawGuiContainerForegroundLayer(final int par1, final int par2)
     {
-        CreativeTabs creativetabs = CreativeTabs.creativeTabArray[selectedTabIndex];
+        final CreativeTabs creativetabs = CreativeTabs.creativeTabArray[selectedTabIndex];
 
         if (creativetabs != null && creativetabs.drawInForegroundOfTab())
         {
@@ -446,18 +446,18 @@ public class GuiContainerCreative extends InventoryEffectRenderer
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int par1, int par2, int par3)
+    protected void mouseClicked(final int par1, final int par2, final int par3)
     {
         if (par3 == 0)
         {
-            int l = par1 - this.guiLeft;
-            int i1 = par2 - this.guiTop;
-            CreativeTabs[] acreativetabs = CreativeTabs.creativeTabArray;
-            int j1 = acreativetabs.length;
+            final int l = par1 - this.guiLeft;
+            final int i1 = par2 - this.guiTop;
+            final CreativeTabs[] acreativetabs = CreativeTabs.creativeTabArray;
+            final int j1 = acreativetabs.length;
 
             for (int k1 = 0; k1 < j1; ++k1)
             {
-                CreativeTabs creativetabs = acreativetabs[k1];
+                final CreativeTabs creativetabs = acreativetabs[k1];
 
                 if (this.func_74232_a(creativetabs, l, i1))
                 {
@@ -473,18 +473,18 @@ public class GuiContainerCreative extends InventoryEffectRenderer
      * Called when the mouse is moved or a mouse button is released.  Signature: (mouseX, mouseY, which) which==-1 is
      * mouseMove, which==0 or which==1 is mouseUp
      */
-    protected void mouseMovedOrUp(int par1, int par2, int par3)
+    protected void mouseMovedOrUp(final int par1, final int par2, final int par3)
     {
         if (par3 == 0)
         {
-            int l = par1 - this.guiLeft;
-            int i1 = par2 - this.guiTop;
-            CreativeTabs[] acreativetabs = CreativeTabs.creativeTabArray;
-            int j1 = acreativetabs.length;
+            final int l = par1 - this.guiLeft;
+            final int i1 = par2 - this.guiTop;
+            final CreativeTabs[] acreativetabs = CreativeTabs.creativeTabArray;
+            final int j1 = acreativetabs.length;
 
             for (int k1 = 0; k1 < j1; ++k1)
             {
-                CreativeTabs creativetabs = acreativetabs[k1];
+                final CreativeTabs creativetabs = acreativetabs[k1];
 
                 if (creativetabs != null && func_74232_a(creativetabs, l, i1))
                 {
@@ -506,23 +506,23 @@ public class GuiContainerCreative extends InventoryEffectRenderer
         return selectedTabIndex != CreativeTabs.tabInventory.getTabIndex() && CreativeTabs.creativeTabArray[selectedTabIndex].shouldHidePlayerInventory() && ((ContainerCreative)this.inventorySlots).hasMoreThan1PageOfItemsInList();
     }
 
-    private void setCurrentCreativeTab(CreativeTabs par1CreativeTabs)
+    private void setCurrentCreativeTab(final CreativeTabs par1CreativeTabs)
     {
         if (par1CreativeTabs == null)
         {
             return;
         }
 
-        int i = selectedTabIndex;
+        final int i = selectedTabIndex;
         selectedTabIndex = par1CreativeTabs.getTabIndex();
-        ContainerCreative containercreative = (ContainerCreative)this.inventorySlots;
+        final ContainerCreative containercreative = (ContainerCreative)this.inventorySlots;
         this.field_94077_p.clear();
         containercreative.itemList.clear();
         par1CreativeTabs.displayAllReleventItems(containercreative.itemList);
 
         if (par1CreativeTabs == CreativeTabs.tabInventory)
         {
-            Container container = this.mc.thePlayer.inventoryContainer;
+            final Container container = this.mc.thePlayer.inventoryContainer;
 
             if (this.backupContainerSlots == null)
             {
@@ -533,11 +533,11 @@ public class GuiContainerCreative extends InventoryEffectRenderer
 
             for (int j = 0; j < container.inventorySlots.size(); ++j)
             {
-                SlotCreativeInventory slotcreativeinventory = new SlotCreativeInventory(this, (Slot)container.inventorySlots.get(j), j);
+                final SlotCreativeInventory slotcreativeinventory = new SlotCreativeInventory(this, (Slot)container.inventorySlots.get(j), j);
                 containercreative.inventorySlots.add(slotcreativeinventory);
-                int k;
-                int l;
-                int i1;
+                final int k;
+                final int l;
+                final int i1;
 
                 if (j >= 5 && j < 9)
                 {
@@ -611,7 +611,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
 
         if (i != 0 && this.needsScrollBars())
         {
-            int j = ((ContainerCreative)this.inventorySlots).itemList.size() / 9 - 5 + 1;
+            final int j = ((ContainerCreative)this.inventorySlots).itemList.size() / 9 - 5 + 1;
 
             if (i > 0)
             {
@@ -642,15 +642,15 @@ public class GuiContainerCreative extends InventoryEffectRenderer
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
-        boolean flag = Mouse.isButtonDown(0);
-        int k = this.guiLeft;
-        int l = this.guiTop;
-        int i1 = k + 175;
-        int j1 = l + 18;
-        int k1 = i1 + 14;
-        int l1 = j1 + 112;
+        final boolean flag = Mouse.isButtonDown(0);
+        final int k = this.guiLeft;
+        final int l = this.guiTop;
+        final int i1 = k + 175;
+        final int j1 = l + 18;
+        final int k1 = i1 + 14;
+        final int l1 = j1 + 112;
 
         if (!this.wasClicking && flag && par1 >= i1 && par2 >= j1 && par1 < k1 && par2 < l1)
         {
@@ -682,15 +682,15 @@ public class GuiContainerCreative extends InventoryEffectRenderer
         }
 
         super.drawScreen(par1, par2, par3);
-        CreativeTabs[] acreativetabs = CreativeTabs.creativeTabArray;
+        final CreativeTabs[] acreativetabs = CreativeTabs.creativeTabArray;
         int start = tabPage * 10;
-        int i2 = Math.min(acreativetabs.length, ((tabPage + 1) * 10) + 2);
+        final int i2 = Math.min(acreativetabs.length, ((tabPage + 1) * 10) + 2);
         if (tabPage != 0) start += 2;
         boolean rendered = false;
 
         for (int j2 = start; j2 < i2; ++j2)
         {
-            CreativeTabs creativetabs = acreativetabs[j2];
+            final CreativeTabs creativetabs = acreativetabs[j2];
 
             if (creativetabs != null && this.renderCreativeInventoryHoveringText(creativetabs, par1, par2))
             {
@@ -711,8 +711,8 @@ public class GuiContainerCreative extends InventoryEffectRenderer
 
         if (maxPages != 0)
         {
-            String page = String.format("%d / %d", tabPage + 1, maxPages + 1);
-            int width = fontRenderer.getStringWidth(page);
+            final String page = String.format("%d / %d", tabPage + 1, maxPages + 1);
+            final int width = fontRenderer.getStringWidth(page);
             GL11.glDisable(GL11.GL_LIGHTING);
             this.zLevel = 300.0F;
             itemRenderer.zLevel = 300.0F;
@@ -725,26 +725,26 @@ public class GuiContainerCreative extends InventoryEffectRenderer
         GL11.glDisable(GL11.GL_LIGHTING);
     }
 
-    protected void drawItemStackTooltip(ItemStack par1ItemStack, int par2, int par3)
+    protected void drawItemStackTooltip(final ItemStack par1ItemStack, final int par2, final int par3)
     {
         if (selectedTabIndex == CreativeTabs.tabAllSearch.getTabIndex())
         {
-            List list = par1ItemStack.getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips);
+            final List list = par1ItemStack.getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips);
             CreativeTabs creativetabs = par1ItemStack.getItem().getCreativeTab();
 
             if (creativetabs == null && par1ItemStack.itemID == Item.enchantedBook.itemID)
             {
-                Map map = EnchantmentHelper.getEnchantments(par1ItemStack);
+                final Map map = EnchantmentHelper.getEnchantments(par1ItemStack);
 
                 if (map.size() == 1)
                 {
-                    Enchantment enchantment = Enchantment.enchantmentsList[((Integer)map.keySet().iterator().next()).intValue()];
-                    CreativeTabs[] acreativetabs = CreativeTabs.creativeTabArray;
-                    int k = acreativetabs.length;
+                    final Enchantment enchantment = Enchantment.enchantmentsList[((Integer)map.keySet().iterator().next()).intValue()];
+                    final CreativeTabs[] acreativetabs = CreativeTabs.creativeTabArray;
+                    final int k = acreativetabs.length;
 
                     for (int l = 0; l < k; ++l)
                     {
-                        CreativeTabs creativetabs1 = acreativetabs[l];
+                        final CreativeTabs creativetabs1 = acreativetabs[l];
 
                         if (creativetabs1.func_111226_a(enchantment.type))
                         {
@@ -783,12 +783,12 @@ public class GuiContainerCreative extends InventoryEffectRenderer
     /**
      * Draw the background layer for the GuiContainer (everything behind the items)
      */
-    protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
+    protected void drawGuiContainerBackgroundLayer(final float par1, final int par2, final int par3)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         RenderHelper.enableGUIStandardItemLighting();
-        CreativeTabs creativetabs = CreativeTabs.creativeTabArray[selectedTabIndex];
-        CreativeTabs[] acreativetabs = CreativeTabs.creativeTabArray;
+        final CreativeTabs creativetabs = CreativeTabs.creativeTabArray[selectedTabIndex];
+        final CreativeTabs[] acreativetabs = CreativeTabs.creativeTabArray;
         int k = acreativetabs.length;
         int l;
 
@@ -798,7 +798,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
 
         for (l = start; l < k; ++l)
         {
-            CreativeTabs creativetabs1 = acreativetabs[l];
+            final CreativeTabs creativetabs1 = acreativetabs[l];
             this.mc.getTextureManager().bindTexture(field_110424_t);
 
             if (creativetabs1 != null && creativetabs1.getTabIndex() != selectedTabIndex)
@@ -825,7 +825,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
         this.searchField.drawTextBox();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        int i1 = this.guiLeft + 175;
+        final int i1 = this.guiLeft + 175;
         k = this.guiTop + 18;
         l = k + 112;
         this.mc.getTextureManager().bindTexture(field_110424_t);
@@ -851,7 +851,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
         }
     }
 
-    protected boolean func_74232_a(CreativeTabs par1CreativeTabs, int par2, int par3)
+    protected boolean func_74232_a(final CreativeTabs par1CreativeTabs, final int par2, final int par3)
     {
         if (par1CreativeTabs.getTabPage() != tabPage)
         {
@@ -862,9 +862,9 @@ public class GuiContainerCreative extends InventoryEffectRenderer
             }
         }
 
-        int k = par1CreativeTabs.getTabColumn();
+        final int k = par1CreativeTabs.getTabColumn();
         int l = 28 * k;
-        byte b0 = 0;
+        final byte b0 = 0;
 
         if (k == 5)
         {
@@ -875,7 +875,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
             l += k;
         }
 
-        int i1;
+        final int i1;
 
         if (par1CreativeTabs.isTabInFirstRow())
         {
@@ -893,11 +893,11 @@ public class GuiContainerCreative extends InventoryEffectRenderer
      * Renders the creative inventory hovering text if mouse is over it. Returns true if did render or false otherwise.
      * Params: current creative tab to be checked, current mouse x position, current mouse y position.
      */
-    protected boolean renderCreativeInventoryHoveringText(CreativeTabs par1CreativeTabs, int par2, int par3)
+    protected boolean renderCreativeInventoryHoveringText(final CreativeTabs par1CreativeTabs, final int par2, final int par3)
     {
-        int k = par1CreativeTabs.getTabColumn();
+        final int k = par1CreativeTabs.getTabColumn();
         int l = 28 * k;
-        byte b0 = 0;
+        final byte b0 = 0;
 
         if (k == 5)
         {
@@ -908,7 +908,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
             l += k;
         }
 
-        int i1;
+        final int i1;
 
         if (par1CreativeTabs.isTabInFirstRow())
         {
@@ -933,16 +933,16 @@ public class GuiContainerCreative extends InventoryEffectRenderer
     /**
      * Renders passed creative inventory tab into the screen.
      */
-    protected void renderCreativeTab(CreativeTabs par1CreativeTabs)
+    protected void renderCreativeTab(final CreativeTabs par1CreativeTabs)
     {
-        boolean flag = par1CreativeTabs.getTabIndex() == selectedTabIndex;
-        boolean flag1 = par1CreativeTabs.isTabInFirstRow();
-        int i = par1CreativeTabs.getTabColumn();
-        int j = i * 28;
+        final boolean flag = par1CreativeTabs.getTabIndex() == selectedTabIndex;
+        final boolean flag1 = par1CreativeTabs.isTabInFirstRow();
+        final int i = par1CreativeTabs.getTabColumn();
+        final int j = i * 28;
         int k = 0;
         int l = this.guiLeft + 28 * i;
         int i1 = this.guiTop;
-        byte b0 = 32;
+        final byte b0 = 32;
 
         if (flag)
         {
@@ -969,7 +969,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
         }
 
         GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glColor3f(1F, 1F, 1F); //Forge: Reset color in case Items change it.
+        GL11.glColor3f(1.0F, 1.0F, 1.0F); //Forge: Reset color in case Items change it.
         this.drawTexturedModalRect(l, i1, j, k, 28, b0);
         this.zLevel = 100.0F;
         itemRenderer.zLevel = 100.0F;
@@ -977,7 +977,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
         i1 += 8 + (flag1 ? 1 : -1);
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        ItemStack itemstack = par1CreativeTabs.getIconItemStack();
+        final ItemStack itemstack = par1CreativeTabs.getIconItemStack();
         itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.getTextureManager(), itemstack, l, i1);
         itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.mc.getTextureManager(), itemstack, l, i1);
         GL11.glDisable(GL11.GL_LIGHTING);
@@ -988,7 +988,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.id == 0)
         {

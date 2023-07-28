@@ -18,7 +18,7 @@ public class MapFont {
      * @param sprite The CharacterSprite to set.
      * @throws IllegalStateException if this font is static.
      */
-    public void setChar(char ch, CharacterSprite sprite) {
+    public void setChar(final char ch, final CharacterSprite sprite) {
         if (!malleable) {
             throw new IllegalStateException("this font is not malleable");
         }
@@ -35,7 +35,7 @@ public class MapFont {
      * @param ch The character to get the sprite for.
      * @return The CharacterSprite associated with the character, or null if there is none.
      */
-    public CharacterSprite getChar(char ch) {
+    public CharacterSprite getChar(final char ch) {
         return chars.get(ch);
     }
 
@@ -45,7 +45,7 @@ public class MapFont {
      * @param text The text.
      * @return The width in pixels.
      */
-    public int getWidth(String text) {
+    public int getWidth(final String text) {
         if (!isValid(text)) {
             throw new IllegalArgumentException("text contains invalid characters");
         }
@@ -72,9 +72,9 @@ public class MapFont {
      * @param text The text.
      * @return True if the string contains only defined characters, false otherwise.
      */
-    public boolean isValid(String text) {
+    public boolean isValid(final String text) {
         for (int i = 0; i < text.length(); ++i) {
-            char ch = text.charAt(i);
+            final char ch = text.charAt(i);
             if (ch == '\u00A7' || ch == '\n') continue;
             if (chars.get(ch) == null) return false;
         }
@@ -90,7 +90,7 @@ public class MapFont {
         private final int height;
         private final boolean[] data;
 
-        public CharacterSprite(int width, int height, boolean[] data) {
+        public CharacterSprite(final int width, final int height, final boolean[] data) {
             this.width = width;
             this.height = height;
             this.data = data;
@@ -107,7 +107,7 @@ public class MapFont {
          * @param col The column, in the range [0,8).
          * @return True if the pixel is solid, false if transparent.
          */
-        public boolean get(int row, int col) {
+        public boolean get(final int row, final int col) {
             if (row < 0 || col < 0 || row >= height || col >= width) return false;
             return data[row * width + col];
         }

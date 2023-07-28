@@ -32,12 +32,12 @@ public class SideTransformer implements IClassTransformer
     private static final boolean DEBUG = false;
     public static boolean allowInvalidSide = false; // Cauldron
     @Override
-    public byte[] transform(String name, String transformedName, byte[] bytes)
+    public byte[] transform(final String name, final String transformedName, final byte[] bytes)
     {
     	if (bytes == null) { return null; }
 
-        ClassNode classNode = new ClassNode();
-        ClassReader classReader = new ClassReader(bytes);
+        final ClassNode classNode = new ClassNode();
+        final ClassReader classReader = new ClassReader(bytes);
         classReader.accept(classNode, 0);
 
         if (remove((List<AnnotationNode>)classNode.visibleAnnotations, SIDE) && !allowInvalidSide) // Cauldron
@@ -49,10 +49,10 @@ public class SideTransformer implements IClassTransformer
             throw new RuntimeException(String.format("Attempted to load class %s for invalid side %s", classNode.name, SIDE));
         }
 
-        Iterator<FieldNode> fields = classNode.fields.iterator();
+        final Iterator<FieldNode> fields = classNode.fields.iterator();
         while(fields.hasNext())
         {
-            FieldNode field = fields.next();
+            final FieldNode field = fields.next();
             if (remove((List<AnnotationNode>)field.visibleAnnotations, SIDE))
             {
                 if (DEBUG)
@@ -62,10 +62,10 @@ public class SideTransformer implements IClassTransformer
                 fields.remove();
             }
         }
-        Iterator<MethodNode> methods = classNode.methods.iterator();
+        final Iterator<MethodNode> methods = classNode.methods.iterator();
         while(methods.hasNext())
         {
-            MethodNode method = methods.next();
+            final MethodNode method = methods.next();
             if (remove((List<AnnotationNode>)method.visibleAnnotations, SIDE))
             {
                 if (DEBUG)
@@ -76,18 +76,18 @@ public class SideTransformer implements IClassTransformer
             }
         }
 
-        ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        final ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         classNode.accept(writer);
         return writer.toByteArray();
     }
 
-    private boolean remove(List<AnnotationNode> anns, String side)
+    private boolean remove(final List<AnnotationNode> anns, final String side)
     {
         if (anns == null)
         {
             return false;
         }
-        for (AnnotationNode ann : anns)
+        for (final AnnotationNode ann : anns)
         {
             if (ann.desc.equals(Type.getDescriptor(SideOnly.class)))
             {
@@ -95,8 +95,8 @@ public class SideTransformer implements IClassTransformer
                 {
                     for (int x = 0; x < ann.values.size() - 1; x += 2)
                     {
-                        Object key = ann.values.get(x);
-                        Object value = ann.values.get(x+1);
+                        final Object key = ann.values.get(x);
+                        final Object value = ann.values.get(x+1);
                         if (key instanceof String && key.equals("value"))
                         {
                             if (value instanceof String[] )

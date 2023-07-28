@@ -47,7 +47,7 @@ public class ModelDragon extends ModelBase
     private ModelRenderer wingTip;
     private float partialTicks;
 
-    public ModelDragon(float par1)
+    public ModelDragon(final float par1)
     {
         this.textureWidth = 256;
         this.textureHeight = 256;
@@ -70,7 +70,7 @@ public class ModelDragon extends ModelBase
         this.setTextureOffset("head.scale", 0, 0);
         this.setTextureOffset("neck.scale", 48, 0);
         this.setTextureOffset("head.nostril", 112, 0);
-        float f1 = -16.0F;
+        final float f1 = -16.0F;
         this.head = new ModelRenderer(this, "head");
         this.head.addBox("upperlip", -6.0F, -1.0F, -8.0F + f1, 12, 5, 16);
         this.head.addBox("upperhead", -8.0F, -8.0F, 6.0F + f1, 16, 16, 16);
@@ -130,7 +130,7 @@ public class ModelDragon extends ModelBase
      * Used for easily adding entity-dependent animations. The second and third float params here are the same second
      * and third as in the setRotationAngles method.
      */
-    public void setLivingAnimations(EntityLivingBase par1EntityLivingBase, float par2, float par3, float par4)
+    public void setLivingAnimations(final EntityLivingBase par1EntityLivingBase, final float par2, final float par3, final float par4)
     {
         this.partialTicks = par4;
     }
@@ -138,11 +138,11 @@ public class ModelDragon extends ModelBase
     /**
      * Sets the models various rotation angles then renders the model.
      */
-    public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7)
+    public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7)
     {
         GL11.glPushMatrix();
-        EntityDragon entitydragon = (EntityDragon)par1Entity;
-        float f6 = entitydragon.prevAnimTime + (entitydragon.animTime - entitydragon.prevAnimTime) * this.partialTicks;
+        final EntityDragon entitydragon = (EntityDragon)par1Entity;
+        final float f6 = entitydragon.prevAnimTime + (entitydragon.animTime - entitydragon.prevAnimTime) * this.partialTicks;
         this.jaw.rotateAngleX = (float)(Math.sin((double)(f6 * (float)Math.PI * 2.0F)) + 1.0D) * 0.2F;
         float f7 = (float)(Math.sin((double)(f6 * (float)Math.PI * 2.0F - 1.0F)) + 1.0D);
         f7 = (f7 * f7 * 1.0F + f7 * 2.0F) * 0.05F;
@@ -150,10 +150,10 @@ public class ModelDragon extends ModelBase
         GL11.glRotatef(f7 * 2.0F, 1.0F, 0.0F, 0.0F);
         float f8 = -30.0F;
         float f9 = 0.0F;
-        float f10 = 1.5F;
+        final float f10 = 1.5F;
         double[] adouble = entitydragon.getMovementOffsets(6, this.partialTicks);
-        float f11 = this.updateRotations(entitydragon.getMovementOffsets(5, this.partialTicks)[0] - entitydragon.getMovementOffsets(10, this.partialTicks)[0]);
-        float f12 = this.updateRotations(entitydragon.getMovementOffsets(5, this.partialTicks)[0] + (double)(f11 / 2.0F));
+        final float f11 = this.updateRotations(entitydragon.getMovementOffsets(5, this.partialTicks)[0] - entitydragon.getMovementOffsets(10, this.partialTicks)[0]);
+        final float f12 = this.updateRotations(entitydragon.getMovementOffsets(5, this.partialTicks)[0] + (double)(f11 / 2.0F));
         f8 += 2.0F;
         float f13 = f6 * (float)Math.PI * 2.0F;
         f8 = 20.0F;
@@ -162,7 +162,7 @@ public class ModelDragon extends ModelBase
 
         for (int i = 0; i < 5; ++i)
         {
-            double[] adouble1 = entitydragon.getMovementOffsets(5 - i, this.partialTicks);
+            final double[] adouble1 = entitydragon.getMovementOffsets(5 - i, this.partialTicks);
             f15 = (float)Math.cos((double)((float)i * 0.45F + f13)) * 0.15F;
             this.spine.rotateAngleY = this.updateRotations(adouble1[0] - adouble[0]) * (float)Math.PI / 180.0F * f10;
             this.spine.rotateAngleX = f15 + (float)(adouble1[1] - adouble[1]) * (float)Math.PI / 180.0F * f10 * 5.0F;
@@ -251,16 +251,17 @@ public class ModelDragon extends ModelBase
      */
     private float updateRotations(double par1)
     {
-        while (par1 >= 180.0D)
+        double par11 = par1;
+        while (par11 >= 180.0D)
         {
-            par1 -= 360.0D;
+            par11 -= 360.0D;
         }
 
-        while (par1 < -180.0D)
+        while (par11 < -180.0D)
         {
-            par1 += 360.0D;
+            par11 += 360.0D;
         }
 
-        return (float)par1;
+        return (float) par11;
     }
 }

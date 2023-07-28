@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 
 public class ItemWritableBook extends Item
 {
-    public ItemWritableBook(int par1)
+    public ItemWritableBook(final int par1)
     {
         super(par1);
         this.setMaxStackSize(1);
@@ -17,7 +17,7 @@ public class ItemWritableBook extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         par3EntityPlayer.displayGUIBook(par1ItemStack);
         return par1ItemStack;
@@ -31,7 +31,7 @@ public class ItemWritableBook extends Item
         return true;
     }
 
-    public static boolean validBookTagPages(NBTTagCompound par0NBTTagCompound)
+    public static boolean validBookTagPages(final NBTTagCompound par0NBTTagCompound)
     {
         if (par0NBTTagCompound == null)
         {
@@ -43,11 +43,11 @@ public class ItemWritableBook extends Item
         }
         else
         {
-            NBTTagList nbttaglist = (NBTTagList)par0NBTTagCompound.getTag("pages");
+            final NBTTagList nbttaglist = (NBTTagList)par0NBTTagCompound.getTag("pages");
 
             for (int i = 0; i < nbttaglist.tagCount(); ++i)
             {
-                NBTTagString nbttagstring = (NBTTagString)nbttaglist.tagAt(i);
+                final NBTTagString nbttagstring = (NBTTagString)nbttaglist.tagAt(i);
 
                 if (nbttagstring.data == null)
                 {

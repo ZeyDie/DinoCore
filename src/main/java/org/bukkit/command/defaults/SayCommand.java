@@ -19,14 +19,14 @@ public class SayCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length == 0)  {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
 
-        StringBuilder message = new StringBuilder();
+        final StringBuilder message = new StringBuilder();
         message.append(ChatColor.LIGHT_PURPLE).append("[");
         if (sender instanceof ConsoleCommandSender) {
             message.append("Server");
@@ -49,7 +49,7 @@ public class SayCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) throws IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
 

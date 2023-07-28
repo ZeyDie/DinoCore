@@ -49,7 +49,7 @@ public class ModelWither extends ModelBase
     /**
      * Sets the models various rotation angles then renders the model.
      */
-    public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7)
+    public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7)
     {
         this.setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
         ModelRenderer[] amodelrenderer = this.field_82904_b;
@@ -78,28 +78,28 @@ public class ModelWither extends ModelBase
      * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how
      * "far" arms and legs can swing at most.
      */
-    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity)
+    public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity)
     {
-        float f6 = MathHelper.cos(par3 * 0.1F);
+        final float f6 = MathHelper.cos(par3 * 0.1F);
         this.field_82905_a[1].rotateAngleX = (0.065F + 0.05F * f6) * (float)Math.PI;
         this.field_82905_a[2].setRotationPoint(-2.0F, 6.9F + MathHelper.cos(this.field_82905_a[1].rotateAngleX) * 10.0F, -0.5F + MathHelper.sin(this.field_82905_a[1].rotateAngleX) * 10.0F);
         this.field_82905_a[2].rotateAngleX = (0.265F + 0.1F * f6) * (float)Math.PI;
-        this.field_82904_b[0].rotateAngleY = par4 / (180F / (float)Math.PI);
-        this.field_82904_b[0].rotateAngleX = par5 / (180F / (float)Math.PI);
+        this.field_82904_b[0].rotateAngleY = par4 / (180.0F / (float)Math.PI);
+        this.field_82904_b[0].rotateAngleX = par5 / (180.0F / (float)Math.PI);
     }
 
     /**
      * Used for easily adding entity-dependent animations. The second and third float params here are the same second
      * and third as in the setRotationAngles method.
      */
-    public void setLivingAnimations(EntityLivingBase par1EntityLivingBase, float par2, float par3, float par4)
+    public void setLivingAnimations(final EntityLivingBase par1EntityLivingBase, final float par2, final float par3, final float par4)
     {
-        EntityWither entitywither = (EntityWither)par1EntityLivingBase;
+        final EntityWither entitywither = (EntityWither)par1EntityLivingBase;
 
         for (int i = 1; i < 3; ++i)
         {
-            this.field_82904_b[i].rotateAngleY = (entitywither.func_82207_a(i - 1) - par1EntityLivingBase.renderYawOffset) / (180F / (float)Math.PI);
-            this.field_82904_b[i].rotateAngleX = entitywither.func_82210_r(i - 1) / (180F / (float)Math.PI);
+            this.field_82904_b[i].rotateAngleY = (entitywither.func_82207_a(i - 1) - par1EntityLivingBase.renderYawOffset) / (180.0F / (float)Math.PI);
+            this.field_82904_b[i].rotateAngleX = entitywither.func_82210_r(i - 1) / (180.0F / (float)Math.PI);
         }
     }
 }

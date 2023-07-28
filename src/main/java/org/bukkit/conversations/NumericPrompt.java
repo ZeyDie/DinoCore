@@ -11,7 +11,7 @@ public abstract class NumericPrompt extends ValidatingPrompt{
     }
 
     @Override
-    protected boolean isInputValid(ConversationContext context, String input) {
+    protected boolean isInputValid(final ConversationContext context, final String input) {
         return NumberUtils.isNumber(input) && isNumberValid(context, NumberUtils.createNumber(input));
     }
 
@@ -23,16 +23,16 @@ public abstract class NumericPrompt extends ValidatingPrompt{
      * @param input The number the player provided.
      * @return The validity of the player's input.
      */
-    protected boolean isNumberValid(ConversationContext context, Number input) {
+    protected boolean isNumberValid(final ConversationContext context, final Number input) {
         return true;
     }
 
     @Override
-    protected Prompt acceptValidatedInput(ConversationContext context, String input) {
+    protected Prompt acceptValidatedInput(final ConversationContext context, final String input) {
         try
         {
             return acceptValidatedInput(context, NumberUtils.createNumber(input));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return acceptValidatedInput(context, NumberUtils.INTEGER_ZERO);
         }
     }
@@ -47,7 +47,7 @@ public abstract class NumericPrompt extends ValidatingPrompt{
     protected abstract Prompt acceptValidatedInput(ConversationContext context, Number input);
 
     @Override
-    protected String getFailedValidationText(ConversationContext context, String invalidInput) {
+    protected String getFailedValidationText(final ConversationContext context, final String invalidInput) {
         if (NumberUtils.isNumber(invalidInput)) {
             return getFailedValidationText(context, NumberUtils.createNumber(invalidInput));
         } else {
@@ -62,7 +62,7 @@ public abstract class NumericPrompt extends ValidatingPrompt{
      * @param invalidInput The invalid input provided by the user.
      * @return A message explaining how to correct the input.
      */
-    protected String getInputNotNumericText(ConversationContext context, String invalidInput) {
+    protected String getInputNotNumericText(final ConversationContext context, final String invalidInput) {
         return null;
     }
 
@@ -73,7 +73,7 @@ public abstract class NumericPrompt extends ValidatingPrompt{
      * @param invalidInput The invalid input provided by the user.
      * @return A message explaining how to correct the input.
      */
-    protected String getFailedValidationText(ConversationContext context, Number invalidInput) {
+    protected String getFailedValidationText(final ConversationContext context, final Number invalidInput) {
         return null;
     }
 }

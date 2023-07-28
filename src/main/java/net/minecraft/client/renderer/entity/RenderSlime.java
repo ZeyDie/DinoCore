@@ -15,7 +15,7 @@ public class RenderSlime extends RenderLiving
     private static final ResourceLocation slimeTextures = new ResourceLocation("textures/entity/slime/slime.png");
     private ModelBase scaleAmount;
 
-    public RenderSlime(ModelBase par1ModelBase, ModelBase par2ModelBase, float par3)
+    public RenderSlime(final ModelBase par1ModelBase, final ModelBase par2ModelBase, final float par3)
     {
         super(par1ModelBase, par3);
         this.scaleAmount = par2ModelBase;
@@ -24,7 +24,7 @@ public class RenderSlime extends RenderLiving
     /**
      * Determines whether Slime Render should pass or not.
      */
-    protected int shouldSlimeRenderPass(EntitySlime par1EntitySlime, int par2, float par3)
+    protected int shouldSlimeRenderPass(final EntitySlime par1EntitySlime, final int par2, final float par3)
     {
         if (par1EntitySlime.isInvisible())
         {
@@ -53,15 +53,15 @@ public class RenderSlime extends RenderLiving
     /**
      * sets the scale for the slime based on getSlimeSize in EntitySlime
      */
-    protected void scaleSlime(EntitySlime par1EntitySlime, float par2)
+    protected void scaleSlime(final EntitySlime par1EntitySlime, final float par2)
     {
-        float f1 = (float)par1EntitySlime.getSlimeSize();
-        float f2 = (par1EntitySlime.prevSquishFactor + (par1EntitySlime.squishFactor - par1EntitySlime.prevSquishFactor) * par2) / (f1 * 0.5F + 1.0F);
-        float f3 = 1.0F / (f2 + 1.0F);
+        final float f1 = (float)par1EntitySlime.getSlimeSize();
+        final float f2 = (par1EntitySlime.prevSquishFactor + (par1EntitySlime.squishFactor - par1EntitySlime.prevSquishFactor) * par2) / (f1 * 0.5F + 1.0F);
+        final float f3 = 1.0F / (f2 + 1.0F);
         GL11.glScalef(f3 * f1, 1.0F / f3 * f1, f3 * f1);
     }
 
-    protected ResourceLocation getSlimeTextures(EntitySlime par1EntitySlime)
+    protected ResourceLocation getSlimeTextures(final EntitySlime par1EntitySlime)
     {
         return slimeTextures;
     }
@@ -70,7 +70,7 @@ public class RenderSlime extends RenderLiving
      * Allows the render to do any OpenGL state modifications necessary before the model is rendered. Args:
      * entityLiving, partialTickTime
      */
-    protected void preRenderCallback(EntityLivingBase par1EntityLivingBase, float par2)
+    protected void preRenderCallback(final EntityLivingBase par1EntityLivingBase, final float par2)
     {
         this.scaleSlime((EntitySlime)par1EntityLivingBase, par2);
     }
@@ -78,7 +78,7 @@ public class RenderSlime extends RenderLiving
     /**
      * Queries whether should render the specified pass or not.
      */
-    protected int shouldRenderPass(EntityLivingBase par1EntityLivingBase, int par2, float par3)
+    protected int shouldRenderPass(final EntityLivingBase par1EntityLivingBase, final int par2, final float par3)
     {
         return this.shouldSlimeRenderPass((EntitySlime)par1EntityLivingBase, par2, par3);
     }
@@ -86,7 +86,7 @@ public class RenderSlime extends RenderLiving
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.getSlimeTextures((EntitySlime)par1Entity);
     }

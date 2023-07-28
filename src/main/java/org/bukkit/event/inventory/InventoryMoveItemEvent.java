@@ -66,7 +66,7 @@ public class InventoryMoveItemEvent extends Event implements Cancellable {
      *
      * @param itemStack The ItemStack
      */
-    public void setItem(ItemStack itemStack) {
+    public void setItem(final ItemStack itemStack) {
         Validate.notNull(itemStack, "ItemStack cannot be null.  Cancel the event if you want nothing to be transferred.");
         this.itemStack = itemStack.clone();
     }
@@ -94,7 +94,7 @@ public class InventoryMoveItemEvent extends Event implements Cancellable {
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancelled = cancel;
     }
 

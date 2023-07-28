@@ -28,7 +28,7 @@ public class EntityAIControlledByPlayer extends EntityAIBase
     /** Maximum time the entity's speed should be boosted for. */
     private int maxSpeedBoostTime;
 
-    public EntityAIControlledByPlayer(EntityLiving par1EntityLiving, float par2)
+    public EntityAIControlledByPlayer(final EntityLiving par1EntityLiving, final float par2)
     {
         this.thisEntity = par1EntityLiving;
         this.maxSpeed = par2;
@@ -65,8 +65,8 @@ public class EntityAIControlledByPlayer extends EntityAIBase
      */
     public void updateTask()
     {
-        EntityPlayer entityplayer = (EntityPlayer)this.thisEntity.riddenByEntity;
-        EntityCreature entitycreature = (EntityCreature)this.thisEntity;
+        final EntityPlayer entityplayer = (EntityPlayer)this.thisEntity.riddenByEntity;
+        final EntityCreature entitycreature = (EntityCreature)this.thisEntity;
         float f = MathHelper.wrapAngleTo180_float(entityplayer.rotationYaw - this.thisEntity.rotationYaw) * 0.5F;
 
         if (f > 5.0F)
@@ -91,9 +91,9 @@ public class EntityAIControlledByPlayer extends EntityAIBase
             this.currentSpeed = this.maxSpeed;
         }
 
-        int i = MathHelper.floor_double(this.thisEntity.posX);
-        int j = MathHelper.floor_double(this.thisEntity.posY);
-        int k = MathHelper.floor_double(this.thisEntity.posZ);
+        final int i = MathHelper.floor_double(this.thisEntity.posX);
+        final int j = MathHelper.floor_double(this.thisEntity.posY);
+        final int k = MathHelper.floor_double(this.thisEntity.posZ);
         float f1 = this.currentSpeed;
 
         if (this.speedBoosted)
@@ -111,7 +111,7 @@ public class EntityAIControlledByPlayer extends EntityAIBase
         if (this.thisEntity.onGround)
         {
             f2 = 0.54600006F;
-            int l = this.thisEntity.worldObj.getBlockId(MathHelper.floor_float((float)i), MathHelper.floor_float((float)j) - 1, MathHelper.floor_float((float)k));
+            final int l = this.thisEntity.worldObj.getBlockId(MathHelper.floor_float((float)i), MathHelper.floor_float((float)j) - 1, MathHelper.floor_float((float)k));
 
             if (l > 0)
             {
@@ -119,13 +119,13 @@ public class EntityAIControlledByPlayer extends EntityAIBase
             }
         }
 
-        float f3 = 0.16277136F / (f2 * f2 * f2);
-        float f4 = MathHelper.sin(entitycreature.rotationYaw * (float)Math.PI / 180.0F);
-        float f5 = MathHelper.cos(entitycreature.rotationYaw * (float)Math.PI / 180.0F);
-        float f6 = entitycreature.getAIMoveSpeed() * f3;
+        final float f3 = 0.16277136F / (f2 * f2 * f2);
+        final float f4 = MathHelper.sin(entitycreature.rotationYaw * (float)Math.PI / 180.0F);
+        final float f5 = MathHelper.cos(entitycreature.rotationYaw * (float)Math.PI / 180.0F);
+        final float f6 = entitycreature.getAIMoveSpeed() * f3;
         float f7 = Math.max(f1, 1.0F);
         f7 = f6 / f7;
-        float f8 = f1 * f7;
+        final float f8 = f1 * f7;
         float f9 = -(f8 * f4);
         float f10 = f8 * f5;
 
@@ -158,15 +158,15 @@ public class EntityAIControlledByPlayer extends EntityAIBase
             }
         }
 
-        int i1 = MathHelper.floor_double(this.thisEntity.posX + (double)f9);
-        int j1 = MathHelper.floor_double(this.thisEntity.posZ + (double)f10);
-        PathPoint pathpoint = new PathPoint(MathHelper.floor_float(this.thisEntity.width + 1.0F), MathHelper.floor_float(this.thisEntity.height + entityplayer.height + 1.0F), MathHelper.floor_float(this.thisEntity.width + 1.0F));
+        final int i1 = MathHelper.floor_double(this.thisEntity.posX + (double)f9);
+        final int j1 = MathHelper.floor_double(this.thisEntity.posZ + (double)f10);
+        final PathPoint pathpoint = new PathPoint(MathHelper.floor_float(this.thisEntity.width + 1.0F), MathHelper.floor_float(this.thisEntity.height + entityplayer.height + 1.0F), MathHelper.floor_float(this.thisEntity.width + 1.0F));
 
         if (i != i1 || k != j1)
         {
-            int k1 = this.thisEntity.worldObj.getBlockId(i, j, k);
-            int l1 = this.thisEntity.worldObj.getBlockId(i, j - 1, k);
-            boolean flag = this.func_98216_b(k1) || Block.blocksList[k1] == null && this.func_98216_b(l1);
+            final int k1 = this.thisEntity.worldObj.getBlockId(i, j, k);
+            final int l1 = this.thisEntity.worldObj.getBlockId(i, j - 1, k);
+            final boolean flag = this.func_98216_b(k1) || Block.blocksList[k1] == null && this.func_98216_b(l1);
 
             if (!flag && PathFinder.func_82565_a(this.thisEntity, i1, j, j1, pathpoint, false, false, true) == 0 && PathFinder.func_82565_a(this.thisEntity, i, j + 1, k, pathpoint, false, false, true) == 1 && PathFinder.func_82565_a(this.thisEntity, i1, j + 1, j1, pathpoint, false, false, true) == 1)
             {
@@ -176,7 +176,7 @@ public class EntityAIControlledByPlayer extends EntityAIBase
 
         if (!entityplayer.capabilities.isCreativeMode && this.currentSpeed >= this.maxSpeed * 0.5F && this.thisEntity.getRNG().nextFloat() < 0.006F && !this.speedBoosted)
         {
-            ItemStack itemstack = entityplayer.getHeldItem();
+            final ItemStack itemstack = entityplayer.getHeldItem();
 
             if (itemstack != null && itemstack.itemID == Item.carrotOnAStick.itemID)
             {
@@ -184,7 +184,7 @@ public class EntityAIControlledByPlayer extends EntityAIBase
 
                 if (itemstack.stackSize == 0)
                 {
-                    ItemStack itemstack1 = new ItemStack(Item.fishingRod);
+                    final ItemStack itemstack1 = new ItemStack(Item.fishingRod);
                     itemstack1.setTagCompound(itemstack.stackTagCompound);
                     entityplayer.inventory.mainInventory[entityplayer.inventory.currentItem] = itemstack1;
                 }
@@ -194,7 +194,7 @@ public class EntityAIControlledByPlayer extends EntityAIBase
         this.thisEntity.moveEntityWithHeading(0.0F, f1);
     }
 
-    private boolean func_98216_b(int par1)
+    private boolean func_98216_b(final int par1)
     {
         return Block.blocksList[par1] != null && (Block.blocksList[par1].getRenderType() == 10 || Block.blocksList[par1] instanceof BlockHalfSlab);
     }

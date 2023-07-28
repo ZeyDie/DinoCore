@@ -10,7 +10,7 @@ public class TileEntityCache {
     public String configPath;
     public String worldName;
 
-    public TileEntityCache(Class<? extends TileEntity> tileEntityClass, String worldName, String configPath, boolean tickNoPlayers, int tickInterval)
+    public TileEntityCache(final Class<? extends TileEntity> tileEntityClass, final String worldName, final String configPath, final boolean tickNoPlayers, final int tickInterval)
     {
         this.tileEntityClass = tileEntityClass;
         this.worldName = worldName;

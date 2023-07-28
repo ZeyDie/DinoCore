@@ -7,7 +7,7 @@ import net.minecraft.network.packet.Packet131MapData;
 public class ForgeTinyPacketHandler implements ITinyPacketHandler {
 
     @Override
-    public void handle(NetHandler handler, Packet131MapData mapData)
+    public void handle(final NetHandler handler, final Packet131MapData mapData)
     {
 
     }

@@ -16,7 +16,7 @@ public class BlockRedstoneOre extends Block
 {
     private boolean glowing;
 
-    public BlockRedstoneOre(int par1, boolean par2)
+    public BlockRedstoneOre(final int par1, final boolean par2)
     {
         super(par1, Material.rock);
 
@@ -31,7 +31,7 @@ public class BlockRedstoneOre extends Block
     /**
      * How many world ticks before ticking
      */
-    public int tickRate(World par1World)
+    public int tickRate(final World par1World)
     {
         return 30;
     }
@@ -39,7 +39,7 @@ public class BlockRedstoneOre extends Block
     /**
      * Called when the block is clicked by a player. Args: x, y, z, entityPlayer
      */
-    public void onBlockClicked(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer)
+    public void onBlockClicked(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer)
     {
         this.glow(par1World, par2, par3, par4);
         super.onBlockClicked(par1World, par2, par3, par4, par5EntityPlayer);
@@ -48,12 +48,12 @@ public class BlockRedstoneOre extends Block
     /**
      * Called whenever an entity is walking on top of this block. Args: world, x, y, z, entity
      */
-    public void onEntityWalking(World par1World, int par2, int par3, int par4, Entity par5Entity)
+    public void onEntityWalking(final World par1World, final int par2, final int par3, final int par4, final Entity par5Entity)
     {
         // CraftBukkit start
         if (par5Entity instanceof EntityPlayer)
         {
-            org.bukkit.event.player.PlayerInteractEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callPlayerInteractEvent((EntityPlayer) par5Entity, org.bukkit.event.block.Action.PHYSICAL, par2, par3, par4, -1, null);
+            final org.bukkit.event.player.PlayerInteractEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callPlayerInteractEvent((EntityPlayer) par5Entity, org.bukkit.event.block.Action.PHYSICAL, par2, par3, par4, -1, null);
 
             if (!event.isCancelled())
             {
@@ -63,7 +63,7 @@ public class BlockRedstoneOre extends Block
         }
         else
         {
-            EntityInteractEvent event = new EntityInteractEvent(par5Entity.getBukkitEntity(), par1World.getWorld().getBlockAt(par2, par3, par4));
+            final EntityInteractEvent event = new EntityInteractEvent(par5Entity.getBukkitEntity(), par1World.getWorld().getBlockAt(par2, par3, par4));
             par1World.getServer().getPluginManager().callEvent(event);
 
             if (!event.isCancelled())
@@ -78,7 +78,7 @@ public class BlockRedstoneOre extends Block
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9)
     {
         this.glow(par1World, par2, par3, par4);
         return super.onBlockActivated(par1World, par2, par3, par4, par5EntityPlayer, par6, par7, par8, par9);
@@ -87,7 +87,7 @@ public class BlockRedstoneOre extends Block
     /**
      * The redstone ore glows.
      */
-    private void glow(World par1World, int par2, int par3, int par4)
+    private void glow(final World par1World, final int par2, final int par3, final int par4)
     {
         this.sparkle(par1World, par2, par3, par4);
 
@@ -100,7 +100,7 @@ public class BlockRedstoneOre extends Block
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (this.blockID == Block.oreRedstoneGlowing.blockID)
         {
@@ -111,7 +111,7 @@ public class BlockRedstoneOre extends Block
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return Item.redstone.itemID;
     }
@@ -119,7 +119,7 @@ public class BlockRedstoneOre extends Block
     /**
      * Returns the usual quantity dropped by the block plus a bonus of 1 to 'i' (inclusive).
      */
-    public int quantityDroppedWithBonus(int par1, Random par2Random)
+    public int quantityDroppedWithBonus(final int par1, final Random par2Random)
     {
         return this.quantityDropped(par2Random) + par2Random.nextInt(par1 + 1);
     }
@@ -127,7 +127,7 @@ public class BlockRedstoneOre extends Block
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random par1Random)
+    public int quantityDropped(final Random par1Random)
     {
         return 4 + par1Random.nextInt(2);
     }
@@ -135,17 +135,17 @@ public class BlockRedstoneOre extends Block
     /**
      * Drops the block items with a specified chance of dropping the specified items
      */
-    public void dropBlockAsItemWithChance(World par1World, int par2, int par3, int par4, int par5, float par6, int par7)
+    public void dropBlockAsItemWithChance(final World par1World, final int par2, final int par3, final int par4, final int par5, final float par6, final int par7)
     {
         super.dropBlockAsItemWithChance(par1World, par2, par3, par4, par5, par6, par7);
         // CraftBukkit start - Delegated to getExpDrop
     }
 
-    public int getExpDrop(World world, int l, int i1)
+    public int getExpDrop(final World world, final int l, final int i1)
     {
         if (this.idDropped(l, world.rand, i1) != this.blockID)
         {
-            int j1 = 1 + world.rand.nextInt(5);
+            final int j1 = 1 + world.rand.nextInt(5);
             return j1;
         }
 
@@ -158,7 +158,7 @@ public class BlockRedstoneOre extends Block
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void randomDisplayTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (this.glowing)
         {
@@ -169,10 +169,10 @@ public class BlockRedstoneOre extends Block
     /**
      * The redstone ore sparkles.
      */
-    private void sparkle(World par1World, int par2, int par3, int par4)
+    private void sparkle(final World par1World, final int par2, final int par3, final int par4)
     {
-        Random random = par1World.rand;
-        double d0 = 0.0625D;
+        final Random random = par1World.rand;
+        final double d0 = 0.0625D;
 
         for (int l = 0; l < 6; ++l)
         {
@@ -221,7 +221,7 @@ public class BlockRedstoneOre extends Block
      * Returns an item stack containing a single instance of the current block type. 'i' is the block's subtype/damage
      * and is ignored for blocks which do not support subtypes. Blocks which cannot be harvested should return null.
      */
-    protected ItemStack createStackedBlock(int par1)
+    protected ItemStack createStackedBlock(final int par1)
     {
         return new ItemStack(Block.oreRedstone);
     }

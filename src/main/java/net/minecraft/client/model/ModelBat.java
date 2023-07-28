@@ -32,10 +32,10 @@ public class ModelBat extends ModelBase
         this.textureHeight = 64;
         this.batHead = new ModelRenderer(this, 0, 0);
         this.batHead.addBox(-3.0F, -3.0F, -3.0F, 6, 6, 6);
-        ModelRenderer modelrenderer = new ModelRenderer(this, 24, 0);
+        final ModelRenderer modelrenderer = new ModelRenderer(this, 24, 0);
         modelrenderer.addBox(-4.0F, -6.0F, -2.0F, 3, 4, 1);
         this.batHead.addChild(modelrenderer);
-        ModelRenderer modelrenderer1 = new ModelRenderer(this, 24, 0);
+        final ModelRenderer modelrenderer1 = new ModelRenderer(this, 24, 0);
         modelrenderer1.mirror = true;
         modelrenderer1.addBox(1.0F, -6.0F, -2.0F, 3, 4, 1);
         this.batHead.addChild(modelrenderer1);
@@ -72,23 +72,23 @@ public class ModelBat extends ModelBase
     /**
      * Sets the models various rotation angles then renders the model.
      */
-    public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7)
+    public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7)
     {
-        EntityBat entitybat = (EntityBat)par1Entity;
-        float f6;
+        final EntityBat entitybat = (EntityBat)par1Entity;
+        final float f6;
 
         if (entitybat.getIsBatHanging())
         {
-            f6 = (180F / (float)Math.PI);
-            this.batHead.rotateAngleX = par6 / (180F / (float)Math.PI);
-            this.batHead.rotateAngleY = (float)Math.PI - par5 / (180F / (float)Math.PI);
+            f6 = (180.0F / (float)Math.PI);
+            this.batHead.rotateAngleX = par6 / (180.0F / (float)Math.PI);
+            this.batHead.rotateAngleY = (float)Math.PI - par5 / (180.0F / (float)Math.PI);
             this.batHead.rotateAngleZ = (float)Math.PI;
             this.batHead.setRotationPoint(0.0F, -2.0F, 0.0F);
             this.batRightWing.setRotationPoint(-3.0F, 0.0F, 3.0F);
             this.batLeftWing.setRotationPoint(3.0F, 0.0F, 3.0F);
             this.batBody.rotateAngleX = (float)Math.PI;
             this.batRightWing.rotateAngleX = -0.15707964F;
-            this.batRightWing.rotateAngleY = -((float)Math.PI * 2F / 5F);
+            this.batRightWing.rotateAngleY = -((float)Math.PI * 2.0F / 5.0F);
             this.batOuterRightWing.rotateAngleY = -1.7278761F;
             this.batLeftWing.rotateAngleX = this.batRightWing.rotateAngleX;
             this.batLeftWing.rotateAngleY = -this.batRightWing.rotateAngleY;
@@ -96,14 +96,14 @@ public class ModelBat extends ModelBase
         }
         else
         {
-            f6 = (180F / (float)Math.PI);
-            this.batHead.rotateAngleX = par6 / (180F / (float)Math.PI);
-            this.batHead.rotateAngleY = par5 / (180F / (float)Math.PI);
+            f6 = (180.0F / (float)Math.PI);
+            this.batHead.rotateAngleX = par6 / (180.0F / (float)Math.PI);
+            this.batHead.rotateAngleY = par5 / (180.0F / (float)Math.PI);
             this.batHead.rotateAngleZ = 0.0F;
             this.batHead.setRotationPoint(0.0F, 0.0F, 0.0F);
             this.batRightWing.setRotationPoint(0.0F, 0.0F, 0.0F);
             this.batLeftWing.setRotationPoint(0.0F, 0.0F, 0.0F);
-            this.batBody.rotateAngleX = ((float)Math.PI / 4F) + MathHelper.cos(par4 * 0.1F) * 0.15F;
+            this.batBody.rotateAngleX = ((float)Math.PI / 4.0F) + MathHelper.cos(par4 * 0.1F) * 0.15F;
             this.batBody.rotateAngleY = 0.0F;
             this.batRightWing.rotateAngleY = MathHelper.cos(par4 * 1.3F) * (float)Math.PI * 0.25F;
             this.batLeftWing.rotateAngleY = -this.batRightWing.rotateAngleY;

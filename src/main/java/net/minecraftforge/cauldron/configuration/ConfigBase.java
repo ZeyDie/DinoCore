@@ -26,7 +26,7 @@ public abstract class ConfigBase
 
     /* ======================================================================== */
 
-    public ConfigBase(String fileName, String commandName)
+    public ConfigBase(final String fileName, final String commandName)
     {
         //TODO ZoomCodeStart
         this.configFile = DefaultPaths.getDefaultFile(fileName);
@@ -48,7 +48,7 @@ public abstract class ConfigBase
 
     public void registerCommands()
     {
-        for (Map.Entry<String, Command> entry : commands.entrySet())
+        for (final Map.Entry<String, Command> entry : commands.entrySet())
         {
             MinecraftServer.getServer().server.getCommandMap().register(entry.getKey(), this.commandName, entry.getValue());
         }
@@ -60,7 +60,7 @@ public abstract class ConfigBase
         {
             config.save(configFile);
         }
-        catch (IOException ex)
+        catch (final IOException ex)
         {
             MinecraftServer.getServer().logSevere("Could not save " + configFile);
             ex.printStackTrace();
@@ -71,7 +71,7 @@ public abstract class ConfigBase
     {
         for (int i = 0; i < MinecraftServer.getServer().worlds.size(); ++i)
         {
-            WorldServer worldserver = MinecraftServer.getServer().worlds.get(i);
+            final WorldServer worldserver = MinecraftServer.getServer().worlds.get(i);
 
             if (worldserver != null)
             {
@@ -89,37 +89,37 @@ public abstract class ConfigBase
 
     protected abstract void load();
  
-    public void set(String path, Object val)
+    public void set(final String path, final Object val)
     {
         config.set(path, val);
     }
 
-    public boolean isSet(String path)
+    public boolean isSet(final String path)
     {
         return config.isSet(path);
     }
 
-    public boolean isInt(String path)
+    public boolean isInt(final String path)
     {
         return config.isInt(path);
     }
 
-    public boolean isBoolean(String path)
+    public boolean isBoolean(final String path)
     {
         return config.isBoolean(path);
     }
 
-    public boolean getBoolean(String path)
+    public boolean getBoolean(final String path)
     {
         return config.getBoolean(path);
     }
 
-    public boolean getBoolean(String path, boolean def)
+    public boolean getBoolean(final String path, final boolean def)
     {
         return getBoolean(path, def, true);
     }
 
-    public boolean getBoolean(String path, boolean def, boolean useDefault)
+    public boolean getBoolean(final String path, final boolean def, final boolean useDefault)
     {
         if (useDefault)
         {
@@ -128,29 +128,29 @@ public abstract class ConfigBase
         return config.getBoolean(path, def);
     }
 
-    public int getInt(String path)
+    public int getInt(final String path)
     {
         return config.getInt(path);
     }
 
-    public int getInt(String path, int def)
+    public int getInt(final String path, final int def)
     {
         config.addDefault(path, def);
         return config.getInt(path, config.getInt(path));
     }
 
-    private <T> List getList(String path, T def)
+    private <T> List getList(final String path, final T def)
     {
         config.addDefault(path, def);
         return config.getList(path, config.getList(path));
     }
 
-    public String getString(String path, String def)
+    public String getString(final String path, final String def)
     {
         return getString(path, def, true);
     }
 
-    public String getString(String path, String def, boolean useDefault)
+    public String getString(final String path, final String def, final boolean useDefault)
     {
         if (useDefault)
         {
@@ -159,7 +159,7 @@ public abstract class ConfigBase
         return config.getString(path, def);
     }
 
-    public String getFakePlayer(String className, String defaultName)
+    public String getFakePlayer(final String className, final String defaultName)
     {
         return getString("fake-players." + className + ".username", defaultName);
     }

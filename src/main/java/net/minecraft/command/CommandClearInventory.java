@@ -12,7 +12,7 @@ public class CommandClearInventory extends CommandBase
         return "clear";
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.clear.usage";
     }
@@ -25,12 +25,12 @@ public class CommandClearInventory extends CommandBase
         return 2;
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
-        EntityPlayerMP entityplayermp = par2ArrayOfStr.length == 0 ? getCommandSenderAsPlayer(par1ICommandSender) : getPlayer(par1ICommandSender, par2ArrayOfStr[0]);
-        int i = par2ArrayOfStr.length >= 2 ? parseIntWithMin(par1ICommandSender, par2ArrayOfStr[1], 1) : -1;
-        int j = par2ArrayOfStr.length >= 3 ? parseIntWithMin(par1ICommandSender, par2ArrayOfStr[2], 0) : -1;
-        int k = entityplayermp.inventory.clearInventory(i, j);
+        final EntityPlayerMP entityplayermp = par2ArrayOfStr.length == 0 ? getCommandSenderAsPlayer(par1ICommandSender) : getPlayer(par1ICommandSender, par2ArrayOfStr[0]);
+        final int i = par2ArrayOfStr.length >= 2 ? parseIntWithMin(par1ICommandSender, par2ArrayOfStr[1], 1) : -1;
+        final int j = par2ArrayOfStr.length >= 3 ? parseIntWithMin(par1ICommandSender, par2ArrayOfStr[2], 0) : -1;
+        final int k = entityplayermp.inventory.clearInventory(i, j);
         entityplayermp.inventoryContainer.detectAndSendChanges();
 
         if (!entityplayermp.capabilities.isCreativeMode)
@@ -51,7 +51,7 @@ public class CommandClearInventory extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public List addTabCompletionOptions(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         return par2ArrayOfStr.length == 1 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, this.getAllOnlineUsernames()) : null;
     }
@@ -67,7 +67,7 @@ public class CommandClearInventory extends CommandBase
     /**
      * Return whether the specified command parameter index is a username parameter.
      */
-    public boolean isUsernameIndex(String[] par1ArrayOfStr, int par2)
+    public boolean isUsernameIndex(final String[] par1ArrayOfStr, final int par2)
     {
         return par2 == 0;
     }

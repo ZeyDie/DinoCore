@@ -28,7 +28,7 @@ public class NextTickListEntry implements Comparable
     /** The id of the tick entry */
     private long tickEntryID;
 
-    public NextTickListEntry(int par1, int par2, int par3, int par4)
+    public NextTickListEntry(final int par1, final int par2, final int par3, final int par4)
     {
         this.tickEntryID = (long)(nextTickEntryID++);
         this.xCoord = par1;
@@ -37,7 +37,7 @@ public class NextTickListEntry implements Comparable
         this.blockID = par4;
     }
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         if (!(par1Obj instanceof NextTickListEntry))
         {
@@ -45,7 +45,7 @@ public class NextTickListEntry implements Comparable
         }
         else
         {
-            NextTickListEntry nextticklistentry = (NextTickListEntry)par1Obj;
+            final NextTickListEntry nextticklistentry = (NextTickListEntry)par1Obj;
             return this.xCoord == nextticklistentry.xCoord && this.yCoord == nextticklistentry.yCoord && this.zCoord == nextticklistentry.zCoord && Block.isAssociatedBlockID(this.blockID, nextticklistentry.blockID);
         }
     }
@@ -58,13 +58,13 @@ public class NextTickListEntry implements Comparable
     /**
      * Sets the scheduled time for this tick entry
      */
-    public NextTickListEntry setScheduledTime(long par1)
+    public NextTickListEntry setScheduledTime(final long par1)
     {
         this.scheduledTime = par1;
         return this;
     }
 
-    public void setPriority(int par1)
+    public void setPriority(final int par1)
     {
         this.priority = par1;
     }
@@ -73,7 +73,7 @@ public class NextTickListEntry implements Comparable
      * Compares this tick entry to another tick entry for sorting purposes. Compared first based on the scheduled time
      * and second based on tickEntryID.
      */
-    public int comparer(NextTickListEntry par1NextTickListEntry)
+    public int comparer(final NextTickListEntry par1NextTickListEntry)
     {
         return this.scheduledTime < par1NextTickListEntry.scheduledTime ? -1 : (this.scheduledTime > par1NextTickListEntry.scheduledTime ? 1 : (this.priority != par1NextTickListEntry.priority ? this.priority - par1NextTickListEntry.priority : (this.tickEntryID < par1NextTickListEntry.tickEntryID ? -1 : (this.tickEntryID > par1NextTickListEntry.tickEntryID ? 1 : 0))));
     }
@@ -83,7 +83,7 @@ public class NextTickListEntry implements Comparable
         return this.blockID + ": (" + this.xCoord + ", " + this.yCoord + ", " + this.zCoord + "), " + this.scheduledTime + ", " + this.priority + ", " + this.tickEntryID;
     }
 
-    public int compareTo(Object par1Obj)
+    public int compareTo(final Object par1Obj)
     {
         return this.comparer((NextTickListEntry)par1Obj);
     }

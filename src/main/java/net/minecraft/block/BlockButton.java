@@ -28,7 +28,7 @@ public abstract class BlockButton extends Block
     /** Whether this button is sensible to arrows, used by wooden buttons. */
     protected boolean sensible;
 
-    protected BlockButton(int par1, boolean par2)
+    protected BlockButton(final int par1, final boolean par2)
     {
         super(par1, Material.circuits);
         this.setTickRandomly(true);
@@ -40,7 +40,7 @@ public abstract class BlockButton extends Block
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4)
     {
         return null;
     }
@@ -48,7 +48,7 @@ public abstract class BlockButton extends Block
     /**
      * How many world ticks before ticking
      */
-    public int tickRate(World par1World)
+    public int tickRate(final World par1World)
     {
         return this.sensible ? 30 : 20;
     }
@@ -73,9 +73,9 @@ public abstract class BlockButton extends Block
     /**
      * checks to see if you can place this block can be placed on that side of a block: BlockLever overrides
      */
-    public boolean canPlaceBlockOnSide(World par1World, int par2, int par3, int par4, int par5)
+    public boolean canPlaceBlockOnSide(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
-        ForgeDirection dir = ForgeDirection.getOrientation(par5);
+        final ForgeDirection dir = ForgeDirection.getOrientation(par5);
         return (dir == NORTH && par1World.isBlockSolidOnSide(par2, par3, par4 + 1, NORTH)) ||
                (dir == SOUTH && par1World.isBlockSolidOnSide(par2, par3, par4 - 1, SOUTH)) ||
                (dir == WEST  && par1World.isBlockSolidOnSide(par2 + 1, par3, par4, WEST)) ||
@@ -85,7 +85,7 @@ public abstract class BlockButton extends Block
     /**
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
      */
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
+    public boolean canPlaceBlockAt(final World par1World, final int par2, final int par3, final int par4)
     {
         return (par1World.isBlockSolidOnSide(par2 - 1, par3, par4, EAST)) ||
                (par1World.isBlockSolidOnSide(par2 + 1, par3, par4, WEST)) ||
@@ -96,14 +96,14 @@ public abstract class BlockButton extends Block
     /**
      * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
      */
-    public int onBlockPlaced(World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9)
+    public int onBlockPlaced(final World par1World, final int par2, final int par3, final int par4, final int par5, final float par6, final float par7, final float par8, final int par9)
     {
         int j1 = par1World.getBlockMetadata(par2, par3, par4);
-        int k1 = j1 & 8;
+        final int k1 = j1 & 8;
         j1 &= 7;
 
 
-        ForgeDirection dir = ForgeDirection.getOrientation(par5);
+        final ForgeDirection dir = ForgeDirection.getOrientation(par5);
 
         if (dir == NORTH && par1World.isBlockSolidOnSide(par2, par3, par4 + 1, NORTH))
         {
@@ -132,7 +132,7 @@ public abstract class BlockButton extends Block
     /**
      * Get side which this button is facing.
      */
-    private int getOrientation(World par1World, int par2, int par3, int par4)
+    private int getOrientation(final World par1World, final int par2, final int par3, final int par4)
     {
         if (par1World.isBlockSolidOnSide(par2 - 1, par3, par4, EAST)) return 1;
         if (par1World.isBlockSolidOnSide(par2 + 1, par3, par4, WEST)) return 2;
@@ -145,11 +145,11 @@ public abstract class BlockButton extends Block
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         if (this.redundantCanPlaceBlockAt(par1World, par2, par3, par4))
         {
-            int i1 = par1World.getBlockMetadata(par2, par3, par4) & 7;
+            final int i1 = par1World.getBlockMetadata(par2, par3, par4) & 7;
             boolean flag = false;
 
             if (!par1World.isBlockSolidOnSide(par2 - 1, par3, par4, EAST) && i1 == 1)
@@ -183,7 +183,7 @@ public abstract class BlockButton extends Block
     /**
      * This method is redundant, check it out...
      */
-    private boolean redundantCanPlaceBlockAt(World par1World, int par2, int par3, int par4)
+    private boolean redundantCanPlaceBlockAt(final World par1World, final int par2, final int par3, final int par4)
     {
         if (!this.canPlaceBlockAt(par1World, par2, par3, par4))
         {
@@ -200,19 +200,19 @@ public abstract class BlockButton extends Block
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
-        int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
+        final int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
         this.func_82534_e(l);
     }
 
-    private void func_82534_e(int par1)
+    private void func_82534_e(final int par1)
     {
-        int j = par1 & 7;
-        boolean flag = (par1 & 8) > 0;
-        float f = 0.375F;
-        float f1 = 0.625F;
-        float f2 = 0.1875F;
+        final int j = par1 & 7;
+        final boolean flag = (par1 & 8) > 0;
+        final float f = 0.375F;
+        final float f1 = 0.625F;
+        final float f2 = 0.1875F;
         float f3 = 0.125F;
 
         if (flag)
@@ -241,16 +241,16 @@ public abstract class BlockButton extends Block
     /**
      * Called when the block is clicked by a player. Args: x, y, z, entityPlayer
      */
-    public void onBlockClicked(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer) {}
+    public void onBlockClicked(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer) {}
 
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9)
     {
-        int i1 = par1World.getBlockMetadata(par2, par3, par4);
-        int j1 = i1 & 7;
-        int k1 = 8 - (i1 & 8);
+        final int i1 = par1World.getBlockMetadata(par2, par3, par4);
+        final int j1 = i1 & 7;
+        final int k1 = 8 - (i1 & 8);
 
         if (k1 == 0)
         {
@@ -259,10 +259,10 @@ public abstract class BlockButton extends Block
         else
         {
             // CraftBukkit start
-            org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2, par3, par4);
-            int old = (k1 != 8) ? 15 : 0;
-            int current = (k1 == 8) ? 15 : 0;
-            BlockRedstoneEvent eventRedstone = new BlockRedstoneEvent(block, old, current);
+            final org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2, par3, par4);
+            final int old = (k1 != 8) ? 15 : 0;
+            final int current = (k1 == 8) ? 15 : 0;
+            final BlockRedstoneEvent eventRedstone = new BlockRedstoneEvent(block, old, current);
             par1World.getServer().getPluginManager().callEvent(eventRedstone);
 
             if ((eventRedstone.getNewCurrent() > 0) != (k1 == 8))
@@ -284,11 +284,11 @@ public abstract class BlockButton extends Block
      * different metadata value, but before the new metadata value is set. Args: World, x, y, z, old block ID, old
      * metadata
      */
-    public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    public void breakBlock(final World par1World, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         if ((par6 & 8) > 0)
         {
-            int j1 = par6 & 7;
+            final int j1 = par6 & 7;
             this.func_82536_d(par1World, par2, par3, par4, j1);
         }
 
@@ -300,7 +300,7 @@ public abstract class BlockButton extends Block
      * returns true, standard redstone propagation rules will apply instead and this will not be called. Args: World, X,
      * Y, Z, side. Note that the side is reversed - eg it is 1 (up) when checking the bottom of the block.
      */
-    public int isProvidingWeakPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public int isProvidingWeakPower(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
         return (par1IBlockAccess.getBlockMetadata(par2, par3, par4) & 8) > 0 ? 15 : 0;
     }
@@ -309,9 +309,9 @@ public abstract class BlockButton extends Block
      * Returns true if the block is emitting direct/strong redstone power on the specified side. Args: World, X, Y, Z,
      * side. Note that the side is reversed - eg it is 1 (up) when checking the bottom of the block.
      */
-    public int isProvidingStrongPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public int isProvidingStrongPower(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
-        int i1 = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
+        final int i1 = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
 
         if ((i1 & 8) == 0)
         {
@@ -319,7 +319,7 @@ public abstract class BlockButton extends Block
         }
         else
         {
-            int j1 = i1 & 7;
+            final int j1 = i1 & 7;
             return j1 == 5 && par5 == 1 ? 15 : (j1 == 4 && par5 == 2 ? 15 : (j1 == 3 && par5 == 3 ? 15 : (j1 == 2 && par5 == 4 ? 15 : (j1 == 1 && par5 == 5 ? 15 : 0))));
         }
     }
@@ -335,17 +335,17 @@ public abstract class BlockButton extends Block
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (!par1World.isRemote)
         {
-            int l = par1World.getBlockMetadata(par2, par3, par4);
+            final int l = par1World.getBlockMetadata(par2, par3, par4);
 
             if ((l & 8) != 0)
             {
                 // CraftBukkit start
-                org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2, par3, par4);
-                BlockRedstoneEvent eventRedstone = new BlockRedstoneEvent(block, 15, 0);
+                final org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2, par3, par4);
+                final BlockRedstoneEvent eventRedstone = new BlockRedstoneEvent(block, 15, 0);
                 par1World.getServer().getPluginManager().callEvent(eventRedstone);
 
                 if (eventRedstone.getNewCurrent() > 0)
@@ -360,7 +360,7 @@ public abstract class BlockButton extends Block
                 else
                 {
                     par1World.setBlockMetadataWithNotify(par2, par3, par4, l & 7, 3);
-                    int i1 = l & 7;
+                    final int i1 = l & 7;
                     this.func_82536_d(par1World, par2, par3, par4, i1);
                     par1World.playSoundEffect((double)par2 + 0.5D, (double)par3 + 0.5D, (double)par4 + 0.5D, "random.click", 0.3F, 0.5F);
                     par1World.markBlockRangeForRenderUpdate(par2, par3, par4, par2, par3, par4);
@@ -374,16 +374,16 @@ public abstract class BlockButton extends Block
      */
     public void setBlockBoundsForItemRender()
     {
-        float f = 0.1875F;
-        float f1 = 0.125F;
-        float f2 = 0.125F;
+        final float f = 0.1875F;
+        final float f1 = 0.125F;
+        final float f2 = 0.125F;
         this.setBlockBounds(0.5F - f, 0.5F - f1, 0.5F - f2, 0.5F + f, 0.5F + f1, 0.5F + f2);
     }
 
     /**
      * Triggered whenever an entity collides with this block (enters into the block). Args: world, x, y, z, entity
      */
-    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
+    public void onEntityCollidedWithBlock(final World par1World, final int par2, final int par3, final int par4, final Entity par5Entity)
     {
         if (!par1World.isRemote)
         {
@@ -397,27 +397,27 @@ public abstract class BlockButton extends Block
         }
     }
 
-    protected void func_82535_o(World par1World, int par2, int par3, int par4)
+    protected void func_82535_o(final World par1World, final int par2, final int par3, final int par4)
     {
-        int l = par1World.getBlockMetadata(par2, par3, par4);
-        int i1 = l & 7;
-        boolean flag = (l & 8) != 0;
+        final int l = par1World.getBlockMetadata(par2, par3, par4);
+        final int i1 = l & 7;
+        final boolean flag = (l & 8) != 0;
         this.func_82534_e(l);
-        List list = par1World.getEntitiesWithinAABB(EntityArrow.class, AxisAlignedBB.getAABBPool().getAABB((double)par2 + this.minX, (double)par3 + this.minY, (double)par4 + this.minZ, (double)par2 + this.maxX, (double)par3 + this.maxY, (double)par4 + this.maxZ));
-        boolean flag1 = !list.isEmpty();
+        final List list = par1World.getEntitiesWithinAABB(EntityArrow.class, AxisAlignedBB.getAABBPool().getAABB((double)par2 + this.minX, (double)par3 + this.minY, (double)par4 + this.minZ, (double)par2 + this.maxX, (double)par3 + this.maxY, (double)par4 + this.maxZ));
+        final boolean flag1 = !list.isEmpty();
 
         // CraftBukkit start - Call interact event when arrows turn on wooden buttons
         if (flag != flag1 && flag1)
         {
-            org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2, par3, par4);
+            final org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2, par3, par4);
             boolean allowed = false;
 
             // If all of the events are cancelled block the button press, else allow
-            for (Object object : list)
+            for (final Object object : list)
             {
                 if (object != null)
                 {
-                    EntityInteractEvent event = new EntityInteractEvent(((Entity) object).getBukkitEntity(), block);
+                    final EntityInteractEvent event = new EntityInteractEvent(((Entity) object).getBukkitEntity(), block);
                     par1World.getServer().getPluginManager().callEvent(event);
 
                     if (!event.isCancelled())
@@ -456,7 +456,7 @@ public abstract class BlockButton extends Block
         }
     }
 
-    private void func_82536_d(World par1World, int par2, int par3, int par4, int par5)
+    private void func_82536_d(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         par1World.notifyBlocksOfNeighborChange(par2, par3, par4, this.blockID);
 
@@ -488,5 +488,5 @@ public abstract class BlockButton extends Block
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister) {}
+    public void registerIcons(final IconRegister par1IconRegister) {}
 }

@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 
 final class CreativeTabBrewing extends CreativeTabs
 {
-    CreativeTabBrewing(int par1, String par2Str)
+    CreativeTabBrewing(final int par1, final String par2Str)
     {
         super(par1, par2Str);
     }

@@ -34,7 +34,7 @@ public class ContainerMerchant extends Container
     }
     // CraftBukkit end
 
-    public ContainerMerchant(InventoryPlayer par1InventoryPlayer, IMerchant par2IMerchant, World par3World)
+    public ContainerMerchant(final InventoryPlayer par1InventoryPlayer, final IMerchant par2IMerchant, final World par3World)
     {
         this.theMerchant = par2IMerchant;
         this.theWorld = par3World;
@@ -64,7 +64,7 @@ public class ContainerMerchant extends Container
         return this.merchantInventory;
     }
 
-    public void addCraftingToCrafters(ICrafting par1ICrafting)
+    public void addCraftingToCrafters(final ICrafting par1ICrafting)
     {
         super.addCraftingToCrafters(par1ICrafting);
     }
@@ -80,21 +80,21 @@ public class ContainerMerchant extends Container
     /**
      * Callback for when the crafting matrix is changed.
      */
-    public void onCraftMatrixChanged(IInventory par1IInventory)
+    public void onCraftMatrixChanged(final IInventory par1IInventory)
     {
         this.merchantInventory.resetRecipeAndSlots();
         super.onCraftMatrixChanged(par1IInventory);
     }
 
-    public void setCurrentRecipeIndex(int par1)
+    public void setCurrentRecipeIndex(final int par1)
     {
         this.merchantInventory.setCurrentRecipeIndex(par1);
     }
 
     @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2) {}
+    public void updateProgressBar(final int par1, final int par2) {}
 
-    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
+    public boolean canInteractWith(final EntityPlayer par1EntityPlayer)
     {
         return this.theMerchant.getCustomer() == par1EntityPlayer;
     }
@@ -102,14 +102,14 @@ public class ContainerMerchant extends Container
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+    public ItemStack transferStackInSlot(final EntityPlayer par1EntityPlayer, final int par2)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(par2);
+        final Slot slot = (Slot)this.inventorySlots.get(par2);
 
         if (slot != null && slot.getHasStack())
         {
-            ItemStack itemstack1 = slot.getStack();
+            final ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
             if (par2 == 2)
@@ -163,7 +163,7 @@ public class ContainerMerchant extends Container
     /**
      * Called when the container is closed.
      */
-    public void onContainerClosed(EntityPlayer par1EntityPlayer)
+    public void onContainerClosed(final EntityPlayer par1EntityPlayer)
     {
         super.onContainerClosed(par1EntityPlayer);
         this.theMerchant.setCustomer((EntityPlayer)null);

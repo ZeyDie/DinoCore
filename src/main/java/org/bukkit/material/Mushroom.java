@@ -21,7 +21,7 @@ public class Mushroom extends MaterialData {
     private static final byte NORTH_SOUTH_MOD = 3;
     private static final byte EAST_WEST_MOD = 1;
 
-    public Mushroom(Material shroom) {
+    public Mushroom(final Material shroom) {
         super(shroom);
         Validate.isTrue(shroom == Material.HUGE_MUSHROOM_1 || shroom == Material.HUGE_MUSHROOM_2, "Not a mushroom!");
     }
@@ -31,7 +31,7 @@ public class Mushroom extends MaterialData {
      * @deprecated Magic value
      */
     @Deprecated
-    public Mushroom(Material shroom, byte data) {
+    public Mushroom(final Material shroom, final byte data) {
         super(shroom, data);
         Validate.isTrue(shroom == Material.HUGE_MUSHROOM_1 || shroom == Material.HUGE_MUSHROOM_2, "Not a mushroom!");
     }
@@ -41,7 +41,7 @@ public class Mushroom extends MaterialData {
      * @deprecated Magic value
      */
     @Deprecated
-    public Mushroom(int type, byte data){
+    public Mushroom(final int type, final byte data){
         super(type, data);
         Validate.isTrue(type == Material.HUGE_MUSHROOM_1.getId() || type == Material.HUGE_MUSHROOM_2.getId(), "Not a mushroom!");
     }
@@ -66,8 +66,8 @@ public class Mushroom extends MaterialData {
      * @param face The face to check.
      * @return True if it is painted.
      */
-    public boolean isFacePainted(BlockFace face) {
-        byte data = getData();
+    public boolean isFacePainted(final BlockFace face) {
+        final byte data = getData();
 
         if (data == SHROOM_NONE || data == SHROOM_STEM) {
             return false;
@@ -96,7 +96,7 @@ public class Mushroom extends MaterialData {
      * @param face The face to paint or unpaint.
      * @param painted True if you want to paint it, false if you want the pores to show.
      */
-    public void setFacePainted(BlockFace face, boolean painted) {
+    public void setFacePainted(final BlockFace face, final boolean painted) {
         if (painted == isFacePainted(face)) {
             return;
         }
@@ -157,7 +157,7 @@ public class Mushroom extends MaterialData {
      * @return A set of all faces that are currently painted (an empty set if it is a stem)
      */
     public Set<BlockFace> getPaintedFaces() {
-        EnumSet<BlockFace> faces = EnumSet.noneOf(BlockFace.class);
+        final EnumSet<BlockFace> faces = EnumSet.noneOf(BlockFace.class);
 
         if (isFacePainted(BlockFace.WEST)) {
             faces.add(BlockFace.WEST);

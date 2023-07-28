@@ -12,7 +12,7 @@ public class Pattern {
 		set_pattern_data( new byte[ 0 ] );
 	}
 	
-	public void set_pattern_data( byte[] data ) {
+	public void set_pattern_data(final byte[] data ) {
 		if( data != null ) {
 			pattern_data = data;
 		}
@@ -20,7 +20,7 @@ public class Pattern {
 		note_index = 0;
 	}
 
-	public void get_note( int[] note, int index ) {
+	public void get_note(final int[] note, final int index ) {
 		if( index < note_index ) {
 			note_index = 0;
 			data_offset = 0;
@@ -31,31 +31,32 @@ public class Pattern {
 		}
 	}
 
-	public int next_note( int data_offset, int[] note ) {
-		int bitmask, field;
-		if( data_offset < 0 ) {
-			data_offset = pattern_data.length;
+	public int next_note(int data_offset, final int[] note ) {
+        int data_offset1 = data_offset;
+        int bitmask, field;
+		if( data_offset1 < 0 ) {
+			data_offset1 = pattern_data.length;
 		}
 		bitmask = 0x80;
-		if( data_offset < pattern_data.length ) {
-			bitmask = pattern_data[ data_offset ] & 0xFF;
+		if( data_offset1 < pattern_data.length ) {
+			bitmask = pattern_data[data_offset1] & 0xFF;
 		}
 		if( ( bitmask & 0x80 ) == 0x80 ) {
-			data_offset += 1;
+			data_offset1 += 1;
 		} else {
 			bitmask = 0x1F;
 		}
 		for( field = 0; field < 5; field++ ) {
 			note[ field ] = 0;
 			if( ( bitmask & 0x01 ) == 0x01 ) {
-				if( data_offset < pattern_data.length ) {
-					note[ field ] = pattern_data[ data_offset ] & 0xFF;
-					data_offset += 1;
+				if( data_offset1 < pattern_data.length ) {
+					note[ field ] = pattern_data[data_offset1] & 0xFF;
+					data_offset1 += 1;
 				}
 			}
 			bitmask = bitmask >> 1;
 		}
-		return data_offset;
+		return data_offset1;
 	}
 }
 

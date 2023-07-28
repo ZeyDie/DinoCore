@@ -8,7 +8,7 @@ import org.bukkit.event.entity.CreeperPowerEvent;
 
 public class CraftCreeper extends CraftMonster implements Creeper {
 
-    public CraftCreeper(CraftServer server, net.minecraft.entity.monster.EntityCreeper entity) {
+    public CraftCreeper(final CraftServer server, final net.minecraft.entity.monster.EntityCreeper entity) {
         super(server, entity);
     }
 
@@ -16,19 +16,19 @@ public class CraftCreeper extends CraftMonster implements Creeper {
         return getHandle().getPowered();
     }
 
-    public void setPowered(boolean powered) {
-        CraftServer server = this.server;
-        Creeper entity = (Creeper) this.getHandle().getBukkitEntity();
+    public void setPowered(final boolean powered) {
+        final CraftServer server = this.server;
+        final Creeper entity = (Creeper) this.getHandle().getBukkitEntity();
 
         if (powered) {
-            CreeperPowerEvent event = new CreeperPowerEvent(entity, CreeperPowerEvent.PowerCause.SET_ON);
+            final CreeperPowerEvent event = new CreeperPowerEvent(entity, CreeperPowerEvent.PowerCause.SET_ON);
             server.getPluginManager().callEvent(event);
 
             if (!event.isCancelled()) {
                 getHandle().setPowered(true);
             }
         } else {
-            CreeperPowerEvent event = new CreeperPowerEvent(entity, CreeperPowerEvent.PowerCause.SET_OFF);
+            final CreeperPowerEvent event = new CreeperPowerEvent(entity, CreeperPowerEvent.PowerCause.SET_OFF);
             server.getPluginManager().callEvent(event);
 
             if (!event.isCancelled()) {

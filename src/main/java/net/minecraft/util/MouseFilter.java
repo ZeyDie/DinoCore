@@ -13,18 +13,19 @@ public class MouseFilter
     /**
      * Smooths mouse input
      */
-    public float smooth(float par1, float par2)
+    public float smooth(float par1, final float par2)
     {
-        this.field_76336_a += par1;
-        par1 = (this.field_76336_a - this.field_76334_b) * par2;
-        this.field_76335_c += (par1 - this.field_76335_c) * 0.5F;
+        float par11 = par1;
+        this.field_76336_a += par11;
+        par11 = (this.field_76336_a - this.field_76334_b) * par2;
+        this.field_76335_c += (par11 - this.field_76335_c) * 0.5F;
 
-        if (par1 > 0.0F && par1 > this.field_76335_c || par1 < 0.0F && par1 < this.field_76335_c)
+        if (par11 > 0.0F && par11 > this.field_76335_c || par11 < 0.0F && par11 < this.field_76335_c)
         {
-            par1 = this.field_76335_c;
+            par11 = this.field_76335_c;
         }
 
-        this.field_76334_b += par1;
-        return par1;
+        this.field_76334_b += par11;
+        return par11;
     }
 }

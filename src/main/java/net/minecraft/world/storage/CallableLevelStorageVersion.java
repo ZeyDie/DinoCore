@@ -6,7 +6,7 @@ class CallableLevelStorageVersion implements Callable
 {
     final WorldInfo worldInfoInstance;
 
-    CallableLevelStorageVersion(WorldInfo par1WorldInfo)
+    CallableLevelStorageVersion(final WorldInfo par1WorldInfo)
     {
         this.worldInfoInstance = par1WorldInfo;
     }
@@ -26,7 +26,7 @@ class CallableLevelStorageVersion implements Callable
                     s = "Anvil";
             }
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
             ;
         }

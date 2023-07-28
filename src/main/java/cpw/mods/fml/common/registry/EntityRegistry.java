@@ -46,7 +46,7 @@ public class EntityRegistry
         private boolean sendsVelocityUpdates;
         private Function<EntitySpawnPacket, Entity> customSpawnCallback;
         private boolean usesVanillaSpawning;
-        public EntityRegistration(ModContainer mc, Class<? extends Entity> entityClass, String entityName, int id, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
+        public EntityRegistration(final ModContainer mc, final Class<? extends Entity> entityClass, final String entityName, final int id, final int trackingRange, final int updateFrequency, final boolean sendsVelocityUpdates)
         {
             this.container = mc;
             this.entityClass = entityClass;
@@ -93,11 +93,11 @@ public class EntityRegistry
         {
             return customSpawnCallback != null;
         }
-        public Entity doCustomSpawning(EntitySpawnPacket packet) throws Exception
+        public Entity doCustomSpawning(final EntitySpawnPacket packet) throws Exception
         {
             return customSpawnCallback.apply(packet);
         }
-        public void setCustomSpawning(Function<EntitySpawnPacket, Entity> callable, boolean usesVanillaSpawning)
+        public void setCustomSpawning(final Function<EntitySpawnPacket, Entity> callable, final boolean usesVanillaSpawning)
         {
             this.customSpawnCallback = callable;
             this.usesVanillaSpawning = usesVanillaSpawning;
@@ -121,7 +121,7 @@ public class EntityRegistry
     {
         availableIndicies = new BitSet(256);
         availableIndicies.set(1,255);
-        for (Object id : EntityList.IDtoClassMapping.keySet())
+        for (final Object id : EntityList.IDtoClassMapping.keySet())
         {
             availableIndicies.clear((Integer)id);
         }
@@ -138,23 +138,23 @@ public class EntityRegistry
      * @param updateFrequency The frequency of tracking updates
      * @param sendsVelocityUpdates Whether to send velocity information packets as well
      */
-    public static void registerModEntity(Class<? extends Entity> entityClass, String entityName, int id, Object mod, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
+    public static void registerModEntity(final Class<? extends Entity> entityClass, final String entityName, final int id, final Object mod, final int trackingRange, final int updateFrequency, final boolean sendsVelocityUpdates)
     {
         instance().doModEntityRegistration(entityClass, entityName, id, mod, trackingRange, updateFrequency, sendsVelocityUpdates);
         registerBukkitType(entityClass, entityName); // Cauldron - register EntityType for Bukkit
     }
 
-    private void doModEntityRegistration(Class<? extends Entity> entityClass, String entityName, int id, Object mod, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
+    private void doModEntityRegistration(final Class<? extends Entity> entityClass, final String entityName, final int id, final Object mod, final int trackingRange, final int updateFrequency, final boolean sendsVelocityUpdates)
     {
-        ModContainer mc = FMLCommonHandler.instance().findContainerFor(mod);
-        EntityRegistration er = new EntityRegistration(mc, entityClass, entityName, id, trackingRange, updateFrequency, sendsVelocityUpdates);
+        final ModContainer mc = FMLCommonHandler.instance().findContainerFor(mod);
+        final EntityRegistration er = new EntityRegistration(mc, entityClass, entityName, id, trackingRange, updateFrequency, sendsVelocityUpdates);
         try
         {
             entityClassRegistrations.put(entityClass, er);
             entityNames.put(entityName, mc);
             if (!EntityList.classToStringMapping.containsKey(entityClass))
             {
-                String entityModName = String.format("%s.%s", mc.getModId(), entityName);
+                final String entityModName = String.format("%s.%s", mc.getModId(), entityName);
                 EntityList.classToStringMapping.put(entityClass, entityModName);
                 EntityList.stringToClassMapping.put(entityModName, entityClass);
                 FMLLog.finest("Automatically registered mod %s entity %s as %s", mc.getModId(), entityName, entityModName);
@@ -164,7 +164,7 @@ public class EntityRegistry
                 FMLLog.fine("Skipping automatic mod %s entity registration for already registered class %s", mc.getModId(), entityClass.getName());
             }
         }
-        catch (IllegalArgumentException e)
+        catch (final IllegalArgumentException e)
         {
             FMLLog.log(Level.WARNING, e, "The mod %s tried to register the entity (name,class) (%s,%s) one or both of which are already registered", mc.getModId(), entityName, entityClass.getName());
             return;
@@ -172,11 +172,11 @@ public class EntityRegistry
         entityRegistrations.put(mc, er);
     }
 
-    public static void registerGlobalEntityID(Class <? extends Entity > entityClass, String entityName, int id)
+    public static void registerGlobalEntityID(final Class <? extends Entity > entityClass, final String entityName, int id)
     {
         if (EntityList.classToStringMapping.containsKey(entityClass))
         {
-            ModContainer activeModContainer = Loader.instance().activeModContainer();
+            final ModContainer activeModContainer = Loader.instance().activeModContainer();
             String modId = "unknown";
             if (activeModContainer != null)
             {
@@ -189,12 +189,12 @@ public class EntityRegistry
             FMLLog.warning("The mod %s tried to register the entity class %s which was already registered - if you wish to override default naming for FML mod entities, register it here first", modId, entityClass);
             return;
         }
-        id = instance().validateAndClaimId(id);
-        EntityList.addMapping(entityClass, entityName, id);
+        int id1 = instance().validateAndClaimId(id);
+        EntityList.addMapping(entityClass, entityName, id1);
         registerBukkitType(entityClass, entityName); // Cauldron - register EntityType for Bukkit
     }
 
-    private int validateAndClaimId(int id)
+    private int validateAndClaimId(final int id)
     {
         // workaround for broken ML
         int realId = id;
@@ -212,7 +212,7 @@ public class EntityRegistry
         {
             UnsignedBytes.checkedCast(realId);
         }
-        catch (IllegalArgumentException e)
+        catch (final IllegalArgumentException e)
         {
             FMLLog.log(Level.SEVERE, "The entity ID %d for mod %s is not an unsigned byte and may not work", id, Loader.instance().activeModContainer().getModId());
         }
@@ -225,11 +225,11 @@ public class EntityRegistry
         return realId;
     }
 
-    public static void registerGlobalEntityID(Class <? extends Entity > entityClass, String entityName, int id, int backgroundEggColour, int foregroundEggColour)
+    public static void registerGlobalEntityID(final Class <? extends Entity > entityClass, final String entityName, final int id, final int backgroundEggColour, final int foregroundEggColour)
     {
         if (EntityList.classToStringMapping.containsKey(entityClass))
         {
-            ModContainer activeModContainer = Loader.instance().activeModContainer();
+            final ModContainer activeModContainer = Loader.instance().activeModContainer();
             String modId = "unknown";
             if (activeModContainer != null)
             {
@@ -248,42 +248,42 @@ public class EntityRegistry
     }
 
     // Cauldron start
-    private static void registerBukkitType(Class <? extends Entity > entityClass, String entityName)
+    private static void registerBukkitType(final Class <? extends Entity > entityClass, String entityName)
     {
-        ModContainer activeModContainer = Loader.instance().activeModContainer();
+        String entityName3 = entityName;
+        final ModContainer activeModContainer = Loader.instance().activeModContainer();
         String modId = "unknown";
         // fixup bad entity names from mods
-        if (entityName.contains("."))
+        if (entityName3.contains("."))
         {
-            if ((entityName.indexOf(".") + 1) < entityName.length())
-                entityName = entityName.substring(entityName.indexOf(".") + 1, entityName.length());
+            if ((entityName3.indexOf(".") + 1) < entityName3.length())
+                entityName3 = entityName3.substring(entityName3.indexOf(".") + 1, entityName3.length());
         }
-        entityName.replace("entity", "");
-        if (entityName.startsWith("ent"))
-            entityName.replace("ent", "");
-        entityName = entityName.replaceAll("[^A-Za-z0-9]", ""); // remove all non-digits/alphanumeric
+        entityName3.replace("entity", "");
+        if (entityName3.startsWith("ent"))
+            entityName3.replace("ent", "");
+        String entityName2 = entityName3.replaceAll("[^A-Za-z0-9]", ""); // remove all non-digits/alphanumeric
         if (activeModContainer != null)
             modId = activeModContainer.getModId();
-        entityName = modId + "-" + entityName;
-        entityTypeMap.put(entityClass, entityName);
-        entityClassMap.put(entityName, entityClass);
+        String entityName1 = modId + "-" + entityName2;
+        entityTypeMap.put(entityClass, entityName1);
+        entityClassMap.put(entityName1, entityClass);
     }
 
     // used by CraftCustomEntity
-    public static String getCustomEntityTypeName(Class <? extends Entity > entityClass)
+    public static String getCustomEntityTypeName(final Class <? extends Entity > entityClass)
     {
         return entityTypeMap.get(entityClass);
     }
     // Cauldron end
 
-    public static void addSpawn(Class <? extends EntityLiving > entityClass, int weightedProb, int min, int max, EnumCreatureType typeOfCreature, BiomeGenBase... biomes)
+    public static void addSpawn(final Class <? extends EntityLiving > entityClass, final int weightedProb, final int min, final int max, final EnumCreatureType typeOfCreature, final BiomeGenBase... biomes)
     {
-        for (BiomeGenBase biome : biomes)
+        for (final BiomeGenBase biome : biomes)
         {
-            @SuppressWarnings("unchecked")
-            List<SpawnListEntry> spawns = biome.getSpawnableList(typeOfCreature);
+            @SuppressWarnings("unchecked") final List<SpawnListEntry> spawns = biome.getSpawnableList(typeOfCreature);
 
-            for (SpawnListEntry entry : spawns)
+            for (final SpawnListEntry entry : spawns)
             {
                 //Adjusting an existing spawn entry
                 if (entry.entityClass == entityClass)
@@ -299,9 +299,9 @@ public class EntityRegistry
         }
     }
 
-    public static void addSpawn(String entityName, int weightedProb, int min, int max, EnumCreatureType spawnList, BiomeGenBase... biomes)
+    public static void addSpawn(final String entityName, final int weightedProb, final int min, final int max, final EnumCreatureType spawnList, final BiomeGenBase... biomes)
     {
-        Class <? extends Entity > entityClazz = (Class<? extends Entity>) EntityList.stringToClassMapping.get(entityName);
+        final Class <? extends Entity > entityClazz = (Class<? extends Entity>) EntityList.stringToClassMapping.get(entityName);
 
         if (EntityLiving.class.isAssignableFrom(entityClazz))
         {
@@ -309,16 +309,15 @@ public class EntityRegistry
         }
     }
 
-    public static void removeSpawn(Class <? extends EntityLiving > entityClass, EnumCreatureType typeOfCreature, BiomeGenBase... biomes)
+    public static void removeSpawn(final Class <? extends EntityLiving > entityClass, final EnumCreatureType typeOfCreature, final BiomeGenBase... biomes)
     {
-        for (BiomeGenBase biome : biomes)
+        for (final BiomeGenBase biome : biomes)
         {
-            @SuppressWarnings("unchecked")
-            Iterator<SpawnListEntry> spawns = biome.getSpawnableList(typeOfCreature).iterator();
+            @SuppressWarnings("unchecked") final Iterator<SpawnListEntry> spawns = biome.getSpawnableList(typeOfCreature).iterator();
 
             while (spawns.hasNext())
             {
-                SpawnListEntry entry = spawns.next();
+                final SpawnListEntry entry = spawns.next();
                 if (entry.entityClass == entityClass)
                 {
                     spawns.remove();
@@ -327,9 +326,9 @@ public class EntityRegistry
         }
     }
 
-    public static void removeSpawn(String entityName, EnumCreatureType spawnList, BiomeGenBase... biomes)
+    public static void removeSpawn(final String entityName, final EnumCreatureType spawnList, final BiomeGenBase... biomes)
     {
-        Class <? extends Entity > entityClazz = (Class<? extends Entity>) EntityList.stringToClassMapping.get(entityName);
+        final Class <? extends Entity > entityClazz = (Class<? extends Entity>) EntityList.stringToClassMapping.get(entityName);
 
         if (EntityLiving.class.isAssignableFrom(entityClazz))
         {
@@ -339,7 +338,7 @@ public class EntityRegistry
 
     public static int findGlobalUniqueEntityId()
     {
-        int res = instance().availableIndicies.nextSetBit(0);
+        final int res = instance().availableIndicies.nextSetBit(0);
         if (res < 0)
         {
             throw new RuntimeException("No more entity indicies left");
@@ -347,28 +346,29 @@ public class EntityRegistry
         return res;
     }
 
-    public EntityRegistration lookupModSpawn(Class<? extends Entity> clazz, boolean keepLooking)
+    public EntityRegistration lookupModSpawn(final Class<? extends Entity> clazz, boolean keepLooking)
     {
+        boolean keepLooking1 = keepLooking;
         Class<?> localClazz = clazz;
 
         do
         {
-            EntityRegistration er = entityClassRegistrations.get(localClazz);
+            final EntityRegistration er = entityClassRegistrations.get(localClazz);
             if (er != null)
             {
                 return er;
             }
             localClazz = localClazz.getSuperclass();
-            keepLooking = (!Object.class.equals(localClazz));
+            keepLooking1 = (!Object.class.equals(localClazz));
         }
-        while (keepLooking);
+        while (keepLooking1);
 
         return null;
     }
 
-    public EntityRegistration lookupModSpawn(ModContainer mc, int modEntityId)
+    public EntityRegistration lookupModSpawn(final ModContainer mc, final int modEntityId)
     {
-        for (EntityRegistration er : entityRegistrations.get(mc))
+        for (final EntityRegistration er : entityRegistrations.get(mc))
         {
             if (er.getModEntityId() == modEntityId)
             {
@@ -378,10 +378,10 @@ public class EntityRegistry
         return null;
     }
 
-    public boolean tryTrackingEntity(EntityTracker entityTracker, Entity entity)
+    public boolean tryTrackingEntity(final EntityTracker entityTracker, final Entity entity)
     {
 
-        EntityRegistration er = lookupModSpawn(entity.getClass(), true);
+        final EntityRegistration er = lookupModSpawn(entity.getClass(), true);
         if (er != null)
         {
             entityTracker.addEntityToTracker(entity, er.getTrackingRange(), er.getUpdateFrequency(), er.sendsVelocityUpdates());
@@ -401,10 +401,10 @@ public class EntityRegistry
      * @param sendVelocityInfo
      */
     @Deprecated
-    public static EntityRegistration registerModLoaderEntity(Object mod, Class<? extends Entity> entityClass, int entityTypeId, int updateRange, int updateInterval,
-            boolean sendVelocityInfo)
+    public static EntityRegistration registerModLoaderEntity(final Object mod, final Class<? extends Entity> entityClass, final int entityTypeId, final int updateRange, final int updateInterval,
+                                                             final boolean sendVelocityInfo)
     {
-        String entityName = (String) EntityList.classToStringMapping.get(entityClass);
+        final String entityName = (String) EntityList.classToStringMapping.get(entityClass);
         if (entityName == null)
         {
             throw new IllegalArgumentException(String.format("The ModLoader mod %s has tried to register an entity tracker for a non-existent entity type %s", Loader.instance().activeModContainer().getModId(), entityClass.getCanonicalName()));

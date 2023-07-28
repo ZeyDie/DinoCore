@@ -40,7 +40,7 @@ public class IntegratedServer extends MinecraftServer
     private boolean isPublic;
     private ThreadLanServerPing lanServerPing;
 
-    public IntegratedServer(Minecraft par1Minecraft, String par2Str, String par3Str, WorldSettings par4WorldSettings)
+    public IntegratedServer(final Minecraft par1Minecraft, final String par2Str, final String par3Str, final WorldSettings par4WorldSettings)
     {
         super(new File(par1Minecraft.mcDataDir, "saves"));
         this.serverLogAgent = new LogAgent("Minecraft-Server", " [SERVER]", (new File(par1Minecraft.mcDataDir, "output-server.log")).getAbsolutePath());
@@ -59,21 +59,21 @@ public class IntegratedServer extends MinecraftServer
         {
             this.theServerListeningThread = new IntegratedServerListenThread(this);
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             throw new Error();
         }
     }
 
-    protected void loadAllWorlds(String par1Str, String par2Str, long par3, WorldType par5WorldType, String par6Str)
+    protected void loadAllWorlds(final String par1Str, final String par2Str, final long par3, final WorldType par5WorldType, final String par6Str)
     {
         this.convertMapIfNeeded(par1Str);
-        ISaveHandler isavehandler = this.getActiveAnvilConverter().getSaveLoader(par1Str, true);
+        final ISaveHandler isavehandler = this.getActiveAnvilConverter().getSaveLoader(par1Str, true);
 
-        WorldServer overWorld = (isDemo() ? new DemoWorldServer(this, isavehandler, par2Str, 0, theProfiler, getLogAgent()) : new WorldServer(this, isavehandler, par2Str, 0, theWorldSettings, theProfiler, getLogAgent()));
-        for (int dim : DimensionManager.getStaticDimensionIDs())
+        final WorldServer overWorld = (isDemo() ? new DemoWorldServer(this, isavehandler, par2Str, 0, theProfiler, getLogAgent()) : new WorldServer(this, isavehandler, par2Str, 0, theWorldSettings, theProfiler, getLogAgent()));
+        for (final int dim : DimensionManager.getStaticDimensionIDs())
         {
-            WorldServer world = (dim == 0 ? overWorld : new WorldServerMulti(this, isavehandler, par2Str, dim, theWorldSettings, overWorld, theProfiler, getLogAgent()));
+            final WorldServer world = (dim == 0 ? overWorld : new WorldServerMulti(this, isavehandler, par2Str, dim, theWorldSettings, overWorld, theProfiler, getLogAgent()));
             world.addWorldAccess(new WorldManager(this, world));
 
             if (!this.isSinglePlayer())
@@ -113,7 +113,7 @@ public class IntegratedServer extends MinecraftServer
      */
     public void tick() throws MinecraftException // Cauldron
     {
-        boolean flag = this.isGamePaused;
+        final boolean flag = this.isGamePaused;
         this.isGamePaused = this.theServerListeningThread.isGamePaused();
 
         if (!flag && this.isGamePaused)
@@ -176,7 +176,7 @@ public class IntegratedServer extends MinecraftServer
     /**
      * Called on exit from the main run() loop.
      */
-    protected void finalTick(CrashReport par1CrashReport)
+    protected void finalTick(final CrashReport par1CrashReport)
     {
         this.mc.crashed(par1CrashReport);
     }
@@ -186,13 +186,13 @@ public class IntegratedServer extends MinecraftServer
      */
     public CrashReport addServerInfoToCrashReport(CrashReport par1CrashReport)
     {
-        par1CrashReport = super.addServerInfoToCrashReport(par1CrashReport);
-        par1CrashReport.getCategory().addCrashSectionCallable("Type", new CallableType3(this));
-        par1CrashReport.getCategory().addCrashSectionCallable("Is Modded", new CallableIsModded(this));
-        return par1CrashReport;
+        CrashReport par1CrashReport1 = super.addServerInfoToCrashReport(par1CrashReport);
+        par1CrashReport1.getCategory().addCrashSectionCallable("Type", new CallableType3(this));
+        par1CrashReport1.getCategory().addCrashSectionCallable("Is Modded", new CallableIsModded(this));
+        return par1CrashReport1;
     }
 
-    public void addServerStatsToSnooper(PlayerUsageSnooper par1PlayerUsageSnooper)
+    public void addServerStatsToSnooper(final PlayerUsageSnooper par1PlayerUsageSnooper)
     {
         super.addServerStatsToSnooper(par1PlayerUsageSnooper);
         par1PlayerUsageSnooper.addData("snooper_partner", this.mc.getPlayerUsageSnooper().getUniqueID());
@@ -209,11 +209,11 @@ public class IntegratedServer extends MinecraftServer
     /**
      * On dedicated does nothing. On integrated, sets commandsAllowedForAll, gameType and allows external connections.
      */
-    public String shareToLAN(EnumGameType par1EnumGameType, boolean par2)
+    public String shareToLAN(final EnumGameType par1EnumGameType, final boolean par2)
     {
         try
         {
-            String s = this.theServerListeningThread.func_71755_c();
+            final String s = this.theServerListeningThread.func_71755_c();
             this.getLogAgent().logInfo("Started on " + s);
             this.isPublic = true;
             this.lanServerPing = new ThreadLanServerPing(this.getMOTD(), s);
@@ -222,7 +222,7 @@ public class IntegratedServer extends MinecraftServer
             this.getConfigurationManager().setCommandsAllowedForAll(par2);
             return s;
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             return null;
         }
@@ -272,7 +272,7 @@ public class IntegratedServer extends MinecraftServer
     /**
      * Sets the game type for all worlds.
      */
-    public void setGameType(EnumGameType par1EnumGameType)
+    public void setGameType(final EnumGameType par1EnumGameType)
     {
         this.getConfigurationManager().setGameType(par1EnumGameType);
     }

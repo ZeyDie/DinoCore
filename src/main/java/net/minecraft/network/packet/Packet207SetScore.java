@@ -26,7 +26,7 @@ public class Packet207SetScore extends Packet
 
     public Packet207SetScore() {}
 
-    public Packet207SetScore(Score par1Score, int par2)
+    public Packet207SetScore(final Score par1Score, final int par2)
     {
         this.itemName = par1Score.getPlayerName();
         this.scoreName = par1Score.func_96645_d().getName();
@@ -34,7 +34,7 @@ public class Packet207SetScore extends Packet
         this.updateOrRemove = par2;
     }
 
-    public Packet207SetScore(String par1Str)
+    public Packet207SetScore(final String par1Str)
     {
         this.itemName = par1Str;
         this.scoreName = "";
@@ -45,7 +45,7 @@ public class Packet207SetScore extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.itemName = readString(par1DataInput, 16);
         this.updateOrRemove = par1DataInput.readByte();
@@ -60,7 +60,7 @@ public class Packet207SetScore extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         writeString(this.itemName, par1DataOutput);
         par1DataOutput.writeByte(this.updateOrRemove);
@@ -75,7 +75,7 @@ public class Packet207SetScore extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleSetScore(this);
     }

@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class WorldGenGlowStone2 extends WorldGenerator
 {
-    public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
+    public boolean generate(final World par1World, final Random par2Random, final int par3, final int par4, final int par5)
     {
         if (!par1World.isAirBlock(par3, par4, par5))
         {
@@ -23,9 +23,9 @@ public class WorldGenGlowStone2 extends WorldGenerator
 
             for (int l = 0; l < 1500; ++l)
             {
-                int i1 = par3 + par2Random.nextInt(8) - par2Random.nextInt(8);
-                int j1 = par4 - par2Random.nextInt(12);
-                int k1 = par5 + par2Random.nextInt(8) - par2Random.nextInt(8);
+                final int i1 = par3 + par2Random.nextInt(8) - par2Random.nextInt(8);
+                final int j1 = par4 - par2Random.nextInt(12);
+                final int k1 = par5 + par2Random.nextInt(8) - par2Random.nextInt(8);
 
                 if (par1World.getBlockId(i1, j1, k1) == 0)
                 {

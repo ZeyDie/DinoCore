@@ -17,12 +17,12 @@ public class CommandServerStop extends CommandBase
         return 4;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.stop.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         notifyAdmins(par1ICommandSender, "commands.stop.start", new Object[0]);
         MinecraftServer.getServer().initiateShutdown();

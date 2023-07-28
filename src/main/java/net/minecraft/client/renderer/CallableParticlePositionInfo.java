@@ -17,7 +17,7 @@ class CallableParticlePositionInfo implements Callable
 
     final RenderGlobal globalRenderer;
 
-    CallableParticlePositionInfo(RenderGlobal par1RenderGlobal, double par2, double par4, double par6)
+    CallableParticlePositionInfo(final RenderGlobal par1RenderGlobal, final double par2, final double par4, final double par6)
     {
         this.globalRenderer = par1RenderGlobal;
         this.posX = par2;

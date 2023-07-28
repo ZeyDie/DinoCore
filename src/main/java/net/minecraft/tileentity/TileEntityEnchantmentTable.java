@@ -32,7 +32,7 @@ public class TileEntityEnchantmentTable extends TileEntity
     /**
      * Writes a tile entity to NBT.
      */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
 
@@ -45,7 +45,7 @@ public class TileEntityEnchantmentTable extends TileEntity
     /**
      * Reads a tile entity from NBT.
      */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
 
@@ -64,18 +64,18 @@ public class TileEntityEnchantmentTable extends TileEntity
         super.updateEntity();
         this.bookSpreadPrev = this.bookSpread;
         this.bookRotationPrev = this.bookRotation2;
-        EntityPlayer entityplayer = this.worldObj.getClosestPlayer((double)((float)this.xCoord + 0.5F), (double)((float)this.yCoord + 0.5F), (double)((float)this.zCoord + 0.5F), 3.0D);
+        final EntityPlayer entityplayer = this.worldObj.getClosestPlayer((double)((float)this.xCoord + 0.5F), (double)((float)this.yCoord + 0.5F), (double)((float)this.zCoord + 0.5F), 3.0D);
 
         if (entityplayer != null)
         {
-            double d0 = entityplayer.posX - (double)((float)this.xCoord + 0.5F);
-            double d1 = entityplayer.posZ - (double)((float)this.zCoord + 0.5F);
+            final double d0 = entityplayer.posX - (double)((float)this.xCoord + 0.5F);
+            final double d1 = entityplayer.posZ - (double)((float)this.zCoord + 0.5F);
             this.bookRotation = (float)Math.atan2(d1, d0);
             this.bookSpread += 0.1F;
 
             if (this.bookSpread < 0.5F || rand.nextInt(40) == 0)
             {
-                float f = this.field_70373_d;
+                final float f = this.field_70373_d;
 
                 do
                 {
@@ -92,34 +92,34 @@ public class TileEntityEnchantmentTable extends TileEntity
 
         while (this.bookRotation2 >= (float)Math.PI)
         {
-            this.bookRotation2 -= ((float)Math.PI * 2F);
+            this.bookRotation2 -= ((float)Math.PI * 2.0F);
         }
 
         while (this.bookRotation2 < -(float)Math.PI)
         {
-            this.bookRotation2 += ((float)Math.PI * 2F);
+            this.bookRotation2 += ((float)Math.PI * 2.0F);
         }
 
         while (this.bookRotation >= (float)Math.PI)
         {
-            this.bookRotation -= ((float)Math.PI * 2F);
+            this.bookRotation -= ((float)Math.PI * 2.0F);
         }
 
         while (this.bookRotation < -(float)Math.PI)
         {
-            this.bookRotation += ((float)Math.PI * 2F);
+            this.bookRotation += ((float)Math.PI * 2.0F);
         }
 
         float f1;
 
-        for (f1 = this.bookRotation - this.bookRotation2; f1 >= (float)Math.PI; f1 -= ((float)Math.PI * 2F))
+        for (f1 = this.bookRotation - this.bookRotation2; f1 >= (float)Math.PI; f1 -= ((float)Math.PI * 2.0F))
         {
             ;
         }
 
         while (f1 < -(float)Math.PI)
         {
-            f1 += ((float)Math.PI * 2F);
+            f1 += ((float)Math.PI * 2.0F);
         }
 
         this.bookRotation2 += f1 * 0.4F;
@@ -137,7 +137,7 @@ public class TileEntityEnchantmentTable extends TileEntity
         ++this.tickCount;
         this.pageFlipPrev = this.pageFlip;
         float f2 = (this.field_70373_d - this.pageFlip) * 0.4F;
-        float f3 = 0.2F;
+        final float f3 = 0.2F;
 
         if (f2 < -f3)
         {
@@ -160,10 +160,10 @@ public class TileEntityEnchantmentTable extends TileEntity
 
     public boolean func_94135_b()
     {
-        return this.field_94136_s != null && this.field_94136_s.length() > 0;
+        return this.field_94136_s != null && !this.field_94136_s.isEmpty();
     }
 
-    public void func_94134_a(String par1Str)
+    public void func_94134_a(final String par1Str)
     {
         this.field_94136_s = par1Str;
     }

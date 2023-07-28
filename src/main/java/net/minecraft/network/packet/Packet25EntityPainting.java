@@ -18,7 +18,7 @@ public class Packet25EntityPainting extends Packet
 
     public Packet25EntityPainting() {}
 
-    public Packet25EntityPainting(EntityPainting par1EntityPainting)
+    public Packet25EntityPainting(final EntityPainting par1EntityPainting)
     {
         this.entityId = par1EntityPainting.entityId;
         this.xPosition = par1EntityPainting.xPosition;
@@ -31,7 +31,7 @@ public class Packet25EntityPainting extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.entityId = par1DataInput.readInt();
         this.title = readString(par1DataInput, EnumArt.maxArtTitleLength);
@@ -44,7 +44,7 @@ public class Packet25EntityPainting extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.entityId);
         writeString(this.title, par1DataOutput);
@@ -57,7 +57,7 @@ public class Packet25EntityPainting extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleEntityPainting(this);
     }

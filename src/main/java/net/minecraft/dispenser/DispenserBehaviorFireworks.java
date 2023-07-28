@@ -16,18 +16,18 @@ final class DispenserBehaviorFireworks extends BehaviorDefaultDispenseItem
     /**
      * Dispense the specified stack, play the dispense sound and spawn particles.
      */
-    public ItemStack dispenseStack(IBlockSource par1IBlockSource, ItemStack par2ItemStack)
+    public ItemStack dispenseStack(final IBlockSource par1IBlockSource, final ItemStack par2ItemStack)
     {
-        EnumFacing enumfacing = BlockDispenser.getFacing(par1IBlockSource.getBlockMetadata());
-        double d0 = par1IBlockSource.getX() + (double)enumfacing.getFrontOffsetX();
-        double d1 = (double)((float)par1IBlockSource.getYInt() + 0.2F);
-        double d2 = par1IBlockSource.getZ() + (double)enumfacing.getFrontOffsetZ();
+        final EnumFacing enumfacing = BlockDispenser.getFacing(par1IBlockSource.getBlockMetadata());
+        final double d0 = par1IBlockSource.getX() + (double)enumfacing.getFrontOffsetX();
+        final double d1 = (double)((float)par1IBlockSource.getYInt() + 0.2F);
+        final double d2 = par1IBlockSource.getZ() + (double)enumfacing.getFrontOffsetZ();
         // CraftBukkit start
-        World world = par1IBlockSource.getWorld();
+        final World world = par1IBlockSource.getWorld();
         ItemStack itemstack1 = par2ItemStack.splitStack(1);
-        org.bukkit.block.Block block = world.getWorld().getBlockAt(par1IBlockSource.getXInt(), par1IBlockSource.getYInt(), par1IBlockSource.getZInt());
-        CraftItemStack craftItem = CraftItemStack.asCraftMirror(itemstack1);
-        BlockDispenseEvent event = new BlockDispenseEvent(block, craftItem.clone(), new org.bukkit.util.Vector(d0, d1, d2));
+        final org.bukkit.block.Block block = world.getWorld().getBlockAt(par1IBlockSource.getXInt(), par1IBlockSource.getYInt(), par1IBlockSource.getZInt());
+        final CraftItemStack craftItem = CraftItemStack.asCraftMirror(itemstack1);
+        final BlockDispenseEvent event = new BlockDispenseEvent(block, craftItem.clone(), new org.bukkit.util.Vector(d0, d1, d2));
 
         if (!BlockDispenser.eventFired)
         {
@@ -44,8 +44,8 @@ final class DispenserBehaviorFireworks extends BehaviorDefaultDispenseItem
         {
             par2ItemStack.stackSize++;
             // Chain to handler for new item
-            ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-            IBehaviorDispenseItem ibehaviordispenseitem = (IBehaviorDispenseItem) BlockDispenser.dispenseBehaviorRegistry.getObject(eventStack.getItem());
+            final ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
+            final IBehaviorDispenseItem ibehaviordispenseitem = (IBehaviorDispenseItem) BlockDispenser.dispenseBehaviorRegistry.getObject(eventStack.getItem());
 
             if (ibehaviordispenseitem != IBehaviorDispenseItem.itemDispenseBehaviorProvider && ibehaviordispenseitem != this)
             {
@@ -55,7 +55,7 @@ final class DispenserBehaviorFireworks extends BehaviorDefaultDispenseItem
         }
 
         itemstack1 = CraftItemStack.asNMSCopy(event.getItem());
-        EntityFireworkRocket entityfireworkrocket = new EntityFireworkRocket(par1IBlockSource.getWorld(), event.getVelocity().getX(), event.getVelocity().getY(), event.getVelocity().getZ(), itemstack1);
+        final EntityFireworkRocket entityfireworkrocket = new EntityFireworkRocket(par1IBlockSource.getWorld(), event.getVelocity().getX(), event.getVelocity().getY(), event.getVelocity().getZ(), itemstack1);
         par1IBlockSource.getWorld().spawnEntityInWorld(entityfireworkrocket);
         // itemstack.a(1); // Handled during event processing
         // CraftBukkit end
@@ -65,7 +65,7 @@ final class DispenserBehaviorFireworks extends BehaviorDefaultDispenseItem
     /**
      * Play the dispense sound from the specified block.
      */
-    protected void playDispenseSound(IBlockSource par1IBlockSource)
+    protected void playDispenseSound(final IBlockSource par1IBlockSource)
     {
         par1IBlockSource.getWorld().playAuxSFX(1002, par1IBlockSource.getXInt(), par1IBlockSource.getYInt(), par1IBlockSource.getZInt(), 0);
     }

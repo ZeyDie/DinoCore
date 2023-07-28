@@ -31,22 +31,22 @@ public class PlayerSelector
     /**
      * Returns the one player that matches the given at-token.  Returns null if more than one player matches.
      */
-    public static EntityPlayerMP matchOnePlayer(ICommandSender par0ICommandSender, String par1Str)
+    public static EntityPlayerMP matchOnePlayer(final ICommandSender par0ICommandSender, final String par1Str)
     {
-        EntityPlayerMP[] aentityplayermp = matchPlayers(par0ICommandSender, par1Str);
+        final EntityPlayerMP[] aentityplayermp = matchPlayers(par0ICommandSender, par1Str);
         return aentityplayermp != null && aentityplayermp.length == 1 ? aentityplayermp[0] : null;
     }
 
     /**
      * Returns a nicely-formatted string listing the matching players.
      */
-    public static String matchPlayersAsString(ICommandSender par0ICommandSender, String par1Str)
+    public static String matchPlayersAsString(final ICommandSender par0ICommandSender, final String par1Str)
     {
-        EntityPlayerMP[] aentityplayermp = matchPlayers(par0ICommandSender, par1Str);
+        final EntityPlayerMP[] aentityplayermp = matchPlayers(par0ICommandSender, par1Str);
 
         if (aentityplayermp != null && aentityplayermp.length != 0)
         {
-            String[] astring = new String[aentityplayermp.length];
+            final String[] astring = new String[aentityplayermp.length];
 
             for (int i = 0; i < astring.length; ++i)
             {
@@ -64,9 +64,9 @@ public class PlayerSelector
     /**
      * Returns an array of all players matched by the given at-token.
      */
-    public static EntityPlayerMP[] matchPlayers(ICommandSender par0ICommandSender, String par1Str)
+    public static EntityPlayerMP[] matchPlayers(final ICommandSender par0ICommandSender, final String par1Str)
     {
-        Matcher matcher = tokenPattern.matcher(par1Str);
+        final Matcher matcher = tokenPattern.matcher(par1Str);
 
         if (!matcher.matches())
         {
@@ -74,16 +74,16 @@ public class PlayerSelector
         }
         else
         {
-            Map map = getArgumentMap(matcher.group(2));
-            String s1 = matcher.group(1);
+            final Map map = getArgumentMap(matcher.group(2));
+            final String s1 = matcher.group(1);
             int i = getDefaultMinimumRange(s1);
             int j = getDefaultMaximumRange(s1);
             int k = getDefaultMinimumLevel(s1);
             int l = getDefaultMaximumLevel(s1);
             int i1 = getDefaultCount(s1);
             int j1 = EnumGameType.NOT_SET.getID();
-            ChunkCoordinates chunkcoordinates = par0ICommandSender.getPlayerCoordinates();
-            Map map1 = func_96560_a(map);
+            final ChunkCoordinates chunkcoordinates = par0ICommandSender.getPlayerCoordinates();
+            final Map map1 = func_96560_a(map);
             String s2 = null;
             String s3 = null;
             boolean flag = false;
@@ -148,7 +148,7 @@ public class PlayerSelector
                 s2 = (String)map.get("name");
             }
 
-            World world = flag ? par0ICommandSender.getEntityWorld() : null;
+            final World world = flag ? par0ICommandSender.getEntityWorld() : null;
             List list;
 
             if (!s1.equals("p") && !s1.equals("a"))
@@ -173,18 +173,18 @@ public class PlayerSelector
         }
     }
 
-    public static Map func_96560_a(Map par0Map)
+    public static Map func_96560_a(final Map par0Map)
     {
-        HashMap hashmap = new HashMap();
-        Iterator iterator = par0Map.keySet().iterator();
+        final HashMap hashmap = new HashMap();
+        final Iterator iterator = par0Map.keySet().iterator();
 
         while (iterator.hasNext())
         {
-            String s = (String)iterator.next();
+            final String s = (String)iterator.next();
 
             if (s.startsWith("score_") && s.length() > "score_".length())
             {
-                String s1 = s.substring("score_".length());
+                final String s1 = s.substring("score_".length());
                 hashmap.put(s1, Integer.valueOf(MathHelper.parseIntWithDefault((String)par0Map.get(s), 1)));
             }
         }
@@ -195,14 +195,14 @@ public class PlayerSelector
     /**
      * Returns whether the given pattern can match more than one player.
      */
-    public static boolean matchesMultiplePlayers(String par0Str)
+    public static boolean matchesMultiplePlayers(final String par0Str)
     {
-        Matcher matcher = tokenPattern.matcher(par0Str);
+        final Matcher matcher = tokenPattern.matcher(par0Str);
 
         if (matcher.matches())
         {
-            Map map = getArgumentMap(matcher.group(2));
-            String s1 = matcher.group(1);
+            final Map map = getArgumentMap(matcher.group(2));
+            final String s1 = matcher.group(1);
             int i = getDefaultCount(s1);
 
             if (map.containsKey("c"))
@@ -221,13 +221,13 @@ public class PlayerSelector
     /**
      * Returns whether the given token (parameter 1) has exactly the given arguments (parameter 2).
      */
-    public static boolean hasTheseArguments(String par0Str, String par1Str)
+    public static boolean hasTheseArguments(final String par0Str, final String par1Str)
     {
-        Matcher matcher = tokenPattern.matcher(par0Str);
+        final Matcher matcher = tokenPattern.matcher(par0Str);
 
         if (matcher.matches())
         {
-            String s2 = matcher.group(1);
+            final String s2 = matcher.group(1);
             return par1Str == null || par1Str.equals(s2);
         }
         else
@@ -239,7 +239,7 @@ public class PlayerSelector
     /**
      * Returns whether the given token has any arguments set.
      */
-    public static boolean hasArguments(String par0Str)
+    public static boolean hasArguments(final String par0Str)
     {
         return hasTheseArguments(par0Str, (String)null);
     }
@@ -247,7 +247,7 @@ public class PlayerSelector
     /**
      * Gets the default minimum range (argument rm).
      */
-    private static final int getDefaultMinimumRange(String par0Str)
+    private static final int getDefaultMinimumRange(final String par0Str)
     {
         return 0;
     }
@@ -255,7 +255,7 @@ public class PlayerSelector
     /**
      * Gets the default maximum range (argument r).
      */
-    private static final int getDefaultMaximumRange(String par0Str)
+    private static final int getDefaultMaximumRange(final String par0Str)
     {
         return 0;
     }
@@ -263,7 +263,7 @@ public class PlayerSelector
     /**
      * Gets the default maximum experience level (argument l)
      */
-    private static final int getDefaultMaximumLevel(String par0Str)
+    private static final int getDefaultMaximumLevel(final String par0Str)
     {
         return Integer.MAX_VALUE;
     }
@@ -271,7 +271,7 @@ public class PlayerSelector
     /**
      * Gets the default minimum experience level (argument lm)
      */
-    private static final int getDefaultMinimumLevel(String par0Str)
+    private static final int getDefaultMinimumLevel(final String par0Str)
     {
         return 0;
     }
@@ -279,7 +279,7 @@ public class PlayerSelector
     /**
      * Gets the default number of players to return (argument c, 0 for infinite)
      */
-    private static final int getDefaultCount(String par0Str)
+    private static final int getDefaultCount(final String par0Str)
     {
         return par0Str.equals("a") ? 0 : 1;
     }
@@ -287,9 +287,9 @@ public class PlayerSelector
     /**
      * Parses the given argument string, turning it into a HashMap&lt;String, String&gt; of name-&gt;value.
      */
-    private static Map getArgumentMap(String par0Str)
+    private static Map getArgumentMap(final String par0Str)
     {
-        HashMap hashmap = new HashMap();
+        final HashMap hashmap = new HashMap();
 
         if (par0Str == null)
         {
@@ -320,7 +320,7 @@ public class PlayerSelector
                         s1 = "r";
                 }
 
-                if (s1 != null && matcher.group(1).length() > 0)
+                if (s1 != null && !matcher.group(1).isEmpty())
                 {
                     hashmap.put(s1, matcher.group(1));
                 }

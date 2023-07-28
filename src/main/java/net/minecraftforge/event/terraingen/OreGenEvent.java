@@ -13,7 +13,7 @@ public class OreGenEvent extends Event
     public final int worldX;
     public final int worldZ;
     
-    public OreGenEvent(World world, Random rand, int worldX, int worldZ)
+    public OreGenEvent(final World world, final Random rand, final int worldX, final int worldZ)
     {
         this.world = world;
         this.rand = rand;
@@ -23,7 +23,7 @@ public class OreGenEvent extends Event
     
     public static class Pre extends OreGenEvent
     {
-        public Pre(World world, Random rand, int worldX, int worldZ)
+        public Pre(final World world, final Random rand, final int worldX, final int worldZ)
         {
             super(world, rand, worldX, worldZ);
         }
@@ -31,7 +31,7 @@ public class OreGenEvent extends Event
     
     public static class Post extends OreGenEvent
     {
-        public Post(World world, Random rand, int worldX, int worldZ)
+        public Post(final World world, final Random rand, final int worldX, final int worldZ)
         {
             super(world, rand, worldX, worldZ);
         }
@@ -50,7 +50,7 @@ public class OreGenEvent extends Event
         public final EventType type;
         public final WorldGenerator generator;
         
-        public GenerateMinable(World world, Random rand, WorldGenerator generator, int worldX, int worldZ, EventType type)
+        public GenerateMinable(final World world, final Random rand, final WorldGenerator generator, final int worldX, final int worldZ, final EventType type)
         {
             super(world, rand, worldX, worldZ);
             this.generator = generator;

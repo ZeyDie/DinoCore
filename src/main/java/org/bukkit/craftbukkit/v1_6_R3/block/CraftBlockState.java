@@ -38,16 +38,16 @@ public class CraftBlockState implements BlockState {
         createData(block.getData());
     }
 
-    public CraftBlockState(final Block block, int flag) {
+    public CraftBlockState(final Block block, final int flag) {
         this(block);
         this.flag = flag;
     }
 
-    public static CraftBlockState getBlockState(net.minecraft.world.World world, int x, int y, int z) {
+    public static CraftBlockState getBlockState(final net.minecraft.world.World world, final int x, final int y, final int z) {
         return new CraftBlockState(world.getWorld().getBlockAt(x, y, z));
     }
 
-    public static CraftBlockState getBlockState(net.minecraft.world.World world, int x, int y, int z, int flag) {
+    public static CraftBlockState getBlockState(final net.minecraft.world.World world, final int x, final int y, final int z, final int flag) {
         return new CraftBlockState(world.getWorld().getBlockAt(x, y, z), flag);
     }
 
@@ -72,7 +72,7 @@ public class CraftBlockState implements BlockState {
     }
 
     public void setData(final MaterialData data) {
-        Material mat = getType();
+        final Material mat = getType();
 
         if ((mat == null) || (mat.getData() == null)) {
             this.data = data;
@@ -107,7 +107,7 @@ public class CraftBlockState implements BlockState {
         return Material.getMaterial(getTypeId());
     }
 
-    public void setFlag(int flag) {
+    public void setFlag(final int flag) {
         this.flag = flag;
     }
 
@@ -131,12 +131,12 @@ public class CraftBlockState implements BlockState {
         return update(false);
     }
 
-    public boolean update(boolean force) {
+    public boolean update(final boolean force) {
         return update(force, true);
     }
 
-    public boolean update(boolean force, boolean applyPhysics) {
-        Block block = getBlock();
+    public boolean update(final boolean force, final boolean applyPhysics) {
+        final Block block = getBlock();
 
         if (block.getType() != getType()) {
             if (force) {
@@ -153,7 +153,7 @@ public class CraftBlockState implements BlockState {
     }
 
     private void createData(final byte data) {
-        Material mat = getType();
+        final Material mat = getType();
         if (mat == null || mat.getData() == null) {
             this.data = new MaterialData(type, data);
         } else {
@@ -169,7 +169,7 @@ public class CraftBlockState implements BlockState {
         return new Location(world, x, y, z);
     }
 
-    public Location getLocation(Location loc) {
+    public Location getLocation(final Location loc) {
         if (loc != null) {
             loc.setWorld(world);
             loc.setX(x);
@@ -182,12 +182,12 @@ public class CraftBlockState implements BlockState {
         return loc;
     }
 
-    public void setRawData(byte data) {
+    public void setRawData(final byte data) {
         this.data.setData(data);
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
@@ -228,19 +228,19 @@ public class CraftBlockState implements BlockState {
         return hash;
     }
 
-    public void setMetadata(String metadataKey, MetadataValue newMetadataValue) {
+    public void setMetadata(final String metadataKey, final MetadataValue newMetadataValue) {
         chunk.getCraftWorld().getBlockMetadata().setMetadata(getBlock(), metadataKey, newMetadataValue);
     }
 
-    public List<MetadataValue> getMetadata(String metadataKey) {
+    public List<MetadataValue> getMetadata(final String metadataKey) {
         return chunk.getCraftWorld().getBlockMetadata().getMetadata(getBlock(), metadataKey);
     }
 
-    public boolean hasMetadata(String metadataKey) {
+    public boolean hasMetadata(final String metadataKey) {
         return chunk.getCraftWorld().getBlockMetadata().hasMetadata(getBlock(), metadataKey);
     }
 
-    public void removeMetadata(String metadataKey, Plugin owningPlugin) {
+    public void removeMetadata(final String metadataKey, final Plugin owningPlugin) {
         chunk.getCraftWorld().getBlockMetadata().removeMetadata(getBlock(), metadataKey, owningPlugin);
     }
 }

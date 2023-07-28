@@ -20,16 +20,16 @@ public class CommandServerSay extends CommandBase
         return 1;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.say.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
-        if (par2ArrayOfStr.length > 0 && par2ArrayOfStr[0].length() > 0)
+        if (par2ArrayOfStr.length > 0 && !par2ArrayOfStr[0].isEmpty())
         {
-            String s = func_82361_a(par1ICommandSender, par2ArrayOfStr, 0, true);
+            final String s = func_82361_a(par1ICommandSender, par2ArrayOfStr, 0, true);
             MinecraftServer.getServer().getConfigurationManager().sendChatMsg(ChatMessageComponent.createFromTranslationWithSubstitutions("chat.type.announcement", new Object[] {par1ICommandSender.getCommandSenderName(), s}));
         }
         else
@@ -41,7 +41,7 @@ public class CommandServerSay extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public List addTabCompletionOptions(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         return par2ArrayOfStr.length >= 1 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, MinecraftServer.getServer().getAllUsernames()) : null;
     }

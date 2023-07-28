@@ -9,7 +9,7 @@ public class TileEntityComparator extends TileEntity
     /**
      * Writes a tile entity to NBT.
      */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setInteger("OutputSignal", this.outputSignal);
@@ -18,7 +18,7 @@ public class TileEntityComparator extends TileEntity
     /**
      * Reads a tile entity from NBT.
      */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
         this.outputSignal = par1NBTTagCompound.getInteger("OutputSignal");
@@ -29,7 +29,7 @@ public class TileEntityComparator extends TileEntity
         return this.outputSignal;
     }
 
-    public void setOutputSignal(int par1)
+    public void setOutputSignal(final int par1)
     {
         this.outputSignal = par1;
     }

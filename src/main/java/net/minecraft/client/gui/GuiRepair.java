@@ -27,7 +27,7 @@ public class GuiRepair extends GuiContainer implements ICrafting
     private GuiTextField itemNameField;
     private InventoryPlayer field_82325_q;
 
-    public GuiRepair(InventoryPlayer par1InventoryPlayer, World par2World, int par3, int par4, int par5)
+    public GuiRepair(final InventoryPlayer par1InventoryPlayer, final World par2World, final int par3, final int par4, final int par5)
     {
         super(new ContainerRepair(par1InventoryPlayer, par2World, par3, par4, par5, Minecraft.getMinecraft().thePlayer));
         this.field_82325_q = par1InventoryPlayer;
@@ -41,8 +41,8 @@ public class GuiRepair extends GuiContainer implements ICrafting
     {
         super.initGui();
         Keyboard.enableRepeatEvents(true);
-        int i = (this.width - this.xSize) / 2;
-        int j = (this.height - this.ySize) / 2;
+        final int i = (this.width - this.xSize) / 2;
+        final int j = (this.height - this.ySize) / 2;
         this.itemNameField = new GuiTextField(this.fontRenderer, i + 62, j + 24, 103, 12);
         this.itemNameField.setTextColor(-1);
         this.itemNameField.setDisabledTextColour(-1);
@@ -65,7 +65,7 @@ public class GuiRepair extends GuiContainer implements ICrafting
     /**
      * Draw the foreground layer for the GuiContainer (everything in front of the items)
      */
-    protected void drawGuiContainerForegroundLayer(int par1, int par2)
+    protected void drawGuiContainerForegroundLayer(final int par1, final int par2)
     {
         GL11.glDisable(GL11.GL_LIGHTING);
         this.fontRenderer.drawString(I18n.getString("container.repair"), 60, 6, 4210752);
@@ -92,9 +92,9 @@ public class GuiRepair extends GuiContainer implements ICrafting
 
             if (flag)
             {
-                int l = -16777216 | (k & 16579836) >> 2 | k & -16777216;
-                int i1 = this.xSize - 8 - this.fontRenderer.getStringWidth(s);
-                byte b0 = 67;
+                final int l = -16777216 | (k & 16579836) >> 2 | k & -16777216;
+                final int i1 = this.xSize - 8 - this.fontRenderer.getStringWidth(s);
+                final byte b0 = 67;
 
                 if (this.fontRenderer.getUnicodeFlag())
                 {
@@ -118,7 +118,7 @@ public class GuiRepair extends GuiContainer implements ICrafting
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         if (this.itemNameField.textboxKeyTyped(par1, par2))
         {
@@ -133,7 +133,7 @@ public class GuiRepair extends GuiContainer implements ICrafting
     private void func_135015_g()
     {
         String s = this.itemNameField.getText();
-        Slot slot = this.repairContainer.getSlot(0);
+        final Slot slot = this.repairContainer.getSlot(0);
 
         if (slot != null && slot.getHasStack() && !slot.getStack().hasDisplayName() && s.equals(slot.getStack().getDisplayName()))
         {
@@ -147,7 +147,7 @@ public class GuiRepair extends GuiContainer implements ICrafting
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int par1, int par2, int par3)
+    protected void mouseClicked(final int par1, final int par2, final int par3)
     {
         super.mouseClicked(par1, par2, par3);
         this.itemNameField.mouseClicked(par1, par2, par3);
@@ -156,7 +156,7 @@ public class GuiRepair extends GuiContainer implements ICrafting
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         super.drawScreen(par1, par2, par3);
         GL11.glDisable(GL11.GL_LIGHTING);
@@ -166,12 +166,12 @@ public class GuiRepair extends GuiContainer implements ICrafting
     /**
      * Draw the background layer for the GuiContainer (everything behind the items)
      */
-    protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
+    protected void drawGuiContainerBackgroundLayer(final float par1, final int par2, final int par3)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(anvilGuiTextures);
-        int k = (this.width - this.xSize) / 2;
-        int l = (this.height - this.ySize) / 2;
+        final int k = (this.width - this.xSize) / 2;
+        final int l = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
         this.drawTexturedModalRect(k + 59, l + 20, 0, this.ySize + (this.repairContainer.getSlot(0).getHasStack() ? 0 : 16), 110, 16);
 
@@ -181,7 +181,7 @@ public class GuiRepair extends GuiContainer implements ICrafting
         }
     }
 
-    public void sendContainerAndContentsToPlayer(Container par1Container, List par2List)
+    public void sendContainerAndContentsToPlayer(final Container par1Container, final List par2List)
     {
         this.sendSlotContents(par1Container, 0, par1Container.getSlot(0).getStack());
     }
@@ -190,7 +190,7 @@ public class GuiRepair extends GuiContainer implements ICrafting
      * Sends the contents of an inventory slot to the client-side Container. This doesn't have to match the actual
      * contents of that slot. Args: Container, slot number, slot contents
      */
-    public void sendSlotContents(Container par1Container, int par2, ItemStack par3ItemStack)
+    public void sendSlotContents(final Container par1Container, final int par2, final ItemStack par3ItemStack)
     {
         if (par2 == 0)
         {
@@ -209,5 +209,5 @@ public class GuiRepair extends GuiContainer implements ICrafting
      * and enchanting level. Normally the first int identifies which variable to update, and the second contains the new
      * value. Both are truncated to shorts in non-local SMP.
      */
-    public void sendProgressBarUpdate(Container par1Container, int par2, int par3) {}
+    public void sendProgressBarUpdate(final Container par1Container, final int par2, final int par3) {}
 }

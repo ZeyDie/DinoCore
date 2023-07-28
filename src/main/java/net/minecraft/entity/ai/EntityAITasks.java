@@ -31,23 +31,23 @@ public class EntityAITasks {
     //TODO ZoomCodeReplace private on public
     public int tickRate = 3;
 
-    public EntityAITasks(Profiler par1Profiler) {
+    public EntityAITasks(final Profiler par1Profiler) {
         this.theProfiler = par1Profiler;
     }
 
-    public void addTask(int par1, EntityAIBase par2EntityAIBase) {
+    public void addTask(final int par1, final EntityAIBase par2EntityAIBase) {
         this.taskEntries.add(new EntityAITaskEntry(this, par1, par2EntityAIBase));
     }
 
     /**
      * removes the indicated task from the entity's AI tasks.
      */
-    public void removeTask(EntityAIBase par1EntityAIBase) {
-        Iterator iterator = this.taskEntries.iterator();
+    public void removeTask(final EntityAIBase par1EntityAIBase) {
+        final Iterator iterator = this.taskEntries.iterator();
 
         while (iterator.hasNext()) {
-            EntityAITaskEntry entityaitaskentry = (EntityAITaskEntry) iterator.next();
-            EntityAIBase entityaibase1 = entityaitaskentry.action;
+            final EntityAITaskEntry entityaitaskentry = (EntityAITaskEntry) iterator.next();
+            final EntityAIBase entityaibase1 = entityaitaskentry.action;
 
             if (entityaibase1 == par1EntityAIBase) {
                 if (this.executingTaskEntries.contains(entityaitaskentry)) {
@@ -70,7 +70,7 @@ public class EntityAITasks {
         }
         //TODO ZoomCodeEnd
 
-        ArrayList arraylist = new ArrayList();
+        final ArrayList arraylist = new ArrayList();
         Iterator iterator;
         EntityAITaskEntry entityaitaskentry;
 
@@ -79,7 +79,7 @@ public class EntityAITasks {
 
             while (iterator.hasNext()) {
                 entityaitaskentry = (EntityAITaskEntry) iterator.next();
-                boolean flag = this.executingTaskEntries.contains(entityaitaskentry);
+                final boolean flag = this.executingTaskEntries.contains(entityaitaskentry);
 
                 if (flag) {
                     if (this.canUse(entityaitaskentry) && this.canContinue(entityaitaskentry)) {
@@ -134,9 +134,9 @@ public class EntityAITasks {
      * Determine if a specific AI Task should continue being executed.
      */
     //TODO ZoomCodeReplace private on public
-    public boolean canContinue(EntityAITaskEntry par1EntityAITaskEntry) {
+    public boolean canContinue(final EntityAITaskEntry par1EntityAITaskEntry) {
         this.theProfiler.startSection("canContinue");
-        boolean flag = par1EntityAITaskEntry.action.continueExecuting();
+        final boolean flag = par1EntityAITaskEntry.action.continueExecuting();
         this.theProfiler.endSection();
         return flag;
     }
@@ -146,12 +146,12 @@ public class EntityAITasks {
      * tasks are compatible with it or all lower priority tasks can be interrupted.
      */
     //TODO ZoomCodeReplace private on public
-    public boolean canUse(EntityAITaskEntry par1EntityAITaskEntry) {
+    public boolean canUse(final EntityAITaskEntry par1EntityAITaskEntry) {
         this.theProfiler.startSection("canUse");
-        Iterator iterator = this.taskEntries.iterator();
+        final Iterator iterator = this.taskEntries.iterator();
 
         while (iterator.hasNext()) {
-            EntityAITaskEntry entityaitaskentry1 = (EntityAITaskEntry) iterator.next();
+            final EntityAITaskEntry entityaitaskentry1 = (EntityAITaskEntry) iterator.next();
 
             if (entityaitaskentry1 != par1EntityAITaskEntry) {
                 if (par1EntityAITaskEntry.priority >= entityaitaskentry1.priority) {
@@ -173,7 +173,7 @@ public class EntityAITasks {
     /**
      * Returns whether two EntityAITaskEntries can be executed concurrently
      */
-    private boolean areTasksCompatible(EntityAITaskEntry par1EntityAITaskEntry, EntityAITaskEntry par2EntityAITaskEntry) {
+    private boolean areTasksCompatible(final EntityAITaskEntry par1EntityAITaskEntry, final EntityAITaskEntry par2EntityAITaskEntry) {
         return (par1EntityAITaskEntry.action.getMutexBits() & par2EntityAITaskEntry.action.getMutexBits()) == 0;
     }
 }

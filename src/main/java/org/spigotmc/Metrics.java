@@ -213,7 +213,7 @@ public class Metrics {
                                 task.cancel();
                                 task = null;
                                 // Tell all plotters to stop gathering information.
-                                for (Graph graph : graphs) {
+                                for (final Graph graph : graphs) {
                                     graph.onOptOut();
                                 }
                             }
@@ -227,7 +227,7 @@ public class Metrics {
                         // After the first post we set firstPost to false
                         // Each post thereafter will be a ping
                         firstPost = false;
-                    } catch (IOException e) {
+                    } catch (final IOException e) {
                         if (debug) {
                             Bukkit.getLogger().log(Level.INFO, "[Metrics] " + e.getMessage());
                         }
@@ -249,12 +249,12 @@ public class Metrics {
             try {
                 // Reload the metrics file
                 configuration.load(getConfigFile());
-            } catch (IOException ex) {
+            } catch (final IOException ex) {
                 if (debug) {
                     Bukkit.getLogger().log(Level.INFO, "[Metrics] " + ex.getMessage());
                 }
                 return true;
-            } catch (InvalidConfigurationException ex) {
+            } catch (final InvalidConfigurationException ex) {
                 if (debug) {
                     Bukkit.getLogger().log(Level.INFO, "[Metrics] " + ex.getMessage());
                 }
@@ -329,11 +329,11 @@ public class Metrics {
      */
     private void postPlugin(final boolean isPing) throws IOException {
         // Server software specific section
-        String pluginName = "Spigot";
-        boolean onlineMode = Bukkit.getServer().getOnlineMode(); // TRUE if online mode is enabled
-        String pluginVersion = (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown";
-        String serverVersion = Bukkit.getVersion();
-        int playersOnline = Bukkit.getServer().getOnlinePlayers().length;
+        final String pluginName = "Spigot";
+        final boolean onlineMode = Bukkit.getServer().getOnlineMode(); // TRUE if online mode is enabled
+        final String pluginVersion = (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown";
+        final String serverVersion = Bukkit.getVersion();
+        final int playersOnline = Bukkit.getServer().getOnlinePlayers().length;
 
         // END server software specific section -- all code below does not use any code outside of this class / Java
 
@@ -348,11 +348,11 @@ public class Metrics {
         encodeDataPair(data, "revision", String.valueOf(REVISION));
 
         // New data as of R6
-        String osname = System.getProperty("os.name");
+        final String osname = System.getProperty("os.name");
         String osarch = System.getProperty("os.arch");
-        String osversion = System.getProperty("os.version");
-        String java_version = System.getProperty("java.version");
-        int coreCount = Runtime.getRuntime().availableProcessors();
+        final String osversion = System.getProperty("os.version");
+        final String java_version = System.getProperty("java.version");
+        final int coreCount = Runtime.getRuntime().availableProcessors();
 
         // normalize os arch .. amd64 -> x86_64
         if (osarch.equals("amd64")) {
@@ -379,7 +379,7 @@ public class Metrics {
             while (iter.hasNext()) {
                 final Graph graph = iter.next();
 
-                for (Plotter plotter : graph.getPlotters()) {
+                for (final Plotter plotter : graph.getPlotters()) {
                     // The key name to send to the metrics server
                     // The format is C-GRAPHNAME-PLOTTERNAME where separator - is defined at the top
                     // Legacy (R4) submitters use the format Custom%s, or CustomPLOTTERNAME
@@ -396,10 +396,10 @@ public class Metrics {
         }
 
         // Create the url
-        URL url = new URL(BASE_URL + String.format(REPORT_URL, encode(pluginName)));
+        final URL url = new URL(BASE_URL + String.format(REPORT_URL, encode(pluginName)));
 
         // Connect to the website
-        URLConnection connection;
+        final URLConnection connection;
 
         // Mineshafter creates a socks proxy, so we can safely bypass it
         // It does not reroute POST requests so we need to go around it
@@ -435,7 +435,7 @@ public class Metrics {
                     while (iter.hasNext()) {
                         final Graph graph = iter.next();
 
-                        for (Plotter plotter : graph.getPlotters()) {
+                        for (final Plotter plotter : graph.getPlotters()) {
                             plotter.reset();
                         }
                     }
@@ -453,7 +453,7 @@ public class Metrics {
         try {
             Class.forName("mineshafter.MineServer");
             return true;
-        } catch (Exception e) {
+        } catch (final Exception e) {
             return false;
         }
     }

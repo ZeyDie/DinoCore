@@ -11,7 +11,7 @@ public class Sandstone extends MaterialData {
         super(Material.SANDSTONE);
     }
 
-    public Sandstone(SandstoneType type) {
+    public Sandstone(final SandstoneType type) {
         this();
         setType(type);
     }
@@ -61,7 +61,7 @@ public class Sandstone extends MaterialData {
      *
      * @param type New type of this sandstone
      */
-    public void setType(SandstoneType type) {
+    public void setType(final SandstoneType type) {
         setData(type.getData());
     }
 

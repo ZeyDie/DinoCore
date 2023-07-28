@@ -18,7 +18,7 @@ public abstract class BlockPistonEvent extends BlockEvent implements Cancellable
         return this.cancelled;
     }
 
-    public void setCancelled(boolean cancelled) {
+    public void setCancelled(final boolean cancelled) {
         this.cancelled = cancelled;
     }
 

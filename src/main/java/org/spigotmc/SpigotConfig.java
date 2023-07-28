@@ -58,7 +58,7 @@ public class SpigotConfig {
     }
 
     public static void registerCommands() {
-        for (Map.Entry<String, Command> entry : commands.entrySet()) {
+        for (final Map.Entry<String, Command> entry : commands.entrySet()) {
             MinecraftServer.getServer().server.getCommandMap().register(entry.getKey(), "Spigot", entry.getValue());
         }
 
@@ -66,22 +66,22 @@ public class SpigotConfig {
             try {
                 metrics = new Metrics();
                 metrics.start();
-            } catch (IOException ex) {
+            } catch (final IOException ex) {
                 Bukkit.getServer().getLogger().log(Level.SEVERE, "Could not start metrics service", ex);
             }
         }
     }
 
-    static void readConfig(Class<?> clazz, Object instance) {
-        for (Method method : clazz.getDeclaredMethods()) {
+    static void readConfig(final Class<?> clazz, final Object instance) {
+        for (final Method method : clazz.getDeclaredMethods()) {
             if (Modifier.isPrivate(method.getModifiers())) {
                 if (method.getParameterTypes().length == 0 && method.getReturnType() == Void.TYPE) {
                     try {
                         method.setAccessible(true);
                         method.invoke(instance);
-                    } catch (InvocationTargetException ex) {
+                    } catch (final InvocationTargetException ex) {
                         Throwables.propagate(ex.getCause());
-                    } catch (Exception ex) {
+                    } catch (final Exception ex) {
                         Bukkit.getLogger().log(Level.SEVERE, "Error invoking " + method, ex);
                     }
                 }
@@ -90,31 +90,31 @@ public class SpigotConfig {
 
         try {
             config.save(CONFIG_FILE);
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             Bukkit.getLogger().log(Level.SEVERE, "Could not save " + CONFIG_FILE, ex);
         }
     }
 
-    private static void set(String path, Object val) {
+    private static void set(final String path, final Object val) {
         config.set(path, val);
     }
 
-    private static boolean getBoolean(String path, boolean def) {
+    private static boolean getBoolean(final String path, final boolean def) {
         config.addDefault(path, def);
         return config.getBoolean(path, config.getBoolean(path));
     }
 
-    private static int getInt(String path, int def) {
+    private static int getInt(final String path, final int def) {
         config.addDefault(path, def);
         return config.getInt(path, config.getInt(path));
     }
 
-    private static <T> List getList(String path, T def) {
+    private static <T> List getList(final String path, final T def) {
         config.addDefault(path, def);
         return (List<T>) config.getList(path, config.getList(path));
     }
 
-    private static String getString(String path, String def) {
+    private static String getString(final String path, final String def) {
         config.addDefault(path, def);
         return config.getString(path, config.getString(path));
     }
@@ -149,7 +149,7 @@ public class SpigotConfig {
         public boolean netty;
         public long connectionThrottle;
 
-        public Listener(String host, int port, boolean netty, long connectionThrottle) {
+        public Listener(final String host, final int port, final boolean netty, final long connectionThrottle) {
             this.host = host;
             this.port = port;
             this.netty = netty;
@@ -163,28 +163,28 @@ public class SpigotConfig {
     private static void listeners() {
         listeners.clear(); // We don't rebuild listeners on reload but we should clear them out!
 
-        Map<String, Object> def = new HashMap<String, Object>();
+        final Map<String, Object> def = new HashMap<String, Object>();
         def.put("host", "default");
         def.put("port", "default");
         def.put("netty", true);
         // def.put( "throttle", "default" );
 
         config.addDefault("listeners", Collections.singletonList(def));
-        for (Map<String, Object> info : (List<Map<String, Object>>) config.getList("listeners")) {
+        for (final Map<String, Object> info : (List<Map<String, Object>>) config.getList("listeners")) {
             String host = (String) info.get("host");
             if ("default".equals(host)) {
                 host = Bukkit.getIp();
             } else {
                 throw new IllegalArgumentException("Can only bind listener to default! Configure it in server.properties");
             }
-            int port;
+            final int port;
 
             if (info.get("port") instanceof Integer) {
                 throw new IllegalArgumentException("Can only bind port to default! Configure it in server.properties");
             } else {
                 port = Bukkit.getPort();
             }
-            boolean netty = (Boolean) info.get("netty");
+            final boolean netty = (Boolean) info.get("netty");
             // long connectionThrottle = ( info.get( "throttle" ) instanceof Number ) ? ( (Number) info.get( "throttle" ) ).longValue() : Bukkit.getConnectionThrottle();
             listeners.add(new Listener(host, port, netty, Bukkit.getConnectionThrottle()));
         }
@@ -236,7 +236,7 @@ public class SpigotConfig {
     public static String outdatedClientMessage;
     public static String outdatedServerMessage;
 
-    private static String transform(String s) {
+    private static String transform(final String s) {
         return ChatColor.translateAlternateColorCodes('&', s).replaceAll("\\n", "\n");
     }
 
@@ -251,16 +251,16 @@ public class SpigotConfig {
     public static List<Pattern> logFilters;
 
     private static void filters() {
-        List<String> def = Arrays.asList(new String[]
+        final List<String> def = Arrays.asList(new String[]
                 {
                         "^(.*)(/login)(.*)$"
                 });
         logFilters = new ArrayList<Pattern>();
 
-        for (String regex : (List<String>) getList("settings.log-filters", def)) {
+        for (final String regex : (List<String>) getList("settings.log-filters", def)) {
             try {
                 logFilters.add(Pattern.compile(regex));
-            } catch (PatternSyntaxException ex) {
+            } catch (final PatternSyntaxException ex) {
                 Bukkit.getLogger().log(Level.WARNING, "Supplied filter " + regex + " is invalid, ignoring!", ex);
             }
         }

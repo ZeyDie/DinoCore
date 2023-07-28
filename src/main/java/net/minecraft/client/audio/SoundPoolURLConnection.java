@@ -15,7 +15,7 @@ class SoundPoolURLConnection extends URLConnection
 
     final SoundPool theSoundPool;
 
-    private SoundPoolURLConnection(SoundPool par1SoundPool, URL par2URL)
+    private SoundPoolURLConnection(final SoundPool par1SoundPool, final URL par2URL)
     {
         super(par2URL);
         this.theSoundPool = par1SoundPool;
@@ -30,13 +30,13 @@ class SoundPoolURLConnection extends URLConnection
         {
             return SoundPool.func_110655_a(this.theSoundPool).getResource(this.field_110659_b).getInputStream();
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
             return null;
         }
     }
 
-    SoundPoolURLConnection(SoundPool par1SoundPool, URL par2URL, SoundPoolProtocolHandler par3SoundPoolProtocolHandler)
+    SoundPoolURLConnection(final SoundPool par1SoundPool, final URL par2URL, final SoundPoolProtocolHandler par3SoundPoolProtocolHandler)
     {
         this(par1SoundPool, par2URL);
     }

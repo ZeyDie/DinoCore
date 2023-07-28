@@ -30,18 +30,18 @@ public class RecipeIterator implements Iterator<Recipe> {
         if (recipes.hasNext()) {
             removeFrom = recipes;
             // Cauldron start - handle custom recipe classes without Bukkit API equivalents
-            net.minecraft.item.crafting.IRecipe iRecipe = recipes.next();
+            final net.minecraft.item.crafting.IRecipe iRecipe = recipes.next();
             try {
                 return iRecipe.toBukkitRecipe();
-            } catch (AbstractMethodError ex) {
+            } catch (final AbstractMethodError ex) {
                 // No Bukkit wrapper provided
                 return new CustomModRecipe(iRecipe);
             }
             // Cauldron end
         } else {
             removeFrom = smelting;
-            int id = smelting.next();
-            CraftItemStack stack = CraftItemStack.asCraftMirror(net.minecraft.item.crafting.FurnaceRecipes.smelting().getSmeltingResult(id)); // Cauldron - TODO: use metadata-aware smelting result
+            final int id = smelting.next();
+            final CraftItemStack stack = CraftItemStack.asCraftMirror(net.minecraft.item.crafting.FurnaceRecipes.smelting().getSmeltingResult(id)); // Cauldron - TODO: use metadata-aware smelting result
             return new CraftFurnaceRecipe(stack, new ItemStack(id, 1, (short) -1));
         }
     }

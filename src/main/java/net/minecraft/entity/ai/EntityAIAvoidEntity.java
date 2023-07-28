@@ -31,7 +31,7 @@ public class EntityAIAvoidEntity extends EntityAIBase
     /** The class of the entity we should avoid */
     private Class targetEntityClass;
 
-    public EntityAIAvoidEntity(EntityCreature par1EntityCreature, Class par2Class, float par3, double par4, double par6)
+    public EntityAIAvoidEntity(final EntityCreature par1EntityCreature, final Class par2Class, final float par3, final double par4, final double par6)
     {
         this.theEntity = par1EntityCreature;
         this.targetEntityClass = par2Class;
@@ -63,7 +63,7 @@ public class EntityAIAvoidEntity extends EntityAIBase
         }
         else
         {
-            List list = this.theEntity.worldObj.selectEntitiesWithinAABB(this.targetEntityClass, this.theEntity.boundingBox.expand((double)this.distanceFromEntity, 3.0D, (double)this.distanceFromEntity), this.field_98218_a);
+            final List list = this.theEntity.worldObj.selectEntitiesWithinAABB(this.targetEntityClass, this.theEntity.boundingBox.expand((double)this.distanceFromEntity, 3.0D, (double)this.distanceFromEntity), this.field_98218_a);
 
             if (list.isEmpty())
             {
@@ -73,7 +73,7 @@ public class EntityAIAvoidEntity extends EntityAIBase
             this.closestLivingEntity = (Entity)list.get(0);
         }
 
-        Vec3 vec3 = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.theEntity, 16, 7, this.theEntity.worldObj.getWorldVec3Pool().getVecFromPool(this.closestLivingEntity.posX, this.closestLivingEntity.posY, this.closestLivingEntity.posZ));
+        final Vec3 vec3 = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.theEntity, 16, 7, this.theEntity.worldObj.getWorldVec3Pool().getVecFromPool(this.closestLivingEntity.posX, this.closestLivingEntity.posY, this.closestLivingEntity.posZ));
 
         if (vec3 == null)
         {
@@ -129,7 +129,7 @@ public class EntityAIAvoidEntity extends EntityAIBase
         }
     }
 
-    static EntityCreature func_98217_a(EntityAIAvoidEntity par0EntityAIAvoidEntity)
+    static EntityCreature func_98217_a(final EntityAIAvoidEntity par0EntityAIAvoidEntity)
     {
         return par0EntityAIAvoidEntity.theEntity;
     }

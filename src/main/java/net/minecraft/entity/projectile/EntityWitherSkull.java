@@ -14,13 +14,13 @@ import org.bukkit.event.entity.ExplosionPrimeEvent;
 
 public class EntityWitherSkull extends EntityFireball
 {
-    public EntityWitherSkull(World par1World)
+    public EntityWitherSkull(final World par1World)
     {
         super(par1World);
         this.setSize(0.3125F, 0.3125F);
     }
 
-    public EntityWitherSkull(World par1World, EntityLivingBase par2EntityLivingBase, double par3, double par5, double par7)
+    public EntityWitherSkull(final World par1World, final EntityLivingBase par2EntityLivingBase, final double par3, final double par5, final double par7)
     {
         super(par1World, par2EntityLivingBase, par3, par5, par7);
         this.setSize(0.3125F, 0.3125F);
@@ -35,7 +35,7 @@ public class EntityWitherSkull extends EntityFireball
     }
 
     @SideOnly(Side.CLIENT)
-    public EntityWitherSkull(World par1World, double par2, double par4, double par6, double par8, double par10, double par12)
+    public EntityWitherSkull(final World par1World, final double par2, final double par4, final double par6, final double par8, final double par10, final double par12)
     {
         super(par1World, par2, par4, par6, par8, par10, par12);
         this.setSize(0.3125F, 0.3125F);
@@ -53,7 +53,7 @@ public class EntityWitherSkull extends EntityFireball
      * Gets a block's resistance to this entity's explosion. Used to make rails immune to TNT minecarts' explosions and
      * Wither skulls more destructive.
      */
-    public float getBlockExplosionResistance(Explosion par1Explosion, World par2World, int par3, int par4, int par5, Block par6Block)
+    public float getBlockExplosionResistance(final Explosion par1Explosion, final World par2World, final int par3, final int par4, final int par5, final Block par6Block)
     {
         float f = super.getBlockExplosionResistance(par1Explosion, par2World, par3, par4, par5, par6Block);
 
@@ -68,7 +68,7 @@ public class EntityWitherSkull extends EntityFireball
     /**
      * Called when this EntityFireball hits a block or entity.
      */
-    protected void onImpact(MovingObjectPosition par1MovingObjectPosition)
+    protected void onImpact(final MovingObjectPosition par1MovingObjectPosition)
     {
         if (!this.worldObj.isRemote)
         {
@@ -110,7 +110,7 @@ public class EntityWitherSkull extends EntityFireball
             }
 
             // CraftBukkit start
-            ExplosionPrimeEvent event = new ExplosionPrimeEvent(this.getBukkitEntity(), 1.0F, false);
+            final ExplosionPrimeEvent event = new ExplosionPrimeEvent(this.getBukkitEntity(), 1.0F, false);
             this.worldObj.getServer().getPluginManager().callEvent(event);
 
             if (!event.isCancelled())
@@ -134,7 +134,7 @@ public class EntityWitherSkull extends EntityFireball
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2)
     {
         return false;
     }
@@ -155,7 +155,7 @@ public class EntityWitherSkull extends EntityFireball
     /**
      * Set whether this skull comes from an invulnerable (aura) wither boss.
      */
-    public void setInvulnerable(boolean par1)
+    public void setInvulnerable(final boolean par1)
     {
         this.dataWatcher.updateObject(10, Byte.valueOf((byte)(par1 ? 1 : 0)));
     }

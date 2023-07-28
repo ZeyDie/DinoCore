@@ -40,7 +40,7 @@ public class TileEntityCommandBlock extends TileEntity implements ICommandSender
     /**
      * Sets the command this block will execute when powered.
      */
-    public void setCommand(String par1Str)
+    public void setCommand(final String par1Str)
     {
         this.command = par1Str;
         this.onInventoryChanged();
@@ -49,7 +49,7 @@ public class TileEntityCommandBlock extends TileEntity implements ICommandSender
     /**
      * Execute the command, called when the command block is powered.
      */
-    public int executeCommandOnPowered(World par1World)
+    public int executeCommandOnPowered(final World par1World)
     {
         if (par1World.isRemote)
         {
@@ -57,13 +57,13 @@ public class TileEntityCommandBlock extends TileEntity implements ICommandSender
         }
         else
         {
-            MinecraftServer minecraftserver = MinecraftServer.getServer();
+            final MinecraftServer minecraftserver = MinecraftServer.getServer();
 
             if (minecraftserver != null && minecraftserver.isCommandBlockEnabled())
             {
                 // CraftBukkit start - Handle command block commands using Bukkit dispatcher
-                org.bukkit.command.SimpleCommandMap commandMap = minecraftserver.server.getCommandMap();
-                Joiner joiner = Joiner.on(" ");
+                final org.bukkit.command.SimpleCommandMap commandMap = minecraftserver.server.getCommandMap();
+                final Joiner joiner = Joiner.on(" ");
                 String command = this.command;
 
                 if (this.command.startsWith("/"))
@@ -71,7 +71,7 @@ public class TileEntityCommandBlock extends TileEntity implements ICommandSender
                     command = this.command.substring(1);
                 }
 
-                String[] args = command.split(" ");
+                final String[] args = command.split(" ");
                 ArrayList<String[]> commands = new ArrayList<String[]>();
 
                 // Block disallowed commands
@@ -86,7 +86,7 @@ public class TileEntityCommandBlock extends TileEntity implements ICommandSender
                 if (commandMap.getCommand(args[0]) == null)
                 {
                     // Cauldron start -- execute using the vanilla command manager if it isn't in the bukkit command map
-                    net.minecraft.command.ICommandManager icommandmanager = minecraftserver.getCommandManager();
+                    final net.minecraft.command.ICommandManager icommandmanager = minecraftserver.getCommandManager();
                     return icommandmanager.executeCommand(this, this.command);
                     // Cauldron end
                 }
@@ -105,7 +105,7 @@ public class TileEntityCommandBlock extends TileEntity implements ICommandSender
                         return 0;
                     }
 
-                    EntityPlayerMP[] players = PlayerSelector.matchPlayers(this, args[1]);
+                    final EntityPlayerMP[] players = PlayerSelector.matchPlayers(this, args[1]);
 
                     if (players != null && players.length > 0)
                     {
@@ -113,7 +113,7 @@ public class TileEntityCommandBlock extends TileEntity implements ICommandSender
                     }
                     else
                     {
-                        EntityPlayerMP player = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(args[1]);
+                        final EntityPlayerMP player = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(args[1]);
 
                         if (player == null)
                         {
@@ -139,7 +139,7 @@ public class TileEntityCommandBlock extends TileEntity implements ICommandSender
                             newCommands.addAll(this.buildCommands(commands.get(j), i));
                         }
 
-                        ArrayList<String[]> temp = commands;
+                        final ArrayList<String[]> temp = commands;
                         commands = newCommands;
                         newCommands = temp;
                         newCommands.clear();
@@ -158,7 +158,7 @@ public class TileEntityCommandBlock extends TileEntity implements ICommandSender
                             completed++;
                         }
                     }
-                    catch (Throwable exception)
+                    catch (final Throwable exception)
                     {
                         minecraftserver.getLogAgent().logWarningException(String.format("CommandBlock at (%d,%d,%d) failed to handle command", this.xCoord, this.yCoord, this.zCoord), exception);
                     }
@@ -175,21 +175,21 @@ public class TileEntityCommandBlock extends TileEntity implements ICommandSender
     }
 
     // CraftBukkit start
-    private ArrayList<String[]> buildCommands(String[] args, int pos)
+    private ArrayList<String[]> buildCommands(final String[] args, final int pos)
     {
-        ArrayList<String[]> commands = new ArrayList<String[]>();
-        EntityPlayerMP[] players = PlayerSelector.matchPlayers(this, args[pos]);
+        final ArrayList<String[]> commands = new ArrayList<String[]>();
+        final EntityPlayerMP[] players = PlayerSelector.matchPlayers(this, args[pos]);
 
         if (players != null)
         {
-            for (EntityPlayerMP player : players)
+            for (final EntityPlayerMP player : players)
             {
                 if (player.worldObj != this.worldObj)
                 {
                     continue;
                 }
 
-                String[] command = args.clone();
+                final String[] command = args.clone();
                 command[pos] = player.getEntityName();
                 commands.add(command);
             }
@@ -220,17 +220,17 @@ public class TileEntityCommandBlock extends TileEntity implements ICommandSender
     /**
      * Sets the name of the command sender
      */
-    public void setCommandSenderName(String par1Str)
+    public void setCommandSenderName(final String par1Str)
     {
         this.commandSenderName = par1Str;
     }
 
-    public void sendChatToPlayer(ChatMessageComponent par1ChatMessageComponent) {}
+    public void sendChatToPlayer(final ChatMessageComponent par1ChatMessageComponent) {}
 
     /**
      * Returns true if the command sender is allowed to use the given command.
      */
-    public boolean canCommandSenderUseCommand(int par1, String par2Str)
+    public boolean canCommandSenderUseCommand(final int par1, final String par2Str)
     {
         return par1 <= 2;
     }
@@ -238,7 +238,7 @@ public class TileEntityCommandBlock extends TileEntity implements ICommandSender
     /**
      * Writes a tile entity to NBT.
      */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setString("Command", this.command);
@@ -249,7 +249,7 @@ public class TileEntityCommandBlock extends TileEntity implements ICommandSender
     /**
      * Reads a tile entity from NBT.
      */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
         this.command = par1NBTTagCompound.getString("Command");
@@ -279,7 +279,7 @@ public class TileEntityCommandBlock extends TileEntity implements ICommandSender
      */
     public Packet getDescriptionPacket()
     {
-        NBTTagCompound nbttagcompound = new NBTTagCompound();
+        final NBTTagCompound nbttagcompound = new NBTTagCompound();
         this.writeToNBT(nbttagcompound);
         return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 2, nbttagcompound);
     }
@@ -289,7 +289,7 @@ public class TileEntityCommandBlock extends TileEntity implements ICommandSender
         return this.succesCount;
     }
 
-    public void setSignalStrength(int par1)
+    public void setSignalStrength(final int par1)
     {
         this.succesCount = par1;
     }

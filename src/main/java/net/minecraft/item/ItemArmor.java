@@ -15,9 +15,9 @@ import net.minecraft.world.World;
 public class ItemArmor extends Item
 {
     /** Holds the 'base' maxDamage that each armorType have. */
-    private static final int[] maxDamageArray = new int[] {11, 16, 15, 13};
-    private static final String[] field_94606_cu = new String[] {"leather_helmet_overlay", "leather_chestplate_overlay", "leather_leggings_overlay", "leather_boots_overlay"};
-    public static final String[] field_94603_a = new String[] {"empty_armor_slot_helmet", "empty_armor_slot_chestplate", "empty_armor_slot_leggings", "empty_armor_slot_boots"};
+    private static final int[] maxDamageArray = {11, 16, 15, 13};
+    private static final String[] field_94606_cu = {"leather_helmet_overlay", "leather_chestplate_overlay", "leather_leggings_overlay", "leather_boots_overlay"};
+    public static final String[] field_94603_a = {"empty_armor_slot_helmet", "empty_armor_slot_chestplate", "empty_armor_slot_leggings", "empty_armor_slot_boots"};
     private static final IBehaviorDispenseItem field_96605_cw = new BehaviorDispenseArmor();
 
     /**
@@ -41,7 +41,7 @@ public class ItemArmor extends Item
     @SideOnly(Side.CLIENT)
     private Icon field_94604_cx;
 
-    public ItemArmor(int par1, EnumArmorMaterial par2EnumArmorMaterial, int par3, int par4)
+    public ItemArmor(final int par1, final EnumArmorMaterial par2EnumArmorMaterial, final int par3, final int par4)
     {
         super(par1);
         this.material = par2EnumArmorMaterial;
@@ -55,7 +55,7 @@ public class ItemArmor extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack par1ItemStack, int par2)
+    public int getColorFromItemStack(final ItemStack par1ItemStack, final int par2)
     {
         if (par2 > 0)
         {
@@ -99,7 +99,7 @@ public class ItemArmor extends Item
     /**
      * Return whether the specified armor ItemStack has a color.
      */
-    public boolean hasColor(ItemStack par1ItemStack)
+    public boolean hasColor(final ItemStack par1ItemStack)
     {
         return this.material != EnumArmorMaterial.CLOTH ? false : (!par1ItemStack.hasTagCompound() ? false : (!par1ItemStack.getTagCompound().hasKey("display") ? false : par1ItemStack.getTagCompound().getCompoundTag("display").hasKey("color")));
     }
@@ -107,7 +107,7 @@ public class ItemArmor extends Item
     /**
      * Return the color for the specified armor ItemStack.
      */
-    public int getColor(ItemStack par1ItemStack)
+    public int getColor(final ItemStack par1ItemStack)
     {
         if (this.material != EnumArmorMaterial.CLOTH)
         {
@@ -115,7 +115,7 @@ public class ItemArmor extends Item
         }
         else
         {
-            NBTTagCompound nbttagcompound = par1ItemStack.getTagCompound();
+            final NBTTagCompound nbttagcompound = par1ItemStack.getTagCompound();
 
             if (nbttagcompound == null)
             {
@@ -123,7 +123,7 @@ public class ItemArmor extends Item
             }
             else
             {
-                NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
+                final NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
                 return nbttagcompound1 == null ? 10511680 : (nbttagcompound1.hasKey("color") ? nbttagcompound1.getInteger("color") : 10511680);
             }
         }
@@ -134,7 +134,7 @@ public class ItemArmor extends Item
     /**
      * Gets an icon index based on an item's damage value and the given render pass
      */
-    public Icon getIconFromDamageForRenderPass(int par1, int par2)
+    public Icon getIconFromDamageForRenderPass(final int par1, final int par2)
     {
         return par2 == 1 ? this.field_94605_cw : super.getIconFromDamageForRenderPass(par1, par2);
     }
@@ -142,15 +142,15 @@ public class ItemArmor extends Item
     /**
      * Remove the color from the specified armor ItemStack.
      */
-    public void removeColor(ItemStack par1ItemStack)
+    public void removeColor(final ItemStack par1ItemStack)
     {
         if (this.material == EnumArmorMaterial.CLOTH)
         {
-            NBTTagCompound nbttagcompound = par1ItemStack.getTagCompound();
+            final NBTTagCompound nbttagcompound = par1ItemStack.getTagCompound();
 
             if (nbttagcompound != null)
             {
-                NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
+                final NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
 
                 if (nbttagcompound1.hasKey("color"))
                 {
@@ -160,7 +160,7 @@ public class ItemArmor extends Item
         }
     }
 
-    public void func_82813_b(ItemStack par1ItemStack, int par2)
+    public void func_82813_b(final ItemStack par1ItemStack, final int par2)
     {
         if (this.material != EnumArmorMaterial.CLOTH)
         {
@@ -176,7 +176,7 @@ public class ItemArmor extends Item
                 par1ItemStack.setTagCompound(nbttagcompound);
             }
 
-            NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
+            final NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
 
             if (!nbttagcompound.hasKey("display"))
             {
@@ -190,13 +190,13 @@ public class ItemArmor extends Item
     /**
      * Return whether this item is repairable in an anvil.
      */
-    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
+    public boolean getIsRepairable(final ItemStack par1ItemStack, final ItemStack par2ItemStack)
     {
         return this.material.getArmorCraftingMaterial() == par2ItemStack.itemID ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
     }
 
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         super.registerIcons(par1IconRegister);
 
@@ -211,10 +211,10 @@ public class ItemArmor extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
-        int i = EntityLiving.getArmorPosition(par1ItemStack) - 1;
-        ItemStack itemstack1 = par3EntityPlayer.getCurrentArmor(i);
+        final int i = EntityLiving.getArmorPosition(par1ItemStack) - 1;
+        final ItemStack itemstack1 = par3EntityPlayer.getCurrentArmor(i);
 
         if (itemstack1 == null)
         {
@@ -226,7 +226,7 @@ public class ItemArmor extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public static Icon func_94602_b(int par0)
+    public static Icon func_94602_b(final int par0)
     {
         switch (par0)
         {

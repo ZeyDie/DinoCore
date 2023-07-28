@@ -72,7 +72,7 @@ public class OreDictionary
         }
 
         // Build our list of items to replace with ore tags
-        Map<ItemStack, String> replacements = new HashMap<ItemStack, String>();
+        final Map<ItemStack, String> replacements = new HashMap<ItemStack, String>();
         replacements.put(new ItemStack(Item.stick), "stickWood");
         replacements.put(new ItemStack(Block.planks), "plankWood");
         replacements.put(new ItemStack(Block.planks, 1, WILDCARD_VALUE), "plankWood");
@@ -82,7 +82,7 @@ public class OreDictionary
         replacements.put(new ItemStack(Block.cobblestone, 1, WILDCARD_VALUE), "cobblestone");
 
         // Register dyes
-        String[] dyes =
+        final String[] dyes =
         {
             "dyeBlack",
             "dyeRed",
@@ -104,7 +104,7 @@ public class OreDictionary
 
         for(int i = 0; i < 16; i++)
         {
-            ItemStack dye = new ItemStack(Item.dyePowder, 1, i);
+            final ItemStack dye = new ItemStack(Item.dyePowder, 1, i);
             if (!hasInit)
             {
                 registerOre(dyes[i], dye);
@@ -113,11 +113,10 @@ public class OreDictionary
         }
         hasInit = true;
 
-        ItemStack[] replaceStacks = replacements.keySet().toArray(new ItemStack[replacements.keySet().size()]);
+        final ItemStack[] replaceStacks = replacements.keySet().toArray(new ItemStack[0]);
 
         // Ignore recipes for the following items
-        ItemStack[] exclusions = new ItemStack[]
-        {
+        final ItemStack[] exclusions = {
             new ItemStack(Block.blockLapis),
             new ItemStack(Item.cookie),
             new ItemStack(Block.stoneBrick),
@@ -130,17 +129,17 @@ public class OreDictionary
             new ItemStack(Block.stairsWoodSpruce)
         };
 
-        List recipes = CraftingManager.getInstance().getRecipeList();
-        List<IRecipe> recipesToRemove = new ArrayList<IRecipe>();
-        List<IRecipe> recipesToAdd = new ArrayList<IRecipe>();
+        final List recipes = CraftingManager.getInstance().getRecipeList();
+        final List<IRecipe> recipesToRemove = new ArrayList<IRecipe>();
+        final List<IRecipe> recipesToAdd = new ArrayList<IRecipe>();
 
         // Search vanilla recipes for recipes to replace
-        for(Object obj : recipes)
+        for(final Object obj : recipes)
         {
             if(obj instanceof ShapedRecipes)
             {
-                ShapedRecipes recipe = (ShapedRecipes)obj;
-                ItemStack output = recipe.getRecipeOutput();
+                final ShapedRecipes recipe = (ShapedRecipes)obj;
+                final ItemStack output = recipe.getRecipeOutput();
                 if ((output != null && containsMatch(false, exclusions, output)) || output == null) // Cauldron - fixes NPE's with null recipes being added to forge
                 {
                     continue;
@@ -154,17 +153,17 @@ public class OreDictionary
             }
             else if(obj instanceof ShapelessRecipes)
             {
-                ShapelessRecipes recipe = (ShapelessRecipes)obj;
-                ItemStack output = recipe.getRecipeOutput();
+                final ShapelessRecipes recipe = (ShapelessRecipes)obj;
+                final ItemStack output = recipe.getRecipeOutput();
                 if ((output != null && containsMatch(false, exclusions, output)) || output == null) // Cauldron - fixes NPE's with null recipes being added to forge
                 {
                     continue;
                 }
 
-                if(containsMatch(true, (ItemStack[])recipe.recipeItems.toArray(new ItemStack[recipe.recipeItems.size()]), replaceStacks))
+                if(containsMatch(true, (ItemStack[])recipe.recipeItems.toArray(new ItemStack[0]), replaceStacks))
                 {
                     recipesToRemove.add((IRecipe)obj);
-                    IRecipe newRecipe = new ShapelessOreRecipe(recipe, replacements);
+                    final IRecipe newRecipe = new ShapelessOreRecipe(recipe, replacements);
                     recipesToAdd.add(newRecipe);
                 }
             }
@@ -172,7 +171,7 @@ public class OreDictionary
 
         recipes.removeAll(recipesToRemove);
         recipes.addAll(recipesToAdd);
-        if (recipesToRemove.size() > 0)
+        if (!recipesToRemove.isEmpty())
         {
             System.out.println("Replaced " + recipesToRemove.size() + " ore recipies");
         }
@@ -185,7 +184,7 @@ public class OreDictionary
      * @param name The unique name for this ore 'oreIron', 'ingotIron', etc..
      * @return A number representing the ID for this ore type
      */
-    public static int getOreID(String name)
+    public static int getOreID(final String name)
     {
         Integer val = oreIDs.get(name);
         if (val == null)
@@ -203,9 +202,9 @@ public class OreDictionary
      * @param id The ID to translate to a string
      * @return The String name, or "Unknown" if not found.
      */
-    public static String getOreName(int id)
+    public static String getOreName(final int id)
     {
-        for (Map.Entry<String, Integer> entry : oreIDs.entrySet())
+        for (final Map.Entry<String, Integer> entry : oreIDs.entrySet())
         {
             if (id == entry.getValue())
             {
@@ -222,16 +221,16 @@ public class OreDictionary
      * @param itemStack The item stack of the ore.
      * @return A number representing the ID for this ore type, or -1 if couldn't find it.
      */
-    public static int getOreID(ItemStack itemStack)
+    public static int getOreID(final ItemStack itemStack)
     {
         if (itemStack == null)
         {
             return -1;
         }
 
-        for(Entry<Integer, ArrayList<ItemStack>> ore : oreStacks.entrySet())
+        for(final Entry<Integer, ArrayList<ItemStack>> ore : oreStacks.entrySet())
         {
-            for(ItemStack target : ore.getValue())
+            for(final ItemStack target : ore.getValue())
             {
                 if(itemStack.itemID == target.itemID && (target.getItemDamage() == WILDCARD_VALUE || itemStack.getItemDamage() == target.getItemDamage()))
                 {
@@ -249,7 +248,7 @@ public class OreDictionary
      * @param name The ore name, directly calls getOreID
      * @return An arrayList containing ItemStacks registered for this ore
      */
-    public static ArrayList<ItemStack> getOres(String name)
+    public static ArrayList<ItemStack> getOres(final String name)
     {
         return getOres(getOreID(name));
     }
@@ -261,7 +260,7 @@ public class OreDictionary
      */
     public static String[] getOreNames()
     {
-        return oreIDs.keySet().toArray(new String[oreIDs.keySet().size()]);
+        return oreIDs.keySet().toArray(new String[0]);
     }
 
     /**
@@ -271,7 +270,7 @@ public class OreDictionary
      * @param id The ore ID, see getOreID
      * @return An arrayList containing ItemStacks registered for this ore
      */
-    public static ArrayList<ItemStack> getOres(Integer id)
+    public static ArrayList<ItemStack> getOres(final Integer id)
     {
         ArrayList<ItemStack> val = oreStacks.get(id);
         if (val == null)
@@ -282,11 +281,11 @@ public class OreDictionary
         return val;
     }
 
-    private static boolean containsMatch(boolean strict, ItemStack[] inputs, ItemStack... targets)
+    private static boolean containsMatch(final boolean strict, final ItemStack[] inputs, final ItemStack... targets)
     {
-        for (ItemStack input : inputs)
+        for (final ItemStack input : inputs)
         {
-            for (ItemStack target : targets)
+            for (final ItemStack target : targets)
             {
                 if (itemMatches(target, input, strict))
                 {
@@ -297,7 +296,7 @@ public class OreDictionary
         return false;
     }
 
-    public static boolean itemMatches(ItemStack target, ItemStack input, boolean strict)
+    public static boolean itemMatches(final ItemStack target, final ItemStack input, final boolean strict)
     {
         if (input == null && target != null || input != null && target == null)
         {
@@ -307,12 +306,12 @@ public class OreDictionary
     }
 
     //Convenience functions that make for cleaner code mod side. They all drill down to registerOre(String, int, ItemStack)
-    public static void registerOre(String name, Item      ore){ registerOre(name, new ItemStack(ore));  }
-    public static void registerOre(String name, Block     ore){ registerOre(name, new ItemStack(ore));  }
-    public static void registerOre(String name, ItemStack ore){ registerOre(name, getOreID(name), ore); }
-    public static void registerOre(int    id,   Item      ore){ registerOre(id,   new ItemStack(ore));  }
-    public static void registerOre(int    id,   Block     ore){ registerOre(id,   new ItemStack(ore));  }
-    public static void registerOre(int    id,   ItemStack ore){ registerOre(getOreName(id), id, ore);   }
+    public static void registerOre(final String name, final Item      ore){ registerOre(name, new ItemStack(ore));  }
+    public static void registerOre(final String name, final Block     ore){ registerOre(name, new ItemStack(ore));  }
+    public static void registerOre(final String name, final ItemStack ore){ registerOre(name, getOreID(name), ore); }
+    public static void registerOre(final int    id, final Item      ore){ registerOre(id,   new ItemStack(ore));  }
+    public static void registerOre(final int    id, final Block     ore){ registerOre(id,   new ItemStack(ore));  }
+    public static void registerOre(final int    id, final ItemStack ore){ registerOre(getOreName(id), id, ore);   }
 
     /**
      * Registers a ore item into the dictionary.
@@ -322,12 +321,12 @@ public class OreDictionary
      * @param id The ID of the ore
      * @param ore The ore's ItemStack
      */
-    private static void registerOre(String name, int id, ItemStack ore)
+    private static void registerOre(final String name, final int id, ItemStack ore)
     {
-        ArrayList<ItemStack> ores = getOres(id);
-        ore = ore.copy();
-        ores.add(ore);
-        MinecraftForge.EVENT_BUS.post(new OreRegisterEvent(name, ore));
+        final ArrayList<ItemStack> ores = getOres(id);
+        ItemStack ore1 = ore.copy();
+        ores.add(ore1);
+        MinecraftForge.EVENT_BUS.post(new OreRegisterEvent(name, ore1));
     }
 
     public static class OreRegisterEvent extends Event
@@ -335,7 +334,7 @@ public class OreDictionary
         public final String Name;
         public final ItemStack Ore;
 
-        public OreRegisterEvent(String name, ItemStack ore)
+        public OreRegisterEvent(final String name, final ItemStack ore)
         {
             this.Name = name;
             this.Ore = ore;

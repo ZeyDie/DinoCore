@@ -6,7 +6,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Silverfish;
 
 public class CraftSilverfish extends CraftMonster implements Silverfish {
-    public CraftSilverfish(CraftServer server, net.minecraft.entity.monster.EntitySilverfish entity) {
+    public CraftSilverfish(final CraftServer server, final net.minecraft.entity.monster.EntitySilverfish entity) {
         super(server, entity);
     }
 

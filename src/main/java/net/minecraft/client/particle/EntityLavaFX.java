@@ -10,7 +10,7 @@ public class EntityLavaFX extends EntityFX
 {
     private float lavaParticleScale;
 
-    public EntityLavaFX(World par1World, double par2, double par4, double par6)
+    public EntityLavaFX(final World par1World, final double par2, final double par4, final double par6)
     {
         super(par1World, par2, par4, par6, 0.0D, 0.0D, 0.0D);
         this.motionX *= 0.800000011920929D;
@@ -25,7 +25,7 @@ public class EntityLavaFX extends EntityFX
         this.setParticleTextureIndex(49);
     }
 
-    public int getBrightnessForRender(float par1)
+    public int getBrightnessForRender(final float par1)
     {
         float f1 = ((float)this.particleAge + par1) / (float)this.particleMaxAge;
 
@@ -39,23 +39,23 @@ public class EntityLavaFX extends EntityFX
             f1 = 1.0F;
         }
 
-        int i = super.getBrightnessForRender(par1);
-        short short1 = 240;
-        int j = i >> 16 & 255;
+        final int i = super.getBrightnessForRender(par1);
+        final short short1 = 240;
+        final int j = i >> 16 & 255;
         return short1 | j << 16;
     }
 
     /**
      * Gets how bright this entity is.
      */
-    public float getBrightness(float par1)
+    public float getBrightness(final float par1)
     {
         return 1.0F;
     }
 
-    public void renderParticle(Tessellator par1Tessellator, float par2, float par3, float par4, float par5, float par6, float par7)
+    public void renderParticle(final Tessellator par1Tessellator, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7)
     {
-        float f6 = ((float)this.particleAge + par2) / (float)this.particleMaxAge;
+        final float f6 = ((float)this.particleAge + par2) / (float)this.particleMaxAge;
         this.particleScale = this.lavaParticleScale * (1.0F - f6 * f6);
         super.renderParticle(par1Tessellator, par2, par3, par4, par5, par6, par7);
     }
@@ -74,7 +74,7 @@ public class EntityLavaFX extends EntityFX
             this.setDead();
         }
 
-        float f = (float)this.particleAge / (float)this.particleMaxAge;
+        final float f = (float)this.particleAge / (float)this.particleMaxAge;
 
         if (this.rand.nextFloat() > f)
         {

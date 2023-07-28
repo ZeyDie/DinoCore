@@ -37,8 +37,8 @@ public class ModelWolf extends ModelBase
 
     public ModelWolf()
     {
-        float f = 0.0F;
-        float f1 = 13.5F;
+        final float f = 0.0F;
+        final float f1 = 13.5F;
         this.wolfHeadMain = new ModelRenderer(this, 0, 0);
         this.wolfHeadMain.addBox(-3.0F, -3.0F, -2.0F, 6, 6, 4, f);
         this.wolfHeadMain.setRotationPoint(-1.0F, f1, -7.0F);
@@ -71,14 +71,14 @@ public class ModelWolf extends ModelBase
     /**
      * Sets the models various rotation angles then renders the model.
      */
-    public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7)
+    public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7)
     {
         super.render(par1Entity, par2, par3, par4, par5, par6, par7);
         this.setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 
         if (this.isChild)
         {
-            float f6 = 2.0F;
+            final float f6 = 2.0F;
             GL11.glPushMatrix();
             GL11.glTranslatef(0.0F, 5.0F * par7, 2.0F * par7);
             this.wolfHeadMain.renderWithRotation(par7);
@@ -112,9 +112,9 @@ public class ModelWolf extends ModelBase
      * Used for easily adding entity-dependent animations. The second and third float params here are the same second
      * and third as in the setRotationAngles method.
      */
-    public void setLivingAnimations(EntityLivingBase par1EntityLivingBase, float par2, float par3, float par4)
+    public void setLivingAnimations(final EntityLivingBase par1EntityLivingBase, final float par2, final float par3, final float par4)
     {
-        EntityWolf entitywolf = (EntityWolf)par1EntityLivingBase;
+        final EntityWolf entitywolf = (EntityWolf)par1EntityLivingBase;
 
         if (entitywolf.isAngry())
         {
@@ -128,15 +128,15 @@ public class ModelWolf extends ModelBase
         if (entitywolf.isSitting())
         {
             this.wolfMane.setRotationPoint(-1.0F, 16.0F, -3.0F);
-            this.wolfMane.rotateAngleX = ((float)Math.PI * 2F / 5F);
+            this.wolfMane.rotateAngleX = ((float)Math.PI * 2.0F / 5.0F);
             this.wolfMane.rotateAngleY = 0.0F;
             this.wolfBody.setRotationPoint(0.0F, 18.0F, 0.0F);
-            this.wolfBody.rotateAngleX = ((float)Math.PI / 4F);
+            this.wolfBody.rotateAngleX = ((float)Math.PI / 4.0F);
             this.wolfTail.setRotationPoint(-1.0F, 21.0F, 6.0F);
             this.wolfLeg1.setRotationPoint(-2.5F, 22.0F, 2.0F);
-            this.wolfLeg1.rotateAngleX = ((float)Math.PI * 3F / 2F);
+            this.wolfLeg1.rotateAngleX = ((float)Math.PI * 3.0F / 2.0F);
             this.wolfLeg2.setRotationPoint(0.5F, 22.0F, 2.0F);
-            this.wolfLeg2.rotateAngleX = ((float)Math.PI * 3F / 2F);
+            this.wolfLeg2.rotateAngleX = ((float)Math.PI * 3.0F / 2.0F);
             this.wolfLeg3.rotateAngleX = 5.811947F;
             this.wolfLeg3.setRotationPoint(-2.49F, 17.0F, -4.0F);
             this.wolfLeg4.rotateAngleX = 5.811947F;
@@ -145,7 +145,7 @@ public class ModelWolf extends ModelBase
         else
         {
             this.wolfBody.setRotationPoint(0.0F, 14.0F, 2.0F);
-            this.wolfBody.rotateAngleX = ((float)Math.PI / 2F);
+            this.wolfBody.rotateAngleX = ((float)Math.PI / 2.0F);
             this.wolfMane.setRotationPoint(-1.0F, 14.0F, -3.0F);
             this.wolfMane.rotateAngleX = this.wolfBody.rotateAngleX;
             this.wolfTail.setRotationPoint(-1.0F, 12.0F, 8.0F);
@@ -170,11 +170,11 @@ public class ModelWolf extends ModelBase
      * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how
      * "far" arms and legs can swing at most.
      */
-    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity)
+    public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity)
     {
         super.setRotationAngles(par1, par2, par3, par4, par5, par6, par7Entity);
-        this.wolfHeadMain.rotateAngleX = par5 / (180F / (float)Math.PI);
-        this.wolfHeadMain.rotateAngleY = par4 / (180F / (float)Math.PI);
+        this.wolfHeadMain.rotateAngleX = par5 / (180.0F / (float)Math.PI);
+        this.wolfHeadMain.rotateAngleY = par4 / (180.0F / (float)Math.PI);
         this.wolfTail.rotateAngleX = par3;
     }
 }

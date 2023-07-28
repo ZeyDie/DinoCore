@@ -19,7 +19,7 @@ public class OreDictionaryEntry {
      * @param id opaque ore dictionary id
      * @return object wrapper around id
      */
-    public static OreDictionaryEntry valueOf(int id) {
+    public static OreDictionaryEntry valueOf(final int id) {
         if (id < 0) throw new IllegalArgumentException("ore dictionary IDs are not negative");
 
         while (oreDictionaryEntries.size() < id + 1) {
@@ -29,7 +29,7 @@ public class OreDictionaryEntry {
     }
 
     private int id;
-    private OreDictionaryEntry(int id) {
+    private OreDictionaryEntry(final int id) {
         this.id = id;
     }
 

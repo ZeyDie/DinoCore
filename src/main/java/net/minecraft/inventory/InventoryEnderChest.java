@@ -27,12 +27,12 @@ public class InventoryEnderChest extends InventoryBasic
         return this.inventoryContents;
     }
 
-    public void onOpen(CraftHumanEntity who)
+    public void onOpen(final CraftHumanEntity who)
     {
         transaction.add(who);
     }
 
-    public void onClose(CraftHumanEntity who)
+    public void onClose(final CraftHumanEntity who)
     {
         transaction.remove(who);
     }
@@ -47,7 +47,7 @@ public class InventoryEnderChest extends InventoryBasic
         return this.player;
     }
 
-    public void setMaxStackSize(int size)
+    public void setMaxStackSize(final int size)
     {
         maxStack = size;
     }
@@ -67,12 +67,12 @@ public class InventoryEnderChest extends InventoryBasic
         super("container.enderchest", false, 27);
     }
 
-    public void setAssociatedChest(TileEntityEnderChest par1TileEntityEnderChest)
+    public void setAssociatedChest(final TileEntityEnderChest par1TileEntityEnderChest)
     {
         this.associatedChest = par1TileEntityEnderChest;
     }
 
-    public void loadInventoryFromNBT(NBTTagList par1NBTTagList)
+    public void loadInventoryFromNBT(final NBTTagList par1NBTTagList)
     {
         int i;
 
@@ -83,8 +83,8 @@ public class InventoryEnderChest extends InventoryBasic
 
         for (i = 0; i < par1NBTTagList.tagCount(); ++i)
         {
-            NBTTagCompound nbttagcompound = (NBTTagCompound)par1NBTTagList.tagAt(i);
-            int j = nbttagcompound.getByte("Slot") & 255;
+            final NBTTagCompound nbttagcompound = (NBTTagCompound)par1NBTTagList.tagAt(i);
+            final int j = nbttagcompound.getByte("Slot") & 255;
 
             if (j >= 0 && j < this.getSizeInventory())
             {
@@ -95,15 +95,15 @@ public class InventoryEnderChest extends InventoryBasic
 
     public NBTTagList saveInventoryToNBT()
     {
-        NBTTagList nbttaglist = new NBTTagList("EnderItems");
+        final NBTTagList nbttaglist = new NBTTagList("EnderItems");
 
         for (int i = 0; i < this.getSizeInventory(); ++i)
         {
-            ItemStack itemstack = this.getStackInSlot(i);
+            final ItemStack itemstack = this.getStackInSlot(i);
 
             if (itemstack != null)
             {
-                NBTTagCompound nbttagcompound = new NBTTagCompound();
+                final NBTTagCompound nbttagcompound = new NBTTagCompound();
                 nbttagcompound.setByte("Slot", (byte)i);
                 itemstack.writeToNBT(nbttagcompound);
                 nbttaglist.appendTag(nbttagcompound);
@@ -116,7 +116,7 @@ public class InventoryEnderChest extends InventoryBasic
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
+    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer)
     {
         return this.associatedChest != null && !this.associatedChest.isUseableByPlayer(par1EntityPlayer) ? false : super.isUseableByPlayer(par1EntityPlayer);
     }
@@ -145,7 +145,7 @@ public class InventoryEnderChest extends InventoryBasic
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack)
+    public boolean isItemValidForSlot(final int par1, final ItemStack par2ItemStack)
     {
         return true;
     }

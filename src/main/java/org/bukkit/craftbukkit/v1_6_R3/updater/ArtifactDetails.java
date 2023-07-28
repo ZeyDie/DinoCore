@@ -16,7 +16,7 @@ public class ArtifactDetails {
         return channel;
     }
 
-    public void setChannel(ChannelDetails channel) {
+    public void setChannel(final ChannelDetails channel) {
         this.channel = channel;
     }
 
@@ -24,7 +24,7 @@ public class ArtifactDetails {
         return isBroken;
     }
 
-    public void setIsBroken(boolean isBroken) {
+    public void setIsBroken(final boolean isBroken) {
         this.isBroken = isBroken;
     }
 
@@ -32,7 +32,7 @@ public class ArtifactDetails {
         return file;
     }
 
-    public void setFile(FileDetails file) {
+    public void setFile(final FileDetails file) {
         this.file = file;
     }
 
@@ -40,7 +40,7 @@ public class ArtifactDetails {
         return brokenReason;
     }
 
-    public void setBrokenReason(String brokenReason) {
+    public void setBrokenReason(final String brokenReason) {
         this.brokenReason = brokenReason;
     }
 
@@ -48,7 +48,7 @@ public class ArtifactDetails {
         return buildNumber;
     }
 
-    public void setBuildNumber(int buildNumber) {
+    public void setBuildNumber(final int buildNumber) {
         this.buildNumber = buildNumber;
     }
 
@@ -56,7 +56,7 @@ public class ArtifactDetails {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(final Date created) {
         this.created = created;
     }
 
@@ -64,7 +64,7 @@ public class ArtifactDetails {
         return htmlUrl;
     }
 
-    public void setHtmlUrl(String htmlUrl) {
+    public void setHtmlUrl(final String htmlUrl) {
         this.htmlUrl = htmlUrl;
     }
 
@@ -72,7 +72,7 @@ public class ArtifactDetails {
         return isBroken;
     }
 
-    public void setBroken(boolean isBroken) {
+    public void setBroken(final boolean isBroken) {
         this.isBroken = isBroken;
     }
 
@@ -80,7 +80,7 @@ public class ArtifactDetails {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(final String version) {
         this.version = version;
     }
 
@@ -91,7 +91,7 @@ public class ArtifactDetails {
             return url;
         }
 
-        public void setUrl(String url) {
+        public void setUrl(final String url) {
             this.url = url;
         }
     }
@@ -105,7 +105,7 @@ public class ArtifactDetails {
             return name;
         }
 
-        public void setName(String name) {
+        public void setName(final String name) {
             this.name = name;
         }
 
@@ -113,7 +113,7 @@ public class ArtifactDetails {
             return priority;
         }
 
-        public void setPriority(int priority) {
+        public void setPriority(final int priority) {
             this.priority = priority;
         }
 
@@ -121,7 +121,7 @@ public class ArtifactDetails {
             return slug;
         }
 
-        public void setSlug(String slug) {
+        public void setSlug(final String slug) {
             this.slug = slug;
         }
     }

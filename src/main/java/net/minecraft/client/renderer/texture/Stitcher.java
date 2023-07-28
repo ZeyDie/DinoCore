@@ -21,12 +21,12 @@ public class Stitcher
     /** Max size (width or height) of a single tile */
     private final int maxTileDimension;
 
-    public Stitcher(int par1, int par2, boolean par3)
+    public Stitcher(final int par1, final int par2, final boolean par3)
     {
         this(par1, par2, par3, 0);
     }
 
-    public Stitcher(int par1, int par2, boolean par3, int par4)
+    public Stitcher(final int par1, final int par2, final boolean par3, final int par4)
     {
         this.setStitchHolders = new HashSet(256);
         this.stitchSlots = new ArrayList(256);
@@ -46,9 +46,9 @@ public class Stitcher
         return this.currentHeight;
     }
 
-    public void addSprite(TextureAtlasSprite par1TextureAtlasSprite)
+    public void addSprite(final TextureAtlasSprite par1TextureAtlasSprite)
     {
-        StitchHolder stitchholder = new StitchHolder(par1TextureAtlasSprite);
+        final StitchHolder stitchholder = new StitchHolder(par1TextureAtlasSprite);
 
         if (this.maxTileDimension > 0)
         {
@@ -60,18 +60,18 @@ public class Stitcher
 
     public void doStitch()
     {
-        StitchHolder[] astitchholder = (StitchHolder[])this.setStitchHolders.toArray(new StitchHolder[this.setStitchHolders.size()]);
+        final StitchHolder[] astitchholder = (StitchHolder[])this.setStitchHolders.toArray(new StitchHolder[0]);
         Arrays.sort(astitchholder);
-        StitchHolder[] astitchholder1 = astitchholder;
-        int i = astitchholder.length;
+        final StitchHolder[] astitchholder1 = astitchholder;
+        final int i = astitchholder.length;
 
         for (int j = 0; j < i; ++j)
         {
-            StitchHolder stitchholder = astitchholder1[j];
+            final StitchHolder stitchholder = astitchholder1[j];
 
             if (!this.allocateSlot(stitchholder))
             {
-                String s = String.format("Unable to fit: %s - size: %dx%d - Maybe try a lowerresolution texturepack?", new Object[] {stitchholder.getAtlasSprite().getIconName(), Integer.valueOf(stitchholder.getAtlasSprite().getIconWidth()), Integer.valueOf(stitchholder.getAtlasSprite().getIconHeight())});
+                final String s = String.format("Unable to fit: %s - size: %dx%d - Maybe try a lowerresolution texturepack?", new Object[] {stitchholder.getAtlasSprite().getIconName(), Integer.valueOf(stitchholder.getAtlasSprite().getIconWidth()), Integer.valueOf(stitchholder.getAtlasSprite().getIconHeight())});
                 throw new StitcherException(stitchholder, s);
             }
         }
@@ -85,23 +85,23 @@ public class Stitcher
 
     public List getStichSlots()
     {
-        ArrayList arraylist = Lists.newArrayList();
-        Iterator iterator = this.stitchSlots.iterator();
+        final ArrayList arraylist = Lists.newArrayList();
+        final Iterator iterator = this.stitchSlots.iterator();
 
         while (iterator.hasNext())
         {
-            StitchSlot stitchslot = (StitchSlot)iterator.next();
+            final StitchSlot stitchslot = (StitchSlot)iterator.next();
             stitchslot.getAllStitchSlots(arraylist);
         }
 
-        ArrayList arraylist1 = Lists.newArrayList();
-        Iterator iterator1 = arraylist.iterator();
+        final ArrayList arraylist1 = Lists.newArrayList();
+        final Iterator iterator1 = arraylist.iterator();
 
         while (iterator1.hasNext())
         {
-            StitchSlot stitchslot1 = (StitchSlot)iterator1.next();
-            StitchHolder stitchholder = stitchslot1.getStitchHolder();
-            TextureAtlasSprite textureatlassprite = stitchholder.getAtlasSprite();
+            final StitchSlot stitchslot1 = (StitchSlot)iterator1.next();
+            final StitchHolder stitchholder = stitchslot1.getStitchHolder();
+            final TextureAtlasSprite textureatlassprite = stitchholder.getAtlasSprite();
             textureatlassprite.initSprite(this.currentWidth, this.currentHeight, stitchslot1.getOriginX(), stitchslot1.getOriginY(), stitchholder.isRotated());
             arraylist1.add(textureatlassprite);
         }
@@ -112,7 +112,7 @@ public class Stitcher
     /**
      * Returns power of 2 >= the specified value
      */
-    private int getCeilPowerOf2(int par1)
+    private int getCeilPowerOf2(final int par1)
     {
         int j = par1 - 1;
         j |= j >> 1;
@@ -126,7 +126,7 @@ public class Stitcher
     /**
      * Attempts to find space for specified tile
      */
-    private boolean allocateSlot(StitchHolder par1StitchHolder)
+    private boolean allocateSlot(final StitchHolder par1StitchHolder)
     {
         for (int i = 0; i < this.stitchSlots.size(); ++i)
         {
@@ -151,35 +151,35 @@ public class Stitcher
     /**
      * Expand stitched texture in order to make space for specified tile
      */
-    private boolean expandAndAllocateSlot(StitchHolder par1StitchHolder)
+    private boolean expandAndAllocateSlot(final StitchHolder par1StitchHolder)
     {
-        int i = Math.min(par1StitchHolder.getHeight(), par1StitchHolder.getWidth());
-        boolean flag = this.currentWidth == 0 && this.currentHeight == 0;
-        boolean flag1;
+        final int i = Math.min(par1StitchHolder.getHeight(), par1StitchHolder.getWidth());
+        final boolean flag = this.currentWidth == 0 && this.currentHeight == 0;
+        final boolean flag1;
 
         if (this.forcePowerOf2)
         {
-            int j = this.getCeilPowerOf2(this.currentWidth);
-            int k = this.getCeilPowerOf2(this.currentHeight);
-            int l = this.getCeilPowerOf2(this.currentWidth + i);
-            int i1 = this.getCeilPowerOf2(this.currentHeight + i);
-            boolean flag2 = l <= this.maxWidth;
-            boolean flag3 = i1 <= this.maxHeight;
+            final int j = this.getCeilPowerOf2(this.currentWidth);
+            final int k = this.getCeilPowerOf2(this.currentHeight);
+            final int l = this.getCeilPowerOf2(this.currentWidth + i);
+            final int i1 = this.getCeilPowerOf2(this.currentHeight + i);
+            final boolean flag2 = l <= this.maxWidth;
+            final boolean flag3 = i1 <= this.maxHeight;
 
             if (!flag2 && !flag3)
             {
                 return false;
             }
 
-            int j1 = Math.max(par1StitchHolder.getHeight(), par1StitchHolder.getWidth());
+            final int j1 = Math.max(par1StitchHolder.getHeight(), par1StitchHolder.getWidth());
 
             if (flag && !flag2 && this.getCeilPowerOf2(this.currentHeight + j1) > this.maxHeight)
             {
                 return false;
             }
 
-            boolean flag4 = j != l;
-            boolean flag5 = k != i1;
+            final boolean flag4 = j != l;
+            final boolean flag5 = k != i1;
 
             if (flag4 ^ flag5)
             {
@@ -192,8 +192,8 @@ public class Stitcher
         }
         else
         {
-            boolean flag6 = this.currentWidth + i <= this.maxWidth;
-            boolean flag7 = this.currentHeight + i <= this.maxHeight;
+            final boolean flag6 = this.currentWidth + i <= this.maxWidth;
+            final boolean flag7 = this.currentHeight + i <= this.maxHeight;
 
             if (!flag6 && !flag7)
             {
@@ -203,7 +203,7 @@ public class Stitcher
             flag1 = (flag || this.currentWidth <= this.currentHeight) && flag6;
         }
 
-        StitchSlot stitchslot;
+        final StitchSlot stitchslot;
 
         if (flag1)
         {

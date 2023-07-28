@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class CraftFakePlayer extends CraftPlayer
 {
-    public CraftFakePlayer(CraftServer server, EntityPlayerMP entity)
+    public CraftFakePlayer(final CraftServer server, final EntityPlayerMP entity)
     {
         super(server, entity);
     }
@@ -40,9 +40,9 @@ public class CraftFakePlayer extends CraftPlayer
      *                      through CraftFakePlayer. The class name is used for naming the new fake player.
      * @return
      */
-    public static EntityPlayerMP get(World world, EntityPlayer modFakePlayer)
+    public static EntityPlayerMP get(final World world, final EntityPlayer modFakePlayer)
     {
-        String className;
+        final String className;
 
         if (modFakePlayer != null)
         {
@@ -56,7 +56,7 @@ public class CraftFakePlayer extends CraftPlayer
 
         if (!fakePlayersUsername.containsKey(className))
         {
-            String defaultName;
+            final String defaultName;
 
             if (modFakePlayer == null)
             {
@@ -64,7 +64,7 @@ public class CraftFakePlayer extends CraftPlayer
                 defaultName = "[FakePlayer]";
             } else {
                 // Default to either the mod's fake player username, or class name if unspecified
-                if (modFakePlayer.username != null && !modFakePlayer.username.equals("")) {
+                if (modFakePlayer.username != null && !modFakePlayer.username.isEmpty()) {
                     defaultName = "[" + modFakePlayer.username + "]";
                 } else {
                     defaultName = "[" + className + "]";
@@ -72,7 +72,7 @@ public class CraftFakePlayer extends CraftPlayer
             }
 
             // Use custom name defined by administrator, if any
-            String username = MinecraftServer.getServer().cauldronConfig.getFakePlayer(className, defaultName);
+            final String username = MinecraftServer.getServer().cauldronConfig.getFakePlayer(className, defaultName);
 
             System.out.println("[FakePlayer] Initializing fake player for " + className + ": " + username);
 
@@ -86,23 +86,23 @@ public class CraftFakePlayer extends CraftPlayer
     /**
      * Get a fake player with a given username
      */
-    public static EntityPlayerMP get(World world, String username, boolean doLogin)
+    public static EntityPlayerMP get(final World world, final String username, final boolean doLogin)
     {
         if (!fakePlayers.containsKey(username))
         {
-            EntityPlayerMP fakePlayer = new EntityPlayerMP(FMLCommonHandler.instance().getMinecraftServerInstance(), world,
+            final EntityPlayerMP fakePlayer = new EntityPlayerMP(FMLCommonHandler.instance().getMinecraftServerInstance(), world,
                     username, new ItemInWorldManager(world));
 
             if (doLogin)
             {
-                PlayerLoginEvent ple = new PlayerLoginEvent(fakePlayer.getBukkitEntity(), "", null);
+                final PlayerLoginEvent ple = new PlayerLoginEvent(fakePlayer.getBukkitEntity(), "", null);
                 world.getServer().getPluginManager().callEvent(ple);
                 if (ple.getResult() != PlayerLoginEvent.Result.ALLOWED)
                 {
                     System.err.println("[FakePlayer] Warning: Login event was disallowed for "+username+". Ignoring, but this may cause confused plugins.");
                 }
 
-                PlayerJoinEvent pje = new PlayerJoinEvent(fakePlayer.getBukkitEntity(), "");
+                final PlayerJoinEvent pje = new PlayerJoinEvent(fakePlayer.getBukkitEntity(), "");
                 world.getServer().getPluginManager().callEvent(pje);
             }
 
@@ -112,16 +112,16 @@ public class CraftFakePlayer extends CraftPlayer
         return fakePlayers.get(username);
     }
 
-    public static EntityPlayerMP get(World world)
+    public static EntityPlayerMP get(final World world)
     {
         return get(world, null);
     }
 
     // Bukkit wrappers
 
-    public static CraftPlayer getBukkitEntity(World world, EntityPlayer modFakePlayer)
+    public static CraftPlayer getBukkitEntity(final World world, final EntityPlayer modFakePlayer)
     {
-        EntityPlayerMP player = get(world, modFakePlayer);
+        final EntityPlayerMP player = get(world, modFakePlayer);
         if (player != null)
         {
             return player.getBukkitEntity();
@@ -129,14 +129,14 @@ public class CraftFakePlayer extends CraftPlayer
         return null;
     }
 
-    public static CraftPlayer getBukkitEntity(World world)
+    public static CraftPlayer getBukkitEntity(final World world)
     {
         return getBukkitEntity(world, null);
     }
 
-    public static CraftPlayer getBukkitEntity(World world, String username, boolean doLogin)
+    public static CraftPlayer getBukkitEntity(final World world, final String username, final boolean doLogin)
     {
-        EntityPlayerMP player = get(world, username, doLogin);
+        final EntityPlayerMP player = get(world, username, doLogin);
         if (player != null)
         {
             return player.getBukkitEntity();
@@ -144,7 +144,7 @@ public class CraftFakePlayer extends CraftPlayer
         return null;
     }
 
-    public static Player getPossiblyRealPlayerBukkitEntity(World world, String username, boolean doLogin)
+    public static Player getPossiblyRealPlayerBukkitEntity(final World world, final String username, final boolean doLogin)
     {
         if (username.startsWith("[") && username.endsWith("]"))
         {
@@ -152,7 +152,7 @@ public class CraftFakePlayer extends CraftPlayer
         }
         else
         {
-            Player player = Bukkit.getServer().getPlayer(username);
+            final Player player = Bukkit.getServer().getPlayer(username);
             if (player != null)
             {
                 // real player is logged in, use it

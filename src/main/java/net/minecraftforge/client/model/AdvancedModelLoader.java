@@ -27,9 +27,9 @@ public class AdvancedModelLoader {
      * Register a new model handler
      * @param modelHandler The model handler to register
      */
-    public static void registerModelHandler(IModelCustomLoader modelHandler)
+    public static void registerModelHandler(final IModelCustomLoader modelHandler)
     {
-        for (String suffix : modelHandler.getSuffixes())
+        for (final String suffix : modelHandler.getSuffixes())
         {
             instances.put(suffix, modelHandler);
         }
@@ -42,23 +42,23 @@ public class AdvancedModelLoader {
      * @throws IllegalArgumentException if the resource name cannot be understood
      * @throws ModelFormatException if the underlying model handler cannot parse the model format
      */
-    public static IModelCustom loadModel(String resourceName) throws IllegalArgumentException, ModelFormatException
+    public static IModelCustom loadModel(final String resourceName) throws IllegalArgumentException, ModelFormatException
     {
-        int i = resourceName.lastIndexOf('.');
+        final int i = resourceName.lastIndexOf('.');
         if (i == -1)
         {
             FMLLog.severe("The resource name %s is not valid", resourceName);
             throw new IllegalArgumentException("The resource name is not valid");
         }
-        String suffix = resourceName.substring(i+1);
-        IModelCustomLoader loader = instances.get(suffix);
+        final String suffix = resourceName.substring(i+1);
+        final IModelCustomLoader loader = instances.get(suffix);
         if (loader == null)
         {
             FMLLog.severe("The resource name %s is not supported", resourceName);
             throw new IllegalArgumentException("The resource name is not supported");
         }
 
-        URL resource = AdvancedModelLoader.class.getResource(resourceName);
+        final URL resource = AdvancedModelLoader.class.getResource(resourceName);
         if (resource == null)
         {
             FMLLog.severe("The resource name %s could not be found", resourceName);

@@ -19,7 +19,7 @@ public class MinecraftDummyContainer extends DummyModContainer
 {
 
     private VersionRange staticRange;
-    public MinecraftDummyContainer(String actualMCVersion)
+    public MinecraftDummyContainer(final String actualMCVersion)
     {
         super(new ModMetadata());
         getMetadata().modId = "Minecraft";

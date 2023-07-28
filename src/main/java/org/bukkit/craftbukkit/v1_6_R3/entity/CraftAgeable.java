@@ -5,7 +5,7 @@ import org.bukkit.craftbukkit.v1_6_R3.CraftServer;
 import org.bukkit.entity.Ageable;
 
 public class CraftAgeable extends CraftCreature implements Ageable {
-    public CraftAgeable(CraftServer server, net.minecraft.entity.EntityAgeable entity) {
+    public CraftAgeable(final CraftServer server, final net.minecraft.entity.EntityAgeable entity) {
         super(server, entity);
     }
 
@@ -13,11 +13,11 @@ public class CraftAgeable extends CraftCreature implements Ageable {
         return getHandle().getGrowingAge();
     }
 
-    public void setAge(int age) {
+    public void setAge(final int age) {
         getHandle().setGrowingAge(age);
     }
 
-    public void setAgeLock(boolean lock) {
+    public void setAgeLock(final boolean lock) {
         getHandle().ageLocked = lock;
     }
 
@@ -46,7 +46,7 @@ public class CraftAgeable extends CraftCreature implements Ageable {
         return getAge() == 0;
     }
 
-    public void setBreed(boolean breed) {
+    public void setBreed(final boolean breed) {
         if (breed) {
             setAge(0);
         } else if (isAdult()) {

@@ -172,11 +172,11 @@ public abstract class BiomeGenBase {
      */
     protected WorldGenSwamp worldGeneratorSwamp;
 
-    public BiomeGenBase(int par1) {
+    public BiomeGenBase(final int par1) {
         this(par1, true);
     }
 
-    public BiomeGenBase(int par1, boolean register) {
+    public BiomeGenBase(final int par1, final boolean register) {
         this.topBlock = (byte) Block.grass.blockID;
         this.fillerBlock = (byte) Block.dirt.blockID;
         this.field_76754_C = 5169201;
@@ -222,7 +222,7 @@ public abstract class BiomeGenBase {
     /**
      * Sets the temperature and rainfall of this biome.
      */
-    public BiomeGenBase setTemperatureRainfall(float par1, float par2) {
+    public BiomeGenBase setTemperatureRainfall(final float par1, final float par2) {
         if (par1 > 0.1F && par1 < 0.2F) {
             throw new IllegalArgumentException("Please avoid temperatures in the range 0.1 - 0.2 because of snow");
         } else {
@@ -235,7 +235,7 @@ public abstract class BiomeGenBase {
     /**
      * Sets the minimum and maximum height of this biome. Seems to go from -2.0 to 2.0.
      */
-    public BiomeGenBase setMinMaxHeight(float par1, float par2) {
+    public BiomeGenBase setMinMaxHeight(final float par1, final float par2) {
         //TODO ZeyCodeStart
         if (this instanceof BiomeGenOcean || this instanceof BiomeGenRiver)
             if (!WorldsSettings.getInstance().getSettings().isWaterBiomes()) {
@@ -261,14 +261,14 @@ public abstract class BiomeGenBase {
     /**
      * Gets a WorldGen appropriate for this biome.
      */
-    public WorldGenerator getRandomWorldGenForTrees(Random par1Random) {
+    public WorldGenerator getRandomWorldGenForTrees(final Random par1Random) {
         return (WorldGenerator) (par1Random.nextInt(10) == 0 ? this.worldGeneratorBigTree : this.worldGeneratorTrees);
     }
 
     /**
      * Gets a WorldGen appropriate for this biome.
      */
-    public WorldGenerator getRandomWorldGenForGrass(Random par1Random) {
+    public WorldGenerator getRandomWorldGenForGrass(final Random par1Random) {
         return new WorldGenTallGrass(Block.tallGrass.blockID, 1);
     }
 
@@ -280,17 +280,17 @@ public abstract class BiomeGenBase {
         return this;
     }
 
-    public BiomeGenBase setBiomeName(String par1Str) {
+    public BiomeGenBase setBiomeName(final String par1Str) {
         this.biomeName = par1Str;
         return this;
     }
 
-    public BiomeGenBase func_76733_a(int par1) {
+    public BiomeGenBase func_76733_a(final int par1) {
         this.field_76754_C = par1;
         return this;
     }
 
-    public BiomeGenBase setColor(int par1) {
+    public BiomeGenBase setColor(final int par1) {
         this.color = par1;
         return this;
     }
@@ -301,23 +301,24 @@ public abstract class BiomeGenBase {
      * takes temperature, returns color
      */
     public int getSkyColorByTemp(float par1) {
-        par1 /= 3.0F;
+        float par11 = par1;
+        par11 /= 3.0F;
 
-        if (par1 < -1.0F) {
-            par1 = -1.0F;
+        if (par11 < -1.0F) {
+            par11 = -1.0F;
         }
 
-        if (par1 > 1.0F) {
-            par1 = 1.0F;
+        if (par11 > 1.0F) {
+            par11 = 1.0F;
         }
 
-        return Color.getHSBColor(0.62222224F - par1 * 0.05F, 0.5F + par1 * 0.1F, 1.0F).getRGB();
+        return Color.getHSBColor(0.62222224F - par11 * 0.05F, 0.5F + par11 * 0.1F, 1.0F).getRGB();
     }
 
     /**
      * Returns the correspondent list of the EnumCreatureType informed.
      */
-    public List getSpawnableList(EnumCreatureType par1EnumCreatureType) {
+    public List getSpawnableList(final EnumCreatureType par1EnumCreatureType) {
         return par1EnumCreatureType == EnumCreatureType.monster ? this.spawnableMonsterList : (par1EnumCreatureType == EnumCreatureType.creature ? this.spawnableCreatureList : (par1EnumCreatureType == EnumCreatureType.waterCreature ? this.spawnableWaterCreatureList : (par1EnumCreatureType == EnumCreatureType.ambient ? this.spawnableCaveCreatureList : null)));
     }
 
@@ -379,7 +380,7 @@ public abstract class BiomeGenBase {
         return this.temperature;
     }
 
-    public void decorate(World par1World, Random par2Random, int par3, int par4) {
+    public void decorate(final World par1World, final Random par2Random, final int par3, final int par4) {
         this.theBiomeDecorator.decorate(par1World, par2Random, par3, par4);
     }
 
@@ -389,8 +390,8 @@ public abstract class BiomeGenBase {
      * Provides the basic grass color based on the biome temperature and rainfall
      */
     public int getBiomeGrassColor() {
-        double d0 = (double) MathHelper.clamp_float(this.getFloatTemperature(), 0.0F, 1.0F);
-        double d1 = (double) MathHelper.clamp_float(this.getFloatRainfall(), 0.0F, 1.0F);
+        final double d0 = (double) MathHelper.clamp_float(this.getFloatTemperature(), 0.0F, 1.0F);
+        final double d1 = (double) MathHelper.clamp_float(this.getFloatRainfall(), 0.0F, 1.0F);
         return getModdedBiomeGrassColor(ColorizerGrass.getGrassColor(d0, d1));
     }
 
@@ -400,29 +401,29 @@ public abstract class BiomeGenBase {
      * Provides the basic foliage color based on the biome temperature and rainfall
      */
     public int getBiomeFoliageColor() {
-        double d0 = (double) MathHelper.clamp_float(this.getFloatTemperature(), 0.0F, 1.0F);
-        double d1 = (double) MathHelper.clamp_float(this.getFloatRainfall(), 0.0F, 1.0F);
+        final double d0 = (double) MathHelper.clamp_float(this.getFloatTemperature(), 0.0F, 1.0F);
+        final double d1 = (double) MathHelper.clamp_float(this.getFloatRainfall(), 0.0F, 1.0F);
         return getModdedBiomeFoliageColor(ColorizerFoliage.getFoliageColor(d0, d1));
     }
 
-    public BiomeDecorator getModdedBiomeDecorator(BiomeDecorator original) {
+    public BiomeDecorator getModdedBiomeDecorator(final BiomeDecorator original) {
         return new DeferredBiomeDecorator(this, original);
     }
 
     public int getWaterColorMultiplier() {
-        BiomeEvent.GetWaterColor event = new BiomeEvent.GetWaterColor(this, waterColorMultiplier);
+        final BiomeEvent.GetWaterColor event = new BiomeEvent.GetWaterColor(this, waterColorMultiplier);
         MinecraftForge.EVENT_BUS.post(event);
         return event.newColor;
     }
 
-    public int getModdedBiomeGrassColor(int original) {
-        BiomeEvent.GetGrassColor event = new BiomeEvent.GetGrassColor(this, original);
+    public int getModdedBiomeGrassColor(final int original) {
+        final BiomeEvent.GetGrassColor event = new BiomeEvent.GetGrassColor(this, original);
         MinecraftForge.EVENT_BUS.post(event);
         return event.newColor;
     }
 
-    public int getModdedBiomeFoliageColor(int original) {
-        BiomeEvent.GetFoliageColor event = new BiomeEvent.GetFoliageColor(this, original);
+    public int getModdedBiomeFoliageColor(final int original) {
+        final BiomeEvent.GetFoliageColor event = new BiomeEvent.GetFoliageColor(this, original);
         MinecraftForge.EVENT_BUS.post(event);
         return event.newColor;
     }

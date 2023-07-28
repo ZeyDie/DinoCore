@@ -12,7 +12,7 @@ public class PlayerFlyableFallEvent extends PlayerEvent
 
     public float distance;
 
-    public PlayerFlyableFallEvent(EntityPlayer player, float f)
+    public PlayerFlyableFallEvent(final EntityPlayer player, final float f)
     {
         super(player);
         this.distance = f;

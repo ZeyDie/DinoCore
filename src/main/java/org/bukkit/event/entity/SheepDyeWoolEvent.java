@@ -23,7 +23,7 @@ public class SheepDyeWoolEvent extends EntityEvent implements Cancellable {
         return cancel;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 
@@ -46,7 +46,7 @@ public class SheepDyeWoolEvent extends EntityEvent implements Cancellable {
      *
      * @param color the DyeColor the sheep will be dyed
      */
-    public void setColor(DyeColor color) {
+    public void setColor(final DyeColor color) {
         this.color = color;
     }
 

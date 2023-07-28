@@ -31,19 +31,19 @@ public class TileEntityEnderChest extends TileEntity
         }
 
         this.prevLidAngle = this.lidAngle;
-        float f = 0.1F;
+        final float f = 0.1F;
         double d0;
 
         if (this.numUsingPlayers > 0 && this.lidAngle == 0.0F)
         {
-            double d1 = (double)this.xCoord + 0.5D;
+            final double d1 = (double)this.xCoord + 0.5D;
             d0 = (double)this.zCoord + 0.5D;
             this.worldObj.playSoundEffect(d1, (double)this.yCoord + 0.5D, d0, "random.chestopen", 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
         }
 
         if (this.numUsingPlayers == 0 && this.lidAngle > 0.0F || this.numUsingPlayers > 0 && this.lidAngle < 1.0F)
         {
-            float f1 = this.lidAngle;
+            final float f1 = this.lidAngle;
 
             if (this.numUsingPlayers > 0)
             {
@@ -59,12 +59,12 @@ public class TileEntityEnderChest extends TileEntity
                 this.lidAngle = 1.0F;
             }
 
-            float f2 = 0.5F;
+            final float f2 = 0.5F;
 
             if (this.lidAngle < f2 && f1 >= f2)
             {
                 d0 = (double)this.xCoord + 0.5D;
-                double d2 = (double)this.zCoord + 0.5D;
+                final double d2 = (double)this.zCoord + 0.5D;
                 this.worldObj.playSoundEffect(d0, (double)this.yCoord + 0.5D, d2, "random.chestclosed", 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
             }
 
@@ -78,7 +78,7 @@ public class TileEntityEnderChest extends TileEntity
     /**
      * Called when a client event is received with the event number and argument, see World.sendClientEvent
      */
-    public boolean receiveClientEvent(int par1, int par2)
+    public boolean receiveClientEvent(final int par1, final int par2)
     {
         if (par1 == 1)
         {
@@ -112,7 +112,7 @@ public class TileEntityEnderChest extends TileEntity
         this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, Block.enderChest.blockID, 1, this.numUsingPlayers);
     }
 
-    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
+    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer)
     {
         return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
     }

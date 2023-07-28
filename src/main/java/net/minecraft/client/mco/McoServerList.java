@@ -31,7 +31,7 @@ public class McoServerList
         this.field_98254_f = Minecraft.getMinecraft().getSession();
     }
 
-    public synchronized void func_130129_a(Session par1Session)
+    public synchronized void func_130129_a(final Session par1Session)
     {
         this.field_98254_f = par1Session;
 
@@ -76,14 +76,14 @@ public class McoServerList
         this.field_98258_c.cancel();
     }
 
-    private synchronized void func_96426_a(List par1List)
+    private synchronized void func_96426_a(final List par1List)
     {
         int i = 0;
-        Iterator iterator = this.field_140060_d.iterator();
+        final Iterator iterator = this.field_140060_d.iterator();
 
         while (iterator.hasNext())
         {
-            McoServer mcoserver = (McoServer)iterator.next();
+            final McoServer mcoserver = (McoServer)iterator.next();
 
             if (par1List.remove(mcoserver))
             {
@@ -100,38 +100,38 @@ public class McoServerList
         this.field_140059_g = true;
     }
 
-    public synchronized void func_140058_a(McoServer par1McoServer)
+    public synchronized void func_140058_a(final McoServer par1McoServer)
     {
         this.field_98255_d.remove(par1McoServer);
         this.field_140060_d.add(par1McoServer);
     }
 
-    private void func_130123_a(int par1)
+    private void func_130123_a(final int par1)
     {
         this.field_130130_e = par1;
     }
 
-    static boolean func_98249_b(McoServerList par0McoServerList)
+    static boolean func_98249_b(final McoServerList par0McoServerList)
     {
         return par0McoServerList.field_98259_a;
     }
 
-    static Session func_100014_a(McoServerList par0McoServerList)
+    static Session func_100014_a(final McoServerList par0McoServerList)
     {
         return par0McoServerList.field_98254_f;
     }
 
-    static void func_98247_a(McoServerList par0McoServerList, List par1List)
+    static void func_98247_a(final McoServerList par0McoServerList, final List par1List)
     {
         par0McoServerList.func_96426_a(par1List);
     }
 
-    static void func_130122_a(McoServerList par0McoServerList, int par1)
+    static void func_130122_a(final McoServerList par0McoServerList, final int par1)
     {
         par0McoServerList.func_130123_a(par1);
     }
 
-    static int func_140057_b(McoServerList par0McoServerList, int par1)
+    static int func_140057_b(final McoServerList par0McoServerList, final int par1)
     {
         return par0McoServerList.field_140061_i = par1;
     }

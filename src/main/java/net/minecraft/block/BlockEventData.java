@@ -13,7 +13,7 @@ public class BlockEventData
     /** Different for each blockID, eventID */
     private int eventParameter;
 
-    public BlockEventData(int par1, int par2, int par3, int par4, int par5, int par6)
+    public BlockEventData(final int par1, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         this.coordX = par1;
         this.coordY = par2;
@@ -71,7 +71,7 @@ public class BlockEventData
         return this.blockID;
     }
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         if (!(par1Obj instanceof BlockEventData))
         {
@@ -79,7 +79,7 @@ public class BlockEventData
         }
         else
         {
-            BlockEventData blockeventdata = (BlockEventData)par1Obj;
+            final BlockEventData blockeventdata = (BlockEventData)par1Obj;
             return this.coordX == blockeventdata.coordX && this.coordY == blockeventdata.coordY && this.coordZ == blockeventdata.coordZ && this.eventID == blockeventdata.eventID && this.eventParameter == blockeventdata.eventParameter && this.blockID == blockeventdata.blockID;
         }
     }

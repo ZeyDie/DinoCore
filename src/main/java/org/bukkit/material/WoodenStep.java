@@ -21,12 +21,12 @@ public class WoodenStep extends MaterialData {
         super(type);
     }
 
-    public WoodenStep(TreeSpecies species) {
+    public WoodenStep(final TreeSpecies species) {
         this();
         setSpecies(species);
     }
 
-    public WoodenStep(TreeSpecies species, boolean inv) {
+    public WoodenStep(final TreeSpecies species, final boolean inv) {
         this();
         setSpecies(species);
         setInverted(inv);
@@ -64,7 +64,7 @@ public class WoodenStep extends MaterialData {
      *
      * @param species New species of this tree
      */
-    public void setSpecies(TreeSpecies species) {
+    public void setSpecies(final TreeSpecies species) {
         setData((byte) ((getData() & 0xC) | species.getData()));
     }
 
@@ -82,7 +82,7 @@ public class WoodenStep extends MaterialData {
      *
      * @param inv - true if step is inverted (top half), false if step is normal (bottom half)
      */
-    public void setInverted(boolean inv) {
+    public void setInverted(final boolean inv) {
         int dat = getData() & 0x7;
         if (inv) {
             dat |= 0x8;

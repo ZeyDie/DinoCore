@@ -27,14 +27,14 @@ public abstract class EntityHanging extends Entity
     public int yPosition;
     public int zPosition;
 
-    public EntityHanging(World par1World)
+    public EntityHanging(final World par1World)
     {
         super(par1World);
         this.yOffset = 0.0F;
         this.setSize(0.5F, 0.5F);
     }
 
-    public EntityHanging(World par1World, int par2, int par3, int par4, int par5)
+    public EntityHanging(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         this(par1World);
         this.xPosition = par2;
@@ -44,7 +44,7 @@ public abstract class EntityHanging extends Entity
 
     protected void entityInit() {}
 
-    public void setDirection(int par1)
+    public void setDirection(final int par1)
     {
         this.hangingDirection = par1;
         this.prevRotationYaw = this.rotationYaw = (float)(par1 * 90);
@@ -68,7 +68,7 @@ public abstract class EntityHanging extends Entity
         float f3 = (float)this.xPosition + 0.5F;
         float f4 = (float)this.yPosition + 0.5F;
         float f5 = (float)this.zPosition + 0.5F;
-        float f6 = 0.5625F;
+        final float f6 = 0.5625F;
 
         if (par1 == 2)
         {
@@ -112,11 +112,11 @@ public abstract class EntityHanging extends Entity
 
         f4 += this.func_70517_b(this.getHeightPixels());
         this.setPosition((double)f3, (double)f4, (double)f5);
-        float f7 = -0.03125F;
+        final float f7 = -0.03125F;
         this.boundingBox.setBounds((double)(f3 - f - f7), (double)(f4 - f1 - f7), (double)(f5 - f2 - f7), (double)(f3 + f + f7), (double)(f4 + f1 + f7), (double)(f5 + f2 + f7));
     }
 
-    private float func_70517_b(int par1)
+    private float func_70517_b(final int par1)
     {
         return par1 == 32 ? 0.5F : (par1 == 64 ? 0.5F : 0.0F);
     }
@@ -137,8 +137,8 @@ public abstract class EntityHanging extends Entity
             if (!this.isDead && !this.onValidSurface())
             {
                 // CraftBukkit start
-                Material material = this.worldObj.getBlockMaterial((int) this.posX, (int) this.posY, (int) this.posZ);
-                HangingBreakEvent.RemoveCause cause;
+                final Material material = this.worldObj.getBlockMaterial((int) this.posX, (int) this.posY, (int) this.posZ);
+                final HangingBreakEvent.RemoveCause cause;
 
                 if (!material.equals(Material.air))
                 {
@@ -150,7 +150,7 @@ public abstract class EntityHanging extends Entity
                     cause = HangingBreakEvent.RemoveCause.PHYSICS;
                 }
 
-                HangingBreakEvent event = new HangingBreakEvent((Hanging) this.getBukkitEntity(), cause);
+                final HangingBreakEvent event = new HangingBreakEvent((Hanging) this.getBukkitEntity(), cause);
                 this.worldObj.getServer().getPluginManager().callEvent(event);
                 PaintingBreakEvent paintingEvent = null;
 
@@ -185,8 +185,8 @@ public abstract class EntityHanging extends Entity
         }
         else
         {
-            int i = Math.max(1, this.getWidthPixels() / 16);
-            int j = Math.max(1, this.getHeightPixels() / 16);
+            final int i = Math.max(1, this.getWidthPixels() / 16);
+            final int j = Math.max(1, this.getHeightPixels() / 16);
             int k = this.xPosition;
             int l = this.yPosition;
             int i1 = this.zPosition;
@@ -217,7 +217,7 @@ public abstract class EntityHanging extends Entity
             {
                 for (int k1 = 0; k1 < j; ++k1)
                 {
-                    Material material;
+                    final Material material;
 
                     if (this.hangingDirection != 2 && this.hangingDirection != 0)
                     {
@@ -235,8 +235,8 @@ public abstract class EntityHanging extends Entity
                 }
             }
 
-            List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox);
-            Iterator iterator = list.iterator();
+            final List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox);
+            final Iterator iterator = list.iterator();
             Entity entity;
 
             do
@@ -265,7 +265,7 @@ public abstract class EntityHanging extends Entity
     /**
      * Called when a player attacks an entity. If this returns true the attack will not happen.
      */
-    public boolean hitByEntity(Entity par1Entity)
+    public boolean hitByEntity(final Entity par1Entity)
     {
         return par1Entity instanceof EntityPlayer ? this.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer)par1Entity), 0.0F) : false;
     }
@@ -273,7 +273,7 @@ public abstract class EntityHanging extends Entity
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2)
     {
         if (this.isEntityInvulnerable())
         {
@@ -328,7 +328,7 @@ public abstract class EntityHanging extends Entity
     /**
      * Tries to moves the entity by the passed in displacement. Args: x, y, z
      */
-    public void moveEntity(double par1, double par3, double par5)
+    public void moveEntity(final double par1, final double par3, final double par5)
     {
         if (!this.worldObj.isRemote && !this.isDead && par1 * par1 + par3 * par3 + par5 * par5 > 0.0D)
         {
@@ -338,7 +338,7 @@ public abstract class EntityHanging extends Entity
             }
 
             // CraftBukkit start
-            HangingBreakEvent event = new HangingBreakEvent((Hanging) this.getBukkitEntity(), HangingBreakEvent.RemoveCause.PHYSICS);
+            final HangingBreakEvent event = new HangingBreakEvent((Hanging) this.getBukkitEntity(), HangingBreakEvent.RemoveCause.PHYSICS);
             this.worldObj.getServer().getPluginManager().callEvent(event);
             PaintingBreakEvent paintingEvent = null;
 
@@ -364,7 +364,7 @@ public abstract class EntityHanging extends Entity
     /**
      * Adds to the current velocity of the entity. Args: x, y, z
      */
-    public void addVelocity(double par1, double par3, double par5)
+    public void addVelocity(final double par1, final double par3, final double par5)
     {
         if (false && !this.worldObj.isRemote && !this.isDead && par1 * par1 + par3 * par3 + par5 * par5 > 0.0D)   // CraftBukkit - not needed
         {
@@ -376,7 +376,7 @@ public abstract class EntityHanging extends Entity
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         par1NBTTagCompound.setByte("Direction", (byte)this.hangingDirection);
         par1NBTTagCompound.setInteger("TileX", this.xPosition);
@@ -402,7 +402,7 @@ public abstract class EntityHanging extends Entity
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         if (par1NBTTagCompound.hasKey("Direction"))
         {

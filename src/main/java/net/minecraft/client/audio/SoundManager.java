@@ -25,7 +25,7 @@ import java.util.*;
 public class SoundManager implements ResourceManagerReloadListener
 {
     public boolean LOAD_SOUND_SYSTEM = true;
-    private static final String[] field_130084_a = new String[] {"ogg"};
+    private static final String[] field_130084_a = {"ogg"};
 
     /** A reference to the sound system. */
     public SoundSystem sndSystem;
@@ -61,7 +61,7 @@ public class SoundManager implements ResourceManagerReloadListener
 
     public static int MUSIC_INTERVAL = 12000;
 
-    public SoundManager(ResourceManager par1ResourceManager, GameSettings par2GameSettings, File par3File)
+    public SoundManager(final ResourceManager par1ResourceManager, final GameSettings par2GameSettings, final File par3File)
     {
         this.ticksBeforeMusic = this.rand.nextInt(MUSIC_INTERVAL);
         this.options = par2GameSettings;
@@ -77,7 +77,7 @@ public class SoundManager implements ResourceManagerReloadListener
             SoundSystemConfig.setCodec("wav", CodecWav.class);
             MinecraftForge.EVENT_BUS.post(new SoundSetupEvent(this));
         }
-        catch (SoundSystemException soundsystemexception)
+        catch (final SoundSystemException soundsystemexception)
         {
             soundsystemexception.printStackTrace();
             System.err.println("error linking with the LibraryJavaSound plug-in");
@@ -86,7 +86,7 @@ public class SoundManager implements ResourceManagerReloadListener
         this.loadSounds();
     }
 
-    public void onResourceManagerReload(ResourceManager par1ResourceManager)
+    public void onResourceManagerReload(final ResourceManager par1ResourceManager)
     {
         if (!this.LOAD_SOUND_SYSTEM) return; //Stop the sound system from initializing three times at startup. Causing race conditions on some machines.
         this.stopAllSounds();
@@ -99,25 +99,25 @@ public class SoundManager implements ResourceManagerReloadListener
     {
         if (this.fileAssets.isDirectory())
         {
-            Collection collection = FileUtils.listFiles(this.fileAssets, field_130084_a, true);
-            Iterator iterator = collection.iterator();
+            final Collection collection = FileUtils.listFiles(this.fileAssets, field_130084_a, true);
+            final Iterator iterator = collection.iterator();
 
             while (iterator.hasNext())
             {
-                File file1 = (File)iterator.next();
+                final File file1 = (File)iterator.next();
                 this.loadSoundFile(file1);
             }
         }
     }
 
-    private void loadSoundFile(File par1File)
+    private void loadSoundFile(final File par1File)
     {
         String s = this.fileAssets.toURI().relativize(par1File.toURI()).getPath();
-        int i = s.indexOf("/");
+        final int i = s.indexOf("/");
 
         if (i != -1)
         {
-            String s1 = s.substring(0, i);
+            final String s1 = s.substring(0, i);
             s = s.substring(i + 1);
 
             if ("sound".equalsIgnoreCase(s1))
@@ -143,8 +143,8 @@ public class SoundManager implements ResourceManagerReloadListener
     {
         if (!this.loaded)
         {
-            float f = this.options.soundVolume;
-            float f1 = this.options.musicVolume;
+            final float f = this.options.soundVolume;
+            final float f1 = this.options.musicVolume;
             this.options.soundVolume = 0.0F;
             this.options.musicVolume = 0.0F;
             this.options.saveOptions();
@@ -155,7 +155,7 @@ public class SoundManager implements ResourceManagerReloadListener
                 this.options.soundVolume = f;
                 this.options.musicVolume = f1;
             }
-            catch (RuntimeException runtimeexception)
+            catch (final RuntimeException runtimeexception)
             {
                 runtimeexception.printStackTrace();
                 System.err.println("error starting SoundSystem turning off sounds & music");
@@ -202,7 +202,7 @@ public class SoundManager implements ResourceManagerReloadListener
     /**
      * Adds a sounds with the name from the file. Args: name, file
      */
-    public void addSound(String par1Str)
+    public void addSound(final String par1Str)
     {
         this.soundPoolSounds.addSound(par1Str);
     }
@@ -210,7 +210,7 @@ public class SoundManager implements ResourceManagerReloadListener
     /**
      * Adds an audio file to the streaming SoundPool.
      */
-    public void addStreaming(String par1Str)
+    public void addStreaming(final String par1Str)
     {
         this.soundPoolStreaming.addSound(par1Str);
     }
@@ -218,7 +218,7 @@ public class SoundManager implements ResourceManagerReloadListener
     /**
      * Adds an audio file to the music SoundPool.
      */
-    public void addMusic(String par1Str)
+    public void addMusic(final String par1Str)
     {
         this.soundPoolMusic.addSound(par1Str);
     }
@@ -256,23 +256,23 @@ public class SoundManager implements ResourceManagerReloadListener
     /**
      * Sets the listener of sounds
      */
-    public void setListener(EntityLivingBase par1EntityLivingBase, float par2)
+    public void setListener(final EntityLivingBase par1EntityLivingBase, final float par2)
     {
         if (this.loaded && this.options.soundVolume != 0.0F && par1EntityLivingBase != null)
         {
-            float f1 = par1EntityLivingBase.prevRotationPitch + (par1EntityLivingBase.rotationPitch - par1EntityLivingBase.prevRotationPitch) * par2;
-            float f2 = par1EntityLivingBase.prevRotationYaw + (par1EntityLivingBase.rotationYaw - par1EntityLivingBase.prevRotationYaw) * par2;
-            double d0 = par1EntityLivingBase.prevPosX + (par1EntityLivingBase.posX - par1EntityLivingBase.prevPosX) * (double)par2;
-            double d1 = par1EntityLivingBase.prevPosY + (par1EntityLivingBase.posY - par1EntityLivingBase.prevPosY) * (double)par2;
-            double d2 = par1EntityLivingBase.prevPosZ + (par1EntityLivingBase.posZ - par1EntityLivingBase.prevPosZ) * (double)par2;
-            float f3 = MathHelper.cos(-f2 * 0.017453292F - (float)Math.PI);
-            float f4 = MathHelper.sin(-f2 * 0.017453292F - (float)Math.PI);
-            float f5 = -f4;
-            float f6 = -MathHelper.sin(-f1 * 0.017453292F - (float)Math.PI);
-            float f7 = -f3;
-            float f8 = 0.0F;
-            float f9 = 1.0F;
-            float f10 = 0.0F;
+            final float f1 = par1EntityLivingBase.prevRotationPitch + (par1EntityLivingBase.rotationPitch - par1EntityLivingBase.prevRotationPitch) * par2;
+            final float f2 = par1EntityLivingBase.prevRotationYaw + (par1EntityLivingBase.rotationYaw - par1EntityLivingBase.prevRotationYaw) * par2;
+            final double d0 = par1EntityLivingBase.prevPosX + (par1EntityLivingBase.posX - par1EntityLivingBase.prevPosX) * (double)par2;
+            final double d1 = par1EntityLivingBase.prevPosY + (par1EntityLivingBase.posY - par1EntityLivingBase.prevPosY) * (double)par2;
+            final double d2 = par1EntityLivingBase.prevPosZ + (par1EntityLivingBase.posZ - par1EntityLivingBase.prevPosZ) * (double)par2;
+            final float f3 = MathHelper.cos(-f2 * 0.017453292F - (float)Math.PI);
+            final float f4 = MathHelper.sin(-f2 * 0.017453292F - (float)Math.PI);
+            final float f5 = -f4;
+            final float f6 = -MathHelper.sin(-f1 * 0.017453292F - (float)Math.PI);
+            final float f7 = -f3;
+            final float f8 = 0.0F;
+            final float f9 = 1.0F;
+            final float f10 = 0.0F;
             this.sndSystem.setListenerPosition((float)d0, (float)d1, (float)d2);
             this.sndSystem.setListenerOrientation(f5, f6, f7, f8, f9, f10);
         }
@@ -285,11 +285,11 @@ public class SoundManager implements ResourceManagerReloadListener
     {
         if (this.loaded)
         {
-            Iterator iterator = this.playingSounds.iterator();
+            final Iterator iterator = this.playingSounds.iterator();
 
             while (iterator.hasNext())
             {
-                String s = (String)iterator.next();
+                final String s = (String)iterator.next();
                 this.sndSystem.stop(s);
             }
 
@@ -297,11 +297,11 @@ public class SoundManager implements ResourceManagerReloadListener
         }
     }
 
-    public void playStreaming(String par1Str, float par2, float par3, float par4)
+    public void playStreaming(final String par1Str, final float par2, final float par3, final float par4)
     {
         if (this.loaded && (this.options.soundVolume != 0.0F || par1Str == null))
         {
-            String s1 = "streaming";
+            final String s1 = "streaming";
 
             if (this.sndSystem.playing(s1))
             {
@@ -332,7 +332,7 @@ public class SoundManager implements ResourceManagerReloadListener
     /**
      * Updates the sound associated with the entity with that entity's position and velocity. Args: the entity
      */
-    public void updateSoundLocation(Entity par1Entity)
+    public void updateSoundLocation(final Entity par1Entity)
     {
         this.updateSoundLocation(par1Entity, par1Entity);
     }
@@ -341,9 +341,9 @@ public class SoundManager implements ResourceManagerReloadListener
      * Updates the sound associated with soundEntity with the position and velocity of trackEntity. Args: soundEntity,
      * trackEntity
      */
-    public void updateSoundLocation(Entity par1Entity, Entity par2Entity)
+    public void updateSoundLocation(final Entity par1Entity, final Entity par2Entity)
     {
-        String s = "entity_" + par1Entity.entityId;
+        final String s = "entity_" + par1Entity.entityId;
 
         if (this.playingSounds.contains(s))
         {
@@ -362,11 +362,11 @@ public class SoundManager implements ResourceManagerReloadListener
     /**
      * Returns true if a sound is currently associated with the given entity, or false otherwise.
      */
-    public boolean isEntitySoundPlaying(Entity par1Entity)
+    public boolean isEntitySoundPlaying(final Entity par1Entity)
     {
         if (par1Entity != null && this.loaded)
         {
-            String s = "entity_" + par1Entity.entityId;
+            final String s = "entity_" + par1Entity.entityId;
             return this.sndSystem.playing(s);
         }
         else
@@ -378,11 +378,11 @@ public class SoundManager implements ResourceManagerReloadListener
     /**
      * Stops playing the sound associated with the given entity
      */
-    public void stopEntitySound(Entity par1Entity)
+    public void stopEntitySound(final Entity par1Entity)
     {
         if (par1Entity != null && this.loaded)
         {
-            String s = "entity_" + par1Entity.entityId;
+            final String s = "entity_" + par1Entity.entityId;
 
             if (this.playingSounds.contains(s))
             {
@@ -400,11 +400,11 @@ public class SoundManager implements ResourceManagerReloadListener
      * Sets the volume of the sound associated with the given entity, if one is playing. The volume is scaled by the
      * global sound volume. Args: the entity, the volume (from 0 to 1)
      */
-    public void setEntitySoundVolume(Entity par1Entity, float par2)
+    public void setEntitySoundVolume(final Entity par1Entity, final float par2)
     {
         if (par1Entity != null && this.loaded && this.options.soundVolume != 0.0F)
         {
-            String s = "entity_" + par1Entity.entityId;
+            final String s = "entity_" + par1Entity.entityId;
 
             if (this.sndSystem.playing(s))
             {
@@ -416,11 +416,11 @@ public class SoundManager implements ResourceManagerReloadListener
     /**
      * Sets the pitch of the sound associated with the given entity, if one is playing. Args: the entity, the pitch
      */
-    public void setEntitySoundPitch(Entity par1Entity, float par2)
+    public void setEntitySoundPitch(final Entity par1Entity, final float par2)
     {
         if (par1Entity != null && this.loaded && this.options.soundVolume != 0.0F)
         {
-            String s = "entity_" + par1Entity.entityId;
+            final String s = "entity_" + par1Entity.entityId;
 
             if (this.sndSystem.playing(s))
             {
@@ -434,11 +434,12 @@ public class SoundManager implements ResourceManagerReloadListener
      * entity. Otherwise, start playing a sound from that entity. Setting the last flag to true will prevent other
      * sounds from overriding this one. Args: The sound name, the entity, the volume, the pitch, priority
      */
-    public void playEntitySound(String par1Str, Entity par2Entity, float par3, float par4, boolean par5)
+    public void playEntitySound(final String par1Str, final Entity par2Entity, float par3, final float par4, final boolean par5)
     {
+        float par31 = par3;
         if (this.loaded && (this.options.soundVolume != 0.0F || par1Str == null) && par2Entity != null)
         {
-            String s1 = "entity_" + par2Entity.entityId;
+            final String s1 = "entity_" + par2Entity.entityId;
 
             if (this.playingSounds.contains(s1))
             {
@@ -453,27 +454,27 @@ public class SoundManager implements ResourceManagerReloadListener
 
                 if (par1Str != null)
                 {
-                    SoundPoolEntry soundpoolentry = this.soundPoolSounds.getRandomSoundFromSoundPool(par1Str);
+                    final SoundPoolEntry soundpoolentry = this.soundPoolSounds.getRandomSoundFromSoundPool(par1Str);
 
-                    if (soundpoolentry != null && par3 > 0.0F)
+                    if (soundpoolentry != null && par31 > 0.0F)
                     {
                         float f2 = 16.0F;
 
-                        if (par3 > 1.0F)
+                        if (par31 > 1.0F)
                         {
-                            f2 *= par3;
+                            f2 *= par31;
                         }
 
                         this.sndSystem.newSource(par5, s1, soundpoolentry.getSoundUrl(), soundpoolentry.getSoundName(), false, (float)par2Entity.posX, (float)par2Entity.posY, (float)par2Entity.posZ, 2, f2);
                         this.sndSystem.setLooping(s1, true);
                         this.sndSystem.setPitch(s1, par4);
 
-                        if (par3 > 1.0F)
+                        if (par31 > 1.0F)
                         {
-                            par3 = 1.0F;
+                            par31 = 1.0F;
                         }
 
-                        this.sndSystem.setVolume(s1, par3 * this.options.soundVolume);
+                        this.sndSystem.setVolume(s1, par31 * this.options.soundVolume);
                         this.sndSystem.setVelocity(s1, (float)par2Entity.motionX, (float)par2Entity.motionY, (float)par2Entity.motionZ);
                         this.sndSystem.play(s1);
                         this.playingSounds.add(s1);
@@ -486,33 +487,34 @@ public class SoundManager implements ResourceManagerReloadListener
     /**
      * Plays a sound. Args: soundName, x, y, z, volume, pitch
      */
-    public void playSound(String par1Str, float par2, float par3, float par4, float par5, float par6)
+    public void playSound(final String par1Str, final float par2, final float par3, final float par4, float par5, final float par6)
     {
+        float par51 = par5;
         if (this.loaded && this.options.soundVolume != 0.0F)
         {
             SoundPoolEntry soundpoolentry = this.soundPoolSounds.getRandomSoundFromSoundPool(par1Str);
-            soundpoolentry = SoundEvent.getResult(new PlaySoundEvent(this, soundpoolentry, par1Str, par2, par3, par4, par5, par6));
+            soundpoolentry = SoundEvent.getResult(new PlaySoundEvent(this, soundpoolentry, par1Str, par2, par3, par4, par51, par6));
 
-            if (soundpoolentry != null && par5 > 0.0F)
+            if (soundpoolentry != null && par51 > 0.0F)
             {
                 this.latestSoundID = (this.latestSoundID + 1) % 256;
-                String s1 = "sound_" + this.latestSoundID;
+                final String s1 = "sound_" + this.latestSoundID;
                 float f5 = 16.0F;
 
-                if (par5 > 1.0F)
+                if (par51 > 1.0F)
                 {
-                    f5 *= par5;
+                    f5 *= par51;
                 }
 
-                this.sndSystem.newSource(par5 > 1.0F, s1, soundpoolentry.getSoundUrl(), soundpoolentry.getSoundName(), false, par2, par3, par4, 2, f5);
+                this.sndSystem.newSource(par51 > 1.0F, s1, soundpoolentry.getSoundUrl(), soundpoolentry.getSoundName(), false, par2, par3, par4, 2, f5);
 
-                if (par5 > 1.0F)
+                if (par51 > 1.0F)
                 {
-                    par5 = 1.0F;
+                    par51 = 1.0F;
                 }
 
                 this.sndSystem.setPitch(s1, par6);
-                this.sndSystem.setVolume(s1, par5 * this.options.soundVolume);
+                this.sndSystem.setVolume(s1, par51 * this.options.soundVolume);
                 MinecraftForge.EVENT_BUS.post(new PlaySoundSourceEvent(this, s1, par2, par3, par4));
                 this.sndSystem.play(s1);
             }
@@ -523,27 +525,28 @@ public class SoundManager implements ResourceManagerReloadListener
      * Plays a sound effect with the volume and pitch of the parameters passed. The sound isn't affected by position of
      * the player (full volume and center balanced)
      */
-    public void playSoundFX(String par1Str, float par2, float par3)
+    public void playSoundFX(final String par1Str, float par2, final float par3)
     {
+        float par21 = par2;
         if (this.loaded && this.options.soundVolume != 0.0F)
         {
             SoundPoolEntry soundpoolentry = this.soundPoolSounds.getRandomSoundFromSoundPool(par1Str);
-            soundpoolentry = SoundEvent.getResult(new PlaySoundEffectEvent(this, soundpoolentry, par1Str, par2, par3));
+            soundpoolentry = SoundEvent.getResult(new PlaySoundEffectEvent(this, soundpoolentry, par1Str, par21, par3));
 
-            if (soundpoolentry != null && par2 > 0.0F)
+            if (soundpoolentry != null && par21 > 0.0F)
             {
                 this.latestSoundID = (this.latestSoundID + 1) % 256;
-                String s1 = "sound_" + this.latestSoundID;
+                final String s1 = "sound_" + this.latestSoundID;
                 this.sndSystem.newSource(false, s1, soundpoolentry.getSoundUrl(), soundpoolentry.getSoundName(), false, 0.0F, 0.0F, 0.0F, 0, 0.0F);
 
-                if (par2 > 1.0F)
+                if (par21 > 1.0F)
                 {
-                    par2 = 1.0F;
+                    par21 = 1.0F;
                 }
 
-                par2 *= 0.25F;
+                par21 *= 0.25F;
                 this.sndSystem.setPitch(s1, par3);
-                this.sndSystem.setVolume(s1, par2 * this.options.soundVolume);
+                this.sndSystem.setVolume(s1, par21 * this.options.soundVolume);
                 MinecraftForge.EVENT_BUS.post(new PlaySoundEffectSourceEvent(this, s1));
                 this.sndSystem.play(s1);
             }
@@ -555,11 +558,11 @@ public class SoundManager implements ResourceManagerReloadListener
      */
     public void pauseAllSounds()
     {
-        Iterator iterator = this.playingSounds.iterator();
+        final Iterator iterator = this.playingSounds.iterator();
 
         while (iterator.hasNext())
         {
-            String s = (String)iterator.next();
+            final String s = (String)iterator.next();
             this.sndSystem.pause(s);
         }
     }
@@ -569,11 +572,11 @@ public class SoundManager implements ResourceManagerReloadListener
      */
     public void resumeAllSounds()
     {
-        Iterator iterator = this.playingSounds.iterator();
+        final Iterator iterator = this.playingSounds.iterator();
 
         while (iterator.hasNext())
         {
-            String s = (String)iterator.next();
+            final String s = (String)iterator.next();
             this.sndSystem.play(s);
         }
     }
@@ -582,11 +585,11 @@ public class SoundManager implements ResourceManagerReloadListener
     {
         if (!this.field_92072_h.isEmpty())
         {
-            Iterator iterator = this.field_92072_h.iterator();
+            final Iterator iterator = this.field_92072_h.iterator();
 
             while (iterator.hasNext())
             {
-                ScheduledSound scheduledsound = (ScheduledSound)iterator.next();
+                final ScheduledSound scheduledsound = (ScheduledSound)iterator.next();
                 --scheduledsound.field_92064_g;
 
                 if (scheduledsound.field_92064_g <= 0)
@@ -598,17 +601,17 @@ public class SoundManager implements ResourceManagerReloadListener
         }
     }
 
-    public void func_92070_a(String par1Str, float par2, float par3, float par4, float par5, float par6, int par7)
+    public void func_92070_a(final String par1Str, final float par2, final float par3, final float par4, final float par5, final float par6, final int par7)
     {
         this.field_92072_h.add(new ScheduledSound(par1Str, par2, par3, par4, par5, par6, par7));
     }
 
-    static SoundSystem func_130080_a(SoundManager par0SoundManager, SoundSystem par1SoundSystem)
+    static SoundSystem func_130080_a(final SoundManager par0SoundManager, final SoundSystem par1SoundSystem)
     {
         return par0SoundManager.sndSystem = par1SoundSystem;
     }
 
-    static boolean func_130082_a(SoundManager par0SoundManager, boolean par1)
+    static boolean func_130082_a(final SoundManager par0SoundManager, final boolean par1)
     {
         return par0SoundManager.loaded = par1;
     }

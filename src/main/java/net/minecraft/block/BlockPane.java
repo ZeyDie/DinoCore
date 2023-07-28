@@ -32,7 +32,7 @@ public class BlockPane extends Block
     @SideOnly(Side.CLIENT)
     private Icon theIcon;
 
-    protected BlockPane(int par1, String par2Str, String par3Str, Material par4Material, boolean par5)
+    protected BlockPane(final int par1, final String par2Str, final String par3Str, final Material par4Material, final boolean par5)
     {
         super(par1, par4Material);
         this.sideTextureIndex = par3Str;
@@ -44,7 +44,7 @@ public class BlockPane extends Block
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return !this.canDropItself ? 0 : super.idDropped(par1, par2Random, par3);
     }
@@ -80,9 +80,9 @@ public class BlockPane extends Block
      * Returns true if the given side of this block type should be rendered, if the adjacent block is at the given
      * coordinates.  Args: blockAccess, x, y, z, side
      */
-    public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public boolean shouldSideBeRendered(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
-        int i1 = par1IBlockAccess.getBlockId(par2, par3, par4);
+        final int i1 = par1IBlockAccess.getBlockId(par2, par3, par4);
         return i1 == this.blockID ? false : super.shouldSideBeRendered(par1IBlockAccess, par2, par3, par4, par5);
     }
 
@@ -90,12 +90,12 @@ public class BlockPane extends Block
      * Adds all intersecting collision boxes to a list. (Be sure to only add boxes to the list if they intersect the
      * mask.) Parameters: World, X, Y, Z, mask, list, colliding entity
      */
-    public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity)
+    public void addCollisionBoxesToList(final World par1World, final int par2, final int par3, final int par4, final AxisAlignedBB par5AxisAlignedBB, final List par6List, final Entity par7Entity)
     {
-        boolean flag = this.canPaneConnectTo(par1World,par2, par3, par4,ForgeDirection.NORTH);
-        boolean flag1 = this.canPaneConnectTo(par1World,par2, par3, par4,ForgeDirection.SOUTH);
-        boolean flag2 = this.canPaneConnectTo(par1World,par2, par3, par4,ForgeDirection.WEST);
-        boolean flag3 = this.canPaneConnectTo(par1World,par2, par3, par4,ForgeDirection.EAST);
+        final boolean flag = this.canPaneConnectTo(par1World,par2, par3, par4,ForgeDirection.NORTH);
+        final boolean flag1 = this.canPaneConnectTo(par1World,par2, par3, par4,ForgeDirection.SOUTH);
+        final boolean flag2 = this.canPaneConnectTo(par1World,par2, par3, par4,ForgeDirection.WEST);
+        final boolean flag3 = this.canPaneConnectTo(par1World,par2, par3, par4,ForgeDirection.EAST);
 
         if ((!flag2 || !flag3) && (flag2 || flag3 || flag || flag1))
         {
@@ -147,16 +147,16 @@ public class BlockPane extends Block
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         float f = 0.4375F;
         float f1 = 0.5625F;
         float f2 = 0.4375F;
         float f3 = 0.5625F;
-        boolean flag = this.canPaneConnectTo(par1IBlockAccess,par2, par3, par4,ForgeDirection.NORTH);
-        boolean flag1 = this.canPaneConnectTo(par1IBlockAccess,par2, par3, par4,ForgeDirection.SOUTH);
-        boolean flag2 = this.canPaneConnectTo(par1IBlockAccess,par2, par3, par4,ForgeDirection.WEST);
-        boolean flag3 = this.canPaneConnectTo(par1IBlockAccess,par2, par3, par4,ForgeDirection.EAST);
+        final boolean flag = this.canPaneConnectTo(par1IBlockAccess,par2, par3, par4,ForgeDirection.NORTH);
+        final boolean flag1 = this.canPaneConnectTo(par1IBlockAccess,par2, par3, par4,ForgeDirection.SOUTH);
+        final boolean flag2 = this.canPaneConnectTo(par1IBlockAccess,par2, par3, par4,ForgeDirection.WEST);
+        final boolean flag3 = this.canPaneConnectTo(par1IBlockAccess,par2, par3, par4,ForgeDirection.EAST);
 
         if ((!flag2 || !flag3) && (flag2 || flag3 || flag || flag1))
         {
@@ -209,7 +209,7 @@ public class BlockPane extends Block
      * Gets passed in the blockID of the block adjacent and supposed to return true if its allowed to connect to the
      * type of blockID passed in. Args: blockID
      */
-    public final boolean canThisPaneConnectToThisBlockID(int par1)
+    public final boolean canThisPaneConnectToThisBlockID(final int par1)
     {
         return Block.opaqueCubeLookup[par1] || par1 == this.blockID || par1 == Block.glass.blockID;
     }
@@ -226,7 +226,7 @@ public class BlockPane extends Block
      * Returns an item stack containing a single instance of the current block type. 'i' is the block's subtype/damage
      * and is ignored for blocks which do not support subtypes. Blocks which cannot be harvested should return null.
      */
-    protected ItemStack createStackedBlock(int par1)
+    protected ItemStack createStackedBlock(final int par1)
     {
         return new ItemStack(this.blockID, 1, par1);
     }
@@ -237,14 +237,14 @@ public class BlockPane extends Block
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.blockIcon = par1IconRegister.registerIcon(this.field_94402_c);
         this.theIcon = par1IconRegister.registerIcon(this.sideTextureIndex);
     }
 
     // FORGE START
-    public boolean canPaneConnectTo(IBlockAccess access, int x, int y, int z, ForgeDirection dir)
+    public boolean canPaneConnectTo(final IBlockAccess access, final int x, final int y, final int z, final ForgeDirection dir)
     {
         return canThisPaneConnectToThisBlockID(access.getBlockId(x+dir.offsetX, y+dir.offsetY, z+dir.offsetZ)) || access.isBlockSolidOnSide(x+dir.offsetX, y+dir.offsetY, z+dir.offsetZ, dir.getOpposite(), false);
     }

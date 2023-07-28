@@ -8,7 +8,7 @@ public class WeightedRandomFishable {
     private boolean hasRandomEnchantments;
     private float damageFraction;
 
-    public WeightedRandomFishable(ItemStack itemStack, int weight) {
+    public WeightedRandomFishable(final ItemStack itemStack, final int weight) {
         this.itemStack = itemStack;
         this.weight = weight;
     }
@@ -24,7 +24,7 @@ public class WeightedRandomFishable {
      * @return this WeightedRandomFishable, for chaining
      */
     public final WeightedRandomFishable withDamageFraction(float damageFraction) {
-        damageFraction = damageFraction;
+        float damageFraction1 = damageFraction;
         return this;
     }
 
@@ -42,7 +42,7 @@ public class WeightedRandomFishable {
      * (Use this method if loading from another source, such as a config file.)
      * @return this WeightedRandomFishable, for chaining
      */
-    public final WeightedRandomFishable withRandomEnchantments(boolean hasEnchants) {
+    public final WeightedRandomFishable withRandomEnchantments(final boolean hasEnchants) {
         hasRandomEnchantments = hasEnchants;
         return this;
     }

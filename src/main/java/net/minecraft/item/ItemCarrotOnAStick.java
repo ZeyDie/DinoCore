@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 public class ItemCarrotOnAStick extends Item
 {
-    public ItemCarrotOnAStick(int par1)
+    public ItemCarrotOnAStick(final int par1)
     {
         super(par1);
         this.setCreativeTab(CreativeTabs.tabTransport);
@@ -41,11 +41,11 @@ public class ItemCarrotOnAStick extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         if (par3EntityPlayer.isRiding() && par3EntityPlayer.ridingEntity instanceof EntityPig)
         {
-            EntityPig entitypig = (EntityPig)par3EntityPlayer.ridingEntity;
+            final EntityPig entitypig = (EntityPig)par3EntityPlayer.ridingEntity;
 
             if (entitypig.getAIControlledByPlayer().isControlledByPlayer() && par1ItemStack.getMaxDamage() - par1ItemStack.getItemDamage() >= 7)
             {
@@ -54,7 +54,7 @@ public class ItemCarrotOnAStick extends Item
 
                 if (par1ItemStack.stackSize == 0)
                 {
-                    ItemStack itemstack1 = new ItemStack(Item.fishingRod);
+                    final ItemStack itemstack1 = new ItemStack(Item.fishingRod);
                     itemstack1.setTagCompound(par1ItemStack.stackTagCompound);
                     return itemstack1;
                 }

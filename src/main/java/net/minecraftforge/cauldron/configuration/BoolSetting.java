@@ -7,7 +7,7 @@ public class BoolSetting extends Setting<Boolean>
     private Boolean value;
     private ConfigBase config;
 
-    public BoolSetting(ConfigBase config, String path, Boolean def, String description)
+    public BoolSetting(final ConfigBase config, final String path, final Boolean def, final String description)
     {
         super(path, def, description);
         this.value = def;
@@ -21,7 +21,7 @@ public class BoolSetting extends Setting<Boolean>
     }
 
     @Override
-    public void setValue(String value)
+    public void setValue(final String value)
     {
         this.value = BooleanUtils.toBooleanObject(value);
         this.value = this.value == null ? def : this.value;

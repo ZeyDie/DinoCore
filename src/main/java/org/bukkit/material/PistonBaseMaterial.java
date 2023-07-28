@@ -38,7 +38,7 @@ public class PistonBaseMaterial extends MaterialData implements Directional, Red
         super(type, data);
     }
 
-    public void setFacingDirection(BlockFace face) {
+    public void setFacingDirection(final BlockFace face) {
         byte data = (byte) (getData() & 0x8);
 
         switch (face) {
@@ -62,7 +62,7 @@ public class PistonBaseMaterial extends MaterialData implements Directional, Red
     }
 
     public BlockFace getFacing() {
-        byte dir = (byte) (getData() & 7);
+        final byte dir = (byte) (getData() & 7);
 
         switch (dir) {
         case 0:
@@ -91,7 +91,7 @@ public class PistonBaseMaterial extends MaterialData implements Directional, Red
      *
      * @param powered true if the piston is extended & powered, or false
      */
-    public void setPowered(boolean powered) {
+    public void setPowered(final boolean powered) {
         setData((byte) (powered ? (getData() | 0x8) : (getData() & ~0x8)));
     }
 

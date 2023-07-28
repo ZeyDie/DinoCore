@@ -19,7 +19,7 @@ public class OreDictionaryInterface implements BukkitOreDictionary {
     private void initializeMap() {
         normalizedToCanonicalMap = new HashMap<String, String>();
 
-        for (String str : getAllOreNames()) {
+        for (final String str : getAllOreNames()) {
             if (str == null || str.isEmpty()) {
                 continue;
             }
@@ -28,12 +28,12 @@ public class OreDictionaryInterface implements BukkitOreDictionary {
     }
 
     @Override
-    public OreDictionaryEntry getOreEntry(String name) {
+    public OreDictionaryEntry getOreEntry(final String name) {
         if (normalizedToCanonicalMap == null) {
             initializeMap();
         }
 
-        String canonical = normalizedToCanonicalMap.get(Material.normalizeName(name));
+        final String canonical = normalizedToCanonicalMap.get(Material.normalizeName(name));
         if (canonical == null) {
             return null;
         }
@@ -42,29 +42,28 @@ public class OreDictionaryInterface implements BukkitOreDictionary {
     }
 
     @Override
-    public List<OreDictionaryEntry> getOreEntries(ItemStack itemStack) {
-        int id = OreDictionary.getOreID(CraftItemStack.asNMSCopy(itemStack));
+    public List<OreDictionaryEntry> getOreEntries(final ItemStack itemStack) {
+        final int id = OreDictionary.getOreID(CraftItemStack.asNMSCopy(itemStack));
 
         return ImmutableList.of(OreDictionaryEntry.valueOf(id));
     }
 
     @Override
-    public List<OreDictionaryEntry> getOreEntries(Material material) {
+    public List<OreDictionaryEntry> getOreEntries(final Material material) {
         return getOreEntries(new ItemStack(material));
     }
 
     @Override
-    public String getOreName(OreDictionaryEntry entry) {
+    public String getOreName(final OreDictionaryEntry entry) {
         return OreDictionary.getOreName(entry.getId());
     }
 
     @Override
-    public List<ItemStack> getDefinitions(OreDictionaryEntry entry) {
-        @SuppressWarnings("deprecation")
-        List<net.minecraft.item.ItemStack> items = OreDictionary.getOres(entry.getId());
+    public List<ItemStack> getDefinitions(final OreDictionaryEntry entry) {
+        @SuppressWarnings("deprecation") final List<net.minecraft.item.ItemStack> items = OreDictionary.getOres(entry.getId());
 
-        ImmutableList.Builder<ItemStack> builder = ImmutableList.builder();
-        for (net.minecraft.item.ItemStack nmsItem : items) {
+        final ImmutableList.Builder<ItemStack> builder = ImmutableList.builder();
+        for (final net.minecraft.item.ItemStack nmsItem : items) {
             builder.add(CraftItemStack.asCraftMirror(nmsItem));
         }
 

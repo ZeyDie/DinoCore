@@ -22,7 +22,7 @@ public class ItemSpawnEvent extends EntityEvent implements Cancellable {
         return canceled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         canceled = cancel;
     }
 

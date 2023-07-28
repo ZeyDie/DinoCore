@@ -35,7 +35,7 @@ public class RConConsoleSource implements ICommandSender
         return "Rcon";
     }
 
-    public void sendChatToPlayer(ChatMessageComponent par1ChatMessageComponent)
+    public void sendChatToPlayer(final ChatMessageComponent par1ChatMessageComponent)
     {
         this.buffer.append(par1ChatMessageComponent.toString());
     }
@@ -43,7 +43,7 @@ public class RConConsoleSource implements ICommandSender
     /**
      * Returns true if the command sender is allowed to use the given command.
      */
-    public boolean canCommandSenderUseCommand(int par1, String par2Str)
+    public boolean canCommandSenderUseCommand(final int par1, final String par2Str)
     {
         return true;
     }

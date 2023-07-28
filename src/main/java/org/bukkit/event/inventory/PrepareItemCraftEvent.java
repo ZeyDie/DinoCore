@@ -10,7 +10,7 @@ public class PrepareItemCraftEvent extends InventoryEvent {
     private boolean repair;
     private CraftingInventory matrix;
 
-    public PrepareItemCraftEvent(CraftingInventory what, InventoryView view, boolean isRepair) {
+    public PrepareItemCraftEvent(final CraftingInventory what, final InventoryView view, final boolean isRepair) {
         super(view);
         this.matrix = what;
         this.repair = isRepair;

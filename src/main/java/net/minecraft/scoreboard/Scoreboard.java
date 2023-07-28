@@ -17,12 +17,12 @@ public class Scoreboard
     /**
      * Returns a ScoreObjective for the objective name
      */
-    public ScoreObjective getObjective(String par1Str)
+    public ScoreObjective getObjective(final String par1Str)
     {
         return (ScoreObjective)this.scoreObjectives.get(par1Str);
     }
 
-    public ScoreObjective func_96535_a(String par1Str, ScoreObjectiveCriteria par2ScoreObjectiveCriteria)
+    public ScoreObjective func_96535_a(final String par1Str, final ScoreObjectiveCriteria par2ScoreObjectiveCriteria)
     {
         ScoreObjective scoreobjective = this.getObjective(par1Str);
 
@@ -48,13 +48,13 @@ public class Scoreboard
         }
     }
 
-    public Collection func_96520_a(ScoreObjectiveCriteria par1ScoreObjectiveCriteria)
+    public Collection func_96520_a(final ScoreObjectiveCriteria par1ScoreObjectiveCriteria)
     {
-        Collection collection = (Collection)this.field_96543_b.get(par1ScoreObjectiveCriteria);
+        final Collection collection = (Collection)this.field_96543_b.get(par1ScoreObjectiveCriteria);
         return collection == null ? new ArrayList() : new ArrayList(collection);
     }
 
-    public Score func_96529_a(String par1Str, ScoreObjective par2ScoreObjective)
+    public Score func_96529_a(final String par1Str, final ScoreObjective par2ScoreObjective)
     {
         Object object = (Map)this.field_96544_c.get(par1Str);
 
@@ -75,15 +75,15 @@ public class Scoreboard
         return score;
     }
 
-    public Collection func_96534_i(ScoreObjective par1ScoreObjective)
+    public Collection func_96534_i(final ScoreObjective par1ScoreObjective)
     {
-        ArrayList arraylist = new ArrayList();
-        Iterator iterator = this.field_96544_c.values().iterator();
+        final ArrayList arraylist = new ArrayList();
+        final Iterator iterator = this.field_96544_c.values().iterator();
 
         while (iterator.hasNext())
         {
-            Map map = (Map)iterator.next();
-            Score score = (Score)map.get(par1ScoreObjective);
+            final Map map = (Map)iterator.next();
+            final Score score = (Score)map.get(par1ScoreObjective);
 
             if (score != null)
             {
@@ -105,9 +105,9 @@ public class Scoreboard
         return this.field_96544_c.keySet();
     }
 
-    public void func_96515_c(String par1Str)
+    public void func_96515_c(final String par1Str)
     {
-        Map map = (Map)this.field_96544_c.remove(par1Str);
+        final Map map = (Map)this.field_96544_c.remove(par1Str);
 
         if (map != null)
         {
@@ -117,20 +117,20 @@ public class Scoreboard
 
     public Collection func_96528_e()
     {
-        Collection collection = this.field_96544_c.values();
-        ArrayList arraylist = new ArrayList();
-        Iterator iterator = collection.iterator();
+        final Collection collection = this.field_96544_c.values();
+        final ArrayList arraylist = new ArrayList();
+        final Iterator iterator = collection.iterator();
 
         while (iterator.hasNext())
         {
-            Map map = (Map)iterator.next();
+            final Map map = (Map)iterator.next();
             arraylist.addAll(map.values());
         }
 
         return arraylist;
     }
 
-    public Map func_96510_d(String par1Str)
+    public Map func_96510_d(final String par1Str)
     {
         Object object = (Map)this.field_96544_c.get(par1Str);
 
@@ -142,7 +142,7 @@ public class Scoreboard
         return (Map)object;
     }
 
-    public void func_96519_k(ScoreObjective par1ScoreObjective)
+    public void func_96519_k(final ScoreObjective par1ScoreObjective)
     {
         this.scoreObjectives.remove(par1ScoreObjective.getName());
 
@@ -154,40 +154,40 @@ public class Scoreboard
             }
         }
 
-        List list = (List)this.field_96543_b.get(par1ScoreObjective.getCriteria());
+        final List list = (List)this.field_96543_b.get(par1ScoreObjective.getCriteria());
 
         if (list != null)
         {
             list.remove(par1ScoreObjective);
         }
 
-        Iterator iterator = this.field_96544_c.values().iterator();
+        final Iterator iterator = this.field_96544_c.values().iterator();
 
         while (iterator.hasNext())
         {
-            Map map = (Map)iterator.next();
+            final Map map = (Map)iterator.next();
             map.remove(par1ScoreObjective);
         }
 
         this.func_96533_c(par1ScoreObjective);
     }
 
-    public void func_96530_a(int par1, ScoreObjective par2ScoreObjective)
+    public void func_96530_a(final int par1, final ScoreObjective par2ScoreObjective)
     {
         this.field_96541_d[par1] = par2ScoreObjective;
     }
 
-    public ScoreObjective func_96539_a(int par1)
+    public ScoreObjective func_96539_a(final int par1)
     {
         return this.field_96541_d[par1];
     }
 
-    public ScorePlayerTeam func_96508_e(String par1Str)
+    public ScorePlayerTeam func_96508_e(final String par1Str)
     {
         return (ScorePlayerTeam)this.field_96542_e.get(par1Str);
     }
 
-    public ScorePlayerTeam createTeam(String par1Str)
+    public ScorePlayerTeam createTeam(final String par1Str)
     {
         ScorePlayerTeam scoreplayerteam = this.func_96508_e(par1Str);
 
@@ -204,21 +204,21 @@ public class Scoreboard
         }
     }
 
-    public void func_96511_d(ScorePlayerTeam par1ScorePlayerTeam)
+    public void func_96511_d(final ScorePlayerTeam par1ScorePlayerTeam)
     {
         this.field_96542_e.remove(par1ScorePlayerTeam.func_96661_b());
-        Iterator iterator = par1ScorePlayerTeam.getMembershipCollection().iterator();
+        final Iterator iterator = par1ScorePlayerTeam.getMembershipCollection().iterator();
 
         while (iterator.hasNext())
         {
-            String s = (String)iterator.next();
+            final String s = (String)iterator.next();
             this.teamMemberships.remove(s);
         }
 
         this.func_96513_c(par1ScorePlayerTeam);
     }
 
-    public void addPlayerToTeam(String par1Str, ScorePlayerTeam par2ScorePlayerTeam)
+    public void addPlayerToTeam(final String par1Str, final ScorePlayerTeam par2ScorePlayerTeam)
     {
         if (this.getPlayersTeam(par1Str) != null)
         {
@@ -229,9 +229,9 @@ public class Scoreboard
         par2ScorePlayerTeam.getMembershipCollection().add(par1Str);
     }
 
-    public boolean removePlayerFromTeams(String par1Str)
+    public boolean removePlayerFromTeams(final String par1Str)
     {
-        ScorePlayerTeam scoreplayerteam = this.getPlayersTeam(par1Str);
+        final ScorePlayerTeam scoreplayerteam = this.getPlayersTeam(par1Str);
 
         if (scoreplayerteam != null)
         {
@@ -248,7 +248,7 @@ public class Scoreboard
      * Removes the given username from the given ScorePlayerTeam. If the player is not on the team then an
      * IllegalStateException is thrown.
      */
-    public void removePlayerFromTeam(String par1Str, ScorePlayerTeam par2ScorePlayerTeam)
+    public void removePlayerFromTeam(final String par1Str, final ScorePlayerTeam par2ScorePlayerTeam)
     {
         if (this.getPlayersTeam(par1Str) != par2ScorePlayerTeam)
         {
@@ -274,31 +274,31 @@ public class Scoreboard
     /**
      * Gets the ScorePlayerTeam object for the given username.
      */
-    public ScorePlayerTeam getPlayersTeam(String par1Str)
+    public ScorePlayerTeam getPlayersTeam(final String par1Str)
     {
         return (ScorePlayerTeam)this.teamMemberships.get(par1Str);
     }
 
-    public void func_96522_a(ScoreObjective par1ScoreObjective) {}
+    public void func_96522_a(final ScoreObjective par1ScoreObjective) {}
 
-    public void func_96532_b(ScoreObjective par1ScoreObjective) {}
+    public void func_96532_b(final ScoreObjective par1ScoreObjective) {}
 
-    public void func_96533_c(ScoreObjective par1ScoreObjective) {}
+    public void func_96533_c(final ScoreObjective par1ScoreObjective) {}
 
-    public void func_96536_a(Score par1Score) {}
+    public void func_96536_a(final Score par1Score) {}
 
-    public void func_96516_a(String par1Str) {}
+    public void func_96516_a(final String par1Str) {}
 
-    public void func_96523_a(ScorePlayerTeam par1ScorePlayerTeam) {}
+    public void func_96523_a(final ScorePlayerTeam par1ScorePlayerTeam) {}
 
-    public void func_96538_b(ScorePlayerTeam par1ScorePlayerTeam) {}
+    public void func_96538_b(final ScorePlayerTeam par1ScorePlayerTeam) {}
 
-    public void func_96513_c(ScorePlayerTeam par1ScorePlayerTeam) {}
+    public void func_96513_c(final ScorePlayerTeam par1ScorePlayerTeam) {}
 
     /**
      * Returns 'list' for 0, 'sidebar' for 1, 'belowName for 2, otherwise null.
      */
-    public static String getObjectiveDisplaySlot(int par0)
+    public static String getObjectiveDisplaySlot(final int par0)
     {
         switch (par0)
         {
@@ -316,7 +316,7 @@ public class Scoreboard
     /**
      * Returns 0 for (case-insensitive) 'list', 1 for 'sidebar', 2 for 'belowName', otherwise -1.
      */
-    public static int getObjectiveDisplaySlotNumber(String par0Str)
+    public static int getObjectiveDisplaySlotNumber(final String par0Str)
     {
         return par0Str.equalsIgnoreCase("list") ? 0 : (par0Str.equalsIgnoreCase("sidebar") ? 1 : (par0Str.equalsIgnoreCase("belowName") ? 2 : -1));
     }

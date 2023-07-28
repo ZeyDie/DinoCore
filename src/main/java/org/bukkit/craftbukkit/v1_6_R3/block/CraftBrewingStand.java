@@ -9,7 +9,7 @@ import org.bukkit.inventory.BrewerInventory;
 public class CraftBrewingStand extends CraftBlockState implements BrewingStand {
     private final net.minecraft.tileentity.TileEntityBrewingStand brewingStand;
 
-    public CraftBrewingStand(Block block) {
+    public CraftBrewingStand(final Block block) {
         super(block);
 
         brewingStand = (net.minecraft.tileentity.TileEntityBrewingStand) ((CraftWorld) block.getWorld()).getTileEntityAt(getX(), getY(), getZ());
@@ -20,8 +20,8 @@ public class CraftBrewingStand extends CraftBlockState implements BrewingStand {
     }
 
     @Override
-    public boolean update(boolean force, boolean applyPhysics) {
-        boolean result = super.update(force, applyPhysics);
+    public boolean update(final boolean force, final boolean applyPhysics) {
+        final boolean result = super.update(force, applyPhysics);
 
         if (result) {
             brewingStand.onInventoryChanged();
@@ -34,7 +34,7 @@ public class CraftBrewingStand extends CraftBlockState implements BrewingStand {
         return brewingStand.brewTime;
     }
 
-    public void setBrewingTime(int brewTime) {
+    public void setBrewingTime(final int brewTime) {
         brewingStand.brewTime = brewTime;
     }
 }

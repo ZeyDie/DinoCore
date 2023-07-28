@@ -24,7 +24,7 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler
     static final float LIGHT_XZ_POS = 0.6F;
     static final double RENDER_OFFSET = 0.0010000000474974513D;
 
-    public float getFluidHeightAverage(float[] flow)
+    public float getFluidHeightAverage(final float[] flow)
     {
         float total = 0;
         int count = 0;
@@ -33,7 +33,7 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler
 
         for (int i = 0; i < flow.length; i++)
         {
-            if (flow[i] >= 0.875F && end != 1F)
+            if (flow[i] >= 0.875F && end != 1.0F)
             {
             	end = flow[i];
             }
@@ -51,7 +51,7 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler
         return end;
     }
 
-    public float getFluidHeightForRender(IBlockAccess world, int x, int y, int z, BlockFluidBase block)
+    public float getFluidHeightForRender(final IBlockAccess world, final int x, final int y, final int z, final BlockFluidBase block)
     {
         if (world.getBlockId(x, y, z) == block.blockID)
         {
@@ -70,31 +70,30 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler
 
     /* ISimpleBlockRenderingHandler */
     @Override
-    public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer){}
+    public void renderInventoryBlock(final Block block, final int metadata, final int modelID, final RenderBlocks renderer){}
 
     @Override
-    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer)
+    public boolean renderWorldBlock(final IBlockAccess world, final int x, final int y, final int z, final Block block, final int modelId, final RenderBlocks renderer)
     {
         if (!(block instanceof BlockFluidBase))
         {
             return false;
         }
 
-        Tessellator tessellator = Tessellator.instance;
-        int color = block.colorMultiplier(world, x, y, z);
-        float red = (color >> 16 & 255) / 255.0F;
-        float green = (color >> 8 & 255) / 255.0F;
-        float blue = (color & 255) / 255.0F;
+        final Tessellator tessellator = Tessellator.instance;
+        final int color = block.colorMultiplier(world, x, y, z);
+        final float red = (color >> 16 & 255) / 255.0F;
+        final float green = (color >> 8 & 255) / 255.0F;
+        final float blue = (color & 255) / 255.0F;
 
-        BlockFluidBase theFluid = (BlockFluidBase) block;
-        int bMeta = world.getBlockMetadata(x, y, z);
+        final BlockFluidBase theFluid = (BlockFluidBase) block;
+        final int bMeta = world.getBlockMetadata(x, y, z);
 
-        boolean renderTop = world.getBlockId(x, y - theFluid.densityDir, z) != theFluid.blockID;
+        final boolean renderTop = world.getBlockId(x, y - theFluid.densityDir, z) != theFluid.blockID;
 
-        boolean renderBottom = block.shouldSideBeRendered(world, x, y + theFluid.densityDir, z, 0) && world.getBlockId(x, y + theFluid.densityDir, z) != theFluid.blockID;
+        final boolean renderBottom = block.shouldSideBeRendered(world, x, y + theFluid.densityDir, z, 0) && world.getBlockId(x, y + theFluid.densityDir, z) != theFluid.blockID;
 
-        boolean[] renderSides = new boolean[]
-        {
+        final boolean[] renderSides = {
             block.shouldSideBeRendered(world, x, y, z - 1, 2), 
             block.shouldSideBeRendered(world, x, y, z + 1, 3),
             block.shouldSideBeRendered(world, x - 1, y, z, 4), 
@@ -109,18 +108,18 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler
         {
             boolean rendered = false;
             double heightNW, heightSW, heightSE, heightNE;
-            float flow11 = getFluidHeightForRender(world, x, y, z, theFluid);
+            final float flow11 = getFluidHeightForRender(world, x, y, z, theFluid);
 
             if (flow11 != 1)
             {
-                float flow00 = getFluidHeightForRender(world, x - 1, y, z - 1, theFluid);
-                float flow01 = getFluidHeightForRender(world, x - 1, y, z,     theFluid);
-                float flow02 = getFluidHeightForRender(world, x - 1, y, z + 1, theFluid);
-                float flow10 = getFluidHeightForRender(world, x,     y, z - 1, theFluid);
-                float flow12 = getFluidHeightForRender(world, x,     y, z + 1, theFluid);
-                float flow20 = getFluidHeightForRender(world, x + 1, y, z - 1, theFluid);
-                float flow21 = getFluidHeightForRender(world, x + 1, y, z,     theFluid);
-                float flow22 = getFluidHeightForRender(world, x + 1, y, z + 1, theFluid);
+                final float flow00 = getFluidHeightForRender(world, x - 1, y, z - 1, theFluid);
+                final float flow01 = getFluidHeightForRender(world, x - 1, y, z,     theFluid);
+                final float flow02 = getFluidHeightForRender(world, x - 1, y, z + 1, theFluid);
+                final float flow10 = getFluidHeightForRender(world, x,     y, z - 1, theFluid);
+                final float flow12 = getFluidHeightForRender(world, x,     y, z + 1, theFluid);
+                final float flow20 = getFluidHeightForRender(world, x + 1, y, z - 1, theFluid);
+                final float flow21 = getFluidHeightForRender(world, x + 1, y, z,     theFluid);
+                final float flow22 = getFluidHeightForRender(world, x + 1, y, z + 1, theFluid);
 
                 heightNW = getFluidHeightAverage(new float[]{ flow00, flow01, flow10, flow11 });
                 heightSW = getFluidHeightAverage(new float[]{ flow01, flow02, flow12, flow11 });
@@ -135,12 +134,12 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler
                 heightNE = flow11;
             }
 
-            boolean rises = theFluid.densityDir == 1;
+            final boolean rises = theFluid.densityDir == 1;
             if (renderer.renderAllFaces || renderTop)
             {
                 rendered = true;
                 Icon iconStill = block.getIcon(1, bMeta);
-                float flowDir = (float) BlockFluidBase.getFlowDirection(world, x, y, z);
+                final float flowDir = (float) BlockFluidBase.getFlowDirection(world, x, y, z);
 
                 if (flowDir > -999.0F)
                 {
@@ -152,7 +151,14 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler
                 heightSE -= RENDER_OFFSET;
                 heightNE -= RENDER_OFFSET;
 
-                double u1, u2, u3, u4, v1, v2, v3, v4;
+                final double u1;
+                double u2;
+                double u3;
+                double u4;
+                double v1;
+                double v2;
+                double v3;
+                final double v4;
 
                 if (flowDir < -999.0F)
                 {
@@ -167,8 +173,8 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler
                 }
                 else
                 {
-                    float xFlow = MathHelper.sin(flowDir) * 0.25F;
-                    float zFlow = MathHelper.cos(flowDir) * 0.25F;
+                    final float xFlow = MathHelper.sin(flowDir) * 0.25F;
+                    final float zFlow = MathHelper.cos(flowDir) * 0.25F;
                     u2 = iconStill.getInterpolatedU(8.0F + (-zFlow - xFlow) * 16.0F);
                     v2 = iconStill.getInterpolatedV(8.0F + (-zFlow + xFlow) * 16.0F);
                     u1 = iconStill.getInterpolatedU(8.0F + (-zFlow + xFlow) * 16.0F);
@@ -227,17 +233,17 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler
                     case 3: ++x2; break;
                 }
 
-                Icon iconFlow = block.getIcon(side + 2, bMeta);
+                final Icon iconFlow = block.getIcon(side + 2, bMeta);
                 if (renderer.renderAllFaces || renderSides[side])
                 {
                     rendered = true;
 
-                    double ty1;
-                    double tx1;
-                    double ty2;
-                    double tx2;
-                    double tz1;
-                    double tz2;
+                    final double ty1;
+                    final double tx1;
+                    final double ty2;
+                    final double tx2;
+                    final double tz1;
+                    final double tz2;
 
                     if (side == 0)
                     {
@@ -276,11 +282,11 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler
                         tz2 = z + 1;
                     }
 
-                    float u1Flow = iconFlow.getInterpolatedU(0.0D);
-                    float u2Flow = iconFlow.getInterpolatedU(8.0D);
-                    float v1Flow = iconFlow.getInterpolatedV((1.0D - ty1) * 16.0D * 0.5D);
-                    float v2Flow = iconFlow.getInterpolatedV((1.0D - ty2) * 16.0D * 0.5D);
-                    float v3Flow = iconFlow.getInterpolatedV(8.0D);
+                    final float u1Flow = iconFlow.getInterpolatedU(0.0D);
+                    final float u2Flow = iconFlow.getInterpolatedU(8.0D);
+                    final float v1Flow = iconFlow.getInterpolatedV((1.0D - ty1) * 16.0D * 0.5D);
+                    final float v2Flow = iconFlow.getInterpolatedV((1.0D - ty2) * 16.0D * 0.5D);
+                    final float v3Flow = iconFlow.getInterpolatedV(8.0D);
                     tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x2, y, z2));
                     float sideLighting = 1.0F;
 

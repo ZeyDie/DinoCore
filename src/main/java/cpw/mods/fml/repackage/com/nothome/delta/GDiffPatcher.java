@@ -40,7 +40,7 @@ import static cpw.mods.fml.repackage.com.nothome.delta.GDiffWriter.*;
 public class GDiffPatcher {
 
     private ByteBuffer buf = ByteBuffer.allocate(1024);
-    private byte buf2[] = buf.array();
+    private byte[] buf2 = buf.array();
 
     /**
      * Constructs a new GDiffPatcher.
@@ -51,15 +51,15 @@ public class GDiffPatcher {
     /**
      * Patches to an output file.
      */
-    public void patch(File sourceFile, File patchFile, File outputFile)
+    public void patch(final File sourceFile, final File patchFile, final File outputFile)
 		throws IOException
 	{
-        RandomAccessFileSeekableSource source =new RandomAccessFileSeekableSource(new RandomAccessFile(sourceFile, "r"));
-        InputStream patch = new FileInputStream(patchFile);
-        OutputStream output = new FileOutputStream(outputFile);
+        final RandomAccessFileSeekableSource source =new RandomAccessFileSeekableSource(new RandomAccessFile(sourceFile, "r"));
+        final InputStream patch = new FileInputStream(patchFile);
+        final OutputStream output = new FileOutputStream(outputFile);
         try {
             patch(source, patch, output);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw e;
         } finally {
             source.close();
@@ -71,15 +71,15 @@ public class GDiffPatcher {
     /**
      * Patches to an output stream.
      */
-    public void patch(byte[] source, InputStream patch, OutputStream output) throws IOException {
+    public void patch(final byte[] source, final InputStream patch, final OutputStream output) throws IOException {
         patch(new ByteBufferSeekableSource(source), patch, output);
     }
 
     /**
      * Patches in memory, returning the patch result.
      */
-    public byte[] patch(byte[] source, byte[] patch) throws IOException {
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
+    public byte[] patch(final byte[] source, final byte[] patch) throws IOException {
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
         patch(source, new ByteArrayInputStream(patch), os);
         return os.toByteArray();
     }
@@ -87,10 +87,10 @@ public class GDiffPatcher {
     /**
      * Patches to an output stream.
      */
-    public void patch(SeekableSource source, InputStream patch, OutputStream out) throws IOException {
+    public void patch(final SeekableSource source, final InputStream patch, final OutputStream out) throws IOException {
 
-        DataOutputStream outOS = new DataOutputStream(out);
-        DataInputStream patchIS = new DataInputStream(patch);
+        final DataOutputStream outOS = new DataOutputStream(out);
+        final DataInputStream patchIS = new DataInputStream(patch);
 
         // the magic string is 'd1 ff d1 ff' + the version number
         if (patchIS.readUnsignedByte() != 0xd1 ||
@@ -103,11 +103,11 @@ public class GDiffPatcher {
         }
 
         while (true) {
-            int command = patchIS.readUnsignedByte();
+            final int command = patchIS.readUnsignedByte();
             if (command == EOF)
                 break;
-            int length;
-            int offset;
+            final int length;
+            final int offset;
 
             if (command <= DATA_MAX) {
                 append(command, patchIS, outOS);
@@ -154,7 +154,7 @@ public class GDiffPatcher {
                 copy(offset, length, source, outOS);
                 break;
             case COPY_LONG_INT:
-                long loffset = patchIS.readLong();
+                final long loffset = patchIS.readLong();
                 length = patchIS.readInt();
                 copy(loffset, length, source, outOS);
                 break;
@@ -165,36 +165,38 @@ public class GDiffPatcher {
 		outOS.flush();
     }
 
-    private void copy(long offset, int length, SeekableSource source, OutputStream output)
+    private void copy(final long offset, int length, final SeekableSource source, final OutputStream output)
 		throws IOException
 	{
+        int length1 = length;
         source.seek(offset);
-        while (length > 0) {
-            int len = Math.min(buf.capacity(), length);
+        while (length1 > 0) {
+            final int len = Math.min(buf.capacity(), length1);
             buf.clear().limit(len);
-            int res = source.read(buf);
+            final int res = source.read(buf);
             if (res == -1)
-                throw new EOFException("in copy " + offset + " " + length);
+                throw new EOFException("in copy " + offset + " " + length1);
             output.write(buf.array(), 0, res);
-            length -= res;
+            length1 -= res;
         }
     }
 
-    private void append(int length, InputStream patch, OutputStream output) throws IOException {
-        while (length > 0) {
-            int len = Math.min(buf2.length, length);
-    	    int res = patch.read(buf2, 0, len);
+    private void append(int length, final InputStream patch, final OutputStream output) throws IOException {
+        int length1 = length;
+        while (length1 > 0) {
+            final int len = Math.min(buf2.length, length1);
+    	    final int res = patch.read(buf2, 0, len);
     	    if (res == -1)
-    	        throw new EOFException("cannot read " + length);
+    	        throw new EOFException("cannot read " + length1);
             output.write(buf2, 0, res);
-            length -= res;
+            length1 -= res;
         }
     }
 
     /**
      * Simple command line tool to patch a file.
      */
-    public static void main(String argv[]) {
+    public static void main(final String[] argv) {
 
         if (argv.length != 3) {
             System.err.println("usage GDiffPatch source patch output");
@@ -202,9 +204,9 @@ public class GDiffPatcher {
             return;
         }
         try {
-            File sourceFile = new File(argv[0]);
-            File patchFile = new File(argv[1]);
-            File outputFile = new File(argv[2]);
+            final File sourceFile = new File(argv[0]);
+            final File patchFile = new File(argv[1]);
+            final File outputFile = new File(argv[2]);
 
             if (sourceFile.length() > Integer.MAX_VALUE ||
             patchFile.length() > Integer.MAX_VALUE) {
@@ -212,12 +214,12 @@ public class GDiffPatcher {
                 System.err.println("aborting..");
                 return;
             }
-            GDiffPatcher patcher = new GDiffPatcher();
+            final GDiffPatcher patcher = new GDiffPatcher();
             patcher.patch(sourceFile, patchFile, outputFile);
 
             System.out.println("finished patching file");
 
-        } catch (Exception ioe) {                                   //gls031504a
+        } catch (final Exception ioe) {                                   //gls031504a
             System.err.println("error while patching: " + ioe);
         }
     }

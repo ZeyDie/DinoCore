@@ -13,7 +13,7 @@ class CallableScreenSize implements Callable
 
     final EntityRenderer theEntityRenderer;
 
-    CallableScreenSize(EntityRenderer par1EntityRenderer, ScaledResolution par2ScaledResolution)
+    CallableScreenSize(final EntityRenderer par1EntityRenderer, final ScaledResolution par2ScaledResolution)
     {
         this.theEntityRenderer = par1EntityRenderer;
         this.theScaledResolution = par2ScaledResolution;

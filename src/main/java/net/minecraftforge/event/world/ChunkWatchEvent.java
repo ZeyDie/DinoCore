@@ -9,7 +9,7 @@ public class ChunkWatchEvent extends Event
     public final ChunkCoordIntPair chunk;
     public final EntityPlayerMP player;
     
-    public ChunkWatchEvent(ChunkCoordIntPair chunk, EntityPlayerMP player)
+    public ChunkWatchEvent(final ChunkCoordIntPair chunk, final EntityPlayerMP player)
     {
         this.chunk = chunk;
         this.player = player;
@@ -17,11 +17,11 @@ public class ChunkWatchEvent extends Event
     
     public static class Watch extends ChunkWatchEvent
     {
-        public Watch(ChunkCoordIntPair chunk, EntityPlayerMP player) { super(chunk, player); }        
+        public Watch(final ChunkCoordIntPair chunk, final EntityPlayerMP player) { super(chunk, player); }
     }
     
     public static class UnWatch extends ChunkWatchEvent
     {
-        public UnWatch(ChunkCoordIntPair chunkLocation, EntityPlayerMP player) { super(chunkLocation, player); }        
+        public UnWatch(final ChunkCoordIntPair chunkLocation, final EntityPlayerMP player) { super(chunkLocation, player); }
     }
 }

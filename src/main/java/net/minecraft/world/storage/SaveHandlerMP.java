@@ -29,7 +29,7 @@ public class SaveHandlerMP implements ISaveHandler
     /**
      * Returns the chunk loader with the provided world provider
      */
-    public IChunkLoader getChunkLoader(WorldProvider par1WorldProvider)
+    public IChunkLoader getChunkLoader(final WorldProvider par1WorldProvider)
     {
         return null;
     }
@@ -37,12 +37,12 @@ public class SaveHandlerMP implements ISaveHandler
     /**
      * Saves the given World Info with the given NBTTagCompound as the Player.
      */
-    public void saveWorldInfoWithPlayer(WorldInfo par1WorldInfo, NBTTagCompound par2NBTTagCompound) {}
+    public void saveWorldInfoWithPlayer(final WorldInfo par1WorldInfo, final NBTTagCompound par2NBTTagCompound) {}
 
     /**
      * Saves the passed in world info.
      */
-    public void saveWorldInfo(WorldInfo par1WorldInfo) {}
+    public void saveWorldInfo(final WorldInfo par1WorldInfo) {}
 
     /**
      * returns null if no saveHandler is relevent (eg. SMP)
@@ -60,7 +60,7 @@ public class SaveHandlerMP implements ISaveHandler
     /**
      * Gets the file location of the given map
      */
-    public File getMapFileFromName(String par1Str)
+    public File getMapFileFromName(final String par1Str)
     {
         return null;
     }

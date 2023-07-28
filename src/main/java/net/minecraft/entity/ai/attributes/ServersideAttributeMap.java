@@ -10,12 +10,12 @@ public class ServersideAttributeMap extends BaseAttributeMap
     private final Set field_111162_d = Sets.newHashSet();
     protected final Map field_111163_c = new LowerStringMap();
 
-    public ModifiableAttributeInstance func_111159_c(Attribute par1Attribute)
+    public ModifiableAttributeInstance func_111159_c(final Attribute par1Attribute)
     {
         return (ModifiableAttributeInstance)super.getAttributeInstance(par1Attribute);
     }
 
-    public ModifiableAttributeInstance func_111158_b(String par1Str)
+    public ModifiableAttributeInstance func_111158_b(final String par1Str)
     {
         AttributeInstance attributeinstance = super.getAttributeInstanceByName(par1Str);
 
@@ -27,7 +27,7 @@ public class ServersideAttributeMap extends BaseAttributeMap
         return (ModifiableAttributeInstance)attributeinstance;
     }
 
-    public AttributeInstance func_111150_b(Attribute par1Attribute)
+    public AttributeInstance func_111150_b(final Attribute par1Attribute)
     {
         if (this.attributesByName.containsKey(par1Attribute.getAttributeUnlocalizedName()))
         {
@@ -35,7 +35,7 @@ public class ServersideAttributeMap extends BaseAttributeMap
         }
         else
         {
-            ModifiableAttributeInstance modifiableattributeinstance = new ModifiableAttributeInstance(this, par1Attribute);
+            final ModifiableAttributeInstance modifiableattributeinstance = new ModifiableAttributeInstance(this, par1Attribute);
             this.attributesByName.put(par1Attribute.getAttributeUnlocalizedName(), modifiableattributeinstance);
 
             if (par1Attribute instanceof RangedAttribute && ((RangedAttribute)par1Attribute).func_111116_f() != null)
@@ -48,7 +48,7 @@ public class ServersideAttributeMap extends BaseAttributeMap
         }
     }
 
-    public void func_111149_a(ModifiableAttributeInstance par1ModifiableAttributeInstance)
+    public void func_111149_a(final ModifiableAttributeInstance par1ModifiableAttributeInstance)
     {
         if (par1ModifiableAttributeInstance.func_111123_a().getShouldWatch())
         {
@@ -63,12 +63,12 @@ public class ServersideAttributeMap extends BaseAttributeMap
 
     public Collection func_111160_c()
     {
-        HashSet hashset = Sets.newHashSet();
-        Iterator iterator = this.getAllAttributes().iterator();
+        final HashSet hashset = Sets.newHashSet();
+        final Iterator iterator = this.getAllAttributes().iterator();
 
         while (iterator.hasNext())
         {
-            AttributeInstance attributeinstance = (AttributeInstance)iterator.next();
+            final AttributeInstance attributeinstance = (AttributeInstance)iterator.next();
 
             if (attributeinstance.func_111123_a().getShouldWatch())
             {
@@ -79,12 +79,12 @@ public class ServersideAttributeMap extends BaseAttributeMap
         return hashset;
     }
 
-    public AttributeInstance getAttributeInstanceByName(String par1Str)
+    public AttributeInstance getAttributeInstanceByName(final String par1Str)
     {
         return this.func_111158_b(par1Str);
     }
 
-    public AttributeInstance getAttributeInstance(Attribute par1Attribute)
+    public AttributeInstance getAttributeInstance(final Attribute par1Attribute)
     {
         return this.func_111159_c(par1Attribute);
     }

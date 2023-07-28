@@ -22,7 +22,7 @@ public class BlockEnchantmentTable extends BlockContainer
     @SideOnly(Side.CLIENT)
     private Icon field_94460_b;
 
-    protected BlockEnchantmentTable(int par1)
+    protected BlockEnchantmentTable(final int par1)
     {
         super(par1, Material.rock);
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.75F, 1.0F);
@@ -43,7 +43,7 @@ public class BlockEnchantmentTable extends BlockContainer
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void randomDisplayTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         super.randomDisplayTick(par1World, par2, par3, par4, par5Random);
 
@@ -89,7 +89,7 @@ public class BlockEnchantmentTable extends BlockContainer
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
         return par1 == 0 ? this.field_94460_b : (par1 == 1 ? this.field_94461_a : this.blockIcon);
     }
@@ -97,7 +97,7 @@ public class BlockEnchantmentTable extends BlockContainer
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World par1World)
+    public TileEntity createNewTileEntity(final World par1World)
     {
         return new TileEntityEnchantmentTable();
     }
@@ -105,7 +105,7 @@ public class BlockEnchantmentTable extends BlockContainer
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9)
     {
         if (par1World.isRemote)
         {
@@ -113,7 +113,7 @@ public class BlockEnchantmentTable extends BlockContainer
         }
         else
         {
-            TileEntityEnchantmentTable tileentityenchantmenttable = (TileEntityEnchantmentTable)par1World.getBlockTileEntity(par2, par3, par4);
+            final TileEntityEnchantmentTable tileentityenchantmenttable = (TileEntityEnchantmentTable)par1World.getBlockTileEntity(par2, par3, par4);
             par5EntityPlayer.displayGUIEnchantment(par2, par3, par4, tileentityenchantmenttable.func_94135_b() ? tileentityenchantmenttable.func_94133_a() : null);
             return true;
         }
@@ -122,7 +122,7 @@ public class BlockEnchantmentTable extends BlockContainer
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
+    public void onBlockPlacedBy(final World par1World, final int par2, final int par3, final int par4, final EntityLivingBase par5EntityLivingBase, final ItemStack par6ItemStack)
     {
         super.onBlockPlacedBy(par1World, par2, par3, par4, par5EntityLivingBase, par6ItemStack);
 
@@ -138,7 +138,7 @@ public class BlockEnchantmentTable extends BlockContainer
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.blockIcon = par1IconRegister.registerIcon(this.getTextureName() + "_" + "side");
         this.field_94461_a = par1IconRegister.registerIcon(this.getTextureName() + "_" + "top");

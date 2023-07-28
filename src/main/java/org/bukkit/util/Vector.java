@@ -46,7 +46,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param y Y component
      * @param z Z component
      */
-    public Vector(int x, int y, int z) {
+    public Vector(final int x, final int y, final int z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -59,7 +59,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param y Y component
      * @param z Z component
      */
-    public Vector(double x, double y, double z) {
+    public Vector(final double x, final double y, final double z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -72,7 +72,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param y Y component
      * @param z Z component
      */
-    public Vector(float x, float y, float z) {
+    public Vector(final float x, final float y, final float z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -84,7 +84,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param vec The other vector
      * @return the same vector
      */
-    public Vector add(Vector vec) {
+    public Vector add(final Vector vec) {
         x += vec.x;
         y += vec.y;
         z += vec.z;
@@ -97,7 +97,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param vec The other vector
      * @return the same vector
      */
-    public Vector subtract(Vector vec) {
+    public Vector subtract(final Vector vec) {
         x -= vec.x;
         y -= vec.y;
         z -= vec.z;
@@ -110,7 +110,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param vec The other vector
      * @return the same vector
      */
-    public Vector multiply(Vector vec) {
+    public Vector multiply(final Vector vec) {
         x *= vec.x;
         y *= vec.y;
         z *= vec.z;
@@ -123,7 +123,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param vec The other vector
      * @return the same vector
      */
-    public Vector divide(Vector vec) {
+    public Vector divide(final Vector vec) {
         x /= vec.x;
         y /= vec.y;
         z /= vec.z;
@@ -136,7 +136,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param vec The other vector
      * @return the same vector
      */
-    public Vector copy(Vector vec) {
+    public Vector copy(final Vector vec) {
         x = vec.x;
         y = vec.y;
         z = vec.z;
@@ -175,7 +175,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param o The other vector
      * @return the distance
      */
-    public double distance(Vector o) {
+    public double distance(final Vector o) {
         return Math.sqrt(NumberConversions.square(x - o.x) + NumberConversions.square(y - o.y) + NumberConversions.square(z - o.z));
     }
 
@@ -185,7 +185,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param o The other vector
      * @return the distance
      */
-    public double distanceSquared(Vector o) {
+    public double distanceSquared(final Vector o) {
         return NumberConversions.square(x - o.x) + NumberConversions.square(y - o.y) + NumberConversions.square(z - o.z);
     }
 
@@ -195,8 +195,8 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param other The other vector
      * @return angle in radians
      */
-    public float angle(Vector other) {
-        double dot = dot(other) / (length() * other.length());
+    public float angle(final Vector other) {
+        final double dot = dot(other) / (length() * other.length());
 
         return (float) Math.acos(dot);
     }
@@ -207,7 +207,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param other The other vector
      * @return this same vector (now a midpoint)
      */
-    public Vector midpoint(Vector other) {
+    public Vector midpoint(final Vector other) {
         x = (x + other.x) / 2;
         y = (y + other.y) / 2;
         z = (z + other.z) / 2;
@@ -220,10 +220,10 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param other The other vector
      * @return a new midpoint vector
      */
-    public Vector getMidpoint(Vector other) {
-        double x = (this.x + other.x) / 2;
-        double y = (this.y + other.y) / 2;
-        double z = (this.z + other.z) / 2;
+    public Vector getMidpoint(final Vector other) {
+        final double x = (this.x + other.x) / 2;
+        final double y = (this.y + other.y) / 2;
+        final double z = (this.z + other.z) / 2;
         return new Vector(x, y, z);
     }
 
@@ -233,7 +233,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param m The factor
      * @return the same vector
      */
-    public Vector multiply(int m) {
+    public Vector multiply(final int m) {
         x *= m;
         y *= m;
         z *= m;
@@ -246,7 +246,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param m The factor
      * @return the same vector
      */
-    public Vector multiply(double m) {
+    public Vector multiply(final double m) {
         x *= m;
         y *= m;
         z *= m;
@@ -259,7 +259,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param m The factor
      * @return the same vector
      */
-    public Vector multiply(float m) {
+    public Vector multiply(final float m) {
         x *= m;
         y *= m;
         z *= m;
@@ -273,7 +273,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param other The other vector
      * @return dot product
      */
-    public double dot(Vector other) {
+    public double dot(final Vector other) {
         return x * other.x + y * other.y + z * other.z;
     }
 
@@ -288,10 +288,10 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param o The other vector
      * @return the same vector
      */
-    public Vector crossProduct(Vector o) {
-        double newX = y * o.z - o.y * z;
-        double newY = z * o.x - o.z * x;
-        double newZ = x * o.y - o.x * y;
+    public Vector crossProduct(final Vector o) {
+        final double newX = y * o.z - o.y * z;
+        final double newY = z * o.x - o.z * x;
+        final double newZ = x * o.y - o.x * y;
 
         x = newX;
         y = newY;
@@ -305,7 +305,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @return the same vector
      */
     public Vector normalize() {
-        double length = length();
+        final double length = length();
 
         x /= length;
         y /= length;
@@ -335,7 +335,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param max Maximum vector
      * @return whether this vector is in the AABB
      */
-    public boolean isInAABB(Vector min, Vector max) {
+    public boolean isInAABB(final Vector min, final Vector max) {
         return x >= min.x && x <= max.x && y >= min.y && y <= max.y && z >= min.z && z <= max.z;
     }
 
@@ -346,7 +346,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param radius Sphere radius
      * @return whether this vector is in the sphere
      */
-    public boolean isInSphere(Vector origin, double radius) {
+    public boolean isInSphere(final Vector origin, final double radius) {
         return (NumberConversions.square(origin.x - x) + NumberConversions.square(origin.y - y) + NumberConversions.square(origin.z - z)) <= NumberConversions.square(radius);
     }
 
@@ -413,7 +413,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param x The new X component.
      * @return This vector.
      */
-    public Vector setX(int x) {
+    public Vector setX(final int x) {
         this.x = x;
         return this;
     }
@@ -424,7 +424,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param x The new X component.
      * @return This vector.
      */
-    public Vector setX(double x) {
+    public Vector setX(final double x) {
         this.x = x;
         return this;
     }
@@ -435,7 +435,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param x The new X component.
      * @return This vector.
      */
-    public Vector setX(float x) {
+    public Vector setX(final float x) {
         this.x = x;
         return this;
     }
@@ -446,7 +446,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param y The new Y component.
      * @return This vector.
      */
-    public Vector setY(int y) {
+    public Vector setY(final int y) {
         this.y = y;
         return this;
     }
@@ -457,7 +457,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param y The new Y component.
      * @return This vector.
      */
-    public Vector setY(double y) {
+    public Vector setY(final double y) {
         this.y = y;
         return this;
     }
@@ -468,7 +468,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param y The new Y component.
      * @return This vector.
      */
-    public Vector setY(float y) {
+    public Vector setY(final float y) {
         this.y = y;
         return this;
     }
@@ -479,7 +479,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param z The new Z component.
      * @return This vector.
      */
-    public Vector setZ(int z) {
+    public Vector setZ(final int z) {
         this.z = z;
         return this;
     }
@@ -490,7 +490,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param z The new Z component.
      * @return This vector.
      */
-    public Vector setZ(double z) {
+    public Vector setZ(final double z) {
         this.z = z;
         return this;
     }
@@ -501,7 +501,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param z The new Z component.
      * @return This vector.
      */
-    public Vector setZ(float z) {
+    public Vector setZ(final float z) {
         this.z = z;
         return this;
     }
@@ -514,12 +514,12 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * with epsilon.
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (!(obj instanceof Vector)) {
             return false;
         }
 
-        Vector other = (Vector) obj;
+        final Vector other = (Vector) obj;
 
         return Math.abs(x - other.x) < epsilon && Math.abs(y - other.y) < epsilon && Math.abs(z - other.z) < epsilon && (this.getClass().equals(obj.getClass()));
     }
@@ -548,7 +548,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
     public Vector clone() {
         try {
             return (Vector) super.clone();
-        } catch (CloneNotSupportedException e) {
+        } catch (final CloneNotSupportedException e) {
             throw new Error(e);
         }
     }
@@ -567,7 +567,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param world The world to link the location to.
      * @return the location
      */
-    public Location toLocation(World world) {
+    public Location toLocation(final World world) {
         return new Location(world, x, y, z);
     }
 
@@ -579,7 +579,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param pitch The desired pitch.
      * @return the location
      */
-    public Location toLocation(World world, float yaw, float pitch) {
+    public Location toLocation(final World world, final float yaw, final float pitch) {
         return new Location(world, x, y, z, yaw, pitch);
     }
 
@@ -608,7 +608,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param v2 The second vector.
      * @return minimum
      */
-    public static Vector getMinimum(Vector v1, Vector v2) {
+    public static Vector getMinimum(final Vector v1, final Vector v2) {
         return new Vector(Math.min(v1.x, v2.x), Math.min(v1.y, v2.y), Math.min(v1.z, v2.z));
     }
 
@@ -619,7 +619,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * @param v2 The second vector.
      * @return maximum
      */
-    public static Vector getMaximum(Vector v1, Vector v2) {
+    public static Vector getMaximum(final Vector v1, final Vector v2) {
         return new Vector(Math.max(v1.x, v2.x), Math.max(v1.y, v2.y), Math.max(v1.z, v2.z));
     }
 
@@ -634,7 +634,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
     }
 
     public Map<String, Object> serialize() {
-        Map<String, Object> result = new LinkedHashMap<String, Object>();
+        final Map<String, Object> result = new LinkedHashMap<String, Object>();
 
         result.put("x", getX());
         result.put("y", getY());
@@ -643,7 +643,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
         return result;
     }
 
-    public static Vector deserialize(Map<String, Object> args) {
+    public static Vector deserialize(final Map<String, Object> args) {
         double x = 0;
         double y = 0;
         double z = 0;

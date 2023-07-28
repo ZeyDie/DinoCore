@@ -128,7 +128,7 @@ public class NetServerHandler extends NetHandler {
     public boolean hasMoved = true; // CraftBukkit - private -> public
     private IntHashMap field_72586_s = new IntHashMap();
 
-    public NetServerHandler(MinecraftServer par1MinecraftServer, INetworkManager par2INetworkManager, EntityPlayerMP par3EntityPlayerMP) {
+    public NetServerHandler(final MinecraftServer par1MinecraftServer, final INetworkManager par2INetworkManager, final EntityPlayerMP par3EntityPlayerMP) {
         this.mcServer = par1MinecraftServer;
         this.netManager = par2INetworkManager;
         par2INetworkManager.setNetHandler(this);
@@ -205,10 +205,11 @@ public class NetServerHandler extends NetHandler {
     }
 
     public void kickPlayerFromServer(String par1Str) {
+        String par1Str1 = par1Str;
         if (!this.connectionClosed) {
             // CraftBukkit start
             String leaveMessage = EnumChatFormatting.YELLOW + this.playerEntity.getCommandSenderName() + " left the game.";
-            PlayerKickEvent event = new PlayerKickEvent(this.server.getPlayer(this.playerEntity), par1Str, leaveMessage);
+            final PlayerKickEvent event = new PlayerKickEvent(this.server.getPlayer(this.playerEntity), par1Str1, leaveMessage);
 
             if (this.server.getServer().isServerRunning()) {
                 this.server.getPluginManager().callEvent(event);
@@ -220,15 +221,15 @@ public class NetServerHandler extends NetHandler {
             }
 
             // Send the possibly modified leave message
-            par1Str = event.getReason();
+            par1Str1 = event.getReason();
             // CraftBukkit end
             this.playerEntity.mountEntityAndWakeUp();
-            this.sendPacketToPlayer(new Packet255KickDisconnect(par1Str));
+            this.sendPacketToPlayer(new Packet255KickDisconnect(par1Str1));
             this.netManager.serverShutdown();
             // CraftBukkit start
             leaveMessage = event.getLeaveMessage();
 
-            if (leaveMessage != null && leaveMessage.length() > 0) {
+            if (leaveMessage != null && !leaveMessage.isEmpty()) {
                 this.mcServer.getConfigurationManager().sendChatMsg(ChatMessageComponent.createFromText(leaveMessage));
             }
 
@@ -238,12 +239,12 @@ public class NetServerHandler extends NetHandler {
         }
     }
 
-    public void func_110774_a(Packet27PlayerInput par1Packet27PlayerInput) {
+    public void func_110774_a(final Packet27PlayerInput par1Packet27PlayerInput) {
         this.playerEntity.setEntityActionState(par1Packet27PlayerInput.func_111010_d(), par1Packet27PlayerInput.func_111012_f(), par1Packet27PlayerInput.func_111013_g(), par1Packet27PlayerInput.func_111011_h());
     }
 
-    public void handleFlying(Packet10Flying par1Packet10Flying) {
-        WorldServer worldserver = this.mcServer.worldServerForDimension(this.playerEntity.dimension);
+    public void handleFlying(final Packet10Flying par1Packet10Flying) {
+        final WorldServer worldserver = this.mcServer.worldServerForDimension(this.playerEntity.dimension);
         this.field_72584_h = true;
 
         if (!this.playerEntity.playerConqueredTheEnd) {
@@ -258,9 +259,9 @@ public class NetServerHandler extends NetHandler {
             }
 
             // CraftBukkit start
-            Player player = this.getPlayerB();
-            Location from = new Location(player.getWorld(), lastPosX__ForEvent_CB, lastPosY__ForEvent_CB, lastPosZ__ForEvent_CB, lastYaw, lastPitch); // Get the Players previous Event location.
-            Location to = player.getLocation().clone(); // Start off the To location as the Players current location.
+            final Player player = this.getPlayerB();
+            final Location from = new Location(player.getWorld(), lastPosX__ForEvent_CB, lastPosY__ForEvent_CB, lastPosZ__ForEvent_CB, lastYaw, lastPitch); // Get the Players previous Event location.
+            final Location to = player.getLocation().clone(); // Start off the To location as the Players current location.
 
             // If the packet contains movement information then we update the To location with the correct XYZ.
             if (par1Packet10Flying.moving && !(par1Packet10Flying.moving && par1Packet10Flying.yPosition == -999.0D && par1Packet10Flying.stance == -999.0D)) {
@@ -276,10 +277,10 @@ public class NetServerHandler extends NetHandler {
             }
 
             // Prevent 40 event-calls for less than a single pixel of movement >.>
-            double delta = Math.pow(this.lastPosX__ForEvent_CB - to.getX(), 2) + Math.pow(this.lastPosY__ForEvent_CB - to.getY(), 2) + Math.pow(this.lastPosZ__ForEvent_CB - to.getZ(), 2);
-            float deltaAngle = Math.abs(this.lastYaw - to.getYaw()) + Math.abs(this.lastPitch - to.getPitch());
+            final double delta = Math.pow(this.lastPosX__ForEvent_CB - to.getX(), 2) + Math.pow(this.lastPosY__ForEvent_CB - to.getY(), 2) + Math.pow(this.lastPosZ__ForEvent_CB - to.getZ(), 2);
+            final float deltaAngle = Math.abs(this.lastYaw - to.getYaw()) + Math.abs(this.lastPitch - to.getPitch());
 
-            if ((delta > 1f / 256 || deltaAngle > 10f) && (this.hasMoved && !this.playerEntity.isDead)) {
+            if ((delta > 1.0f / 256 || deltaAngle > 10.0f) && (this.hasMoved && !this.playerEntity.isDead)) {
                 this.lastPosX__ForEvent_CB = to.getX();
                 this.lastPosY__ForEvent_CB = to.getY();
                 this.lastPosZ__ForEvent_CB = to.getZ();
@@ -289,7 +290,7 @@ public class NetServerHandler extends NetHandler {
                 // Skip the first time we do this
                 if (spigotHasMoved)   // Spigot - Better Check!
                 {
-                    PlayerMoveEvent event = new PlayerMoveEvent(player, from, to);
+                    final PlayerMoveEvent event = new PlayerMoveEvent(player, from, to);
                     this.server.getPluginManager().callEvent(event);
 
                     // If the event is cancelled we move the player back to their old location.
@@ -432,9 +433,9 @@ public class NetServerHandler extends NetHandler {
                 double d5 = d2 - this.playerEntity.posY;
                 double d6 = d3 - this.playerEntity.posZ;
                 //BUGFIX: min -> max, grabs the highest distance
-                double d7 = Math.max(Math.abs(d4), Math.abs(this.playerEntity.motionX));
-                double d8 = Math.max(Math.abs(d5), Math.abs(this.playerEntity.motionY));
-                double d9 = Math.max(Math.abs(d6), Math.abs(this.playerEntity.motionZ));
+                final double d7 = Math.max(Math.abs(d4), Math.abs(this.playerEntity.motionX));
+                final double d8 = Math.max(Math.abs(d5), Math.abs(this.playerEntity.motionY));
+                final double d9 = Math.max(Math.abs(d6), Math.abs(this.playerEntity.motionZ));
                 double d10 = d7 * d7 + d8 * d8 + d9 * d9;
 
                 if (d10 > 100.0D && this.hasMoved && (!this.mcServer.isSinglePlayer() || !this.mcServer.getServerOwner().equals(this.playerEntity.getCommandSenderName())))   // CraftBukkit - Added this.checkMovement condition to solve this check being triggered by teleports
@@ -444,8 +445,8 @@ public class NetServerHandler extends NetHandler {
                     return;
                 }
 
-                float f4 = 0.0625F;
-                boolean flag = worldserver.getCollidingBoundingBoxes(this.playerEntity, this.playerEntity.boundingBox.copy().contract((double) f4, (double) f4, (double) f4)).isEmpty();
+                final float f4 = 0.0625F;
+                final boolean flag = worldserver.getCollidingBoundingBoxes(this.playerEntity, this.playerEntity.boundingBox.copy().contract((double) f4, (double) f4, (double) f4)).isEmpty();
 
                 if (this.playerEntity.onGround && !par1Packet10Flying.onGround && d5 > 0.0D) {
                     this.playerEntity.addExhaustion(0.2F);
@@ -459,7 +460,7 @@ public class NetServerHandler extends NetHandler {
                 this.playerEntity.moveEntity(d4, d5, d6);
                 this.playerEntity.onGround = par1Packet10Flying.onGround;
                 this.playerEntity.addMovementStat(d4, d5, d6);
-                double d11 = d5;
+                final double d11 = d5;
                 d4 = d1 - this.playerEntity.posX;
                 d5 = d2 - this.playerEntity.posY;
 
@@ -482,14 +483,14 @@ public class NetServerHandler extends NetHandler {
                 }
 
                 this.playerEntity.setPositionAndRotation(d1, d2, d3, f2, f3);
-                boolean flag2 = worldserver.getCollidingBoundingBoxes(this.playerEntity, this.playerEntity.boundingBox.copy().contract((double) f4, (double) f4, (double) f4)).isEmpty();
+                final boolean flag2 = worldserver.getCollidingBoundingBoxes(this.playerEntity, this.playerEntity.boundingBox.copy().contract((double) f4, (double) f4, (double) f4)).isEmpty();
 
                 if (flag && (flag1 || !flag2) && !this.playerEntity.isPlayerSleeping() && !this.playerEntity.noClip) {
                     this.setPlayerLocation(this.lastPosX, this.lastPosY, this.lastPosZ, f2, f3);
                     return;
                 }
 
-                AxisAlignedBB axisalignedbb = this.playerEntity.boundingBox.copy().expand((double) f4, (double) f4, (double) f4).addCoord(0.0D, -0.55D, 0.0D);
+                final AxisAlignedBB axisalignedbb = this.playerEntity.boundingBox.copy().expand((double) f4, (double) f4, (double) f4).addCoord(0.0D, -0.55D, 0.0D);
 
                 if (!this.mcServer.isFlightAllowed() && !this.playerEntity.capabilities.allowFlying && !worldserver.checkBlockCollision(axisalignedbb))   // CraftBukkit - check abilities instead of creative mode
                 {
@@ -528,20 +529,22 @@ public class NetServerHandler extends NetHandler {
     /**
      * Moves the player to the specified destination and rotation
      */
-    public void setPlayerLocation(double par1, double par3, double par5, float par7, float par8) {
+    public void setPlayerLocation(final double par1, final double par3, final double par5, final float par7, final float par8) {
         // CraftBukkit start - Delegate to teleport(Location)
-        Player player = this.getPlayerB();
+        final Player player = this.getPlayerB();
         Location from = player.getLocation();
         Location to = new Location(this.getPlayerB().getWorld(), par1, par3, par5, par7, par8);
-        PlayerTeleportEvent event = new PlayerTeleportEvent(player, from, to, PlayerTeleportEvent.TeleportCause.UNKNOWN);
+        final PlayerTeleportEvent event = new PlayerTeleportEvent(player, from, to, PlayerTeleportEvent.TeleportCause.UNKNOWN);
         this.server.getPluginManager().callEvent(event);
         from = event.getFrom();
         to = event.isCancelled() ? from : event.getTo();
         this.teleport(to);
     }
 
-    public void teleport(Location dest) {
-        double d0, d1, d2;
+    public void teleport(final Location dest) {
+        final double d0;
+        final double d1;
+        final double d2;
         float f, f1;
         d0 = dest.getX();
         d1 = dest.getY();
@@ -573,12 +576,12 @@ public class NetServerHandler extends NetHandler {
         this.playerEntity.playerNetServerHandler.sendPacketToPlayer(new Packet13PlayerLookMove(d0, d1 + 1.6200000047683716D, d1, d2, f, f1, false));
     }
 
-    public void handleBlockDig(Packet14BlockDig par1Packet14BlockDig) {
+    public void handleBlockDig(final Packet14BlockDig par1Packet14BlockDig) {
         if (this.playerEntity.isDead) {
             return;    // CraftBukkit
         }
 
-        WorldServer worldserver = this.mcServer.worldServerForDimension(this.playerEntity.dimension);
+        final WorldServer worldserver = this.mcServer.worldServerForDimension(this.playerEntity.dimension);
         this.playerEntity.func_143004_u();
 
         if (par1Packet14BlockDig.status == 4) {
@@ -619,15 +622,15 @@ public class NetServerHandler extends NetHandler {
                 flag = true;
             }
 
-            int i = par1Packet14BlockDig.xPosition;
-            int j = par1Packet14BlockDig.yPosition;
-            int k = par1Packet14BlockDig.zPosition;
+            final int i = par1Packet14BlockDig.xPosition;
+            final int j = par1Packet14BlockDig.yPosition;
+            final int k = par1Packet14BlockDig.zPosition;
 
             if (flag) {
-                double d0 = this.playerEntity.posX - ((double) i + 0.5D);
-                double d1 = this.playerEntity.posY - ((double) j + 0.5D) + 1.5D;
-                double d2 = this.playerEntity.posZ - ((double) k + 0.5D);
-                double d3 = d0 * d0 + d1 * d1 + d2 * d2;
+                final double d0 = this.playerEntity.posX - ((double) i + 0.5D);
+                final double d1 = this.playerEntity.posY - ((double) j + 0.5D) + 1.5D;
+                final double d2 = this.playerEntity.posZ - ((double) k + 0.5D);
+                final double d3 = d0 * d0 + d1 * d1 + d2 * d2;
 
                 double dist = playerEntity.theItemInWorldManager.getBlockReachDistance() + 1;
                 dist *= dist;
@@ -649,7 +652,7 @@ public class NetServerHandler extends NetHandler {
                     CraftEventFactory.callPlayerInteractEvent(this.playerEntity, org.bukkit.event.block.Action.LEFT_CLICK_BLOCK, i, j, k, par1Packet14BlockDig.face, this.playerEntity.inventory.getCurrentItem());
                     this.playerEntity.playerNetServerHandler.sendPacketToPlayer(new Packet53BlockChange(i, j, k, worldserver));
                     // Update any tile entity data for this block
-                    TileEntity tileentity = worldserver.getBlockTileEntity(i, j, k);
+                    final TileEntity tileentity = worldserver.getBlockTileEntity(i, j, k);
 
                     if (tileentity != null) {
                         this.playerEntity.playerNetServerHandler.sendPacketToPlayer(tileentity.getDescriptionPacket());
@@ -673,8 +676,8 @@ public class NetServerHandler extends NetHandler {
         }
     }
 
-    public void handlePlace(Packet15Place par1Packet15Place) {
-        WorldServer worldserver = this.mcServer.worldServerForDimension(this.playerEntity.dimension);
+    public void handlePlace(final Packet15Place par1Packet15Place) {
+        final WorldServer worldserver = this.mcServer.worldServerForDimension(this.playerEntity.dimension);
 
         // CraftBukkit start
         if (this.playerEntity.isDead) {
@@ -710,7 +713,7 @@ public class NetServerHandler extends NetHandler {
         int i = par1Packet15Place.getXPosition();
         int j = par1Packet15Place.getYPosition();
         int k = par1Packet15Place.getZPosition();
-        int l = par1Packet15Place.getDirection();
+        final int l = par1Packet15Place.getDirection();
         this.playerEntity.func_143004_u();
 
         if (par1Packet15Place.getDirection() == 255) {
@@ -719,10 +722,10 @@ public class NetServerHandler extends NetHandler {
             }
 
             // CraftBukkit start
-            int itemstackAmount = itemstack.stackSize;
-            org.bukkit.event.player.PlayerInteractEvent event = CraftEventFactory.callPlayerInteractEvent(this.playerEntity, org.bukkit.event.block.Action.RIGHT_CLICK_AIR, itemstack);
+            final int itemstackAmount = itemstack.stackSize;
+            final org.bukkit.event.player.PlayerInteractEvent event = CraftEventFactory.callPlayerInteractEvent(this.playerEntity, org.bukkit.event.block.Action.RIGHT_CLICK_AIR, itemstack);
             // Cauldron start - merge with Forge event
-            PlayerInteractEvent forgeEvent = ForgeEventFactory.onPlayerInteract(this.playerEntity, PlayerInteractEvent.Action.RIGHT_CLICK_AIR, 0, 0, 0, -1);
+            final PlayerInteractEvent forgeEvent = ForgeEventFactory.onPlayerInteract(this.playerEntity, PlayerInteractEvent.Action.RIGHT_CLICK_AIR, 0, 0, 0, -1);
 
             if (event.useItemInHand() != org.bukkit.event.Event.Result.DENY && forgeEvent.useItem != net.minecraftforge.event.Event.Result.DENY) {
                 this.playerEntity.theItemInWorldManager.tryUseItem(this.playerEntity, this.playerEntity.worldObj, itemstack);
@@ -739,7 +742,7 @@ public class NetServerHandler extends NetHandler {
             flag = true;
         } else {
             // CraftBukkit start - Check if we can actually do something over this large a distance
-            Location eyeLoc = this.getPlayerB().getEyeLocation();
+            final Location eyeLoc = this.getPlayerB().getEyeLocation();
 
             if (Math.pow(eyeLoc.getX() - i, 2) + Math.pow(eyeLoc.getY() - j, 2) + Math.pow(eyeLoc.getZ() - k, 2) > PLACE_DISTANCE_SQUARED) {
                 return;
@@ -794,7 +797,7 @@ public class NetServerHandler extends NetHandler {
         if (itemstack == null || itemstack.getMaxItemUseDuration() == 0) {
             this.playerEntity.playerInventoryBeingManipulated = true;
             this.playerEntity.inventory.mainInventory[this.playerEntity.inventory.currentItem] = ItemStack.copyItemStack(this.playerEntity.inventory.mainInventory[this.playerEntity.inventory.currentItem]);
-            Slot slot = this.playerEntity.openContainer.getSlotFromInventory((IInventory) this.playerEntity.inventory, this.playerEntity.inventory.currentItem);
+            final Slot slot = this.playerEntity.openContainer.getSlotFromInventory((IInventory) this.playerEntity.inventory, this.playerEntity.inventory.currentItem);
             // Cauldron start - abort if no slot, fixes RP2 timer crash block place - see #181   
             if (slot == null) {
                 this.playerEntity.playerInventoryBeingManipulated = false; // set flag to false or it will cause inventory to glitch on death
@@ -811,16 +814,16 @@ public class NetServerHandler extends NetHandler {
         }
     }
 
-    public void handleErrorMessage(String par1Str, Object[] par2ArrayOfObj) {
+    public void handleErrorMessage(final String par1Str, final Object[] par2ArrayOfObj) {
         if (this.connectionClosed) {
             return;    // CraftBukkit - Rarely it would send a disconnect line twice
         }
 
         this.mcServer.getLogAgent().logInfo(this.playerEntity.getCommandSenderName() + " lost connection: " + par1Str);
         // CraftBukkit start - We need to handle custom quit messages
-        String quitMessage = this.mcServer.getConfigurationManager().disconnect(this.playerEntity);
+        final String quitMessage = this.mcServer.getConfigurationManager().disconnect(this.playerEntity);
 
-        if ((quitMessage != null) && (quitMessage.length() > 0)) {
+        if ((quitMessage != null) && (!quitMessage.isEmpty())) {
             this.mcServer.getConfigurationManager().sendChatMsg(ChatMessageComponent.createFromText(quitMessage));
         }
 
@@ -837,7 +840,7 @@ public class NetServerHandler extends NetHandler {
      * Default handler called for packets that don't have their own handlers in NetClientHandler; currentlly does
      * nothing.
      */
-    public void unexpectedPacket(Packet par1Packet) {
+    public void unexpectedPacket(final Packet par1Packet) {
         if (this.connectionClosed) {
             return;    // CraftBukkit
         }
@@ -849,10 +852,10 @@ public class NetServerHandler extends NetHandler {
     /**
      * addToSendQueue. if it is a chat packet, check before sending it
      */
-    public void sendPacketToPlayer(Packet par1Packet) {
+    public void sendPacketToPlayer(final Packet par1Packet) {
         if (par1Packet instanceof Packet3Chat) {
-            Packet3Chat packet3chat = (Packet3Chat) par1Packet;
-            int i = this.playerEntity.getChatVisibility();
+            final Packet3Chat packet3chat = (Packet3Chat) par1Packet;
+            final int i = this.playerEntity.getChatVisibility();
 
             if (i == 2) {
                 return;
@@ -867,7 +870,7 @@ public class NetServerHandler extends NetHandler {
         if (par1Packet == null) {
             return;
         } else if (par1Packet instanceof Packet6SpawnPosition) {
-            Packet6SpawnPosition packet6 = (Packet6SpawnPosition) par1Packet;
+            final Packet6SpawnPosition packet6 = (Packet6SpawnPosition) par1Packet;
             this.playerEntity.compassTarget = new Location(this.getPlayerB().getWorld(), packet6.xPosition, packet6.yPosition, packet6.zPosition);
         }
 
@@ -875,9 +878,9 @@ public class NetServerHandler extends NetHandler {
 
         try {
             this.netManager.addToSendQueue(par1Packet);
-        } catch (Throwable throwable) {
-            CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Sending packet");
-            CrashReportCategory crashreportcategory = crashreport.makeCategory("Packet being sent");
+        } catch (final Throwable throwable) {
+            final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Sending packet");
+            final CrashReportCategory crashreportcategory = crashreport.makeCategory("Packet being sent");
             crashreportcategory.addCrashSectionCallable("Packet ID", new CallablePacketID(this, par1Packet));
             crashreportcategory.addCrashSectionCallable("Packet class", new CallablePacketClass(this, par1Packet));
             throw new ReportedException(crashreport);
@@ -887,8 +890,8 @@ public class NetServerHandler extends NetHandler {
     //TODO ZoomCodeStart
     public void sendFastPacketToPlayer(final Packet par1Packet) {
         if (par1Packet instanceof Packet3Chat) {
-            Packet3Chat packet3chat = (Packet3Chat) par1Packet;
-            int i = this.playerEntity.getChatVisibility();
+            final Packet3Chat packet3chat = (Packet3Chat) par1Packet;
+            final int i = this.playerEntity.getChatVisibility();
 
             if (i == 2) {
                 return;
@@ -903,7 +906,7 @@ public class NetServerHandler extends NetHandler {
         if (par1Packet == null) {
             return;
         } else if (par1Packet instanceof Packet6SpawnPosition) {
-            Packet6SpawnPosition packet6 = (Packet6SpawnPosition) par1Packet;
+            final Packet6SpawnPosition packet6 = (Packet6SpawnPosition) par1Packet;
             this.playerEntity.compassTarget = new Location(this.getPlayerB().getWorld(), packet6.xPosition, packet6.yPosition, packet6.zPosition);
         }
 
@@ -911,9 +914,9 @@ public class NetServerHandler extends NetHandler {
 
         try {
             this.netManager.addToSendQueueFast(par1Packet);
-        } catch (Throwable throwable) {
-            CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Sending packet");
-            CrashReportCategory crashreportcategory = crashreport.makeCategory("Packet being sent");
+        } catch (final Throwable throwable) {
+            final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Sending packet");
+            final CrashReportCategory crashreportcategory = crashreport.makeCategory("Packet being sent");
             crashreportcategory.addCrashSectionCallable("Packet ID", new CallablePacketID(this, par1Packet));
             crashreportcategory.addCrashSectionCallable("Packet class", new CallablePacketClass(this, par1Packet));
             throw new ReportedException(crashreport);
@@ -921,14 +924,14 @@ public class NetServerHandler extends NetHandler {
     }
     //TODO ZoomCodeEnd
 
-    public void handleBlockItemSwitch(Packet16BlockItemSwitch par1Packet16BlockItemSwitch) {
+    public void handleBlockItemSwitch(final Packet16BlockItemSwitch par1Packet16BlockItemSwitch) {
         // CraftBukkit start
         if (this.playerEntity.isDead) {
             return;
         }
 
         if (par1Packet16BlockItemSwitch.id >= 0 && par1Packet16BlockItemSwitch.id < InventoryPlayer.getHotbarSize()) {
-            PlayerItemHeldEvent event = new PlayerItemHeldEvent(this.getPlayerB(), this.playerEntity.inventory.currentItem, par1Packet16BlockItemSwitch.id);
+            final PlayerItemHeldEvent event = new PlayerItemHeldEvent(this.getPlayerB(), this.playerEntity.inventory.currentItem, par1Packet16BlockItemSwitch.id);
             this.server.getPluginManager().callEvent(event);
 
             if (event.isCancelled()) {
@@ -947,20 +950,20 @@ public class NetServerHandler extends NetHandler {
     }
 
     public void handleChat(Packet3Chat par1Packet3Chat) {
-        par1Packet3Chat = FMLNetworkHandler.handleChatMessage(this, par1Packet3Chat);
+        Packet3Chat par1Packet3Chat1 = FMLNetworkHandler.handleChatMessage(this, par1Packet3Chat);
 
-        if (par1Packet3Chat == null || par1Packet3Chat.message == null) {
+        if (par1Packet3Chat1 == null || par1Packet3Chat1.message == null) {
             return;
         }
         if (this.playerEntity.getChatVisibility() == 2) {
             this.sendPacketToPlayer(new Packet3Chat(ChatMessageComponent.createFromTranslationKey("chat.cannotSend").setColor(EnumChatFormatting.RED)));
         } else {
             this.playerEntity.func_143004_u();
-            String s = par1Packet3Chat.message;
+            final String s = par1Packet3Chat1.message;
 
             if (s.length() > 100) {
                 // CraftBukkit start
-                if (par1Packet3Chat.canProcessAsync()) {
+                if (par1Packet3Chat1.canProcessAsync()) {
                     //TODO ZoomCodeStart
                     final Waitable waitable = new WaitableChatMessage(this, "Chat message too long");
                     //TODO ZoomCodeEnd
@@ -977,9 +980,9 @@ public class NetServerHandler extends NetHandler {
 
                     try {
                         waitable.get();
-                    } catch (InterruptedException e) {
+                    } catch (final InterruptedException e) {
                         Thread.currentThread().interrupt();
-                    } catch (ExecutionException e) {
+                    } catch (final ExecutionException e) {
                         throw new RuntimeException(e);
                     }
                 } else {
@@ -991,7 +994,7 @@ public class NetServerHandler extends NetHandler {
                 for (int i = 0; i < s.length(); ++i) {
                     if (!ChatAllowedCharacters.isAllowedCharacter(s.charAt(i))) {
                         // CraftBukkit start
-                        if (par1Packet3Chat.canProcessAsync()) {
+                        if (par1Packet3Chat1.canProcessAsync()) {
 
                             //TODO ZoomCodeStart
                             final Waitable waitable = new WaitableChatMessage(this, String.format("Illegal characters in chat %s", s.charAt(i)));
@@ -1009,9 +1012,9 @@ public class NetServerHandler extends NetHandler {
 
                             try {
                                 waitable.get();
-                            } catch (InterruptedException e) {
+                            } catch (final InterruptedException e) {
                                 Thread.currentThread().interrupt();
-                            } catch (ExecutionException e) {
+                            } catch (final ExecutionException e) {
                                 throw new RuntimeException(e);
                             }
                         } else {
@@ -1029,28 +1032,28 @@ public class NetServerHandler extends NetHandler {
                     return;
                 }
 
-                if (!par1Packet3Chat.canProcessAsync()) {
+                if (!par1Packet3Chat1.canProcessAsync()) {
                     try {
                         this.mcServer.server.playerCommandState = true;
-                        this.chat(s, par1Packet3Chat.canProcessAsync());
+                        this.chat(s, par1Packet3Chat1.canProcessAsync());
                     } finally {
                         this.mcServer.server.playerCommandState = false;
                     }
                 } else {
-                    this.chat(s, par1Packet3Chat.canProcessAsync());
+                    this.chat(s, par1Packet3Chat1.canProcessAsync());
                 }
 
                 // This section stays because it is only applicable to packets
                 // Spigot - spam exclusions
                 boolean counted = true;
-                for (String exclude : org.spigotmc.SpigotConfig.spamExclusions) {
+                for (final String exclude : org.spigotmc.SpigotConfig.spamExclusions) {
                     if (exclude != null && s.startsWith(exclude)) {
                         counted = false;
                         break;
                     }
                 }
                 if (counted && chatSpamField.addAndGet(this, 20) > 200 && !this.mcServer.getConfigurationManager().isPlayerOpped(this.playerEntity.getCommandSenderName())) { // CraftBukkit use thread-safe spam
-                    if (par1Packet3Chat.canProcessAsync()) {
+                    if (par1Packet3Chat1.canProcessAsync()) {
 
                         //TODO ZoomCodeStart
                         final Waitable waitable = new WaitableChatMessage(this, "disconnect.spam");
@@ -1068,9 +1071,9 @@ public class NetServerHandler extends NetHandler {
 
                         try {
                             waitable.get();
-                        } catch (InterruptedException e) {
+                        } catch (final InterruptedException e) {
                             Thread.currentThread().interrupt();
-                        } catch (ExecutionException e) {
+                        } catch (final ExecutionException e) {
                             throw new RuntimeException(e);
                         }
                     } else {
@@ -1081,29 +1084,30 @@ public class NetServerHandler extends NetHandler {
         }
     }
 
-    public void chat(String s, boolean async) {
+    public void chat(String s, final boolean async) {
+        String s1 = s;
         if (!this.playerEntity.isDead) {
-            if (s.length() == 0) {
+            if (s1.isEmpty()) {
                 this.mcServer.getLogAgent().logWarning(this.playerEntity.getCommandSenderName() + " tried to send an empty message");
                 return;
             }
 
             if (getPlayerB().isConversing()) {
-                getPlayerB().acceptConversationInput(s);
+                getPlayerB().acceptConversationInput(s1);
                 return;
             }
 
-            if (s.startsWith("/")) {
-                this.handleSlashCommand(s);
+            if (s1.startsWith("/")) {
+                this.handleSlashCommand(s1);
                 return;
             } else {
                 // Cauldron start - call Forge event
-                ChatMessageComponent chatmessagecomponent = ChatMessageComponent.createFromTranslationWithSubstitutions("chat.type.text", new Object[]{this.playerEntity.getTranslatedEntityName(), s});
-                chatmessagecomponent = ForgeHooks.onServerChatEvent(this, s, chatmessagecomponent);
+                ChatMessageComponent chatmessagecomponent = ChatMessageComponent.createFromTranslationWithSubstitutions("chat.type.text", new Object[]{this.playerEntity.getTranslatedEntityName(), s1});
+                chatmessagecomponent = ForgeHooks.onServerChatEvent(this, s1, chatmessagecomponent);
                 // Cauldron end
 
-                Player player = this.getPlayerB();
-                AsyncPlayerChatEvent event = new AsyncPlayerChatEvent(async, player, s, new LazyPlayerSet());
+                final Player player = this.getPlayerB();
+                final AsyncPlayerChatEvent event = new AsyncPlayerChatEvent(async, player, s1, new LazyPlayerSet());
                 event.setCancelled(chatmessagecomponent == null); // Cauldron pre-cancel event if forge event was cancelled
                 this.server.getPluginManager().callEvent(event);
 
@@ -1150,9 +1154,9 @@ public class NetServerHandler extends NetHandler {
 
                     try {
                         waitable.get();
-                    } catch (InterruptedException e) {
+                    } catch (final InterruptedException e) {
                         Thread.currentThread().interrupt(); // This is proper habit for java. If we aren't handling it, pass it on!
-                    } catch (ExecutionException e) {
+                    } catch (final ExecutionException e) {
                         throw new RuntimeException("Exception processing chat event", e.getCause());
                     }
                 } else {
@@ -1160,16 +1164,16 @@ public class NetServerHandler extends NetHandler {
                         return;
                     }
 
-                    s = String.format(event.getFormat(), event.getPlayer().getDisplayName(), event.getMessage());
-                    mcServer.console.sendMessage(s);
+                    s1 = String.format(event.getFormat(), event.getPlayer().getDisplayName(), event.getMessage());
+                    mcServer.console.sendMessage(s1);
 
                     if (((LazyPlayerSet) event.getRecipients()).isLazy()) {
-                        for (Object recipient : mcServer.getConfigurationManager().playerEntityList) {
-                            ((EntityPlayerMP) recipient).sendChatToPlayer(ChatMessageComponent.createFromText(s));
+                        for (final Object recipient : mcServer.getConfigurationManager().playerEntityList) {
+                            ((EntityPlayerMP) recipient).sendChatToPlayer(ChatMessageComponent.createFromText(s1));
                         }
                     } else {
-                        for (Player recipient : event.getRecipients()) {
-                            recipient.sendMessage(s);
+                        for (final Player recipient : event.getRecipients()) {
+                            recipient.sendMessage(s1);
                         }
                     }
                 }
@@ -1183,11 +1187,11 @@ public class NetServerHandler extends NetHandler {
     /**
      * Processes a / command
      */
-    private void handleSlashCommand(String par1Str) {
+    private void handleSlashCommand(final String par1Str) {
         SpigotTimings.playerCommandTimer.startTiming(); // Spigot
         // CraftBukkit start
-        CraftPlayer player = this.getPlayerB();
-        PlayerCommandPreprocessEvent event = new PlayerCommandPreprocessEvent(player, par1Str, new LazyPlayerSet());
+        final CraftPlayer player = this.getPlayerB();
+        final PlayerCommandPreprocessEvent event = new PlayerCommandPreprocessEvent(player, par1Str, new LazyPlayerSet());
         this.server.getPluginManager().callEvent(event);
 
         if (event.isCancelled()) {
@@ -1200,7 +1204,7 @@ public class NetServerHandler extends NetHandler {
                 this.mcServer.getLogAgent().logInfo(event.getPlayer().getName() + " issued server command: " + event.getMessage()); // Spigot
             }
             // Cauldron start - handle bukkit/vanilla commands
-            int space = event.getMessage().indexOf(" ");
+            final int space = event.getMessage().indexOf(" ");
             // if bukkit command exists then execute it over vanilla
             if (this.server.getCommandMap().getCommand(event.getMessage().substring(1, space != -1 ? space : event.getMessage().length())) != null) {
                 this.server.dispatchCommand(event.getPlayer(), event.getMessage().substring(1));
@@ -1212,7 +1216,7 @@ public class NetServerHandler extends NetHandler {
                 SpigotTimings.playerCommandTimer.stopTiming(); // Spigot
                 return;
             }
-        } catch (org.bukkit.command.CommandException ex) {
+        } catch (final org.bukkit.command.CommandException ex) {
             player.sendMessage(org.bukkit.ChatColor.RED + "An internal error occurred while attempting to perform this command");
             java.util.logging.Logger.getLogger(NetServerHandler.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             SpigotTimings.playerCommandTimer.stopTiming(); // Spigot
@@ -1225,7 +1229,7 @@ public class NetServerHandler extends NetHandler {
         // CraftBukkit end */
     }
 
-    public void handleAnimation(Packet18Animation par1Packet18Animation) {
+    public void handleAnimation(final Packet18Animation par1Packet18Animation) {
         if (this.playerEntity.isDead) {
             return;    // CraftBukkit
         }
@@ -1234,29 +1238,29 @@ public class NetServerHandler extends NetHandler {
 
         if (par1Packet18Animation.animate == 1) {
             // CraftBukkit start - Raytrace to look for 'rogue armswings'
-            float f = 1.0F;
-            float f1 = this.playerEntity.prevRotationPitch + (this.playerEntity.rotationPitch - this.playerEntity.prevRotationPitch) * f;
-            float f2 = this.playerEntity.prevRotationYaw + (this.playerEntity.rotationYaw - this.playerEntity.prevRotationYaw) * f;
-            double d0 = this.playerEntity.prevPosX + (this.playerEntity.posX - this.playerEntity.prevPosX) * (double) f;
-            double d1 = this.playerEntity.prevPosY + (this.playerEntity.posY - this.playerEntity.prevPosY) * (double) f + 1.62D - (double) this.playerEntity.yOffset;
-            double d2 = this.playerEntity.prevPosZ + (this.playerEntity.posZ - this.playerEntity.prevPosZ) * (double) f;
-            Vec3 vec3 = this.playerEntity.worldObj.getWorldVec3Pool().getVecFromPool(d0, d1, d2);
-            float f3 = MathHelper.cos(-f2 * 0.017453292F - (float) Math.PI);
-            float f4 = MathHelper.sin(-f2 * 0.017453292F - (float) Math.PI);
-            float f5 = -MathHelper.cos(-f1 * 0.017453292F);
-            float f6 = MathHelper.sin(-f1 * 0.017453292F);
-            float f7 = f4 * f5;
-            float f8 = f3 * f5;
-            double d3 = 5.0D;
-            Vec3 vec31 = vec3.addVector((double) f7 * d3, (double) f6 * d3, (double) f8 * d3);
-            MovingObjectPosition movingobjectposition = this.playerEntity.worldObj.clip(vec3, vec31, true);
+            final float f = 1.0F;
+            final float f1 = this.playerEntity.prevRotationPitch + (this.playerEntity.rotationPitch - this.playerEntity.prevRotationPitch) * f;
+            final float f2 = this.playerEntity.prevRotationYaw + (this.playerEntity.rotationYaw - this.playerEntity.prevRotationYaw) * f;
+            final double d0 = this.playerEntity.prevPosX + (this.playerEntity.posX - this.playerEntity.prevPosX) * (double) f;
+            final double d1 = this.playerEntity.prevPosY + (this.playerEntity.posY - this.playerEntity.prevPosY) * (double) f + 1.62D - (double) this.playerEntity.yOffset;
+            final double d2 = this.playerEntity.prevPosZ + (this.playerEntity.posZ - this.playerEntity.prevPosZ) * (double) f;
+            final Vec3 vec3 = this.playerEntity.worldObj.getWorldVec3Pool().getVecFromPool(d0, d1, d2);
+            final float f3 = MathHelper.cos(-f2 * 0.017453292F - (float) Math.PI);
+            final float f4 = MathHelper.sin(-f2 * 0.017453292F - (float) Math.PI);
+            final float f5 = -MathHelper.cos(-f1 * 0.017453292F);
+            final float f6 = MathHelper.sin(-f1 * 0.017453292F);
+            final float f7 = f4 * f5;
+            final float f8 = f3 * f5;
+            final double d3 = 5.0D;
+            final Vec3 vec31 = vec3.addVector((double) f7 * d3, (double) f6 * d3, (double) f8 * d3);
+            final MovingObjectPosition movingobjectposition = this.playerEntity.worldObj.clip(vec3, vec31, true);
 
             if (movingobjectposition == null || movingobjectposition.typeOfHit != EnumMovingObjectType.TILE) {
                 CraftEventFactory.callPlayerInteractEvent(this.playerEntity, org.bukkit.event.block.Action.LEFT_CLICK_AIR, this.playerEntity.inventory.getCurrentItem());
             }
 
             // Arm swing animation
-            PlayerAnimationEvent event = new PlayerAnimationEvent(this.getPlayerB());
+            final PlayerAnimationEvent event = new PlayerAnimationEvent(this.getPlayerB());
             this.server.getPluginManager().callEvent(event);
 
             if (event.isCancelled()) {
@@ -1271,7 +1275,7 @@ public class NetServerHandler extends NetHandler {
     /**
      * runs registerPacket on the given Packet19EntityAction
      */
-    public void handleEntityAction(Packet19EntityAction par1Packet19EntityAction) {
+    public void handleEntityAction(final Packet19EntityAction par1Packet19EntityAction) {
         // CraftBukkit start
         if (this.playerEntity.isDead) {
             return;
@@ -1280,7 +1284,7 @@ public class NetServerHandler extends NetHandler {
         this.playerEntity.func_143004_u();
 
         if (par1Packet19EntityAction.action == 1 || par1Packet19EntityAction.action == 2) {
-            PlayerToggleSneakEvent event = new PlayerToggleSneakEvent(this.getPlayerB(), par1Packet19EntityAction.action == 1);
+            final PlayerToggleSneakEvent event = new PlayerToggleSneakEvent(this.getPlayerB(), par1Packet19EntityAction.action == 1);
             this.server.getPluginManager().callEvent(event);
 
             if (event.isCancelled()) {
@@ -1289,7 +1293,7 @@ public class NetServerHandler extends NetHandler {
         }
 
         if (par1Packet19EntityAction.action == 4 || par1Packet19EntityAction.action == 5) {
-            PlayerToggleSprintEvent event = new PlayerToggleSprintEvent(this.getPlayerB(), par1Packet19EntityAction.action == 4);
+            final PlayerToggleSprintEvent event = new PlayerToggleSprintEvent(this.getPlayerB(), par1Packet19EntityAction.action == 4);
             this.server.getPluginManager().callEvent(event);
 
             if (event.isCancelled()) {
@@ -1319,7 +1323,7 @@ public class NetServerHandler extends NetHandler {
         }
     }
 
-    public void handleKickDisconnect(Packet255KickDisconnect par1Packet255KickDisconnect) {
+    public void handleKickDisconnect(final Packet255KickDisconnect par1Packet255KickDisconnect) {
         this.netManager.networkShutdown("disconnect.quitting", new Object[0]);
     }
 
@@ -1330,20 +1334,20 @@ public class NetServerHandler extends NetHandler {
         return this.netManager.packetSize();
     }
 
-    public void handleUseEntity(Packet7UseEntity par1Packet7UseEntity) {
+    public void handleUseEntity(final Packet7UseEntity par1Packet7UseEntity) {
         if (this.playerEntity.isDead) {
             return;    // CraftBukkit
         }
 
-        WorldServer worldserver = this.mcServer.worldServerForDimension(this.playerEntity.dimension);
-        Entity entity = worldserver.getEntityByID(par1Packet7UseEntity.targetEntity);
+        final WorldServer worldserver = this.mcServer.worldServerForDimension(this.playerEntity.dimension);
+        final Entity entity = worldserver.getEntityByID(par1Packet7UseEntity.targetEntity);
         this.playerEntity.func_143004_u();
 
         if (entity == this.playerEntity) {
             this.kickPlayerFromServer("Cannot interact with self!");
         } else {
             if (entity != null) {
-                boolean flag = this.playerEntity.canEntityBeSeen(entity);
+                final boolean flag = this.playerEntity.canEntityBeSeen(entity);
                 double d0 = 36.0D;
 
                 if (!flag) {
@@ -1351,14 +1355,14 @@ public class NetServerHandler extends NetHandler {
                 }
 
                 if (this.playerEntity.getDistanceSqToEntity(entity) < d0) {
-                    ItemStack itemInHand = this.playerEntity.inventory.getCurrentItem(); // CraftBukkit
+                    final ItemStack itemInHand = this.playerEntity.inventory.getCurrentItem(); // CraftBukkit
 
                     if (par1Packet7UseEntity.isLeftClick == 0) {
                         // CraftBukkit start
-                        boolean triggerTagUpdate = itemInHand != null && itemInHand.itemID == Item.nameTag.itemID && entity instanceof EntityLiving;
-                        boolean triggerChestUpdate = itemInHand != null && itemInHand.itemID == Block.chest.blockID && entity instanceof EntityHorse;
-                        boolean triggerLeashUpdate = itemInHand != null && itemInHand.itemID == Item.leash.itemID && entity instanceof EntityLiving;
-                        PlayerInteractEntityEvent event = new PlayerInteractEntityEvent((Player) this.getPlayerB(), entity.getBukkitEntity());
+                        final boolean triggerTagUpdate = itemInHand != null && itemInHand.itemID == Item.nameTag.itemID && entity instanceof EntityLiving;
+                        final boolean triggerChestUpdate = itemInHand != null && itemInHand.itemID == Block.chest.blockID && entity instanceof EntityHorse;
+                        final boolean triggerLeashUpdate = itemInHand != null && itemInHand.itemID == Item.leash.itemID && entity instanceof EntityLiving;
+                        final PlayerInteractEntityEvent event = new PlayerInteractEntityEvent((Player) this.getPlayerB(), entity.getBukkitEntity());
                         this.server.getPluginManager().callEvent(event);
 
                         if (triggerLeashUpdate && (event.isCancelled() || this.playerEntity.inventory.getCurrentItem() == null || this.playerEntity.inventory.getCurrentItem().itemID != Item.leash.itemID)) {
@@ -1389,7 +1393,7 @@ public class NetServerHandler extends NetHandler {
                     } else if (par1Packet7UseEntity.isLeftClick == 1) {
                         // CraftBukkit - Check for player
                         if ((entity instanceof EntityItem) || (entity instanceof EntityXPOrb) || (entity instanceof EntityArrow) || (entity == this.playerEntity)) {
-                            String type = entity.getClass().getSimpleName();
+                            final String type = entity.getClass().getSimpleName();
                             kickPlayerFromServer("Attacking an " + type + " is not permitted");
                             System.out.println("Player " + playerEntity.getCommandSenderName() + " tried to attack an " + type + ", so I have disconnected them for exploiting.");
                             return;
@@ -1407,7 +1411,7 @@ public class NetServerHandler extends NetHandler {
         }
     }
 
-    public void handleClientCommand(Packet205ClientCommand par1Packet205ClientCommand) {
+    public void handleClientCommand(final Packet205ClientCommand par1Packet205ClientCommand) {
         this.playerEntity.func_143004_u();
 
         if (par1Packet205ClientCommand.forceRespawn == 1) {
@@ -1427,7 +1431,7 @@ public class NetServerHandler extends NetHandler {
                     this.playerEntity.playerNetServerHandler.kickPlayerFromServer("You have died. Game over, man, it\'s game over!");
                     this.mcServer.deleteWorldAndStopServer();
                 } else {
-                    BanEntry banentry = new BanEntry(this.playerEntity.getCommandSenderName());
+                    final BanEntry banentry = new BanEntry(this.playerEntity.getCommandSenderName());
                     banentry.setBanReason("Death in Hardcore");
                     this.mcServer.getConfigurationManager().getBannedPlayers().put(banentry);
                     this.playerEntity.playerNetServerHandler.kickPlayerFromServer("You have died. Game over, man, it\'s game over!");
@@ -1454,10 +1458,10 @@ public class NetServerHandler extends NetHandler {
     /**
      * respawns the player
      */
-    public void handleRespawn(Packet9Respawn par1Packet9Respawn) {
+    public void handleRespawn(final Packet9Respawn par1Packet9Respawn) {
     }
 
-    public void handleCloseWindow(Packet101CloseWindow par1Packet101CloseWindow) {
+    public void handleCloseWindow(final Packet101CloseWindow par1Packet101CloseWindow) {
         if (this.playerEntity.isDead) {
             return;    // CraftBukkit
         }
@@ -1467,14 +1471,14 @@ public class NetServerHandler extends NetHandler {
             if (this.playerEntity.openContainer.getBukkitView() != null) {
                 CraftEventFactory.handleInventoryCloseEvent(this.playerEntity); // CraftBukkit
             }
-        } catch (AbstractMethodError e) {
+        } catch (final AbstractMethodError e) {
             // do nothing
         }
         // Cauldron end
         this.playerEntity.closeContainer();
     }
 
-    public void handleWindowClick(Packet102WindowClick par1Packet102WindowClick) {
+    public void handleWindowClick(final Packet102WindowClick par1Packet102WindowClick) {
         if (this.playerEntity.isDead) {
             return; // CraftBukkit
         }
@@ -1520,11 +1524,11 @@ public class NetServerHandler extends NetHandler {
                             action = par1Packet102WindowClick.mouseClick == 0 ? InventoryAction.DROP_ALL_CURSOR : InventoryAction.DROP_ONE_CURSOR;
                         }
                     } else {
-                        Slot slot = this.playerEntity.openContainer.getSlot(par1Packet102WindowClick.inventorySlot);
+                        final Slot slot = this.playerEntity.openContainer.getSlot(par1Packet102WindowClick.inventorySlot);
 
                         if (slot != null) {
-                            ItemStack clickedItem = slot.getStack();
-                            ItemStack cursor = playerEntity.inventory.getItemStack();
+                            final ItemStack clickedItem = slot.getStack();
+                            final ItemStack cursor = playerEntity.inventory.getItemStack();
 
                             if (clickedItem == null) {
                                 if (cursor != null) {
@@ -1577,7 +1581,7 @@ public class NetServerHandler extends NetHandler {
                     if (par1Packet102WindowClick.inventorySlot < 0) {
                         action = InventoryAction.NOTHING;
                     } else {
-                        Slot slot = this.playerEntity.openContainer.getSlot(par1Packet102WindowClick.inventorySlot);
+                        final Slot slot = this.playerEntity.openContainer.getSlot(par1Packet102WindowClick.inventorySlot);
 
                         if (slot != null && slot.canTakeStack(this.playerEntity) && slot.getHasStack())   // Should be Slot.hasItem()
                         {
@@ -1590,17 +1594,17 @@ public class NetServerHandler extends NetHandler {
             } else if (par1Packet102WindowClick.holdingShift == 2) {
                 if (par1Packet102WindowClick.mouseClick >= 0 && par1Packet102WindowClick.mouseClick < 9) {
                     click = ClickType.NUMBER_KEY;
-                    Slot clickedSlot = this.playerEntity.openContainer.getSlot(par1Packet102WindowClick.inventorySlot);
+                    final Slot clickedSlot = this.playerEntity.openContainer.getSlot(par1Packet102WindowClick.inventorySlot);
 
                     if (clickedSlot.canTakeStack(playerEntity)) {
-                        ItemStack hotbar = this.playerEntity.inventory.getStackInSlot(par1Packet102WindowClick.mouseClick);
-                        boolean canCleanSwap = hotbar == null || (clickedSlot.inventory == playerEntity.inventory && clickedSlot.isItemValid(hotbar)); // the slot will accept the hotbar item
+                        final ItemStack hotbar = this.playerEntity.inventory.getStackInSlot(par1Packet102WindowClick.mouseClick);
+                        final boolean canCleanSwap = hotbar == null || (clickedSlot.inventory == playerEntity.inventory && clickedSlot.isItemValid(hotbar)); // the slot will accept the hotbar item
 
                         if (clickedSlot.getHasStack()) {
                             if (canCleanSwap) {
                                 action = InventoryAction.HOTBAR_SWAP;
                             } else {
-                                int firstEmptySlot = playerEntity.inventory.getFirstEmptyStack(); // Should be Inventory.firstEmpty()
+                                final int firstEmptySlot = playerEntity.inventory.getFirstEmptyStack(); // Should be Inventory.firstEmpty()
 
                                 if (firstEmptySlot > -1) {
                                     action = InventoryAction.HOTBAR_MOVE_AND_READD;
@@ -1627,7 +1631,7 @@ public class NetServerHandler extends NetHandler {
                     if (par1Packet102WindowClick.inventorySlot == -999) {
                         action = InventoryAction.NOTHING;
                     } else {
-                        Slot slot = this.playerEntity.openContainer.getSlot(par1Packet102WindowClick.inventorySlot);
+                        final Slot slot = this.playerEntity.openContainer.getSlot(par1Packet102WindowClick.inventorySlot);
 
                         if (slot != null && slot.getHasStack() && playerEntity.capabilities.isCreativeMode && playerEntity.inventory.getItemStack() == null) {
                             action = InventoryAction.CLONE_STACK;
@@ -1643,7 +1647,7 @@ public class NetServerHandler extends NetHandler {
                 if (par1Packet102WindowClick.inventorySlot >= 0) {
                     if (par1Packet102WindowClick.mouseClick == 0) {
                         click = ClickType.DROP;
-                        Slot slot = this.playerEntity.openContainer.getSlot(par1Packet102WindowClick.inventorySlot);
+                        final Slot slot = this.playerEntity.openContainer.getSlot(par1Packet102WindowClick.inventorySlot);
 
                         if (slot != null && slot.getHasStack() && slot.canTakeStack(playerEntity) && slot.getStack() != null && slot.getStack().itemID != 0) {
                             action = InventoryAction.DROP_ONE_SLOT;
@@ -1652,7 +1656,7 @@ public class NetServerHandler extends NetHandler {
                         }
                     } else if (par1Packet102WindowClick.mouseClick == 1) {
                         click = ClickType.CONTROL_DROP;
-                        Slot slot = this.playerEntity.openContainer.getSlot(par1Packet102WindowClick.inventorySlot);
+                        final Slot slot = this.playerEntity.openContainer.getSlot(par1Packet102WindowClick.inventorySlot);
 
                         if (slot != null && slot.getHasStack() && slot.canTakeStack(playerEntity) && slot.getStack() != null && slot.getStack().itemID != 0) {
                             action = InventoryAction.DROP_ALL_SLOT;
@@ -1677,7 +1681,7 @@ public class NetServerHandler extends NetHandler {
                 action = InventoryAction.NOTHING;
 
                 if (par1Packet102WindowClick.inventorySlot >= 0 && this.playerEntity.inventory.getItemStack() != null) {
-                    ItemStack cursor = this.playerEntity.inventory.getItemStack();
+                    final ItemStack cursor = this.playerEntity.inventory.getItemStack();
                     action = InventoryAction.NOTHING;
 
                     // Quick check for if we have any of the item
@@ -1686,7 +1690,7 @@ public class NetServerHandler extends NetHandler {
                         if (inventory.getTopInventory().contains(cursor.itemID) || inventory.getBottomInventory().contains(cursor.itemID)) {
                             action = InventoryAction.COLLECT_TO_CURSOR;
                         }
-                    } catch (AbstractMethodError ex) {
+                    } catch (final AbstractMethodError ex) {
                         // nothing we can do
                     }
                     // Cauldron end
@@ -1702,14 +1706,14 @@ public class NetServerHandler extends NetHandler {
                     event = new InventoryClickEvent(inventory, type, par1Packet102WindowClick.inventorySlot, click, action);
                 }
 
-                org.bukkit.inventory.Inventory top = inventory.getTopInventory();
+                final org.bukkit.inventory.Inventory top = inventory.getTopInventory();
 
                 if (par1Packet102WindowClick.inventorySlot == 0 && top instanceof CraftingInventory) {
                     // Cauldron start - vanilla compatibility (mod recipes)
                     org.bukkit.inventory.Recipe recipe = null;
                     try {
                         recipe = ((CraftingInventory) top).getRecipe();
-                    } catch (AbstractMethodError e) {
+                    } catch (final AbstractMethodError e) {
                         // do nothing
                     }
                     // Cauldron end
@@ -1822,7 +1826,7 @@ public class NetServerHandler extends NetHandler {
                 this.field_72586_s.addKey(this.playerEntity.openContainer.windowId, Short.valueOf(par1Packet102WindowClick.action));
                 this.playerEntity.playerNetServerHandler.sendPacketToPlayer(new Packet106Transaction(par1Packet102WindowClick.window_Id, par1Packet102WindowClick.action, false));
                 this.playerEntity.openContainer.setPlayerIsPresent(this.playerEntity, false);
-                ArrayList arraylist = new ArrayList();
+                final ArrayList arraylist = new ArrayList();
 
                 for (int i = 0; i < this.playerEntity.openContainer.inventorySlots.size(); ++i) {
                     arraylist.add(((Slot) this.playerEntity.openContainer.inventorySlots.get(i)).getStack());
@@ -1840,7 +1844,7 @@ public class NetServerHandler extends NetHandler {
         }
     }
 
-    public void handleEnchantItem(Packet108EnchantItem par1Packet108EnchantItem) {
+    public void handleEnchantItem(final Packet108EnchantItem par1Packet108EnchantItem) {
         this.playerEntity.func_143004_u();
 
         if (this.playerEntity.openContainer.windowId == par1Packet108EnchantItem.windowId && this.playerEntity.openContainer.isPlayerNotUsingContainer(this.playerEntity)) {
@@ -1852,11 +1856,11 @@ public class NetServerHandler extends NetHandler {
     /**
      * Handle a creative slot packet.
      */
-    public void handleCreativeSetSlot(Packet107CreativeSetSlot par1Packet107CreativeSetSlot) {
+    public void handleCreativeSetSlot(final Packet107CreativeSetSlot par1Packet107CreativeSetSlot) {
         if (this.playerEntity.theItemInWorldManager.isCreative()) {
-            boolean flag = par1Packet107CreativeSetSlot.slot < 0;
+            final boolean flag = par1Packet107CreativeSetSlot.slot < 0;
             ItemStack itemstack = par1Packet107CreativeSetSlot.itemStack;
-            boolean flag1 = par1Packet107CreativeSetSlot.slot >= 1 && par1Packet107CreativeSetSlot.slot < 36 + InventoryPlayer.getHotbarSize();
+            final boolean flag1 = par1Packet107CreativeSetSlot.slot >= 1 && par1Packet107CreativeSetSlot.slot < 36 + InventoryPlayer.getHotbarSize();
             // CraftBukkit
             boolean flag2 = itemstack == null || itemstack.itemID < Item.itemsList.length && itemstack.itemID >= 0 && Item.itemsList[itemstack.itemID] != null && !invalidItems.contains(itemstack.itemID);
             boolean flag3 = itemstack == null || itemstack.getItemDamage() >= 0 && itemstack.getItemDamage() >= 0 && itemstack.stackSize <= 64 && itemstack.stackSize > 0;
@@ -1864,9 +1868,9 @@ public class NetServerHandler extends NetHandler {
             // CraftBukkit start - Call click event
             if (flag || (flag1 && !ItemStack.areItemStacksEqual(this.playerEntity.inventoryContainer.getSlot(par1Packet107CreativeSetSlot.slot).getStack(), par1Packet107CreativeSetSlot.itemStack)))   // Insist on valid slot
             {
-                org.bukkit.entity.HumanEntity player = this.playerEntity.getBukkitEntity();
-                InventoryView inventory = new CraftInventoryView(player, player.getInventory(), this.playerEntity.inventoryContainer);
-                org.bukkit.inventory.ItemStack item = CraftItemStack.asBukkitCopy(par1Packet107CreativeSetSlot.itemStack); // Should be packet107setcreativeslot.newitem
+                final org.bukkit.entity.HumanEntity player = this.playerEntity.getBukkitEntity();
+                final InventoryView inventory = new CraftInventoryView(player, player.getInventory(), this.playerEntity.inventoryContainer);
+                final org.bukkit.inventory.ItemStack item = CraftItemStack.asBukkitCopy(par1Packet107CreativeSetSlot.itemStack); // Should be packet107setcreativeslot.newitem
                 SlotType type = SlotType.QUICKBAR;
 
                 if (flag) {
@@ -1879,7 +1883,7 @@ public class NetServerHandler extends NetHandler {
                     }
                 }
 
-                InventoryCreativeEvent event = new InventoryCreativeEvent(inventory, type, flag ? -999 : par1Packet107CreativeSetSlot.slot, item);
+                final InventoryCreativeEvent event = new InventoryCreativeEvent(inventory, type, flag ? -999 : par1Packet107CreativeSetSlot.slot, item);
                 server.getPluginManager().callEvent(event);
                 itemstack = CraftItemStack.asNMSCopy(event.getCursor());
 
@@ -1930,7 +1934,7 @@ public class NetServerHandler extends NetHandler {
                 this.playerEntity.inventoryContainer.setPlayerIsPresent(this.playerEntity, true);
             } else if (flag && flag2 && flag3 && this.creativeItemCreationSpamThresholdTally < 200) {
                 this.creativeItemCreationSpamThresholdTally += 20;
-                EntityItem entityitem = this.playerEntity.dropPlayerItem(itemstack);
+                final EntityItem entityitem = this.playerEntity.dropPlayerItem(itemstack);
 
                 if (entityitem != null) {
                     entityitem.setAgeToCreativeDespawnTime();
@@ -1939,12 +1943,12 @@ public class NetServerHandler extends NetHandler {
         }
     }
 
-    public void handleTransaction(Packet106Transaction par1Packet106Transaction) {
+    public void handleTransaction(final Packet106Transaction par1Packet106Transaction) {
         if (this.playerEntity.isDead) {
             return;    // CraftBukkit
         }
 
-        Short oshort = (Short) this.field_72586_s.lookup(this.playerEntity.openContainer.windowId);
+        final Short oshort = (Short) this.field_72586_s.lookup(this.playerEntity.openContainer.windowId);
 
         if (oshort != null && par1Packet106Transaction.shortWindowId == oshort.shortValue() && this.playerEntity.openContainer.windowId == par1Packet106Transaction.windowId && !this.playerEntity.openContainer.isPlayerNotUsingContainer(this.playerEntity)) {
             this.playerEntity.openContainer.setPlayerIsPresent(this.playerEntity, true);
@@ -1954,19 +1958,19 @@ public class NetServerHandler extends NetHandler {
     /**
      * Updates Client side signs
      */
-    public void handleUpdateSign(Packet130UpdateSign par1Packet130UpdateSign) {
+    public void handleUpdateSign(final Packet130UpdateSign par1Packet130UpdateSign) {
         if (this.playerEntity.isDead) {
             return;    // CraftBukkit
         }
 
         this.playerEntity.func_143004_u();
-        WorldServer worldserver = this.mcServer.worldServerForDimension(this.playerEntity.dimension);
+        final WorldServer worldserver = this.mcServer.worldServerForDimension(this.playerEntity.dimension);
 
         if (worldserver.blockExists(par1Packet130UpdateSign.xPosition, par1Packet130UpdateSign.yPosition, par1Packet130UpdateSign.zPosition)) {
-            TileEntity tileentity = worldserver.getBlockTileEntity(par1Packet130UpdateSign.xPosition, par1Packet130UpdateSign.yPosition, par1Packet130UpdateSign.zPosition);
+            final TileEntity tileentity = worldserver.getBlockTileEntity(par1Packet130UpdateSign.xPosition, par1Packet130UpdateSign.yPosition, par1Packet130UpdateSign.zPosition);
 
             if (tileentity instanceof TileEntitySign) {
-                TileEntitySign tileentitysign = (TileEntitySign) tileentity;
+                final TileEntitySign tileentitysign = (TileEntitySign) tileentity;
 
                 if (!tileentitysign.isEditable() || tileentitysign.func_142009_b() != this.playerEntity) {
                     this.mcServer.logWarning("Player " + this.playerEntity.getCommandSenderName() + " just tried to change non-editable sign");
@@ -1999,12 +2003,12 @@ public class NetServerHandler extends NetHandler {
 
             if (tileentity instanceof TileEntitySign) {
                 j = par1Packet130UpdateSign.xPosition;
-                int k = par1Packet130UpdateSign.yPosition;
+                final int k = par1Packet130UpdateSign.yPosition;
                 i = par1Packet130UpdateSign.zPosition;
-                TileEntitySign tileentitysign1 = (TileEntitySign) tileentity;
+                final TileEntitySign tileentitysign1 = (TileEntitySign) tileentity;
                 // CraftBukkit start
-                Player player = this.server.getPlayer(this.playerEntity);
-                SignChangeEvent event = new SignChangeEvent((org.bukkit.craftbukkit.v1_6_R3.block.CraftBlock) player.getWorld().getBlockAt(j, k, i), this.server.getPlayer(this.playerEntity), par1Packet130UpdateSign.signLines);
+                final Player player = this.server.getPlayer(this.playerEntity);
+                final SignChangeEvent event = new SignChangeEvent((org.bukkit.craftbukkit.v1_6_R3.block.CraftBlock) player.getWorld().getBlockAt(j, k, i), this.server.getPlayer(this.playerEntity), par1Packet130UpdateSign.signLines);
                 this.server.getPluginManager().callEvent(event);
 
                 if (!event.isCancelled()) {
@@ -2029,9 +2033,9 @@ public class NetServerHandler extends NetHandler {
     /**
      * Handle a keep alive packet.
      */
-    public void handleKeepAlive(Packet0KeepAlive par1Packet0KeepAlive) {
+    public void handleKeepAlive(final Packet0KeepAlive par1Packet0KeepAlive) {
         if (par1Packet0KeepAlive.randomId == this.keepAliveRandomID) {
-            int i = (int) (System.nanoTime() / 1000000L - this.keepAliveTimeSent);
+            final int i = (int) (System.nanoTime() / 1000000L - this.keepAliveTimeSent);
             this.playerEntity.ping = (this.playerEntity.ping * 3 + i) / 4;
         }
     }
@@ -2046,10 +2050,10 @@ public class NetServerHandler extends NetHandler {
     /**
      * Handle a player abilities packet.
      */
-    public void handlePlayerAbilities(Packet202PlayerAbilities par1Packet202PlayerAbilities) {
+    public void handlePlayerAbilities(final Packet202PlayerAbilities par1Packet202PlayerAbilities) {
         // CraftBukkit start
         if (this.playerEntity.capabilities.allowFlying && this.playerEntity.capabilities.isFlying != par1Packet202PlayerAbilities.getFlying()) {
-            PlayerToggleFlightEvent event = new PlayerToggleFlightEvent(this.server.getPlayer(this.playerEntity), par1Packet202PlayerAbilities.getFlying());
+            final PlayerToggleFlightEvent event = new PlayerToggleFlightEvent(this.server.getPlayer(this.playerEntity), par1Packet202PlayerAbilities.getFlying());
             this.server.getPluginManager().callEvent(event);
 
             if (!event.isCancelled()) {
@@ -2062,11 +2066,11 @@ public class NetServerHandler extends NetHandler {
         // CraftBukkit end
     }
 
-    public void handleAutoComplete(Packet203AutoComplete par1Packet203AutoComplete) {
-        StringBuilder stringbuilder = new StringBuilder();
+    public void handleAutoComplete(final Packet203AutoComplete par1Packet203AutoComplete) {
+        final StringBuilder stringbuilder = new StringBuilder();
         String s;
 
-        for (Iterator iterator = this.mcServer.getPossibleCompletions(this.playerEntity, par1Packet203AutoComplete.getText()).iterator(); iterator.hasNext(); stringbuilder.append(s)) {
+        for (final Iterator iterator = this.mcServer.getPossibleCompletions(this.playerEntity, par1Packet203AutoComplete.getText()).iterator(); iterator.hasNext(); stringbuilder.append(s)) {
             s = (String) iterator.next();
 
             if (stringbuilder.length() > 0) {
@@ -2077,18 +2081,18 @@ public class NetServerHandler extends NetHandler {
         this.playerEntity.playerNetServerHandler.sendPacketToPlayer(new Packet203AutoComplete(stringbuilder.toString()));
     }
 
-    public void handleClientInfo(Packet204ClientInfo par1Packet204ClientInfo) {
+    public void handleClientInfo(final Packet204ClientInfo par1Packet204ClientInfo) {
         this.playerEntity.updateClientInfo(par1Packet204ClientInfo);
     }
 
-    public void handleCustomPayload(Packet250CustomPayload par1Packet250CustomPayload) {
+    public void handleCustomPayload(final Packet250CustomPayload par1Packet250CustomPayload) {
         FMLNetworkHandler.handlePacket250Packet(par1Packet250CustomPayload, netManager, this);
     }
 
-    public void handleVanilla250Packet(Packet250CustomPayload par1Packet250CustomPayload) {
-        DataInputStream datainputstream;
-        ItemStack itemstack;
-        ItemStack itemstack1;
+    public void handleVanilla250Packet(final Packet250CustomPayload par1Packet250CustomPayload) {
+        final DataInputStream datainputstream;
+        final ItemStack itemstack;
+        final ItemStack itemstack1;
 
         // CraftBukkit start - Ignore empty payloads
         if (par1Packet250CustomPayload.length <= 0) {
@@ -2113,7 +2117,7 @@ public class NetServerHandler extends NetHandler {
                 }
 
                 // CraftBukkit start
-            } catch (Throwable exception) {
+            } catch (final Throwable exception) {
                 this.mcServer.getLogAgent().logWarningException(this.playerEntity.getCommandSenderName() + " sent invalid MC|BEdit data", exception);
                 this.kickPlayerFromServer("Invalid book data!");
                 // CraftBukkit end
@@ -2134,31 +2138,31 @@ public class NetServerHandler extends NetHandler {
                 }
 
                 // CraftBukkit start
-            } catch (Throwable exception1) {
+            } catch (final Throwable exception1) {
                 this.mcServer.getLogAgent().logWarningException(this.playerEntity.getCommandSenderName() + " sent invalid MC|BSign data", exception1);
                 this.kickPlayerFromServer("Invalid book data!");
                 // CraftBukkit end
             }
         } else {
-            int i;
+            final int i;
 
             if ("MC|TrSel".equals(par1Packet250CustomPayload.channel)) {
                 try {
                     datainputstream = new DataInputStream(new ByteArrayInputStream(par1Packet250CustomPayload.data));
                     i = datainputstream.readInt();
-                    Container container = this.playerEntity.openContainer;
+                    final Container container = this.playerEntity.openContainer;
 
                     if (container instanceof ContainerMerchant) {
                         ((ContainerMerchant) container).setCurrentRecipeIndex(i);
                     }
-                } catch (Exception exception2) {
+                } catch (final Exception exception2) {
                     // CraftBukkit start
                     this.mcServer.getLogAgent().logWarningException(this.playerEntity.getCommandSenderName() + " sent invalid MC|TrSel data", exception2);
                     this.kickPlayerFromServer("Invalid trade data!");
                     // CraftBukkit end
                 }
             } else {
-                int j;
+                final int j;
 
                 if ("MC|AdvCdm".equals(par1Packet250CustomPayload.channel)) {
                     if (!this.mcServer.isCommandBlockEnabled()) {
@@ -2168,16 +2172,16 @@ public class NetServerHandler extends NetHandler {
                             datainputstream = new DataInputStream(new ByteArrayInputStream(par1Packet250CustomPayload.data));
                             i = datainputstream.readInt();
                             j = datainputstream.readInt();
-                            int k = datainputstream.readInt();
-                            String s = Packet.readString(datainputstream, 256);
-                            TileEntity tileentity = this.playerEntity.worldObj.getBlockTileEntity(i, j, k);
+                            final int k = datainputstream.readInt();
+                            final String s = Packet.readString(datainputstream, 256);
+                            final TileEntity tileentity = this.playerEntity.worldObj.getBlockTileEntity(i, j, k);
 
                             if (tileentity != null && tileentity instanceof TileEntityCommandBlock) {
                                 ((TileEntityCommandBlock) tileentity).setCommand(s);
                                 this.playerEntity.worldObj.markBlockForUpdate(i, j, k);
                                 this.playerEntity.sendChatToPlayer(ChatMessageComponent.createFromTranslationWithSubstitutions("advMode.setCommand.success", new Object[]{s}));
                             }
-                        } catch (Exception exception3) {
+                        } catch (final Exception exception3) {
                             // CraftBukkit start
                             this.mcServer.getLogAgent().logWarningException(this.playerEntity.getCommandSenderName() + " sent invalid MC|AdvCdm data", exception3);
                             this.kickPlayerFromServer("Invalid CommandBlock data!");
@@ -2192,17 +2196,17 @@ public class NetServerHandler extends NetHandler {
                             datainputstream = new DataInputStream(new ByteArrayInputStream(par1Packet250CustomPayload.data));
                             i = datainputstream.readInt();
                             j = datainputstream.readInt();
-                            ContainerBeacon containerbeacon = (ContainerBeacon) this.playerEntity.openContainer;
-                            Slot slot = containerbeacon.getSlot(0);
+                            final ContainerBeacon containerbeacon = (ContainerBeacon) this.playerEntity.openContainer;
+                            final Slot slot = containerbeacon.getSlot(0);
 
                             if (slot.getHasStack()) {
                                 slot.decrStackSize(1);
-                                TileEntityBeacon tileentitybeacon = containerbeacon.getBeacon();
+                                final TileEntityBeacon tileentitybeacon = containerbeacon.getBeacon();
                                 tileentitybeacon.setPrimaryEffect(i);
                                 tileentitybeacon.setSecondaryEffect(j);
                                 tileentitybeacon.onInventoryChanged();
                             }
-                        } catch (Exception exception4) {
+                        } catch (final Exception exception4) {
                             // CraftBukkit start
                             this.mcServer.getLogAgent().logWarningException(this.playerEntity.getCommandSenderName() + " sent invalid MC|Beacon data", exception4);
                             this.kickPlayerFromServer("Invalid beacon data!");
@@ -2210,10 +2214,10 @@ public class NetServerHandler extends NetHandler {
                         }
                     }
                 } else if ("MC|ItemName".equals(par1Packet250CustomPayload.channel) && this.playerEntity.openContainer instanceof ContainerRepair) {
-                    ContainerRepair containerrepair = (ContainerRepair) this.playerEntity.openContainer;
+                    final ContainerRepair containerrepair = (ContainerRepair) this.playerEntity.openContainer;
 
                     if (par1Packet250CustomPayload.data != null && par1Packet250CustomPayload.data.length >= 1) {
-                        String s1 = ChatAllowedCharacters.filerAllowedCharacters(new String(par1Packet250CustomPayload.data));
+                        final String s1 = ChatAllowedCharacters.filerAllowedCharacters(new String(par1Packet250CustomPayload.data));
 
                         if (s1.length() <= 30) {
                             containerrepair.updateItemName(s1);
@@ -2242,7 +2246,7 @@ public class NetServerHandler extends NetHandler {
     /**
      * Contains logic for handling packets containing arbitrary unique item data. Currently this is only for maps.
      */
-    public void handleMapData(Packet131MapData par1Packet131MapData) {
+    public void handleMapData(final Packet131MapData par1Packet131MapData) {
         FMLNetworkHandler.handlePacket131Packet(this, par1Packet131MapData);
     }
 

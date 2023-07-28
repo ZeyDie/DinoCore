@@ -21,7 +21,7 @@ class GuiScreenTemporaryResourcePackSelectSelectionList extends GuiSlot
 
     final GuiScreenTemporaryResourcePackSelect field_110512_a;
 
-    public GuiScreenTemporaryResourcePackSelectSelectionList(GuiScreenTemporaryResourcePackSelect par1GuiScreenTemporaryResourcePackSelect, ResourcePackRepository par2ResourcePackRepository)
+    public GuiScreenTemporaryResourcePackSelectSelectionList(final GuiScreenTemporaryResourcePackSelect par1GuiScreenTemporaryResourcePackSelect, final ResourcePackRepository par2ResourcePackRepository)
     {
         super(GuiScreenTemporaryResourcePackSelect.func_110344_a(par1GuiScreenTemporaryResourcePackSelect), par1GuiScreenTemporaryResourcePackSelect.width, par1GuiScreenTemporaryResourcePackSelect.height, 32, par1GuiScreenTemporaryResourcePackSelect.height - 55 + 4, 36);
         this.field_110512_a = par1GuiScreenTemporaryResourcePackSelect;
@@ -40,9 +40,9 @@ class GuiScreenTemporaryResourcePackSelectSelectionList extends GuiSlot
     /**
      * the element in the slot that was clicked, boolean for wether it was double clicked or not
      */
-    protected void elementClicked(int par1, boolean par2)
+    protected void elementClicked(final int par1, final boolean par2)
     {
-        List list = this.field_110511_b.getRepositoryEntriesAll();
+        final List list = this.field_110511_b.getRepositoryEntriesAll();
 
         try
         {
@@ -54,7 +54,7 @@ class GuiScreenTemporaryResourcePackSelectSelectionList extends GuiSlot
             this.field_110511_b.setRepositoryEntries(new ResourcePackRepositoryEntry[] {(ResourcePackRepositoryEntry)list.get(par1 - 1)});
             GuiScreenTemporaryResourcePackSelect.func_110341_b(this.field_110512_a).refreshResources();
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             this.field_110511_b.setRepositoryEntries(new ResourcePackRepositoryEntry[0]);
             GuiScreenTemporaryResourcePackSelect.func_110339_c(this.field_110512_a).refreshResources();
@@ -67,9 +67,9 @@ class GuiScreenTemporaryResourcePackSelectSelectionList extends GuiSlot
     /**
      * returns true if the element passed in is currently selected
      */
-    protected boolean isSelected(int par1)
+    protected boolean isSelected(final int par1)
     {
-        List list = this.field_110511_b.getRepositoryEntries();
+        final List list = this.field_110511_b.getRepositoryEntries();
         return par1 == 0 ? list.isEmpty() : list.contains(this.field_110511_b.getRepositoryEntriesAll().get(par1 - 1));
     }
 
@@ -86,16 +86,16 @@ class GuiScreenTemporaryResourcePackSelectSelectionList extends GuiSlot
         this.field_110512_a.drawDefaultBackground();
     }
 
-    protected void drawSlot(int par1, int par2, int par3, int par4, Tessellator par5Tessellator)
+    protected void drawSlot(final int par1, final int par2, final int par3, final int par4, final Tessellator par5Tessellator)
     {
-        TextureManager texturemanager = GuiScreenTemporaryResourcePackSelect.func_110340_f(this.field_110512_a).getTextureManager();
+        final TextureManager texturemanager = GuiScreenTemporaryResourcePackSelect.func_110340_f(this.field_110512_a).getTextureManager();
 
         if (par1 == 0)
         {
             try
             {
-                ResourcePack resourcepack = this.field_110511_b.rprDefaultResourcePack;
-                PackMetadataSection packmetadatasection = (PackMetadataSection)resourcepack.getPackMetadata(this.field_110511_b.rprMetadataSerializer, "pack");
+                final ResourcePack resourcepack = this.field_110511_b.rprDefaultResourcePack;
+                final PackMetadataSection packmetadatasection = (PackMetadataSection)resourcepack.getPackMetadata(this.field_110511_b.rprMetadataSerializer, "pack");
 
                 if (this.field_110513_h == null)
                 {
@@ -114,14 +114,14 @@ class GuiScreenTemporaryResourcePackSelectSelectionList extends GuiSlot
                 this.field_110512_a.drawString(GuiScreenTemporaryResourcePackSelect.func_130017_g(this.field_110512_a), "Default", par2 + 32 + 2, par3 + 1, 16777215);
                 this.field_110512_a.drawString(GuiScreenTemporaryResourcePackSelect.func_130016_h(this.field_110512_a), packmetadatasection.getPackDescription(), par2 + 32 + 2, par3 + 12 + 10, 8421504);
             }
-            catch (IOException ioexception)
+            catch (final IOException ioexception)
             {
                 ;
             }
         }
         else
         {
-            ResourcePackRepositoryEntry resourcepackrepositoryentry = (ResourcePackRepositoryEntry)this.field_110511_b.getRepositoryEntriesAll().get(par1 - 1);
+            final ResourcePackRepositoryEntry resourcepackrepositoryentry = (ResourcePackRepositoryEntry)this.field_110511_b.getRepositoryEntriesAll().get(par1 - 1);
             resourcepackrepositoryentry.bindTexturePackIcon(texturemanager);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             par5Tessellator.startDrawingQuads();
@@ -139,7 +139,7 @@ class GuiScreenTemporaryResourcePackSelectSelectionList extends GuiSlot
             }
 
             this.field_110512_a.drawString(GuiScreenTemporaryResourcePackSelect.func_110337_i(this.field_110512_a), s, par2 + 32 + 2, par3 + 1, 16777215);
-            List list = GuiScreenTemporaryResourcePackSelect.func_110335_j(this.field_110512_a).listFormattedStringToWidth(resourcepackrepositoryentry.getTexturePackDescription(), 183);
+            final List list = GuiScreenTemporaryResourcePackSelect.func_110335_j(this.field_110512_a).listFormattedStringToWidth(resourcepackrepositoryentry.getTexturePackDescription(), 183);
 
             for (int i1 = 0; i1 < 2 && i1 < list.size(); ++i1)
             {
@@ -148,7 +148,7 @@ class GuiScreenTemporaryResourcePackSelectSelectionList extends GuiSlot
         }
     }
 
-    static ResourcePackRepository func_110510_a(GuiScreenTemporaryResourcePackSelectSelectionList par0GuiScreenTemporaryResourcePackSelectSelectionList)
+    static ResourcePackRepository func_110510_a(final GuiScreenTemporaryResourcePackSelectSelectionList par0GuiScreenTemporaryResourcePackSelectSelectionList)
     {
         return par0GuiScreenTemporaryResourcePackSelectSelectionList.field_110511_b;
     }

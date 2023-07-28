@@ -11,22 +11,22 @@ import org.bukkit.entity.Painting;
 
 public class CraftPainting extends CraftHanging implements Painting {
 
-    public CraftPainting(CraftServer server, net.minecraft.entity.item.EntityPainting entity) {
+    public CraftPainting(final CraftServer server, final net.minecraft.entity.item.EntityPainting entity) {
         super(server, entity);
     }
 
     public Art getArt() {
-        net.minecraft.util.EnumArt art = getHandle().art;
+        final net.minecraft.util.EnumArt art = getHandle().art;
         return CraftArt.NotchToBukkit(art);
     }
 
-    public boolean setArt(Art art) {
+    public boolean setArt(final Art art) {
         return setArt(art, false);
     }
 
-    public boolean setArt(Art art, boolean force) {
-        net.minecraft.entity.item.EntityPainting painting = this.getHandle();
-        net.minecraft.util.EnumArt oldArt = painting.art;
+    public boolean setArt(final Art art, final boolean force) {
+        final net.minecraft.entity.item.EntityPainting painting = this.getHandle();
+        final net.minecraft.util.EnumArt oldArt = painting.art;
         painting.art = CraftArt.BukkitToNotch(art);
         painting.setDirection(painting.hangingDirection);
         if (!force && !painting.onValidSurface()) {
@@ -39,7 +39,7 @@ public class CraftPainting extends CraftHanging implements Painting {
         return true;
     }
 
-    public boolean setFacingDirection(BlockFace face, boolean force) {
+    public boolean setFacingDirection(final BlockFace face, final boolean force) {
         if (super.setFacingDirection(face, force)) {
             update();
             return true;
@@ -49,8 +49,8 @@ public class CraftPainting extends CraftHanging implements Painting {
     }
 
     private void update() {
-        net.minecraft.world.WorldServer world = ((CraftWorld) getWorld()).getHandle();
-        net.minecraft.entity.item.EntityPainting painting = new net.minecraft.entity.item.EntityPainting(world);
+        final net.minecraft.world.WorldServer world = ((CraftWorld) getWorld()).getHandle();
+        final net.minecraft.entity.item.EntityPainting painting = new net.minecraft.entity.item.EntityPainting(world);
         painting.xPosition = getHandle().xPosition;
         painting.yPosition = getHandle().yPosition;
         painting.zPosition = getHandle().zPosition;

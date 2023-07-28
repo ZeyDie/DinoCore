@@ -10,12 +10,12 @@ public class NBTTagIntArray extends NBTBase
     /** The array of saved integers */
     public int[] intArray;
 
-    public NBTTagIntArray(String par1Str)
+    public NBTTagIntArray(final String par1Str)
     {
         super(par1Str);
     }
 
-    public NBTTagIntArray(String par1Str, int[] par2ArrayOfInteger)
+    public NBTTagIntArray(final String par1Str, final int[] par2ArrayOfInteger)
     {
         super(par1Str);
         this.intArray = par2ArrayOfInteger;
@@ -24,7 +24,7 @@ public class NBTTagIntArray extends NBTBase
     /**
      * Write the actual data contents of the tag, implemented in NBT extension classes
      */
-    void write(DataOutput par1DataOutput) throws IOException
+    void write(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.intArray.length);
 
@@ -37,9 +37,9 @@ public class NBTTagIntArray extends NBTBase
     /**
      * Read the actual data contents of the tag, implemented in NBT extension classes
      */
-    void load(DataInput par1DataInput, int par2) throws IOException
+    void load(final DataInput par1DataInput, final int par2) throws IOException
     {
-        int j = par1DataInput.readInt();
+        final int j = par1DataInput.readInt();
         this.intArray = new int[j];
 
         for (int k = 0; k < j; ++k)
@@ -66,12 +66,12 @@ public class NBTTagIntArray extends NBTBase
      */
     public NBTBase copy()
     {
-        int[] aint = new int[this.intArray.length];
+        final int[] aint = new int[this.intArray.length];
         System.arraycopy(this.intArray, 0, aint, 0, this.intArray.length);
         return new NBTTagIntArray(this.getName(), aint);
     }
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         if (!super.equals(par1Obj))
         {
@@ -79,7 +79,7 @@ public class NBTTagIntArray extends NBTBase
         }
         else
         {
-            NBTTagIntArray nbttagintarray = (NBTTagIntArray)par1Obj;
+            final NBTTagIntArray nbttagintarray = (NBTTagIntArray)par1Obj;
             return this.intArray == null && nbttagintarray.intArray == null || this.intArray != null && Arrays.equals(this.intArray, nbttagintarray.intArray);
         }
     }

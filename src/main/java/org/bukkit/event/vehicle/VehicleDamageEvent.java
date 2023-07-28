@@ -59,7 +59,7 @@ public class VehicleDamageEvent extends VehicleEvent implements Cancellable {
      *
      * @param damage The damage
      */
-    public void setDamage(double damage) {
+    public void setDamage(final double damage) {
         this.damage = damage;
     }
 
@@ -69,7 +69,7 @@ public class VehicleDamageEvent extends VehicleEvent implements Cancellable {
      * under any circumstances.
      */
     @Deprecated
-    public void _INVALID_setDamage(int damage) {
+    public void _INVALID_setDamage(final int damage) {
         setDamage(damage);
     }
 
@@ -77,7 +77,7 @@ public class VehicleDamageEvent extends VehicleEvent implements Cancellable {
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancelled = cancel;
     }
 

@@ -15,7 +15,7 @@ public class GuiPlayerInfo
     /** Player response time to server in milliseconds */
     public int responseTime;
 
-    public GuiPlayerInfo(String par1Str)
+    public GuiPlayerInfo(final String par1Str)
     {
         this.name = par1Str;
         this.nameinLowerCase = par1Str.toLowerCase();

@@ -20,12 +20,12 @@ public enum PistonMoveReaction {
     private int id;
     private static Map<Integer, PistonMoveReaction> byId = new HashMap<Integer, PistonMoveReaction>();
     static {
-        for (PistonMoveReaction reaction : PistonMoveReaction.values()) {
+        for (final PistonMoveReaction reaction : PistonMoveReaction.values()) {
             byId.put(reaction.id, reaction);
         }
     }
 
-    private PistonMoveReaction(int id) {
+    private PistonMoveReaction(final int id) {
         this.id = id;
     }
 
@@ -44,7 +44,7 @@ public enum PistonMoveReaction {
      * @deprecated Magic value
      */
     @Deprecated
-    public static PistonMoveReaction getById(int id) {
+    public static PistonMoveReaction getById(final int id) {
         return byId.get(id);
     }
 }

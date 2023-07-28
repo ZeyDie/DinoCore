@@ -19,14 +19,14 @@ public class Packet104WindowItems extends Packet
 
     public Packet104WindowItems() {}
 
-    public Packet104WindowItems(int par1, List par2List)
+    public Packet104WindowItems(final int par1, final List par2List)
     {
         this.windowId = par1;
         this.itemStack = new ItemStack[par2List.size()];
 
         for (int j = 0; j < this.itemStack.length; ++j)
         {
-            ItemStack itemstack = (ItemStack)par2List.get(j);
+            final ItemStack itemstack = (ItemStack)par2List.get(j);
             this.itemStack[j] = itemstack == null ? null : itemstack.copy();
         }
     }
@@ -34,10 +34,10 @@ public class Packet104WindowItems extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.windowId = par1DataInput.readByte();
-        short short1 = par1DataInput.readShort();
+        final short short1 = par1DataInput.readShort();
         this.itemStack = new ItemStack[short1];
 
         for (int i = 0; i < short1; ++i)
@@ -49,7 +49,7 @@ public class Packet104WindowItems extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeByte(this.windowId);
         par1DataOutput.writeShort(this.itemStack.length);
@@ -63,7 +63,7 @@ public class Packet104WindowItems extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleWindowItems(this);
     }

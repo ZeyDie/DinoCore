@@ -6,7 +6,7 @@ class CallableLevelSeed implements Callable
 {
     final WorldInfo worldInfoInstance;
 
-    CallableLevelSeed(WorldInfo par1WorldInfo)
+    CallableLevelSeed(final WorldInfo par1WorldInfo)
     {
         this.worldInfoInstance = par1WorldInfo;
     }

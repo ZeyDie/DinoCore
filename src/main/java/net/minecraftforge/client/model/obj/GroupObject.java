@@ -19,12 +19,12 @@ public class GroupObject
         this("");
     }
 
-    public GroupObject(String name)
+    public GroupObject(final String name)
     {
         this(name, -1);
     }
 
-    public GroupObject(String name, int glDrawingMode)
+    public GroupObject(final String name, final int glDrawingMode)
     {
         this.name = name;
         this.glDrawingMode = glDrawingMode;
@@ -32,20 +32,20 @@ public class GroupObject
 
     public void render()
     {
-        if (faces.size() > 0)
+        if (!faces.isEmpty())
         {
-            Tessellator tessellator = Tessellator.instance;
+            final Tessellator tessellator = Tessellator.instance;
             tessellator.startDrawing(glDrawingMode);
             render(tessellator);
             tessellator.draw();
         }
     }
 
-    public void render(Tessellator tessellator)
+    public void render(final Tessellator tessellator)
     {
-        if (faces.size() > 0)
+        if (!faces.isEmpty())
         {
-            for (Face face : faces)
+            for (final Face face : faces)
             {
                 face.addFaceForRender(tessellator);
             }

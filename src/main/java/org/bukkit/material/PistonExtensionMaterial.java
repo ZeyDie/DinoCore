@@ -38,7 +38,7 @@ public class PistonExtensionMaterial extends MaterialData implements Attachable 
         super(type, data);
     }
 
-    public void setFacingDirection(BlockFace face) {
+    public void setFacingDirection(final BlockFace face) {
         byte data = (byte) (getData() & 0x8);
 
         switch (face) {
@@ -62,7 +62,7 @@ public class PistonExtensionMaterial extends MaterialData implements Attachable 
     }
 
     public BlockFace getFacing() {
-        byte dir = (byte) (getData() & 7);
+        final byte dir = (byte) (getData() & 7);
 
         switch (dir) {
         case 0:
@@ -96,7 +96,7 @@ public class PistonExtensionMaterial extends MaterialData implements Attachable 
      *
      * @param sticky true if sticky, otherwise false
      */
-    public void setSticky(boolean sticky) {
+    public void setSticky(final boolean sticky) {
         setData((byte) (sticky ? (getData() | 0x8) : (getData() & ~0x8)));
     }
 

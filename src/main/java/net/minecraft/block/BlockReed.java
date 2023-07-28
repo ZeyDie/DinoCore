@@ -14,10 +14,10 @@ import java.util.Random;
 
 public class BlockReed extends Block implements IPlantable
 {
-    protected BlockReed(int par1)
+    protected BlockReed(final int par1)
     {
         super(par1, Material.plants);
-        float f = 0.375F;
+        final float f = 0.375F;
         this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 1.0F, 0.5F + f);
         this.setTickRandomly(true);
     }
@@ -25,7 +25,7 @@ public class BlockReed extends Block implements IPlantable
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (par1World.isAirBlock(par2, par3 + 1, par4))
         {
@@ -38,7 +38,7 @@ public class BlockReed extends Block implements IPlantable
 
             if (l < 3)
             {
-                int i1 = par1World.getBlockMetadata(par2, par3, par4);
+                final int i1 = par1World.getBlockMetadata(par2, par3, par4);
 
                 if (i1 >= (byte) range(3, (par1World.growthOdds / par1World.spigotConfig.caneModifier * 15) + 0.5F, 15)) // Spigot
                 {
@@ -56,9 +56,9 @@ public class BlockReed extends Block implements IPlantable
     /**
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
      */
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
+    public boolean canPlaceBlockAt(final World par1World, final int par2, final int par3, final int par4)
     {
-        Block block = Block.blocksList[par1World.getBlockId(par2, par3 - 1, par4)];
+        final Block block = Block.blocksList[par1World.getBlockId(par2, par3 - 1, par4)];
         return (block != null && block.canSustainPlant(par1World, par2, par3 - 1, par4, ForgeDirection.UP, this));
     }
 
@@ -66,7 +66,7 @@ public class BlockReed extends Block implements IPlantable
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         this.checkBlockCoordValid(par1World, par2, par3, par4);
     }
@@ -74,7 +74,7 @@ public class BlockReed extends Block implements IPlantable
     /**
      * Checks if current block pos is valid, if not, breaks the block as dropable item. Used for reed and cactus.
      */
-    protected final void checkBlockCoordValid(World par1World, int par2, int par3, int par4)
+    protected final void checkBlockCoordValid(final World par1World, final int par2, final int par3, final int par4)
     {
         if (!this.canBlockStay(par1World, par2, par3, par4))
         {
@@ -86,7 +86,7 @@ public class BlockReed extends Block implements IPlantable
     /**
      * Can this block stay at this position.  Similar to canPlaceBlockAt except gets checked often with plants.
      */
-    public boolean canBlockStay(World par1World, int par2, int par3, int par4)
+    public boolean canBlockStay(final World par1World, final int par2, final int par3, final int par4)
     {
         return this.canPlaceBlockAt(par1World, par2, par3, par4);
     }
@@ -95,7 +95,7 @@ public class BlockReed extends Block implements IPlantable
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4)
     {
         return null;
     }
@@ -103,7 +103,7 @@ public class BlockReed extends Block implements IPlantable
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return Item.reed.itemID;
     }
@@ -138,25 +138,25 @@ public class BlockReed extends Block implements IPlantable
     /**
      * only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
      */
-    public int idPicked(World par1World, int par2, int par3, int par4)
+    public int idPicked(final World par1World, final int par2, final int par3, final int par4)
     {
         return Item.reed.itemID;
     }
 
     @Override
-    public EnumPlantType getPlantType(World world, int x, int y, int z)
+    public EnumPlantType getPlantType(final World world, final int x, final int y, final int z)
     {
         return EnumPlantType.Beach;
     }
 
     @Override
-    public int getPlantID(World world, int x, int y, int z)
+    public int getPlantID(final World world, final int x, final int y, final int z)
     {
         return blockID;
     }
 
     @Override
-    public int getPlantMetadata(World world, int x, int y, int z)
+    public int getPlantMetadata(final World world, final int x, final int y, final int z)
     {
         return world.getBlockMetadata(x, y, z);
     }

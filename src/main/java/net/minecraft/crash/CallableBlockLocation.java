@@ -10,7 +10,7 @@ final class CallableBlockLocation implements Callable
 
     final int blockZCoord;
 
-    CallableBlockLocation(int par1, int par2, int par3)
+    CallableBlockLocation(final int par1, final int par2, final int par3)
     {
         this.blockXCoord = par1;
         this.blockYCoord = par2;

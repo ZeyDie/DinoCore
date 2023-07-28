@@ -18,7 +18,7 @@ public class Packet206SetObjective extends Packet
 
     public Packet206SetObjective() {}
 
-    public Packet206SetObjective(ScoreObjective par1ScoreObjective, int par2)
+    public Packet206SetObjective(final ScoreObjective par1ScoreObjective, final int par2)
     {
         this.objectiveName = par1ScoreObjective.getName();
         this.objectiveDisplayName = par1ScoreObjective.getDisplayName();
@@ -28,7 +28,7 @@ public class Packet206SetObjective extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.objectiveName = readString(par1DataInput, 16);
         this.objectiveDisplayName = readString(par1DataInput, 32);
@@ -38,7 +38,7 @@ public class Packet206SetObjective extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         writeString(this.objectiveName, par1DataOutput);
         writeString(this.objectiveDisplayName, par1DataOutput);
@@ -48,7 +48,7 @@ public class Packet206SetObjective extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleSetObjective(this);
     }

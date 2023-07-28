@@ -25,26 +25,26 @@ public class VillageCollection extends WorldSavedData
     private final List villageList = new ArrayList();
     private int tickCounter;
 
-    public VillageCollection(String par1Str)
+    public VillageCollection(final String par1Str)
     {
         super(par1Str);
     }
 
-    public VillageCollection(World par1World)
+    public VillageCollection(final World par1World)
     {
         super("villages");
         this.worldObj = par1World;
         this.markDirty();
     }
 
-    public void func_82566_a(World par1World)
+    public void func_82566_a(final World par1World)
     {
         this.worldObj = par1World;
-        Iterator iterator = this.villageList.iterator();
+        final Iterator iterator = this.villageList.iterator();
 
         while (iterator.hasNext())
         {
-            Village village = (Village)iterator.next();
+            final Village village = (Village)iterator.next();
             village.func_82691_a(par1World);
         }
     }
@@ -53,7 +53,7 @@ public class VillageCollection extends WorldSavedData
      * This is a black hole. You can add data to this list through a public interface, but you can't query that
      * information in any way and it's not used internally either.
      */
-    public void addVillagerPosition(int par1, int par2, int par3)
+    public void addVillagerPosition(final int par1, final int par2, final int par3)
     {
         if (this.villagerPositionsList.size() <= 64)
         {
@@ -70,11 +70,11 @@ public class VillageCollection extends WorldSavedData
     public void tick()
     {
         ++this.tickCounter;
-        Iterator iterator = this.villageList.iterator();
+        final Iterator iterator = this.villageList.iterator();
 
         while (iterator.hasNext())
         {
-            Village village = (Village)iterator.next();
+            final Village village = (Village)iterator.next();
             village.tick(this.tickCounter);
         }
 
@@ -90,11 +90,11 @@ public class VillageCollection extends WorldSavedData
 
     private void removeAnnihilatedVillages()
     {
-        Iterator iterator = this.villageList.iterator();
+        final Iterator iterator = this.villageList.iterator();
 
         while (iterator.hasNext())
         {
-            Village village = (Village)iterator.next();
+            final Village village = (Village)iterator.next();
 
             if (village.isAnnihilated())
             {
@@ -116,20 +116,20 @@ public class VillageCollection extends WorldSavedData
      * Finds the nearest village, but only the given coordinates are withing it's bounding box plus the given the
      * distance.
      */
-    public Village findNearestVillage(int par1, int par2, int par3, int par4)
+    public Village findNearestVillage(final int par1, final int par2, final int par3, final int par4)
     {
         Village village = null;
         float f = Float.MAX_VALUE;
-        Iterator iterator = this.villageList.iterator();
+        final Iterator iterator = this.villageList.iterator();
 
         while (iterator.hasNext())
         {
-            Village village1 = (Village)iterator.next();
-            float f1 = village1.getCenter().getDistanceSquared(par1, par2, par3);
+            final Village village1 = (Village)iterator.next();
+            final float f1 = village1.getCenter().getDistanceSquared(par1, par2, par3);
 
             if (f1 < f)
             {
-                float f2 = (float)(par4 + village1.getVillageRadius());
+                final float f2 = (float)(par4 + village1.getVillageRadius());
 
                 if (f1 <= f2 * f2)
                 {
@@ -156,17 +156,17 @@ public class VillageCollection extends WorldSavedData
 
         while (i < this.newDoors.size())
         {
-            VillageDoorInfo villagedoorinfo = (VillageDoorInfo)this.newDoors.get(i);
+            final VillageDoorInfo villagedoorinfo = (VillageDoorInfo)this.newDoors.get(i);
             boolean flag = false;
-            Iterator iterator = this.villageList.iterator();
+            final Iterator iterator = this.villageList.iterator();
 
             while (true)
             {
                 if (iterator.hasNext())
                 {
-                    Village village = (Village)iterator.next();
-                    int j = (int)village.getCenter().getDistanceSquared(villagedoorinfo.posX, villagedoorinfo.posY, villagedoorinfo.posZ);
-                    float k = 32f + village.getVillageRadius();
+                    final Village village = (Village)iterator.next();
+                    final int j = (int)village.getCenter().getDistanceSquared(villagedoorinfo.posX, villagedoorinfo.posY, villagedoorinfo.posZ);
+                    final float k = 32.0f + village.getVillageRadius();
 
                     if (j > k * k)
                     {
@@ -179,7 +179,7 @@ public class VillageCollection extends WorldSavedData
 
                 if (!flag)
                 {
-                    Village village1 = new Village(this.worldObj);
+                    final Village village1 = new Village(this.worldObj);
                     village1.addVillageDoorInfo(villagedoorinfo);
                     this.villageList.add(village1);
                     this.markDirty();
@@ -193,11 +193,11 @@ public class VillageCollection extends WorldSavedData
         this.newDoors.clear();
     }
 
-    private void addUnassignedWoodenDoorsAroundToNewDoorsList(ChunkCoordinates par1ChunkCoordinates)
+    private void addUnassignedWoodenDoorsAroundToNewDoorsList(final ChunkCoordinates par1ChunkCoordinates)
     {
-        byte b0 = 16;
-        byte b1 = 4;
-        byte b2 = 16;
+        final byte b0 = 16;
+        final byte b1 = 4;
+        final byte b2 = 16;
 
         for (int i = par1ChunkCoordinates.posX - b0; i < par1ChunkCoordinates.posX + b0; ++i)
         {
@@ -207,7 +207,7 @@ public class VillageCollection extends WorldSavedData
                 {
                     if (this.isWoodenDoorAt(i, j, k))
                     {
-                        VillageDoorInfo villagedoorinfo = this.getVillageDoorAt(i, j, k);
+                        final VillageDoorInfo villagedoorinfo = this.getVillageDoorAt(i, j, k);
 
                         if (villagedoorinfo == null)
                         {
@@ -223,7 +223,7 @@ public class VillageCollection extends WorldSavedData
         }
     }
 
-    private VillageDoorInfo getVillageDoorAt(int par1, int par2, int par3)
+    private VillageDoorInfo getVillageDoorAt(final int par1, final int par2, final int par3)
     {
         Iterator iterator = this.newDoors.iterator();
         VillageDoorInfo villagedoorinfo;
@@ -242,7 +242,7 @@ public class VillageCollection extends WorldSavedData
                         return null;
                     }
 
-                    Village village = (Village)iterator.next();
+                    final Village village = (Village)iterator.next();
                     villagedoorinfo1 = village.getVillageDoorAt(par1, par2, par3);
                 }
                 while (villagedoorinfo1 == null);
@@ -257,9 +257,9 @@ public class VillageCollection extends WorldSavedData
         return villagedoorinfo;
     }
 
-    private void addDoorToNewListIfAppropriate(int par1, int par2, int par3)
+    private void addDoorToNewListIfAppropriate(final int par1, final int par2, final int par3)
     {
-        int l = ((BlockDoor)Block.doorWood).getDoorOrientation(this.worldObj, par1, par2, par3);
+        final int l = ((BlockDoor)Block.doorWood).getDoorOrientation(this.worldObj, par1, par2, par3);
         int i1;
         int j1;
 
@@ -315,9 +315,9 @@ public class VillageCollection extends WorldSavedData
         }
     }
 
-    private boolean isVillagerPositionPresent(int par1, int par2, int par3)
+    private boolean isVillagerPositionPresent(final int par1, final int par2, final int par3)
     {
-        Iterator iterator = this.villagerPositionsList.iterator();
+        final Iterator iterator = this.villagerPositionsList.iterator();
         ChunkCoordinates chunkcoordinates;
 
         do
@@ -334,24 +334,24 @@ public class VillageCollection extends WorldSavedData
         return true;
     }
 
-    private boolean isWoodenDoorAt(int par1, int par2, int par3)
+    private boolean isWoodenDoorAt(final int par1, final int par2, final int par3)
     {
-        int l = this.worldObj.getBlockId(par1, par2, par3);
+        final int l = this.worldObj.getBlockId(par1, par2, par3);
         return l == Block.doorWood.blockID;
     }
 
     /**
      * reads in data from the NBTTagCompound into this MapDataBase
      */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         this.tickCounter = par1NBTTagCompound.getInteger("Tick");
-        NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Villages");
+        final NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Villages");
 
         for (int i = 0; i < nbttaglist.tagCount(); ++i)
         {
-            NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
-            Village village = new Village();
+            final NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
+            final Village village = new Village();
             village.readVillageDataFromNBT(nbttagcompound1);
             this.villageList.add(village);
         }
@@ -360,16 +360,16 @@ public class VillageCollection extends WorldSavedData
     /**
      * write data to NBTTagCompound from this MapDataBase, similar to Entities and TileEntities
      */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         par1NBTTagCompound.setInteger("Tick", this.tickCounter);
-        NBTTagList nbttaglist = new NBTTagList("Villages");
-        Iterator iterator = this.villageList.iterator();
+        final NBTTagList nbttaglist = new NBTTagList("Villages");
+        final Iterator iterator = this.villageList.iterator();
 
         while (iterator.hasNext())
         {
-            Village village = (Village)iterator.next();
-            NBTTagCompound nbttagcompound1 = new NBTTagCompound("Village");
+            final Village village = (Village)iterator.next();
+            final NBTTagCompound nbttagcompound1 = new NBTTagCompound("Village");
             village.writeVillageDataToNBT(nbttagcompound1);
             nbttaglist.appendTag(nbttagcompound1);
         }

@@ -56,7 +56,7 @@ public class FurnaceSmeltEvent extends BlockEvent implements Cancellable {
      *
      * @param result new result ItemStack
      */
-    public void setResult(ItemStack result) {
+    public void setResult(final ItemStack result) {
         this.result = result;
     }
 
@@ -64,7 +64,7 @@ public class FurnaceSmeltEvent extends BlockEvent implements Cancellable {
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancelled = cancel;
     }
 

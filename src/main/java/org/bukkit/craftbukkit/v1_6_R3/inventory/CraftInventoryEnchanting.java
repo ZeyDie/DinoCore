@@ -5,11 +5,11 @@ import org.bukkit.inventory.ItemStack;
 
 
 public class CraftInventoryEnchanting extends CraftInventory implements EnchantingInventory {
-    public CraftInventoryEnchanting(net.minecraft.inventory.SlotEnchantmentTable inventory) {
+    public CraftInventoryEnchanting(final net.minecraft.inventory.SlotEnchantmentTable inventory) {
         super(inventory);
     }
 
-    public void setItem(ItemStack item) {
+    public void setItem(final ItemStack item) {
         setItem(0,item);
     }
 

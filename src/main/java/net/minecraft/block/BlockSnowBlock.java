@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class BlockSnowBlock extends Block
 {
-    protected BlockSnowBlock(int par1)
+    protected BlockSnowBlock(final int par1)
     {
         super(par1, Material.craftedSnow);
         this.setTickRandomly(true);
@@ -20,7 +20,7 @@ public class BlockSnowBlock extends Block
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return Item.snowball.itemID;
     }
@@ -28,7 +28,7 @@ public class BlockSnowBlock extends Block
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random par1Random)
+    public int quantityDropped(final Random par1Random)
     {
         return 4;
     }
@@ -36,7 +36,7 @@ public class BlockSnowBlock extends Block
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (par1World.getSavedLightValue(EnumSkyBlock.Block, par2, par3, par4) > 11)
         {

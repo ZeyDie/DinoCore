@@ -5,7 +5,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ExperienceOrb;
 
 public class CraftExperienceOrb extends CraftEntity implements ExperienceOrb {
-    public CraftExperienceOrb(CraftServer server, net.minecraft.entity.item.EntityXPOrb entity) {
+    public CraftExperienceOrb(final CraftServer server, final net.minecraft.entity.item.EntityXPOrb entity) {
         super(server, entity);
     }
 
@@ -13,7 +13,7 @@ public class CraftExperienceOrb extends CraftEntity implements ExperienceOrb {
         return getHandle().xpValue;
     }
 
-    public void setExperience(int value) {
+    public void setExperience(final int value) {
         getHandle().xpValue = value;
     }
 

@@ -11,7 +11,7 @@ public class Language implements Comparable
     private final String name;
     private final boolean bidirectional;
 
-    public Language(String par1Str, String par2Str, String par3Str, boolean par4)
+    public Language(final String par1Str, final String par2Str, final String par3Str, final boolean par4)
     {
         this.languageCode = par1Str;
         this.region = par2Str;
@@ -34,7 +34,7 @@ public class Language implements Comparable
         return String.format("%s (%s)", new Object[] {this.name, this.region});
     }
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         return this == par1Obj ? true : (!(par1Obj instanceof Language) ? false : this.languageCode.equals(((Language)par1Obj).languageCode));
     }
@@ -44,12 +44,12 @@ public class Language implements Comparable
         return this.languageCode.hashCode();
     }
 
-    public int func_135033_a(Language par1Language)
+    public int func_135033_a(final Language par1Language)
     {
         return this.languageCode.compareTo(par1Language.languageCode);
     }
 
-    public int compareTo(Object par1Obj)
+    public int compareTo(final Object par1Obj)
     {
         return this.func_135033_a((Language)par1Obj);
     }

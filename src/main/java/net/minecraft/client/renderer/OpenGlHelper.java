@@ -52,7 +52,7 @@ public class OpenGlHelper
     /**
      * Sets the current lightmap texture to the specified OpenGL constant
      */
-    public static void setActiveTexture(int par0)
+    public static void setActiveTexture(final int par0)
     {
         if (useMultitextureARB)
         {
@@ -67,7 +67,7 @@ public class OpenGlHelper
     /**
      * Sets the current lightmap texture to the specified OpenGL constant
      */
-    public static void setClientActiveTexture(int par0)
+    public static void setClientActiveTexture(final int par0)
     {
         if (useMultitextureARB)
         {
@@ -82,7 +82,7 @@ public class OpenGlHelper
     /**
      * Sets the current coordinates of the given lightmap texture
      */
-    public static void setLightmapTextureCoords(int par0, float par1, float par2)
+    public static void setLightmapTextureCoords(final int par0, final float par1, final float par2)
     {
         if (useMultitextureARB)
         {

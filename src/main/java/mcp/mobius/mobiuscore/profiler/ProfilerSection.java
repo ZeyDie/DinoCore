@@ -34,13 +34,13 @@ public enum ProfilerSection implements IProfilerBase{
 	
 	public static long timeStampLastRun;
 	
-	private ProfilerSection(RunType runType, Side side){
+	private ProfilerSection(final RunType runType, final Side side){
 		this.runType  = runType;
 		this.profiler = new DummyProfiler();
 		this.sides    = EnumSet.of(side);
 	}
 	
-	private ProfilerSection(RunType runType, EnumSet<Side> sides){
+	private ProfilerSection(final RunType runType, final EnumSet<Side> sides){
 		this.runType  = runType;
 		this.profiler = new DummyProfiler();
 		this.sides    = sides;
@@ -58,7 +58,7 @@ public enum ProfilerSection implements IProfilerBase{
 		return this.profilerSuspended;
 	}
 	
-	public void setProfiler(IProfilerBase profiler){
+	public void setProfiler(final IProfilerBase profiler){
 		this.profilerSuspended = profiler;
 		if (this.runType == RunType.REALTIME)
 			this.profiler = profiler;
@@ -74,20 +74,20 @@ public enum ProfilerSection implements IProfilerBase{
 			this.profiler = new DummyProfiler();
 	}	
 	
-	public static void activateAll(Side trgside){
-		for (ProfilerSection section : ProfilerSection.values())
+	public static void activateAll(final Side trgside){
+		for (final ProfilerSection section : ProfilerSection.values())
 			if (section.sides.contains(trgside))
 				section.activate();
 	}
 
-	public static void desactivateAll(Side trgside){
-		for (ProfilerSection section : ProfilerSection.values())
+	public static void desactivateAll(final Side trgside){
+		for (final ProfilerSection section : ProfilerSection.values())
 			if (section.sides.contains(trgside))
 				section.desactivate();
 	}	
 
-	public static void resetAll(Side trgside){
-		for (ProfilerSection section : ProfilerSection.values())
+	public static void resetAll(final Side trgside){
+		for (final ProfilerSection section : ProfilerSection.values())
 			if (section.sides.contains(trgside))
 				section.reset();
 	}	
@@ -107,19 +107,19 @@ public enum ProfilerSection implements IProfilerBase{
 	@Override
 	public void stop()  { this.profiler.stop(); }
 	@Override
-	public void start(Object key) { this.profiler.start(key); }
+	public void start(final Object key) { this.profiler.start(key); }
 	@Override
-	public void stop(Object key) { this.profiler.stop(key); }
+	public void stop(final Object key) { this.profiler.stop(key); }
 	@Override
-	public void start(Object key1, Object key2) { this.profiler.start(key1, key2); }
+	public void start(final Object key1, final Object key2) { this.profiler.start(key1, key2); }
 	@Override
-	public void stop(Object key1, Object key2) { this.profiler.stop(key1, key2); }
+	public void stop(final Object key1, final Object key2) { this.profiler.stop(key1, key2); }
 	@Override
-	public void start(Object key1, Object key2, Object key3) {	this.profiler.start(key1, key2, key3);}
+	public void start(final Object key1, final Object key2, final Object key3) {	this.profiler.start(key1, key2, key3);}
 	@Override
-	public void stop(Object key1, Object key2, Object key3) { this.profiler.stop(key1, key2, key3); }	
+	public void stop(final Object key1, final Object key2, final Object key3) { this.profiler.stop(key1, key2, key3); }
 	@Override
-	public void start(Object key1, Object key2, Object key3, Object key4) {	this.profiler.start(key1, key2, key3, key4);}
+	public void start(final Object key1, final Object key2, final Object key3, final Object key4) {	this.profiler.start(key1, key2, key3, key4);}
 	@Override
-	public void stop(Object key1, Object key2, Object key3, Object key4) { this.profiler.stop(key1, key2, key3, key4); }
+	public void stop(final Object key1, final Object key2, final Object key3, final Object key4) { this.profiler.stop(key1, key2, key3, key4); }
 }

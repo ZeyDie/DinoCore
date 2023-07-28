@@ -24,12 +24,12 @@ public class ModelVillager extends ModelBase
     public ModelRenderer leftVillagerLeg;
     public ModelRenderer villagerNose;
 
-    public ModelVillager(float par1)
+    public ModelVillager(final float par1)
     {
         this(par1, 0.0F, 64, 64);
     }
 
-    public ModelVillager(float par1, float par2, int par3, int par4)
+    public ModelVillager(final float par1, final float par2, final int par3, final int par4)
     {
         this.villagerHead = (new ModelRenderer(this)).setTextureSize(par3, par4);
         this.villagerHead.setRotationPoint(0.0F, 0.0F + par2, 0.0F);
@@ -59,7 +59,7 @@ public class ModelVillager extends ModelBase
     /**
      * Sets the models various rotation angles then renders the model.
      */
-    public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7)
+    public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7)
     {
         this.setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
         this.villagerHead.render(par7);
@@ -74,10 +74,10 @@ public class ModelVillager extends ModelBase
      * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how
      * "far" arms and legs can swing at most.
      */
-    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity)
+    public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity)
     {
-        this.villagerHead.rotateAngleY = par4 / (180F / (float)Math.PI);
-        this.villagerHead.rotateAngleX = par5 / (180F / (float)Math.PI);
+        this.villagerHead.rotateAngleY = par4 / (180.0F / (float)Math.PI);
+        this.villagerHead.rotateAngleX = par5 / (180.0F / (float)Math.PI);
         this.villagerArms.rotationPointY = 3.0F;
         this.villagerArms.rotationPointZ = -1.0F;
         this.villagerArms.rotateAngleX = -0.75F;

@@ -32,8 +32,8 @@ public final class NettyPacketDecoderLegacy extends ByteToMessageDecoder {
             @NotNull final List<Object> paramList
     ) {
         if (paramByteBuf.readableBytes() >= 1) {
-            int index = paramByteBuf.readerIndex();
-            short unsignedByte = paramByteBuf.readUnsignedByte();
+            final int index = paramByteBuf.readerIndex();
+            final short unsignedByte = paramByteBuf.readUnsignedByte();
 
             try {
                 switch (unsignedByte) {
@@ -61,7 +61,7 @@ public final class NettyPacketDecoderLegacy extends ByteToMessageDecoder {
                                 if (paramByteBuf.readableBytes() < var7)
                                     paramByteBuf.readerIndex(index);
                                 else {
-                                    Packet254ServerPing packet254ServerPing = new Packet254ServerPing();
+                                    final Packet254ServerPing packet254ServerPing = new Packet254ServerPing();
                                     packet254ServerPing.readSuccessfully = paramByteBuf.readByte();
 
                                     if (packet254ServerPing.readSuccessfully >= 73) {
@@ -71,7 +71,7 @@ public final class NettyPacketDecoderLegacy extends ByteToMessageDecoder {
 
                                     paramList.add(packet254ServerPing);
                                 }
-                            } catch (Throwable var9) {
+                            } catch (final Throwable var9) {
                                 this.exceptionCaught(paramChannelHandlerContext, new RuntimeException("Ping protocol error"));
                             }
                         }
@@ -80,7 +80,7 @@ public final class NettyPacketDecoderLegacy extends ByteToMessageDecoder {
                     default:
                         this.exceptionCaught(paramChannelHandlerContext, new RuntimeException("Handshake protocol error " + unsignedByte));
                 }
-            } catch (Exception exception) {
+            } catch (final Exception exception) {
                 exception.printStackTrace();
             }
         }

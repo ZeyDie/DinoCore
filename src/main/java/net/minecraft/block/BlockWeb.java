@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class BlockWeb extends Block
 {
-    public BlockWeb(int par1)
+    public BlockWeb(final int par1)
     {
         super(par1, Material.web);
         this.setCreativeTab(CreativeTabs.tabDecorations);
@@ -20,7 +20,7 @@ public class BlockWeb extends Block
     /**
      * Triggered whenever an entity collides with this block (enters into the block). Args: world, x, y, z, entity
      */
-    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
+    public void onEntityCollidedWithBlock(final World par1World, final int par2, final int par3, final int par4, final Entity par5Entity)
     {
         par5Entity.setInWeb();
     }
@@ -38,7 +38,7 @@ public class BlockWeb extends Block
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4)
     {
         return null;
     }
@@ -62,7 +62,7 @@ public class BlockWeb extends Block
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return Item.silk.itemID;
     }

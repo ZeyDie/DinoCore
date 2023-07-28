@@ -14,20 +14,20 @@ public class StructureVillageStart extends StructureStart
 
     public StructureVillageStart() {}
 
-    public StructureVillageStart(World par1World, Random par2Random, int par3, int par4, int par5)
+    public StructureVillageStart(final World par1World, final Random par2Random, final int par3, final int par4, final int par5)
     {
         super(par3, par4);
-        List list = StructureVillagePieces.getStructureVillageWeightedPieceList(par2Random, par5);
-        ComponentVillageStartPiece componentvillagestartpiece = new ComponentVillageStartPiece(par1World.getWorldChunkManager(), 0, par2Random, (par3 << 4) + 2, (par4 << 4) + 2, list, par5);
+        final List list = StructureVillagePieces.getStructureVillageWeightedPieceList(par2Random, par5);
+        final ComponentVillageStartPiece componentvillagestartpiece = new ComponentVillageStartPiece(par1World.getWorldChunkManager(), 0, par2Random, (par3 << 4) + 2, (par4 << 4) + 2, list, par5);
         this.components.add(componentvillagestartpiece);
         componentvillagestartpiece.buildComponent(componentvillagestartpiece, this.components, par2Random);
-        List list1 = componentvillagestartpiece.field_74930_j;
-        List list2 = componentvillagestartpiece.field_74932_i;
+        final List list1 = componentvillagestartpiece.field_74930_j;
+        final List list2 = componentvillagestartpiece.field_74932_i;
         int l;
 
         while (!list1.isEmpty() || !list2.isEmpty())
         {
-            StructureComponent structurecomponent;
+            final StructureComponent structurecomponent;
 
             if (list1.isEmpty())
             {
@@ -45,11 +45,11 @@ public class StructureVillageStart extends StructureStart
 
         this.updateBoundingBox();
         l = 0;
-        Iterator iterator = this.components.iterator();
+        final Iterator iterator = this.components.iterator();
 
         while (iterator.hasNext())
         {
-            StructureComponent structurecomponent1 = (StructureComponent)iterator.next();
+            final StructureComponent structurecomponent1 = (StructureComponent)iterator.next();
 
             if (!(structurecomponent1 instanceof ComponentVillageRoadPiece))
             {
@@ -68,13 +68,13 @@ public class StructureVillageStart extends StructureStart
         return this.hasMoreThanTwoComponents;
     }
 
-    public void func_143022_a(NBTTagCompound par1NBTTagCompound)
+    public void func_143022_a(final NBTTagCompound par1NBTTagCompound)
     {
         super.func_143022_a(par1NBTTagCompound);
         par1NBTTagCompound.setBoolean("Valid", this.hasMoreThanTwoComponents);
     }
 
-    public void func_143017_b(NBTTagCompound nbttagcompound)
+    public void func_143017_b(final NBTTagCompound nbttagcompound)
     {
         super.func_143017_b(nbttagcompound);
         this.hasMoreThanTwoComponents = nbttagcompound.getBoolean("Valid");

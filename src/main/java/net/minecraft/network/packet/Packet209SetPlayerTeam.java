@@ -41,7 +41,7 @@ public class Packet209SetPlayerTeam extends Packet
 
     public Packet209SetPlayerTeam() {}
 
-    public Packet209SetPlayerTeam(ScorePlayerTeam par1ScorePlayerTeam, int par2)
+    public Packet209SetPlayerTeam(final ScorePlayerTeam par1ScorePlayerTeam, final int par2)
     {
         this.teamName = par1ScorePlayerTeam.func_96661_b();
         this.mode = par2;
@@ -60,7 +60,7 @@ public class Packet209SetPlayerTeam extends Packet
         }
     }
 
-    public Packet209SetPlayerTeam(ScorePlayerTeam par1ScorePlayerTeam, Collection par2Collection, int par3)
+    public Packet209SetPlayerTeam(final ScorePlayerTeam par1ScorePlayerTeam, final Collection par2Collection, final int par3)
     {
         if (par3 != 3 && par3 != 4)
         {
@@ -81,7 +81,7 @@ public class Packet209SetPlayerTeam extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.teamName = readString(par1DataInput, 16);
         this.mode = par1DataInput.readByte();
@@ -96,7 +96,7 @@ public class Packet209SetPlayerTeam extends Packet
 
         if (this.mode == 0 || this.mode == 3 || this.mode == 4)
         {
-            short short1 = par1DataInput.readShort();
+            final short short1 = par1DataInput.readShort();
 
             for (int i = 0; i < short1; ++i)
             {
@@ -108,7 +108,7 @@ public class Packet209SetPlayerTeam extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         writeString(this.teamName, par1DataOutput);
         par1DataOutput.writeByte(this.mode);
@@ -124,11 +124,11 @@ public class Packet209SetPlayerTeam extends Packet
         if (this.mode == 0 || this.mode == 3 || this.mode == 4)
         {
             par1DataOutput.writeShort(this.playerNames.size());
-            Iterator iterator = this.playerNames.iterator();
+            final Iterator iterator = this.playerNames.iterator();
 
             while (iterator.hasNext())
             {
-                String s = (String)iterator.next();
+                final String s = (String)iterator.next();
                 writeString(s, par1DataOutput);
             }
         }
@@ -137,7 +137,7 @@ public class Packet209SetPlayerTeam extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleSetPlayerTeam(this);
     }

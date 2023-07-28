@@ -19,16 +19,16 @@ class LogFormatter extends Formatter
     private boolean strip = false;
     // CraftBukkit end
 
-    private LogFormatter(LogAgent par1LogAgent)
+    private LogFormatter(final LogAgent par1LogAgent)
     {
         this.field_98229_a = par1LogAgent;
         this.field_98228_b = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.strip = MinecraftServer.getServer().options == null ? false : MinecraftServer.getServer().options.has("log-strip-color"); // CraftBukkit
     }
 
-    public String format(LogRecord par1LogRecord)
+    public String format(final LogRecord par1LogRecord)
     {
-        StringBuilder stringbuilder = new StringBuilder();
+        final StringBuilder stringbuilder = new StringBuilder();
         stringbuilder.append(this.field_98228_b.format(Long.valueOf(par1LogRecord.getMillis())));
 
         if (LogAgent.func_98237_a(this.field_98229_a) != null)
@@ -39,11 +39,11 @@ class LogFormatter extends Formatter
         stringbuilder.append(" [").append(par1LogRecord.getLevel().getName()).append("] ");
         stringbuilder.append(this.formatMessage(par1LogRecord));
         stringbuilder.append('\n');
-        Throwable throwable = par1LogRecord.getThrown();
+        final Throwable throwable = par1LogRecord.getThrown();
 
         if (throwable != null)
         {
-            StringWriter stringwriter = new StringWriter();
+            final StringWriter stringwriter = new StringWriter();
             throwable.printStackTrace(new PrintWriter(stringwriter));
             stringbuilder.append(stringwriter.toString());
         }
@@ -60,7 +60,7 @@ class LogFormatter extends Formatter
         // CraftBukkit end
     }
 
-    LogFormatter(LogAgent par1LogAgent, LogAgentEmptyAnon par2LogAgentEmptyAnon)
+    LogFormatter(final LogAgent par1LogAgent, final LogAgentEmptyAnon par2LogAgentEmptyAnon)
     {
         this(par1LogAgent);
     }

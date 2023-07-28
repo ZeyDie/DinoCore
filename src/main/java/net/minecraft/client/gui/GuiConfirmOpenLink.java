@@ -15,7 +15,7 @@ public class GuiConfirmOpenLink extends GuiYesNo
     private String field_92028_p;
     private boolean field_92027_q = true;
 
-    public GuiConfirmOpenLink(GuiScreen par1GuiScreen, String par2Str, int par3, boolean par4)
+    public GuiConfirmOpenLink(final GuiScreen par1GuiScreen, final String par2Str, final int par3, final boolean par4)
     {
         super(par1GuiScreen, I18n.getString(par4 ? "chat.link.confirmTrusted" : "chat.link.confirm"), par2Str, par3);
         this.buttonText1 = I18n.getString(par4 ? "chat.link.open" : "gui.yes");
@@ -38,7 +38,7 @@ public class GuiConfirmOpenLink extends GuiYesNo
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.id == 2)
         {
@@ -59,7 +59,7 @@ public class GuiConfirmOpenLink extends GuiYesNo
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         super.drawScreen(par1, par2, par3);
 

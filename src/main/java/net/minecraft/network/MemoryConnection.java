@@ -30,7 +30,7 @@ public class MemoryConnection implements INetworkManager
     private boolean gamePaused;
 
     @SideOnly(Side.CLIENT)
-    public MemoryConnection(ILogAgent par1ILogAgent, NetHandler par2NetHandler)
+    public MemoryConnection(final ILogAgent par1ILogAgent, final NetHandler par2NetHandler)
     {
         this.myNetHandler = par2NetHandler;
         this.field_98214_c = par1ILogAgent;
@@ -39,7 +39,7 @@ public class MemoryConnection implements INetworkManager
     /**
      * Sets the NetHandler for this NetworkManager. Server-only.
      */
-    public void setNetHandler(NetHandler par1NetHandler)
+    public void setNetHandler(final NetHandler par1NetHandler)
     {
         this.myNetHandler = par1NetHandler;
     }
@@ -47,7 +47,7 @@ public class MemoryConnection implements INetworkManager
     /**
      * Adds the packet to the correct send queue (chunk data packets go to a separate queue).
      */
-    public void addToSendQueue(Packet par1Packet)
+    public void addToSendQueue(final Packet par1Packet)
     {
         if (!this.shuttingDown)
         {
@@ -89,7 +89,7 @@ public class MemoryConnection implements INetworkManager
 
         while (i-- >= 0 && !this.readPacketCache.isEmpty())
         {
-            Packet packet = readPacketCache.poll();
+            final Packet packet = readPacketCache.poll();
             ProfilerSection.PACKET_INBOUND.start(packet); // Cauldron - mobius hook
             packet.processPacket(this.myNetHandler);
         }
@@ -126,7 +126,7 @@ public class MemoryConnection implements INetworkManager
      * Shuts down the network with the specified reason. Closes all streams and sockets, spawns NetworkMasterThread to
      * stop reading and writing threads.
      */
-    public void networkShutdown(String par1Str, Object ... par2ArrayOfObj)
+    public void networkShutdown(final String par1Str, final Object ... par2ArrayOfObj)
     {
         this.shuttingDown = true;
         this.shutdownReason = par1Str;
@@ -142,7 +142,7 @@ public class MemoryConnection implements INetworkManager
     }
 
     @SideOnly(Side.CLIENT)
-    public void pairWith(MemoryConnection par1MemoryConnection)
+    public void pairWith(final MemoryConnection par1MemoryConnection)
     {
         this.pairedConnection = par1MemoryConnection;
         par1MemoryConnection.pairedConnection = this;
@@ -155,7 +155,7 @@ public class MemoryConnection implements INetworkManager
     }
 
     @SideOnly(Side.CLIENT)
-    public void setGamePaused(boolean par1)
+    public void setGamePaused(final boolean par1)
     {
         this.gamePaused = par1;
     }
@@ -169,7 +169,7 @@ public class MemoryConnection implements INetworkManager
     /**
      * acts immiditally if isWritePacket, otherwise adds it to the readCache to be processed next tick
      */
-    public void processOrCachePacket(Packet par1Packet)
+    public void processOrCachePacket(final Packet par1Packet)
     {
         if (par1Packet.canProcessAsync() && this.myNetHandler.canProcessPacketsAsync())
         {
@@ -182,7 +182,7 @@ public class MemoryConnection implements INetworkManager
     }
     
     @Override
-    public void setSocketAddress(SocketAddress address)
+    public void setSocketAddress(final SocketAddress address)
     {
         // TODO Auto-generated method stub
         

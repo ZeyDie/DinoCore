@@ -6,7 +6,7 @@ class CallableTileEntityName implements Callable
 {
     final TileEntity theTileEntity;
 
-    CallableTileEntityName(TileEntity par1TileEntity)
+    CallableTileEntityName(final TileEntity par1TileEntity)
     {
         this.theTileEntity = par1TileEntity;
     }

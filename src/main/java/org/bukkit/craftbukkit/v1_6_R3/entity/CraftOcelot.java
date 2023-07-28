@@ -6,7 +6,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Ocelot;
 
 public class CraftOcelot extends CraftTameableAnimal implements Ocelot {
-    public CraftOcelot(CraftServer server, net.minecraft.entity.passive.EntityOcelot wolf) {
+    public CraftOcelot(final CraftServer server, final net.minecraft.entity.passive.EntityOcelot wolf) {
         super(server, wolf);
     }
 
@@ -19,7 +19,7 @@ public class CraftOcelot extends CraftTameableAnimal implements Ocelot {
         return Type.getType(getHandle().getTameSkin());
     }
 
-    public void setCatType(Type type) {
+    public void setCatType(final Type type) {
         Validate.notNull(type, "Cat type cannot be null");
         getHandle().setTameSkin(type.getId());
     }

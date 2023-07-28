@@ -14,16 +14,16 @@ public class CommandDefaultGameMode extends CommandGameMode
         return "defaultgamemode";
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.defaultgamemode.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         if (par2ArrayOfStr.length > 0)
         {
-            EnumGameType enumgametype = this.getGameModeFromCommand(par1ICommandSender, par2ArrayOfStr[0]);
+            final EnumGameType enumgametype = this.getGameModeFromCommand(par1ICommandSender, par2ArrayOfStr[0]);
             this.setGameType(enumgametype);
             notifyAdmins(par1ICommandSender, "commands.defaultgamemode.success", new Object[] {ChatMessageComponent.createFromTranslationKey("gameMode." + enumgametype.getName())});
         }
@@ -33,15 +33,15 @@ public class CommandDefaultGameMode extends CommandGameMode
         }
     }
 
-    protected void setGameType(EnumGameType par1EnumGameType)
+    protected void setGameType(final EnumGameType par1EnumGameType)
     {
-        MinecraftServer minecraftserver = MinecraftServer.getServer();
+        final MinecraftServer minecraftserver = MinecraftServer.getServer();
         minecraftserver.setGameType(par1EnumGameType);
         EntityPlayerMP entityplayermp;
 
         if (minecraftserver.getForceGamemode())
         {
-            for (Iterator iterator = MinecraftServer.getServer().getConfigurationManager().playerEntityList.iterator(); iterator.hasNext(); entityplayermp.fallDistance = 0.0F)
+            for (final Iterator iterator = MinecraftServer.getServer().getConfigurationManager().playerEntityList.iterator(); iterator.hasNext(); entityplayermp.fallDistance = 0.0F)
             {
                 entityplayermp = (EntityPlayerMP)iterator.next();
                 entityplayermp.setGameType(par1EnumGameType);

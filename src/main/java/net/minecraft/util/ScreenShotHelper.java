@@ -24,18 +24,18 @@ public class ScreenShotHelper
     /**
      * Takes a screenshot and saves it to the screenshots directory. Returns the filename of the screenshot.
      */
-    public static String saveScreenshot(File par0File, int par1, int par2)
+    public static String saveScreenshot(final File par0File, final int par1, final int par2)
     {
         return func_74292_a(par0File, (String)null, par1, par2);
     }
 
-    public static String func_74292_a(File par0File, String par1Str, int par2, int par3)
+    public static String func_74292_a(final File par0File, final String par1Str, final int par2, final int par3)
     {
         try
         {
-            File file2 = new File(par0File, "screenshots");
+            final File file2 = new File(par0File, "screenshots");
             file2.mkdir();
-            int k = par2 * par3;
+            final int k = par2 * par3;
 
             if (field_74293_b == null || field_74293_b.capacity() < k)
             {
@@ -49,9 +49,9 @@ public class ScreenShotHelper
             GL11.glReadPixels(0, 0, par2, par3, GL12.GL_BGRA, GL12.GL_UNSIGNED_INT_8_8_8_8_REV, field_74293_b);
             field_74293_b.get(field_74294_c);
             func_74289_a(field_74294_c, par2, par3);
-            BufferedImage bufferedimage = new BufferedImage(par2, par3, 1);
+            final BufferedImage bufferedimage = new BufferedImage(par2, par3, 1);
             bufferedimage.setRGB(0, 0, par2, par3, field_74294_c, 0, par2);
-            File file3;
+            final File file3;
 
             if (par1Str == null)
             {
@@ -65,21 +65,21 @@ public class ScreenShotHelper
             ImageIO.write(bufferedimage, "png", file3);
             return "Saved screenshot as " + file3.getName();
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             exception.printStackTrace();
             return "Failed to save: " + exception;
         }
     }
 
-    private static File func_74290_a(File par0File)
+    private static File func_74290_a(final File par0File)
     {
-        String s = dateFormat.format(new Date()).toString();
+        final String s = dateFormat.format(new Date()).toString();
         int i = 1;
 
         while (true)
         {
-            File file2 = new File(par0File, s + (i == 1 ? "" : "_" + i) + ".png");
+            final File file2 = new File(par0File, s + (i == 1 ? "" : "_" + i) + ".png");
 
             if (!file2.exists())
             {
@@ -90,10 +90,10 @@ public class ScreenShotHelper
         }
     }
 
-    private static void func_74289_a(int[] par0ArrayOfInteger, int par1, int par2)
+    private static void func_74289_a(final int[] par0ArrayOfInteger, final int par1, final int par2)
     {
-        int[] aint1 = new int[par1];
-        int k = par2 / 2;
+        final int[] aint1 = new int[par1];
+        final int k = par2 / 2;
 
         for (int l = 0; l < k; ++l)
         {

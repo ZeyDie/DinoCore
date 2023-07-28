@@ -58,7 +58,7 @@ public class PlayerInstance {
     };*/
     // CraftBukkit end
 
-    public PlayerInstance(PlayerManager par1PlayerManager, int par2, int par3) {
+    public PlayerInstance(final PlayerManager par1PlayerManager, final int par2, final int par3) {
         this.thePlayerManager = par1PlayerManager;
         this.playersInChunk = new ArrayList();
         this.locationOfBlockChange = new short[64];
@@ -82,7 +82,7 @@ public class PlayerInstance {
 
             this.playersInChunk.add(par1EntityPlayerMP);
             // CraftBukkit start
-            Runnable playerRunnable;
+            final Runnable playerRunnable;
 
             if (this.loaded) {
                 playerRunnable = null;
@@ -101,7 +101,7 @@ public class PlayerInstance {
         }
     }
 
-    public void removePlayer(EntityPlayerMP par1EntityPlayerMP) {
+    public void removePlayer(final EntityPlayerMP par1EntityPlayerMP) {
         if (this.playersInChunk.contains(par1EntityPlayerMP)) {
             // CraftBukkit start - If we haven't loaded yet don't load the chunk just so we can clean it up
             if (!this.loaded) {
@@ -111,7 +111,7 @@ public class PlayerInstance {
 
                 if (this.playersInChunk.isEmpty()) {
                     ChunkIOExecutor.dropQueuedChunkLoad(this.thePlayerManager.getWorldServer(), this.chunkLocation.chunkXPos, this.chunkLocation.chunkZPos, this.loadedRunnable);
-                    long i = (long) this.chunkLocation.chunkXPos + 2147483647L | (long) this.chunkLocation.chunkZPos + 2147483647L << 32;
+                    final long i = (long) this.chunkLocation.chunkXPos + 2147483647L | (long) this.chunkLocation.chunkZPos + 2147483647L << 32;
                     PlayerManager.getChunkWatchers(this.thePlayerManager).remove(i);
                     PlayerManager.getChunkWatcherList(this.thePlayerManager).remove(this);
                 }
@@ -120,7 +120,7 @@ public class PlayerInstance {
             }
 
             // CraftBukkit end
-            Chunk chunk = this.thePlayerManager.getWorldServer().getChunkFromChunkCoords(this.chunkLocation.chunkXPos, this.chunkLocation.chunkZPos);
+            final Chunk chunk = this.thePlayerManager.getWorldServer().getChunkFromChunkCoords(this.chunkLocation.chunkXPos, this.chunkLocation.chunkZPos);
             par1EntityPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet51MapChunk(chunk, true, 0));
             this.players.remove(par1EntityPlayerMP); // CraftBukkit
             this.playersInChunk.remove(par1EntityPlayerMP);
@@ -129,7 +129,7 @@ public class PlayerInstance {
             MinecraftForge.EVENT_BUS.post(new ChunkWatchEvent.UnWatch(chunkLocation, par1EntityPlayerMP));
 
             if (this.playersInChunk.isEmpty()) {
-                long i = (long) this.chunkLocation.chunkXPos + 2147483647L | (long) this.chunkLocation.chunkZPos + 2147483647L << 32;
+                final long i = (long) this.chunkLocation.chunkXPos + 2147483647L | (long) this.chunkLocation.chunkZPos + 2147483647L << 32;
                 this.increaseInhabitedTime(chunk);
                 PlayerManager.getChunkWatchers(this.thePlayerManager).remove(i);
                 PlayerManager.getChunkWatcherList(this.thePlayerManager).remove(this);
@@ -153,12 +153,12 @@ public class PlayerInstance {
     /**
      * Increases chunk inhabited time every 8000 ticks
      */
-    private void increaseInhabitedTime(Chunk par1Chunk) {
+    private void increaseInhabitedTime(final Chunk par1Chunk) {
         par1Chunk.inhabitedTime += PlayerManager.getWorldServer(this.thePlayerManager).getTotalWorldTime() - this.previousWorldTime;
         this.previousWorldTime = PlayerManager.getWorldServer(this.thePlayerManager).getTotalWorldTime();
     }
 
-    public void flagChunkForUpdate(int par1, int par2, int par3) {
+    public void flagChunkForUpdate(final int par1, final int par2, final int par3) {
         if (this.numberOfTilesToUpdate == 0) {
             PlayerManager.getChunkWatchersWithPlayers(this.thePlayerManager).add(this);
         }
@@ -167,7 +167,7 @@ public class PlayerInstance {
 
         //if (this.numberOfTilesToUpdate < 64) //Forge; Cache everything, so always run
         {
-            short short1 = (short) (par1 << 12 | par3 << 8 | par2);
+            final short short1 = (short) (par1 << 12 | par3 << 8 | par2);
 
             for (int l = 0; l < this.numberOfTilesToUpdate; ++l) {
                 if (this.locationOfBlockChange[l] == short1) {
@@ -182,9 +182,9 @@ public class PlayerInstance {
         }
     }
 
-    public void sendToAllPlayersWatchingChunk(Packet par1Packet) {
+    public void sendToAllPlayersWatchingChunk(final Packet par1Packet) {
         for (int i = 0; i < this.playersInChunk.size(); ++i) {
-            EntityPlayerMP entityplayermp = (EntityPlayerMP) this.playersInChunk.get(i);
+            final EntityPlayerMP entityplayermp = (EntityPlayerMP) this.playersInChunk.get(i);
 
             if (!entityplayermp.loadedChunks.contains(this.chunkLocation)) {
                 entityplayermp.playerNetServerHandler.sendPacketToPlayer(par1Packet);
@@ -252,9 +252,9 @@ public class PlayerInstance {
         }
     }
 
-    private void sendTileToAllPlayersWatchingChunk(TileEntity par1TileEntity) {
+    private void sendTileToAllPlayersWatchingChunk(final TileEntity par1TileEntity) {
         if (par1TileEntity != null) {
-            Packet packet = par1TileEntity.getDescriptionPacket();
+            final Packet packet = par1TileEntity.getDescriptionPacket();
 
             if (packet != null) {
                 this.sendToAllPlayersWatchingChunk(packet);
@@ -262,11 +262,11 @@ public class PlayerInstance {
         }
     }
 
-    static ChunkCoordIntPair getChunkLocation(PlayerInstance par0PlayerInstance) {
+    static ChunkCoordIntPair getChunkLocation(final PlayerInstance par0PlayerInstance) {
         return par0PlayerInstance.chunkLocation;
     }
 
-    static List getPlayersInChunk(PlayerInstance par0PlayerInstance) {
+    static List getPlayersInChunk(final PlayerInstance par0PlayerInstance) {
         return par0PlayerInstance.playersInChunk;
     }
 }

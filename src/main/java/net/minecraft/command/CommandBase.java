@@ -30,7 +30,7 @@ public abstract class CommandBase implements ICommand
     /**
      * Returns true if the given command sender is allowed to use this command.
      */
-    public boolean canCommandSenderUseCommand(ICommandSender par1ICommandSender)
+    public boolean canCommandSenderUseCommand(final ICommandSender par1ICommandSender)
     {
         return par1ICommandSender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName());
     }
@@ -38,7 +38,7 @@ public abstract class CommandBase implements ICommand
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public List addTabCompletionOptions(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         return null;
     }
@@ -46,13 +46,13 @@ public abstract class CommandBase implements ICommand
     /**
      * Parses an int from the given string.
      */
-    public static int parseInt(ICommandSender par0ICommandSender, String par1Str)
+    public static int parseInt(final ICommandSender par0ICommandSender, final String par1Str)
     {
         try
         {
             return Integer.parseInt(par1Str);
         }
-        catch (NumberFormatException numberformatexception)
+        catch (final NumberFormatException numberformatexception)
         {
             throw new NumberInvalidException("commands.generic.num.invalid", new Object[] {par1Str});
         }
@@ -61,7 +61,7 @@ public abstract class CommandBase implements ICommand
     /**
      * Parses an int from the given sring with a specified minimum.
      */
-    public static int parseIntWithMin(ICommandSender par0ICommandSender, String par1Str, int par2)
+    public static int parseIntWithMin(final ICommandSender par0ICommandSender, final String par1Str, final int par2)
     {
         return parseIntBounded(par0ICommandSender, par1Str, par2, Integer.MAX_VALUE);
     }
@@ -69,9 +69,9 @@ public abstract class CommandBase implements ICommand
     /**
      * Parses an int from the given string within a specified bound.
      */
-    public static int parseIntBounded(ICommandSender par0ICommandSender, String par1Str, int par2, int par3)
+    public static int parseIntBounded(final ICommandSender par0ICommandSender, final String par1Str, final int par2, final int par3)
     {
-        int k = parseInt(par0ICommandSender, par1Str);
+        final int k = parseInt(par0ICommandSender, par1Str);
 
         if (k < par2)
         {
@@ -90,11 +90,11 @@ public abstract class CommandBase implements ICommand
     /**
      * Parses a double from the given string or throws an exception if it's not a double.
      */
-    public static double parseDouble(ICommandSender par0ICommandSender, String par1Str)
+    public static double parseDouble(final ICommandSender par0ICommandSender, final String par1Str)
     {
         try
         {
-            double d0 = Double.parseDouble(par1Str);
+            final double d0 = Double.parseDouble(par1Str);
 
             if (!Doubles.isFinite(d0))
             {
@@ -105,20 +105,20 @@ public abstract class CommandBase implements ICommand
                 return d0;
             }
         }
-        catch (NumberFormatException numberformatexception)
+        catch (final NumberFormatException numberformatexception)
         {
             throw new NumberInvalidException("commands.generic.double.invalid", new Object[] {par1Str});
         }
     }
 
-    public static double func_110664_a(ICommandSender par0ICommandSender, String par1Str, double par2)
+    public static double func_110664_a(final ICommandSender par0ICommandSender, final String par1Str, final double par2)
     {
         return func_110661_a(par0ICommandSender, par1Str, par2, Double.MAX_VALUE);
     }
 
-    public static double func_110661_a(ICommandSender par0ICommandSender, String par1Str, double par2, double par4)
+    public static double func_110661_a(final ICommandSender par0ICommandSender, final String par1Str, final double par2, final double par4)
     {
-        double d2 = parseDouble(par0ICommandSender, par1Str);
+        final double d2 = parseDouble(par0ICommandSender, par1Str);
 
         if (d2 < par2)
         {
@@ -134,7 +134,7 @@ public abstract class CommandBase implements ICommand
         }
     }
 
-    public static boolean func_110662_c(ICommandSender par0ICommandSender, String par1Str)
+    public static boolean func_110662_c(final ICommandSender par0ICommandSender, final String par1Str)
     {
         if (!par1Str.equals("true") && !par1Str.equals("1"))
         {
@@ -156,7 +156,7 @@ public abstract class CommandBase implements ICommand
     /**
      * Returns the given ICommandSender as a EntityPlayer or throw an exception.
      */
-    public static EntityPlayerMP getCommandSenderAsPlayer(ICommandSender par0ICommandSender)
+    public static EntityPlayerMP getCommandSenderAsPlayer(final ICommandSender par0ICommandSender)
     {
         if (par0ICommandSender instanceof EntityPlayerMP)
         {
@@ -168,7 +168,7 @@ public abstract class CommandBase implements ICommand
         }
     }
 
-    public static EntityPlayerMP getPlayer(ICommandSender par0ICommandSender, String par1Str)
+    public static EntityPlayerMP getPlayer(final ICommandSender par0ICommandSender, final String par1Str)
     {
         EntityPlayerMP entityplayermp = PlayerSelector.matchOnePlayer(par0ICommandSender, par1Str);
 
@@ -191,9 +191,9 @@ public abstract class CommandBase implements ICommand
         }
     }
 
-    public static String func_96332_d(ICommandSender par0ICommandSender, String par1Str)
+    public static String func_96332_d(final ICommandSender par0ICommandSender, final String par1Str)
     {
-        EntityPlayerMP entityplayermp = PlayerSelector.matchOnePlayer(par0ICommandSender, par1Str);
+        final EntityPlayerMP entityplayermp = PlayerSelector.matchOnePlayer(par0ICommandSender, par1Str);
 
         if (entityplayermp != null)
         {
@@ -209,14 +209,14 @@ public abstract class CommandBase implements ICommand
         }
     }
 
-    public static String func_82360_a(ICommandSender par0ICommandSender, String[] par1ArrayOfStr, int par2)
+    public static String func_82360_a(final ICommandSender par0ICommandSender, final String[] par1ArrayOfStr, final int par2)
     {
         return func_82361_a(par0ICommandSender, par1ArrayOfStr, par2, false);
     }
 
-    public static String func_82361_a(ICommandSender par0ICommandSender, String[] par1ArrayOfStr, int par2, boolean par3)
+    public static String func_82361_a(final ICommandSender par0ICommandSender, final String[] par1ArrayOfStr, final int par2, final boolean par3)
     {
-        StringBuilder stringbuilder = new StringBuilder();
+        final StringBuilder stringbuilder = new StringBuilder();
 
         for (int j = par2; j < par1ArrayOfStr.length; ++j)
         {
@@ -229,7 +229,7 @@ public abstract class CommandBase implements ICommand
 
             if (par3)
             {
-                String s1 = PlayerSelector.matchPlayersAsString(par0ICommandSender, s);
+                final String s1 = PlayerSelector.matchPlayersAsString(par0ICommandSender, s);
 
                 if (s1 != null)
                 {
@@ -247,14 +247,15 @@ public abstract class CommandBase implements ICommand
         return stringbuilder.toString();
     }
 
-    public static double func_110666_a(ICommandSender par0ICommandSender, double par1, String par3Str)
+    public static double func_110666_a(final ICommandSender par0ICommandSender, final double par1, final String par3Str)
     {
         return func_110665_a(par0ICommandSender, par1, par3Str, -30000000, 30000000);
     }
 
-    public static double func_110665_a(ICommandSender par0ICommandSender, double par1, String par3Str, int par4, int par5)
+    public static double func_110665_a(final ICommandSender par0ICommandSender, final double par1, String par3Str, final int par4, final int par5)
     {
-        boolean flag = par3Str.startsWith("~");
+        String par3Str1 = par3Str;
+        final boolean flag = par3Str1.startsWith("~");
 
         if (flag && Double.isNaN(par1))
         {
@@ -264,16 +265,16 @@ public abstract class CommandBase implements ICommand
         {
             double d1 = flag ? par1 : 0.0D;
 
-            if (!flag || par3Str.length() > 1)
+            if (!flag || par3Str1.length() > 1)
             {
-                boolean flag1 = par3Str.contains(".");
+                final boolean flag1 = par3Str1.contains(".");
 
                 if (flag)
                 {
-                    par3Str = par3Str.substring(1);
+                    par3Str1 = par3Str1.substring(1);
                 }
 
-                d1 += parseDouble(par0ICommandSender, par3Str);
+                d1 += parseDouble(par0ICommandSender, par3Str1);
 
                 if (!flag1 && !flag)
                 {
@@ -301,13 +302,13 @@ public abstract class CommandBase implements ICommand
     /**
      * Joins the given string array into a "x, y, and z" seperated string.
      */
-    public static String joinNiceString(Object[] par0ArrayOfObj)
+    public static String joinNiceString(final Object[] par0ArrayOfObj)
     {
-        StringBuilder stringbuilder = new StringBuilder();
+        final StringBuilder stringbuilder = new StringBuilder();
 
         for (int i = 0; i < par0ArrayOfObj.length; ++i)
         {
-            String s = par0ArrayOfObj[i].toString();
+            final String s = par0ArrayOfObj[i].toString();
 
             if (i > 0)
             {
@@ -327,18 +328,18 @@ public abstract class CommandBase implements ICommand
         return stringbuilder.toString();
     }
 
-    public static String func_96333_a(Collection par0Collection)
+    public static String func_96333_a(final Collection par0Collection)
     {
-        return joinNiceString(par0Collection.toArray(new String[par0Collection.size()]));
+        return joinNiceString(par0Collection.toArray(new String[0]));
     }
 
-    public static String func_110663_b(Collection par0Collection)
+    public static String func_110663_b(final Collection par0Collection)
     {
-        String[] astring = new String[par0Collection.size()];
+        final String[] astring = new String[par0Collection.size()];
         int i = 0;
         EntityLivingBase entitylivingbase;
 
-        for (Iterator iterator = par0Collection.iterator(); iterator.hasNext(); astring[i++] = entitylivingbase.getTranslatedEntityName())
+        for (final Iterator iterator = par0Collection.iterator(); iterator.hasNext(); astring[i++] = entitylivingbase.getTranslatedEntityName())
         {
             entitylivingbase = (EntityLivingBase)iterator.next();
         }
@@ -349,7 +350,7 @@ public abstract class CommandBase implements ICommand
     /**
      * Returns true if the given substring is exactly equal to the start of the given string (case insensitive).
      */
-    public static boolean doesStringStartWith(String par0Str, String par1Str)
+    public static boolean doesStringStartWith(final String par0Str, final String par1Str)
     {
         return par1Str.regionMatches(true, 0, par0Str, 0, par0Str.length());
     }
@@ -358,16 +359,16 @@ public abstract class CommandBase implements ICommand
      * Returns a List of strings (chosen from the given strings) which the last word in the given string array is a
      * beginning-match for. (Tab completion).
      */
-    public static List getListOfStringsMatchingLastWord(String[] par0ArrayOfStr, String ... par1ArrayOfStr)
+    public static List getListOfStringsMatchingLastWord(final String[] par0ArrayOfStr, final String ... par1ArrayOfStr)
     {
-        String s1 = par0ArrayOfStr[par0ArrayOfStr.length - 1];
-        ArrayList arraylist = new ArrayList();
-        String[] astring1 = par1ArrayOfStr;
-        int i = par1ArrayOfStr.length;
+        final String s1 = par0ArrayOfStr[par0ArrayOfStr.length - 1];
+        final ArrayList arraylist = new ArrayList();
+        final String[] astring1 = par1ArrayOfStr;
+        final int i = par1ArrayOfStr.length;
 
         for (int j = 0; j < i; ++j)
         {
-            String s2 = astring1[j];
+            final String s2 = astring1[j];
 
             if (doesStringStartWith(s1, s2))
             {
@@ -382,15 +383,15 @@ public abstract class CommandBase implements ICommand
      * Returns a List of strings (chosen from the given string iterable) which the last word in the given string array
      * is a beginning-match for. (Tab completion).
      */
-    public static List getListOfStringsFromIterableMatchingLastWord(String[] par0ArrayOfStr, Iterable par1Iterable)
+    public static List getListOfStringsFromIterableMatchingLastWord(final String[] par0ArrayOfStr, final Iterable par1Iterable)
     {
-        String s = par0ArrayOfStr[par0ArrayOfStr.length - 1];
-        ArrayList arraylist = new ArrayList();
-        Iterator iterator = par1Iterable.iterator();
+        final String s = par0ArrayOfStr[par0ArrayOfStr.length - 1];
+        final ArrayList arraylist = new ArrayList();
+        final Iterator iterator = par1Iterable.iterator();
 
         while (iterator.hasNext())
         {
-            String s1 = (String)iterator.next();
+            final String s1 = (String)iterator.next();
 
             if (doesStringStartWith(s, s1))
             {
@@ -404,17 +405,17 @@ public abstract class CommandBase implements ICommand
     /**
      * Return whether the specified command parameter index is a username parameter.
      */
-    public boolean isUsernameIndex(String[] par1ArrayOfStr, int par2)
+    public boolean isUsernameIndex(final String[] par1ArrayOfStr, final int par2)
     {
         return false;
     }
 
-    public static void notifyAdmins(ICommandSender par0ICommandSender, String par1Str, Object ... par2ArrayOfObj)
+    public static void notifyAdmins(final ICommandSender par0ICommandSender, final String par1Str, final Object ... par2ArrayOfObj)
     {
         notifyAdmins(par0ICommandSender, 0, par1Str, par2ArrayOfObj);
     }
 
-    public static void notifyAdmins(ICommandSender par0ICommandSender, int par1, String par2Str, Object ... par3ArrayOfObj)
+    public static void notifyAdmins(final ICommandSender par0ICommandSender, final int par1, final String par2Str, final Object ... par3ArrayOfObj)
     {
         if (theAdmin != null)
         {
@@ -425,7 +426,7 @@ public abstract class CommandBase implements ICommand
     /**
      * Sets the static IAdminCommander.
      */
-    public static void setAdminCommander(IAdminCommand par0IAdminCommand)
+    public static void setAdminCommander(final IAdminCommand par0IAdminCommand)
     {
         theAdmin = par0IAdminCommand;
     }
@@ -433,12 +434,12 @@ public abstract class CommandBase implements ICommand
     /**
      * Compares the name of this command to the name of the given command.
      */
-    public int compareTo(ICommand par1ICommand)
+    public int compareTo(final ICommand par1ICommand)
     {
         return this.getCommandName().compareTo(par1ICommand.getCommandName());
     }
 
-    public int compareTo(Object par1Obj)
+    public int compareTo(final Object par1Obj)
     {
         return this.compareTo((ICommand)par1Obj);
     }

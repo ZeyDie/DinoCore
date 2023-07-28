@@ -15,7 +15,7 @@ public class MathHelper
     /**
      * sin looked up in a table
      */
-    public static final float sin(float par0)
+    public static final float sin(final float par0)
     {
         return SIN_TABLE[(int)(par0 * 10430.378F) & 65535];
     }
@@ -23,17 +23,17 @@ public class MathHelper
     /**
      * cos looked up in the sin table with the appropriate offset
      */
-    public static final float cos(float par0)
+    public static final float cos(final float par0)
     {
         return SIN_TABLE[(int)(par0 * 10430.378F + 16384.0F) & 65535];
     }
 
-    public static final float sqrt_float(float par0)
+    public static final float sqrt_float(final float par0)
     {
         return (float)Math.sqrt((double)par0);
     }
 
-    public static final float sqrt_double(double par0)
+    public static final float sqrt_double(final double par0)
     {
         return (float)Math.sqrt(par0);
     }
@@ -41,9 +41,9 @@ public class MathHelper
     /**
      * Returns the greatest integer less than or equal to the float argument
      */
-    public static int floor_float(float par0)
+    public static int floor_float(final float par0)
     {
-        int i = (int)par0;
+        final int i = (int)par0;
         return par0 < (float)i ? i - 1 : i;
     }
 
@@ -52,7 +52,7 @@ public class MathHelper
     /**
      * returns par0 cast as an int, and no greater than Integer.MAX_VALUE-1024
      */
-    public static int truncateDoubleToInt(double par0)
+    public static int truncateDoubleToInt(final double par0)
     {
         return (int)(par0 + 1024.0D) - 1024;
     }
@@ -60,22 +60,22 @@ public class MathHelper
     /**
      * Returns the greatest integer less than or equal to the double argument
      */
-    public static int floor_double(double par0)
+    public static int floor_double(final double par0)
     {
-        int i = (int)par0;
+        final int i = (int)par0;
         return par0 < (double)i ? i - 1 : i;
     }
 
     /**
      * Long version of floor_double
      */
-    public static long floor_double_long(double par0)
+    public static long floor_double_long(final double par0)
     {
-        long i = (long)par0;
+        final long i = (long)par0;
         return par0 < (double)i ? i - 1L : i;
     }
 
-    public static float abs(float par0)
+    public static float abs(final float par0)
     {
         return par0 >= 0.0F ? par0 : -par0;
     }
@@ -83,20 +83,20 @@ public class MathHelper
     /**
      * Returns the unsigned value of an int.
      */
-    public static int abs_int(int par0)
+    public static int abs_int(final int par0)
     {
         return par0 >= 0 ? par0 : -par0;
     }
 
-    public static int ceiling_float_int(float par0)
+    public static int ceiling_float_int(final float par0)
     {
-        int i = (int)par0;
+        final int i = (int)par0;
         return par0 > (float)i ? i + 1 : i;
     }
 
-    public static int ceiling_double_int(double par0)
+    public static int ceiling_double_int(final double par0)
     {
-        int i = (int)par0;
+        final int i = (int)par0;
         return par0 > (double)i ? i + 1 : i;
     }
 
@@ -104,7 +104,7 @@ public class MathHelper
      * Returns the value of the first parameter, clamped to be within the lower and upper limits given by the second and
      * third parameters.
      */
-    public static int clamp_int(int par0, int par1, int par2)
+    public static int clamp_int(final int par0, final int par1, final int par2)
     {
         return par0 < par1 ? par1 : (par0 > par2 ? par2 : par0);
     }
@@ -113,7 +113,7 @@ public class MathHelper
      * Returns the value of the first parameter, clamped to be within the lower and upper limits given by the second and
      * third parameters
      */
-    public static float clamp_float(float par0, float par1, float par2)
+    public static float clamp_float(final float par0, final float par1, final float par2)
     {
         return par0 < par1 ? par1 : (par0 > par2 ? par2 : par0);
     }
@@ -123,17 +123,19 @@ public class MathHelper
      */
     public static double abs_max(double par0, double par2)
     {
-        if (par0 < 0.0D)
+        double par01 = par0;
+        double par21 = par2;
+        if (par01 < 0.0D)
         {
-            par0 = -par0;
+            par01 = -par01;
         }
 
-        if (par2 < 0.0D)
+        if (par21 < 0.0D)
         {
-            par2 = -par2;
+            par21 = -par21;
         }
 
-        return par0 > par2 ? par0 : par2;
+        return par01 > par21 ? par01 : par21;
     }
 
     @SideOnly(Side.CLIENT)
@@ -141,7 +143,7 @@ public class MathHelper
     /**
      * Buckets an integer with specifed bucket sizes.  Args: i, bucketSize
      */
-    public static int bucketInt(int par0, int par1)
+    public static int bucketInt(final int par0, final int par1)
     {
         return par0 < 0 ? -((-par0 - 1) / par1) - 1 : par0 / par1;
     }
@@ -151,30 +153,30 @@ public class MathHelper
     /**
      * Tests if a string is null or of length zero
      */
-    public static boolean stringNullOrLengthZero(String par0Str)
+    public static boolean stringNullOrLengthZero(final String par0Str)
     {
-        return par0Str == null || par0Str.length() == 0;
+        return par0Str == null || par0Str.isEmpty();
     }
 
-    public static int getRandomIntegerInRange(Random par0Random, int par1, int par2)
+    public static int getRandomIntegerInRange(final Random par0Random, final int par1, final int par2)
     {
         return par1 >= par2 ? par1 : par0Random.nextInt(par2 - par1 + 1) + par1;
     }
 
-    public static double getRandomDoubleInRange(Random par0Random, double par1, double par3)
+    public static double getRandomDoubleInRange(final Random par0Random, final double par1, final double par3)
     {
         return par1 >= par3 ? par1 : par0Random.nextDouble() * (par3 - par1) + par1;
     }
 
-    public static double average(long[] par0ArrayOfLong)
+    public static double average(final long[] par0ArrayOfLong)
     {
         long i = 0L;
-        long[] along1 = par0ArrayOfLong;
-        int j = par0ArrayOfLong.length;
+        final long[] along1 = par0ArrayOfLong;
+        final int j = par0ArrayOfLong.length;
 
         for (int k = 0; k < j; ++k)
         {
-            long l = along1[k];
+            final long l = along1[k];
             i += l;
         }
 
@@ -186,19 +188,20 @@ public class MathHelper
      */
     public static float wrapAngleTo180_float(float par0)
     {
-        par0 %= 360.0F;
+        float par01 = par0;
+        par01 %= 360.0F;
 
-        if (par0 >= 180.0F)
+        if (par01 >= 180.0F)
         {
-            par0 -= 360.0F;
+            par01 -= 360.0F;
         }
 
-        if (par0 < -180.0F)
+        if (par01 < -180.0F)
         {
-            par0 += 360.0F;
+            par01 += 360.0F;
         }
 
-        return par0;
+        return par01;
     }
 
     /**
@@ -206,25 +209,26 @@ public class MathHelper
      */
     public static double wrapAngleTo180_double(double par0)
     {
-        par0 %= 360.0D;
+        double par01 = par0;
+        par01 %= 360.0D;
 
-        if (par0 >= 180.0D)
+        if (par01 >= 180.0D)
         {
-            par0 -= 360.0D;
+            par01 -= 360.0D;
         }
 
-        if (par0 < -180.0D)
+        if (par01 < -180.0D)
         {
-            par0 += 360.0D;
+            par01 += 360.0D;
         }
 
-        return par0;
+        return par01;
     }
 
     /**
      * parses the string as integer or returns the second parameter if it fails
      */
-    public static int parseIntWithDefault(String par0Str, int par1)
+    public static int parseIntWithDefault(final String par0Str, final int par1)
     {
         int j = par1;
 
@@ -232,7 +236,7 @@ public class MathHelper
         {
             j = Integer.parseInt(par0Str);
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
             ;
         }
@@ -243,7 +247,7 @@ public class MathHelper
     /**
      * parses the string as integer or returns the second parameter if it fails. this value is capped to par2
      */
-    public static int parseIntWithDefaultAndMax(String par0Str, int par1, int par2)
+    public static int parseIntWithDefaultAndMax(final String par0Str, final int par1, final int par2)
     {
         int k = par1;
 
@@ -251,7 +255,7 @@ public class MathHelper
         {
             k = Integer.parseInt(par0Str);
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
             ;
         }
@@ -267,7 +271,7 @@ public class MathHelper
     /**
      * parses the string as double or returns the second parameter if it fails.
      */
-    public static double parseDoubleWithDefault(String par0Str, double par1)
+    public static double parseDoubleWithDefault(final String par0Str, final double par1)
     {
         double d1 = par1;
 
@@ -275,7 +279,7 @@ public class MathHelper
         {
             d1 = Double.parseDouble(par0Str);
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
             ;
         }
@@ -283,7 +287,7 @@ public class MathHelper
         return d1;
     }
 
-    public static double func_82713_a(String par0Str, double par1, double par3)
+    public static double func_82713_a(final String par0Str, final double par1, final double par3)
     {
         double d2 = par1;
 
@@ -291,7 +295,7 @@ public class MathHelper
         {
             d2 = Double.parseDouble(par0Str);
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
             ;
         }

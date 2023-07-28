@@ -28,7 +28,7 @@ public class GuiSlotModList extends GuiScrollingList
     private GuiModList parent;
     private ArrayList<ModContainer> mods;
 
-    public GuiSlotModList(GuiModList parent, ArrayList<ModContainer> mods, int listWidth)
+    public GuiSlotModList(final GuiModList parent, final ArrayList<ModContainer> mods, final int listWidth)
     {
         super(parent.getMinecraftInstance(), listWidth, parent.height, 32, parent.height - 65 + 4, 10, 35);
         this.parent=parent;
@@ -42,13 +42,13 @@ public class GuiSlotModList extends GuiScrollingList
     }
 
     @Override
-    protected void elementClicked(int var1, boolean var2)
+    protected void elementClicked(final int var1, final boolean var2)
     {
         this.parent.selectModIndex(var1);
     }
 
     @Override
-    protected boolean isSelected(int var1)
+    protected boolean isSelected(final int var1)
     {
         return this.parent.modIndexSelected(var1);
     }
@@ -66,9 +66,9 @@ public class GuiSlotModList extends GuiScrollingList
     }
 
     @Override
-    protected void drawSlot(int listIndex, int var2, int var3, int var4, Tessellator var5)
+    protected void drawSlot(final int listIndex, final int var2, final int var3, final int var4, final Tessellator var5)
     {
-        ModContainer mc=mods.get(listIndex);
+        final ModContainer mc=mods.get(listIndex);
         if (Loader.instance().getModState(mc)==ModState.DISABLED)
         {
             this.parent.getFontRenderer().drawString(this.parent.getFontRenderer().trimStringToWidth(mc.getName(), listWidth - 10), this.left + 3 , var3 + 2, 0xFF2222);

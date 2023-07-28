@@ -6,7 +6,7 @@ public class LivingSetAttackTargetEvent extends LivingEvent
 {
 
     public final EntityLivingBase target;
-    public LivingSetAttackTargetEvent(EntityLivingBase entity, EntityLivingBase target)
+    public LivingSetAttackTargetEvent(final EntityLivingBase entity, final EntityLivingBase target)
     {
         super(entity);
         this.target = target;

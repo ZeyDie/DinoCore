@@ -2,12 +2,12 @@ package net.minecraft.world.gen.structure;
 
 final class StructureStrongholdPieceWeight2 extends StructureStrongholdPieceWeight
 {
-    StructureStrongholdPieceWeight2(Class par1Class, int par2, int par3)
+    StructureStrongholdPieceWeight2(final Class par1Class, final int par2, final int par3)
     {
         super(par1Class, par2, par3);
     }
 
-    public boolean canSpawnMoreStructuresOfType(int par1)
+    public boolean canSpawnMoreStructuresOfType(final int par1)
     {
         return super.canSpawnMoreStructuresOfType(par1) && par1 > 4;
     }

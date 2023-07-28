@@ -34,7 +34,7 @@ public class PotionEffect implements ConfigurationSerializable {
      * @param amplifier the amplifier, see {@link PotionEffect#getAmplifier()}
      * @param ambient the ambient status, see {@link PotionEffect#isAmbient()}
      */
-    public PotionEffect(PotionEffectType type, int duration, int amplifier, boolean ambient) {
+    public PotionEffect(final PotionEffectType type, final int duration, final int amplifier, final boolean ambient) {
         Validate.notNull(type, "effect type cannot be null");
         this.type = type;
         this.duration = duration;
@@ -50,7 +50,7 @@ public class PotionEffect implements ConfigurationSerializable {
      * @param amplifier the amplifier for the effect
      * @see PotionEffect#PotionEffect(PotionEffectType, int, int, boolean)
      */
-    public PotionEffect(PotionEffectType type, int duration, int amplifier) {
+    public PotionEffect(final PotionEffectType type, final int duration, final int amplifier) {
         this(type, duration, amplifier, true);
     }
 
@@ -59,29 +59,29 @@ public class PotionEffect implements ConfigurationSerializable {
      *
      * @param map the map to deserialize from
      */
-    public PotionEffect(Map<String, Object> map) {
+    public PotionEffect(final Map<String, Object> map) {
         this(getEffectType(map), getInt(map, DURATION), getInt(map, AMPLIFIER), getBool(map, AMBIENT));
     }
 
-    private static PotionEffectType getEffectType(Map<?,?> map) {
-        int type = getInt(map, TYPE);
-        PotionEffectType effect = PotionEffectType.getById(type);
+    private static PotionEffectType getEffectType(final Map<?,?> map) {
+        final int type = getInt(map, TYPE);
+        final PotionEffectType effect = PotionEffectType.getById(type);
         if (effect != null) {
             return effect;
         }
         throw new NoSuchElementException(map + " does not contain " + TYPE);
     }
 
-    private static int getInt(Map<?,?> map, Object key) {
-        Object num = map.get(key);
+    private static int getInt(final Map<?,?> map, final Object key) {
+        final Object num = map.get(key);
         if (num instanceof Integer) {
             return (Integer) num;
         }
         throw new NoSuchElementException(map + " does not contain " + key);
     }
 
-    private static boolean getBool(Map<?,?> map, Object key) {
-        Object bool = map.get(key);
+    private static boolean getBool(final Map<?,?> map, final Object key) {
+        final Object bool = map.get(key);
         if (bool instanceof Boolean) {
             return (Boolean) bool;
         }
@@ -105,19 +105,19 @@ public class PotionEffect implements ConfigurationSerializable {
      * @param entity The entity to add this effect to
      * @return Whether the effect could be added
      */
-    public boolean apply(LivingEntity entity) {
+    public boolean apply(final LivingEntity entity) {
         return entity.addPotionEffect(this);
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
         if (!(obj instanceof PotionEffect)) {
             return false;
         }
-        PotionEffect that = (PotionEffect) obj;
+        final PotionEffect that = (PotionEffect) obj;
         return this.type.equals(that.type) && this.ambient == that.ambient && this.amplifier == that.amplifier && this.duration == that.duration;
     }
 

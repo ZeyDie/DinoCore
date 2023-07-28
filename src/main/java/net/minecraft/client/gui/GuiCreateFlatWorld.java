@@ -20,7 +20,7 @@ public class GuiCreateFlatWorld extends GuiScreen
     private GuiButton buttonEditLayer;
     private GuiButton buttonRemoveLayer;
 
-    public GuiCreateFlatWorld(GuiCreateWorld par1GuiCreateWorld, String par2Str)
+    public GuiCreateFlatWorld(final GuiCreateWorld par1GuiCreateWorld, final String par2Str)
     {
         this.createWorldGui = par1GuiCreateWorld;
         this.setFlatGeneratorInfo(par2Str);
@@ -31,7 +31,7 @@ public class GuiCreateFlatWorld extends GuiScreen
         return this.theFlatGeneratorInfo.toString();
     }
 
-    public void setFlatGeneratorInfo(String par1Str)
+    public void setFlatGeneratorInfo(final String par1Str)
     {
         this.theFlatGeneratorInfo = FlatGeneratorInfo.createFlatGeneratorFromString(par1Str);
     }
@@ -60,9 +60,9 @@ public class GuiCreateFlatWorld extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
-        int i = this.theFlatGeneratorInfo.getFlatLayers().size() - this.createFlatWorldListSlotGui.field_82454_a - 1;
+        final int i = this.theFlatGeneratorInfo.getFlatLayers().size() - this.createFlatWorldListSlotGui.field_82454_a - 1;
 
         if (par1GuiButton.id == 1)
         {
@@ -89,7 +89,7 @@ public class GuiCreateFlatWorld extends GuiScreen
 
     public void func_82270_g()
     {
-        boolean flag = this.func_82272_i();
+        final boolean flag = this.func_82272_i();
         this.buttonRemoveLayer.enabled = flag;
         this.buttonEditLayer.enabled = flag;
         this.buttonEditLayer.enabled = false;
@@ -104,12 +104,12 @@ public class GuiCreateFlatWorld extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.createFlatWorldListSlotGui.drawScreen(par1, par2, par3);
         this.drawCenteredString(this.fontRenderer, this.customizationTitle, this.width / 2, 8, 16777215);
-        int k = this.width / 2 - 92 - 16;
+        final int k = this.width / 2 - 92 - 16;
         this.drawString(this.fontRenderer, this.layerMaterialLabel, k, 32, 16777215);
         this.drawString(this.fontRenderer, this.heightLabel, k + 2 + 213 - this.fontRenderer.getStringWidth(this.heightLabel), 32, 16777215);
         super.drawScreen(par1, par2, par3);
@@ -120,7 +120,7 @@ public class GuiCreateFlatWorld extends GuiScreen
         return theRenderItem;
     }
 
-    static FlatGeneratorInfo func_82271_a(GuiCreateFlatWorld par0GuiCreateFlatWorld)
+    static FlatGeneratorInfo func_82271_a(final GuiCreateFlatWorld par0GuiCreateFlatWorld)
     {
         return par0GuiCreateFlatWorld.theFlatGeneratorInfo;
     }

@@ -40,24 +40,24 @@ public class ModLoaderKeyBindingHandler extends KeyBindingRegistry.KeyHandler
         super(new KeyBinding[0], new boolean[0]);
     }
 
-    void setModContainer(ModLoaderModContainer modContainer)
+    void setModContainer(final ModLoaderModContainer modContainer)
     {
         this.modContainer = modContainer;
     }
 
-    public void fireKeyEvent(KeyBinding kb)
+    public void fireKeyEvent(final KeyBinding kb)
     {
         ((net.minecraft.src.BaseMod)modContainer.getMod()).keyboardEvent(kb);
     }
 
     @Override
-    public void keyDown(EnumSet<TickType> type, KeyBinding kb, boolean end, boolean repeats)
+    public void keyDown(final EnumSet<TickType> type, final KeyBinding kb, final boolean end, final boolean repeats)
     {
         if (!end)
         {
             return;
         }
-        int idx = helper.indexOf(kb);
+        final int idx = helper.indexOf(kb);
         if (type.contains(TickType.CLIENT))
         {
             armed[idx] = true;
@@ -71,13 +71,13 @@ public class ModLoaderKeyBindingHandler extends KeyBindingRegistry.KeyHandler
     }
 
     @Override
-    public void keyUp(EnumSet<TickType> type, KeyBinding kb, boolean end)
+    public void keyUp(final EnumSet<TickType> type, final KeyBinding kb, final boolean end)
     {
         if (!end)
         {
             return;
         }
-        int idx = helper.indexOf(kb);
+        final int idx = helper.indexOf(kb);
         active[idx] = false;
     }
 
@@ -93,7 +93,7 @@ public class ModLoaderKeyBindingHandler extends KeyBindingRegistry.KeyHandler
         return modContainer.getModId() +" KB "+keyBindings[0].keyCode;
     }
 
-    void addKeyBinding(KeyBinding binding, boolean repeats)
+    void addKeyBinding(final KeyBinding binding, final boolean repeats)
     {
         this.keyBindings = ObjectArrays.concat(this.keyBindings, binding);
         this.repeatings = new boolean[this.keyBindings.length];

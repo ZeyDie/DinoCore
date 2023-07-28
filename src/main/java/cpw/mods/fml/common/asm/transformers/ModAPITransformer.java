@@ -22,20 +22,20 @@ public class ModAPITransformer implements IClassTransformer {
     private ListMultimap<String, ASMData> optionals;
 
     @Override
-    public byte[] transform(String name, String transformedName, byte[] basicClass)
+    public byte[] transform(final String name, final String transformedName, final byte[] basicClass)
     {
         if (optionals == null || !optionals.containsKey(name))
         {
             return basicClass;
         }
-        ClassNode classNode = new ClassNode();
-        ClassReader classReader = new ClassReader(basicClass);
+        final ClassNode classNode = new ClassNode();
+        final ClassReader classReader = new ClassReader(basicClass);
         classReader.accept(classNode, 0);
 
         if (logDebugInfo) FMLRelaunchLog.finest("Optional removal - found optionals for class %s - processing", name);
-        for (ASMData optional : optionals.get(name))
+        for (final ASMData optional : optionals.get(name))
         {
-            String modId = (String) optional.getAnnotationInfo().get("modid");
+            final String modId = (String) optional.getAnnotationInfo().get("modid");
 
             if (Loader.isModLoaded(modId) || ModAPIManager.INSTANCE.hasAPI(modId))
             {
@@ -58,16 +58,16 @@ public class ModAPITransformer implements IClassTransformer {
         }
         if (logDebugInfo) FMLRelaunchLog.finest("Optional removal - class %s processed", name);
 
-        ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        final ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         classNode.accept(writer);
         return writer.toByteArray();
     }
 
-    private void stripMethod(ClassNode classNode, String methodDescriptor)
+    private void stripMethod(final ClassNode classNode, final String methodDescriptor)
     {
-        for (ListIterator<MethodNode> iterator = classNode.methods.listIterator(); iterator.hasNext();)
+        for (final ListIterator<MethodNode> iterator = classNode.methods.listIterator(); iterator.hasNext();)
         {
-            MethodNode method = iterator.next();
+            final MethodNode method = iterator.next();
             if (methodDescriptor.equals(method.name+method.desc))
             {
                 iterator.remove();
@@ -78,19 +78,19 @@ public class ModAPITransformer implements IClassTransformer {
         if (logDebugInfo) FMLRelaunchLog.finest("Optional removal - method %s NOT removed - not found", methodDescriptor);
     }
 
-    private void stripInterface(ClassNode classNode, String interfaceName, boolean stripRefs)
+    private void stripInterface(final ClassNode classNode, final String interfaceName, final boolean stripRefs)
     {
-        String ifaceName = interfaceName.replace('.', '/');
-        boolean found = classNode.interfaces.remove(ifaceName);
+        final String ifaceName = interfaceName.replace('.', '/');
+        final boolean found = classNode.interfaces.remove(ifaceName);
         if (found && logDebugInfo) FMLRelaunchLog.finest("Optional removal - interface %s removed", interfaceName);
         if (!found && logDebugInfo) FMLRelaunchLog.finest("Optional removal - interface %s NOT removed - not found", interfaceName);
 
         if (found && stripRefs)
         {
             if (logDebugInfo) FMLRelaunchLog.finest("Optional removal - interface %s - stripping method signature references", interfaceName);
-            for (Iterator<MethodNode> iterator = classNode.methods.iterator(); iterator.hasNext();)
+            for (final Iterator<MethodNode> iterator = classNode.methods.iterator(); iterator.hasNext();)
             {
-                MethodNode node = iterator.next();
+                final MethodNode node = iterator.next();
                 if (node.desc.contains(ifaceName))
                 {
                     if (logDebugInfo) FMLRelaunchLog.finest("Optional removal - interface %s - stripping method containing reference %s", interfaceName, node.name);
@@ -105,35 +105,35 @@ public class ModAPITransformer implements IClassTransformer {
         }
     }
 
-    public void initTable(ASMDataTable dataTable)
+    public void initTable(final ASMDataTable dataTable)
     {
         optionals = ArrayListMultimap.create();
-        Set<ASMData> interfaceLists = dataTable.getAll("cpw.mods.fml.common.Optional$InterfaceList");
+        final Set<ASMData> interfaceLists = dataTable.getAll("cpw.mods.fml.common.Optional$InterfaceList");
         addData(unpackInterfaces(interfaceLists));
-        Set<ASMData> interfaces = dataTable.getAll("cpw.mods.fml.common.Optional$Interface");
+        final Set<ASMData> interfaces = dataTable.getAll("cpw.mods.fml.common.Optional$Interface");
         addData(interfaces);
-        Set<ASMData> methods = dataTable.getAll("cpw.mods.fml.common.Optional$Method");
+        final Set<ASMData> methods = dataTable.getAll("cpw.mods.fml.common.Optional$Method");
         addData(methods);
     }
 
-    private Set<ASMData> unpackInterfaces(Set<ASMData> packedInterfaces)
+    private Set<ASMData> unpackInterfaces(final Set<ASMData> packedInterfaces)
     {
-        Set<ASMData> result = Sets.newHashSet();
-        for (ASMData data : packedInterfaces)
+        final Set<ASMData> result = Sets.newHashSet();
+        for (final ASMData data : packedInterfaces)
         {
-            List<Map<String,Object>> packedList = (List<Map<String,Object>>) data.getAnnotationInfo().get("value");
-            for (Map<String,Object> packed : packedList)
+            final List<Map<String,Object>> packedList = (List<Map<String,Object>>) data.getAnnotationInfo().get("value");
+            for (final Map<String,Object> packed : packedList)
             {
-                ASMData newData = data.copy(packed);
+                final ASMData newData = data.copy(packed);
                 result.add(newData);
             }
         }
 
         return result;
     }
-    private void addData(Set<ASMData> interfaces)
+    private void addData(final Set<ASMData> interfaces)
     {
-        for (ASMData data : interfaces)
+        for (final ASMData data : interfaces)
         {
             optionals.put(data.getClassName(),data);
         }

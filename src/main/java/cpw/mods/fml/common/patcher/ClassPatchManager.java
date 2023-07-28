@@ -46,37 +46,38 @@ public class ClassPatchManager {
     }
 
 
-    public byte[] getPatchedResource(String name, String mappedName, LaunchClassLoader loader) throws IOException
+    public byte[] getPatchedResource(final String name, final String mappedName, final LaunchClassLoader loader) throws IOException
     {
-        byte[] rawClassBytes = loader.getClassBytes(name);
+        final byte[] rawClassBytes = loader.getClassBytes(name);
         return applyPatch(name, mappedName, rawClassBytes);
     }
-    public byte[] applyPatch(String name, String mappedName, byte[] inputData)
+    public byte[] applyPatch(final String name, final String mappedName, byte[] inputData)
     {
+        byte[] inputData1 = inputData;
         if (patches == null)
         {
-            return inputData;
+            return inputData1;
         }
         if (patchedClasses.containsKey(name))
         {
             return patchedClasses.get(name);
         }
-        List<ClassPatch> list = patches.get(name);
+        final List<ClassPatch> list = patches.get(name);
         if (list.isEmpty())
         {
-            return inputData;
+            return inputData1;
         }
         boolean ignoredError = false;
-        FMLRelaunchLog.fine("Runtime patching class %s (input size %d), found %d patch%s", mappedName, (inputData == null ? 0 : inputData.length), list.size(), list.size()!=1 ? "es" : "");
-        for (ClassPatch patch: list)
+        FMLRelaunchLog.fine("Runtime patching class %s (input size %d), found %d patch%s", mappedName, (inputData1 == null ? 0 : inputData1.length), list.size(), list.size()!=1 ? "es" : "");
+        for (final ClassPatch patch: list)
         {
             if (!patch.targetClassName.equals(mappedName) && !patch.sourceClassName.equals(name))
             {
                 FMLRelaunchLog.warning("Binary patch found %s for wrong class %s", patch.targetClassName, mappedName);
             }
-            if (!patch.existsAtTarget && (inputData == null || inputData.length == 0))
+            if (!patch.existsAtTarget && (inputData1 == null || inputData1.length == 0))
             {
-                inputData = new byte[0];
+                inputData1 = new byte[0];
             }
             else if (!patch.existsAtTarget)
             {
@@ -84,7 +85,7 @@ public class ClassPatchManager {
             }
             else
             {
-                int inputChecksum = Hashing.adler32().hashBytes(inputData).asInt();
+                final int inputChecksum = Hashing.adler32().hashBytes(inputData1).asInt();
                 if (patch.inputChecksum != inputChecksum)
                 {
                     FMLRelaunchLog.severe("There is a binary discrepency between the expected input class %s (%s) and the actual class. Checksum on disk is %x, in patch %x. Things are probably about to go very wrong. Did you put something into the jar file?", mappedName, name, inputChecksum, patch.inputChecksum);
@@ -105,9 +106,9 @@ public class ClassPatchManager {
             {
                 try
                 {
-                    inputData = patcher.patch(inputData, patch.patch);
+                    inputData1 = patcher.patch(inputData1, patch.patch);
                 }
-                catch (IOException e)
+                catch (final IOException e)
                 {
                     FMLRelaunchLog.log(Level.SEVERE, e, "Encountered problem runtime patching class %s", name);
                     continue;
@@ -116,42 +117,42 @@ public class ClassPatchManager {
         }
         if (!ignoredError)
         {
-            FMLRelaunchLog.fine("Successfully applied runtime patches for %s (new size %d)", mappedName, inputData.length);
+            FMLRelaunchLog.fine("Successfully applied runtime patches for %s (new size %d)", mappedName, inputData1.length);
         }
         if (dumpPatched)
         {
             try
             {
-                Files.write(inputData, new File(tempDir,mappedName));
+                Files.write(inputData1, new File(tempDir,mappedName));
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 FMLRelaunchLog.log(Level.SEVERE, e, "Failed to write %s to %s", mappedName, tempDir.getAbsolutePath());
             }
         }
-        patchedClasses.put(name,inputData);
-        return inputData;
+        patchedClasses.put(name, inputData1);
+        return inputData1;
     }
 
-    public void setup(Side side)
+    public void setup(final Side side)
     {
-        Pattern binpatchMatcher = Pattern.compile(String.format("binpatch/%s/.*.binpatch", side.toString().toLowerCase(Locale.ENGLISH)));
-        JarInputStream jis;
+        final Pattern binpatchMatcher = Pattern.compile(String.format("binpatch/%s/.*.binpatch", side.toString().toLowerCase(Locale.ENGLISH)));
+        final JarInputStream jis;
         try
         {
-            InputStream binpatchesCompressed = getClass().getResourceAsStream("/binpatches.pack.lzma");
+            final InputStream binpatchesCompressed = getClass().getResourceAsStream("/binpatches.pack.lzma");
             if (binpatchesCompressed==null)
             {
                 FMLRelaunchLog.log(Level.SEVERE, "The binary patch set is missing. Either you are in a development environment, or things are not going to work!");
                 return;
             }
-            LzmaInputStream binpatchesDecompressed = new LzmaInputStream(binpatchesCompressed);
-            ByteArrayOutputStream jarBytes = new ByteArrayOutputStream();
-            JarOutputStream jos = new JarOutputStream(jarBytes);
+            final LzmaInputStream binpatchesDecompressed = new LzmaInputStream(binpatchesCompressed);
+            final ByteArrayOutputStream jarBytes = new ByteArrayOutputStream();
+            final JarOutputStream jos = new JarOutputStream(jarBytes);
             Pack200.newUnpacker().unpack(binpatchesDecompressed, jos);
             jis = new JarInputStream(new ByteArrayInputStream(jarBytes.toByteArray()));
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             FMLRelaunchLog.log(Level.SEVERE, e, "Error occurred reading binary patches. Expect severe problems!");
             throw Throwables.propagate(e);
@@ -163,14 +164,14 @@ public class ClassPatchManager {
         {
             try
             {
-                JarEntry entry = jis.getNextJarEntry();
+                final JarEntry entry = jis.getNextJarEntry();
                 if (entry == null)
                 {
                     break;
                 }
                 if (binpatchMatcher.matcher(entry.getName()).matches())
                 {
-                    ClassPatch cp = readPatch(entry, jis);
+                    final ClassPatch cp = readPatch(entry, jis);
                     if (cp != null)
                     {
                         patches.put(cp.sourceClassName, cp);
@@ -181,7 +182,7 @@ public class ClassPatchManager {
                     jis.closeEntry();
                 }
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
             }
         } while (true);
@@ -190,30 +191,30 @@ public class ClassPatchManager {
         patchedClasses.clear();
     }
 
-    private ClassPatch readPatch(JarEntry patchEntry, JarInputStream jis)
+    private ClassPatch readPatch(final JarEntry patchEntry, final JarInputStream jis)
     {
         FMLRelaunchLog.finest("Reading patch data from %s", patchEntry.getName());
-        ByteArrayDataInput input;
+        final ByteArrayDataInput input;
         try
         {
             input = ByteStreams.newDataInput(ByteStreams.toByteArray(jis));
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             FMLRelaunchLog.log(Level.WARNING, e, "Unable to read binpatch file %s - ignoring", patchEntry.getName());
             return null;
         }
-        String name = input.readUTF();
-        String sourceClassName = input.readUTF();
-        String targetClassName = input.readUTF();
-        boolean exists = input.readBoolean();
+        final String name = input.readUTF();
+        final String sourceClassName = input.readUTF();
+        final String targetClassName = input.readUTF();
+        final boolean exists = input.readBoolean();
         int inputChecksum = 0;
         if (exists)
         {
             inputChecksum = input.readInt();
         }
-        int patchLength = input.readInt();
-        byte[] patchBytes = new byte[patchLength];
+        final int patchLength = input.readInt();
+        final byte[] patchBytes = new byte[patchLength];
         input.readFully(patchBytes);
 
         return new ClassPatch(name, sourceClassName, targetClassName, exists, inputChecksum, patchBytes);

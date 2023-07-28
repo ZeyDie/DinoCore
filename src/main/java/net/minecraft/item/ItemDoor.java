@@ -11,7 +11,7 @@ public class ItemDoor extends Item
 {
     private Material doorMaterial;
 
-    public ItemDoor(int par1, Material par2Material)
+    public ItemDoor(final int par1, final Material par2Material)
     {
         super(par1);
         this.doorMaterial = par2Material;
@@ -23,16 +23,17 @@ public class ItemDoor extends Item
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final World par3World, final int par4, int par5, final int par6, final int par7, final float par8, final float par9, final float par10)
     {
+        int par51 = par5;
         if (par7 != 1)
         {
             return false;
         }
         else
         {
-            ++par5;
-            Block block;
+            ++par51;
+            final Block block;
 
             if (this.doorMaterial == Material.wood)
             {
@@ -43,16 +44,16 @@ public class ItemDoor extends Item
                 block = Block.doorIron;
             }
 
-            if (par2EntityPlayer.canPlayerEdit(par4, par5, par6, par7, par1ItemStack) && par2EntityPlayer.canPlayerEdit(par4, par5 + 1, par6, par7, par1ItemStack))
+            if (par2EntityPlayer.canPlayerEdit(par4, par51, par6, par7, par1ItemStack) && par2EntityPlayer.canPlayerEdit(par4, par51 + 1, par6, par7, par1ItemStack))
             {
-                if (!block.canPlaceBlockAt(par3World, par4, par5, par6))
+                if (!block.canPlaceBlockAt(par3World, par4, par51, par6))
                 {
                     return false;
                 }
                 else
                 {
-                    int i1 = MathHelper.floor_double((double)((par2EntityPlayer.rotationYaw + 180.0F) * 4.0F / 360.0F) - 0.5D) & 3;
-                    placeDoorBlock(par3World, par4, par5, par6, i1, block);
+                    final int i1 = MathHelper.floor_double((double)((par2EntityPlayer.rotationYaw + 180.0F) * 4.0F / 360.0F) - 0.5D) & 3;
+                    placeDoorBlock(par3World, par4, par51, par6, i1, block);
                     --par1ItemStack.stackSize;
                     return true;
                 }
@@ -64,7 +65,7 @@ public class ItemDoor extends Item
         }
     }
 
-    public static void placeDoorBlock(World par0World, int par1, int par2, int par3, int par4, Block par5Block)
+    public static void placeDoorBlock(final World par0World, final int par1, final int par2, final int par3, final int par4, final Block par5Block)
     {
         byte b0 = 0;
         byte b1 = 0;
@@ -89,10 +90,10 @@ public class ItemDoor extends Item
             b0 = 1;
         }
 
-        int i1 = (par0World.isBlockNormalCube(par1 - b0, par2, par3 - b1) ? 1 : 0) + (par0World.isBlockNormalCube(par1 - b0, par2 + 1, par3 - b1) ? 1 : 0);
-        int j1 = (par0World.isBlockNormalCube(par1 + b0, par2, par3 + b1) ? 1 : 0) + (par0World.isBlockNormalCube(par1 + b0, par2 + 1, par3 + b1) ? 1 : 0);
-        boolean flag = par0World.getBlockId(par1 - b0, par2, par3 - b1) == par5Block.blockID || par0World.getBlockId(par1 - b0, par2 + 1, par3 - b1) == par5Block.blockID;
-        boolean flag1 = par0World.getBlockId(par1 + b0, par2, par3 + b1) == par5Block.blockID || par0World.getBlockId(par1 + b0, par2 + 1, par3 + b1) == par5Block.blockID;
+        final int i1 = (par0World.isBlockNormalCube(par1 - b0, par2, par3 - b1) ? 1 : 0) + (par0World.isBlockNormalCube(par1 - b0, par2 + 1, par3 - b1) ? 1 : 0);
+        final int j1 = (par0World.isBlockNormalCube(par1 + b0, par2, par3 + b1) ? 1 : 0) + (par0World.isBlockNormalCube(par1 + b0, par2 + 1, par3 + b1) ? 1 : 0);
+        final boolean flag = par0World.getBlockId(par1 - b0, par2, par3 - b1) == par5Block.blockID || par0World.getBlockId(par1 - b0, par2 + 1, par3 - b1) == par5Block.blockID;
+        final boolean flag1 = par0World.getBlockId(par1 + b0, par2, par3 + b1) == par5Block.blockID || par0World.getBlockId(par1 + b0, par2 + 1, par3 + b1) == par5Block.blockID;
         boolean flag2 = false;
 
         if (flag && !flag1)

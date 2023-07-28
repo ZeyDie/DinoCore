@@ -29,7 +29,7 @@ public class Note {
         /** The number of tones including sharped tones. */
         public static final byte TONES_COUNT = 12;
 
-        private Tone(int id, boolean sharpable) {
+        private Tone(final int id, final boolean sharpable) {
             this.id = (byte) (id % TONES_COUNT);
             this.sharpable = sharpable;
         }
@@ -55,8 +55,8 @@ public class Note {
          * @deprecated Magic value
          */
         @Deprecated
-        public byte getId(boolean sharped) {
-            byte id = (byte) (sharped && sharpable ? this.id + 1 : this.id);
+        public byte getId(final boolean sharped) {
+            final byte id = (byte) (sharped && sharpable ? this.id + 1 : this.id);
 
             return (byte) (id % TONES_COUNT);
         }
@@ -79,7 +79,7 @@ public class Note {
          * @deprecated Magic value
          */
         @Deprecated
-        public boolean isSharped(byte id) {
+        public boolean isSharped(final byte id) {
             if (id == getId(false)) {
                 return false;
             } else if (id == getId(true)) {
@@ -98,12 +98,12 @@ public class Note {
          * @deprecated Magic value
          */
         @Deprecated
-        public static Tone getById(byte id) {
+        public static Tone getById(final byte id) {
             return BY_DATA.get(id);
         }
 
         static {
-            for (Tone tone : values()) {
+            for (final Tone tone : values()) {
                 int id = tone.id % TONES_COUNT;
                 BY_DATA.put((byte) id, tone);
 
@@ -123,7 +123,7 @@ public class Note {
      * @param note Internal note id. {@link #getId()} always return this value.
      *            The value has to be in the interval [0;&nbsp;24].
      */
-    public Note(int note) {
+    public Note(final int note) {
         Validate.isTrue(note >= 0 && note <= 24, "The note value has to be between 0 and 24.");
 
         this.note = (byte) note;
@@ -136,16 +136,18 @@ public class Note {
      * @param tone The tone within the octave. If the octave is 2 the note has to be F#.
      * @param sharped Set if the tone is sharped (e.g. for F#).
      */
-    public Note(int octave, Tone tone, boolean sharped) {
-        if (sharped && !tone.isSharpable()) {
-            tone = Tone.values()[tone.ordinal() + 1];
-            sharped = false;
+    public Note(final int octave, Tone tone, boolean sharped) {
+        Tone tone1 = tone;
+        boolean sharped1 = sharped;
+        if (sharped1 && !tone1.isSharpable()) {
+            tone1 = Tone.values()[tone1.ordinal() + 1];
+            sharped1 = false;
         }
-        if (octave < 0 || octave > 2 || (octave == 2 && !(tone == Tone.F && sharped))) {
+        if (octave < 0 || octave > 2 || (octave == 2 && !(tone1 == Tone.F && sharped1))) {
             throw new IllegalArgumentException("Tone and octave have to be between F#0 and F#2");
         }
 
-        this.note = (byte) (octave * Tone.TONES_COUNT + tone.getId(sharped));
+        this.note = (byte) (octave * Tone.TONES_COUNT + tone1.getId(sharped1));
     }
 
     /**
@@ -155,10 +157,10 @@ public class Note {
      * @param tone The tone within the octave.
      * @return The new note.
      */
-    public static Note flat(int octave, Tone tone) {
+    public static Note flat(final int octave, Tone tone) {
         Validate.isTrue(octave != 2, "Octave cannot be 2 for flats");
-        tone = tone == Tone.G ? Tone.F : Tone.values()[tone.ordinal() - 1];
-        return new Note(octave, tone, tone.isSharpable());
+        Tone tone1 = tone == Tone.G ? Tone.F : Tone.values()[tone.ordinal() - 1];
+        return new Note(octave, tone1, tone1.isSharpable());
     }
 
     /**
@@ -168,7 +170,7 @@ public class Note {
      * @param tone The tone within the octave. If the octave is 2 the note has to be F#.
      * @return The new note.
      */
-    public static Note sharp(int octave, Tone tone) {
+    public static Note sharp(final int octave, final Tone tone) {
         return new Note(octave, tone, true);
     }
 
@@ -179,7 +181,7 @@ public class Note {
      * @param tone The tone within the octave.
      * @return The new note.
      */
-    public static Note natural(int octave, Tone tone) {
+    public static Note natural(final int octave, final Tone tone) {
         Validate.isTrue(octave != 2, "Octave cannot be 2 for naturals");
         return new Note(octave, tone, false);
     }
@@ -239,7 +241,7 @@ public class Note {
      * @return if this note is sharped.
      */
     public boolean isSharped() {
-        byte note = getToneByte();
+        final byte note = getToneByte();
         return Tone.getById(note).isSharped(note);
     }
 
@@ -252,14 +254,14 @@ public class Note {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Note other = (Note) obj;
+        final Note other = (Note) obj;
         if (note != other.note)
             return false;
         return true;

@@ -5,7 +5,7 @@ import org.bukkit.entity.Bat;
 import org.bukkit.entity.EntityType;
 
 public class CraftBat extends CraftAmbient implements Bat {
-    public CraftBat(CraftServer server, net.minecraft.entity.passive.EntityBat entity) {
+    public CraftBat(final CraftServer server, final net.minecraft.entity.passive.EntityBat entity) {
         super(server, entity);
     }
 

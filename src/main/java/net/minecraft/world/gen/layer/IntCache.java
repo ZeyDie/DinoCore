@@ -29,9 +29,9 @@ public class IntCache
      */
     private static List inUseLargeArrays = new ArrayList();
 
-    public static synchronized int[] getIntCache(int par0)
+    public static synchronized int[] getIntCache(final int par0)
     {
-        int[] aint;
+        final int[] aint;
 
         if (par0 <= 256)
         {

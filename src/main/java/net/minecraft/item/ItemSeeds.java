@@ -18,7 +18,7 @@ public class ItemSeeds extends Item implements IPlantable
     /** BlockID of the block the seeds can be planted on. */
     private int soilBlockID;
 
-    public ItemSeeds(int par1, int par2, int par3)
+    public ItemSeeds(final int par1, final int par2, final int par3)
     {
         super(par1);
         this.blockType = par2;
@@ -30,7 +30,7 @@ public class ItemSeeds extends Item implements IPlantable
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final World par3World, final int par4, final int par5, final int par6, final int par7, final float par8, final float par9, final float par10)
     {
         if (par7 != 1)
         {
@@ -38,8 +38,8 @@ public class ItemSeeds extends Item implements IPlantable
         }
         else if (par2EntityPlayer.canPlayerEdit(par4, par5, par6, par7, par1ItemStack) && par2EntityPlayer.canPlayerEdit(par4, par5 + 1, par6, par7, par1ItemStack))
         {
-            int i1 = par3World.getBlockId(par4, par5, par6);
-            Block soil = Block.blocksList[i1];
+            final int i1 = par3World.getBlockId(par4, par5, par6);
+            final Block soil = Block.blocksList[i1];
 
             if (soil != null && soil.canSustainPlant(par3World, par4, par5, par6, ForgeDirection.UP, this) && par3World.isAirBlock(par4, par5 + 1, par6))
             {
@@ -59,19 +59,19 @@ public class ItemSeeds extends Item implements IPlantable
     }
 
     @Override
-    public EnumPlantType getPlantType(World world, int x, int y, int z)
+    public EnumPlantType getPlantType(final World world, final int x, final int y, final int z)
     {
         return (blockType == Block.netherStalk.blockID ? EnumPlantType.Nether : EnumPlantType.Crop);
     }
 
     @Override
-    public int getPlantID(World world, int x, int y, int z)
+    public int getPlantID(final World world, final int x, final int y, final int z)
     {
         return blockType;
     }
 
     @Override
-    public int getPlantMetadata(World world, int x, int y, int z)
+    public int getPlantMetadata(final World world, final int x, final int y, final int z)
     {
         return 0;
     }

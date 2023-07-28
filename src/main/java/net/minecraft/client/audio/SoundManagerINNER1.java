@@ -9,7 +9,7 @@ class SoundManagerINNER1 implements Runnable
 {
     final SoundManager theSoundManager;
 
-    SoundManagerINNER1(SoundManager par1SoundManager)
+    SoundManagerINNER1(final SoundManager par1SoundManager)
     {
         this.theSoundManager = par1SoundManager;
     }

@@ -7,11 +7,11 @@ public class ResourceLocation
     private final String resourceDomain;
     private final String resourcePath;
 
-    public ResourceLocation(String par1Str, String par2Str)
+    public ResourceLocation(final String par1Str, final String par2Str)
     {
         Validate.notNull(par2Str);
 
-        if (par1Str != null && par1Str.length() != 0)
+        if (par1Str != null && !par1Str.isEmpty())
         {
             this.resourceDomain = par1Str;
         }
@@ -23,11 +23,11 @@ public class ResourceLocation
         this.resourcePath = par2Str;
     }
 
-    public ResourceLocation(String par1Str)
+    public ResourceLocation(final String par1Str)
     {
         String s1 = "minecraft";
         String s2 = par1Str;
-        int i = par1Str.indexOf(58);
+        final int i = par1Str.indexOf(58);
 
         if (i >= 0)
         {
@@ -58,7 +58,7 @@ public class ResourceLocation
         return this.resourceDomain + ":" + this.resourcePath;
     }
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         if (this == par1Obj)
         {
@@ -70,7 +70,7 @@ public class ResourceLocation
         }
         else
         {
-            ResourceLocation resourcelocation = (ResourceLocation)par1Obj;
+            final ResourceLocation resourcelocation = (ResourceLocation)par1Obj;
             return this.resourceDomain.equals(resourcelocation.resourceDomain) && this.resourcePath.equals(resourcelocation.resourcePath);
         }
     }

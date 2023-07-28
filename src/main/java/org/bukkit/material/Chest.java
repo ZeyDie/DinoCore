@@ -17,7 +17,7 @@ public class Chest extends DirectionalContainer {
      *
      * @param direction the direction the chest's lit opens towards
      */
-    public Chest(BlockFace direction) {
+    public Chest(final BlockFace direction) {
         this();
         setFacingDirection(direction);
     }

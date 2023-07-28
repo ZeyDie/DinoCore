@@ -43,7 +43,7 @@ public class FMLInterModComms {
         private ModContainer activeContainer;
 
         @Override
-        public void applyModContainer(ModContainer activeContainer)
+        public void applyModContainer(final ModContainer activeContainer)
         {
             this.activeContainer = activeContainer;
             this.currentList = null;
@@ -82,7 +82,7 @@ public class FMLInterModComms {
          */
         private Object value;
 
-        private IMCMessage(String key, Object value)
+        private IMCMessage(final String key, final Object value)
         {
             this.key = key;
             this.value = value;
@@ -99,7 +99,7 @@ public class FMLInterModComms {
             return this.sender;
         }
 
-        void setSender(ModContainer activeModContainer)
+        void setSender(final ModContainer activeModContainer)
         {
             this.sender = activeModContainer.getModId();
         }
@@ -140,35 +140,35 @@ public class FMLInterModComms {
         }
     }
 
-    public static boolean sendMessage(String modId, String key, NBTTagCompound value)
+    public static boolean sendMessage(final String modId, final String key, final NBTTagCompound value)
     {
         return enqueueStartupMessage(modId, new IMCMessage(key, value));
     }
-    public static boolean sendMessage(String modId, String key, ItemStack value)
+    public static boolean sendMessage(final String modId, final String key, final ItemStack value)
     {
         return enqueueStartupMessage(modId, new IMCMessage(key, value));
     }
-    public static boolean sendMessage(String modId, String key, String value)
+    public static boolean sendMessage(final String modId, final String key, final String value)
     {
         return enqueueStartupMessage(modId, new IMCMessage(key, value));
     }
 
-    public static void sendRuntimeMessage(Object sourceMod, String modId, String key, NBTTagCompound value)
+    public static void sendRuntimeMessage(final Object sourceMod, final String modId, final String key, final NBTTagCompound value)
     {
         enqueueMessage(sourceMod, modId, new IMCMessage(key, value));
     }
 
-    public static void sendRuntimeMessage(Object sourceMod, String modId, String key, ItemStack value)
+    public static void sendRuntimeMessage(final Object sourceMod, final String modId, final String key, final ItemStack value)
     {
         enqueueMessage(sourceMod, modId, new IMCMessage(key, value));
     }
 
-    public static void sendRuntimeMessage(Object sourceMod, String modId, String key, String value)
+    public static void sendRuntimeMessage(final Object sourceMod, final String modId, final String key, final String value)
     {
         enqueueMessage(sourceMod, modId, new IMCMessage(key, value));
     }
 
-    private static boolean enqueueStartupMessage(String modTarget, IMCMessage message)
+    private static boolean enqueueStartupMessage(final String modTarget, final IMCMessage message)
     {
         if (Loader.instance().activeModContainer() == null)
         {
@@ -178,9 +178,9 @@ public class FMLInterModComms {
         return Loader.isModLoaded(modTarget) && !Loader.instance().hasReachedState(LoaderState.POSTINITIALIZATION);
 
     }
-    private static void enqueueMessage(Object sourceMod, String modTarget, IMCMessage message)
+    private static void enqueueMessage(final Object sourceMod, final String modTarget, final IMCMessage message)
     {
-        ModContainer mc;
+        final ModContainer mc;
         if (sourceMod instanceof ModContainer) {
             mc = (ModContainer) sourceMod;
         }
@@ -200,9 +200,9 @@ public class FMLInterModComms {
      * @param forMod The {@link Instance} of the Mod to fetch messages for
      * @return any messages - the collection will never be null
      */
-    public static ImmutableList<IMCMessage> fetchRuntimeMessages(Object forMod)
+    public static ImmutableList<IMCMessage> fetchRuntimeMessages(final Object forMod)
     {
-        ModContainer mc = FMLCommonHandler.instance().findContainerFor(forMod);
+        final ModContainer mc = FMLCommonHandler.instance().findContainerFor(forMod);
         if (mc != null)
         {
             return ImmutableList.copyOf(modMessages.removeAll(mc.getModId()));

@@ -6,7 +6,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ExceptionMcoHttp extends RuntimeException
 {
-    public ExceptionMcoHttp(String par1Str, Exception par2Exception)
+    public ExceptionMcoHttp(final String par1Str, final Exception par2Exception)
     {
         super(par1Str, par2Exception);
     }

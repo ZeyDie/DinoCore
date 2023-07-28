@@ -19,7 +19,7 @@ public final class CustomLoginVerified {
 
         try {
             return com.mojang.authlib.yggdrasil.LegacyBridge.checkServer(username, serverID);
-        } catch (Throwable exception) {
+        } catch (final Throwable exception) {
             final String site = String.format(authSettingsData.getAuthRequest(), username, serverID);
 
             if (authSettingsData.isDebug())

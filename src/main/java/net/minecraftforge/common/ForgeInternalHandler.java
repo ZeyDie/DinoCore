@@ -13,17 +13,17 @@ import net.minecraftforge.event.world.WorldEvent;
 public class ForgeInternalHandler
 {
     @ForgeSubscribe(priority = EventPriority.HIGHEST)
-    public void onEntityJoinWorld(EntityJoinWorldEvent event)
+    public void onEntityJoinWorld(final EntityJoinWorldEvent event)
     {
         if (!event.world.isRemote)
         {
             ForgeChunkManager.loadEntity(event.entity);
         }
 
-        Entity entity = event.entity;
+        final Entity entity = event.entity;
         if (entity.getClass().equals(EntityItem.class))
         {
-            ItemStack stack = entity.getDataWatcher().getWatchableObjectItemStack(10);
+            final ItemStack stack = entity.getDataWatcher().getWatchableObjectItemStack(10);
 
             if (stack == null)
             {
@@ -32,7 +32,7 @@ public class ForgeInternalHandler
                 return;
             }
 
-            Item item = stack.getItem();
+            final Item item = stack.getItem();
             if (item == null)
             {
                 FMLLog.warning("Attempted to add a EntityItem to the world with a invalid item: ID %d at " +
@@ -45,7 +45,7 @@ public class ForgeInternalHandler
 
             if (item.hasCustomEntity(stack))
             {
-                Entity newEntity = item.createEntity(event.world, entity, stack);
+                final Entity newEntity = item.createEntity(event.world, entity, stack);
                 if (newEntity != null)
                 {
                     entity.setDead();
@@ -57,19 +57,19 @@ public class ForgeInternalHandler
     }
 
     @ForgeSubscribe(priority = EventPriority.HIGHEST)
-    public void onDimensionLoad(WorldEvent.Load event)
+    public void onDimensionLoad(final WorldEvent.Load event)
     {
         ForgeChunkManager.loadWorld(event.world);
     }
 
     @ForgeSubscribe(priority = EventPriority.HIGHEST)
-    public void onDimensionSave(WorldEvent.Save event)
+    public void onDimensionSave(final WorldEvent.Save event)
     {
     	ForgeChunkManager.saveWorld(event.world);
     }
 
     @ForgeSubscribe(priority = EventPriority.HIGHEST)
-    public void onDimensionUnload(WorldEvent.Unload event)
+    public void onDimensionUnload(final WorldEvent.Unload event)
     {
         ForgeChunkManager.unloadWorld(event.world);
     }

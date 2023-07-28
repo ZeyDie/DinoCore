@@ -26,7 +26,7 @@ public class EntityLookHelper
     private double posY;
     private double posZ;
 
-    public EntityLookHelper(EntityLiving par1EntityLiving)
+    public EntityLookHelper(final EntityLiving par1EntityLiving)
     {
         this.entity = par1EntityLiving;
     }
@@ -34,7 +34,7 @@ public class EntityLookHelper
     /**
      * Sets position to look at using entity
      */
-    public void setLookPositionWithEntity(Entity par1Entity, float par2, float par3)
+    public void setLookPositionWithEntity(final Entity par1Entity, final float par2, final float par3)
     {
         this.posX = par1Entity.posX;
 
@@ -56,7 +56,7 @@ public class EntityLookHelper
     /**
      * Sets position to look at
      */
-    public void setLookPosition(double par1, double par3, double par5, float par7, float par8)
+    public void setLookPosition(final double par1, final double par3, final double par5, final float par7, final float par8)
     {
         this.posX = par1;
         this.posY = par3;
@@ -76,13 +76,13 @@ public class EntityLookHelper
         if (this.isLooking)
         {
             this.isLooking = false;
-            double d0 = this.posX - this.entity.posX;
-            double d1 = this.posY - (this.entity.posY + (double)this.entity.getEyeHeight());
-            double d2 = this.posZ - this.entity.posZ;
-            double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+            final double d0 = this.posX - this.entity.posX;
+            final double d1 = this.posY - (this.entity.posY + (double)this.entity.getEyeHeight());
+            final double d2 = this.posZ - this.entity.posZ;
+            final double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d2 * d2);
             // CraftBukkit start - Math -> TrigMath
-            float f = (float)(TrigMath.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
-            float f1 = (float)(-(TrigMath.atan2(d1, d3) * 180.0D / Math.PI));
+            final float f = (float)(TrigMath.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
+            final float f1 = (float)(-(TrigMath.atan2(d1, d3) * 180.0D / Math.PI));
             // CraftBukkit end
             this.entity.rotationPitch = this.updateRotation(this.entity.rotationPitch, f1, this.deltaLookPitch);
             this.entity.rotationYawHead = this.updateRotation(this.entity.rotationYawHead, f, this.deltaLookYaw);
@@ -92,7 +92,7 @@ public class EntityLookHelper
             this.entity.rotationYawHead = this.updateRotation(this.entity.rotationYawHead, this.entity.renderYawOffset, 10.0F);
         }
 
-        float f2 = MathHelper.wrapAngleTo180_float(this.entity.rotationYawHead - this.entity.renderYawOffset);
+        final float f2 = MathHelper.wrapAngleTo180_float(this.entity.rotationYawHead - this.entity.renderYawOffset);
 
         if (!this.entity.getNavigator().noPath())
         {
@@ -108,7 +108,7 @@ public class EntityLookHelper
         }
     }
 
-    private float updateRotation(float par1, float par2, float par3)
+    private float updateRotation(final float par1, final float par2, final float par3)
     {
         float f3 = MathHelper.wrapAngleTo180_float(par2 - par1);
 

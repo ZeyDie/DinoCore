@@ -30,7 +30,7 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
         return cancel;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 
@@ -69,7 +69,7 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
      *
      * @param yield The new yield percentage
      */
-    public void setYield(float yield) {
+    public void setYield(final float yield) {
         this.yield = yield;
     }
 

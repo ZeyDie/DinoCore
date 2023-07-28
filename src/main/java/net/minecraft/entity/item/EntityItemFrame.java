@@ -17,12 +17,12 @@ public class EntityItemFrame extends EntityHanging
     /** Chance for this item frame's item to drop from the frame. */
     private float itemDropChance = 1.0F;
 
-    public EntityItemFrame(World par1World)
+    public EntityItemFrame(final World par1World)
     {
         super(par1World);
     }
 
-    public EntityItemFrame(World par1World, int par2, int par3, int par4, int par5)
+    public EntityItemFrame(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         super(par1World, par2, par3, par4, par5);
         this.setDirection(par5);
@@ -50,7 +50,7 @@ public class EntityItemFrame extends EntityHanging
      * Checks if the entity is in range to render by using the past in distance and comparing it to its average edge
      * length * 64 * renderDistanceWeight Args: distance
      */
-    public boolean isInRangeToRenderDist(double par1)
+    public boolean isInRangeToRenderDist(final double par1)
     {
         double d1 = 16.0D;
         d1 *= 64.0D * this.renderDistanceWeight;
@@ -60,13 +60,13 @@ public class EntityItemFrame extends EntityHanging
     /**
      * Called when this entity is broken. Entity parameter may be null.
      */
-    public void onBroken(Entity par1Entity)
+    public void onBroken(final Entity par1Entity)
     {
         ItemStack itemstack = this.getDisplayedItem();
 
         if (par1Entity instanceof EntityPlayer)
         {
-            EntityPlayer entityplayer = (EntityPlayer)par1Entity;
+            final EntityPlayer entityplayer = (EntityPlayer)par1Entity;
 
             if (entityplayer.capabilities.isCreativeMode)
             {
@@ -88,13 +88,13 @@ public class EntityItemFrame extends EntityHanging
     /**
      * Removes the dot representing this frame's position from the map when the item frame is broken.
      */
-    private void removeFrameFromMap(ItemStack par1ItemStack)
+    private void removeFrameFromMap(final ItemStack par1ItemStack)
     {
         if (par1ItemStack != null)
         {
             if (par1ItemStack.itemID == Item.map.itemID)
             {
-                MapData mapdata = ((ItemMap)par1ItemStack.getItem()).getMapData(par1ItemStack, this.worldObj);
+                final MapData mapdata = ((ItemMap)par1ItemStack.getItem()).getMapData(par1ItemStack, this.worldObj);
                 mapdata.playersVisibleOnMap.remove("frame-" + this.entityId);
             }
 
@@ -109,10 +109,10 @@ public class EntityItemFrame extends EntityHanging
 
     public void setDisplayedItem(ItemStack par1ItemStack)
     {
-        par1ItemStack = par1ItemStack.copy();
-        par1ItemStack.stackSize = 1;
-        par1ItemStack.setItemFrame(this);
-        this.getDataWatcher().updateObject(2, par1ItemStack);
+        ItemStack par1ItemStack1 = par1ItemStack.copy();
+        par1ItemStack1.stackSize = 1;
+        par1ItemStack1.setItemFrame(this);
+        this.getDataWatcher().updateObject(2, par1ItemStack1);
         this.getDataWatcher().setObjectWatched(2);
     }
 
@@ -124,7 +124,7 @@ public class EntityItemFrame extends EntityHanging
         return this.getDataWatcher().getWatchableObjectByte(3);
     }
 
-    public void setItemRotation(int par1)
+    public void setItemRotation(final int par1)
     {
         this.getDataWatcher().updateObject(3, Byte.valueOf((byte)(par1 % 4)));
     }
@@ -132,7 +132,7 @@ public class EntityItemFrame extends EntityHanging
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         if (this.getDisplayedItem() != null)
         {
@@ -147,9 +147,9 @@ public class EntityItemFrame extends EntityHanging
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
-        NBTTagCompound nbttagcompound1 = par1NBTTagCompound.getCompoundTag("Item");
+        final NBTTagCompound nbttagcompound1 = par1NBTTagCompound.getCompoundTag("Item");
 
         if (nbttagcompound1 != null && !nbttagcompound1.hasNoTags())
         {
@@ -168,11 +168,11 @@ public class EntityItemFrame extends EntityHanging
     /**
      * First layer of player interaction
      */
-    public boolean interactFirst(EntityPlayer par1EntityPlayer)
+    public boolean interactFirst(final EntityPlayer par1EntityPlayer)
     {
         if (this.getDisplayedItem() == null)
         {
-            ItemStack itemstack = par1EntityPlayer.getHeldItem();
+            final ItemStack itemstack = par1EntityPlayer.getHeldItem();
 
             if (itemstack != null && !this.worldObj.isRemote)
             {

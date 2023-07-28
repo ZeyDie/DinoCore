@@ -23,15 +23,15 @@ public enum Statistic {
     private final boolean isSubstat;
     private final boolean isBlock;
 
-    private Statistic(int id) {
+    private Statistic(final int id) {
         this(id, false, false);
     }
 
-    private Statistic(int id, boolean isBlock) {
+    private Statistic(final int id, final boolean isBlock) {
         this(id, true, isBlock);
     }
 
-    private Statistic(int id, boolean isSubstat, boolean isBlock) {
+    private Statistic(final int id, final boolean isSubstat, final boolean isBlock) {
         this.id = id;
         this.isSubstat = isSubstat;
         this.isBlock = isBlock;
@@ -76,12 +76,12 @@ public enum Statistic {
      * @deprecated Magic value
      */
     @Deprecated
-    public static Statistic getById(int id) {
+    public static Statistic getById(final int id) {
         return BY_ID.get(id);
     }
 
     static {
-        for (Statistic statistic : values()) {
+        for (final Statistic statistic : values()) {
             BY_ID.put(statistic.id, statistic);
         }
     }

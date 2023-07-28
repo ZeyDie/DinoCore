@@ -11,9 +11,9 @@ public enum EnumEntitySize
     SIZE_5,
     SIZE_6;
 
-    public int multiplyBy32AndRound(double par1)
+    public int multiplyBy32AndRound(final double par1)
     {
-        double d1 = par1 - ((double)MathHelper.floor_double(par1) + 0.5D);
+        final double d1 = par1 - ((double)MathHelper.floor_double(par1) + 0.5D);
 
         switch (EnumEntitySizeHelper.field_96565_a[this.ordinal()])
         {

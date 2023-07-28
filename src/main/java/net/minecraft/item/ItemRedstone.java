@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 
 public class ItemRedstone extends Item
 {
-    public ItemRedstone(int par1)
+    public ItemRedstone(final int par1)
     {
         super(par1);
         this.setCreativeTab(CreativeTabs.tabRedstone);
@@ -17,56 +17,59 @@ public class ItemRedstone extends Item
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final World par3World, int par4, int par5, int par6, final int par7, final float par8, final float par9, final float par10)
     {
-        if (par3World.getBlockId(par4, par5, par6) != Block.snow.blockID)
+        int par51 = par5;
+        int par61 = par6;
+        int par41 = par4;
+        if (par3World.getBlockId(par41, par51, par61) != Block.snow.blockID)
         {
             if (par7 == 0)
             {
-                --par5;
+                --par51;
             }
 
             if (par7 == 1)
             {
-                ++par5;
+                ++par51;
             }
 
             if (par7 == 2)
             {
-                --par6;
+                --par61;
             }
 
             if (par7 == 3)
             {
-                ++par6;
+                ++par61;
             }
 
             if (par7 == 4)
             {
-                --par4;
+                --par41;
             }
 
             if (par7 == 5)
             {
-                ++par4;
+                ++par41;
             }
 
-            if (!par3World.isAirBlock(par4, par5, par6))
+            if (!par3World.isAirBlock(par41, par51, par61))
             {
                 return false;
             }
         }
 
-        if (!par2EntityPlayer.canPlayerEdit(par4, par5, par6, par7, par1ItemStack))
+        if (!par2EntityPlayer.canPlayerEdit(par41, par51, par61, par7, par1ItemStack))
         {
             return false;
         }
         else
         {
-            if (Block.redstoneWire.canPlaceBlockAt(par3World, par4, par5, par6))
+            if (Block.redstoneWire.canPlaceBlockAt(par3World, par41, par51, par61))
             {
                 --par1ItemStack.stackSize;
-                par3World.setBlock(par4, par5, par6, Block.redstoneWire.blockID);
+                par3World.setBlock(par41, par51, par61, Block.redstoneWire.blockID);
             }
 
             return true;

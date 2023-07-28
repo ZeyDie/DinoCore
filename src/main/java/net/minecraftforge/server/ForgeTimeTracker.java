@@ -28,14 +28,14 @@ public class ForgeTimeTracker {
     
     private ForgeTimeTracker()
     {
-        MapMaker mm = new MapMaker();
+        final MapMaker mm = new MapMaker();
         mm.weakKeys();
         tileEntityTimings = mm.makeMap();
         entityTimings = mm.makeMap();
     }
     
 
-    private void trackTileStart(TileEntity tileEntity, long nanoTime)
+    private void trackTileStart(final TileEntity tileEntity, final long nanoTime)
     {
         if (tileEntityTrackingTime == 0)
         {
@@ -53,7 +53,7 @@ public class ForgeTimeTracker {
     }
 
 
-    private void trackTileEnd(TileEntity tileEntity, long nanoTime)
+    private void trackTileEnd(final TileEntity tileEntity, final long nanoTime)
     {
         if (tile == null || tile.get() != tileEntity)
         {
@@ -67,7 +67,7 @@ public class ForgeTimeTracker {
             timings = new int[101];
             tileEntityTimings.put(tileEntity, timings);
         }
-        int idx = timings[100] = (timings[100] + 1) % 100;
+        final int idx = timings[100] = (timings[100] + 1) % 100;
         timings[idx] = (int) (nanoTime - timing);
     }
 
@@ -78,8 +78,8 @@ public class ForgeTimeTracker {
     
     private ImmutableMap<TileEntity, int[]> buildImmutableTileEntityTimingMap()
     {
-        Builder<TileEntity, int[]> builder = ImmutableMap.<TileEntity,int[]>builder();
-        for (Entry<TileEntity, int[]> entry : tileEntityTimings.entrySet())
+        final Builder<TileEntity, int[]> builder = ImmutableMap.<TileEntity,int[]>builder();
+        for (final Entry<TileEntity, int[]> entry : tileEntityTimings.entrySet())
         {
             builder.put(entry.getKey(), Arrays.copyOfRange(entry.getValue(), 0, 100));
         }
@@ -87,24 +87,24 @@ public class ForgeTimeTracker {
     }
 
 
-    public static void trackStart(TileEntity tileEntity)
+    public static void trackStart(final TileEntity tileEntity)
     {
         if (!tileEntityTracking) return;
         INSTANCE.trackTileStart(tileEntity, System.nanoTime());
     }
 
-    public static void trackEnd(TileEntity tileEntity)
+    public static void trackEnd(final TileEntity tileEntity)
     {
         if (!tileEntityTracking) return;
         INSTANCE.trackTileEnd(tileEntity, System.nanoTime());
     }
 
-    public static void trackStart(Entity par1Entity)
+    public static void trackStart(final Entity par1Entity)
     {
         
     }
 
-    public static void trackEnd(Entity par1Entity)
+    public static void trackEnd(final Entity par1Entity)
     {
         
     }

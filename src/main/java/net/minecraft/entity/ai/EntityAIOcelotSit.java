@@ -27,7 +27,7 @@ public class EntityAIOcelotSit extends EntityAIBase
     /** Z Coordinate of a nearby sitable block */
     private int sitableBlockZ;
 
-    public EntityAIOcelotSit(EntityOcelot par1EntityOcelot, double par2)
+    public EntityAIOcelotSit(final EntityOcelot par1EntityOcelot, final double par2)
     {
         this.theOcelot = par1EntityOcelot;
         this.field_75404_b = par2;
@@ -99,7 +99,7 @@ public class EntityAIOcelotSit extends EntityAIBase
      */
     protected boolean getNearbySitableBlockDistance()
     {
-        int i = (int)this.theOcelot.posY;
+        final int i = (int)this.theOcelot.posY;
         double d0 = 2.147483647E9D;
 
         for (int j = (int)this.theOcelot.posX - 8; (double)j < this.theOcelot.posX + 8.0D; ++j)
@@ -108,7 +108,7 @@ public class EntityAIOcelotSit extends EntityAIBase
             {
                 if (this.isSittableBlock(this.theOcelot.worldObj, j, i, k) && this.theOcelot.worldObj.isAirBlock(j, i + 1, k))
                 {
-                    double d1 = this.theOcelot.getDistanceSq((double)j, (double)i, (double)k);
+                    final double d1 = this.theOcelot.getDistanceSq((double)j, (double)i, (double)k);
 
                     if (d1 < d0)
                     {
@@ -127,14 +127,14 @@ public class EntityAIOcelotSit extends EntityAIBase
     /**
      * Determines whether the Ocelot wants to sit on the block at given coordinate
      */
-    protected boolean isSittableBlock(World par1World, int par2, int par3, int par4)
+    protected boolean isSittableBlock(final World par1World, final int par2, final int par3, final int par4)
     {
-        int l = par1World.getBlockId(par2, par3, par4);
-        int i1 = par1World.getBlockMetadata(par2, par3, par4);
+        final int l = par1World.getBlockId(par2, par3, par4);
+        final int i1 = par1World.getBlockMetadata(par2, par3, par4);
 
         if (l == Block.chest.blockID)
         {
-            TileEntityChest tileentitychest = (TileEntityChest)par1World.getBlockTileEntity(par2, par3, par4);
+            final TileEntityChest tileentitychest = (TileEntityChest)par1World.getBlockTileEntity(par2, par3, par4);
 
             if (tileentitychest.numUsingPlayers < 1)
             {

@@ -37,7 +37,7 @@ public class ServerListenThread extends Thread {
     //TODO ZeyCodeEnd
     private final NetworkListenThread myNetworkListenThread;
 
-    public ServerListenThread(NetworkListenThread par1NetworkListenThread, InetAddress par2InetAddress, int par3) throws IOException   // CraftBukkit - added throws
+    public ServerListenThread(final NetworkListenThread par1NetworkListenThread, final InetAddress par2InetAddress, final int par3) throws IOException   // CraftBukkit - added throws
     {
         super("Listen thread");
         this.myNetworkListenThread = par1NetworkListenThread;
@@ -58,15 +58,15 @@ public class ServerListenThread extends Thread {
     }
 
     public void processPendingConnections() {
-        List list = this.pendingConnections;
+        final List list = this.pendingConnections;
 
         synchronized (this.pendingConnections) {
             for (int i = 0; i < this.pendingConnections.size(); ++i) {
-                NetLoginHandler netloginhandler = (NetLoginHandler) this.pendingConnections.get(i);
+                final NetLoginHandler netloginhandler = (NetLoginHandler) this.pendingConnections.get(i);
 
                 try {
                     netloginhandler.tryLogin();
-                } catch (Exception exception) {
+                } catch (final Exception exception) {
                     netloginhandler.raiseErrorAndDisconnect("Internal server error");
                     FMLLog.log(Level.SEVERE, exception, "Error handling login related packet - connection from %s refused", netloginhandler.getUsernameAndAddress());
                     this.myNetworkListenThread.getServer().getLogAgent().logWarningException("Failed to handle packet for " + netloginhandler.getUsernameAndAddress() + ": " + exception, exception);
@@ -88,11 +88,11 @@ public class ServerListenThread extends Thread {
 
         while (this.myNetworkListenThread.isListening) {
             try {
-                Socket socket = this.myServerSocket.accept();
+                final Socket socket = this.myServerSocket.accept();
 
                 // CraftBukkit start - Connection throttle
-                InetAddress address = socket.getInetAddress();
-                long currentTime = System.currentTimeMillis();
+                final InetAddress address = socket.getInetAddress();
+                final long currentTime = System.currentTimeMillis();
 
                 //TODO ZeyCodeStart
                 if (CoreSettings.getInstance().getSettings().isDebug())
@@ -117,10 +117,10 @@ public class ServerListenThread extends Thread {
                 }
 
                 // CraftBukkit end
-                NetLoginHandler netloginhandler = new NetLoginHandler(this.myNetworkListenThread.getServer(), socket, "Connection #" + this.connectionCounter++);
+                final NetLoginHandler netloginhandler = new NetLoginHandler(this.myNetworkListenThread.getServer(), socket, "Connection #" + this.connectionCounter++);
 
                 this.addPendingConnection(netloginhandler);
-            } catch (IOException ioexception) {
+            } catch (final IOException ioexception) {
                 this.myNetworkListenThread.getServer().getLogAgent().logWarning("DSCT: " + ioexception.getMessage()); // CraftBukkit
             }
         }
@@ -128,11 +128,11 @@ public class ServerListenThread extends Thread {
         this.myNetworkListenThread.getServer().getLogAgent().logInfo("Closing listening thread");
     }
 
-    private void addPendingConnection(NetLoginHandler par1NetLoginHandler) {
+    private void addPendingConnection(final NetLoginHandler par1NetLoginHandler) {
         if (par1NetLoginHandler == null) {
             throw new IllegalArgumentException("Got null pendingconnection!");
         } else {
-            List list = this.pendingConnections;
+            final List list = this.pendingConnections;
 
             synchronized (this.pendingConnections) {
                 this.pendingConnections.add(par1NetLoginHandler);
@@ -140,9 +140,9 @@ public class ServerListenThread extends Thread {
         }
     }
 
-    public void func_71769_a(InetAddress par1InetAddress) {
+    public void func_71769_a(final InetAddress par1InetAddress) {
         if (par1InetAddress != null) {
-            HashMap hashmap = this.recentConnections;
+            final HashMap hashmap = this.recentConnections;
 
             synchronized (this.recentConnections) {
                 this.recentConnections.remove(par1InetAddress);
@@ -157,7 +157,7 @@ public class ServerListenThread extends Thread {
 
             try {
                 this.myServerSocket.close();
-            } catch (Throwable ignored) {
+            } catch (final Throwable ignored) {
             }
     }
 

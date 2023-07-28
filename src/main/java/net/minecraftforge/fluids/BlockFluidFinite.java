@@ -18,13 +18,13 @@ import java.util.Random;
  */
 public class BlockFluidFinite extends BlockFluidBase
 {
-    public BlockFluidFinite(int id, Fluid fluid, Material material)
+    public BlockFluidFinite(final int id, final Fluid fluid, final Material material)
     {
         super(id, fluid, material);
     }
 
     @Override
-    public int getQuantaValue(IBlockAccess world, int x, int y, int z)
+    public int getQuantaValue(final IBlockAccess world, final int x, final int y, final int z)
     {
         if (world.isAirBlock(x, y, z))
         {
@@ -36,12 +36,12 @@ public class BlockFluidFinite extends BlockFluidBase
             return -1;
         }
 
-        int quantaRemaining = world.getBlockMetadata(x, y, z) + 1;
+        final int quantaRemaining = world.getBlockMetadata(x, y, z) + 1;
         return quantaRemaining;
     }
 
     @Override
-    public boolean canCollideCheck(int meta, boolean fullHit)
+    public boolean canCollideCheck(final int meta, final boolean fullHit)
     {
         return fullHit && meta == quantaPerBlock - 1;
     }
@@ -53,13 +53,13 @@ public class BlockFluidFinite extends BlockFluidBase
     }
 
     @Override
-    public void updateTick(World world, int x, int y, int z, Random rand)
+    public void updateTick(final World world, final int x, final int y, final int z, final Random rand)
     {
         boolean changed = false;
         int quantaRemaining = world.getBlockMetadata(x, y, z) + 1;
 
         // Flow vertically if possible
-        int prevRemaining = quantaRemaining;
+        final int prevRemaining = quantaRemaining;
         quantaRemaining = tryToFlowVerticallyInto(world, x, y, z, quantaRemaining);
 
         if (quantaRemaining < 1)
@@ -81,15 +81,15 @@ public class BlockFluidFinite extends BlockFluidBase
         }
 
         // Flow out if possible
-        int lowerthan = quantaRemaining - 1;
+        final int lowerthan = quantaRemaining - 1;
         if (displaceIfPossible(world, x,     y, z - 1)) world.setBlock(x,     y, z - 1, 0);
         if (displaceIfPossible(world, x,     y, z + 1)) world.setBlock(x,     y, z + 1, 0);
         if (displaceIfPossible(world, x - 1, y, z    )) world.setBlock(x - 1, y, z,     0);
         if (displaceIfPossible(world, x + 1, y, z    )) world.setBlock(x + 1, y, z,     0);
-        int north = getQuantaValueBelow(world, x,     y, z - 1, lowerthan);
-        int south = getQuantaValueBelow(world, x,     y, z + 1, lowerthan);
-        int west  = getQuantaValueBelow(world, x - 1, y, z,     lowerthan);
-        int east  = getQuantaValueBelow(world, x + 1, y, z,     lowerthan);
+        final int north = getQuantaValueBelow(world, x,     y, z - 1, lowerthan);
+        final int south = getQuantaValueBelow(world, x,     y, z + 1, lowerthan);
+        final int west  = getQuantaValueBelow(world, x - 1, y, z,     lowerthan);
+        final int east  = getQuantaValueBelow(world, x + 1, y, z,     lowerthan);
         int total = quantaRemaining;
         int count = 1;
 
@@ -230,9 +230,9 @@ public class BlockFluidFinite extends BlockFluidBase
         world.setBlockMetadataWithNotify(x, y, z, each - 1, 2);
     }
 
-    public int tryToFlowVerticallyInto(World world, int x, int y, int z, int amtToInput)
+    public int tryToFlowVerticallyInto(final World world, final int x, final int y, final int z, final int amtToInput)
     {
-        int otherY = y + densityDir;
+        final int otherY = y + densityDir;
         if (otherY < 0 || otherY >= world.getHeight())
         {
             world.setBlockToAir(x, y, z);
@@ -260,7 +260,7 @@ public class BlockFluidFinite extends BlockFluidBase
         }
         else
         {
-            int density_other = getDensity(world, x, otherY, z);
+            final int density_other = getDensity(world, x, otherY, z);
             if (density_other == Integer.MAX_VALUE)
             {
                 if (displaceIfPossible(world, x, otherY, z))
@@ -280,9 +280,9 @@ public class BlockFluidFinite extends BlockFluidBase
             {
                 if (density_other < density) // then swap
                 {
-                    int bId = world.getBlockId(x, otherY, z);
-                    BlockFluidBase block = (BlockFluidBase) Block.blocksList[bId];
-                    int otherData = world.getBlockMetadata(x, otherY, z);
+                    final int bId = world.getBlockId(x, otherY, z);
+                    final BlockFluidBase block = (BlockFluidBase) Block.blocksList[bId];
+                    final int otherData = world.getBlockMetadata(x, otherY, z);
                     world.setBlock(x, otherY, z, blockID, amtToInput - 1, 3);
                     world.setBlock(x, y, z, bId, otherData, 3);
                     world.scheduleBlockUpdate(x, otherY, z, blockID, tickRate);
@@ -294,9 +294,9 @@ public class BlockFluidFinite extends BlockFluidBase
             {
                 if (density_other > density)
                 {
-                    int bId = world.getBlockId(x, otherY, z);
-                    BlockFluidBase block = (BlockFluidBase) Block.blocksList[bId];
-                    int otherData = world.getBlockMetadata(x, otherY, z);
+                    final int bId = world.getBlockId(x, otherY, z);
+                    final BlockFluidBase block = (BlockFluidBase) Block.blocksList[bId];
+                    final int otherData = world.getBlockMetadata(x, otherY, z);
                     world.setBlock(x, otherY, z, blockID, amtToInput - 1, 3);
                     world.setBlock(x, y, z, bId, otherData, 3);
                     world.scheduleBlockUpdate(x, otherY, z, blockID, tickRate);
@@ -310,13 +310,13 @@ public class BlockFluidFinite extends BlockFluidBase
 
     /* IFluidBlock */
     @Override
-    public FluidStack drain(World world, int x, int y, int z, boolean doDrain)
+    public FluidStack drain(final World world, final int x, final int y, final int z, final boolean doDrain)
     {
         return null;
     }
 
     @Override
-    public boolean canDrain(World world, int x, int y, int z)
+    public boolean canDrain(final World world, final int x, final int y, final int z)
     {
         return false;
     }

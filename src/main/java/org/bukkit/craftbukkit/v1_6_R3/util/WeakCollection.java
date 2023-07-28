@@ -17,15 +17,15 @@ public final class WeakCollection<T> implements Collection<T> {
         collection = new ArrayList<WeakReference<T>>();
     }
 
-    public boolean add(T value) {
+    public boolean add(final T value) {
         Validate.notNull(value, "Cannot add null value");
         return collection.add(new WeakReference<T>(value));
     }
 
-    public boolean addAll(Collection<? extends T> collection) {
-        Collection<WeakReference<T>> values = this.collection;
+    public boolean addAll(final Collection<? extends T> collection) {
+        final Collection<WeakReference<T>> values = this.collection;
         boolean ret = false;
-        for (T value : collection) {
+        for (final T value : collection) {
             Validate.notNull(value, "Cannot add null value");
             ret |= values.add(new WeakReference<T>(value));
         }
@@ -36,11 +36,11 @@ public final class WeakCollection<T> implements Collection<T> {
         collection.clear();
     }
 
-    public boolean contains(Object object) {
+    public boolean contains(final Object object) {
         if (object  == null) {
             return false;
         }
-        for (T compare : this) {
+        for (final T compare : this) {
             if (object.equals(compare)) {
                 return true;
             }
@@ -48,7 +48,7 @@ public final class WeakCollection<T> implements Collection<T> {
         return false;
     }
 
-    public boolean containsAll(Collection<?> collection) {
+    public boolean containsAll(final Collection<?> collection) {
         return toCollection().containsAll(collection);
     }
 
@@ -67,11 +67,11 @@ public final class WeakCollection<T> implements Collection<T> {
                     return true;
                 }
 
-                Iterator<WeakReference<T>> it = this.it;
+                final Iterator<WeakReference<T>> it = this.it;
                 value = null;
 
                 while (it.hasNext()) {
-                    WeakReference<T> ref = it.next();
+                    final WeakReference<T> ref = it.next();
                     value = ref.get();
                     if (value == null) {
                         it.remove();
@@ -88,8 +88,7 @@ public final class WeakCollection<T> implements Collection<T> {
                     throw new NoSuchElementException("No more elements");
                 }
 
-                @SuppressWarnings("unchecked")
-                T value = (T) this.value;
+                @SuppressWarnings("unchecked") final T value = (T) this.value;
                 this.value = NO_VALUE;
                 return value;
             }
@@ -105,12 +104,12 @@ public final class WeakCollection<T> implements Collection<T> {
         };
     }
 
-    public boolean remove(Object object) {
+    public boolean remove(final Object object) {
         if (object == null) {
             return false;
         }
 
-        Iterator<T> it = this.iterator();
+        final Iterator<T> it = this.iterator();
         while (it.hasNext()) {
             if (object.equals(it.next())) {
                 it.remove();
@@ -120,8 +119,8 @@ public final class WeakCollection<T> implements Collection<T> {
         return false;
     }
 
-    public boolean removeAll(Collection<?> collection) {
-        Iterator<T> it = this.iterator();
+    public boolean removeAll(final Collection<?> collection) {
+        final Iterator<T> it = this.iterator();
         boolean ret = false;
         while (it.hasNext()) {
             if (collection.contains(it.next())) {
@@ -132,8 +131,8 @@ public final class WeakCollection<T> implements Collection<T> {
         return ret;
     }
 
-    public boolean retainAll(Collection<?> collection) {
-        Iterator<T> it = this.iterator();
+    public boolean retainAll(final Collection<?> collection) {
+        final Iterator<T> it = this.iterator();
         boolean ret = false;
         while (it.hasNext()) {
             if (!collection.contains(it.next())) {
@@ -146,7 +145,7 @@ public final class WeakCollection<T> implements Collection<T> {
 
     public int size() {
         int s = 0;
-        for (T value : this) {
+        for (final T value : this) {
             s++;
         }
         return s;
@@ -156,15 +155,13 @@ public final class WeakCollection<T> implements Collection<T> {
         return this.toArray(new Object[0]);
     }
 
-    public <T> T[] toArray(T[] array) {
+    public <T> T[] toArray(final T[] array) {
         return toCollection().toArray(array);
     }
 
     private Collection<T> toCollection() {
-        ArrayList<T> collection = new ArrayList<T>();
-        for (T value : this) {
-            collection.add(value);
-        }
+        final ArrayList<T> collection = new ArrayList<T>();
+        collection.addAll(this);
         return collection;
     }
 }

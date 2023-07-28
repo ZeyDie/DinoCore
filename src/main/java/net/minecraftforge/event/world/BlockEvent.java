@@ -17,7 +17,7 @@ public class BlockEvent extends Event {
     public final World world;
     public final Block block;
     public final int blockMetadata;
-    public BlockEvent(int x, int y, int z, World world, Block block, int blockMetadata)
+    public BlockEvent(final int x, final int y, final int z, final World world, final Block block, final int blockMetadata)
     {
         this.x = x;
         this.y = y;
@@ -45,7 +45,7 @@ public class BlockEvent extends Event {
         public float dropChance; // Change to e.g. 1.0f, if you manipulate the list and want to guarantee it always drops
         public final EntityPlayer harvester; // May be null for non-player harvesting such as explosions or machines
 
-        public HarvestDropsEvent(int x, int y, int z, World world, Block block, int blockMetadata, int fortuneLevel, float dropChance, ArrayList<ItemStack> drops, EntityPlayer harvester, boolean isSilkTouching)
+        public HarvestDropsEvent(final int x, final int y, final int z, final World world, final Block block, final int blockMetadata, final int fortuneLevel, final float dropChance, final ArrayList<ItemStack> drops, final EntityPlayer harvester, final boolean isSilkTouching)
         {
             super(x, y, z, world, block, blockMetadata);
             this.fortuneLevel = fortuneLevel;
@@ -67,13 +67,13 @@ public class BlockEvent extends Event {
         private final EntityPlayer player;
         private int exp;
 
-        public BreakEvent(int x, int y, int z, World world, Block block, int blockMetadata, EntityPlayer player)
+        public BreakEvent(final int x, final int y, final int z, final World world, final Block block, final int blockMetadata, final EntityPlayer player)
         {
             super(x, y, z, world, block, blockMetadata);
             this.player = player;
 
             // Cauldron start - handle event on bukkit side
-            org.bukkit.event.block.BlockBreakEvent bukkitEvent = CraftEventFactory.callBlockBreakEvent(world, x, y, z, block, blockMetadata, player);
+            final org.bukkit.event.block.BlockBreakEvent bukkitEvent = CraftEventFactory.callBlockBreakEvent(world, x, y, z, block, blockMetadata, player);
             if (bukkitEvent.isCancelled())
             {
                 this.setCanceled(true);
@@ -105,7 +105,7 @@ public class BlockEvent extends Event {
          *
          * @param exp 1 or higher to drop experience, else nothing will drop
          */
-        public void setExpToDrop(int exp)
+        public void setExpToDrop(final int exp)
         {
             this.exp = exp;
         }

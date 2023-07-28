@@ -29,7 +29,7 @@ public class Packet62LevelSound extends Packet
 
     public Packet62LevelSound() {}
 
-    public Packet62LevelSound(String par1Str, double par2, double par4, double par6, float par8, float par9)
+    public Packet62LevelSound(final String par1Str, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.soundName = par1Str;
         this.effectX = (int)(par2 * 8.0D);
@@ -52,7 +52,7 @@ public class Packet62LevelSound extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.soundName = readString(par1DataInput, 256);
         this.effectX = par1DataInput.readInt();
@@ -65,7 +65,7 @@ public class Packet62LevelSound extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         writeString(this.soundName, par1DataOutput);
         par1DataOutput.writeInt(this.effectX);
@@ -78,7 +78,7 @@ public class Packet62LevelSound extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleLevelSound(this);
     }

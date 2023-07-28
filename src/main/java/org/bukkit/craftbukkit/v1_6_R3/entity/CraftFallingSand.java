@@ -8,7 +8,7 @@ import org.bukkit.entity.FallingSand;
 
 public class CraftFallingSand extends CraftEntity implements FallingSand {
 
-    public CraftFallingSand(CraftServer server, net.minecraft.entity.item.EntityFallingSand entity) {
+    public CraftFallingSand(final CraftServer server, final net.minecraft.entity.item.EntityFallingSand entity) {
         super(server, entity);
     }
 
@@ -42,7 +42,7 @@ public class CraftFallingSand extends CraftEntity implements FallingSand {
         return getHandle().shouldDropItem;
     }
 
-    public void setDropItem(boolean drop) {
+    public void setDropItem(final boolean drop) {
         getHandle().shouldDropItem = drop;
     }
 }

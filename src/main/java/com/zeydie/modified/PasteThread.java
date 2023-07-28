@@ -44,10 +44,10 @@ public final class PasteThread extends Thread {
             out.write(this.byteArrayOutputStream.toByteArray());
             out.close();
 
-            JsonObject location = (new Gson()).fromJson(new InputStreamReader(httpURLConnection.getInputStream()), JsonObject.class);
+            final JsonObject location = (new Gson()).fromJson(new InputStreamReader(httpURLConnection.getInputStream()), JsonObject.class);
             httpURLConnection.getInputStream().close();
             this.commandSender.sendMessage(ChatColor.GREEN + "Timings results can be viewed at https://www.spigotmc.org/go/timings?url=" + location.get("key").getAsString());
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             this.commandSender.sendMessage(ChatColor.RED + "Error pasting timings, check your console for more information");
             Bukkit.getServer().getLogger().log(Level.WARNING, "Could not paste timings", ex);
         }

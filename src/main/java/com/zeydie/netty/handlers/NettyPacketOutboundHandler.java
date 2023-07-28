@@ -38,11 +38,11 @@ public final class NettyPacketOutboundHandler extends MessageToMessageEncoder<Pa
         final PacketWithBytes packetWithBytes = new PacketWithBytes(packet, null);
         final List<PacketHandlers.PacketHandler> packetHandlers = PacketHandlers.specificHandlers.get(packet.getPacketId());
 
-        for (PacketHandlers.PacketHandler packetHandler : packetHandlers)
+        for (final PacketHandlers.PacketHandler packetHandler : packetHandlers)
             if (packetHandler.handleOutboundPacket(packetWithBytes, this.username, this.uuid, list))
                 return;
 
-        for (PacketHandlers.PacketHandler packetHandler : PacketHandlers.generalHandlers)
+        for (final PacketHandlers.PacketHandler packetHandler : PacketHandlers.generalHandlers)
             if (packetHandler.handleOutboundPacket(packetWithBytes, this.username, this.uuid, list))
                 return;
 

@@ -15,7 +15,7 @@ public class Packet11PlayerPosition extends Packet10Flying
     }
 
     @SideOnly(Side.CLIENT)
-    public Packet11PlayerPosition(double par1, double par3, double par5, double par7, boolean par9)
+    public Packet11PlayerPosition(final double par1, final double par3, final double par5, final double par7, final boolean par9)
     {
         this.xPosition = par1;
         this.yPosition = par3;
@@ -28,7 +28,7 @@ public class Packet11PlayerPosition extends Packet10Flying
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.xPosition = par1DataInput.readDouble();
         this.yPosition = par1DataInput.readDouble();
@@ -40,7 +40,7 @@ public class Packet11PlayerPosition extends Packet10Flying
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeDouble(this.xPosition);
         par1DataOutput.writeDouble(this.yPosition);

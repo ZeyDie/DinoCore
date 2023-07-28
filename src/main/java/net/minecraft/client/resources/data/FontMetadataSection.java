@@ -10,7 +10,7 @@ public class FontMetadataSection implements MetadataSection
     private final float[] charLefts;
     private final float[] charSpacings;
 
-    public FontMetadataSection(float[] par1ArrayOfFloat, float[] par2ArrayOfFloat, float[] par3ArrayOfFloat)
+    public FontMetadataSection(final float[] par1ArrayOfFloat, final float[] par2ArrayOfFloat, final float[] par3ArrayOfFloat)
     {
         this.charWidths = par1ArrayOfFloat;
         this.charLefts = par2ArrayOfFloat;

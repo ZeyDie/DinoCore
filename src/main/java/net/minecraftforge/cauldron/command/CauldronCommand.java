@@ -35,7 +35,7 @@ public class CauldronCommand extends Command
     }
 
     @Override
-    public boolean execute(CommandSender sender, String commandLabel, String[] args)
+    public boolean execute(final CommandSender sender, final String commandLabel, final String[] args)
     {
         if (!testPermission(sender))
         {
@@ -93,18 +93,18 @@ public class CauldronCommand extends Command
         return false;
     }
 
-    private void processHeap(CommandSender sender, String[] args)
+    private void processHeap(final CommandSender sender, final String[] args)
     {
-        File file = new File(new File(new File("."), "dumps"), "heap-dump-" + new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date()) + "-server.bin");
+        final File file = new File(new File(new File("."), "dumps"), "heap-dump-" + new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date()) + "-server.bin");
         sender.sendMessage("Writing chunk info to: " + file);
         CauldronHooks.dumpHeap(file, true);
         sender.sendMessage("Chunk info complete");
     }
 
-    private void processChunks(CommandSender sender, String[] args)
+    private void processChunks(final CommandSender sender, final String[] args)
     {
         sender.sendMessage(ChatColor.GOLD + "Dimension stats: ");
-        for (net.minecraft.world.WorldServer world : MinecraftServer.getServer().worlds)
+        for (final net.minecraft.world.WorldServer world : MinecraftServer.getServer().worlds)
         {
             sender.sendMessage(ChatColor.GOLD + "Dimension: " + ChatColor.GRAY + world.provider.dimensionId +
                     ChatColor.GOLD + " Loaded Chunks: " + ChatColor.GRAY + world.theChunkProviderServer.loadedChunkHashMap.size() +
@@ -123,15 +123,15 @@ public class CauldronCommand extends Command
         {
             return;
         }
-        boolean dumpAll = ((args.length > 2) && "all".equalsIgnoreCase(args[2]));
+        final boolean dumpAll = ((args.length > 2) && "all".equalsIgnoreCase(args[2]));
 
-        File file = new File(new File(new File("."), "chunk-dumps"), "chunk-info-" + new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date()) + "-server.txt");
+        final File file = new File(new File(new File("."), "chunk-dumps"), "chunk-info-" + new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date()) + "-server.txt");
         sender.sendMessage("Writing chunk info to: " + file);
         CauldronHooks.writeChunks(file, dumpAll);
         sender.sendMessage("Chunk info complete");
     }
 
-    private boolean getToggle(CommandSender sender, String[] args)
+    private boolean getToggle(final CommandSender sender, final String[] args)
     {
         try
         {
@@ -158,11 +158,11 @@ public class CauldronCommand extends Command
                 sender.sendMessage(ChatColor.RED + "Could not find option: " + args[1]);
                 return false;
             }
-            Object value = toggle.getValue();
-            String option = (Boolean.TRUE.equals(value) ? ChatColor.GREEN : ChatColor.RED) + " " + value;
+            final Object value = toggle.getValue();
+            final String option = (Boolean.TRUE.equals(value) ? ChatColor.GREEN : ChatColor.RED) + " " + value;
             sender.sendMessage(ChatColor.GOLD + args[1] + " " + option);
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             ex.printStackTrace();
@@ -170,14 +170,14 @@ public class CauldronCommand extends Command
         return true;
     }
 
-    private boolean intervalSet(CommandSender sender, String[] args)
+    private boolean intervalSet(final CommandSender sender, final String[] args)
     {
         try
         {
-            int setting = NumberUtils.toInt(args[2], 1);
+            final int setting = NumberUtils.toInt(args[2], 1);
             MinecraftServer.getServer().cauldronConfig.set(args[1], setting);
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
@@ -185,7 +185,7 @@ public class CauldronCommand extends Command
         return true;
     }
 
-    private boolean setToggle(CommandSender sender, String[] args)
+    private boolean setToggle(final CommandSender sender, final String[] args)
     {
         try
         {
@@ -208,20 +208,20 @@ public class CauldronCommand extends Command
                 return false;
             }
             toggle.setValue(args[2]);
-            Object value = toggle.getValue();
-            String option = (Boolean.TRUE.equals(value) ? ChatColor.GREEN : ChatColor.RED) + " " + value;
+            final Object value = toggle.getValue();
+            final String option = (Boolean.TRUE.equals(value) ? ChatColor.GREEN : ChatColor.RED) + " " + value;
             sender.sendMessage(ChatColor.GOLD + args[1] + " " + option);
             // Special case for load-on-request
             if (toggle == MinecraftServer.getServer().cauldronConfig.loadChunkOnRequest)
             {
-                for (net.minecraft.world.WorldServer world : MinecraftServer.getServer().worlds)
+                for (final net.minecraft.world.WorldServer world : MinecraftServer.getServer().worlds)
                 {
                     world.theChunkProviderServer.loadChunkOnProvideRequest = MinecraftServer.getServer().cauldronConfig.loadChunkOnRequest.getValue();
                 }
             }
             MinecraftServer.getServer().cauldronConfig.save();
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             ex.printStackTrace();
@@ -230,7 +230,7 @@ public class CauldronCommand extends Command
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args)
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args)
     {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");

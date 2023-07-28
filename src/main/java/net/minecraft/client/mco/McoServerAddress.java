@@ -12,20 +12,20 @@ public class McoServerAddress extends ValueObject
 {
     public String field_96417_a;
 
-    public static McoServerAddress func_98162_a(String par0Str)
+    public static McoServerAddress func_98162_a(final String par0Str)
     {
-        McoServerAddress mcoserveraddress = new McoServerAddress();
+        final McoServerAddress mcoserveraddress = new McoServerAddress();
 
         try
         {
-            JsonRootNode jsonrootnode = (new JdomParser()).parse(par0Str);
+            final JsonRootNode jsonrootnode = (new JdomParser()).parse(par0Str);
             mcoserveraddress.field_96417_a = jsonrootnode.getStringValue(new Object[] {"address"});
         }
-        catch (InvalidSyntaxException invalidsyntaxexception)
+        catch (final InvalidSyntaxException invalidsyntaxexception)
         {
             ;
         }
-        catch (IllegalArgumentException illegalargumentexception)
+        catch (final IllegalArgumentException illegalargumentexception)
         {
             ;
         }

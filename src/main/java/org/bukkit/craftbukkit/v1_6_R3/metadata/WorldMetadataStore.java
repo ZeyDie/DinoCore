@@ -16,7 +16,7 @@ public class WorldMetadataStore extends MetadataStoreBase<World> implements Meta
      * @return a unique metadata key
      */
     @Override
-    protected String disambiguate(World world, String metadataKey) {
+    protected String disambiguate(final World world, final String metadataKey) {
         return world.getUID().toString() + ":" + metadataKey;
     }
 }

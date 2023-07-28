@@ -8,7 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.Vector;
 
 public class CraftFireball extends AbstractProjectile implements Fireball {
-    public CraftFireball(CraftServer server, net.minecraft.entity.projectile.EntityFireball entity) {
+    public CraftFireball(final CraftServer server, final net.minecraft.entity.projectile.EntityFireball entity) {
         super(server, entity);
     }
 
@@ -20,11 +20,11 @@ public class CraftFireball extends AbstractProjectile implements Fireball {
         return getHandle().isIncendiary;
     }
 
-    public void setIsIncendiary(boolean isIncendiary) {
+    public void setIsIncendiary(final boolean isIncendiary) {
         getHandle().isIncendiary = isIncendiary;
     }
 
-    public void setYield(float yield) {
+    public void setYield(final float yield) {
         getHandle().yield = yield;
     }
 
@@ -36,7 +36,7 @@ public class CraftFireball extends AbstractProjectile implements Fireball {
         return null;
     }
 
-    public void setShooter(LivingEntity shooter) {
+    public void setShooter(final LivingEntity shooter) {
         if (shooter instanceof CraftLivingEntity) {
             getHandle().shootingEntity = (net.minecraft.entity.EntityLivingBase) ((CraftLivingEntity) shooter).entity;
         }
@@ -46,7 +46,7 @@ public class CraftFireball extends AbstractProjectile implements Fireball {
         return new Vector(getHandle().accelerationX, getHandle().accelerationY, getHandle().accelerationZ);
     }
 
-    public void setDirection(Vector direction) {
+    public void setDirection(final Vector direction) {
         getHandle().setDirection(direction.getX(), direction.getY(), direction.getZ());
     }
 

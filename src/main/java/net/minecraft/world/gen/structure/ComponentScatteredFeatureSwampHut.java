@@ -15,18 +15,18 @@ public class ComponentScatteredFeatureSwampHut extends ComponentScatteredFeature
 
     public ComponentScatteredFeatureSwampHut() {}
 
-    public ComponentScatteredFeatureSwampHut(Random par1Random, int par2, int par3)
+    public ComponentScatteredFeatureSwampHut(final Random par1Random, final int par2, final int par3)
     {
         super(par1Random, par2, 64, par3, 7, 5, 9);
     }
 
-    protected void func_143012_a(NBTTagCompound par1NBTTagCompound)
+    protected void func_143012_a(final NBTTagCompound par1NBTTagCompound)
     {
         super.func_143012_a(par1NBTTagCompound);
         par1NBTTagCompound.setBoolean("Witch", this.hasWitch);
     }
 
-    protected void func_143011_b(NBTTagCompound par1NBTTagCompound)
+    protected void func_143011_b(final NBTTagCompound par1NBTTagCompound)
     {
         super.func_143011_b(par1NBTTagCompound);
         this.hasWitch = par1NBTTagCompound.getBoolean("Witch");
@@ -36,7 +36,7 @@ public class ComponentScatteredFeatureSwampHut extends ComponentScatteredFeature
      * second Part of Structure generating, this for example places Spiderwebs, Mob Spawners, it closes Mineshafts at
      * the end, it adds Fences...
      */
-    public boolean addComponentParts(World par1World, Random par2Random, StructureBoundingBox par3StructureBoundingBox)
+    public boolean addComponentParts(final World par1World, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox)
     {
         if (!this.func_74935_a(par1World, par3StructureBoundingBox, 0))
         {
@@ -65,10 +65,10 @@ public class ComponentScatteredFeatureSwampHut extends ComponentScatteredFeature
             this.placeBlockAtCurrentPosition(par1World, Block.cauldron.blockID, 0, 4, 2, 6, par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(par1World, Block.fence.blockID, 0, 1, 2, 1, par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(par1World, Block.fence.blockID, 0, 5, 2, 1, par3StructureBoundingBox);
-            int i = this.getMetadataWithOffset(Block.stairsWoodOak.blockID, 3);
-            int j = this.getMetadataWithOffset(Block.stairsWoodOak.blockID, 1);
-            int k = this.getMetadataWithOffset(Block.stairsWoodOak.blockID, 0);
-            int l = this.getMetadataWithOffset(Block.stairsWoodOak.blockID, 2);
+            final int i = this.getMetadataWithOffset(Block.stairsWoodOak.blockID, 3);
+            final int j = this.getMetadataWithOffset(Block.stairsWoodOak.blockID, 1);
+            final int k = this.getMetadataWithOffset(Block.stairsWoodOak.blockID, 0);
+            final int l = this.getMetadataWithOffset(Block.stairsWoodOak.blockID, 2);
             this.fillWithMetadataBlocks(par1World, par3StructureBoundingBox, 0, 4, 1, 6, 4, 1, Block.stairsWoodSpruce.blockID, i, Block.stairsWoodSpruce.blockID, i, false);
             this.fillWithMetadataBlocks(par1World, par3StructureBoundingBox, 0, 4, 2, 0, 4, 7, Block.stairsWoodSpruce.blockID, k, Block.stairsWoodSpruce.blockID, k, false);
             this.fillWithMetadataBlocks(par1World, par3StructureBoundingBox, 6, 4, 2, 6, 4, 7, Block.stairsWoodSpruce.blockID, j, Block.stairsWoodSpruce.blockID, j, false);
@@ -88,12 +88,12 @@ public class ComponentScatteredFeatureSwampHut extends ComponentScatteredFeature
             {
                 i1 = this.getXWithOffset(2, 5);
                 j1 = this.getYWithOffset(2);
-                int k1 = this.getZWithOffset(2, 5);
+                final int k1 = this.getZWithOffset(2, 5);
 
                 if (par3StructureBoundingBox.isVecInside(i1, j1, k1))
                 {
                     this.hasWitch = true;
-                    EntityWitch entitywitch = new EntityWitch(par1World);
+                    final EntityWitch entitywitch = new EntityWitch(par1World);
                     entitywitch.setLocationAndAngles((double)i1 + 0.5D, (double)j1, (double)k1 + 0.5D, 0.0F, 0.0F);
                     entitywitch.onSpawnWithEgg((EntityLivingData)null);
                     par1World.spawnEntityInWorld(entitywitch);

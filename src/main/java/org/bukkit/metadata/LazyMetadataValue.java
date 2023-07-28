@@ -25,7 +25,7 @@ public class LazyMetadataValue extends MetadataValueAdapter implements MetadataV
      * @param owningPlugin the {@link Plugin} that created this metadata value.
      * @param lazyValue the lazy value assigned to this metadata value.
      */
-    public LazyMetadataValue(Plugin owningPlugin, Callable<Object> lazyValue) {
+    public LazyMetadataValue(final Plugin owningPlugin, final Callable<Object> lazyValue) {
         this(owningPlugin, CacheStrategy.CACHE_AFTER_FIRST_EVAL, lazyValue);
     }
 
@@ -36,7 +36,7 @@ public class LazyMetadataValue extends MetadataValueAdapter implements MetadataV
      * @param cacheStrategy determines the rules for caching this metadata value.
      * @param lazyValue the lazy value assigned to this metadata value.
      */
-    public LazyMetadataValue(Plugin owningPlugin, CacheStrategy cacheStrategy, Callable<Object> lazyValue) {
+    public LazyMetadataValue(final Plugin owningPlugin, final CacheStrategy cacheStrategy, final Callable<Object> lazyValue) {
         super(owningPlugin);
         Validate.notNull(cacheStrategy, "cacheStrategy cannot be null");
         Validate.notNull(lazyValue, "lazyValue cannot be null");
@@ -46,13 +46,13 @@ public class LazyMetadataValue extends MetadataValueAdapter implements MetadataV
     }
 
     /** Protected special constructor used by FixedMetadataValue to bypass standard setup. */
-    protected LazyMetadataValue(Plugin owningPlugin) {
+    protected LazyMetadataValue(final Plugin owningPlugin) {
         super(owningPlugin);
     }
 
     public Object value() {
         eval();
-        Object value = internalValue.get();
+        final Object value = internalValue.get();
         if (value == ACTUALLY_NULL) {
             return null;
         }
@@ -72,7 +72,7 @@ public class LazyMetadataValue extends MetadataValueAdapter implements MetadataV
                     value = ACTUALLY_NULL;
                 }
                 internalValue = new SoftReference<Object>(value);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 throw new MetadataEvaluationException(e);
             }
         }

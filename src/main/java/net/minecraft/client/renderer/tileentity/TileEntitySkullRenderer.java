@@ -25,7 +25,7 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer
     /**
      * Render a skull tile entity.
      */
-    public void renderTileEntitySkullAt(TileEntitySkull par1TileEntitySkull, double par2, double par4, double par6, float par8)
+    public void renderTileEntitySkullAt(final TileEntitySkull par1TileEntitySkull, final double par2, final double par4, final double par6, final float par8)
     {
         this.func_82393_a((float)par2, (float)par4, (float)par6, par1TileEntitySkull.getBlockMetadata() & 7, (float)(par1TileEntitySkull.func_82119_b() * 360) / 16.0F, par1TileEntitySkull.getSkullType(), par1TileEntitySkull.getExtraType());
     }
@@ -33,14 +33,15 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer
     /**
      * Associate a TileEntityRenderer with this TileEntitySpecialRenderer
      */
-    public void setTileEntityRenderer(TileEntityRenderer par1TileEntityRenderer)
+    public void setTileEntityRenderer(final TileEntityRenderer par1TileEntityRenderer)
     {
         super.setTileEntityRenderer(par1TileEntityRenderer);
         skullRenderer = this;
     }
 
-    public void func_82393_a(float par1, float par2, float par3, int par4, float par5, int par6, String par7Str)
+    public void func_82393_a(final float par1, final float par2, final float par3, final int par4, float par5, final int par6, final String par7Str)
     {
+        float par51 = par5;
         ModelSkeletonHead modelskeletonhead = this.field_82396_c;
 
         switch (par6)
@@ -59,7 +60,7 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer
             case 3:
                 ResourceLocation resourcelocation = AbstractClientPlayer.locationStevePng;
 
-                if (par7Str != null && par7Str.length() > 0)
+                if (par7Str != null && !par7Str.isEmpty())
                 {
                     resourcelocation = AbstractClientPlayer.getLocationSkull(par7Str);
                     AbstractClientPlayer.getDownloadImageSkin(resourcelocation, par7Str);
@@ -83,16 +84,16 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer
                     break;
                 case 3:
                     GL11.glTranslatef(par1 + 0.5F, par2 + 0.25F, par3 + 0.26F);
-                    par5 = 180.0F;
+                    par51 = 180.0F;
                     break;
                 case 4:
                     GL11.glTranslatef(par1 + 0.74F, par2 + 0.25F, par3 + 0.5F);
-                    par5 = 270.0F;
+                    par51 = 270.0F;
                     break;
                 case 5:
                 default:
                     GL11.glTranslatef(par1 + 0.26F, par2 + 0.25F, par3 + 0.5F);
-                    par5 = 90.0F;
+                    par51 = 90.0F;
             }
         }
         else
@@ -100,15 +101,15 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer
             GL11.glTranslatef(par1 + 0.5F, par2, par3 + 0.5F);
         }
 
-        float f4 = 0.0625F;
+        final float f4 = 0.0625F;
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glScalef(-1.0F, -1.0F, 1.0F);
         GL11.glEnable(GL11.GL_ALPHA_TEST);
-        modelskeletonhead.render((Entity)null, 0.0F, 0.0F, 0.0F, par5, 0.0F, f4);
+        modelskeletonhead.render((Entity)null, 0.0F, 0.0F, 0.0F, par51, 0.0F, f4);
         GL11.glPopMatrix();
     }
 
-    public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8)
+    public void renderTileEntityAt(final TileEntity par1TileEntity, final double par2, final double par4, final double par6, final float par8)
     {
         this.renderTileEntitySkullAt((TileEntitySkull)par1TileEntity, par2, par4, par6, par8);
     }

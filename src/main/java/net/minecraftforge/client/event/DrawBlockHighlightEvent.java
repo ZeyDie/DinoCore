@@ -17,7 +17,7 @@ public class DrawBlockHighlightEvent extends Event
     public final ItemStack currentItem;
     public final float partialTicks;
     
-    public DrawBlockHighlightEvent(RenderGlobal context, EntityPlayer player, MovingObjectPosition target, int subID, ItemStack currentItem, float partialTicks)
+    public DrawBlockHighlightEvent(final RenderGlobal context, final EntityPlayer player, final MovingObjectPosition target, final int subID, final ItemStack currentItem, final float partialTicks)
     {
         this.context = context;
         this.player = player;

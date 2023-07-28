@@ -21,7 +21,7 @@ class TaskWorldCreation extends TaskLongRunning
 
     final GuiScreenCreateOnlineWorld field_96590_a;
 
-    public TaskWorldCreation(GuiScreenCreateOnlineWorld par1GuiScreenCreateOnlineWorld, String par2Str, String par3Str, String par4Str, WorldTemplate par5WorldTemplate)
+    public TaskWorldCreation(final GuiScreenCreateOnlineWorld par1GuiScreenCreateOnlineWorld, final String par2Str, final String par3Str, final String par4Str, final WorldTemplate par5WorldTemplate)
     {
         this.field_96590_a = par1GuiScreenCreateOnlineWorld;
         this.field_96589_c = par2Str;
@@ -32,9 +32,9 @@ class TaskWorldCreation extends TaskLongRunning
 
     public void run()
     {
-        String s = I18n.getString("mco.create.world.wait");
+        final String s = I18n.getString("mco.create.world.wait");
         this.setMessage(s);
-        McoClient mcoclient = new McoClient(GuiScreenCreateOnlineWorld.func_96248_a(this.field_96590_a).getSession());
+        final McoClient mcoclient = new McoClient(GuiScreenCreateOnlineWorld.func_96248_a(this.field_96590_a).getSession());
 
         try
         {
@@ -49,22 +49,22 @@ class TaskWorldCreation extends TaskLongRunning
 
             GuiScreenCreateOnlineWorld.func_96246_c(this.field_96590_a).displayGuiScreen(GuiScreenCreateOnlineWorld.func_96247_b(this.field_96590_a));
         }
-        catch (ExceptionMcoService exceptionmcoservice)
+        catch (final ExceptionMcoService exceptionmcoservice)
         {
             GuiScreenCreateOnlineWorld.func_130026_d(this.field_96590_a).getLogAgent().logSevere(exceptionmcoservice.toString());
             this.setFailedMessage(exceptionmcoservice.toString());
         }
-        catch (UnsupportedEncodingException unsupportedencodingexception)
+        catch (final UnsupportedEncodingException unsupportedencodingexception)
         {
             GuiScreenCreateOnlineWorld.func_130027_e(this.field_96590_a).getLogAgent().logWarning("Realms: " + unsupportedencodingexception.getLocalizedMessage());
             this.setFailedMessage(unsupportedencodingexception.getLocalizedMessage());
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             GuiScreenCreateOnlineWorld.func_130028_f(this.field_96590_a).getLogAgent().logWarning("Realms: could not parse response");
             this.setFailedMessage(ioexception.getLocalizedMessage());
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             this.setFailedMessage(exception.getLocalizedMessage());
         }

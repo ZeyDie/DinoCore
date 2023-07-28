@@ -27,7 +27,7 @@ public class FMLTweaker implements ITweaker {
     private static URI jarLocation;
 
     @Override
-    public void acceptOptions(List<String> args, File gameDir, File assetsDir, String profile)
+    public void acceptOptions(final List<String> args, final File gameDir, final File assetsDir, final String profile)
     {
         this.gameDir = (gameDir == null ? new File(".") : gameDir);
         this.assetsDir = assetsDir;
@@ -45,7 +45,7 @@ public class FMLTweaker implements ITweaker {
 
         String classifier = null;
 
-        for (String arg : args)
+        for (final String arg : args)
         {
             if (arg.startsWith("-"))
             {
@@ -94,7 +94,7 @@ public class FMLTweaker implements ITweaker {
         {
             jarLocation = getClass().getProtectionDomain().getCodeSource().getLocation().toURI();
         }
-        catch (URISyntaxException e)
+        catch (final URISyntaxException e)
         {
             Logger.getLogger("FMLTWEAK").log(Level.SEVERE, "Missing URI information for FML tweak");
             throw Throwables.propagate(e);
@@ -102,7 +102,7 @@ public class FMLTweaker implements ITweaker {
     }
 
     @Override
-    public void injectIntoClassLoader(LaunchClassLoader classLoader)
+    public void injectIntoClassLoader(final LaunchClassLoader classLoader)
     {
         classLoader.addTransformerExclusion("cpw.mods.fml.repackage.");
         classLoader.addTransformerExclusion("cpw.mods.fml.relauncher.");
@@ -121,17 +121,17 @@ public class FMLTweaker implements ITweaker {
     @Override
     public String[] getLaunchArguments()
     {
-        List<String> args = Lists.newArrayList();
+        final List<String> args = Lists.newArrayList();
         args.addAll(standaloneArgs);
 
-        for (Entry<String, String> arg : launchArgs.entrySet())
+        for (final Entry<String, String> arg : launchArgs.entrySet())
         {
             args.add(arg.getKey());
             args.add(arg.getValue());
         }
         launchArgs.clear();
 
-        return args.toArray(new String[args.size()]);
+        return args.toArray(new String[0]);
     }
 
     public File getGameDir()
@@ -144,9 +144,9 @@ public class FMLTweaker implements ITweaker {
         return jarLocation;
     }
 
-    public void injectCascadingTweak(String tweakClassName)
+    public void injectCascadingTweak(final String tweakClassName)
     {
-        List<String> tweakClasses = (List<String>) Launch.blackboard.get("TweakClasses");
+        final List<String> tweakClasses = (List<String>) Launch.blackboard.get("TweakClasses");
         tweakClasses.add(tweakClassName);
     }
 }

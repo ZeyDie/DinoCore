@@ -6,18 +6,18 @@ public class NibbleArrayReader
     private final int depthBits;
     private final int depthBitsPlusFour;
 
-    public NibbleArrayReader(byte[] par1ArrayOfByte, int par2)
+    public NibbleArrayReader(final byte[] par1ArrayOfByte, final int par2)
     {
         this.data = par1ArrayOfByte;
         this.depthBits = par2;
         this.depthBitsPlusFour = par2 + 4;
     }
 
-    public int get(int par1, int par2, int par3)
+    public int get(final int par1, final int par2, final int par3)
     {
-        int l = par1 << this.depthBitsPlusFour | par3 << this.depthBits | par2;
-        int i1 = l >> 1;
-        int j1 = l & 1;
+        final int l = par1 << this.depthBitsPlusFour | par3 << this.depthBits | par2;
+        final int i1 = l >> 1;
+        final int j1 = l & 1;
         return j1 == 0 ? this.data[i1] & 15 : this.data[i1] >> 4 & 15;
     }
 }

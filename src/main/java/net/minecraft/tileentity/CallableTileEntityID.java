@@ -8,20 +8,20 @@ class CallableTileEntityID implements Callable
 {
     final TileEntity theTileEntity;
 
-    CallableTileEntityID(TileEntity par1TileEntity)
+    CallableTileEntityID(final TileEntity par1TileEntity)
     {
         this.theTileEntity = par1TileEntity;
     }
 
     public String callTileEntityID()
     {
-        int i = this.theTileEntity.worldObj.getBlockId(this.theTileEntity.xCoord, this.theTileEntity.yCoord, this.theTileEntity.zCoord);
+        final int i = this.theTileEntity.worldObj.getBlockId(this.theTileEntity.xCoord, this.theTileEntity.yCoord, this.theTileEntity.zCoord);
 
         try
         {
             return String.format("ID #%d (%s // %s)", new Object[] {Integer.valueOf(i), Block.blocksList[i].getUnlocalizedName(), Block.blocksList[i].getClass().getCanonicalName()});
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
             return "ID #" + i;
         }

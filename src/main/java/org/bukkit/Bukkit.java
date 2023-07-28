@@ -47,7 +47,7 @@ public final class Bukkit {
      *
      * @param server Server instance
      */
-    public static void setServer(Server server) {
+    public static void setServer(final Server server) {
         if (Bukkit.server != null) {
             throw new UnsupportedOperationException("Cannot redefine singleton Server");
         }
@@ -157,7 +157,7 @@ public final class Bukkit {
     /**
      * @see Server#broadcastMessage(String message)
      */
-    public static int broadcastMessage(String message) {
+    public static int broadcastMessage(final String message) {
         return server.broadcastMessage(message);
     }
 
@@ -171,14 +171,14 @@ public final class Bukkit {
     /**
      * @see Server#getPlayer(String name)
      */
-    public static Player getPlayer(String name) {
+    public static Player getPlayer(final String name) {
         return server.getPlayer(name);
     }
 
     /**
      * @see Server#matchPlayer(String name)
      */
-    public static List<Player> matchPlayer(String name) {
+    public static List<Player> matchPlayer(final String name) {
         return server.matchPlayer(name);
     }
 
@@ -213,35 +213,35 @@ public final class Bukkit {
     /**
      * @see Server#createWorld(WorldCreator options)
      */
-    public static World createWorld(WorldCreator options) {
+    public static World createWorld(final WorldCreator options) {
         return server.createWorld(options);
     }
 
     /**
      * @see Server#unloadWorld(String name, boolean save)
      */
-    public static boolean unloadWorld(String name, boolean save) {
+    public static boolean unloadWorld(final String name, final boolean save) {
         return server.unloadWorld(name, save);
     }
 
     /**
      * @see Server#unloadWorld(World world, boolean save)
      */
-    public static boolean unloadWorld(World world, boolean save) {
+    public static boolean unloadWorld(final World world, final boolean save) {
         return server.unloadWorld(world, save);
     }
 
     /**
      * @see Server#getWorld(String name)
      */
-    public static World getWorld(String name) {
+    public static World getWorld(final String name) {
         return server.getWorld(name);
     }
 
     /**
      * @see Server#getWorld(UUID uid)
      */
-    public static World getWorld(UUID uid) {
+    public static World getWorld(final UUID uid) {
         return server.getWorld(uid);
     }
 
@@ -250,14 +250,14 @@ public final class Bukkit {
      * @deprecated Magic value
      */
     @Deprecated
-    public static MapView getMap(short id) {
+    public static MapView getMap(final short id) {
         return server.getMap(id);
     }
 
     /**
      * @see Server#createMap(World world)
      */
-    public static MapView createMap(World world) {
+    public static MapView createMap(final World world) {
         return server.createMap(world);
     }
 
@@ -279,7 +279,7 @@ public final class Bukkit {
     /**
      * @see Server#getPluginCommand(String name)
      */
-    public static PluginCommand getPluginCommand(String name) {
+    public static PluginCommand getPluginCommand(final String name) {
         return server.getPluginCommand(name);
     }
 
@@ -293,28 +293,28 @@ public final class Bukkit {
     /**
      * @see Server#dispatchCommand(CommandSender sender, String commandLine)
      */
-    public static boolean dispatchCommand(CommandSender sender, String commandLine) {
+    public static boolean dispatchCommand(final CommandSender sender, final String commandLine) {
         return server.dispatchCommand(sender, commandLine);
     }
 
     /**
      * @see Server#configureDbConfig(ServerConfig config)
      */
-    public static void configureDbConfig(ServerConfig config) {
+    public static void configureDbConfig(final ServerConfig config) {
         server.configureDbConfig(config);
     }
 
     /**
      * @see Server#addRecipe(Recipe recipe)
      */
-    public static boolean addRecipe(Recipe recipe) {
+    public static boolean addRecipe(final Recipe recipe) {
         return server.addRecipe(recipe);
     }
 
     /**
      * @see Server#getRecipesFor(ItemStack result)
      */
-    public static List<Recipe> getRecipesFor(ItemStack result) {
+    public static List<Recipe> getRecipesFor(final ItemStack result) {
         return server.getRecipesFor(result);
     }
 
@@ -356,7 +356,7 @@ public final class Bukkit {
     /**
      * @see Server#setSpawnRadius(int value)
      */
-    public static void setSpawnRadius(int value) {
+    public static void setSpawnRadius(final int value) {
         server.setSpawnRadius(value);
     }
 
@@ -391,21 +391,21 @@ public final class Bukkit {
     /**
      * @see Server#broadcast(String message, String permission)
      */
-    public static int broadcast(String message, String permission) {
+    public static int broadcast(final String message, final String permission) {
         return server.broadcast(message, permission);
     }
 
     /**
      * @see Server#getOfflinePlayer(String name)
      */
-    public static OfflinePlayer getOfflinePlayer(String name) {
+    public static OfflinePlayer getOfflinePlayer(final String name) {
         return server.getOfflinePlayer(name);
     }
 
     /**
      * @see Server#getPlayerExact(String name)
      */
-    public static Player getPlayerExact(String name) {
+    public static Player getPlayerExact(final String name) {
         return server.getPlayerExact(name);
     }
 
@@ -419,14 +419,14 @@ public final class Bukkit {
     /**
      * @see Server#banIP(String address)
      */
-    public static void banIP(String address) {
+    public static void banIP(final String address) {
         server.banIP(address);
     }
 
     /**
      * @see Server#unbanIP(String address)
      */
-    public static void unbanIP(String address) {
+    public static void unbanIP(final String address) {
         server.unbanIP(address);
     }
 
@@ -440,7 +440,7 @@ public final class Bukkit {
     /**
      * @see Server#setWhitelist(boolean value)
      */
-    public static void setWhitelist(boolean value) {
+    public static void setWhitelist(final boolean value) {
         server.setWhitelist(value);
     }
 
@@ -538,7 +538,7 @@ public final class Bukkit {
     /**
      * @see Server#setDefaultGameMode(GameMode mode)
      */
-    public static void setDefaultGameMode(GameMode mode) {
+    public static void setDefaultGameMode(final GameMode mode) {
         server.setDefaultGameMode(mode);
     }
 
@@ -552,21 +552,21 @@ public final class Bukkit {
     /**
      * @see Server#createInventory(InventoryHolder owner, InventoryType type)
      */
-    public static Inventory createInventory(InventoryHolder owner, InventoryType type) {
+    public static Inventory createInventory(final InventoryHolder owner, final InventoryType type) {
         return server.createInventory(owner, type);
     }
 
     /**
      * @see Server#createInventory(InventoryHolder owner, int size)
      */
-    public static Inventory createInventory(InventoryHolder owner, int size) {
+    public static Inventory createInventory(final InventoryHolder owner, final int size) {
         return server.createInventory(owner, size);
     }
 
     /**
      * @see Server#createInventory(InventoryHolder owner, int size, String title)
      */
-    public static Inventory createInventory(InventoryHolder owner, int size, String title) {
+    public static Inventory createInventory(final InventoryHolder owner, final int size, final String title) {
         return server.createInventory(owner, size, title);
     }
 

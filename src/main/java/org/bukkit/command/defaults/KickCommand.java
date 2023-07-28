@@ -19,14 +19,14 @@ public class KickCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
-        if (args.length < 1 || args[0].length() == 0) {
+        if (args.length < 1 || args[0].isEmpty()) {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
 
-        Player player = Bukkit.getPlayerExact(args[0]);
+        final Player player = Bukkit.getPlayerExact(args[0]);
 
         if (player != null) {
             String reason = "Kicked by an operator.";
@@ -45,7 +45,7 @@ public class KickCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) throws IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");

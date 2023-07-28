@@ -28,25 +28,25 @@ public class ModLoaderGuiHelper implements IGuiHandler
     private Container container;
     private int currentID;
 
-    ModLoaderGuiHelper(BaseModProxy mod)
+    ModLoaderGuiHelper(final BaseModProxy mod)
     {
         this.mod = mod;
         this.ids = Sets.newHashSet();
     }
 
     @Override
-    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
+    public Object getServerGuiElement(final int ID, final EntityPlayer player, final World world, final int x, final int y, final int z)
     {
         return container;
     }
 
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
+    public Object getClientGuiElement(final int ID, final EntityPlayer player, final World world, final int x, final int y, final int z)
     {
         return ModLoaderHelper.getClientSideGui(mod, player, ID, x, y, z);
     }
 
-    public void injectContainerAndID(Container container, int ID)
+    public void injectContainerAndID(final Container container, final int ID)
     {
         this.container = container;
         this.currentID = ID;
@@ -57,7 +57,7 @@ public class ModLoaderGuiHelper implements IGuiHandler
         return mod;
     }
 
-    public void associateId(int additionalID)
+    public void associateId(final int additionalID)
     {
         this.ids.add(additionalID);
     }

@@ -27,7 +27,7 @@ public abstract class BukkitRunnable implements Runnable {
      * @throws IllegalStateException if this was already scheduled
      * @see BukkitScheduler#runTask(Plugin, Runnable)
      */
-    public synchronized BukkitTask runTask(Plugin plugin) throws IllegalArgumentException, IllegalStateException {
+    public synchronized BukkitTask runTask(final Plugin plugin) throws IllegalArgumentException, IllegalStateException {
         checkState();
         return setupId(Bukkit.getScheduler().runTask(plugin, this));
     }
@@ -44,7 +44,7 @@ public abstract class BukkitRunnable implements Runnable {
      * @throws IllegalStateException if this was already scheduled
      * @see BukkitScheduler#runTaskAsynchronously(Plugin, Runnable)
      */
-    public synchronized BukkitTask runTaskAsynchronously(Plugin plugin) throws IllegalArgumentException, IllegalStateException  {
+    public synchronized BukkitTask runTaskAsynchronously(final Plugin plugin) throws IllegalArgumentException, IllegalStateException  {
         checkState();
         return setupId(Bukkit.getScheduler().runTaskAsynchronously(plugin, this));
     }
@@ -59,7 +59,7 @@ public abstract class BukkitRunnable implements Runnable {
      * @throws IllegalStateException if this was already scheduled
      * @see BukkitScheduler#runTaskLater(Plugin, Runnable, long)
      */
-    public synchronized BukkitTask runTaskLater(Plugin plugin, long delay) throws IllegalArgumentException, IllegalStateException  {
+    public synchronized BukkitTask runTaskLater(final Plugin plugin, final long delay) throws IllegalArgumentException, IllegalStateException  {
         checkState();
         return setupId(Bukkit.getScheduler().runTaskLater(plugin, this, delay));
     }
@@ -77,7 +77,7 @@ public abstract class BukkitRunnable implements Runnable {
      * @throws IllegalStateException if this was already scheduled
      * @see BukkitScheduler#runTaskLaterAsynchronously(Plugin, Runnable, long)
      */
-    public synchronized BukkitTask runTaskLaterAsynchronously(Plugin plugin, long delay) throws IllegalArgumentException, IllegalStateException  {
+    public synchronized BukkitTask runTaskLaterAsynchronously(final Plugin plugin, final long delay) throws IllegalArgumentException, IllegalStateException  {
         checkState();
         return setupId(Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, this, delay));
     }
@@ -93,7 +93,7 @@ public abstract class BukkitRunnable implements Runnable {
      * @throws IllegalStateException if this was already scheduled
      * @see BukkitScheduler#runTaskTimer(Plugin, Runnable, long, long)
      */
-    public synchronized BukkitTask runTaskTimer(Plugin plugin, long delay, long period) throws IllegalArgumentException, IllegalStateException  {
+    public synchronized BukkitTask runTaskTimer(final Plugin plugin, final long delay, final long period) throws IllegalArgumentException, IllegalStateException  {
         checkState();
         return setupId(Bukkit.getScheduler().runTaskTimer(plugin, this, delay, period));
     }
@@ -112,7 +112,7 @@ public abstract class BukkitRunnable implements Runnable {
      * @throws IllegalStateException if this was already scheduled
      * @see BukkitScheduler#runTaskTimerAsynchronously(Plugin, Runnable, long, long)
      */
-    public synchronized BukkitTask runTaskTimerAsynchronously(Plugin plugin, long delay, long period) throws IllegalArgumentException, IllegalStateException  {
+    public synchronized BukkitTask runTaskTimerAsynchronously(final Plugin plugin, final long delay, final long period) throws IllegalArgumentException, IllegalStateException  {
         checkState();
         return setupId(Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this, delay, period));
     }

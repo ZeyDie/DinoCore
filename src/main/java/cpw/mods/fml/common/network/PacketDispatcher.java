@@ -28,17 +28,17 @@ import net.minecraft.server.MinecraftServer;
  */
 public class PacketDispatcher
 {
-    public static Packet250CustomPayload getPacket(String type, byte[] data)
+    public static Packet250CustomPayload getPacket(final String type, final byte[] data)
     {
         return new Packet250CustomPayload(type, data);
     }
 
-    public static void sendPacketToServer(Packet packet)
+    public static void sendPacketToServer(final Packet packet)
     {
         FMLCommonHandler.instance().getSidedDelegate().sendPacket(packet);
     }
 
-    public static void sendPacketToPlayer(Packet packet, Player player)
+    public static void sendPacketToPlayer(final Packet packet, final Player player)
     {
         if (player instanceof EntityPlayerMP)
         {
@@ -46,9 +46,9 @@ public class PacketDispatcher
         }
     }
 
-    public static void sendPacketToAllAround(double X, double Y, double Z, double range, int dimensionId, Packet packet)
+    public static void sendPacketToAllAround(final double X, final double Y, final double Z, final double range, final int dimensionId, final Packet packet)
     {
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+        final MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
         if (server != null)
         {
             server.getConfigurationManager().sendToAllNear(X, Y, Z, range, dimensionId, packet);
@@ -59,9 +59,9 @@ public class PacketDispatcher
         }
     }
 
-    public static void sendPacketToAllInDimension(Packet packet, int dimId)
+    public static void sendPacketToAllInDimension(final Packet packet, final int dimId)
     {
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+        final MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
         if (server != null)
         {
             server.getConfigurationManager().sendPacketToAllPlayersInDimension(packet, dimId);
@@ -72,9 +72,9 @@ public class PacketDispatcher
         }
     }
 
-    public static void sendPacketToAllPlayers(Packet packet)
+    public static void sendPacketToAllPlayers(final Packet packet)
     {
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+        final MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
         if (server != null)
         {
             server.getConfigurationManager().sendPacketToAllPlayers(packet);
@@ -85,9 +85,9 @@ public class PacketDispatcher
         }
     }
 
-    public static Packet131MapData getTinyPacket(Object mod, short tag, byte[] data)
+    public static Packet131MapData getTinyPacket(final Object mod, final short tag, final byte[] data)
     {
-        NetworkModHandler nmh = FMLNetworkHandler.instance().findNetworkModHandler(mod);
+        final NetworkModHandler nmh = FMLNetworkHandler.instance().findNetworkModHandler(mod);
         return new Packet131MapData((short) nmh.getNetworkId(), tag, data);
     }
 }

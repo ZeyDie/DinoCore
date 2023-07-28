@@ -11,7 +11,7 @@ public class SoundPoolEntry
     private final String soundName;
     private final URL soundUrl;
 
-    public SoundPoolEntry(String par1Str, URL par2URL)
+    public SoundPoolEntry(final String par1Str, final URL par2URL)
     {
         this.soundName = par1Str;
         this.soundUrl = par2URL;

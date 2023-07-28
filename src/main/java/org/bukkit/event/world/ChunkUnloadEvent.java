@@ -19,7 +19,7 @@ public class ChunkUnloadEvent extends ChunkEvent implements Cancellable {
         return cancel;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 

@@ -80,7 +80,7 @@ public abstract class GuiContainer extends GuiScreen
     private boolean field_94074_J;
     private ItemStack field_94075_K;
 
-    public GuiContainer(Container par1Container)
+    public GuiContainer(final Container par1Container)
     {
         this.inventorySlots = par1Container;
         this.field_94068_E = true;
@@ -100,11 +100,11 @@ public abstract class GuiContainer extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
-        int k = this.guiLeft;
-        int l = this.guiTop;
+        final int k = this.guiLeft;
+        final int l = this.guiTop;
         this.drawGuiContainerBackgroundLayer(par3, par1, par2);
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         RenderHelper.disableStandardItemLighting();
@@ -117,15 +117,15 @@ public abstract class GuiContainer extends GuiScreen
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         this.theSlot = null;
-        short short1 = 240;
-        short short2 = 240;
+        final short short1 = 240;
+        final short short2 = 240;
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)short1 / 1.0F, (float)short2 / 1.0F);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         int i1;
 
         for (int j1 = 0; j1 < this.inventorySlots.inventorySlots.size(); ++j1)
         {
-            Slot slot = (Slot)this.inventorySlots.inventorySlots.get(j1);
+            final Slot slot = (Slot)this.inventorySlots.inventorySlots.get(j1);
             this.drawSlotInventory(slot);
 
             if (this.isMouseOverSlot(slot, par1, par2) && slot.func_111238_b())
@@ -133,7 +133,7 @@ public abstract class GuiContainer extends GuiScreen
                 this.theSlot = slot;
                 GL11.glDisable(GL11.GL_LIGHTING);
                 GL11.glDisable(GL11.GL_DEPTH_TEST);
-                int k1 = slot.xDisplayPosition;
+                final int k1 = slot.xDisplayPosition;
                 i1 = slot.yDisplayPosition;
                 this.drawGradientRect(k1, i1, k1 + 16, i1 + 16, -2130706433, -2130706433);
                 GL11.glEnable(GL11.GL_LIGHTING);
@@ -146,12 +146,12 @@ public abstract class GuiContainer extends GuiScreen
         GL11.glDisable(GL11.GL_LIGHTING);
         this.drawGuiContainerForegroundLayer(par1, par2);
         GL11.glEnable(GL11.GL_LIGHTING);
-        InventoryPlayer inventoryplayer = this.mc.thePlayer.inventory;
+        final InventoryPlayer inventoryplayer = this.mc.thePlayer.inventory;
         ItemStack itemstack = this.draggedStack == null ? inventoryplayer.getItemStack() : this.draggedStack;
 
         if (itemstack != null)
         {
-            byte b0 = 8;
+            final byte b0 = 8;
             i1 = this.draggedStack == null ? 8 : 16;
             String s = null;
 
@@ -185,9 +185,9 @@ public abstract class GuiContainer extends GuiScreen
             }
 
             i1 = this.returningStackDestSlot.xDisplayPosition - this.field_85049_r;
-            int l1 = this.returningStackDestSlot.yDisplayPosition - this.field_85048_s;
-            int i2 = this.field_85049_r + (int)((float)i1 * f1);
-            int j2 = this.field_85048_s + (int)((float)l1 * f1);
+            final int l1 = this.returningStackDestSlot.yDisplayPosition - this.field_85048_s;
+            final int i2 = this.field_85049_r + (int)((float)i1 * f1);
+            final int j2 = this.field_85048_s + (int)((float)l1 * f1);
             this.drawItemStack(this.returningStack, i2, j2, (String)null);
         }
 
@@ -195,7 +195,7 @@ public abstract class GuiContainer extends GuiScreen
 
         if (inventoryplayer.getItemStack() == null && this.theSlot != null && this.theSlot.getHasStack())
         {
-            ItemStack itemstack1 = this.theSlot.getStack();
+            final ItemStack itemstack1 = this.theSlot.getStack();
             this.drawItemStackTooltip(itemstack1, par1, par2);
         }
 
@@ -204,7 +204,7 @@ public abstract class GuiContainer extends GuiScreen
         RenderHelper.enableStandardItemLighting();
     }
 
-    private void drawItemStack(ItemStack par1ItemStack, int par2, int par3, String par4Str)
+    private void drawItemStack(final ItemStack par1ItemStack, final int par2, final int par3, final String par4Str)
     {
         GL11.glTranslatef(0.0F, 0.0F, 32.0F);
         this.zLevel = 200.0F;
@@ -218,9 +218,9 @@ public abstract class GuiContainer extends GuiScreen
         itemRenderer.zLevel = 0.0F;
     }
 
-    protected void drawItemStackTooltip(ItemStack par1ItemStack, int par2, int par3)
+    protected void drawItemStackTooltip(final ItemStack par1ItemStack, final int par2, final int par3)
     {
-        List list = par1ItemStack.getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips);
+        final List list = par1ItemStack.getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips);
 
         for (int k = 0; k < list.size(); ++k)
         {
@@ -234,7 +234,7 @@ public abstract class GuiContainer extends GuiScreen
             }
         }
 
-        FontRenderer font = par1ItemStack.getItem().getFontRenderer(par1ItemStack);
+        final FontRenderer font = par1ItemStack.getItem().getFontRenderer(par1ItemStack);
         drawHoveringText(list, par2, par3, (font == null ? fontRenderer : font));
     }
 
@@ -242,17 +242,17 @@ public abstract class GuiContainer extends GuiScreen
      * Draws the text when mouse is over creative inventory tab. Params: current creative tab to be checked, current
      * mouse x position, current mouse y position.
      */
-    protected void drawCreativeTabHoveringText(String par1Str, int par2, int par3)
+    protected void drawCreativeTabHoveringText(final String par1Str, final int par2, final int par3)
     {
         this.func_102021_a(Arrays.asList(new String[] {par1Str}), par2, par3);
     }
 
-    protected void func_102021_a(List par1List, int par2, int par3)
+    protected void func_102021_a(final List par1List, final int par2, final int par3)
     {
         drawHoveringText(par1List, par2, par3, fontRenderer);
     }
 
-    protected void drawHoveringText(List par1List, int par2, int par3, FontRenderer font)
+    protected void drawHoveringText(final List par1List, final int par2, final int par3, final FontRenderer font)
     {
         if (!par1List.isEmpty())
         {
@@ -261,12 +261,12 @@ public abstract class GuiContainer extends GuiScreen
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glDisable(GL11.GL_DEPTH_TEST);
             int k = 0;
-            Iterator iterator = par1List.iterator();
+            final Iterator iterator = par1List.iterator();
 
             while (iterator.hasNext())
             {
-                String s = (String)iterator.next();
-                int l = font.getStringWidth(s);
+                final String s = (String)iterator.next();
+                final int l = font.getStringWidth(s);
 
                 if (l > k)
                 {
@@ -295,14 +295,14 @@ public abstract class GuiContainer extends GuiScreen
 
             this.zLevel = 300.0F;
             itemRenderer.zLevel = 300.0F;
-            int l1 = -267386864;
+            final int l1 = -267386864;
             this.drawGradientRect(i1 - 3, j1 - 4, i1 + k + 3, j1 - 3, l1, l1);
             this.drawGradientRect(i1 - 3, j1 + k1 + 3, i1 + k + 3, j1 + k1 + 4, l1, l1);
             this.drawGradientRect(i1 - 3, j1 - 3, i1 + k + 3, j1 + k1 + 3, l1, l1);
             this.drawGradientRect(i1 - 4, j1 - 3, i1 - 3, j1 + k1 + 3, l1, l1);
             this.drawGradientRect(i1 + k + 3, j1 - 3, i1 + k + 4, j1 + k1 + 3, l1, l1);
-            int i2 = 1347420415;
-            int j2 = (i2 & 16711422) >> 1 | i2 & -16777216;
+            final int i2 = 1347420415;
+            final int j2 = (i2 & 16711422) >> 1 | i2 & -16777216;
             this.drawGradientRect(i1 - 3, j1 - 3 + 1, i1 - 3 + 1, j1 + k1 + 3 - 1, i2, j2);
             this.drawGradientRect(i1 + k + 2, j1 - 3 + 1, i1 + k + 3, j1 + k1 + 3 - 1, i2, j2);
             this.drawGradientRect(i1 - 3, j1 - 3, i1 + k + 3, j1 - 3 + 1, i2, i2);
@@ -310,7 +310,7 @@ public abstract class GuiContainer extends GuiScreen
 
             for (int k2 = 0; k2 < par1List.size(); ++k2)
             {
-                String s1 = (String)par1List.get(k2);
+                final String s1 = (String)par1List.get(k2);
                 font.drawStringWithShadow(s1, i1, j1, -1);
 
                 if (k2 == 0)
@@ -333,7 +333,7 @@ public abstract class GuiContainer extends GuiScreen
     /**
      * Draw the foreground layer for the GuiContainer (everything in front of the items)
      */
-    protected void drawGuiContainerForegroundLayer(int par1, int par2) {}
+    protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {}
 
     /**
      * Draw the background layer for the GuiContainer (everything behind the items)
@@ -343,14 +343,14 @@ public abstract class GuiContainer extends GuiScreen
     /**
      * Draws an inventory slot
      */
-    protected void drawSlotInventory(Slot par1Slot)
+    protected void drawSlotInventory(final Slot par1Slot)
     {
-        int i = par1Slot.xDisplayPosition;
-        int j = par1Slot.yDisplayPosition;
+        final int i = par1Slot.xDisplayPosition;
+        final int j = par1Slot.yDisplayPosition;
         ItemStack itemstack = par1Slot.getStack();
         boolean flag = false;
         boolean flag1 = par1Slot == this.clickedSlot && this.draggedStack != null && !this.isRightMouseClick;
-        ItemStack itemstack1 = this.mc.thePlayer.inventory.getItemStack();
+        final ItemStack itemstack1 = this.mc.thePlayer.inventory.getItemStack();
         String s = null;
 
         if (par1Slot == this.clickedSlot && this.draggedStack != null && this.isRightMouseClick && itemstack != null)
@@ -395,7 +395,7 @@ public abstract class GuiContainer extends GuiScreen
 
         if (itemstack == null)
         {
-            Icon icon = par1Slot.getBackgroundIconIndex();
+            final Icon icon = par1Slot.getBackgroundIconIndex();
 
             if (icon != null)
             {
@@ -425,7 +425,7 @@ public abstract class GuiContainer extends GuiScreen
 
     private void func_94066_g()
     {
-        ItemStack itemstack = this.mc.thePlayer.inventory.getItemStack();
+        final ItemStack itemstack = this.mc.thePlayer.inventory.getItemStack();
 
         if (itemstack != null && this.field_94076_q)
         {
@@ -433,9 +433,9 @@ public abstract class GuiContainer extends GuiScreen
             ItemStack itemstack1;
             int i;
 
-            for (Iterator iterator = this.field_94077_p.iterator(); iterator.hasNext(); this.field_94069_F -= itemstack1.stackSize - i)
+            for (final Iterator iterator = this.field_94077_p.iterator(); iterator.hasNext(); this.field_94069_F -= itemstack1.stackSize - i)
             {
-                Slot slot = (Slot)iterator.next();
+                final Slot slot = (Slot)iterator.next();
                 itemstack1 = itemstack.copy();
                 i = slot.getStack() == null ? 0 : slot.getStack().stackSize;
                 Container.func_94525_a(this.field_94077_p, this.field_94071_C, itemstack1, i);
@@ -456,11 +456,11 @@ public abstract class GuiContainer extends GuiScreen
     /**
      * Returns the slot at the given coordinates or null if there is none.
      */
-    private Slot getSlotAtPosition(int par1, int par2)
+    private Slot getSlotAtPosition(final int par1, final int par2)
     {
         for (int k = 0; k < this.inventorySlots.inventorySlots.size(); ++k)
         {
-            Slot slot = (Slot)this.inventorySlots.inventorySlots.get(k);
+            final Slot slot = (Slot)this.inventorySlots.inventorySlots.get(k);
 
             if (this.isMouseOverSlot(slot, par1, par2))
             {
@@ -474,20 +474,20 @@ public abstract class GuiContainer extends GuiScreen
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int par1, int par2, int par3)
+    protected void mouseClicked(final int par1, final int par2, final int par3)
     {
         super.mouseClicked(par1, par2, par3);
-        boolean flag = par3 == this.mc.gameSettings.keyBindPickBlock.keyCode + 100;
-        Slot slot = this.getSlotAtPosition(par1, par2);
-        long l = Minecraft.getSystemTime();
+        final boolean flag = par3 == this.mc.gameSettings.keyBindPickBlock.keyCode + 100;
+        final Slot slot = this.getSlotAtPosition(par1, par2);
+        final long l = Minecraft.getSystemTime();
         this.field_94074_J = this.field_94072_H == slot && l - this.field_94070_G < 250L && this.field_94073_I == par3;
         this.field_94068_E = false;
 
         if (par3 == 0 || par3 == 1 || flag)
         {
-            int i1 = this.guiLeft;
-            int j1 = this.guiTop;
-            boolean flag1 = par1 < i1 || par2 < j1 || par1 >= i1 + this.xSize || par2 >= j1 + this.ySize;
+            final int i1 = this.guiLeft;
+            final int j1 = this.guiTop;
+            final boolean flag1 = par1 < i1 || par2 < j1 || par1 >= i1 + this.xSize || par2 >= j1 + this.ySize;
             int k1 = -1;
 
             if (slot != null)
@@ -531,7 +531,7 @@ public abstract class GuiContainer extends GuiScreen
                         }
                         else
                         {
-                            boolean flag2 = k1 != -999 && (Keyboard.isKeyDown(42) || Keyboard.isKeyDown(54));
+                            final boolean flag2 = k1 != -999 && (Keyboard.isKeyDown(42) || Keyboard.isKeyDown(54));
                             byte b0 = 0;
 
                             if (flag2)
@@ -577,10 +577,10 @@ public abstract class GuiContainer extends GuiScreen
      * Called when a mouse button is pressed and the mouse is moved around. Parameters are : mouseX, mouseY,
      * lastButtonClicked & timeSinceMouseClick.
      */
-    protected void mouseClickMove(int par1, int par2, int par3, long par4)
+    protected void mouseClickMove(final int par1, final int par2, final int par3, final long par4)
     {
-        Slot slot = this.getSlotAtPosition(par1, par2);
-        ItemStack itemstack = this.mc.thePlayer.inventory.getItemStack();
+        final Slot slot = this.getSlotAtPosition(par1, par2);
+        final ItemStack itemstack = this.mc.thePlayer.inventory.getItemStack();
 
         if (this.clickedSlot != null && this.mc.gameSettings.touchscreen)
         {
@@ -595,7 +595,7 @@ public abstract class GuiContainer extends GuiScreen
                 }
                 else if (this.draggedStack.stackSize > 1 && slot != null && Container.func_94527_a(slot, this.draggedStack, false))
                 {
-                    long i1 = Minecraft.getSystemTime();
+                    final long i1 = Minecraft.getSystemTime();
 
                     if (this.field_92033_y == slot)
                     {
@@ -627,12 +627,12 @@ public abstract class GuiContainer extends GuiScreen
      * Called when the mouse is moved or a mouse button is released.  Signature: (mouseX, mouseY, which) which==-1 is
      * mouseMove, which==0 or which==1 is mouseUp
      */
-    protected void mouseMovedOrUp(int par1, int par2, int par3)
+    protected void mouseMovedOrUp(final int par1, final int par2, final int par3)
     {
-        Slot slot = this.getSlotAtPosition(par1, par2);
-        int l = this.guiLeft;
-        int i1 = this.guiTop;
-        boolean flag = par1 < l || par2 < i1 || par1 >= l + this.xSize || par2 >= i1 + this.ySize;
+        final Slot slot = this.getSlotAtPosition(par1, par2);
+        final int l = this.guiLeft;
+        final int i1 = this.guiTop;
+        final boolean flag = par1 < l || par2 < i1 || par1 >= l + this.xSize || par2 >= i1 + this.ySize;
         int j1 = -1;
 
         if (slot != null)
@@ -646,7 +646,7 @@ public abstract class GuiContainer extends GuiScreen
         }
 
         Slot slot1;
-        Iterator iterator;
+        final Iterator iterator;
 
         if (this.field_94074_J && slot != null && par3 == 0 && this.inventorySlots.func_94530_a((ItemStack)null, slot))
         {
@@ -691,7 +691,7 @@ public abstract class GuiContainer extends GuiScreen
                 return;
             }
 
-            boolean flag1;
+            final boolean flag1;
 
             if (this.clickedSlot != null && this.mc.gameSettings.touchscreen)
             {
@@ -780,7 +780,7 @@ public abstract class GuiContainer extends GuiScreen
     /**
      * Returns if the passed mouse position is over the specified slot.
      */
-    private boolean isMouseOverSlot(Slot par1Slot, int par2, int par3)
+    private boolean isMouseOverSlot(final Slot par1Slot, final int par2, final int par3)
     {
         return this.isPointInRegion(par1Slot.xDisplayPosition, par1Slot.yDisplayPosition, 16, 16, par2, par3);
     }
@@ -789,29 +789,32 @@ public abstract class GuiContainer extends GuiScreen
      * Args: left, top, width, height, pointX, pointY. Note: left, top are local to Gui, pointX, pointY are local to
      * screen
      */
-    protected boolean isPointInRegion(int par1, int par2, int par3, int par4, int par5, int par6)
+    protected boolean isPointInRegion(final int par1, final int par2, final int par3, final int par4, int par5, int par6)
     {
-        int k1 = this.guiLeft;
-        int l1 = this.guiTop;
-        par5 -= k1;
-        par6 -= l1;
-        return par5 >= par1 - 1 && par5 < par1 + par3 + 1 && par6 >= par2 - 1 && par6 < par2 + par4 + 1;
+        int par51 = par5;
+        int par61 = par6;
+        final int k1 = this.guiLeft;
+        final int l1 = this.guiTop;
+        par51 -= k1;
+        par61 -= l1;
+        return par51 >= par1 - 1 && par51 < par1 + par3 + 1 && par61 >= par2 - 1 && par61 < par2 + par4 + 1;
     }
 
-    protected void handleMouseClick(Slot par1Slot, int par2, int par3, int par4)
+    protected void handleMouseClick(final Slot par1Slot, int par2, final int par3, final int par4)
     {
+        int par21 = par2;
         if (par1Slot != null)
         {
-            par2 = par1Slot.slotNumber;
+            par21 = par1Slot.slotNumber;
         }
 
-        this.mc.playerController.windowClick(this.inventorySlots.windowId, par2, par3, par4, this.mc.thePlayer);
+        this.mc.playerController.windowClick(this.inventorySlots.windowId, par21, par3, par4, this.mc.thePlayer);
     }
 
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         if (par2 == 1 || par2 == this.mc.gameSettings.keyBindInventory.keyCode)
         {
@@ -836,7 +839,7 @@ public abstract class GuiContainer extends GuiScreen
     /**
      * This function is what controls the hotbar shortcut check when you press a number key when hovering a stack.
      */
-    protected boolean checkHotbarKeys(int par1)
+    protected boolean checkHotbarKeys(final int par1)
     {
         if (this.mc.thePlayer.inventory.getItemStack() == null && this.theSlot != null)
         {

@@ -25,7 +25,7 @@ public class WatchdogThread extends Thread
     private volatile boolean stopping;
     private volatile long lastWarning;
 
-    private WatchdogThread(long timeoutTime, boolean restart)
+    private WatchdogThread(final long timeoutTime, final boolean restart)
     {
         super( "Spigot Watchdog Thread" );
         this.timeoutTime = timeoutTime;
@@ -33,7 +33,7 @@ public class WatchdogThread extends Thread
         this.restart = restart;
     }
 
-    public static void doStart(int timeoutTime, boolean restart)
+    public static void doStart(final int timeoutTime, final boolean restart)
     {
         if ( instance == null )
         {
@@ -61,10 +61,10 @@ public class WatchdogThread extends Thread
         while (!stopping)
         {
             // Trigger watchdog logic
-            long currentTime = System.currentTimeMillis();
+            final long currentTime = System.currentTimeMillis();
             if ((lastTick != 0 && currentTime > lastTick + timeoutTime))
             {
-                Logger log = Bukkit.getServer().getLogger();
+                final Logger log = Bukkit.getServer().getLogger();
                 log.log(Level.SEVERE, "The server has stopped responding!");
                 log.log(Level.SEVERE, "Please report this to https://github.com/MinecraftPortCentral/Cauldron/issues");
                 log.log(Level.SEVERE, "Be sure to include ALL relevant console errors and Minecraft crash reports");
@@ -72,7 +72,7 @@ public class WatchdogThread extends Thread
                 
                 // Cauldron start - add more logging info
                 log.log(Level.SEVERE, "The server is going slow. Last server tick was " + (currentTime - lastTick) + "ms ago");
-                double tps = Math.min(20, Math.round(net.minecraft.server.MinecraftServer.currentTPS * 10) / 10.0);
+                final double tps = Math.min(20, Math.round(net.minecraft.server.MinecraftServer.currentTPS * 10) / 10.0);
                 log.log(Level.SEVERE, "Last Tick: " + lastTick + " Current Time: " + currentTime + " Warning: " + warningTime + " Timeout: " + timeoutTime);
                 log.log(Level.SEVERE, "[TPS]: " + tps + " Server Tick #" + net.minecraft.server.MinecraftServer.getServer().getTickCounter());
                 log.log(Level.SEVERE, "Last recorded TPS: " + tps);
@@ -80,7 +80,7 @@ public class WatchdogThread extends Thread
                 // Dump world info
                 log.log(Level.SEVERE, "------------------------------");
                 log.log(Level.SEVERE, "Loaded dimensions:");
-                for (net.minecraft.world.WorldServer world : MinecraftServer.getServer().worlds)
+                for (final net.minecraft.world.WorldServer world : MinecraftServer.getServer().worlds)
                 {
                     log.log(Level.SEVERE, "  Dimension:" + world.provider.dimensionId);
                     log.log(Level.SEVERE,
@@ -95,7 +95,7 @@ public class WatchdogThread extends Thread
                 if (MinecraftServer.getServer().cauldronConfig.dumpChunksOnDeadlock.getValue())
                 {
                     // Dump detailed world info to a watchdog report log
-                    File file = new File(new File(new File("."), "crash-reports"), "watchdog-chunks-"
+                    final File file = new File(new File(new File("."), "crash-reports"), "watchdog-chunks-"
                             + (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss")).format(new Date()) + "-server.txt");
                     log.log(Level.SEVERE, "------------------------------");
                     log.log(Level.SEVERE, "Writing watchdog detailed info to: " + file);
@@ -106,7 +106,7 @@ public class WatchdogThread extends Thread
                 if (MinecraftServer.getServer().cauldronConfig.dumpHeapOnDeadlock.getValue())
                 {
                     // Dump detailed world info to a watchdog report log
-                    File file = new File(new File(new File("."), "crash-reports"), "watchdog-heap-"
+                    final File file = new File(new File(new File("."), "crash-reports"), "watchdog-heap-"
                             + (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss")).format(new Date()) + "-server.bin");
                     log.log(Level.SEVERE, "------------------------------");
                     log.log(Level.SEVERE, "Writing heap dump to: " + file);
@@ -122,8 +122,8 @@ public class WatchdogThread extends Thread
                 log.log(Level.SEVERE, "------------------------------");
                 //
                 log.log(Level.SEVERE, "Entire Thread Dump:");
-                ThreadInfo[] threads = ManagementFactory.getThreadMXBean().dumpAllThreads(true, true);
-                for (ThreadInfo thread : threads)
+                final ThreadInfo[] threads = ManagementFactory.getThreadMXBean().dumpAllThreads(true, true);
+                for (final ThreadInfo thread : threads)
                 {
                     dumpThread(thread, log);
                 }
@@ -138,14 +138,14 @@ public class WatchdogThread extends Thread
             // Cauldron + start - add warning info 
             else if (lastTick != 0 && System.currentTimeMillis() > lastTick + warningTime)
             {
-                Logger log = Bukkit.getServer().getLogger();
+                final Logger log = Bukkit.getServer().getLogger();
                 lastWarning = System.currentTimeMillis();
                 // Print what the last server TPS was...
                 log.log(Level.WARNING, "The server is going slow. Last server tick was " + ((System.currentTimeMillis() - lastTick)) + "ms ago");
-                double tps = Math.min(20, Math.round(net.minecraft.server.MinecraftServer.currentTPS * 10) / 10.0);
+                final double tps = Math.min(20, Math.round(net.minecraft.server.MinecraftServer.currentTPS * 10) / 10.0);
                 log.log(Level.WARNING, "Last Tick: " + lastTick + " Current Time: " + currentTime + " Warning: " + warningTime + " Timeout: " + timeoutTime);
                 log.log(Level.WARNING, "[TPS]: " + tps + " Server Tick #" + net.minecraft.server.MinecraftServer.getServer().getTickCounter());
-                for (net.minecraft.world.WorldServer world : MinecraftServer.getServer().worlds)
+                for (final net.minecraft.world.WorldServer world : MinecraftServer.getServer().worlds)
                 {
                     log.log(Level.WARNING, "  Dimension:" + world.provider.dimensionId);
                     log.log(Level.WARNING, "  Loaded Chunks: " + world.theChunkProviderServer.loadedChunkHashMap.size() +
@@ -168,18 +168,18 @@ public class WatchdogThread extends Thread
             {
                 sleep(10000);
             }
-            catch (InterruptedException ex)
+            catch (final InterruptedException ex)
             {
                 interrupt();
             }
         }
     }
-    private static void dumpThread(ThreadInfo thread, Logger log)
+    private static void dumpThread(final ThreadInfo thread, final Logger log)
     {
         dumpThread(thread, log, Level.SEVERE);
     }
 
-    private static void dumpThread(ThreadInfo thread, Logger log, Level level)
+    private static void dumpThread(final ThreadInfo thread, final Logger log, final Level level)
     {
         if (thread == null) return;
         if ( thread.getThreadState() != State.WAITING )
@@ -197,7 +197,7 @@ public class WatchdogThread extends Thread
             if ( thread.getLockedMonitors().length != 0 )
             {
                 log.log( level, "\tThread is waiting on monitor(s):" );
-                for ( MonitorInfo monitor : thread.getLockedMonitors() )
+                for ( final MonitorInfo monitor : thread.getLockedMonitors() )
                 {
                     log.log( level, "\t\tLocked on:" + monitor.getLockedStackFrame() );
                 }
@@ -205,7 +205,7 @@ public class WatchdogThread extends Thread
             if ( thread.getLockOwnerId() != -1 ) log.log( level, "\tLock Owner Id: " + thread.getLockOwnerId()); // Cauldron + add info about lock owner thread id
             log.log( level, "\tStack:" );
             //
-            StackTraceElement[] stack = thread.getStackTrace();
+            final StackTraceElement[] stack = thread.getStackTrace();
             for ( int line = 0; line < stack.length; line++ )
             {
                 log.log( level, "\t\t" + stack[line].toString() );

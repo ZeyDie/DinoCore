@@ -18,7 +18,7 @@ public final class WeatherEffectsRunnable implements Runnable {
     @Override
     public void run() {
         for (int i = 0; i < this.world.weatherEffects.size(); ++i) {
-            Entity entity = (Entity) this.world.weatherEffects.get(i);
+            final Entity entity = (Entity) this.world.weatherEffects.get(i);
             // CraftBukkit start - Fixed an NPE
             if (entity == null) {
                 continue;
@@ -29,9 +29,9 @@ public final class WeatherEffectsRunnable implements Runnable {
             try {
                 ++entity.ticksExisted;
                 entity.onUpdate();
-            } catch (Throwable throwable) {
-                CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Ticking entity");
-                CrashReportCategory crashreportcategory = crashreport.makeCategory("Entity being ticked");
+            } catch (final Throwable throwable) {
+                final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Ticking entity");
+                final CrashReportCategory crashreportcategory = crashreport.makeCategory("Entity being ticked");
 
                 if (entity == null) {
                     crashreportcategory.addCrashSection("Entity", "~~NULL~~");

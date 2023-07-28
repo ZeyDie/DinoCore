@@ -39,7 +39,7 @@ public class Packet10Flying extends Packet
     public Packet10Flying() {}
 
     @SideOnly(Side.CLIENT)
-    public Packet10Flying(boolean par1)
+    public Packet10Flying(final boolean par1)
     {
         this.onGround = par1;
     }
@@ -47,7 +47,7 @@ public class Packet10Flying extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleFlying(this);
     }
@@ -55,7 +55,7 @@ public class Packet10Flying extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.onGround = par1DataInput.readUnsignedByte() != 0;
     }
@@ -63,7 +63,7 @@ public class Packet10Flying extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.write(this.onGround ? 1 : 0);
     }
@@ -88,7 +88,7 @@ public class Packet10Flying extends Packet
      * eg return packet30entity.entityId == entityId; WARNING : will throw if you compare a packet to a different packet
      * class
      */
-    public boolean containsSameEntityIDAs(Packet par1Packet)
+    public boolean containsSameEntityIDAs(final Packet par1Packet)
     {
         return true;
     }

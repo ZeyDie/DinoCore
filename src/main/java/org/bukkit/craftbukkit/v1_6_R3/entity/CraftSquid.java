@@ -7,7 +7,7 @@ import org.bukkit.entity.Squid;
 
 public class CraftSquid extends CraftWaterMob implements Squid {
 
-    public CraftSquid(CraftServer server, net.minecraft.entity.passive.EntitySquid entity) {
+    public CraftSquid(final CraftServer server, final net.minecraft.entity.passive.EntitySquid entity) {
         super(server, entity);
     }
 

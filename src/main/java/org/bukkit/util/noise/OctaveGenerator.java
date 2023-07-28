@@ -9,7 +9,7 @@ public abstract class OctaveGenerator {
     protected double yScale = 1;
     protected double zScale = 1;
 
-    protected OctaveGenerator(NoiseGenerator[] octaves) {
+    protected OctaveGenerator(final NoiseGenerator[] octaves) {
         this.octaves = octaves;
     }
 
@@ -20,7 +20,7 @@ public abstract class OctaveGenerator {
      *
      * @param scale New value to scale each coordinate by
      */
-    public void setScale(double scale) {
+    public void setScale(final double scale) {
         setXScale(scale);
         setYScale(scale);
         setZScale(scale);
@@ -40,7 +40,7 @@ public abstract class OctaveGenerator {
      *
      * @param scale New X scale
      */
-    public void setXScale(double scale) {
+    public void setXScale(final double scale) {
         xScale = scale;
     }
 
@@ -58,7 +58,7 @@ public abstract class OctaveGenerator {
      *
      * @param scale New Y scale
      */
-    public void setYScale(double scale) {
+    public void setYScale(final double scale) {
         yScale = scale;
     }
 
@@ -76,7 +76,7 @@ public abstract class OctaveGenerator {
      *
      * @param scale New Z scale
      */
-    public void setZScale(double scale) {
+    public void setZScale(final double scale) {
         zScale = scale;
     }
 
@@ -97,7 +97,7 @@ public abstract class OctaveGenerator {
      * @param amplitude How much to alter the amplitude by each octave
      * @return Resulting noise
      */
-    public double noise(double x, double frequency, double amplitude) {
+    public double noise(final double x, final double frequency, final double amplitude) {
         return noise(x, 0, 0, frequency, amplitude);
     }
 
@@ -110,7 +110,7 @@ public abstract class OctaveGenerator {
      * @param normalized If true, normalize the value to [-1, 1]
      * @return Resulting noise
      */
-    public double noise(double x, double frequency, double amplitude, boolean normalized) {
+    public double noise(final double x, final double frequency, final double amplitude, final boolean normalized) {
         return noise(x, 0, 0, frequency, amplitude, normalized);
     }
 
@@ -123,7 +123,7 @@ public abstract class OctaveGenerator {
      * @param amplitude How much to alter the amplitude by each octave
      * @return Resulting noise
      */
-    public double noise(double x, double y, double frequency, double amplitude) {
+    public double noise(final double x, final double y, final double frequency, final double amplitude) {
         return noise(x, y, 0, frequency, amplitude);
     }
 
@@ -137,7 +137,7 @@ public abstract class OctaveGenerator {
      * @param normalized If true, normalize the value to [-1, 1]
      * @return Resulting noise
      */
-    public double noise(double x, double y, double frequency, double amplitude, boolean normalized) {
+    public double noise(final double x, final double y, final double frequency, final double amplitude, final boolean normalized) {
         return noise(x, y, 0, frequency, amplitude, normalized);
     }
 
@@ -151,7 +151,7 @@ public abstract class OctaveGenerator {
      * @param amplitude How much to alter the amplitude by each octave
      * @return Resulting noise
      */
-    public double noise(double x, double y, double z, double frequency, double amplitude) {
+    public double noise(final double x, final double y, final double z, final double frequency, final double amplitude) {
         return noise(x, y, z, frequency, amplitude, false);
     }
 
@@ -166,18 +166,21 @@ public abstract class OctaveGenerator {
      * @param normalized If true, normalize the value to [-1, 1]
      * @return Resulting noise
      */
-    public double noise(double x, double y, double z, double frequency, double amplitude, boolean normalized) {
+    public double noise(double x, double y, double z, final double frequency, final double amplitude, final boolean normalized) {
+        double x1 = x;
+        double y1 = y;
+        double z1 = z;
         double result = 0;
         double amp = 1;
         double freq = 1;
         double max = 0;
 
-        x *= xScale;
-        y *= yScale;
-        z *= zScale;
+        x1 *= xScale;
+        y1 *= yScale;
+        z1 *= zScale;
 
-        for (NoiseGenerator octave : octaves) {
-            result += octave.noise(x * freq, y * freq, z * freq) * amp;
+        for (final NoiseGenerator octave : octaves) {
+            result += octave.noise(x1 * freq, y1 * freq, z1 * freq) * amp;
             max += amp;
             freq *= frequency;
             amp *= amplitude;

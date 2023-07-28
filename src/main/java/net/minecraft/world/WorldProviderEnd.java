@@ -34,7 +34,7 @@ public class WorldProviderEnd extends WorldProvider
     /**
      * Calculates the angle of sun and moon in the sky relative to a specified time (usually worldTime)
      */
-    public float calculateCelestialAngle(long par1, float par3)
+    public float calculateCelestialAngle(final long par1, final float par3)
     {
         return 0.0F;
     }
@@ -44,7 +44,7 @@ public class WorldProviderEnd extends WorldProvider
     /**
      * Returns array with sunrise/sunset colors
      */
-    public float[] calcSunriseSunsetColors(float par1, float par2)
+    public float[] calcSunriseSunsetColors(final float par1, final float par2)
     {
         return null;
     }
@@ -54,9 +54,9 @@ public class WorldProviderEnd extends WorldProvider
     /**
      * Return Vec3D with biome specific fog color
      */
-    public Vec3 getFogColor(float par1, float par2)
+    public Vec3 getFogColor(final float par1, final float par2)
     {
-        int i = 10518688;
+        final int i = 10518688;
         float f2 = MathHelper.cos(par1 * (float)Math.PI * 2.0F) * 2.0F + 0.5F;
 
         if (f2 < 0.0F)
@@ -113,9 +113,9 @@ public class WorldProviderEnd extends WorldProvider
     /**
      * Will check if the x, z position specified is alright to be set as the map spawn point
      */
-    public boolean canCoordinateBeSpawn(int par1, int par2)
+    public boolean canCoordinateBeSpawn(final int par1, final int par2)
     {
-        int k = this.worldObj.getFirstUncoveredBlock(par1, par2);
+        final int k = this.worldObj.getFirstUncoveredBlock(par1, par2);
         return k == 0 ? false : Block.blocksList[k].blockMaterial.blocksMovement();
     }
 
@@ -137,7 +137,7 @@ public class WorldProviderEnd extends WorldProvider
     /**
      * Returns true if the given X,Z coordinate should show environmental fog.
      */
-    public boolean doesXZShowFog(int par1, int par2)
+    public boolean doesXZShowFog(final int par1, final int par2)
     {
         return true;
     }

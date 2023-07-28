@@ -22,33 +22,33 @@ public class LanguageManager implements ResourceManagerReloadListener
     protected static final Locale currentLocale = new Locale();
     private Map languageMap = Maps.newHashMap();
 
-    public LanguageManager(MetadataSerializer par1MetadataSerializer, String par2Str)
+    public LanguageManager(final MetadataSerializer par1MetadataSerializer, final String par2Str)
     {
         this.field_135047_b = par1MetadataSerializer;
         this.currentLanguage = par2Str;
         I18n.setLocale(currentLocale);
     }
 
-    public void parseLanguageMetadata(List par1List)
+    public void parseLanguageMetadata(final List par1List)
     {
         this.languageMap.clear();
-        Iterator iterator = par1List.iterator();
+        final Iterator iterator = par1List.iterator();
 
         while (iterator.hasNext())
         {
-            ResourcePack resourcepack = (ResourcePack)iterator.next();
+            final ResourcePack resourcepack = (ResourcePack)iterator.next();
 
             try
             {
-                LanguageMetadataSection languagemetadatasection = (LanguageMetadataSection)resourcepack.getPackMetadata(this.field_135047_b, "language");
+                final LanguageMetadataSection languagemetadatasection = (LanguageMetadataSection)resourcepack.getPackMetadata(this.field_135047_b, "language");
 
                 if (languagemetadatasection != null)
                 {
-                    Iterator iterator1 = languagemetadatasection.getLanguages().iterator();
+                    final Iterator iterator1 = languagemetadatasection.getLanguages().iterator();
 
                     while (iterator1.hasNext())
                     {
-                        Language language = (Language)iterator1.next();
+                        final Language language = (Language)iterator1.next();
 
                         if (!this.languageMap.containsKey(language.getLanguageCode()))
                         {
@@ -57,20 +57,20 @@ public class LanguageManager implements ResourceManagerReloadListener
                     }
                 }
             }
-            catch (RuntimeException runtimeexception)
+            catch (final RuntimeException runtimeexception)
             {
                 Minecraft.getMinecraft().getLogAgent().logWarningException("Unable to parse metadata section of resourcepack: " + resourcepack.getPackName(), runtimeexception);
             }
-            catch (IOException ioexception)
+            catch (final IOException ioexception)
             {
                 Minecraft.getMinecraft().getLogAgent().logWarningException("Unable to parse metadata section of resourcepack: " + resourcepack.getPackName(), ioexception);
             }
         }
     }
 
-    public void onResourceManagerReload(ResourceManager par1ResourceManager)
+    public void onResourceManagerReload(final ResourceManager par1ResourceManager)
     {
-        ArrayList arraylist = Lists.newArrayList(new String[] {"en_US"});
+        final ArrayList arraylist = Lists.newArrayList(new String[] {"en_US"});
 
         if (!"en_US".equals(this.currentLanguage))
         {
@@ -92,7 +92,7 @@ public class LanguageManager implements ResourceManagerReloadListener
         return this.getCurrentLanguage().isBidirectional();
     }
 
-    public void setCurrentLanguage(Language par1Language)
+    public void setCurrentLanguage(final Language par1Language)
     {
         this.currentLanguage = par1Language.getLanguageCode();
     }

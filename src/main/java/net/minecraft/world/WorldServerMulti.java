@@ -9,7 +9,7 @@ import net.minecraft.world.storage.ISaveHandler;
 public class WorldServerMulti extends WorldServer
 {
     // CraftBukkit start - Changed signature
-    public WorldServerMulti(MinecraftServer minecraftserver, ISaveHandler isavehandler, String s, int i, WorldSettings worldsettings, WorldServer worldserver, Profiler profiler, ILogAgent ilogagent, org.bukkit.World.Environment env, org.bukkit.generator.ChunkGenerator gen)
+    public WorldServerMulti(final MinecraftServer minecraftserver, final ISaveHandler isavehandler, final String s, final int i, final WorldSettings worldsettings, final WorldServer worldserver, final Profiler profiler, final ILogAgent ilogagent, final org.bukkit.World.Environment env, final org.bukkit.generator.ChunkGenerator gen)
     {
         super(minecraftserver, isavehandler, s, i, worldsettings, profiler, ilogagent, env, gen);
         // CraftBukkit end
@@ -19,7 +19,7 @@ public class WorldServerMulti extends WorldServer
     }
 
     // Cauldron start - vanilla compatibility
-    public WorldServerMulti(MinecraftServer minecraftserver, ISaveHandler isavehandler, String s, int i, WorldSettings worldsettings, WorldServer worldserver, Profiler profiler, ILogAgent ilogagent) {
+    public WorldServerMulti(final MinecraftServer minecraftserver, final ISaveHandler isavehandler, final String s, final int i, final WorldSettings worldsettings, final WorldServer worldserver, final Profiler profiler, final ILogAgent ilogagent) {
         super(minecraftserver, isavehandler, s, i, ilogagent, worldsettings, profiler);
         this.mapStorage = worldserver.mapStorage;
         this.worldInfo = new DerivedWorldInfo(worldserver.getWorldInfo());

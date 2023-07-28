@@ -16,7 +16,7 @@ public class Packet203AutoComplete extends Packet
 
     public Packet203AutoComplete() {}
 
-    public Packet203AutoComplete(String par1Str)
+    public Packet203AutoComplete(final String par1Str)
     {
         this.text = par1Str;
     }
@@ -24,7 +24,7 @@ public class Packet203AutoComplete extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.text = readString(par1DataInput, 32767);
     }
@@ -32,7 +32,7 @@ public class Packet203AutoComplete extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         writeString(StringUtils.substring(this.text, 0, 32767), par1DataOutput);
     }
@@ -40,7 +40,7 @@ public class Packet203AutoComplete extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleAutoComplete(this);
     }
@@ -70,7 +70,7 @@ public class Packet203AutoComplete extends Packet
      * eg return packet30entity.entityId == entityId; WARNING : will throw if you compare a packet to a different packet
      * class
      */
-    public boolean containsSameEntityIDAs(Packet par1Packet)
+    public boolean containsSameEntityIDAs(final Packet par1Packet)
     {
         return true;
     }

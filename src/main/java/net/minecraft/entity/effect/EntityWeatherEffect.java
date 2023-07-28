@@ -5,7 +5,7 @@ import net.minecraft.world.World;
 
 public abstract class EntityWeatherEffect extends Entity
 {
-    public EntityWeatherEffect(World par1World)
+    public EntityWeatherEffect(final World par1World)
     {
         super(par1World);
     }

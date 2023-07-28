@@ -13,7 +13,7 @@ public enum EnumGameType
     int id;
     String name;
 
-    private EnumGameType(int par3, String par4Str)
+    private EnumGameType(final int par3, final String par4Str)
     {
         this.id = par3;
         this.name = par4Str;
@@ -38,7 +38,7 @@ public enum EnumGameType
     /**
      * Configures the player capabilities based on the game type
      */
-    public void configurePlayerCapabilities(PlayerCapabilities par1PlayerCapabilities)
+    public void configurePlayerCapabilities(final PlayerCapabilities par1PlayerCapabilities)
     {
         if (this == CREATIVE)
         {
@@ -86,14 +86,14 @@ public enum EnumGameType
     /**
      * Returns the game type with the specified ID, or SURVIVAL if none found. Args: id
      */
-    public static EnumGameType getByID(int par0)
+    public static EnumGameType getByID(final int par0)
     {
-        EnumGameType[] aenumgametype = values();
-        int j = aenumgametype.length;
+        final EnumGameType[] aenumgametype = values();
+        final int j = aenumgametype.length;
 
         for (int k = 0; k < j; ++k)
         {
-            EnumGameType enumgametype = aenumgametype[k];
+            final EnumGameType enumgametype = aenumgametype[k];
 
             if (enumgametype.id == par0)
             {
@@ -109,14 +109,14 @@ public enum EnumGameType
     /**
      * Returns the game type with the specified name, or SURVIVAL if none found. This is case sensitive. Args: name
      */
-    public static EnumGameType getByName(String par0Str)
+    public static EnumGameType getByName(final String par0Str)
     {
-        EnumGameType[] aenumgametype = values();
-        int i = aenumgametype.length;
+        final EnumGameType[] aenumgametype = values();
+        final int i = aenumgametype.length;
 
         for (int j = 0; j < i; ++j)
         {
-            EnumGameType enumgametype = aenumgametype[j];
+            final EnumGameType enumgametype = aenumgametype[j];
 
             if (enumgametype.name.equals(par0Str))
             {

@@ -13,13 +13,13 @@ import java.util.List;
 
 public class ItemEditableBook extends Item
 {
-    public ItemEditableBook(int par1)
+    public ItemEditableBook(final int par1)
     {
         super(par1);
         this.setMaxStackSize(1);
     }
 
-    public static boolean validBookTagContents(NBTTagCompound par0NBTTagCompound)
+    public static boolean validBookTagContents(final NBTTagCompound par0NBTTagCompound)
     {
         if (!ItemWritableBook.validBookTagPages(par0NBTTagCompound))
         {
@@ -31,17 +31,17 @@ public class ItemEditableBook extends Item
         }
         else
         {
-            String s = par0NBTTagCompound.getString("title");
+            final String s = par0NBTTagCompound.getString("title");
             return s != null && s.length() <= 16 ? par0NBTTagCompound.hasKey("author") : false;
         }
     }
 
-    public String getItemDisplayName(ItemStack par1ItemStack)
+    public String getItemDisplayName(final ItemStack par1ItemStack)
     {
         if (par1ItemStack.hasTagCompound())
         {
-            NBTTagCompound nbttagcompound = par1ItemStack.getTagCompound();
-            NBTTagString nbttagstring = (NBTTagString)nbttagcompound.getTag("title");
+            final NBTTagCompound nbttagcompound = par1ItemStack.getTagCompound();
+            final NBTTagString nbttagstring = (NBTTagString)nbttagcompound.getTag("title");
 
             if (nbttagstring != null)
             {
@@ -57,12 +57,12 @@ public class ItemEditableBook extends Item
     /**
      * allows items to add custom lines of information to the mouseover description
      */
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    public void addInformation(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final List par3List, final boolean par4)
     {
         if (par1ItemStack.hasTagCompound())
         {
-            NBTTagCompound nbttagcompound = par1ItemStack.getTagCompound();
-            NBTTagString nbttagstring = (NBTTagString)nbttagcompound.getTag("author");
+            final NBTTagCompound nbttagcompound = par1ItemStack.getTagCompound();
+            final NBTTagString nbttagstring = (NBTTagString)nbttagcompound.getTag("author");
 
             if (nbttagstring != null)
             {
@@ -74,7 +74,7 @@ public class ItemEditableBook extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         par3EntityPlayer.displayGUIBook(par1ItemStack);
         return par1ItemStack;
@@ -89,7 +89,7 @@ public class ItemEditableBook extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack par1ItemStack)
+    public boolean hasEffect(final ItemStack par1ItemStack)
     {
         return true;
     }

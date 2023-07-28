@@ -21,25 +21,25 @@ public class GenDiffSet {
 
     private static final List<String> RESERVED_NAMES = Arrays.asList("CON", "PRN", "AUX", "NUL", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9");
 
-    public static void main(String[] args) throws IOException
+    public static void main(final String[] args) throws IOException
     {
-        String sourceJar = args[0]; //Clean Vanilla jar minecraft.jar or minecraft_server.jar
-        String targetDir = args[1]; //Directory containing obfed output classes, typically mcp/reobf/minecraft
-        String deobfData = args[2]; //Path to FML's deobfusication_data.lzma
-        String outputDir = args[3]; //Path to place generated .binpatch
-        String killTarget = args[4]; //"true" if we should destroy the target file if it generated a successful .binpatch
+        final String sourceJar = args[0]; //Clean Vanilla jar minecraft.jar or minecraft_server.jar
+        final String targetDir = args[1]; //Directory containing obfed output classes, typically mcp/reobf/minecraft
+        final String deobfData = args[2]; //Path to FML's deobfusication_data.lzma
+        final String outputDir = args[3]; //Path to place generated .binpatch
+        final String killTarget = args[4]; //"true" if we should destroy the target file if it generated a successful .binpatch
 
         Logger.getLogger("GENDIFF").log(Level.INFO, String.format("Creating patches at %s for %s from %s", outputDir, sourceJar, targetDir));
-        Delta delta = new Delta();
-        FMLDeobfuscatingRemapper remapper = FMLDeobfuscatingRemapper.INSTANCE;
+        final Delta delta = new Delta();
+        final FMLDeobfuscatingRemapper remapper = FMLDeobfuscatingRemapper.INSTANCE;
         remapper.setupLoadOnly(deobfData, false);
-        JarFile sourceZip = new JarFile(sourceJar);
-        boolean kill = killTarget.equalsIgnoreCase("true");
+        final JarFile sourceZip = new JarFile(sourceJar);
+        final boolean kill = killTarget.equalsIgnoreCase("true");
 
-        File f = new File(outputDir);
+        final File f = new File(outputDir);
         f.mkdirs();
 
-        for (String name : remapper.getObfedClasses())
+        for (final String name : remapper.getObfedClasses())
         {
 //            Logger.getLogger("GENDIFF").info(String.format("Evaluating path for data :%s",name));
             String fileName = name;
@@ -48,21 +48,21 @@ public class GenDiffSet {
             {
                 fileName = "_"+name;
             }
-            File targetFile = new File(targetDir, fileName.replace('/', File.separatorChar) + ".class");
+            final File targetFile = new File(targetDir, fileName.replace('/', File.separatorChar) + ".class");
             jarName = jarName+".class";
             if (targetFile.exists())
             {
-                String sourceClassName = name.replace('/', '.');
-                String targetClassName = remapper.map(name).replace('/', '.');
-                JarEntry entry = sourceZip.getJarEntry(jarName);
+                final String sourceClassName = name.replace('/', '.');
+                final String targetClassName = remapper.map(name).replace('/', '.');
+                final JarEntry entry = sourceZip.getJarEntry(jarName);
 
-                byte[] vanillaBytes = entry != null ? ByteStreams.toByteArray(sourceZip.getInputStream(entry)) : new byte[0];
-                byte[] patchedBytes = Files.toByteArray(targetFile);
+                final byte[] vanillaBytes = entry != null ? ByteStreams.toByteArray(sourceZip.getInputStream(entry)) : new byte[0];
+                final byte[] patchedBytes = Files.toByteArray(targetFile);
 
-                byte[] diff = delta.compute(vanillaBytes, patchedBytes);
+                final byte[] diff = delta.compute(vanillaBytes, patchedBytes);
 
 
-                ByteArrayDataOutput diffOut = ByteStreams.newDataOutput(diff.length + 50);
+                final ByteArrayDataOutput diffOut = ByteStreams.newDataOutput(diff.length + 50);
                 // Original name
                 diffOut.writeUTF(name);
                 // Source name
@@ -80,7 +80,7 @@ public class GenDiffSet {
                 // patch
                 diffOut.write(diff);
 
-                File target = new File(outputDir, targetClassName+".binpatch");
+                final File target = new File(outputDir, targetClassName+".binpatch");
                 target.getParentFile().mkdirs();
                 Files.write(diffOut.toByteArray(), target);
                 Logger.getLogger("GENDIFF").info(String.format("Wrote patch for %s (%s) at %s",name, targetClassName, target.getAbsolutePath()));

@@ -102,26 +102,26 @@ public class NetClientHandler extends NetHandler
 
     private static byte connectionCompatibilityLevel;
 
-    public NetClientHandler(Minecraft par1Minecraft, String par2Str, int par3) throws IOException
+    public NetClientHandler(final Minecraft par1Minecraft, final String par2Str, final int par3) throws IOException
     {
         this.mc = par1Minecraft;
-        Socket socket = new Socket(InetAddress.getByName(par2Str), par3);
+        final Socket socket = new Socket(InetAddress.getByName(par2Str), par3);
         //TODO ZeyCodeClear
         //this.netManager = new TcpConnection(par1Minecraft.getLogAgent(), socket, "Client", this);
         FMLNetworkHandler.onClientConnectionToRemoteServer(this, par2Str, par3, this.netManager);
     }
 
-    public NetClientHandler(Minecraft par1Minecraft, String par2Str, int par3, GuiScreen par4GuiScreen) throws IOException
+    public NetClientHandler(final Minecraft par1Minecraft, final String par2Str, final int par3, final GuiScreen par4GuiScreen) throws IOException
     {
         this.mc = par1Minecraft;
         this.field_98183_l = par4GuiScreen;
-        Socket socket = new Socket(InetAddress.getByName(par2Str), par3);
+        final Socket socket = new Socket(InetAddress.getByName(par2Str), par3);
         //TODO ZeyCodeClear
         //this.netManager = new TcpConnection(par1Minecraft.getLogAgent(), socket, "Client", this);
         FMLNetworkHandler.onClientConnectionToRemoteServer(this, par2Str, par3, this.netManager);
     }
 
-    public NetClientHandler(Minecraft par1Minecraft, IntegratedServer par2IntegratedServer) throws IOException
+    public NetClientHandler(final Minecraft par1Minecraft, final IntegratedServer par2IntegratedServer) throws IOException
     {
         this.mc = par1Minecraft;
         this.netManager = new MemoryConnection(par1Minecraft.getLogAgent(), this);
@@ -159,16 +159,16 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleServerAuthData(Packet253ServerAuthData par1Packet253ServerAuthData)
+    public void handleServerAuthData(final Packet253ServerAuthData par1Packet253ServerAuthData)
     {
-        String s = par1Packet253ServerAuthData.getServerId().trim();
-        PublicKey publickey = par1Packet253ServerAuthData.getPublicKey();
-        SecretKey secretkey = CryptManager.createNewSharedKey();
+        final String s = par1Packet253ServerAuthData.getServerId().trim();
+        final PublicKey publickey = par1Packet253ServerAuthData.getPublicKey();
+        final SecretKey secretkey = CryptManager.createNewSharedKey();
 
         if (!"-".equals(s))
         {
-            String s1 = (new BigInteger(CryptManager.getServerIdHash(s, publickey, secretkey))).toString(16);
-            String s2 = this.sendSessionRequest(this.mc.getSession().getUsername(), this.mc.getSession().getSessionID(), s1);
+            final String s1 = (new BigInteger(CryptManager.getServerIdHash(s, publickey, secretkey))).toString(16);
+            final String s2 = this.sendSessionRequest(this.mc.getSession().getUsername(), this.mc.getSession().getSessionID(), s1);
 
             if (!"ok".equalsIgnoreCase(s2))
             {
@@ -183,18 +183,18 @@ public class NetClientHandler extends NetHandler
     /**
      * Send request to http://session.minecraft.net with user's sessionId and serverId hash
      */
-    private String sendSessionRequest(String par1Str, String par2Str, String par3Str)
+    private String sendSessionRequest(final String par1Str, final String par2Str, final String par3Str)
     {
         try
         {
-            URL url = new URL("http://session.minecraft.net/game/joinserver.jsp?user=" + urlEncode(par1Str) + "&sessionId=" + urlEncode(par2Str) + "&serverId=" + urlEncode(par3Str));
-            InputStream inputstream = url.openConnection(this.mc.getProxy()).getInputStream();
-            BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(inputstream));
-            String s3 = bufferedreader.readLine();
+            final URL url = new URL("http://session.minecraft.net/game/joinserver.jsp?user=" + urlEncode(par1Str) + "&sessionId=" + urlEncode(par2Str) + "&serverId=" + urlEncode(par3Str));
+            final InputStream inputstream = url.openConnection(this.mc.getProxy()).getInputStream();
+            final BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(inputstream));
+            final String s3 = bufferedreader.readLine();
             bufferedreader.close();
             return s3;
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             return ioexception.toString();
         }
@@ -203,18 +203,18 @@ public class NetClientHandler extends NetHandler
     /**
      * Encode the given string for insertion into a URL
      */
-    private static String urlEncode(String par0Str) throws IOException
+    private static String urlEncode(final String par0Str) throws IOException
     {
         return URLEncoder.encode(par0Str, "UTF-8");
     }
 
-    public void handleSharedKey(Packet252SharedKey par1Packet252SharedKey)
+    public void handleSharedKey(final Packet252SharedKey par1Packet252SharedKey)
     {
         this.addToSendQueue(FMLNetworkHandler.getFMLFakeLoginPacket());
         this.addToSendQueue(new Packet205ClientCommand(0));
     }
 
-    public void handleLogin(Packet1Login par1Packet1Login)
+    public void handleLogin(final Packet1Login par1Packet1Login)
     {
         this.mc.playerController = new PlayerControllerMP(this.mc, this);
         this.mc.statFileWriter.readStat(StatList.joinMultiplayerStat, 1);
@@ -231,11 +231,11 @@ public class NetClientHandler extends NetHandler
         this.netManager.addToSendQueue(new Packet250CustomPayload("MC|Brand", ClientBrandRetriever.getClientModName().getBytes(Charsets.UTF_8)));
     }
 
-    public void handleVehicleSpawn(Packet23VehicleSpawn par1Packet23VehicleSpawn)
+    public void handleVehicleSpawn(final Packet23VehicleSpawn par1Packet23VehicleSpawn)
     {
-        double d0 = (double)par1Packet23VehicleSpawn.xPosition / 32.0D;
-        double d1 = (double)par1Packet23VehicleSpawn.yPosition / 32.0D;
-        double d2 = (double)par1Packet23VehicleSpawn.zPosition / 32.0D;
+        final double d0 = (double)par1Packet23VehicleSpawn.xPosition / 32.0D;
+        final double d1 = (double)par1Packet23VehicleSpawn.yPosition / 32.0D;
+        final double d2 = (double)par1Packet23VehicleSpawn.zPosition / 32.0D;
         Object object = null;
 
         if (par1Packet23VehicleSpawn.type == 10)
@@ -244,7 +244,7 @@ public class NetClientHandler extends NetHandler
         }
         else if (par1Packet23VehicleSpawn.type == 90)
         {
-            Entity entity = this.getEntityByID(par1Packet23VehicleSpawn.throwerEntityId);
+            final Entity entity = this.getEntityByID(par1Packet23VehicleSpawn.throwerEntityId);
 
             if (entity instanceof EntityPlayer)
             {
@@ -341,11 +341,11 @@ public class NetClientHandler extends NetHandler
             ((Entity)object).serverPosZ = par1Packet23VehicleSpawn.zPosition;
             ((Entity)object).rotationPitch = (float)(par1Packet23VehicleSpawn.pitch * 360) / 256.0F;
             ((Entity)object).rotationYaw = (float)(par1Packet23VehicleSpawn.yaw * 360) / 256.0F;
-            Entity[] aentity = ((Entity)object).getParts();
+            final Entity[] aentity = ((Entity)object).getParts();
 
             if (aentity != null)
             {
-                int i = par1Packet23VehicleSpawn.entityId - ((Entity)object).entityId;
+                final int i = par1Packet23VehicleSpawn.entityId - ((Entity)object).entityId;
 
                 for (int j = 0; j < aentity.length; ++j)
                 {
@@ -360,11 +360,11 @@ public class NetClientHandler extends NetHandler
             {
                 if (par1Packet23VehicleSpawn.type == 60)
                 {
-                    Entity entity1 = this.getEntityByID(par1Packet23VehicleSpawn.throwerEntityId);
+                    final Entity entity1 = this.getEntityByID(par1Packet23VehicleSpawn.throwerEntityId);
 
                     if (entity1 instanceof EntityLivingBase)
                     {
-                        EntityArrow entityarrow = (EntityArrow)object;
+                        final EntityArrow entityarrow = (EntityArrow)object;
                         entityarrow.shootingEntity = entity1;
                     }
                 }
@@ -377,9 +377,9 @@ public class NetClientHandler extends NetHandler
     /**
      * Handle a entity experience orb packet.
      */
-    public void handleEntityExpOrb(Packet26EntityExpOrb par1Packet26EntityExpOrb)
+    public void handleEntityExpOrb(final Packet26EntityExpOrb par1Packet26EntityExpOrb)
     {
-        EntityXPOrb entityxporb = new EntityXPOrb(this.worldClient, (double)par1Packet26EntityExpOrb.posX, (double)par1Packet26EntityExpOrb.posY, (double)par1Packet26EntityExpOrb.posZ, par1Packet26EntityExpOrb.xpValue);
+        final EntityXPOrb entityxporb = new EntityXPOrb(this.worldClient, (double)par1Packet26EntityExpOrb.posX, (double)par1Packet26EntityExpOrb.posY, (double)par1Packet26EntityExpOrb.posZ, par1Packet26EntityExpOrb.xpValue);
         entityxporb.serverPosX = par1Packet26EntityExpOrb.posX;
         entityxporb.serverPosY = par1Packet26EntityExpOrb.posY;
         entityxporb.serverPosZ = par1Packet26EntityExpOrb.posZ;
@@ -392,11 +392,11 @@ public class NetClientHandler extends NetHandler
     /**
      * Handles weather packet
      */
-    public void handleWeather(Packet71Weather par1Packet71Weather)
+    public void handleWeather(final Packet71Weather par1Packet71Weather)
     {
-        double d0 = (double)par1Packet71Weather.posX / 32.0D;
-        double d1 = (double)par1Packet71Weather.posY / 32.0D;
-        double d2 = (double)par1Packet71Weather.posZ / 32.0D;
+        final double d0 = (double)par1Packet71Weather.posX / 32.0D;
+        final double d1 = (double)par1Packet71Weather.posY / 32.0D;
+        final double d2 = (double)par1Packet71Weather.posZ / 32.0D;
         EntityLightningBolt entitylightningbolt = null;
 
         if (par1Packet71Weather.isLightningBolt == 1)
@@ -419,18 +419,18 @@ public class NetClientHandler extends NetHandler
     /**
      * Packet handler
      */
-    public void handleEntityPainting(Packet25EntityPainting par1Packet25EntityPainting)
+    public void handleEntityPainting(final Packet25EntityPainting par1Packet25EntityPainting)
     {
-        EntityPainting entitypainting = new EntityPainting(this.worldClient, par1Packet25EntityPainting.xPosition, par1Packet25EntityPainting.yPosition, par1Packet25EntityPainting.zPosition, par1Packet25EntityPainting.direction, par1Packet25EntityPainting.title);
+        final EntityPainting entitypainting = new EntityPainting(this.worldClient, par1Packet25EntityPainting.xPosition, par1Packet25EntityPainting.yPosition, par1Packet25EntityPainting.zPosition, par1Packet25EntityPainting.direction, par1Packet25EntityPainting.title);
         this.worldClient.addEntityToWorld(par1Packet25EntityPainting.entityId, entitypainting);
     }
 
     /**
      * Packet handler
      */
-    public void handleEntityVelocity(Packet28EntityVelocity par1Packet28EntityVelocity)
+    public void handleEntityVelocity(final Packet28EntityVelocity par1Packet28EntityVelocity)
     {
-        Entity entity = this.getEntityByID(par1Packet28EntityVelocity.entityId);
+        final Entity entity = this.getEntityByID(par1Packet28EntityVelocity.entityId);
 
         if (entity != null)
         {
@@ -441,9 +441,9 @@ public class NetClientHandler extends NetHandler
     /**
      * Packet handler
      */
-    public void handleEntityMetadata(Packet40EntityMetadata par1Packet40EntityMetadata)
+    public void handleEntityMetadata(final Packet40EntityMetadata par1Packet40EntityMetadata)
     {
-        Entity entity = this.getEntityByID(par1Packet40EntityMetadata.entityId);
+        final Entity entity = this.getEntityByID(par1Packet40EntityMetadata.entityId);
 
         if (entity != null && par1Packet40EntityMetadata.getMetadata() != null)
         {
@@ -451,18 +451,18 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleNamedEntitySpawn(Packet20NamedEntitySpawn par1Packet20NamedEntitySpawn)
+    public void handleNamedEntitySpawn(final Packet20NamedEntitySpawn par1Packet20NamedEntitySpawn)
     {
-        double d0 = (double)par1Packet20NamedEntitySpawn.xPosition / 32.0D;
-        double d1 = (double)par1Packet20NamedEntitySpawn.yPosition / 32.0D;
-        double d2 = (double)par1Packet20NamedEntitySpawn.zPosition / 32.0D;
-        float f = (float)(par1Packet20NamedEntitySpawn.rotation * 360) / 256.0F;
-        float f1 = (float)(par1Packet20NamedEntitySpawn.pitch * 360) / 256.0F;
-        EntityOtherPlayerMP entityotherplayermp = new EntityOtherPlayerMP(this.mc.theWorld, par1Packet20NamedEntitySpawn.name);
+        final double d0 = (double)par1Packet20NamedEntitySpawn.xPosition / 32.0D;
+        final double d1 = (double)par1Packet20NamedEntitySpawn.yPosition / 32.0D;
+        final double d2 = (double)par1Packet20NamedEntitySpawn.zPosition / 32.0D;
+        final float f = (float)(par1Packet20NamedEntitySpawn.rotation * 360) / 256.0F;
+        final float f1 = (float)(par1Packet20NamedEntitySpawn.pitch * 360) / 256.0F;
+        final EntityOtherPlayerMP entityotherplayermp = new EntityOtherPlayerMP(this.mc.theWorld, par1Packet20NamedEntitySpawn.name);
         entityotherplayermp.prevPosX = entityotherplayermp.lastTickPosX = (double)(entityotherplayermp.serverPosX = par1Packet20NamedEntitySpawn.xPosition);
         entityotherplayermp.prevPosY = entityotherplayermp.lastTickPosY = (double)(entityotherplayermp.serverPosY = par1Packet20NamedEntitySpawn.yPosition);
         entityotherplayermp.prevPosZ = entityotherplayermp.lastTickPosZ = (double)(entityotherplayermp.serverPosZ = par1Packet20NamedEntitySpawn.zPosition);
-        int i = par1Packet20NamedEntitySpawn.currentItem;
+        final int i = par1Packet20NamedEntitySpawn.currentItem;
 
         if (i == 0)
         {
@@ -475,7 +475,7 @@ public class NetClientHandler extends NetHandler
 
         entityotherplayermp.setPositionAndRotation(d0, d1, d2, f, f1);
         this.worldClient.addEntityToWorld(par1Packet20NamedEntitySpawn.entityId, entityotherplayermp);
-        List list = par1Packet20NamedEntitySpawn.getWatchedMetadata();
+        final List list = par1Packet20NamedEntitySpawn.getWatchedMetadata();
 
         if (list != null)
         {
@@ -483,25 +483,25 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleEntityTeleport(Packet34EntityTeleport par1Packet34EntityTeleport)
+    public void handleEntityTeleport(final Packet34EntityTeleport par1Packet34EntityTeleport)
     {
-        Entity entity = this.getEntityByID(par1Packet34EntityTeleport.entityId);
+        final Entity entity = this.getEntityByID(par1Packet34EntityTeleport.entityId);
 
         if (entity != null)
         {
             entity.serverPosX = par1Packet34EntityTeleport.xPosition;
             entity.serverPosY = par1Packet34EntityTeleport.yPosition;
             entity.serverPosZ = par1Packet34EntityTeleport.zPosition;
-            double d0 = (double)entity.serverPosX / 32.0D;
-            double d1 = (double)entity.serverPosY / 32.0D + 0.015625D;
-            double d2 = (double)entity.serverPosZ / 32.0D;
-            float f = (float)(par1Packet34EntityTeleport.yaw * 360) / 256.0F;
-            float f1 = (float)(par1Packet34EntityTeleport.pitch * 360) / 256.0F;
+            final double d0 = (double)entity.serverPosX / 32.0D;
+            final double d1 = (double)entity.serverPosY / 32.0D + 0.015625D;
+            final double d2 = (double)entity.serverPosZ / 32.0D;
+            final float f = (float)(par1Packet34EntityTeleport.yaw * 360) / 256.0F;
+            final float f1 = (float)(par1Packet34EntityTeleport.pitch * 360) / 256.0F;
             entity.setPositionAndRotation2(d0, d1, d2, f, f1, 3);
         }
     }
 
-    public void handleBlockItemSwitch(Packet16BlockItemSwitch par1Packet16BlockItemSwitch)
+    public void handleBlockItemSwitch(final Packet16BlockItemSwitch par1Packet16BlockItemSwitch)
     {
         if (par1Packet16BlockItemSwitch.id >= 0 && par1Packet16BlockItemSwitch.id < InventoryPlayer.getHotbarSize())
         {
@@ -509,36 +509,36 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleEntity(Packet30Entity par1Packet30Entity)
+    public void handleEntity(final Packet30Entity par1Packet30Entity)
     {
-        Entity entity = this.getEntityByID(par1Packet30Entity.entityId);
+        final Entity entity = this.getEntityByID(par1Packet30Entity.entityId);
 
         if (entity != null)
         {
             entity.serverPosX += par1Packet30Entity.xPosition;
             entity.serverPosY += par1Packet30Entity.yPosition;
             entity.serverPosZ += par1Packet30Entity.zPosition;
-            double d0 = (double)entity.serverPosX / 32.0D;
-            double d1 = (double)entity.serverPosY / 32.0D;
-            double d2 = (double)entity.serverPosZ / 32.0D;
-            float f = par1Packet30Entity.rotating ? (float)(par1Packet30Entity.yaw * 360) / 256.0F : entity.rotationYaw;
-            float f1 = par1Packet30Entity.rotating ? (float)(par1Packet30Entity.pitch * 360) / 256.0F : entity.rotationPitch;
+            final double d0 = (double)entity.serverPosX / 32.0D;
+            final double d1 = (double)entity.serverPosY / 32.0D;
+            final double d2 = (double)entity.serverPosZ / 32.0D;
+            final float f = par1Packet30Entity.rotating ? (float)(par1Packet30Entity.yaw * 360) / 256.0F : entity.rotationYaw;
+            final float f1 = par1Packet30Entity.rotating ? (float)(par1Packet30Entity.pitch * 360) / 256.0F : entity.rotationPitch;
             entity.setPositionAndRotation2(d0, d1, d2, f, f1, 3);
         }
     }
 
-    public void handleEntityHeadRotation(Packet35EntityHeadRotation par1Packet35EntityHeadRotation)
+    public void handleEntityHeadRotation(final Packet35EntityHeadRotation par1Packet35EntityHeadRotation)
     {
-        Entity entity = this.getEntityByID(par1Packet35EntityHeadRotation.entityId);
+        final Entity entity = this.getEntityByID(par1Packet35EntityHeadRotation.entityId);
 
         if (entity != null)
         {
-            float f = (float)(par1Packet35EntityHeadRotation.headRotationYaw * 360) / 256.0F;
+            final float f = (float)(par1Packet35EntityHeadRotation.headRotationYaw * 360) / 256.0F;
             entity.setRotationYawHead(f);
         }
     }
 
-    public void handleDestroyEntity(Packet29DestroyEntity par1Packet29DestroyEntity)
+    public void handleDestroyEntity(final Packet29DestroyEntity par1Packet29DestroyEntity)
     {
         for (int i = 0; i < par1Packet29DestroyEntity.entityId.length; ++i)
         {
@@ -546,9 +546,9 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleFlying(Packet10Flying par1Packet10Flying)
+    public void handleFlying(final Packet10Flying par1Packet10Flying)
     {
-        EntityClientPlayerMP entityclientplayermp = this.mc.thePlayer;
+        final EntityClientPlayerMP entityclientplayermp = this.mc.thePlayer;
         double d0 = entityclientplayermp.posX;
         double d1 = entityclientplayermp.posY;
         double d2 = entityclientplayermp.posZ;
@@ -587,30 +587,30 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleMultiBlockChange(Packet52MultiBlockChange par1Packet52MultiBlockChange)
+    public void handleMultiBlockChange(final Packet52MultiBlockChange par1Packet52MultiBlockChange)
     {
-        int i = par1Packet52MultiBlockChange.xPosition * 16;
-        int j = par1Packet52MultiBlockChange.zPosition * 16;
+        final int i = par1Packet52MultiBlockChange.xPosition * 16;
+        final int j = par1Packet52MultiBlockChange.zPosition * 16;
 
         if (par1Packet52MultiBlockChange.metadataArray != null)
         {
-            DataInputStream datainputstream = new DataInputStream(new ByteArrayInputStream(par1Packet52MultiBlockChange.metadataArray));
+            final DataInputStream datainputstream = new DataInputStream(new ByteArrayInputStream(par1Packet52MultiBlockChange.metadataArray));
 
             try
             {
                 for (int k = 0; k < par1Packet52MultiBlockChange.size; ++k)
                 {
-                    short short1 = datainputstream.readShort();
-                    short short2 = datainputstream.readShort();
-                    int l = short2 >> 4 & 4095;
-                    int i1 = short2 & 15;
-                    int j1 = short1 >> 12 & 15;
-                    int k1 = short1 >> 8 & 15;
-                    int l1 = short1 & 255;
+                    final short short1 = datainputstream.readShort();
+                    final short short2 = datainputstream.readShort();
+                    final int l = short2 >> 4 & 4095;
+                    final int i1 = short2 & 15;
+                    final int j1 = short1 >> 12 & 15;
+                    final int k1 = short1 >> 8 & 15;
+                    final int l1 = short1 & 255;
                     this.worldClient.setBlockAndMetadataAndInvalidate(j1 + i, l1, k1 + j, l, i1);
                 }
             }
-            catch (IOException ioexception)
+            catch (final IOException ioexception)
             {
                 ;
             }
@@ -620,7 +620,7 @@ public class NetClientHandler extends NetHandler
     /**
      * Handle Packet51MapChunk (full chunk update of blocks, metadata, light levels, and optionally biome data)
      */
-    public void handleMapChunk(Packet51MapChunk par1Packet51MapChunk)
+    public void handleMapChunk(final Packet51MapChunk par1Packet51MapChunk)
     {
         if (par1Packet51MapChunk.includeInitialize)
         {
@@ -654,12 +654,12 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleBlockChange(Packet53BlockChange par1Packet53BlockChange)
+    public void handleBlockChange(final Packet53BlockChange par1Packet53BlockChange)
     {
         this.worldClient.setBlockAndMetadataAndInvalidate(par1Packet53BlockChange.xPosition, par1Packet53BlockChange.yPosition, par1Packet53BlockChange.zPosition, par1Packet53BlockChange.type, par1Packet53BlockChange.metadata);
     }
 
-    public void handleKickDisconnect(Packet255KickDisconnect par1Packet255KickDisconnect)
+    public void handleKickDisconnect(final Packet255KickDisconnect par1Packet255KickDisconnect)
     {
         this.netManager.networkShutdown("disconnect.kicked", par1Packet255KickDisconnect.reason);
         this.disconnected = true;
@@ -675,7 +675,7 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleErrorMessage(String par1Str, Object[] par2ArrayOfObj)
+    public void handleErrorMessage(final String par1Str, final Object[] par2ArrayOfObj)
     {
         if (!this.disconnected)
         {
@@ -693,7 +693,7 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void quitWithPacket(Packet par1Packet)
+    public void quitWithPacket(final Packet par1Packet)
     {
         if (!this.disconnected)
         {
@@ -706,7 +706,7 @@ public class NetClientHandler extends NetHandler
     /**
      * Adds the packet to the send queue
      */
-    public void addToSendQueue(Packet par1Packet)
+    public void addToSendQueue(final Packet par1Packet)
     {
         if (!this.disconnected)
         {
@@ -714,9 +714,9 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleCollect(Packet22Collect par1Packet22Collect)
+    public void handleCollect(final Packet22Collect par1Packet22Collect)
     {
-        Entity entity = this.getEntityByID(par1Packet22Collect.collectedEntityId);
+        final Entity entity = this.getEntityByID(par1Packet22Collect.collectedEntityId);
         Object object = (EntityLivingBase)this.getEntityByID(par1Packet22Collect.collectorEntityId);
 
         if (object == null)
@@ -742,27 +742,27 @@ public class NetClientHandler extends NetHandler
 
     public void handleChat(Packet3Chat par1Packet3Chat)
     {
-        par1Packet3Chat = FMLNetworkHandler.handleChatMessage(this, par1Packet3Chat);
-        if (par1Packet3Chat == null)
+        Packet3Chat par1Packet3Chat1 = FMLNetworkHandler.handleChatMessage(this, par1Packet3Chat);
+        if (par1Packet3Chat1 == null)
         {
             return;
         }
-        ClientChatReceivedEvent event = new ClientChatReceivedEvent(par1Packet3Chat.message);
+        final ClientChatReceivedEvent event = new ClientChatReceivedEvent(par1Packet3Chat1.message);
         if (!MinecraftForge.EVENT_BUS.post(event) && event.message != null)
         {
             this.mc.ingameGUI.getChatGUI().printChatMessage(ChatMessageComponent.createFromJson(event.message).toStringWithFormatting(true));
         }
     }
 
-    public void handleAnimation(Packet18Animation par1Packet18Animation)
+    public void handleAnimation(final Packet18Animation par1Packet18Animation)
     {
-        Entity entity = this.getEntityByID(par1Packet18Animation.entityId);
+        final Entity entity = this.getEntityByID(par1Packet18Animation.entityId);
 
         if (entity != null)
         {
             if (par1Packet18Animation.animate == 1)
             {
-                EntityLivingBase entitylivingbase = (EntityLivingBase)entity;
+                final EntityLivingBase entitylivingbase = (EntityLivingBase)entity;
                 entitylivingbase.swingItem();
             }
             else if (par1Packet18Animation.animate == 2)
@@ -771,7 +771,7 @@ public class NetClientHandler extends NetHandler
             }
             else if (par1Packet18Animation.animate == 3)
             {
-                EntityPlayer entityplayer = (EntityPlayer)entity;
+                final EntityPlayer entityplayer = (EntityPlayer)entity;
                 entityplayer.wakeUpPlayer(false, false, false);
             }
             else if (par1Packet18Animation.animate != 4)
@@ -782,7 +782,7 @@ public class NetClientHandler extends NetHandler
                 }
                 else if (par1Packet18Animation.animate == 7)
                 {
-                    EntityCrit2FX entitycrit2fx = new EntityCrit2FX(this.mc.theWorld, entity, "magicCrit");
+                    final EntityCrit2FX entitycrit2fx = new EntityCrit2FX(this.mc.theWorld, entity, "magicCrit");
                     this.mc.effectRenderer.addEffect(entitycrit2fx);
                 }
                 else if (par1Packet18Animation.animate == 5 && entity instanceof EntityOtherPlayerMP)
@@ -793,15 +793,15 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleSleep(Packet17Sleep par1Packet17Sleep)
+    public void handleSleep(final Packet17Sleep par1Packet17Sleep)
     {
-        Entity entity = this.getEntityByID(par1Packet17Sleep.entityID);
+        final Entity entity = this.getEntityByID(par1Packet17Sleep.entityID);
 
         if (entity != null)
         {
             if (par1Packet17Sleep.field_73622_e == 0)
             {
-                EntityPlayer entityplayer = (EntityPlayer)entity;
+                final EntityPlayer entityplayer = (EntityPlayer)entity;
                 entityplayer.sleepInBedAt(par1Packet17Sleep.bedX, par1Packet17Sleep.bedY, par1Packet17Sleep.bedZ);
             }
         }
@@ -817,23 +817,23 @@ public class NetClientHandler extends NetHandler
         this.netManager.networkShutdown("disconnect.closed", new Object[0]);
     }
 
-    public void handleMobSpawn(Packet24MobSpawn par1Packet24MobSpawn)
+    public void handleMobSpawn(final Packet24MobSpawn par1Packet24MobSpawn)
     {
-        double d0 = (double)par1Packet24MobSpawn.xPosition / 32.0D;
-        double d1 = (double)par1Packet24MobSpawn.yPosition / 32.0D;
-        double d2 = (double)par1Packet24MobSpawn.zPosition / 32.0D;
-        float f = (float)(par1Packet24MobSpawn.yaw * 360) / 256.0F;
-        float f1 = (float)(par1Packet24MobSpawn.pitch * 360) / 256.0F;
-        EntityLivingBase entitylivingbase = (EntityLivingBase)EntityList.createEntityByID(par1Packet24MobSpawn.type, this.mc.theWorld);
+        final double d0 = (double)par1Packet24MobSpawn.xPosition / 32.0D;
+        final double d1 = (double)par1Packet24MobSpawn.yPosition / 32.0D;
+        final double d2 = (double)par1Packet24MobSpawn.zPosition / 32.0D;
+        final float f = (float)(par1Packet24MobSpawn.yaw * 360) / 256.0F;
+        final float f1 = (float)(par1Packet24MobSpawn.pitch * 360) / 256.0F;
+        final EntityLivingBase entitylivingbase = (EntityLivingBase)EntityList.createEntityByID(par1Packet24MobSpawn.type, this.mc.theWorld);
         entitylivingbase.serverPosX = par1Packet24MobSpawn.xPosition;
         entitylivingbase.serverPosY = par1Packet24MobSpawn.yPosition;
         entitylivingbase.serverPosZ = par1Packet24MobSpawn.zPosition;
         entitylivingbase.rotationYawHead = (float)(par1Packet24MobSpawn.headYaw * 360) / 256.0F;
-        Entity[] aentity = entitylivingbase.getParts();
+        final Entity[] aentity = entitylivingbase.getParts();
 
         if (aentity != null)
         {
-            int i = par1Packet24MobSpawn.entityId - entitylivingbase.entityId;
+            final int i = par1Packet24MobSpawn.entityId - entitylivingbase.entityId;
 
             for (int j = 0; j < aentity.length; ++j)
             {
@@ -847,7 +847,7 @@ public class NetClientHandler extends NetHandler
         entitylivingbase.motionY = (double)((float)par1Packet24MobSpawn.velocityY / 8000.0F);
         entitylivingbase.motionZ = (double)((float)par1Packet24MobSpawn.velocityZ / 8000.0F);
         this.worldClient.addEntityToWorld(par1Packet24MobSpawn.entityId, entitylivingbase);
-        List list = par1Packet24MobSpawn.getMetadata();
+        final List list = par1Packet24MobSpawn.getMetadata();
 
         if (list != null)
         {
@@ -855,13 +855,13 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleUpdateTime(Packet4UpdateTime par1Packet4UpdateTime)
+    public void handleUpdateTime(final Packet4UpdateTime par1Packet4UpdateTime)
     {
         this.mc.theWorld.func_82738_a(par1Packet4UpdateTime.worldAge);
         this.mc.theWorld.setWorldTime(par1Packet4UpdateTime.time);
     }
 
-    public void handleSpawnPosition(Packet6SpawnPosition par1Packet6SpawnPosition)
+    public void handleSpawnPosition(final Packet6SpawnPosition par1Packet6SpawnPosition)
     {
         this.mc.thePlayer.setSpawnChunk(new ChunkCoordinates(par1Packet6SpawnPosition.xPosition, par1Packet6SpawnPosition.yPosition, par1Packet6SpawnPosition.zPosition), true);
         this.mc.theWorld.getWorldInfo().setSpawnPosition(par1Packet6SpawnPosition.xPosition, par1Packet6SpawnPosition.yPosition, par1Packet6SpawnPosition.zPosition);
@@ -870,10 +870,10 @@ public class NetClientHandler extends NetHandler
     /**
      * Packet handler
      */
-    public void handleAttachEntity(Packet39AttachEntity par1Packet39AttachEntity)
+    public void handleAttachEntity(final Packet39AttachEntity par1Packet39AttachEntity)
     {
         Object object = this.getEntityByID(par1Packet39AttachEntity.ridingEntityId);
-        Entity entity = this.getEntityByID(par1Packet39AttachEntity.vehicleEntityId);
+        final Entity entity = this.getEntityByID(par1Packet39AttachEntity.vehicleEntityId);
 
         if (par1Packet39AttachEntity.attachState == 0)
         {
@@ -904,7 +904,7 @@ public class NetClientHandler extends NetHandler
 
             if (flag)
             {
-                GameSettings gamesettings = this.mc.gameSettings;
+                final GameSettings gamesettings = this.mc.gameSettings;
                 this.mc.ingameGUI.func_110326_a(I18n.getStringParams("mount.onboard", new Object[] {GameSettings.getKeyDisplayString(gamesettings.keyBindSneak.keyCode)}), false);
             }
         }
@@ -924,9 +924,9 @@ public class NetClientHandler extends NetHandler
     /**
      * Packet handler
      */
-    public void handleEntityStatus(Packet38EntityStatus par1Packet38EntityStatus)
+    public void handleEntityStatus(final Packet38EntityStatus par1Packet38EntityStatus)
     {
-        Entity entity = this.getEntityByID(par1Packet38EntityStatus.entityId);
+        final Entity entity = this.getEntityByID(par1Packet38EntityStatus.entityId);
 
         if (entity != null)
         {
@@ -934,7 +934,7 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    private Entity getEntityByID(int par1)
+    private Entity getEntityByID(final int par1)
     {
         return (Entity)(par1 == this.mc.thePlayer.entityId ? this.mc.thePlayer : this.worldClient.getEntityByID(par1));
     }
@@ -942,7 +942,7 @@ public class NetClientHandler extends NetHandler
     /**
      * Recieves player health from the server and then proceeds to set it locally on the client.
      */
-    public void handleUpdateHealth(Packet8UpdateHealth par1Packet8UpdateHealth)
+    public void handleUpdateHealth(final Packet8UpdateHealth par1Packet8UpdateHealth)
     {
         this.mc.thePlayer.setPlayerSPHealth(par1Packet8UpdateHealth.healthMP);
         this.mc.thePlayer.getFoodStats().setFoodLevel(par1Packet8UpdateHealth.food);
@@ -952,7 +952,7 @@ public class NetClientHandler extends NetHandler
     /**
      * Handle an experience packet.
      */
-    public void handleExperience(Packet43Experience par1Packet43Experience)
+    public void handleExperience(final Packet43Experience par1Packet43Experience)
     {
         this.mc.thePlayer.setXPStats(par1Packet43Experience.experience, par1Packet43Experience.experienceTotal, par1Packet43Experience.experienceLevel);
     }
@@ -960,12 +960,12 @@ public class NetClientHandler extends NetHandler
     /**
      * respawns the player
      */
-    public void handleRespawn(Packet9Respawn par1Packet9Respawn)
+    public void handleRespawn(final Packet9Respawn par1Packet9Respawn)
     {
         if (par1Packet9Respawn.respawnDimension != this.mc.thePlayer.dimension)
         {
             this.doneLoadingTerrain = false;
-            Scoreboard scoreboard = this.worldClient.getScoreboard();
+            final Scoreboard scoreboard = this.worldClient.getScoreboard();
             this.worldClient = new WorldClient(this, new WorldSettings(0L, par1Packet9Respawn.gameType, false, this.mc.theWorld.getWorldInfo().isHardcoreModeEnabled(), par1Packet9Respawn.terrainType), par1Packet9Respawn.respawnDimension, par1Packet9Respawn.difficulty, this.mc.mcProfiler, this.mc.getLogAgent());
             this.worldClient.func_96443_a(scoreboard);
             this.worldClient.isRemote = true;
@@ -978,9 +978,9 @@ public class NetClientHandler extends NetHandler
         this.mc.playerController.setGameType(par1Packet9Respawn.gameType);
     }
 
-    public void handleExplosion(Packet60Explosion par1Packet60Explosion)
+    public void handleExplosion(final Packet60Explosion par1Packet60Explosion)
     {
-        Explosion explosion = new Explosion(this.mc.theWorld, (Entity)null, par1Packet60Explosion.explosionX, par1Packet60Explosion.explosionY, par1Packet60Explosion.explosionZ, par1Packet60Explosion.explosionSize);
+        final Explosion explosion = new Explosion(this.mc.theWorld, (Entity)null, par1Packet60Explosion.explosionX, par1Packet60Explosion.explosionY, par1Packet60Explosion.explosionZ, par1Packet60Explosion.explosionSize);
         explosion.affectedBlockPositions = par1Packet60Explosion.chunkPositionRecords;
         explosion.doExplosionB(true);
         this.mc.thePlayer.motionX += (double)par1Packet60Explosion.getPlayerVelocityX();
@@ -988,9 +988,9 @@ public class NetClientHandler extends NetHandler
         this.mc.thePlayer.motionZ += (double)par1Packet60Explosion.getPlayerVelocityZ();
     }
 
-    public void handleOpenWindow(Packet100OpenWindow par1Packet100OpenWindow)
+    public void handleOpenWindow(final Packet100OpenWindow par1Packet100OpenWindow)
     {
-        EntityClientPlayerMP entityclientplayermp = this.mc.thePlayer;
+        final EntityClientPlayerMP entityclientplayermp = this.mc.thePlayer;
 
         switch (par1Packet100OpenWindow.inventoryType)
         {
@@ -1003,7 +1003,7 @@ public class NetClientHandler extends NetHandler
                 entityclientplayermp.openContainer.windowId = par1Packet100OpenWindow.windowId;
                 break;
             case 2:
-                TileEntityFurnace tileentityfurnace = new TileEntityFurnace();
+                final TileEntityFurnace tileentityfurnace = new TileEntityFurnace();
 
                 if (par1Packet100OpenWindow.useProvidedWindowTitle)
                 {
@@ -1014,7 +1014,7 @@ public class NetClientHandler extends NetHandler
                 entityclientplayermp.openContainer.windowId = par1Packet100OpenWindow.windowId;
                 break;
             case 3:
-                TileEntityDispenser tileentitydispenser = new TileEntityDispenser();
+                final TileEntityDispenser tileentitydispenser = new TileEntityDispenser();
 
                 if (par1Packet100OpenWindow.useProvidedWindowTitle)
                 {
@@ -1029,7 +1029,7 @@ public class NetClientHandler extends NetHandler
                 entityclientplayermp.openContainer.windowId = par1Packet100OpenWindow.windowId;
                 break;
             case 5:
-                TileEntityBrewingStand tileentitybrewingstand = new TileEntityBrewingStand();
+                final TileEntityBrewingStand tileentitybrewingstand = new TileEntityBrewingStand();
 
                 if (par1Packet100OpenWindow.useProvidedWindowTitle)
                 {
@@ -1044,7 +1044,7 @@ public class NetClientHandler extends NetHandler
                 entityclientplayermp.openContainer.windowId = par1Packet100OpenWindow.windowId;
                 break;
             case 7:
-                TileEntityBeacon tileentitybeacon = new TileEntityBeacon();
+                final TileEntityBeacon tileentitybeacon = new TileEntityBeacon();
                 entityclientplayermp.displayGUIBeacon(tileentitybeacon);
 
                 if (par1Packet100OpenWindow.useProvidedWindowTitle)
@@ -1059,7 +1059,7 @@ public class NetClientHandler extends NetHandler
                 entityclientplayermp.openContainer.windowId = par1Packet100OpenWindow.windowId;
                 break;
             case 9:
-                TileEntityHopper tileentityhopper = new TileEntityHopper();
+                final TileEntityHopper tileentityhopper = new TileEntityHopper();
 
                 if (par1Packet100OpenWindow.useProvidedWindowTitle)
                 {
@@ -1070,7 +1070,7 @@ public class NetClientHandler extends NetHandler
                 entityclientplayermp.openContainer.windowId = par1Packet100OpenWindow.windowId;
                 break;
             case 10:
-                TileEntityDropper tileentitydropper = new TileEntityDropper();
+                final TileEntityDropper tileentitydropper = new TileEntityDropper();
 
                 if (par1Packet100OpenWindow.useProvidedWindowTitle)
                 {
@@ -1081,7 +1081,7 @@ public class NetClientHandler extends NetHandler
                 entityclientplayermp.openContainer.windowId = par1Packet100OpenWindow.windowId;
                 break;
             case 11:
-                Entity entity = this.getEntityByID(par1Packet100OpenWindow.field_111008_f);
+                final Entity entity = this.getEntityByID(par1Packet100OpenWindow.field_111008_f);
 
                 if (entity != null && entity instanceof EntityHorse)
                 {
@@ -1091,9 +1091,9 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleSetSlot(Packet103SetSlot par1Packet103SetSlot)
+    public void handleSetSlot(final Packet103SetSlot par1Packet103SetSlot)
     {
-        EntityClientPlayerMP entityclientplayermp = this.mc.thePlayer;
+        final EntityClientPlayerMP entityclientplayermp = this.mc.thePlayer;
 
         if (par1Packet103SetSlot.windowId == -1)
         {
@@ -1105,13 +1105,13 @@ public class NetClientHandler extends NetHandler
 
             if (this.mc.currentScreen instanceof GuiContainerCreative)
             {
-                GuiContainerCreative guicontainercreative = (GuiContainerCreative)this.mc.currentScreen;
+                final GuiContainerCreative guicontainercreative = (GuiContainerCreative)this.mc.currentScreen;
                 flag = guicontainercreative.getCurrentTabIndex() != CreativeTabs.tabInventory.getTabIndex();
             }
 
             if (par1Packet103SetSlot.windowId == 0 && par1Packet103SetSlot.itemSlot >= 36 && par1Packet103SetSlot.itemSlot < 45)
             {
-                ItemStack itemstack = entityclientplayermp.inventoryContainer.getSlot(par1Packet103SetSlot.itemSlot).getStack();
+                final ItemStack itemstack = entityclientplayermp.inventoryContainer.getSlot(par1Packet103SetSlot.itemSlot).getStack();
 
                 if (par1Packet103SetSlot.myItemStack != null && (itemstack == null || itemstack.stackSize < par1Packet103SetSlot.myItemStack.stackSize))
                 {
@@ -1127,10 +1127,10 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleTransaction(Packet106Transaction par1Packet106Transaction)
+    public void handleTransaction(final Packet106Transaction par1Packet106Transaction)
     {
         Container container = null;
-        EntityClientPlayerMP entityclientplayermp = this.mc.thePlayer;
+        final EntityClientPlayerMP entityclientplayermp = this.mc.thePlayer;
 
         if (par1Packet106Transaction.windowId == 0)
         {
@@ -1147,9 +1147,9 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleWindowItems(Packet104WindowItems par1Packet104WindowItems)
+    public void handleWindowItems(final Packet104WindowItems par1Packet104WindowItems)
     {
-        EntityClientPlayerMP entityclientplayermp = this.mc.thePlayer;
+        final EntityClientPlayerMP entityclientplayermp = this.mc.thePlayer;
 
         if (par1Packet104WindowItems.windowId == 0)
         {
@@ -1161,9 +1161,9 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void func_142031_a(Packet133TileEditorOpen par1Packet133TileEditorOpen)
+    public void func_142031_a(final Packet133TileEditorOpen par1Packet133TileEditorOpen)
     {
-        TileEntity tileentity = this.worldClient.getBlockTileEntity(par1Packet133TileEditorOpen.field_142035_b, par1Packet133TileEditorOpen.field_142036_c, par1Packet133TileEditorOpen.field_142034_d);
+        final TileEntity tileentity = this.worldClient.getBlockTileEntity(par1Packet133TileEditorOpen.field_142035_b, par1Packet133TileEditorOpen.field_142036_c, par1Packet133TileEditorOpen.field_142034_d);
 
         if (tileentity != null)
         {
@@ -1171,7 +1171,7 @@ public class NetClientHandler extends NetHandler
         }
         else if (par1Packet133TileEditorOpen.field_142037_a == 0)
         {
-            TileEntitySign tileentitysign = new TileEntitySign();
+            final TileEntitySign tileentitysign = new TileEntitySign();
             tileentitysign.setWorldObj(this.worldClient);
             tileentitysign.xCoord = par1Packet133TileEditorOpen.field_142035_b;
             tileentitysign.yCoord = par1Packet133TileEditorOpen.field_142036_c;
@@ -1183,24 +1183,21 @@ public class NetClientHandler extends NetHandler
     /**
      * Updates Client side signs
      */
-    public void handleUpdateSign(Packet130UpdateSign par1Packet130UpdateSign)
+    public void handleUpdateSign(final Packet130UpdateSign par1Packet130UpdateSign)
     {
         boolean flag = false;
 
         if (this.mc.theWorld.blockExists(par1Packet130UpdateSign.xPosition, par1Packet130UpdateSign.yPosition, par1Packet130UpdateSign.zPosition))
         {
-            TileEntity tileentity = this.mc.theWorld.getBlockTileEntity(par1Packet130UpdateSign.xPosition, par1Packet130UpdateSign.yPosition, par1Packet130UpdateSign.zPosition);
+            final TileEntity tileentity = this.mc.theWorld.getBlockTileEntity(par1Packet130UpdateSign.xPosition, par1Packet130UpdateSign.yPosition, par1Packet130UpdateSign.zPosition);
 
             if (tileentity instanceof TileEntitySign)
             {
-                TileEntitySign tileentitysign = (TileEntitySign)tileentity;
+                final TileEntitySign tileentitysign = (TileEntitySign)tileentity;
 
                 if (tileentitysign.isEditable())
                 {
-                    for (int i = 0; i < 4; ++i)
-                    {
-                        tileentitysign.signText[i] = par1Packet130UpdateSign.signLines[i];
-                    }
+                    System.arraycopy(par1Packet130UpdateSign.signLines, 0, tileentitysign.signText, 0, 4);
 
                     tileentitysign.onInventoryChanged();
                 }
@@ -1215,11 +1212,11 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleTileEntityData(Packet132TileEntityData par1Packet132TileEntityData)
+    public void handleTileEntityData(final Packet132TileEntityData par1Packet132TileEntityData)
     {
         if (this.mc.theWorld.blockExists(par1Packet132TileEntityData.xPosition, par1Packet132TileEntityData.yPosition, par1Packet132TileEntityData.zPosition))
         {
-            TileEntity tileentity = this.mc.theWorld.getBlockTileEntity(par1Packet132TileEntityData.xPosition, par1Packet132TileEntityData.yPosition, par1Packet132TileEntityData.zPosition);
+            final TileEntity tileentity = this.mc.theWorld.getBlockTileEntity(par1Packet132TileEntityData.xPosition, par1Packet132TileEntityData.yPosition, par1Packet132TileEntityData.zPosition);
 
             if (tileentity != null)
             {
@@ -1247,9 +1244,9 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleUpdateProgressbar(Packet105UpdateProgressbar par1Packet105UpdateProgressbar)
+    public void handleUpdateProgressbar(final Packet105UpdateProgressbar par1Packet105UpdateProgressbar)
     {
-        EntityClientPlayerMP entityclientplayermp = this.mc.thePlayer;
+        final EntityClientPlayerMP entityclientplayermp = this.mc.thePlayer;
         this.unexpectedPacket(par1Packet105UpdateProgressbar);
 
         if (entityclientplayermp.openContainer != null && entityclientplayermp.openContainer.windowId == par1Packet105UpdateProgressbar.windowId)
@@ -1258,9 +1255,9 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handlePlayerInventory(Packet5PlayerInventory par1Packet5PlayerInventory)
+    public void handlePlayerInventory(final Packet5PlayerInventory par1Packet5PlayerInventory)
     {
-        Entity entity = this.getEntityByID(par1Packet5PlayerInventory.entityID);
+        final Entity entity = this.getEntityByID(par1Packet5PlayerInventory.entityID);
 
         if (entity != null)
         {
@@ -1268,27 +1265,27 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleCloseWindow(Packet101CloseWindow par1Packet101CloseWindow)
+    public void handleCloseWindow(final Packet101CloseWindow par1Packet101CloseWindow)
     {
         this.mc.thePlayer.func_92015_f();
     }
 
-    public void handleBlockEvent(Packet54PlayNoteBlock par1Packet54PlayNoteBlock)
+    public void handleBlockEvent(final Packet54PlayNoteBlock par1Packet54PlayNoteBlock)
     {
         this.mc.theWorld.addBlockEvent(par1Packet54PlayNoteBlock.xLocation, par1Packet54PlayNoteBlock.yLocation, par1Packet54PlayNoteBlock.zLocation, par1Packet54PlayNoteBlock.blockId, par1Packet54PlayNoteBlock.instrumentType, par1Packet54PlayNoteBlock.pitch);
     }
 
-    public void handleBlockDestroy(Packet55BlockDestroy par1Packet55BlockDestroy)
+    public void handleBlockDestroy(final Packet55BlockDestroy par1Packet55BlockDestroy)
     {
         this.mc.theWorld.destroyBlockInWorldPartially(par1Packet55BlockDestroy.getEntityId(), par1Packet55BlockDestroy.getPosX(), par1Packet55BlockDestroy.getPosY(), par1Packet55BlockDestroy.getPosZ(), par1Packet55BlockDestroy.getDestroyedStage());
     }
 
-    public void handleMapChunks(Packet56MapChunks par1Packet56MapChunks)
+    public void handleMapChunks(final Packet56MapChunks par1Packet56MapChunks)
     {
         for (int i = 0; i < par1Packet56MapChunks.getNumberOfChunkInPacket(); ++i)
         {
-            int j = par1Packet56MapChunks.getChunkPosX(i);
-            int k = par1Packet56MapChunks.getChunkPosZ(i);
+            final int j = par1Packet56MapChunks.getChunkPosX(i);
+            final int k = par1Packet56MapChunks.getChunkPosZ(i);
             this.worldClient.doPreChunk(j, k, true);
             this.worldClient.invalidateBlockReceiveRegion(j << 4, 0, k << 4, (j << 4) + 15, 256, (k << 4) + 15);
             Chunk chunk = this.worldClient.getChunkFromChunkCoords(j, k);
@@ -1322,11 +1319,11 @@ public class NetClientHandler extends NetHandler
         return this.mc != null && this.mc.theWorld != null && this.mc.thePlayer != null && this.worldClient != null;
     }
 
-    public void handleGameEvent(Packet70GameEvent par1Packet70GameEvent)
+    public void handleGameEvent(final Packet70GameEvent par1Packet70GameEvent)
     {
-        EntityClientPlayerMP entityclientplayermp = this.mc.thePlayer;
-        int i = par1Packet70GameEvent.eventType;
-        int j = par1Packet70GameEvent.gameMode;
+        final EntityClientPlayerMP entityclientplayermp = this.mc.thePlayer;
+        final int i = par1Packet70GameEvent.eventType;
+        final int j = par1Packet70GameEvent.gameMode;
 
         if (i >= 0 && i < Packet70GameEvent.clientMessage.length && Packet70GameEvent.clientMessage[i] != null)
         {
@@ -1353,7 +1350,7 @@ public class NetClientHandler extends NetHandler
         }
         else if (i == 5)
         {
-            GameSettings gamesettings = this.mc.gameSettings;
+            final GameSettings gamesettings = this.mc.gameSettings;
 
             if (j == 0)
             {
@@ -1381,12 +1378,12 @@ public class NetClientHandler extends NetHandler
     /**
      * Contains logic for handling packets containing arbitrary unique item data. Currently this is only for maps.
      */
-    public void handleMapData(Packet131MapData par1Packet131MapData)
+    public void handleMapData(final Packet131MapData par1Packet131MapData)
     {
         FMLNetworkHandler.handlePacket131Packet(this, par1Packet131MapData);
     }
 
-    public void fmlPacket131Callback(Packet131MapData par1Packet131MapData)
+    public void fmlPacket131Callback(final Packet131MapData par1Packet131MapData)
     {
         if (par1Packet131MapData.itemID == Item.map.itemID)
         {
@@ -1398,7 +1395,7 @@ public class NetClientHandler extends NetHandler
         }
     }
 
-    public void handleDoorChange(Packet61DoorChange par1Packet61DoorChange)
+    public void handleDoorChange(final Packet61DoorChange par1Packet61DoorChange)
     {
         if (par1Packet61DoorChange.getRelativeVolumeDisabled())
         {
@@ -1413,7 +1410,7 @@ public class NetClientHandler extends NetHandler
     /**
      * Increment player statistics
      */
-    public void handleStatistic(Packet200Statistic par1Packet200Statistic)
+    public void handleStatistic(final Packet200Statistic par1Packet200Statistic)
     {
         this.mc.thePlayer.incrementStat(StatList.getOneShotStat(par1Packet200Statistic.statisticId), par1Packet200Statistic.amount);
     }
@@ -1421,13 +1418,13 @@ public class NetClientHandler extends NetHandler
     /**
      * Handle an entity effect packet.
      */
-    public void handleEntityEffect(Packet41EntityEffect par1Packet41EntityEffect)
+    public void handleEntityEffect(final Packet41EntityEffect par1Packet41EntityEffect)
     {
-        Entity entity = this.getEntityByID(par1Packet41EntityEffect.entityId);
+        final Entity entity = this.getEntityByID(par1Packet41EntityEffect.entityId);
 
         if (entity instanceof EntityLivingBase)
         {
-            PotionEffect potioneffect = new PotionEffect(par1Packet41EntityEffect.effectId, par1Packet41EntityEffect.duration, par1Packet41EntityEffect.effectAmplifier);
+            final PotionEffect potioneffect = new PotionEffect(par1Packet41EntityEffect.effectId, par1Packet41EntityEffect.duration, par1Packet41EntityEffect.effectAmplifier);
             potioneffect.setPotionDurationMax(par1Packet41EntityEffect.isDurationMax());
             ((EntityLivingBase)entity).addPotionEffect(potioneffect);
         }
@@ -1436,9 +1433,9 @@ public class NetClientHandler extends NetHandler
     /**
      * Handle a remove entity effect packet.
      */
-    public void handleRemoveEntityEffect(Packet42RemoveEntityEffect par1Packet42RemoveEntityEffect)
+    public void handleRemoveEntityEffect(final Packet42RemoveEntityEffect par1Packet42RemoveEntityEffect)
     {
-        Entity entity = this.getEntityByID(par1Packet42RemoveEntityEffect.entityId);
+        final Entity entity = this.getEntityByID(par1Packet42RemoveEntityEffect.entityId);
 
         if (entity instanceof EntityLivingBase)
         {
@@ -1457,7 +1454,7 @@ public class NetClientHandler extends NetHandler
     /**
      * Handle a player information packet.
      */
-    public void handlePlayerInfo(Packet201PlayerInfo par1Packet201PlayerInfo)
+    public void handlePlayerInfo(final Packet201PlayerInfo par1Packet201PlayerInfo)
     {
         GuiPlayerInfo guiplayerinfo = (GuiPlayerInfo)this.playerInfoMap.get(par1Packet201PlayerInfo.playerName);
 
@@ -1483,7 +1480,7 @@ public class NetClientHandler extends NetHandler
     /**
      * Handle a keep alive packet.
      */
-    public void handleKeepAlive(Packet0KeepAlive par1Packet0KeepAlive)
+    public void handleKeepAlive(final Packet0KeepAlive par1Packet0KeepAlive)
     {
         this.addToSendQueue(new Packet0KeepAlive(par1Packet0KeepAlive.randomId));
     }
@@ -1491,9 +1488,9 @@ public class NetClientHandler extends NetHandler
     /**
      * Handle a player abilities packet.
      */
-    public void handlePlayerAbilities(Packet202PlayerAbilities par1Packet202PlayerAbilities)
+    public void handlePlayerAbilities(final Packet202PlayerAbilities par1Packet202PlayerAbilities)
     {
-        EntityClientPlayerMP entityclientplayermp = this.mc.thePlayer;
+        final EntityClientPlayerMP entityclientplayermp = this.mc.thePlayer;
         entityclientplayermp.capabilities.isFlying = par1Packet202PlayerAbilities.getFlying();
         entityclientplayermp.capabilities.isCreativeMode = par1Packet202PlayerAbilities.isCreativeMode();
         entityclientplayermp.capabilities.disableDamage = par1Packet202PlayerAbilities.getDisableDamage();
@@ -1502,46 +1499,46 @@ public class NetClientHandler extends NetHandler
         entityclientplayermp.capabilities.setPlayerWalkSpeed(par1Packet202PlayerAbilities.getWalkSpeed());
     }
 
-    public void handleAutoComplete(Packet203AutoComplete par1Packet203AutoComplete)
+    public void handleAutoComplete(final Packet203AutoComplete par1Packet203AutoComplete)
     {
-        String[] astring = par1Packet203AutoComplete.getText().split("\u0000");
+        final String[] astring = par1Packet203AutoComplete.getText().split("\u0000");
 
         if (this.mc.currentScreen instanceof GuiChat)
         {
-            GuiChat guichat = (GuiChat)this.mc.currentScreen;
+            final GuiChat guichat = (GuiChat)this.mc.currentScreen;
             guichat.func_73894_a(astring);
         }
     }
 
-    public void handleLevelSound(Packet62LevelSound par1Packet62LevelSound)
+    public void handleLevelSound(final Packet62LevelSound par1Packet62LevelSound)
     {
         this.mc.theWorld.playSound(par1Packet62LevelSound.getEffectX(), par1Packet62LevelSound.getEffectY(), par1Packet62LevelSound.getEffectZ(), par1Packet62LevelSound.getSoundName(), par1Packet62LevelSound.getVolume(), par1Packet62LevelSound.getPitch(), false);
     }
 
-    public void handleCustomPayload(Packet250CustomPayload par1Packet250CustomPayload)
+    public void handleCustomPayload(final Packet250CustomPayload par1Packet250CustomPayload)
     {
     FMLNetworkHandler.handlePacket250Packet(par1Packet250CustomPayload, netManager, this);
     }
 
-    public void handleVanilla250Packet(Packet250CustomPayload par1Packet250CustomPayload)
+    public void handleVanilla250Packet(final Packet250CustomPayload par1Packet250CustomPayload)
     {
         if ("MC|TrList".equals(par1Packet250CustomPayload.channel))
         {
-            DataInputStream datainputstream = new DataInputStream(new ByteArrayInputStream(par1Packet250CustomPayload.data));
+            final DataInputStream datainputstream = new DataInputStream(new ByteArrayInputStream(par1Packet250CustomPayload.data));
 
             try
             {
-                int i = datainputstream.readInt();
-                GuiScreen guiscreen = this.mc.currentScreen;
+                final int i = datainputstream.readInt();
+                final GuiScreen guiscreen = this.mc.currentScreen;
 
                 if (guiscreen != null && guiscreen instanceof GuiMerchant && i == this.mc.thePlayer.openContainer.windowId)
                 {
-                    IMerchant imerchant = ((GuiMerchant)guiscreen).getIMerchant();
-                    MerchantRecipeList merchantrecipelist = MerchantRecipeList.readRecipiesFromStream(datainputstream);
+                    final IMerchant imerchant = ((GuiMerchant)guiscreen).getIMerchant();
+                    final MerchantRecipeList merchantrecipelist = MerchantRecipeList.readRecipiesFromStream(datainputstream);
                     imerchant.setRecipes(merchantrecipelist);
                 }
             }
-            catch (IOException ioexception)
+            catch (final IOException ioexception)
             {
                 ioexception.printStackTrace();
             }
@@ -1555,10 +1552,10 @@ public class NetClientHandler extends NetHandler
     /**
      * Handle a set objective packet.
      */
-    public void handleSetObjective(Packet206SetObjective par1Packet206SetObjective)
+    public void handleSetObjective(final Packet206SetObjective par1Packet206SetObjective)
     {
-        Scoreboard scoreboard = this.worldClient.getScoreboard();
-        ScoreObjective scoreobjective;
+        final Scoreboard scoreboard = this.worldClient.getScoreboard();
+        final ScoreObjective scoreobjective;
 
         if (par1Packet206SetObjective.change == 0)
         {
@@ -1583,14 +1580,14 @@ public class NetClientHandler extends NetHandler
     /**
      * Handle a set score packet.
      */
-    public void handleSetScore(Packet207SetScore par1Packet207SetScore)
+    public void handleSetScore(final Packet207SetScore par1Packet207SetScore)
     {
-        Scoreboard scoreboard = this.worldClient.getScoreboard();
-        ScoreObjective scoreobjective = scoreboard.getObjective(par1Packet207SetScore.scoreName);
+        final Scoreboard scoreboard = this.worldClient.getScoreboard();
+        final ScoreObjective scoreobjective = scoreboard.getObjective(par1Packet207SetScore.scoreName);
 
         if (par1Packet207SetScore.updateOrRemove == 0)
         {
-            Score score = scoreboard.func_96529_a(par1Packet207SetScore.itemName, scoreobjective);
+            final Score score = scoreboard.func_96529_a(par1Packet207SetScore.itemName, scoreobjective);
             score.func_96647_c(par1Packet207SetScore.value);
         }
         else if (par1Packet207SetScore.updateOrRemove == 1)
@@ -1602,17 +1599,17 @@ public class NetClientHandler extends NetHandler
     /**
      * Handle a set display objective packet.
      */
-    public void handleSetDisplayObjective(Packet208SetDisplayObjective par1Packet208SetDisplayObjective)
+    public void handleSetDisplayObjective(final Packet208SetDisplayObjective par1Packet208SetDisplayObjective)
     {
-        Scoreboard scoreboard = this.worldClient.getScoreboard();
+        final Scoreboard scoreboard = this.worldClient.getScoreboard();
 
-        if (par1Packet208SetDisplayObjective.scoreName.length() == 0)
+        if (par1Packet208SetDisplayObjective.scoreName.isEmpty())
         {
             scoreboard.func_96530_a(par1Packet208SetDisplayObjective.scoreboardPosition, (ScoreObjective)null);
         }
         else
         {
-            ScoreObjective scoreobjective = scoreboard.getObjective(par1Packet208SetDisplayObjective.scoreName);
+            final ScoreObjective scoreobjective = scoreboard.getObjective(par1Packet208SetDisplayObjective.scoreName);
             scoreboard.func_96530_a(par1Packet208SetDisplayObjective.scoreboardPosition, scoreobjective);
         }
     }
@@ -1620,10 +1617,10 @@ public class NetClientHandler extends NetHandler
     /**
      * Handle a set player team packet.
      */
-    public void handleSetPlayerTeam(Packet209SetPlayerTeam par1Packet209SetPlayerTeam)
+    public void handleSetPlayerTeam(final Packet209SetPlayerTeam par1Packet209SetPlayerTeam)
     {
-        Scoreboard scoreboard = this.worldClient.getScoreboard();
-        ScorePlayerTeam scoreplayerteam;
+        final Scoreboard scoreboard = this.worldClient.getScoreboard();
+        final ScorePlayerTeam scoreplayerteam;
 
         if (par1Packet209SetPlayerTeam.mode == 0)
         {
@@ -1676,23 +1673,23 @@ public class NetClientHandler extends NetHandler
     /**
      * Handle a world particles packet.
      */
-    public void handleWorldParticles(Packet63WorldParticles par1Packet63WorldParticles)
+    public void handleWorldParticles(final Packet63WorldParticles par1Packet63WorldParticles)
     {
         for (int i = 0; i < par1Packet63WorldParticles.getQuantity(); ++i)
         {
-            double d0 = this.rand.nextGaussian() * (double)par1Packet63WorldParticles.getOffsetX();
-            double d1 = this.rand.nextGaussian() * (double)par1Packet63WorldParticles.getOffsetY();
-            double d2 = this.rand.nextGaussian() * (double)par1Packet63WorldParticles.getOffsetZ();
-            double d3 = this.rand.nextGaussian() * (double)par1Packet63WorldParticles.getSpeed();
-            double d4 = this.rand.nextGaussian() * (double)par1Packet63WorldParticles.getSpeed();
-            double d5 = this.rand.nextGaussian() * (double)par1Packet63WorldParticles.getSpeed();
+            final double d0 = this.rand.nextGaussian() * (double)par1Packet63WorldParticles.getOffsetX();
+            final double d1 = this.rand.nextGaussian() * (double)par1Packet63WorldParticles.getOffsetY();
+            final double d2 = this.rand.nextGaussian() * (double)par1Packet63WorldParticles.getOffsetZ();
+            final double d3 = this.rand.nextGaussian() * (double)par1Packet63WorldParticles.getSpeed();
+            final double d4 = this.rand.nextGaussian() * (double)par1Packet63WorldParticles.getSpeed();
+            final double d5 = this.rand.nextGaussian() * (double)par1Packet63WorldParticles.getSpeed();
             this.worldClient.spawnParticle(par1Packet63WorldParticles.getParticleName(), par1Packet63WorldParticles.getPositionX() + d0, par1Packet63WorldParticles.getPositionY() + d1, par1Packet63WorldParticles.getPositionZ() + d2, d3, d4, d5);
         }
     }
 
-    public void func_110773_a(Packet44UpdateAttributes par1Packet44UpdateAttributes)
+    public void func_110773_a(final Packet44UpdateAttributes par1Packet44UpdateAttributes)
     {
-        Entity entity = this.getEntityByID(par1Packet44UpdateAttributes.func_111002_d());
+        final Entity entity = this.getEntityByID(par1Packet44UpdateAttributes.func_111002_d());
 
         if (entity != null)
         {
@@ -1702,12 +1699,12 @@ public class NetClientHandler extends NetHandler
             }
             else
             {
-                BaseAttributeMap baseattributemap = ((EntityLivingBase)entity).getAttributeMap();
-                Iterator iterator = par1Packet44UpdateAttributes.func_111003_f().iterator();
+                final BaseAttributeMap baseattributemap = ((EntityLivingBase)entity).getAttributeMap();
+                final Iterator iterator = par1Packet44UpdateAttributes.func_111003_f().iterator();
 
                 while (iterator.hasNext())
                 {
-                    Packet44UpdateAttributesSnapshot packet44updateattributessnapshot = (Packet44UpdateAttributesSnapshot)iterator.next();
+                    final Packet44UpdateAttributesSnapshot packet44updateattributessnapshot = (Packet44UpdateAttributesSnapshot)iterator.next();
                     AttributeInstance attributeinstance = baseattributemap.getAttributeInstanceByName(packet44updateattributessnapshot.func_142040_a());
 
                     if (attributeinstance == null)
@@ -1717,11 +1714,11 @@ public class NetClientHandler extends NetHandler
 
                     attributeinstance.setAttribute(packet44updateattributessnapshot.func_142041_b());
                     attributeinstance.func_142049_d();
-                    Iterator iterator1 = packet44updateattributessnapshot.func_142039_c().iterator();
+                    final Iterator iterator1 = packet44updateattributessnapshot.func_142039_c().iterator();
 
                     while (iterator1.hasNext())
                     {
-                        AttributeModifier attributemodifier = (AttributeModifier)iterator1.next();
+                        final AttributeModifier attributemodifier = (AttributeModifier)iterator1.next();
                         attributeinstance.applyModifier(attributemodifier);
                     }
                 }
@@ -1743,7 +1740,7 @@ public class NetClientHandler extends NetHandler
         return mc.thePlayer;
     }
 
-    public static void setConnectionCompatibilityLevel(byte connectionCompatibilityLevel)
+    public static void setConnectionCompatibilityLevel(final byte connectionCompatibilityLevel)
     {
         NetClientHandler.connectionCompatibilityLevel = connectionCompatibilityLevel;
     }

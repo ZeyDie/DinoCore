@@ -6,7 +6,7 @@ class CallableLevelDimension implements Callable
 {
     final WorldInfo worldInfoInstance;
 
-    CallableLevelDimension(WorldInfo par1WorldInfo)
+    CallableLevelDimension(final WorldInfo par1WorldInfo)
     {
         this.worldInfoInstance = par1WorldInfo;
     }

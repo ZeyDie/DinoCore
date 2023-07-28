@@ -24,11 +24,11 @@ public abstract class MetadataStoreBase<T> {
      * @see MetadataStore#setMetadata(Object, String, MetadataValue)
      * @throws IllegalArgumentException If value is null, or the owning plugin is null
      */
-    public synchronized void setMetadata(T subject, String metadataKey, MetadataValue newMetadataValue) {
+    public synchronized void setMetadata(final T subject, final String metadataKey, final MetadataValue newMetadataValue) {
         Validate.notNull(newMetadataValue, "Value cannot be null");
-        Plugin owningPlugin = newMetadataValue.getOwningPlugin();
+        final Plugin owningPlugin = newMetadataValue.getOwningPlugin();
         Validate.notNull(owningPlugin, "Plugin cannot be null");
-        String key = disambiguate(subject, metadataKey);
+        final String key = disambiguate(subject, metadataKey);
         Map<Plugin, MetadataValue> entry = metadataMap.get(key);
         if (entry == null) {
             entry = new WeakHashMap<Plugin, MetadataValue>(1);
@@ -46,10 +46,10 @@ public abstract class MetadataStoreBase<T> {
      * @return A list of values, one for each plugin that has set the requested value.
      * @see MetadataStore#getMetadata(Object, String)
      */
-    public synchronized List<MetadataValue> getMetadata(T subject, String metadataKey) {
-        String key = disambiguate(subject, metadataKey);
+    public synchronized List<MetadataValue> getMetadata(final T subject, final String metadataKey) {
+        final String key = disambiguate(subject, metadataKey);
         if (metadataMap.containsKey(key)) {
-            Collection<MetadataValue> values = metadataMap.get(key).values();
+            final Collection<MetadataValue> values = metadataMap.get(key).values();
             return Collections.unmodifiableList(new ArrayList<MetadataValue>(values));
         } else {
             return Collections.emptyList();
@@ -63,8 +63,8 @@ public abstract class MetadataStoreBase<T> {
      * @param metadataKey the unique metadata key being queried.
      * @return the existence of the metadataKey within subject.
      */
-    public synchronized boolean hasMetadata(T subject, String metadataKey) {
-        String key = disambiguate(subject, metadataKey);
+    public synchronized boolean hasMetadata(final T subject, final String metadataKey) {
+        final String key = disambiguate(subject, metadataKey);
         return metadataMap.containsKey(key);
     }
 
@@ -77,10 +77,10 @@ public abstract class MetadataStoreBase<T> {
      * @see MetadataStore#removeMetadata(Object, String, org.bukkit.plugin.Plugin)
      * @throws IllegalArgumentException If plugin is null
      */
-    public synchronized void removeMetadata(T subject, String metadataKey, Plugin owningPlugin) {
+    public synchronized void removeMetadata(final T subject, final String metadataKey, final Plugin owningPlugin) {
         Validate.notNull(owningPlugin, "Plugin cannot be null");
-        String key = disambiguate(subject, metadataKey);
-        Map<Plugin, MetadataValue> entry = metadataMap.get(key);
+        final String key = disambiguate(subject, metadataKey);
+        final Map<Plugin, MetadataValue> entry = metadataMap.get(key);
         if (entry == null) {
             return;
         }
@@ -99,9 +99,9 @@ public abstract class MetadataStoreBase<T> {
      * @see MetadataStore#invalidateAll(org.bukkit.plugin.Plugin)
      * @throws IllegalArgumentException If plugin is null
      */
-    public synchronized void invalidateAll(Plugin owningPlugin) {
+    public synchronized void invalidateAll(final Plugin owningPlugin) {
         Validate.notNull(owningPlugin, "Plugin cannot be null");
-        for (Map<Plugin, MetadataValue> values : metadataMap.values()) {
+        for (final Map<Plugin, MetadataValue> values : metadataMap.values()) {
             if (values.containsKey(owningPlugin)) {
                 values.get(owningPlugin).invalidate();
             }

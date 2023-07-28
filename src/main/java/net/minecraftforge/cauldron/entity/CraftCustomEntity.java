@@ -11,7 +11,7 @@ public class CraftCustomEntity extends CraftEntity {
     public Class<? extends Entity> entityClass;
     public String entityName;
 
-    public CraftCustomEntity(CraftServer server, net.minecraft.entity.Entity entity) {
+    public CraftCustomEntity(final CraftServer server, final net.minecraft.entity.Entity entity) {
         super(server, entity);
         this.entityClass = entity.getClass();
         this.entityName = EntityRegistry.getCustomEntityTypeName(entityClass);
@@ -30,7 +30,7 @@ public class CraftCustomEntity extends CraftEntity {
     }
 
     public EntityType getType() {
-        EntityType type = EntityType.fromName(this.entityName);
+        final EntityType type = EntityType.fromName(this.entityName);
         if (type != null)
             return type;
         else return EntityType.UNKNOWN;

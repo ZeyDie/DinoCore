@@ -37,7 +37,7 @@ public class EntityTracker {
     public IntHashMap trackedEntityIDs = new IntHashMap(); // CraftBukkit - private -> public
     private final int entityViewDistance;
 
-    public EntityTracker(WorldServer par1WorldServer) {
+    public EntityTracker(final WorldServer par1WorldServer) {
         this.theWorld = par1WorldServer;
         this.entityViewDistance = par1WorldServer.getMinecraftServer().getConfigurationManager().getEntityViewDistance();
     }
@@ -46,16 +46,16 @@ public class EntityTracker {
      * if entity is a player sends all tracked events to the player, otherwise, adds with a visibility and update arate
      * based on the class type
      */
-    public void addEntityToTracker(Entity par1Entity) {
+    public void addEntityToTracker(final Entity par1Entity) {
         if (EntityRegistry.instance().tryTrackingEntity(this, par1Entity)) {
             return;
         }
 
         if (par1Entity instanceof EntityPlayerMP) {
             this.addEntityToTracker(par1Entity, 512, 2);
-            EntityPlayerMP entityplayermp = (EntityPlayerMP) par1Entity;
+            final EntityPlayerMP entityplayermp = (EntityPlayerMP) par1Entity;
 
-            for (EntityTrackerEntry entitytrackerentry : this.trackedEntities) {
+            for (final EntityTrackerEntry entitytrackerentry : this.trackedEntities) {
                 if (entitytrackerentry.myEntity != entityplayermp) {
                     entitytrackerentry.tryStartWachingThis(entityplayermp);
                 }
@@ -109,13 +109,14 @@ public class EntityTracker {
         }
     }
 
-    public void addEntityToTracker(Entity par1Entity, int par2, int par3) {
+    public void addEntityToTracker(final Entity par1Entity, final int par2, final int par3) {
         this.addEntityToTracker(par1Entity, par2, par3, false);
     }
 
-    public void addEntityToTracker(Entity par1Entity, int par2, int par3, boolean par4) {
+    public void addEntityToTracker(final Entity par1Entity, int par2, final int par3, final boolean par4) {
 
         //TODO ZoomCodeStart
+        int par21 = par2;
         if (CoreSettings.getInstance().getSettings().isAsynchronousWarnings())
             //TODO ZoomCodeEnd
 
@@ -123,10 +124,10 @@ public class EntityTracker {
                 throw new IllegalStateException("Asynchronous entity track!");    // Spigot
             }
 
-        par2 = org.spigotmc.TrackingRange.getEntityTrackingRange(par1Entity, par2); // Spigot
+        par21 = org.spigotmc.TrackingRange.getEntityTrackingRange(par1Entity, par21); // Spigot
 
-        if (par2 > this.entityViewDistance) {
-            par2 = this.entityViewDistance;
+        if (par21 > this.entityViewDistance) {
+            par21 = this.entityViewDistance;
         }
 
         try {
@@ -141,29 +142,29 @@ public class EntityTracker {
                 throw new IllegalStateException("Entity is already tracked!");
             }
 
-            EntityTrackerEntry entitytrackerentry = new EntityTrackerEntry(par1Entity, par2, par3, par4);
+            final EntityTrackerEntry entitytrackerentry = new EntityTrackerEntry(par1Entity, par21, par3, par4);
             this.trackedEntities.add(entitytrackerentry);
             this.trackedEntityIDs.addKey(par1Entity.entityId, entitytrackerentry);
             entitytrackerentry.sendEventsToPlayers(this.theWorld.playerEntities);
-        } catch (Throwable throwable) {
-            CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Adding entity to track");
-            CrashReportCategory crashreportcategory = crashreport.makeCategory("Entity To Track");
-            crashreportcategory.addCrashSection("Tracking range", par2 + " blocks");
+        } catch (final Throwable throwable) {
+            final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Adding entity to track");
+            final CrashReportCategory crashreportcategory = crashreport.makeCategory("Entity To Track");
+            crashreportcategory.addCrashSection("Tracking range", par21 + " blocks");
             crashreportcategory.addCrashSectionCallable("Update interval", new CallableEntityTracker(this, par3));
             par1Entity.addEntityCrashInfo(crashreportcategory);
-            CrashReportCategory crashreportcategory1 = crashreport.makeCategory("Entity That Is Already Tracked");
+            final CrashReportCategory crashreportcategory1 = crashreport.makeCategory("Entity That Is Already Tracked");
             ((EntityTrackerEntry) this.trackedEntityIDs.lookup(par1Entity.entityId)).myEntity.addEntityCrashInfo(crashreportcategory1);
 
             try {
                 throw new ReportedException(crashreport);
-            } catch (ReportedException reportedexception) {
+            } catch (final ReportedException reportedexception) {
                 System.err.println("\"Silently\" catching entity tracking error.");
                 reportedexception.printStackTrace();
             }
         }
     }
 
-    public void removeEntityFromAllTrackingPlayers(Entity par1Entity) {
+    public void removeEntityFromAllTrackingPlayers(final Entity par1Entity) {
 
         //TODO ZoomCodeStart
         if (CoreSettings.getInstance().getSettings().isAsynchronousWarnings())
@@ -174,16 +175,16 @@ public class EntityTracker {
             }
 
         if (par1Entity instanceof EntityPlayerMP) {
-            EntityPlayerMP entityplayermp = (EntityPlayerMP) par1Entity;
-            Iterator iterator = this.trackedEntities.iterator();
+            final EntityPlayerMP entityplayermp = (EntityPlayerMP) par1Entity;
+            final Iterator iterator = this.trackedEntities.iterator();
 
             while (iterator.hasNext()) {
-                EntityTrackerEntry entitytrackerentry = (EntityTrackerEntry) iterator.next();
+                final EntityTrackerEntry entitytrackerentry = (EntityTrackerEntry) iterator.next();
                 entitytrackerentry.removeFromWatchingList(entityplayermp);
             }
         }
 
-        EntityTrackerEntry entitytrackerentry1 = (EntityTrackerEntry) this.trackedEntityIDs.removeObject(par1Entity.entityId);
+        final EntityTrackerEntry entitytrackerentry1 = (EntityTrackerEntry) this.trackedEntityIDs.removeObject(par1Entity.entityId);
 
         if (entitytrackerentry1 != null) {
             this.trackedEntities.remove(entitytrackerentry1);
@@ -193,11 +194,11 @@ public class EntityTracker {
 
     public void updateTrackedEntities() {
         try {
-            ArrayList arraylist = new ArrayList();
-            Iterator iterator = this.trackedEntities.iterator();
+            final ArrayList arraylist = new ArrayList();
+            final Iterator iterator = this.trackedEntities.iterator();
 
             while (iterator.hasNext()) {
-                EntityTrackerEntry entitytrackerentry = (EntityTrackerEntry) iterator.next();
+                final EntityTrackerEntry entitytrackerentry = (EntityTrackerEntry) iterator.next();
                 entitytrackerentry.sendLocationToAllClients(this.theWorld.playerEntities);
 
                 if (entitytrackerentry.playerEntitiesUpdated && entitytrackerentry.myEntity instanceof EntityPlayerMP) {
@@ -206,25 +207,25 @@ public class EntityTracker {
             }
 
             for (int i = 0; i < arraylist.size(); ++i) {
-                EntityPlayerMP entityplayermp = (EntityPlayerMP) arraylist.get(i);
-                Iterator iterator1 = this.trackedEntities.iterator();
+                final EntityPlayerMP entityplayermp = (EntityPlayerMP) arraylist.get(i);
+                final Iterator iterator1 = this.trackedEntities.iterator();
 
                 while (iterator1.hasNext()) {
-                    EntityTrackerEntry entitytrackerentry1 = (EntityTrackerEntry) iterator1.next();
+                    final EntityTrackerEntry entitytrackerentry1 = (EntityTrackerEntry) iterator1.next();
 
                     if (entitytrackerentry1.myEntity != entityplayermp) {
                         entitytrackerentry1.tryStartWachingThis(entityplayermp);
                     }
                 }
             }
-        } catch (Throwable t) {}
+        } catch (final Throwable t) {}
     }
 
     /**
      * does not send the packet to the entity if the entity is a player
      */
-    public void sendPacketToAllPlayersTrackingEntity(Entity par1Entity, Packet par2Packet) {
-        EntityTrackerEntry entitytrackerentry = (EntityTrackerEntry) this.trackedEntityIDs.lookup(par1Entity.entityId);
+    public void sendPacketToAllPlayersTrackingEntity(final Entity par1Entity, final Packet par2Packet) {
+        final EntityTrackerEntry entitytrackerentry = (EntityTrackerEntry) this.trackedEntityIDs.lookup(par1Entity.entityId);
 
         if (entitytrackerentry != null) {
             entitytrackerentry.sendPacketToAllTrackingPlayers(par2Packet);
@@ -234,28 +235,28 @@ public class EntityTracker {
     /**
      * sends to the entity if the entity is a player
      */
-    public void sendPacketToAllAssociatedPlayers(Entity par1Entity, Packet par2Packet) {
-        EntityTrackerEntry entitytrackerentry = (EntityTrackerEntry) this.trackedEntityIDs.lookup(par1Entity.entityId);
+    public void sendPacketToAllAssociatedPlayers(final Entity par1Entity, final Packet par2Packet) {
+        final EntityTrackerEntry entitytrackerentry = (EntityTrackerEntry) this.trackedEntityIDs.lookup(par1Entity.entityId);
 
         if (entitytrackerentry != null) {
             entitytrackerentry.sendPacketToAllAssociatedPlayers(par2Packet);
         }
     }
 
-    public void removePlayerFromTrackers(EntityPlayerMP par1EntityPlayerMP) {
-        Iterator iterator = this.trackedEntities.iterator();
+    public void removePlayerFromTrackers(final EntityPlayerMP par1EntityPlayerMP) {
+        final Iterator iterator = this.trackedEntities.iterator();
 
         while (iterator.hasNext()) {
-            EntityTrackerEntry entitytrackerentry = (EntityTrackerEntry) iterator.next();
+            final EntityTrackerEntry entitytrackerentry = (EntityTrackerEntry) iterator.next();
             entitytrackerentry.removePlayerFromTracker(par1EntityPlayerMP);
         }
     }
 
-    public void func_85172_a(EntityPlayerMP par1EntityPlayerMP, Chunk par2Chunk) {
-        Iterator iterator = this.trackedEntities.iterator();
+    public void func_85172_a(final EntityPlayerMP par1EntityPlayerMP, final Chunk par2Chunk) {
+        final Iterator iterator = this.trackedEntities.iterator();
 
         while (iterator.hasNext()) {
-            EntityTrackerEntry entitytrackerentry = (EntityTrackerEntry) iterator.next();
+            final EntityTrackerEntry entitytrackerentry = (EntityTrackerEntry) iterator.next();
 
             if (entitytrackerentry.myEntity != par1EntityPlayerMP && entitytrackerentry.myEntity.chunkCoordX == par2Chunk.xPosition && entitytrackerentry.myEntity.chunkCoordZ == par2Chunk.zPosition) {
                 entitytrackerentry.tryStartWachingThis(par1EntityPlayerMP);

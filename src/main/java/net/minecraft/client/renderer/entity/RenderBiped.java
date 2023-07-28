@@ -35,14 +35,14 @@ public class RenderBiped extends RenderLiving
     private static final Map field_110859_k = Maps.newHashMap();
 
     /** List of armor texture filenames. */
-    public static String[] bipedArmorFilenamePrefix = new String[] {"leather", "chainmail", "iron", "diamond", "gold"};
+    public static String[] bipedArmorFilenamePrefix = {"leather", "chainmail", "iron", "diamond", "gold"};
 
-    public RenderBiped(ModelBiped par1ModelBiped, float par2)
+    public RenderBiped(final ModelBiped par1ModelBiped, final float par2)
     {
         this(par1ModelBiped, par2, 1.0F);
     }
 
-    public RenderBiped(ModelBiped par1ModelBiped, float par2, float par3)
+    public RenderBiped(final ModelBiped par1ModelBiped, final float par2, final float par3)
     {
         super(par1ModelBiped, par2);
         this.modelBipedMain = par1ModelBiped;
@@ -57,15 +57,15 @@ public class RenderBiped extends RenderLiving
     }
 
     @Deprecated //Use the more sensitve version getArmorResource below
-    public static ResourceLocation func_110857_a(ItemArmor par0ItemArmor, int par1)
+    public static ResourceLocation func_110857_a(final ItemArmor par0ItemArmor, final int par1)
     {
         return func_110858_a(par0ItemArmor, par1, (String)null);
     }
 
     @Deprecated //Use the more sensitve version getArmorResource below
-    public static ResourceLocation func_110858_a(ItemArmor par0ItemArmor, int par1, String par2Str)
+    public static ResourceLocation func_110858_a(final ItemArmor par0ItemArmor, final int par1, final String par2Str)
     {
-        String s1 = String.format("textures/models/armor/%s_layer_%d%s.png", new Object[] {bipedArmorFilenamePrefix[par0ItemArmor.renderIndex], Integer.valueOf(par1 == 2 ? 2 : 1), par2Str == null ? "" : String.format("_%s", new Object[]{par2Str})});
+        final String s1 = String.format("textures/models/armor/%s_layer_%d%s.png", new Object[] {bipedArmorFilenamePrefix[par0ItemArmor.renderIndex], Integer.valueOf(par1 == 2 ? 2 : 1), par2Str == null ? "" : String.format("_%s", new Object[]{par2Str})});
         ResourceLocation resourcelocation = (ResourceLocation)field_110859_k.get(s1);
 
         if (resourcelocation == null)
@@ -86,9 +86,9 @@ public class RenderBiped extends RenderLiving
      * @param type Subtype, can be null or "overlay"
      * @return ResourceLocation pointing at the armor's texture
      */
-    public static ResourceLocation getArmorResource(Entity entity, ItemStack stack, int slot, String type)
+    public static ResourceLocation getArmorResource(final Entity entity, final ItemStack stack, final int slot, final String type)
     {
-        ItemArmor item = (ItemArmor)stack.getItem();
+        final ItemArmor item = (ItemArmor)stack.getItem();
         String s1 = String.format("textures/models/armor/%s_layer_%d%s.png",
                 bipedArmorFilenamePrefix[item.renderIndex], (slot == 2 ? 2 : 1), type == null ? "" : String.format("_%s", type));
 
@@ -104,17 +104,17 @@ public class RenderBiped extends RenderLiving
         return resourcelocation;
     }
 
-    protected int func_130006_a(EntityLiving par1EntityLiving, int par2, float par3)
+    protected int func_130006_a(final EntityLiving par1EntityLiving, final int par2, final float par3)
     {
-        ItemStack itemstack = par1EntityLiving.func_130225_q(3 - par2);
+        final ItemStack itemstack = par1EntityLiving.func_130225_q(3 - par2);
 
         if (itemstack != null)
         {
-            Item item = itemstack.getItem();
+            final Item item = itemstack.getItem();
 
             if (item instanceof ItemArmor)
             {
-                ItemArmor itemarmor = (ItemArmor)item;
+                final ItemArmor itemarmor = (ItemArmor)item;
                 this.bindTexture(getArmorResource(par1EntityLiving, itemstack, par2, null));
                 ModelBiped modelbiped = par2 == 2 ? this.field_82425_h : this.field_82423_g;
                 modelbiped.bipedHead.showModel = par2 == 0;
@@ -129,15 +129,15 @@ public class RenderBiped extends RenderLiving
                 modelbiped.onGround = this.mainModel.onGround;
                 modelbiped.isRiding = this.mainModel.isRiding;
                 modelbiped.isChild = this.mainModel.isChild;
-                float f1 = 1.0F;
+                final float f1 = 1.0F;
 
                 //Move out of if to allow for more then just CLOTH to have color
-                int j = itemarmor.getColor(itemstack);
+                final int j = itemarmor.getColor(itemstack);
                 if (j != -1)
                 {
-                    float f2 = (float)(j >> 16 & 255) / 255.0F;
-                    float f3 = (float)(j >> 8 & 255) / 255.0F;
-                    float f4 = (float)(j & 255) / 255.0F;
+                    final float f2 = (float)(j >> 16 & 255) / 255.0F;
+                    final float f3 = (float)(j >> 8 & 255) / 255.0F;
+                    final float f4 = (float)(j & 255) / 255.0F;
                     GL11.glColor3f(f1 * f2, f1 * f3, f1 * f4);
 
                     if (itemstack.isItemEnchanted())
@@ -162,28 +162,28 @@ public class RenderBiped extends RenderLiving
         return -1;
     }
 
-    protected void func_130013_c(EntityLiving par1EntityLiving, int par2, float par3)
+    protected void func_130013_c(final EntityLiving par1EntityLiving, final int par2, final float par3)
     {
-        ItemStack itemstack = par1EntityLiving.func_130225_q(3 - par2);
+        final ItemStack itemstack = par1EntityLiving.func_130225_q(3 - par2);
 
         if (itemstack != null)
         {
-            Item item = itemstack.getItem();
+            final Item item = itemstack.getItem();
 
             if (item instanceof ItemArmor)
             {
                 this.bindTexture(getArmorResource(par1EntityLiving, itemstack, par2, "overlay"));
-                float f1 = 1.0F;
+                final float f1 = 1.0F;
                 GL11.glColor3f(f1, f1, f1);
             }
         }
     }
 
-    public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9)
+    public void doRenderLiving(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
-        float f2 = 1.0F;
+        final float f2 = 1.0F;
         GL11.glColor3f(f2, f2, f2);
-        ItemStack itemstack = par1EntityLiving.getHeldItem();
+        final ItemStack itemstack = par1EntityLiving.getHeldItem();
         this.func_82420_a(par1EntityLiving, itemstack);
         double d3 = par4 - (double)par1EntityLiving.yOffset;
 
@@ -198,24 +198,24 @@ public class RenderBiped extends RenderLiving
         this.field_82423_g.heldItemRight = this.field_82425_h.heldItemRight = this.modelBipedMain.heldItemRight = 0;
     }
 
-    protected ResourceLocation func_110856_a(EntityLiving par1EntityLiving)
+    protected ResourceLocation func_110856_a(final EntityLiving par1EntityLiving)
     {
         return null;
     }
 
-    protected void func_82420_a(EntityLiving par1EntityLiving, ItemStack par2ItemStack)
+    protected void func_82420_a(final EntityLiving par1EntityLiving, final ItemStack par2ItemStack)
     {
         this.field_82423_g.heldItemRight = this.field_82425_h.heldItemRight = this.modelBipedMain.heldItemRight = par2ItemStack != null ? 1 : 0;
         this.field_82423_g.isSneak = this.field_82425_h.isSneak = this.modelBipedMain.isSneak = par1EntityLiving.isSneaking();
     }
 
-    protected void func_130005_c(EntityLiving par1EntityLiving, float par2)
+    protected void func_130005_c(final EntityLiving par1EntityLiving, final float par2)
     {
-        float f1 = 1.0F;
+        final float f1 = 1.0F;
         GL11.glColor3f(f1, f1, f1);
         super.renderEquippedItems(par1EntityLiving, par2);
-        ItemStack itemstack = par1EntityLiving.getHeldItem();
-        ItemStack itemstack1 = par1EntityLiving.func_130225_q(3);
+        final ItemStack itemstack = par1EntityLiving.getHeldItem();
+        final ItemStack itemstack1 = par1EntityLiving.func_130225_q(3);
         float f2;
 
         if (itemstack1 != null)
@@ -223,8 +223,8 @@ public class RenderBiped extends RenderLiving
             GL11.glPushMatrix();
             this.modelBipedMain.bipedHead.postRender(0.0625F);
 
-            IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(itemstack1, EQUIPPED);
-            boolean is3D = (customRenderer != null && customRenderer.shouldUseRenderHelper(EQUIPPED, itemstack1, BLOCK_3D));
+            final IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(itemstack1, EQUIPPED);
+            final boolean is3D = (customRenderer != null && customRenderer.shouldUseRenderHelper(EQUIPPED, itemstack1, BLOCK_3D));
 
             if (itemstack1.getItem() instanceof ItemBlock)
             {
@@ -270,8 +270,8 @@ public class RenderBiped extends RenderLiving
             this.modelBipedMain.bipedRightArm.postRender(0.0625F);
             GL11.glTranslatef(-0.0625F, 0.4375F, 0.0625F);
 
-            IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(itemstack, EQUIPPED);
-            boolean is3D = (customRenderer != null && customRenderer.shouldUseRenderHelper(EQUIPPED, itemstack, BLOCK_3D));
+            final IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(itemstack, EQUIPPED);
+            final boolean is3D = (customRenderer != null && customRenderer.shouldUseRenderHelper(EQUIPPED, itemstack, BLOCK_3D));
 
             if (itemstack.getItem() instanceof ItemBlock && (is3D || RenderBlocks.renderItemIn3d(Block.blocksList[itemstack.itemID].getRenderType())))
             {
@@ -335,7 +335,7 @@ public class RenderBiped extends RenderLiving
         GL11.glTranslatef(0.0F, 0.1875F, 0.0F);
     }
 
-    protected void func_82439_b(EntityLivingBase par1EntityLivingBase, int par2, float par3)
+    protected void func_82439_b(final EntityLivingBase par1EntityLivingBase, final int par2, final float par3)
     {
         this.func_130013_c((EntityLiving)par1EntityLivingBase, par2, par3);
     }
@@ -343,17 +343,17 @@ public class RenderBiped extends RenderLiving
     /**
      * Queries whether should render the specified pass or not.
      */
-    protected int shouldRenderPass(EntityLivingBase par1EntityLivingBase, int par2, float par3)
+    protected int shouldRenderPass(final EntityLivingBase par1EntityLivingBase, final int par2, final float par3)
     {
         return this.func_130006_a((EntityLiving)par1EntityLivingBase, par2, par3);
     }
 
-    protected void renderEquippedItems(EntityLivingBase par1EntityLivingBase, float par2)
+    protected void renderEquippedItems(final EntityLivingBase par1EntityLivingBase, final float par2)
     {
         this.func_130005_c((EntityLiving)par1EntityLivingBase, par2);
     }
 
-    public void renderPlayer(EntityLivingBase par1EntityLivingBase, double par2, double par4, double par6, float par8, float par9)
+    public void renderPlayer(final EntityLivingBase par1EntityLivingBase, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.doRenderLiving((EntityLiving)par1EntityLivingBase, par2, par4, par6, par8, par9);
     }
@@ -361,7 +361,7 @@ public class RenderBiped extends RenderLiving
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.func_110856_a((EntityLiving)par1Entity);
     }
@@ -372,7 +372,7 @@ public class RenderBiped extends RenderLiving
      * (Render<T extends Entity) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.doRenderLiving((EntityLiving)par1Entity, par2, par4, par6, par8, par9);
     }

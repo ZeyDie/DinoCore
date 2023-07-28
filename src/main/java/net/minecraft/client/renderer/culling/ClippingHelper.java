@@ -14,7 +14,7 @@ public class ClippingHelper
     /**
      * Returns true if the box is inside all 6 clipping planes, otherwise returns false.
      */
-    public boolean isBoxInFrustum(double par1, double par3, double par5, double par7, double par9, double par11)
+    public boolean isBoxInFrustum(final double par1, final double par3, final double par5, final double par7, final double par9, final double par11)
     {
         for (int i = 0; i < 6; ++i)
         {

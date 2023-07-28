@@ -24,13 +24,13 @@ public class ContainerBeacon extends Container
     private InventoryPlayer player;
     // CraftBukkit end
 
-    public ContainerBeacon(InventoryPlayer par1InventoryPlayer, TileEntityBeacon par2TileEntityBeacon)
+    public ContainerBeacon(final InventoryPlayer par1InventoryPlayer, final TileEntityBeacon par2TileEntityBeacon)
     {
         player = par1InventoryPlayer; // CraftBukkit
         this.theBeacon = par2TileEntityBeacon;
         this.addSlotToContainer(this.beaconSlot = new SlotBeacon(this, par2TileEntityBeacon, 0, 136, 110));
-        byte b0 = 36;
-        short short1 = 137;
+        final byte b0 = 36;
+        final short short1 = 137;
         int i;
 
         for (i = 0; i < 3; ++i)
@@ -51,7 +51,7 @@ public class ContainerBeacon extends Container
         this.field_82868_i = par2TileEntityBeacon.getSecondaryEffect();
     }
 
-    public void addCraftingToCrafters(ICrafting par1ICrafting)
+    public void addCraftingToCrafters(final ICrafting par1ICrafting)
     {
         super.addCraftingToCrafters(par1ICrafting);
         par1ICrafting.sendProgressBarUpdate(this, 0, this.field_82865_g);
@@ -60,7 +60,7 @@ public class ContainerBeacon extends Container
     }
 
     @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2)
+    public void updateProgressBar(final int par1, final int par2)
     {
         if (par1 == 0)
         {
@@ -86,7 +86,7 @@ public class ContainerBeacon extends Container
         return this.theBeacon;
     }
 
-    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
+    public boolean canInteractWith(final EntityPlayer par1EntityPlayer)
     {
         if (!this.checkReachable)
         {
@@ -99,14 +99,14 @@ public class ContainerBeacon extends Container
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+    public ItemStack transferStackInSlot(final EntityPlayer par1EntityPlayer, final int par2)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(par2);
+        final Slot slot = (Slot)this.inventorySlots.get(par2);
 
         if (slot != null && slot.getHasStack())
         {
-            ItemStack itemstack1 = slot.getStack();
+            final ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
             if (par2 == 0)
@@ -172,7 +172,7 @@ public class ContainerBeacon extends Container
             return bukkitEntity;
         }
 
-        org.bukkit.craftbukkit.v1_6_R3.inventory.CraftInventory inventory = new org.bukkit.craftbukkit.v1_6_R3.inventory.CraftInventoryBeacon(this.theBeacon);
+        final org.bukkit.craftbukkit.v1_6_R3.inventory.CraftInventory inventory = new org.bukkit.craftbukkit.v1_6_R3.inventory.CraftInventoryBeacon(this.theBeacon);
         bukkitEntity = new CraftInventoryView(this.player.player.getBukkitEntity(), inventory, this);
         return bukkitEntity;
     }

@@ -19,6 +19,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,7 +31,7 @@ public class TimingsCommand extends BukkitCommand {
     private static final List<String> TIMINGS_SUBCOMMANDS = ImmutableList.of("report", "reset", "on", "off", "paste"); // Spigot
     public static long timingStart = 0; // Spigot
 
-    public TimingsCommand(String name) {
+    public TimingsCommand(final String name) {
         super(name);
         this.description = "Manages Spigot Timings data to see performance of the server."; // Spigot
         this.usageMessage = "/timings <reset|report|on|off|paste>"; // Spigot
@@ -38,7 +39,7 @@ public class TimingsCommand extends BukkitCommand {
     }
 
     // Spigot start - redesigned Timings Command
-    public void executeSpigotTimings(CommandSender sender, String[] args) {
+    public void executeSpigotTimings(final CommandSender sender, final String[] args) {
         if ("on".equals(args[0])) {
             ((SimplePluginManager) Bukkit.getPluginManager()).useTimings(true);
             CustomTimingsHandler.reload();
@@ -55,24 +56,24 @@ public class TimingsCommand extends BukkitCommand {
             return;
         }
 
-        boolean paste = "paste".equals(args[0]);
+        final boolean paste = "paste".equals(args[0]);
         if ("reset".equals(args[0])) {
             CustomTimingsHandler.reload();
             sender.sendMessage("Timings reset");
         } else if ("merged".equals(args[0]) || "report".equals(args[0]) || paste) {
-            long sampleTime = System.nanoTime() - timingStart;
+            final long sampleTime = System.nanoTime() - timingStart;
             int index = 0;
-            File timingFolder = new File("timings");
+            final File timingFolder = new File("timings");
             timingFolder.mkdirs();
             File timings = new File(timingFolder, "timings.txt");
-            ByteArrayOutputStream bout = (paste) ? new ByteArrayOutputStream() : null;
+            final ByteArrayOutputStream bout = (paste) ? new ByteArrayOutputStream() : null;
             while (timings.exists()) timings = new File(timingFolder, "timings" + (++index) + ".txt");
             PrintStream fileTimings = null;
             try {
                 fileTimings = (paste) ? new PrintStream(bout) : new PrintStream(timings);
 
                 CustomTimingsHandler.printTimings(fileTimings);
-                fileTimings.println("Sample time " + sampleTime + " (" + sampleTime / 1E9 + "s)");
+                fileTimings.println("Sample time " + sampleTime + " (" + sampleTime / 1.0E9 + "s)");
 
                 if (paste) {
                     //TODO ZoomCodeStart
@@ -87,7 +88,7 @@ public class TimingsCommand extends BukkitCommand {
                 sender.sendMessage("Timings written to " + timings.getPath());
                 sender.sendMessage("Paste contents of file into form at http://www.spigotmc.org/go/timings to read results.");
 
-            } catch (IOException e) {
+            } catch (final IOException e) {
             } finally {
                 if (fileTimings != null) {
                     fileTimings.close();
@@ -98,7 +99,7 @@ public class TimingsCommand extends BukkitCommand {
     // Spigot end
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length < 1) { // Spigot
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
@@ -113,10 +114,10 @@ public class TimingsCommand extends BukkitCommand {
             return true;
         }
 
-        boolean separate = "separate".equals(args[0]);
+        final boolean separate = "separate".equals(args[0]);
         if ("reset".equals(args[0])) {
-            for (HandlerList handlerList : HandlerList.getHandlerLists()) {
-                for (RegisteredListener listener : handlerList.getRegisteredListeners()) {
+            for (final HandlerList handlerList : HandlerList.getHandlerLists()) {
+                for (final RegisteredListener listener : handlerList.getRegisteredListeners()) {
                     if (listener instanceof TimedRegisteredListener) {
                         ((TimedRegisteredListener) listener).reset();
                     }
@@ -127,7 +128,7 @@ public class TimingsCommand extends BukkitCommand {
 
             int index = 0;
             int pluginIdx = 0;
-            File timingFolder = new File("timings");
+            final File timingFolder = new File("timings");
             timingFolder.mkdirs();
             File timings = new File(timingFolder, "timings.txt");
             File names = null;
@@ -140,22 +141,22 @@ public class TimingsCommand extends BukkitCommand {
                     names = new File(timingFolder, "names" + index + ".txt");
                     fileNames = new PrintStream(names);
                 }
-                for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
+                for (final Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
                     pluginIdx++;
                     long totalTime = 0;
                     if (separate) {
                         fileNames.println(pluginIdx + " " + plugin.getDescription().getFullName());
                         fileTimings.println("Plugin " + pluginIdx);
                     } else fileTimings.println(plugin.getDescription().getFullName());
-                    for (RegisteredListener listener : HandlerList.getRegisteredListeners(plugin)) {
+                    for (final RegisteredListener listener : HandlerList.getRegisteredListeners(plugin)) {
                         if (listener instanceof TimedRegisteredListener) {
-                            TimedRegisteredListener trl = (TimedRegisteredListener) listener;
-                            long time = trl.getTotalTime();
-                            int count = trl.getCount();
+                            final TimedRegisteredListener trl = (TimedRegisteredListener) listener;
+                            final long time = trl.getTotalTime();
+                            final int count = trl.getCount();
                             if (count == 0) continue;
-                            long avg = time / count;
+                            final long avg = time / count;
                             totalTime += time;
-                            Class<? extends Event> eventClass = trl.getEventClass();
+                            final Class<? extends Event> eventClass = trl.getEventClass();
                             if (count > 0 && eventClass != null) {
                                 fileTimings.println("    " + eventClass.getSimpleName() + (trl.hasMultiple() ? " (and sub-classes)" : "") + " Time: " + time + " Count: " + count + " Avg: " + avg);
                             }
@@ -165,7 +166,7 @@ public class TimingsCommand extends BukkitCommand {
                 }
                 sender.sendMessage("Timings written to " + timings.getPath());
                 if (separate) sender.sendMessage("Names written to " + names.getPath());
-            } catch (IOException e) {
+            } catch (final IOException e) {
             } finally {
                 if (fileTimings != null) {
                     fileTimings.close();
@@ -179,7 +180,7 @@ public class TimingsCommand extends BukkitCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");
@@ -196,7 +197,7 @@ public class TimingsCommand extends BukkitCommand {
         private final CommandSender sender;
         private final ByteArrayOutputStream bout;
 
-        public PasteThread(CommandSender sender, ByteArrayOutputStream bout) {
+        public PasteThread(final CommandSender sender, final ByteArrayOutputStream bout) {
             super("Timings paste thread");
             this.sender = sender;
             this.bout = bout;
@@ -214,21 +215,21 @@ public class TimingsCommand extends BukkitCommand {
         @Override
         public void run() {
             try {
-                HttpURLConnection con = (HttpURLConnection) new URL("http://paste.ubuntu.com/").openConnection();
+                final HttpURLConnection con = (HttpURLConnection) new URL("http://paste.ubuntu.com/").openConnection();
                 con.setDoOutput(true);
                 con.setRequestMethod("POST");
                 con.setInstanceFollowRedirects(false);
 
-                OutputStream out = con.getOutputStream();
-                out.write("poster=Spigot&syntax=text&content=".getBytes("UTF-8"));
-                out.write(URLEncoder.encode(bout.toString("UTF-8"), "UTF-8").getBytes("UTF-8"));
+                final OutputStream out = con.getOutputStream();
+                out.write("poster=Spigot&syntax=text&content=".getBytes(StandardCharsets.UTF_8));
+                out.write(URLEncoder.encode(bout.toString("UTF-8"), "UTF-8").getBytes(StandardCharsets.UTF_8));
                 out.close();
                 con.getInputStream().close();
 
-                String location = con.getHeaderField("Location");
-                String pasteID = location.substring("http://paste.ubuntu.com/".length(), location.length() - 1);
+                final String location = con.getHeaderField("Location");
+                final String pasteID = location.substring("http://paste.ubuntu.com/".length(), location.length() - 1);
                 sender.sendMessage(ChatColor.GREEN + "View timings results can be viewed at http://www.spigotmc.org/go/timings?url=" + pasteID);
-            } catch (IOException ex) {
+            } catch (final IOException ex) {
                 sender.sendMessage(ChatColor.RED + "Error pasting timings, check your console for more information");
                 Bukkit.getServer().getLogger().log(Level.WARNING, "Could not paste timings", ex);
             }

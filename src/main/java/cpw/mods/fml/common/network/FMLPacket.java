@@ -67,7 +67,7 @@ public abstract class FMLPacket
         private boolean isMultipart;
         private ConcurrentMap<INetworkManager, FMLPacket> partTracker;
 
-        private Type(Class<? extends FMLPacket> clazz, boolean isMultipart)
+        private Type(final Class<? extends FMLPacket> clazz, final boolean isMultipart)
         {
             this.packetType = clazz;
             this.isMultipart = isMultipart;
@@ -79,7 +79,7 @@ public abstract class FMLPacket
             {
                 return this.packetType.newInstance();
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 Throwables.propagateIfPossible(e);
                 FMLLog.log(Level.SEVERE, e, "A bizarre critical error occured during packet encoding");
@@ -92,7 +92,7 @@ public abstract class FMLPacket
             return isMultipart;
         }
 
-        private FMLPacket findCurrentPart(INetworkManager network)
+        private FMLPacket findCurrentPart(final INetworkManager network)
         {
             if (partTracker == null)
             {
@@ -108,33 +108,33 @@ public abstract class FMLPacket
 
     private Type type;
 
-    public static byte[][] makePacketSet(Type type, Object... data)
+    public static byte[][] makePacketSet(final Type type, final Object... data)
     {
         if (!type.isMultipart())
         {
             return new byte[0][];
         }
-        byte[] packetData = type.make().generatePacket(data);
+        final byte[] packetData = type.make().generatePacket(data);
 
-        byte[][] chunks = new byte[packetData.length / 32000 + 1][];
+        final byte[][] chunks = new byte[packetData.length / 32000 + 1][];
         for (int i = 0; i < packetData.length / 32000 + 1; i++)
         {
-            int len = Math.min(32000, packetData.length - i* 32000);
+            final int len = Math.min(32000, packetData.length - i* 32000);
             chunks[i] = Bytes.concat(new byte[] { UnsignedBytes.checkedCast(type.ordinal()), UnsignedBytes.checkedCast(i), UnsignedBytes.checkedCast(chunks.length)}, Ints.toByteArray(len), Arrays.copyOfRange(packetData, i * 32000, len + i * 32000));
         }
         return chunks;
     }
-    public static byte[] makePacket(Type type, Object... data)
+    public static byte[] makePacket(final Type type, final Object... data)
     {
-        byte[] packetData = type.make().generatePacket(data);
+        final byte[] packetData = type.make().generatePacket(data);
         return Bytes.concat(new byte[] { UnsignedBytes.checkedCast(type.ordinal()) }, packetData );
     }
 
-    public static FMLPacket readPacket(INetworkManager network, byte[] payload)
+    public static FMLPacket readPacket(final INetworkManager network, final byte[] payload)
     {
-        int type = UnsignedBytes.toInt(payload[0]);
-        Type eType = Type.values()[type];
-        FMLPacket pkt;
+        final int type = UnsignedBytes.toInt(payload[0]);
+        final Type eType = Type.values()[type];
+        final FMLPacket pkt;
         if (eType.isMultipart())
         {
             pkt = eType.findCurrentPart(network);
@@ -146,7 +146,7 @@ public abstract class FMLPacket
         return pkt.consumePacket(Arrays.copyOfRange(payload, 1, payload.length));
     }
 
-    public FMLPacket(Type type)
+    public FMLPacket(final Type type)
     {
         this.type = type;
     }

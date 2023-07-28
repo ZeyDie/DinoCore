@@ -30,7 +30,7 @@ public class Packet15Place extends Packet
     public Packet15Place() {}
 
     @SideOnly(Side.CLIENT)
-    public Packet15Place(int par1, int par2, int par3, int par4, ItemStack par5ItemStack, float par6, float par7, float par8)
+    public Packet15Place(final int par1, final int par2, final int par3, final int par4, final ItemStack par5ItemStack, final float par6, final float par7, final float par8)
     {
         this.xPosition = par1;
         this.yPosition = par2;
@@ -45,7 +45,7 @@ public class Packet15Place extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.xPosition = par1DataInput.readInt();
         this.yPosition = par1DataInput.readUnsignedByte();
@@ -60,7 +60,7 @@ public class Packet15Place extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.xPosition);
         par1DataOutput.write(this.yPosition);
@@ -75,7 +75,7 @@ public class Packet15Place extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handlePlace(this);
     }

@@ -9,10 +9,10 @@ import java.io.FileFilter;
 @SideOnly(Side.CLIENT)
 final class ResourcePackRepositoryFilter implements FileFilter
 {
-    public boolean accept(File par1File)
+    public boolean accept(final File par1File)
     {
-        boolean flag = par1File.isFile() && par1File.getName().endsWith(".zip");
-        boolean flag1 = par1File.isDirectory() && (new File(par1File, "pack.mcmeta")).isFile();
+        final boolean flag = par1File.isFile() && par1File.getName().endsWith(".zip");
+        final boolean flag1 = par1File.isDirectory() && (new File(par1File, "pack.mcmeta")).isFile();
         return flag || flag1;
     }
 }

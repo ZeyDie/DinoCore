@@ -7,7 +7,7 @@ import org.bukkit.entity.EntityType;
 
 public class CraftCow extends CraftAnimals implements Cow {
 
-    public CraftCow(CraftServer server, net.minecraft.entity.passive.EntityCow entity) {
+    public CraftCow(final CraftServer server, final net.minecraft.entity.passive.EntityCow entity) {
         super(server, entity);
     }
 

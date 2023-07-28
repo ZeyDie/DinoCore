@@ -17,7 +17,7 @@ public class RecipesMapExtending extends ShapedRecipes
     /**
      * Used to check if a recipe matches current crafting inventory
      */
-    public boolean matches(InventoryCrafting par1InventoryCrafting, World par2World)
+    public boolean matches(final InventoryCrafting par1InventoryCrafting, final World par2World)
     {
         if (!super.matches(par1InventoryCrafting, par2World))
         {
@@ -29,7 +29,7 @@ public class RecipesMapExtending extends ShapedRecipes
 
             for (int i = 0; i < par1InventoryCrafting.getSizeInventory() && itemstack == null; ++i)
             {
-                ItemStack itemstack1 = par1InventoryCrafting.getStackInSlot(i);
+                final ItemStack itemstack1 = par1InventoryCrafting.getStackInSlot(i);
 
                 if (itemstack1 != null && itemstack1.itemID == Item.map.itemID)
                 {
@@ -43,7 +43,7 @@ public class RecipesMapExtending extends ShapedRecipes
             }
             else
             {
-                MapData mapdata = Item.map.getMapData(itemstack, par2World);
+                final MapData mapdata = Item.map.getMapData(itemstack, par2World);
                 return mapdata == null ? false : mapdata.scale < 4;
             }
         }
@@ -52,13 +52,13 @@ public class RecipesMapExtending extends ShapedRecipes
     /**
      * Returns an Item that is the result of this recipe
      */
-    public ItemStack getCraftingResult(InventoryCrafting par1InventoryCrafting)
+    public ItemStack getCraftingResult(final InventoryCrafting par1InventoryCrafting)
     {
         ItemStack itemstack = null;
 
         for (int i = 0; i < par1InventoryCrafting.getSizeInventory() && itemstack == null; ++i)
         {
-            ItemStack itemstack1 = par1InventoryCrafting.getStackInSlot(i);
+            final ItemStack itemstack1 = par1InventoryCrafting.getStackInSlot(i);
 
             if (itemstack1 != null && itemstack1.itemID == Item.map.itemID)
             {

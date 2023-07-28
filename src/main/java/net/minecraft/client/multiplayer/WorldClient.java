@@ -57,7 +57,7 @@ public class WorldClient extends World
     private final Minecraft mc = Minecraft.getMinecraft();
     private final Set previousActiveChunkSet = new HashSet();
 
-    public WorldClient(NetClientHandler par1NetClientHandler, WorldSettings par2WorldSettings, int par3, int par4, Profiler par5Profiler, ILogAgent par6ILogAgent)
+    public WorldClient(final NetClientHandler par1NetClientHandler, final WorldSettings par2WorldSettings, final int par3, final int par4, final Profiler par5Profiler, final ILogAgent par6ILogAgent)
     {
         super(new SaveHandlerMP(), "MpServer", WorldProvider.getProviderForDimension(par3), par2WorldSettings, par5Profiler, par6ILogAgent);
         this.sendQueue = par1NetClientHandler;
@@ -86,7 +86,7 @@ public class WorldClient extends World
 
         for (int i = 0; i < 10 && !this.entitySpawnQueue.isEmpty(); ++i)
         {
-            Entity entity = (Entity)this.entitySpawnQueue.iterator().next();
+            final Entity entity = (Entity)this.entitySpawnQueue.iterator().next();
             this.entitySpawnQueue.remove(entity);
 
             if (!this.loadedEntityList.contains(entity))
@@ -108,7 +108,7 @@ public class WorldClient extends World
      * Invalidates an AABB region of blocks from the receive queue, in the event that the block has been modified
      * client-side in the intervening 80 receive ticks.
      */
-    public void invalidateBlockReceiveRegion(int par1, int par2, int par3, int par4, int par5, int par6) {}
+    public void invalidateBlockReceiveRegion(final int par1, final int par2, final int par3, final int par4, final int par5, final int par6) {}
 
     /**
      * Creates the chunk provider for this world. Called in the constructor. Retrieves provider from worldProvider?
@@ -134,18 +134,18 @@ public class WorldClient extends World
         }
 
         int i = 0;
-        Iterator iterator = this.activeChunkSet.iterator();
+        final Iterator iterator = this.activeChunkSet.iterator();
 
         while (iterator.hasNext())
         {
-            ChunkCoordIntPair chunkcoordintpair = (ChunkCoordIntPair)iterator.next();
+            final ChunkCoordIntPair chunkcoordintpair = (ChunkCoordIntPair)iterator.next();
 
             if (!this.previousActiveChunkSet.contains(chunkcoordintpair))
             {
-                int j = chunkcoordintpair.chunkXPos * 16;
-                int k = chunkcoordintpair.chunkZPos * 16;
+                final int j = chunkcoordintpair.chunkXPos * 16;
+                final int k = chunkcoordintpair.chunkZPos * 16;
                 this.theProfiler.startSection("getChunk");
-                Chunk chunk = this.getChunkFromChunkCoords(chunkcoordintpair.chunkXPos, chunkcoordintpair.chunkZPos);
+                final Chunk chunk = this.getChunkFromChunkCoords(chunkcoordintpair.chunkXPos, chunkcoordintpair.chunkZPos);
                 this.moodSoundAndLightCheck(j, k, chunk);
                 this.theProfiler.endSection();
                 this.previousActiveChunkSet.add(chunkcoordintpair);
@@ -159,7 +159,7 @@ public class WorldClient extends World
         }
     }
 
-    public void doPreChunk(int par1, int par2, boolean par3)
+    public void doPreChunk(final int par1, final int par2, final boolean par3)
     {
         if (par3)
         {
@@ -179,9 +179,9 @@ public class WorldClient extends World
     /**
      * Called to place all entities as part of a world
      */
-    public boolean spawnEntityInWorld(Entity par1Entity)
+    public boolean spawnEntityInWorld(final Entity par1Entity)
     {
-        boolean flag = super.spawnEntityInWorld(par1Entity);
+        final boolean flag = super.spawnEntityInWorld(par1Entity);
         this.entityList.add(par1Entity);
 
         if (!flag)
@@ -195,13 +195,13 @@ public class WorldClient extends World
     /**
      * Schedule the entity for removal during the next tick. Marks the entity dead in anticipation.
      */
-    public void removeEntity(Entity par1Entity)
+    public void removeEntity(final Entity par1Entity)
     {
         super.removeEntity(par1Entity);
         this.entityList.remove(par1Entity);
     }
 
-    protected void onEntityAdded(Entity par1Entity)
+    protected void onEntityAdded(final Entity par1Entity)
     {
         super.onEntityAdded(par1Entity);
 
@@ -211,7 +211,7 @@ public class WorldClient extends World
         }
     }
 
-    public void onEntityRemoved(Entity par1Entity)
+    public void onEntityRemoved(final Entity par1Entity)
     {
         super.onEntityRemoved(par1Entity);
 
@@ -231,9 +231,9 @@ public class WorldClient extends World
     /**
      * Add an ID to Entity mapping to entityHashSet
      */
-    public void addEntityToWorld(int par1, Entity par2Entity)
+    public void addEntityToWorld(final int par1, final Entity par2Entity)
     {
-        Entity entity1 = this.getEntityByID(par1);
+        final Entity entity1 = this.getEntityByID(par1);
 
         if (entity1 != null)
         {
@@ -254,14 +254,14 @@ public class WorldClient extends World
     /**
      * Returns the Entity with the given ID, or null if it doesn't exist in this World.
      */
-    public Entity getEntityByID(int par1)
+    public Entity getEntityByID(final int par1)
     {
         return (Entity)(par1 == this.mc.thePlayer.entityId ? this.mc.thePlayer : (Entity)this.entityHashSet.lookup(par1));
     }
 
-    public Entity removeEntityFromWorld(int par1)
+    public Entity removeEntityFromWorld(final int par1)
     {
-        Entity entity = (Entity)this.entityHashSet.removeObject(par1);
+        final Entity entity = (Entity)this.entityHashSet.removeObject(par1);
 
         if (entity != null)
         {
@@ -272,7 +272,7 @@ public class WorldClient extends World
         return entity;
     }
 
-    public boolean setBlockAndMetadataAndInvalidate(int par1, int par2, int par3, int par4, int par5)
+    public boolean setBlockAndMetadataAndInvalidate(final int par1, final int par2, final int par3, final int par4, final int par5)
     {
         this.invalidateBlockReceiveRegion(par1, par2, par3, par1, par2, par3);
         return super.setBlock(par1, par2, par3, par4, par5, 3);
@@ -286,7 +286,7 @@ public class WorldClient extends World
         this.sendQueue.quitWithPacket(new Packet255KickDisconnect("Quitting"));
     }
 
-    public IUpdatePlayerListBox getMinecartSoundUpdater(EntityMinecart par1EntityMinecart)
+    public IUpdatePlayerListBox getMinecartSoundUpdater(final EntityMinecart par1EntityMinecart)
     {
         return new SoundUpdaterMinecart(this.mc.sndManager, par1EntityMinecart, this.mc.thePlayer);
     }
@@ -348,17 +348,17 @@ public class WorldClient extends World
         }
     }
 
-    public void doVoidFogParticles(int par1, int par2, int par3)
+    public void doVoidFogParticles(final int par1, final int par2, final int par3)
     {
-        byte b0 = 16;
-        Random random = new Random();
+        final byte b0 = 16;
+        final Random random = new Random();
 
         for (int l = 0; l < 1000; ++l)
         {
-            int i1 = par1 + this.rand.nextInt(b0) - this.rand.nextInt(b0);
-            int j1 = par2 + this.rand.nextInt(b0) - this.rand.nextInt(b0);
-            int k1 = par3 + this.rand.nextInt(b0) - this.rand.nextInt(b0);
-            int l1 = this.getBlockId(i1, j1, k1);
+            final int i1 = par1 + this.rand.nextInt(b0) - this.rand.nextInt(b0);
+            final int j1 = par2 + this.rand.nextInt(b0) - this.rand.nextInt(b0);
+            final int k1 = par3 + this.rand.nextInt(b0) - this.rand.nextInt(b0);
+            final int l1 = this.getBlockId(i1, j1, k1);
 
             if (l1 == 0 && this.rand.nextInt(8) > j1 && this.provider.getWorldHasVoidParticles())
             {
@@ -435,9 +435,9 @@ public class WorldClient extends World
     /**
      * Adds some basic stats of the world to the given crash report.
      */
-    public CrashReportCategory addWorldInfoToCrashReport(CrashReport par1CrashReport)
+    public CrashReportCategory addWorldInfoToCrashReport(final CrashReport par1CrashReport)
     {
-        CrashReportCategory crashreportcategory = super.addWorldInfoToCrashReport(par1CrashReport);
+        final CrashReportCategory crashreportcategory = super.addWorldInfoToCrashReport(par1CrashReport);
         crashreportcategory.addCrashSectionCallable("Forced entities", new CallableMPL1(this));
         crashreportcategory.addCrashSectionCallable("Retry entities", new CallableMPL2(this));
         crashreportcategory.addCrashSectionCallable("Server brand", new WorldClientINNER3(this));
@@ -448,7 +448,7 @@ public class WorldClient extends World
     /**
      * par8 is loudness, all pars passed to minecraftInstance.sndManager.playSound
      */
-    public void playSound(double par1, double par3, double par5, String par7Str, float par8, float par9, boolean par10)
+    public void playSound(final double par1, final double par3, final double par5, final String par7Str, final float par8, final float par9, final boolean par10)
     {
         float f2 = 16.0F;
 
@@ -457,13 +457,13 @@ public class WorldClient extends World
             f2 *= par8;
         }
 
-        double d3 = this.mc.renderViewEntity.getDistanceSq(par1, par3, par5);
+        final double d3 = this.mc.renderViewEntity.getDistanceSq(par1, par3, par5);
 
         if (d3 < (double)(f2 * f2))
         {
             if (par10 && d3 > 100.0D)
             {
-                double d4 = Math.sqrt(d3) / 40.0D;
+                final double d4 = Math.sqrt(d3) / 40.0D;
                 this.mc.sndManager.func_92070_a(par7Str, (float)par1, (float)par3, (float)par5, par8, par9, (int)Math.round(d4 * 20.0D));
             }
             else
@@ -473,12 +473,12 @@ public class WorldClient extends World
         }
     }
 
-    public void func_92088_a(double par1, double par3, double par5, double par7, double par9, double par11, NBTTagCompound par13NBTTagCompound)
+    public void func_92088_a(final double par1, final double par3, final double par5, final double par7, final double par9, final double par11, final NBTTagCompound par13NBTTagCompound)
     {
         this.mc.effectRenderer.addEffect(new EntityFireworkStarterFX(this, par1, par3, par5, par7, par9, par11, this.mc.effectRenderer, par13NBTTagCompound));
     }
 
-    public void func_96443_a(Scoreboard par1Scoreboard)
+    public void func_96443_a(final Scoreboard par1Scoreboard)
     {
         this.worldScoreboard = par1Scoreboard;
     }
@@ -488,9 +488,10 @@ public class WorldClient extends World
      */
     public void setWorldTime(long par1)
     {
-        if (par1 < 0L)
+        long par11 = par1;
+        if (par11 < 0L)
         {
-            par1 = -par1;
+            par11 = -par11;
             this.getGameRules().setOrCreateGameRule("doDaylightCycle", "false");
         }
         else
@@ -498,20 +499,20 @@ public class WorldClient extends World
             this.getGameRules().setOrCreateGameRule("doDaylightCycle", "true");
         }
 
-        super.setWorldTime(par1);
+        super.setWorldTime(par11);
     }
 
-    static Set getEntityList(WorldClient par0WorldClient)
+    static Set getEntityList(final WorldClient par0WorldClient)
     {
         return par0WorldClient.entityList;
     }
 
-    static Set getEntitySpawnQueue(WorldClient par0WorldClient)
+    static Set getEntitySpawnQueue(final WorldClient par0WorldClient)
     {
         return par0WorldClient.entitySpawnQueue;
     }
 
-    static Minecraft func_142030_c(WorldClient par0WorldClient)
+    static Minecraft func_142030_c(final WorldClient par0WorldClient)
     {
         return par0WorldClient.mc;
     }

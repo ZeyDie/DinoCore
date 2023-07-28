@@ -18,7 +18,7 @@ import java.util.Random;
 
 public class BlockStairs extends Block
 {
-    private static final int[][] field_72159_a = new int[][] {{2, 6}, {3, 7}, {2, 3}, {6, 7}, {0, 4}, {1, 5}, {0, 1}, {4, 5}};
+    private static final int[][] field_72159_a = {{2, 6}, {3, 7}, {2, 3}, {6, 7}, {0, 4}, {1, 5}, {0, 1}, {4, 5}};
 
     /** The block that is used as model for the stair. */
     private final Block modelBlock;
@@ -26,7 +26,7 @@ public class BlockStairs extends Block
     private boolean field_72156_cr;
     private int field_72160_cs;
 
-    protected BlockStairs(int par1, Block par2Block, int par3)
+    protected BlockStairs(final int par1, final Block par2Block, final int par3)
     {
         super(par1, par2Block.blockMaterial);
         this.modelBlock = par2Block;
@@ -41,7 +41,7 @@ public class BlockStairs extends Block
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         if (this.field_72156_cr)
         {
@@ -78,9 +78,9 @@ public class BlockStairs extends Block
         return 10;
     }
 
-    public void func_82541_d(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public void func_82541_d(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
-        int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
+        final int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
 
         if ((l & 4) != 0)
         {
@@ -95,7 +95,7 @@ public class BlockStairs extends Block
     /**
      * Checks if supplied ID is one of a BlockStairs
      */
-    public static boolean isBlockStairsID(int par0)
+    public static boolean isBlockStairsID(final int par0)
     {
         return par0 > 0 && Block.blocksList[par0] instanceof BlockStairs;
     }
@@ -104,16 +104,16 @@ public class BlockStairs extends Block
      * returns true if the given block is a stairs block and is in the given direction of par5.  Parameters are
      * IBlockAccess, x, y, z, direction
      */
-    private boolean isBlockStairsDirection(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    private boolean isBlockStairsDirection(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
-        int i1 = par1IBlockAccess.getBlockId(par2, par3, par4);
+        final int i1 = par1IBlockAccess.getBlockId(par2, par3, par4);
         return isBlockStairsID(i1) && par1IBlockAccess.getBlockMetadata(par2, par3, par4) == par5;
     }
 
-    public boolean func_82542_g(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public boolean func_82542_g(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
-        int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
-        int i1 = l & 3;
+        final int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
+        final int i1 = l & 3;
         float f = 0.5F;
         float f1 = 1.0F;
 
@@ -128,9 +128,9 @@ public class BlockStairs extends Block
         float f4 = 0.0F;
         float f5 = 0.5F;
         boolean flag = true;
-        int j1;
-        int k1;
-        int l1;
+        final int j1;
+        final int k1;
+        final int l1;
 
         if (i1 == 0)
         {
@@ -227,10 +227,10 @@ public class BlockStairs extends Block
         return flag;
     }
 
-    public boolean func_82544_h(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public boolean func_82544_h(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
-        int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
-        int i1 = l & 3;
+        final int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
+        final int i1 = l & 3;
         float f = 0.5F;
         float f1 = 1.0F;
 
@@ -245,9 +245,9 @@ public class BlockStairs extends Block
         float f4 = 0.5F;
         float f5 = 1.0F;
         boolean flag = false;
-        int j1;
-        int k1;
-        int l1;
+        final int j1;
+        final int k1;
+        final int l1;
 
         if (i1 == 0)
         {
@@ -354,11 +354,11 @@ public class BlockStairs extends Block
      * Adds all intersecting collision boxes to a list. (Be sure to only add boxes to the list if they intersect the
      * mask.) Parameters: World, X, Y, Z, mask, list, colliding entity
      */
-    public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity)
+    public void addCollisionBoxesToList(final World par1World, final int par2, final int par3, final int par4, final AxisAlignedBB par5AxisAlignedBB, final List par6List, final Entity par7Entity)
     {
         this.func_82541_d(par1World, par2, par3, par4);
         super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
-        boolean flag = this.func_82542_g(par1World, par2, par3, par4);
+        final boolean flag = this.func_82542_g(par1World, par2, par3, par4);
         super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
 
         if (flag && this.func_82544_h(par1World, par2, par3, par4))
@@ -372,7 +372,7 @@ public class BlockStairs extends Block
     /**
      * Called when the block is clicked by a player. Args: x, y, z, entityPlayer
      */
-    public void onBlockClicked(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer)
+    public void onBlockClicked(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer)
     {
         this.modelBlock.onBlockClicked(par1World, par2, par3, par4, par5EntityPlayer);
     }
@@ -382,7 +382,7 @@ public class BlockStairs extends Block
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void randomDisplayTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         this.modelBlock.randomDisplayTick(par1World, par2, par3, par4, par5Random);
     }
@@ -390,7 +390,7 @@ public class BlockStairs extends Block
     /**
      * Called right before the block is destroyed by a player.  Args: world, x, y, z, metaData
      */
-    public void onBlockDestroyedByPlayer(World par1World, int par2, int par3, int par4, int par5)
+    public void onBlockDestroyedByPlayer(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         this.modelBlock.onBlockDestroyedByPlayer(par1World, par2, par3, par4, par5);
     }
@@ -400,7 +400,7 @@ public class BlockStairs extends Block
     /**
      * Goes straight to getLightBrightnessForSkyBlocks for Blocks, does some fancy computing for Fluids
      */
-    public int getMixedBrightnessForBlock(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public int getMixedBrightnessForBlock(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         return this.modelBlock.getMixedBrightnessForBlock(par1IBlockAccess, par2, par3, par4);
     }
@@ -410,7 +410,7 @@ public class BlockStairs extends Block
     /**
      * How bright to render this block based on the light its receiving. Args: iBlockAccess, x, y, z
      */
-    public float getBlockBrightness(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public float getBlockBrightness(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         return this.modelBlock.getBlockBrightness(par1IBlockAccess, par2, par3, par4);
     }
@@ -418,7 +418,7 @@ public class BlockStairs extends Block
     /**
      * Returns how much this block can resist explosions from the passed in entity.
      */
-    public float getExplosionResistance(Entity par1Entity)
+    public float getExplosionResistance(final Entity par1Entity)
     {
         return this.modelBlock.getExplosionResistance(par1Entity);
     }
@@ -426,7 +426,7 @@ public class BlockStairs extends Block
     /**
      * How many world ticks before ticking
      */
-    public int tickRate(World par1World)
+    public int tickRate(final World par1World)
     {
         return this.modelBlock.tickRate(par1World);
     }
@@ -434,7 +434,7 @@ public class BlockStairs extends Block
     /**
      * Can add to the passed in vector for a movement vector to be applied to the entity. Args: x, y, z, entity, vec3d
      */
-    public void velocityToAddToEntity(World par1World, int par2, int par3, int par4, Entity par5Entity, Vec3 par6Vec3)
+    public void velocityToAddToEntity(final World par1World, final int par2, final int par3, final int par4, final Entity par5Entity, final Vec3 par6Vec3)
     {
         this.modelBlock.velocityToAddToEntity(par1World, par2, par3, par4, par5Entity, par6Vec3);
     }
@@ -454,7 +454,7 @@ public class BlockStairs extends Block
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
         return this.modelBlock.getIcon(par1, this.modelBlockMetadata);
     }
@@ -464,7 +464,7 @@ public class BlockStairs extends Block
     /**
      * Returns the bounding box of the wired rectangular prism to render.
      */
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    public AxisAlignedBB getSelectedBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4)
     {
         return this.modelBlock.getSelectedBoundingBoxFromPool(par1World, par2, par3, par4);
     }
@@ -481,7 +481,7 @@ public class BlockStairs extends Block
      * Returns whether this block is collideable based on the arguments passed in \n@param par1 block metaData \n@param
      * par2 whether the player right-clicked while holding a boat
      */
-    public boolean canCollideCheck(int par1, boolean par2)
+    public boolean canCollideCheck(final int par1, final boolean par2)
     {
         return this.modelBlock.canCollideCheck(par1, par2);
     }
@@ -489,7 +489,7 @@ public class BlockStairs extends Block
     /**
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
      */
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
+    public boolean canPlaceBlockAt(final World par1World, final int par2, final int par3, final int par4)
     {
         return this.modelBlock.canPlaceBlockAt(par1World, par2, par3, par4);
     }
@@ -497,7 +497,7 @@ public class BlockStairs extends Block
     /**
      * Called whenever the block is added into the world. Args: world, x, y, z
      */
-    public void onBlockAdded(World par1World, int par2, int par3, int par4)
+    public void onBlockAdded(final World par1World, final int par2, final int par3, final int par4)
     {
         this.onNeighborBlockChange(par1World, par2, par3, par4, 0);
         this.modelBlock.onBlockAdded(par1World, par2, par3, par4);
@@ -508,7 +508,7 @@ public class BlockStairs extends Block
      * different metadata value, but before the new metadata value is set. Args: World, x, y, z, old block ID, old
      * metadata
      */
-    public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    public void breakBlock(final World par1World, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         this.modelBlock.breakBlock(par1World, par2, par3, par4, par5, par6);
     }
@@ -516,7 +516,7 @@ public class BlockStairs extends Block
     /**
      * Called whenever an entity is walking on top of this block. Args: world, x, y, z, entity
      */
-    public void onEntityWalking(World par1World, int par2, int par3, int par4, Entity par5Entity)
+    public void onEntityWalking(final World par1World, final int par2, final int par3, final int par4, final Entity par5Entity)
     {
         this.modelBlock.onEntityWalking(par1World, par2, par3, par4, par5Entity);
     }
@@ -524,7 +524,7 @@ public class BlockStairs extends Block
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         this.modelBlock.updateTick(par1World, par2, par3, par4, par5Random);
     }
@@ -532,7 +532,7 @@ public class BlockStairs extends Block
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9)
     {
         return this.modelBlock.onBlockActivated(par1World, par2, par3, par4, par5EntityPlayer, 0, 0.0F, 0.0F, 0.0F);
     }
@@ -540,7 +540,7 @@ public class BlockStairs extends Block
     /**
      * Called upon the block being destroyed by an explosion
      */
-    public void onBlockDestroyedByExplosion(World par1World, int par2, int par3, int par4, Explosion par5Explosion)
+    public void onBlockDestroyedByExplosion(final World par1World, final int par2, final int par3, final int par4, final Explosion par5Explosion)
     {
         this.modelBlock.onBlockDestroyedByExplosion(par1World, par2, par3, par4, par5Explosion);
     }
@@ -548,10 +548,10 @@ public class BlockStairs extends Block
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
+    public void onBlockPlacedBy(final World par1World, final int par2, final int par3, final int par4, final EntityLivingBase par5EntityLivingBase, final ItemStack par6ItemStack)
     {
-        int l = MathHelper.floor_double((double)(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-        int i1 = par1World.getBlockMetadata(par2, par3, par4) & 4;
+        final int l = MathHelper.floor_double((double)(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        final int i1 = par1World.getBlockMetadata(par2, par3, par4) & 4;
 
         if (l == 0)
         {
@@ -577,7 +577,7 @@ public class BlockStairs extends Block
     /**
      * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
      */
-    public int onBlockPlaced(World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9)
+    public int onBlockPlaced(final World par1World, final int par2, final int par3, final int par4, final int par5, final float par6, final float par7, final float par8, final int par9)
     {
         return par5 != 0 && (par5 == 1 || (double)par7 <= 0.5D) ? par9 : par9 | 4;
     }
@@ -586,13 +586,13 @@ public class BlockStairs extends Block
      * Ray traces through the blocks collision from start vector to end vector returning a ray trace hit. Args: world,
      * x, y, z, startVec, endVec
      */
-    public MovingObjectPosition collisionRayTrace(World par1World, int par2, int par3, int par4, Vec3 par5Vec3, Vec3 par6Vec3)
+    public MovingObjectPosition collisionRayTrace(final World par1World, final int par2, final int par3, final int par4, final Vec3 par5Vec3, final Vec3 par6Vec3)
     {
-        MovingObjectPosition[] amovingobjectposition = new MovingObjectPosition[8];
-        int l = par1World.getBlockMetadata(par2, par3, par4);
-        int i1 = l & 3;
-        boolean flag = (l & 4) == 4;
-        int[] aint = field_72159_a[i1 + (flag ? 4 : 0)];
+        final MovingObjectPosition[] amovingobjectposition = new MovingObjectPosition[8];
+        final int l = par1World.getBlockMetadata(par2, par3, par4);
+        final int i1 = l & 3;
+        final boolean flag = (l & 4) == 4;
+        final int[] aint = field_72159_a[i1 + (flag ? 4 : 0)];
         this.field_72156_cr = true;
         int j1;
         int k1;
@@ -601,7 +601,7 @@ public class BlockStairs extends Block
         for (int i2 = 0; i2 < 8; ++i2)
         {
             this.field_72160_cs = i2;
-            int[] aint1 = aint;
+            final int[] aint1 = aint;
             j1 = aint.length;
 
             for (k1 = 0; k1 < j1; ++k1)
@@ -617,8 +617,8 @@ public class BlockStairs extends Block
             amovingobjectposition[i2] = super.collisionRayTrace(par1World, par2, par3, par4, par5Vec3, par6Vec3);
         }
 
-        int[] aint2 = aint;
-        int j2 = aint.length;
+        final int[] aint2 = aint;
+        final int j2 = aint.length;
 
         for (j1 = 0; j1 < j2; ++j1)
         {
@@ -628,16 +628,16 @@ public class BlockStairs extends Block
 
         MovingObjectPosition movingobjectposition = null;
         double d0 = 0.0D;
-        MovingObjectPosition[] amovingobjectposition1 = amovingobjectposition;
+        final MovingObjectPosition[] amovingobjectposition1 = amovingobjectposition;
         l1 = amovingobjectposition.length;
 
         for (int k2 = 0; k2 < l1; ++k2)
         {
-            MovingObjectPosition movingobjectposition1 = amovingobjectposition1[k2];
+            final MovingObjectPosition movingobjectposition1 = amovingobjectposition1[k2];
 
             if (movingobjectposition1 != null)
             {
-                double d1 = movingobjectposition1.hitVec.squareDistanceTo(par6Vec3);
+                final double d1 = movingobjectposition1.hitVec.squareDistanceTo(par6Vec3);
 
                 if (d1 > d0)
                 {
@@ -656,5 +656,5 @@ public class BlockStairs extends Block
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister) {}
+    public void registerIcons(final IconRegister par1IconRegister) {}
 }

@@ -7,7 +7,7 @@ import net.minecraftforge.event.Event;
 public class ClientChatReceivedEvent extends Event
 {
     public String message;
-    public ClientChatReceivedEvent(String message)
+    public ClientChatReceivedEvent(final String message)
     {
         this.message = message;
     }

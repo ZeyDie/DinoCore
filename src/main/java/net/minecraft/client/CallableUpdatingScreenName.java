@@ -10,7 +10,7 @@ class CallableUpdatingScreenName implements Callable
 {
     final Minecraft theMinecraft;
 
-    CallableUpdatingScreenName(Minecraft par1Minecraft)
+    CallableUpdatingScreenName(final Minecraft par1Minecraft)
     {
         this.theMinecraft = par1Minecraft;
     }

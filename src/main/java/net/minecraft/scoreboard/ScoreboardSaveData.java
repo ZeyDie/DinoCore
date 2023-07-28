@@ -19,12 +19,12 @@ public class ScoreboardSaveData extends WorldSavedData
         this("scoreboard");
     }
 
-    public ScoreboardSaveData(String par1Str)
+    public ScoreboardSaveData(final String par1Str)
     {
         super(par1Str);
     }
 
-    public void func_96499_a(Scoreboard par1Scoreboard)
+    public void func_96499_a(final Scoreboard par1Scoreboard)
     {
         this.theScoreboard = par1Scoreboard;
 
@@ -37,7 +37,7 @@ public class ScoreboardSaveData extends WorldSavedData
     /**
      * reads in data from the NBTTagCompound into this MapDataBase
      */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         if (this.theScoreboard == null)
         {
@@ -60,12 +60,12 @@ public class ScoreboardSaveData extends WorldSavedData
         }
     }
 
-    protected void func_96498_a(NBTTagList par1NBTTagList)
+    protected void func_96498_a(final NBTTagList par1NBTTagList)
     {
         for (int i = 0; i < par1NBTTagList.tagCount(); ++i)
         {
-            NBTTagCompound nbttagcompound = (NBTTagCompound)par1NBTTagList.tagAt(i);
-            ScorePlayerTeam scoreplayerteam = this.theScoreboard.createTeam(nbttagcompound.getString("Name"));
+            final NBTTagCompound nbttagcompound = (NBTTagCompound)par1NBTTagList.tagAt(i);
+            final ScorePlayerTeam scoreplayerteam = this.theScoreboard.createTeam(nbttagcompound.getString("Name"));
             scoreplayerteam.setTeamName(nbttagcompound.getString("DisplayName"));
             scoreplayerteam.setNamePrefix(nbttagcompound.getString("Prefix"));
             scoreplayerteam.setNameSuffix(nbttagcompound.getString("Suffix"));
@@ -84,7 +84,7 @@ public class ScoreboardSaveData extends WorldSavedData
         }
     }
 
-    protected void func_96502_a(ScorePlayerTeam par1ScorePlayerTeam, NBTTagList par2NBTTagList)
+    protected void func_96502_a(final ScorePlayerTeam par1ScorePlayerTeam, final NBTTagList par2NBTTagList)
     {
         for (int i = 0; i < par2NBTTagList.tagCount(); ++i)
         {
@@ -92,37 +92,37 @@ public class ScoreboardSaveData extends WorldSavedData
         }
     }
 
-    protected void func_96504_c(NBTTagCompound par1NBTTagCompound)
+    protected void func_96504_c(final NBTTagCompound par1NBTTagCompound)
     {
         for (int i = 0; i < 3; ++i)
         {
             if (par1NBTTagCompound.hasKey("slot_" + i))
             {
-                String s = par1NBTTagCompound.getString("slot_" + i);
-                ScoreObjective scoreobjective = this.theScoreboard.getObjective(s);
+                final String s = par1NBTTagCompound.getString("slot_" + i);
+                final ScoreObjective scoreobjective = this.theScoreboard.getObjective(s);
                 this.theScoreboard.func_96530_a(i, scoreobjective);
             }
         }
     }
 
-    protected void func_96501_b(NBTTagList par1NBTTagList)
+    protected void func_96501_b(final NBTTagList par1NBTTagList)
     {
         for (int i = 0; i < par1NBTTagList.tagCount(); ++i)
         {
-            NBTTagCompound nbttagcompound = (NBTTagCompound)par1NBTTagList.tagAt(i);
-            ScoreObjectiveCriteria scoreobjectivecriteria = (ScoreObjectiveCriteria)ScoreObjectiveCriteria.field_96643_a.get(nbttagcompound.getString("CriteriaName"));
-            ScoreObjective scoreobjective = this.theScoreboard.func_96535_a(nbttagcompound.getString("Name"), scoreobjectivecriteria);
+            final NBTTagCompound nbttagcompound = (NBTTagCompound)par1NBTTagList.tagAt(i);
+            final ScoreObjectiveCriteria scoreobjectivecriteria = (ScoreObjectiveCriteria)ScoreObjectiveCriteria.field_96643_a.get(nbttagcompound.getString("CriteriaName"));
+            final ScoreObjective scoreobjective = this.theScoreboard.func_96535_a(nbttagcompound.getString("Name"), scoreobjectivecriteria);
             scoreobjective.setDisplayName(nbttagcompound.getString("DisplayName"));
         }
     }
 
-    protected void func_96500_c(NBTTagList par1NBTTagList)
+    protected void func_96500_c(final NBTTagList par1NBTTagList)
     {
         for (int i = 0; i < par1NBTTagList.tagCount(); ++i)
         {
-            NBTTagCompound nbttagcompound = (NBTTagCompound)par1NBTTagList.tagAt(i);
-            ScoreObjective scoreobjective = this.theScoreboard.getObjective(nbttagcompound.getString("Objective"));
-            Score score = this.theScoreboard.func_96529_a(nbttagcompound.getString("Name"), scoreobjective);
+            final NBTTagCompound nbttagcompound = (NBTTagCompound)par1NBTTagList.tagAt(i);
+            final ScoreObjective scoreobjective = this.theScoreboard.getObjective(nbttagcompound.getString("Objective"));
+            final Score score = this.theScoreboard.func_96529_a(nbttagcompound.getString("Name"), scoreobjective);
             score.func_96647_c(nbttagcompound.getInteger("Score"));
         }
     }
@@ -130,7 +130,7 @@ public class ScoreboardSaveData extends WorldSavedData
     /**
      * write data to NBTTagCompound from this MapDataBase, similar to Entities and TileEntities
      */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         if (this.theScoreboard == null)
         {
@@ -147,26 +147,26 @@ public class ScoreboardSaveData extends WorldSavedData
 
     protected NBTTagList func_96496_a()
     {
-        NBTTagList nbttaglist = new NBTTagList();
-        Collection collection = this.theScoreboard.func_96525_g();
-        Iterator iterator = collection.iterator();
+        final NBTTagList nbttaglist = new NBTTagList();
+        final Collection collection = this.theScoreboard.func_96525_g();
+        final Iterator iterator = collection.iterator();
 
         while (iterator.hasNext())
         {
-            ScorePlayerTeam scoreplayerteam = (ScorePlayerTeam)iterator.next();
-            NBTTagCompound nbttagcompound = new NBTTagCompound();
+            final ScorePlayerTeam scoreplayerteam = (ScorePlayerTeam)iterator.next();
+            final NBTTagCompound nbttagcompound = new NBTTagCompound();
             nbttagcompound.setString("Name", scoreplayerteam.func_96661_b());
             nbttagcompound.setString("DisplayName", scoreplayerteam.func_96669_c());
             nbttagcompound.setString("Prefix", scoreplayerteam.getColorPrefix());
             nbttagcompound.setString("Suffix", scoreplayerteam.getColorSuffix());
             nbttagcompound.setBoolean("AllowFriendlyFire", scoreplayerteam.getAllowFriendlyFire());
             nbttagcompound.setBoolean("SeeFriendlyInvisibles", scoreplayerteam.func_98297_h());
-            NBTTagList nbttaglist1 = new NBTTagList();
-            Iterator iterator1 = scoreplayerteam.getMembershipCollection().iterator();
+            final NBTTagList nbttaglist1 = new NBTTagList();
+            final Iterator iterator1 = scoreplayerteam.getMembershipCollection().iterator();
 
             while (iterator1.hasNext())
             {
-                String s = (String)iterator1.next();
+                final String s = (String)iterator1.next();
                 nbttaglist1.appendTag(new NBTTagString("", s));
             }
 
@@ -177,14 +177,14 @@ public class ScoreboardSaveData extends WorldSavedData
         return nbttaglist;
     }
 
-    protected void func_96497_d(NBTTagCompound par1NBTTagCompound)
+    protected void func_96497_d(final NBTTagCompound par1NBTTagCompound)
     {
-        NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+        final NBTTagCompound nbttagcompound1 = new NBTTagCompound();
         boolean flag = false;
 
         for (int i = 0; i < 3; ++i)
         {
-            ScoreObjective scoreobjective = this.theScoreboard.func_96539_a(i);
+            final ScoreObjective scoreobjective = this.theScoreboard.func_96539_a(i);
 
             if (scoreobjective != null)
             {
@@ -201,14 +201,14 @@ public class ScoreboardSaveData extends WorldSavedData
 
     protected NBTTagList func_96505_b()
     {
-        NBTTagList nbttaglist = new NBTTagList();
-        Collection collection = this.theScoreboard.getScoreObjectives();
-        Iterator iterator = collection.iterator();
+        final NBTTagList nbttaglist = new NBTTagList();
+        final Collection collection = this.theScoreboard.getScoreObjectives();
+        final Iterator iterator = collection.iterator();
 
         while (iterator.hasNext())
         {
-            ScoreObjective scoreobjective = (ScoreObjective)iterator.next();
-            NBTTagCompound nbttagcompound = new NBTTagCompound();
+            final ScoreObjective scoreobjective = (ScoreObjective)iterator.next();
+            final NBTTagCompound nbttagcompound = new NBTTagCompound();
             nbttagcompound.setString("Name", scoreobjective.getName());
             nbttagcompound.setString("CriteriaName", scoreobjective.getCriteria().func_96636_a());
             nbttagcompound.setString("DisplayName", scoreobjective.getDisplayName());
@@ -220,14 +220,14 @@ public class ScoreboardSaveData extends WorldSavedData
 
     protected NBTTagList func_96503_e()
     {
-        NBTTagList nbttaglist = new NBTTagList();
-        Collection collection = this.theScoreboard.func_96528_e();
-        Iterator iterator = collection.iterator();
+        final NBTTagList nbttaglist = new NBTTagList();
+        final Collection collection = this.theScoreboard.func_96528_e();
+        final Iterator iterator = collection.iterator();
 
         while (iterator.hasNext())
         {
-            Score score = (Score)iterator.next();
-            NBTTagCompound nbttagcompound = new NBTTagCompound();
+            final Score score = (Score)iterator.next();
+            final NBTTagCompound nbttagcompound = new NBTTagCompound();
             nbttagcompound.setString("Name", score.getPlayerName());
             nbttagcompound.setString("Objective", score.func_96645_d().getName());
             nbttagcompound.setInteger("Score", score.getScorePoints());

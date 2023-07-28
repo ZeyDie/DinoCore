@@ -9,7 +9,7 @@ public class EventException extends Exception {
      *
      * @param throwable Exception that triggered this Exception
      */
-    public EventException(Throwable throwable) {
+    public EventException(final Throwable throwable) {
         cause = throwable;
     }
 
@@ -26,7 +26,7 @@ public class EventException extends Exception {
      * @param cause The exception that caused this
      * @param message The message
      */
-    public EventException(Throwable cause, String message) {
+    public EventException(final Throwable cause, final String message) {
         super(message);
         this.cause = cause;
     }
@@ -36,7 +36,7 @@ public class EventException extends Exception {
      *
      * @param message The message
      */
-    public EventException(String message) {
+    public EventException(final String message) {
         super(message);
         cause = null;
     }

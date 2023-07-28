@@ -40,7 +40,7 @@ public enum Art {
     private static final HashMap<String, Art> BY_NAME = Maps.newHashMap();
     private static final HashMap<Integer, Art> BY_ID = Maps.newHashMap();
 
-    private Art(int id, int width, int height) {
+    private Art(final int id, final int width, final int height) {
         this.id = id;
         this.width = width;
         this.height = height;
@@ -83,7 +83,7 @@ public enum Art {
      * @deprecated Magic value
      */
     @Deprecated
-    public static Art getById(int id) {
+    public static Art getById(final int id) {
         return BY_ID.get(id);
     }
 
@@ -95,14 +95,14 @@ public enum Art {
      * @param name The name
      * @return The painting
      */
-    public static Art getByName(String name) {
+    public static Art getByName(final String name) {
         Validate.notNull(name, "Name cannot be null");
 
         return BY_NAME.get(name.toLowerCase().replaceAll("_", ""));
     }
 
     static {
-        for (Art art : values()) {
+        for (final Art art : values()) {
             BY_ID.put(art.id, art);
             BY_NAME.put(art.toString().toLowerCase().replaceAll("_", ""), art);
         }

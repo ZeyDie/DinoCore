@@ -45,7 +45,7 @@ public class RenderingRegistry
      *
      * @param armor
      */
-    public static int addNewArmourRendererPrefix(String armor)
+    public static int addNewArmourRendererPrefix(final String armor)
     {
         RenderBiped.bipedArmorFilenamePrefix = ObjectArrays.concat(RenderBiped.bipedArmorFilenamePrefix, armor);
         return RenderBiped.bipedArmorFilenamePrefix.length - 1;
@@ -58,7 +58,7 @@ public class RenderingRegistry
      * @param entityClass
      * @param renderer
      */
-    public static void registerEntityRenderingHandler(Class<? extends Entity> entityClass, Render renderer)
+    public static void registerEntityRenderingHandler(final Class<? extends Entity> entityClass, final Render renderer)
     {
         instance().entityRenderers.add(new EntityRendererInfo(entityClass, renderer));
     }
@@ -68,7 +68,7 @@ public class RenderingRegistry
      *
      * @param handler
      */
-    public static void registerBlockHandler(ISimpleBlockRenderingHandler handler)
+    public static void registerBlockHandler(final ISimpleBlockRenderingHandler handler)
     {
         instance().blockRenderers.put(handler.getRenderId(), handler);
     }
@@ -81,7 +81,7 @@ public class RenderingRegistry
      * @param renderId
      * @param handler
      */
-    public static void registerBlockHandler(int renderId, ISimpleBlockRenderingHandler handler)
+    public static void registerBlockHandler(final int renderId, final ISimpleBlockRenderingHandler handler)
     {
         instance().blockRenderers.put(renderId, handler);
     }
@@ -100,7 +100,7 @@ public class RenderingRegistry
      * @param fileToAdd
      */
     @Deprecated
-    public static int addTextureOverride(String fileToOverride, String fileToAdd)
+    public static int addTextureOverride(final String fileToOverride, final String fileToAdd)
     {
         return -1;
     }
@@ -112,7 +112,7 @@ public class RenderingRegistry
      * @param overlayPath
      * @param index
      */
-    public static void addTextureOverride(String path, String overlayPath, int index)
+    public static void addTextureOverride(final String path, final String overlayPath, final int index)
     {
 //        TextureFXManager.instance().addNewTextureOverride(path, overlayPath, index);
     }
@@ -123,7 +123,7 @@ public class RenderingRegistry
      * @param path
      */
     @Deprecated
-    public static int getUniqueTextureIndex(String path)
+    public static int getUniqueTextureIndex(final String path)
     {
         return -1;
     }
@@ -135,7 +135,7 @@ public class RenderingRegistry
 
     private static class EntityRendererInfo
     {
-        public EntityRendererInfo(Class<? extends Entity> target, Render renderer)
+        public EntityRendererInfo(final Class<? extends Entity> target, final Render renderer)
         {
             this.target = target;
             this.renderer = renderer;
@@ -144,29 +144,29 @@ public class RenderingRegistry
         private Render renderer;
     }
 
-    public boolean renderWorldBlock(RenderBlocks renderer, IBlockAccess world, int x, int y, int z, Block block, int modelId)
+    public boolean renderWorldBlock(final RenderBlocks renderer, final IBlockAccess world, final int x, final int y, final int z, final Block block, final int modelId)
     {
         if (!blockRenderers.containsKey(modelId)) { return false; }
-        ISimpleBlockRenderingHandler bri = blockRenderers.get(modelId);
+        final ISimpleBlockRenderingHandler bri = blockRenderers.get(modelId);
         return bri.renderWorldBlock(world, x, y, z, block, modelId, renderer);
     }
 
-    public void renderInventoryBlock(RenderBlocks renderer, Block block, int metadata, int modelID)
+    public void renderInventoryBlock(final RenderBlocks renderer, final Block block, final int metadata, final int modelID)
     {
         if (!blockRenderers.containsKey(modelID)) { return; }
-        ISimpleBlockRenderingHandler bri = blockRenderers.get(modelID);
+        final ISimpleBlockRenderingHandler bri = blockRenderers.get(modelID);
         bri.renderInventoryBlock(block, metadata, modelID, renderer);
     }
 
-    public boolean renderItemAsFull3DBlock(int modelId)
+    public boolean renderItemAsFull3DBlock(final int modelId)
     {
-        ISimpleBlockRenderingHandler bri = blockRenderers.get(modelId);
+        final ISimpleBlockRenderingHandler bri = blockRenderers.get(modelId);
         return bri != null && bri.shouldRender3DInInventory();
     }
 
-    public void loadEntityRenderers(Map<Class<? extends Entity>, Render> rendererMap)
+    public void loadEntityRenderers(final Map<Class<? extends Entity>, Render> rendererMap)
     {
-        for (EntityRendererInfo info : entityRenderers)
+        for (final EntityRendererInfo info : entityRenderers)
         {
             rendererMap.put(info.target, info.renderer);
             info.renderer.setRenderManager(RenderManager.instance);

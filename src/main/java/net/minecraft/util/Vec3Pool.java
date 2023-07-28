@@ -19,7 +19,7 @@ public class Vec3Pool
     private int maximumSizeSinceLastTruncation;
     private int resetCount;
 
-    public Vec3Pool(int par1, int par2)
+    public Vec3Pool(final int par1, final int par2)
     {
         this.truncateArrayResetThreshold = par1;
         this.minimumSize = par2;
@@ -28,14 +28,14 @@ public class Vec3Pool
     /**
      * extends the pool if all vecs are currently "out"
      */
-    public synchronized final Vec3 getVecFromPool(double par1, double par3, double par5)   // CraftBukkit - add final // Cauldron - synchronize
+    public synchronized final Vec3 getVecFromPool(final double par1, final double par3, final double par5)   // CraftBukkit - add final // Cauldron - synchronize
     {
         if (this.resetCount == 0)
         {
             return Vec3.createVectorHelper(par1, par3, par5);    // CraftBukkit - Don't pool objects indefinitely if thread doesn't adhere to contract
         }
 
-        Vec3 vec3;
+        final Vec3 vec3;
 
         if (this.freelist == null)   // CraftBukkit
         {
@@ -65,7 +65,7 @@ public class Vec3Pool
     }
 
     // CraftBukkit start - Offer back vector (can save LOTS of unneeded bloat) - works about 90% of the time
-    public synchronized void release(Vec3 v) // Cauldron - synchronize
+    public synchronized void release(final Vec3 v) // Cauldron - synchronize
     {
         if (this.alloclist == v)
         {
@@ -115,7 +115,7 @@ public class Vec3Pool
 
         if ((this.resetCount++ & 0xff) == 0)
         {
-            int newSize = total_size - (total_size >> 3);
+            final int newSize = total_size - (total_size >> 3);
 
             if (newSize > this.maximumSizeSinceLastTruncation)   // newSize will be 87.5%, but if we were not in that range, we clear some of the cache
             {

@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 public class ItemEnderEye extends Item
 {
-    public ItemEnderEye(int par1)
+    public ItemEnderEye(final int par1)
     {
         super(par1);
         this.setCreativeTab(CreativeTabs.tabMisc);
@@ -23,10 +23,10 @@ public class ItemEnderEye extends Item
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final World par3World, final int par4, final int par5, final int par6, final int par7, final float par8, final float par9, final float par10)
     {
-        int i1 = par3World.getBlockId(par4, par5, par6);
-        int j1 = par3World.getBlockMetadata(par4, par5, par6);
+        final int i1 = par3World.getBlockId(par4, par5, par6);
+        final int j1 = par3World.getBlockMetadata(par4, par5, par6);
 
         if (par2EntityPlayer.canPlayerEdit(par4, par5, par6, par7, par1ItemStack) && i1 == Block.endPortalFrame.blockID && !BlockEndPortalFrame.isEnderEyeInserted(j1))
         {
@@ -43,12 +43,12 @@ public class ItemEnderEye extends Item
 
                 for (k1 = 0; k1 < 16; ++k1)
                 {
-                    double d0 = (double)((float)par4 + (5.0F + itemRand.nextFloat() * 6.0F) / 16.0F);
-                    double d1 = (double)((float)par5 + 0.8125F);
-                    double d2 = (double)((float)par6 + (5.0F + itemRand.nextFloat() * 6.0F) / 16.0F);
-                    double d3 = 0.0D;
-                    double d4 = 0.0D;
-                    double d5 = 0.0D;
+                    final double d0 = (double)((float)par4 + (5.0F + itemRand.nextFloat() * 6.0F) / 16.0F);
+                    final double d1 = (double)((float)par5 + 0.8125F);
+                    final double d2 = (double)((float)par6 + (5.0F + itemRand.nextFloat() * 6.0F) / 16.0F);
+                    final double d3 = 0.0D;
+                    final double d4 = 0.0D;
+                    final double d5 = 0.0D;
                     par3World.spawnParticle("smoke", d0, d1, d2, d3, d4, d5);
                 }
 
@@ -57,7 +57,7 @@ public class ItemEnderEye extends Item
                 int i2 = 0;
                 boolean flag = false;
                 boolean flag1 = true;
-                int j2 = Direction.rotateRight[k1];
+                final int j2 = Direction.rotateRight[k1];
                 int k2;
                 int l2;
                 int i3;
@@ -117,7 +117,7 @@ public class ItemEnderEye extends Item
                             l2 += Direction.offsetX[k1] * j3;
                             k3 += Direction.offsetZ[k1] * j3;
                             i3 = par3World.getBlockId(l2, par5, k3);
-                            int l3 = par3World.getBlockMetadata(l2, par5, k3);
+                            final int l3 = par3World.getBlockMetadata(l2, par5, k3);
 
                             if (i3 != Block.endPortalFrame.blockID || !BlockEndPortalFrame.isEnderEyeInserted(l3))
                             {
@@ -155,13 +155,13 @@ public class ItemEnderEye extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
-        MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, false);
+        final MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, false);
 
         if (movingobjectposition != null && movingobjectposition.typeOfHit == EnumMovingObjectType.TILE)
         {
-            int i = par2World.getBlockId(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ);
+            final int i = par2World.getBlockId(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ);
 
             if (i == Block.endPortalFrame.blockID)
             {
@@ -171,11 +171,11 @@ public class ItemEnderEye extends Item
 
         if (!par2World.isRemote)
         {
-            ChunkPosition chunkposition = par2World.findClosestStructure("Stronghold", (int)par3EntityPlayer.posX, (int)par3EntityPlayer.posY, (int)par3EntityPlayer.posZ);
+            final ChunkPosition chunkposition = par2World.findClosestStructure("Stronghold", (int)par3EntityPlayer.posX, (int)par3EntityPlayer.posY, (int)par3EntityPlayer.posZ);
 
             if (chunkposition != null)
             {
-                EntityEnderEye entityendereye = new EntityEnderEye(par2World, par3EntityPlayer.posX, par3EntityPlayer.posY + 1.62D - (double)par3EntityPlayer.yOffset, par3EntityPlayer.posZ);
+                final EntityEnderEye entityendereye = new EntityEnderEye(par2World, par3EntityPlayer.posX, par3EntityPlayer.posY + 1.62D - (double)par3EntityPlayer.yOffset, par3EntityPlayer.posZ);
                 entityendereye.moveTowards((double)chunkposition.x, chunkposition.y, (double)chunkposition.z);
                 par2World.spawnEntityInWorld(entityendereye);
                 par2World.playSoundAtEntity(par3EntityPlayer, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));

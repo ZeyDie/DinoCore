@@ -7,7 +7,7 @@ import net.minecraftforge.event.entity.EntityEvent;
 
 public class ZombieEvent extends EntityEvent {
 
-    public ZombieEvent(EntityZombie entity)
+    public ZombieEvent(final EntityZombie entity)
     {
         super(entity);
     }
@@ -31,7 +31,7 @@ public class ZombieEvent extends EntityEvent {
         public final EntityLivingBase attacker;
         public final double summonChance;
         
-        public SummonAidEvent(EntityZombie entity, World world, int x, int y, int z, EntityLivingBase attacker, double summonChance)
+        public SummonAidEvent(final EntityZombie entity, final World world, final int x, final int y, final int z, final EntityLivingBase attacker, final double summonChance)
         {
             super(entity);
             this.world = world;

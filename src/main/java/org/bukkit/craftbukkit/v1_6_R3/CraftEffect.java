@@ -7,8 +7,8 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.potion.Potion;
 
 public class CraftEffect {
-    public static <T> int getDataValue(Effect effect, T data) {
-        int datavalue;
+    public static <T> int getDataValue(final Effect effect, final T data) {
+        final int datavalue;
         switch(effect) {
         case POTION_BREAK:
             datavalue = ((Potion) data).toDamageValue() & 0x3F;

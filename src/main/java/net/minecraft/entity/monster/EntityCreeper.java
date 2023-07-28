@@ -35,7 +35,7 @@ public class EntityCreeper extends EntityMob
     /** Explosion radius for this creeper. */
     private int explosionRadius = 3;
 
-    public EntityCreeper(World par1World)
+    public EntityCreeper(final World par1World)
     {
         super(par1World);
         this.tasks.addTask(1, new EntityAISwimming(this));
@@ -74,7 +74,7 @@ public class EntityCreeper extends EntityMob
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float par1)
+    protected void fall(final float par1)
     {
         super.fall(par1);
         this.timeSinceIgnited = (int)((float)this.timeSinceIgnited + par1 * 1.5F);
@@ -95,7 +95,7 @@ public class EntityCreeper extends EntityMob
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
 
@@ -111,7 +111,7 @@ public class EntityCreeper extends EntityMob
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.dataWatcher.updateObject(17, Byte.valueOf((byte)(par1NBTTagCompound.getBoolean("powered") ? 1 : 0)));
@@ -135,7 +135,7 @@ public class EntityCreeper extends EntityMob
         if (this.isEntityAlive())
         {
             this.lastActiveTime = this.timeSinceIgnited;
-            int i = this.getCreeperState();
+            final int i = this.getCreeperState();
 
             if (i > 0 && this.timeSinceIgnited == 0)
             {
@@ -155,10 +155,10 @@ public class EntityCreeper extends EntityMob
 
                 if (!this.worldObj.isRemote)
                 {
-                    boolean flag = this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing");
+                    final boolean flag = this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing");
                     // CraftBukkit start
-                    float radius = this.getPowered() ? 6.0F : 3.0F;
-                    ExplosionPrimeEvent event = new ExplosionPrimeEvent(this.getBukkitEntity(), radius, false);
+                    final float radius = this.getPowered() ? 6.0F : 3.0F;
+                    final ExplosionPrimeEvent event = new ExplosionPrimeEvent(this.getBukkitEntity(), radius, false);
                     this.worldObj.getServer().getPluginManager().callEvent(event);
 
                     if (!event.isCancelled())
@@ -198,18 +198,18 @@ public class EntityCreeper extends EntityMob
     /**
      * Called when the mob's health reaches 0.
      */
-    public void onDeath(DamageSource par1DamageSource)
+    public void onDeath(final DamageSource par1DamageSource)
     {
         super.onDeath(par1DamageSource);
 
         if (par1DamageSource.getEntity() instanceof EntitySkeleton)
         {
-            int i = Item.record13.itemID + this.rand.nextInt(Item.recordWait.itemID - Item.record13.itemID + 1);
+            final int i = Item.record13.itemID + this.rand.nextInt(Item.recordWait.itemID - Item.record13.itemID + 1);
             this.dropItem(i, 1);
         }
     }
 
-    public boolean attackEntityAsMob(Entity par1Entity)
+    public boolean attackEntityAsMob(final Entity par1Entity)
     {
         return true;
     }
@@ -227,7 +227,7 @@ public class EntityCreeper extends EntityMob
     /**
      * Params: (Float)Render tick. Returns the intensity of the creeper's flash when it is ignited.
      */
-    public float getCreeperFlashIntensity(float par1)
+    public float getCreeperFlashIntensity(final float par1)
     {
         return ((float)this.lastActiveTime + (float)(this.timeSinceIgnited - this.lastActiveTime) * par1) / (float)(this.fuseTime - 2);
     }
@@ -251,7 +251,7 @@ public class EntityCreeper extends EntityMob
     /**
      * Sets the state of creeper, -1 to idle and 1 to be 'in fuse'
      */
-    public void setCreeperState(int par1)
+    public void setCreeperState(final int par1)
     {
         this.dataWatcher.updateObject(16, Byte.valueOf((byte)par1));
     }
@@ -259,7 +259,7 @@ public class EntityCreeper extends EntityMob
     /**
      * Called when a lightning bolt hits the entity.
      */
-    public void onStruckByLightning(EntityLightningBolt par1EntityLightningBolt)
+    public void onStruckByLightning(final EntityLightningBolt par1EntityLightningBolt)
     {
         super.onStruckByLightning(par1EntityLightningBolt);
 
@@ -277,7 +277,7 @@ public class EntityCreeper extends EntityMob
         this.setPowered(true);
     }
 
-    public void setPowered(boolean powered)
+    public void setPowered(final boolean powered)
     {
         if (!powered)
         {

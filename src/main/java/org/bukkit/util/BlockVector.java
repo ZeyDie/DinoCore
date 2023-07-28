@@ -27,7 +27,7 @@ public class BlockVector extends Vector {
      *
      * @param vec The other vector.
      */
-    public BlockVector(Vector vec) {
+    public BlockVector(final Vector vec) {
         this.x = vec.getX();
         this.y = vec.getY();
         this.z = vec.getZ();
@@ -40,7 +40,7 @@ public class BlockVector extends Vector {
      * @param y Y component
      * @param z Z component
      */
-    public BlockVector(int x, int y, int z) {
+    public BlockVector(final int x, final int y, final int z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -53,7 +53,7 @@ public class BlockVector extends Vector {
      * @param y Y component
      * @param z Z component
      */
-    public BlockVector(double x, double y, double z) {
+    public BlockVector(final double x, final double y, final double z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -66,7 +66,7 @@ public class BlockVector extends Vector {
      * @param y Y component
      * @param z Z component
      */
-    public BlockVector(float x, float y, float z) {
+    public BlockVector(final float x, final float y, final float z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -79,11 +79,11 @@ public class BlockVector extends Vector {
      * @return whether the other object is equivalent
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (!(obj instanceof BlockVector)) {
             return false;
         }
-        BlockVector other = (BlockVector) obj;
+        final BlockVector other = (BlockVector) obj;
 
         return (int) other.getX() == (int) this.x && (int) other.getY() == (int) this.y && (int) other.getZ() == (int) this.z;
 
@@ -109,7 +109,7 @@ public class BlockVector extends Vector {
         return (BlockVector) super.clone();
     }
 
-    public static BlockVector deserialize(Map<String, Object> args) {
+    public static BlockVector deserialize(final Map<String, Object> args) {
         double x = 0;
         double y = 0;
         double z = 0;

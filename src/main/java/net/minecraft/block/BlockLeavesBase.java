@@ -13,7 +13,7 @@ public class BlockLeavesBase extends Block
      */
     public boolean graphicsLevel;
 
-    protected BlockLeavesBase(int par1, Material par2Material, boolean par3)
+    protected BlockLeavesBase(final int par1, final Material par2Material, final boolean par3)
     {
         super(par1, par2Material);
         this.graphicsLevel = par3;
@@ -34,9 +34,9 @@ public class BlockLeavesBase extends Block
      * Returns true if the given side of this block type should be rendered, if the adjacent block is at the given
      * coordinates.  Args: blockAccess, x, y, z, side
      */
-    public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public boolean shouldSideBeRendered(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
-        int i1 = par1IBlockAccess.getBlockId(par2, par3, par4);
+        final int i1 = par1IBlockAccess.getBlockId(par2, par3, par4);
         return !this.graphicsLevel && i1 == this.blockID ? false : super.shouldSideBeRendered(par1IBlockAccess, par2, par3, par4, par5);
     }
 }

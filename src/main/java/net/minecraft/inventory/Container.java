@@ -42,34 +42,35 @@ public abstract class Container
     // CraftBukkit start
     public boolean checkReachable = true;
     public InventoryView getBukkitView() { return bukkitView; } // Cauldron
-    public void transferTo(Container other, org.bukkit.craftbukkit.v1_6_R3.entity.CraftHumanEntity player)
+    public void transferTo(final Container other, final org.bukkit.craftbukkit.v1_6_R3.entity.CraftHumanEntity player)
     {
-        InventoryView source = this.getBukkitView(), destination = other.getBukkitView();
+        final InventoryView source = this.getBukkitView();
+        final InventoryView destination = other.getBukkitView();
         // Cauldron start - add null checks to skip modded inventories with no Bukkit wrappers, and
         // catch AbstractMethodErrors for modded IInventory's with no onClose()
         if (source != null) {
             try {
                 ((CraftInventory) source.getTopInventory()).getInventory().onClose(player);
-            } catch (AbstractMethodError ex) {
+            } catch (final AbstractMethodError ex) {
                 // modded
             }
 
             try {
                 ((CraftInventory) source.getBottomInventory()).getInventory().onClose(player);
-            } catch (AbstractMethodError ex) {
+            } catch (final AbstractMethodError ex) {
                 // modded
             }
         }
         if (destination != null) {
             try {
                 ((CraftInventory) destination.getTopInventory()).getInventory().onOpen(player);
-            } catch (AbstractMethodError ex) {
+            } catch (final AbstractMethodError ex) {
                 // modded
             }
 
             try {
                 ((CraftInventory) destination.getBottomInventory()).getInventory().onOpen(player);
-            } catch (AbstractMethodError ex) {
+            } catch (final AbstractMethodError ex) {
                 // modded
             }
         }
@@ -82,7 +83,7 @@ public abstract class Container
     /**
      * the slot is assumed empty
      */
-    protected Slot addSlotToContainer(Slot par1Slot)
+    protected Slot addSlotToContainer(final Slot par1Slot)
     {
         par1Slot.slotNumber = this.inventorySlots.size();
         this.inventorySlots.add(par1Slot);
@@ -90,7 +91,7 @@ public abstract class Container
         return par1Slot;
     }
 
-    public void addCraftingToCrafters(ICrafting par1ICrafting)
+    public void addCraftingToCrafters(final ICrafting par1ICrafting)
     {
         if (this.crafters.contains(par1ICrafting))
         {
@@ -113,7 +114,7 @@ public abstract class Container
      */
     public List getInventory()
     {
-        ArrayList arraylist = new ArrayList();
+        final ArrayList arraylist = new ArrayList();
 
         for (int i = 0; i < this.inventorySlots.size(); ++i)
         {
@@ -128,7 +129,7 @@ public abstract class Container
     /**
      * Remove this crafting listener from the listener list.
      */
-    public void removeCraftingFromCrafters(ICrafting par1ICrafting)
+    public void removeCraftingFromCrafters(final ICrafting par1ICrafting)
     {
         this.crafters.remove(par1ICrafting);
     }
@@ -140,7 +141,7 @@ public abstract class Container
     {
         for (int i = 0; i < this.inventorySlots.size(); ++i)
         {
-            ItemStack itemstack = ((Slot)this.inventorySlots.get(i)).getStack();
+            final ItemStack itemstack = ((Slot)this.inventorySlots.get(i)).getStack();
             ItemStack itemstack1 = (ItemStack)this.inventoryItemStacks.get(i);
 
             if (!ItemStack.areItemStacksEqual(itemstack1, itemstack))
@@ -159,16 +160,16 @@ public abstract class Container
     /**
      * enchants the item on the table using the specified slot; also deducts XP from player
      */
-    public boolean enchantItem(EntityPlayer par1EntityPlayer, int par2)
+    public boolean enchantItem(final EntityPlayer par1EntityPlayer, final int par2)
     {
         return false;
     }
 
-    public Slot getSlotFromInventory(IInventory par1IInventory, int par2)
+    public Slot getSlotFromInventory(final IInventory par1IInventory, final int par2)
     {
         for (int j = 0; j < this.inventorySlots.size(); ++j)
         {
-            Slot slot = (Slot)this.inventorySlots.get(j);
+            final Slot slot = (Slot)this.inventorySlots.get(j);
 
             if (slot.isSlotInInventory(par1IInventory, par2))
             {
@@ -179,7 +180,7 @@ public abstract class Container
         return null;
     }
 
-    public Slot getSlot(int par1)
+    public Slot getSlot(final int par1)
     {
         // Cauldron start - vanilla compatibility. fixes NPE with ProjectRed's Item Stock Keeper
         if (par1 < 0 || par1 >= this.inventorySlots.size())
@@ -191,22 +192,22 @@ public abstract class Container
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+    public ItemStack transferStackInSlot(final EntityPlayer par1EntityPlayer, final int par2)
     {
-        Slot slot = (Slot)this.inventorySlots.get(par2);
+        final Slot slot = (Slot)this.inventorySlots.get(par2);
         return slot != null ? slot.getStack() : null;
     }
 
-    public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer par4EntityPlayer)
+    public ItemStack slotClick(final int par1, final int par2, final int par3, final EntityPlayer par4EntityPlayer)
     {
         ItemStack itemstack = null;
-        InventoryPlayer inventoryplayer = par4EntityPlayer.inventory;
+        final InventoryPlayer inventoryplayer = par4EntityPlayer.inventory;
         int l;
         ItemStack itemstack1;
 
         if (par3 == 5)
         {
-            int i1 = this.field_94536_g;
+            final int i1 = this.field_94536_g;
             this.field_94536_g = func_94532_c(par2);
 
             if ((i1 != 1 || this.field_94536_g != 2) && i1 != this.field_94536_g)
@@ -233,7 +234,7 @@ public abstract class Container
             }
             else if (this.field_94536_g == 1)
             {
-                Slot slot = (Slot)this.inventorySlots.get(par1);
+                final Slot slot = (Slot)this.inventorySlots.get(par1);
 
                 if (slot != null && func_94527_a(slot, inventoryplayer.getItemStack(), true) && slot.isItemValid(inventoryplayer.getItemStack()) && inventoryplayer.getItemStack().stackSize > this.field_94537_h.size() && this.canDragIntoSlot(slot))
                 {
@@ -246,17 +247,17 @@ public abstract class Container
                 {
                     itemstack1 = inventoryplayer.getItemStack().copy();
                     l = inventoryplayer.getItemStack().stackSize;
-                    Iterator iterator = this.field_94537_h.iterator();
-                    Map<Integer, ItemStack> draggedSlots = new HashMap<Integer, ItemStack>(); // CraftBukkit - Store slots from drag in map (raw slot id -> new stack)
+                    final Iterator iterator = this.field_94537_h.iterator();
+                    final Map<Integer, ItemStack> draggedSlots = new HashMap<Integer, ItemStack>(); // CraftBukkit - Store slots from drag in map (raw slot id -> new stack)
 
                     while (iterator.hasNext())
                     {
-                        Slot slot1 = (Slot)iterator.next();
+                        final Slot slot1 = (Slot)iterator.next();
 
                         if (slot1 != null && func_94527_a(slot1, inventoryplayer.getItemStack(), true) && slot1.isItemValid(inventoryplayer.getItemStack()) && inventoryplayer.getItemStack().stackSize >= this.field_94537_h.size() && this.canDragIntoSlot(slot1))
                         {
-                            ItemStack itemstack2 = itemstack1.copy();
-                            int j1 = slot1.getHasStack() ? slot1.getStack().stackSize : 0;
+                            final ItemStack itemstack2 = itemstack1.copy();
+                            final int j1 = slot1.getHasStack() ? slot1.getStack().stackSize : 0;
                             func_94525_a(this.field_94537_h, this.field_94535_f, itemstack2, j1);
 
                             if (itemstack2.stackSize > itemstack2.getMaxStackSize())
@@ -275,27 +276,27 @@ public abstract class Container
                     }
 
                     // CraftBukkit start - InventoryDragEvent
-                    InventoryView view = getBukkitView();
-                    org.bukkit.inventory.ItemStack newcursor = CraftItemStack.asCraftMirror(itemstack1);
+                    final InventoryView view = getBukkitView();
+                    final org.bukkit.inventory.ItemStack newcursor = CraftItemStack.asCraftMirror(itemstack1);
                     newcursor.setAmount(l);
-                    Map<Integer, org.bukkit.inventory.ItemStack> eventmap = new HashMap<Integer, org.bukkit.inventory.ItemStack>();
+                    final Map<Integer, org.bukkit.inventory.ItemStack> eventmap = new HashMap<Integer, org.bukkit.inventory.ItemStack>();
 
-                    for (Map.Entry<Integer, ItemStack> ditem : draggedSlots.entrySet())
+                    for (final Map.Entry<Integer, ItemStack> ditem : draggedSlots.entrySet())
                     {
                         eventmap.put(ditem.getKey(), CraftItemStack.asBukkitCopy(ditem.getValue()));
                     }
 
                     // It's essential that we set the cursor to the new value here to prevent item duplication if a plugin closes the inventory.
-                    ItemStack oldCursor = inventoryplayer.getItemStack();
+                    final ItemStack oldCursor = inventoryplayer.getItemStack();
                     inventoryplayer.setItemStack(CraftItemStack.asNMSCopy(newcursor));
-                    InventoryDragEvent event = new InventoryDragEvent(view, (newcursor.getType() != org.bukkit.Material.AIR ? newcursor : null), CraftItemStack.asBukkitCopy(oldCursor), this.field_94535_f == 1, eventmap); // Should be dragButton
+                    final InventoryDragEvent event = new InventoryDragEvent(view, (newcursor.getType() != org.bukkit.Material.AIR ? newcursor : null), CraftItemStack.asBukkitCopy(oldCursor), this.field_94535_f == 1, eventmap); // Should be dragButton
                     par4EntityPlayer.worldObj.getServer().getPluginManager().callEvent(event);
                     // Whether or not a change was made to the inventory that requires an update.
                     boolean needsUpdate = event.getResult() != Result.DEFAULT;
 
                     if (event.getResult() != Result.DENY)
                     {
-                        for (Map.Entry<Integer, ItemStack> dslot : draggedSlots.entrySet())
+                        for (final Map.Entry<Integer, ItemStack> dslot : draggedSlots.entrySet())
                         {
                             view.setItem(dslot.getKey(), CraftItemStack.asBukkitCopy(dslot.getValue()));
                         }
@@ -334,9 +335,9 @@ public abstract class Container
         }
         else
         {
-            Slot slot2;
+            final Slot slot2;
             int k1;
-            ItemStack itemstack3;
+            final ItemStack itemstack3;
 
             if ((par3 == 0 || par3 == 1) && (par2 == 0 || par2 == 1))
             {
@@ -353,7 +354,7 @@ public abstract class Container
                         if (par2 == 1)
                         {
                             // CraftBukkit start - Store a reference
-                            ItemStack itemstack4 = inventoryplayer.getItemStack();
+                            final ItemStack itemstack4 = inventoryplayer.getItemStack();
 
                             if (itemstack4.stackSize > 0)
                             {
@@ -405,7 +406,7 @@ public abstract class Container
                     if (slot2 != null)
                     {
                         itemstack1 = slot2.getStack();
-                        ItemStack itemstack4 = inventoryplayer.getItemStack();
+                        final ItemStack itemstack4 = inventoryplayer.getItemStack();
 
                         if (itemstack1 != null)
                         {
@@ -584,12 +585,12 @@ public abstract class Container
                     {
                         for (int i2 = l; i2 >= 0 && i2 < this.inventorySlots.size() && itemstack1.stackSize < itemstack1.getMaxStackSize(); i2 += k1)
                         {
-                            Slot slot3 = (Slot)this.inventorySlots.get(i2);
+                            final Slot slot3 = (Slot)this.inventorySlots.get(i2);
 
                             if (slot3.getHasStack() && func_94527_a(slot3, itemstack1, true) && slot3.canTakeStack(par4EntityPlayer) && this.func_94530_a(itemstack1, slot3) && (l1 != 0 || slot3.getStack().stackSize != slot3.getStack().getMaxStackSize()))
                             {
-                                int j2 = Math.min(itemstack1.getMaxStackSize() - itemstack1.stackSize, slot3.getStack().stackSize);
-                                ItemStack itemstack5 = slot3.decrStackSize(j2);
+                                final int j2 = Math.min(itemstack1.getMaxStackSize() - itemstack1.stackSize, slot3.getStack().stackSize);
+                                final ItemStack itemstack5 = slot3.decrStackSize(j2);
                                 itemstack1.stackSize += j2;
 
                                 if (itemstack5.stackSize <= 0)
@@ -610,12 +611,12 @@ public abstract class Container
         return itemstack;
     }
 
-    public boolean func_94530_a(ItemStack par1ItemStack, Slot par2Slot)
+    public boolean func_94530_a(final ItemStack par1ItemStack, final Slot par2Slot)
     {
         return true;
     }
 
-    protected void retrySlotClick(int par1, int par2, boolean par3, EntityPlayer par4EntityPlayer)
+    protected void retrySlotClick(final int par1, final int par2, final boolean par3, final EntityPlayer par4EntityPlayer)
     {
         this.slotClick(par1, par2, 1, par4EntityPlayer);
     }
@@ -623,9 +624,9 @@ public abstract class Container
     /**
      * Called when the container is closed.
      */
-    public void onContainerClosed(EntityPlayer par1EntityPlayer)
+    public void onContainerClosed(final EntityPlayer par1EntityPlayer)
     {
-        InventoryPlayer inventoryplayer = par1EntityPlayer.inventory;
+        final InventoryPlayer inventoryplayer = par1EntityPlayer.inventory;
 
         if (inventoryplayer.getItemStack() != null)
         {
@@ -637,7 +638,7 @@ public abstract class Container
     /**
      * Callback for when the crafting matrix is changed.
      */
-    public void onCraftMatrixChanged(IInventory par1IInventory)
+    public void onCraftMatrixChanged(final IInventory par1IInventory)
     {
         this.detectAndSendChanges();
     }
@@ -645,7 +646,7 @@ public abstract class Container
     /**
      * args: slotID, itemStack to put in slot
      */
-    public void putStackInSlot(int par1, ItemStack par2ItemStack)
+    public void putStackInSlot(final int par1, final ItemStack par2ItemStack)
     {
         this.getSlot(par1).putStack(par2ItemStack);
     }
@@ -655,7 +656,7 @@ public abstract class Container
     /**
      * places itemstacks in first x slots, x being aitemstack.lenght
      */
-    public void putStacksInSlots(ItemStack[] par1ArrayOfItemStack)
+    public void putStacksInSlots(final ItemStack[] par1ArrayOfItemStack)
     {
         for (int i = 0; i < par1ArrayOfItemStack.length; ++i)
         {
@@ -664,14 +665,14 @@ public abstract class Container
     }
 
     @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2) {}
+    public void updateProgressBar(final int par1, final int par2) {}
 
     @SideOnly(Side.CLIENT)
 
     /**
      * Gets a unique transaction ID. Parameter is unused.
      */
-    public short getNextTransactionID(InventoryPlayer par1InventoryPlayer)
+    public short getNextTransactionID(final InventoryPlayer par1InventoryPlayer)
     {
         ++this.transactionID;
         return this.transactionID;
@@ -680,7 +681,7 @@ public abstract class Container
     /**
      * NotUsing because adding a player twice is an error
      */
-    public boolean isPlayerNotUsingContainer(EntityPlayer par1EntityPlayer)
+    public boolean isPlayerNotUsingContainer(final EntityPlayer par1EntityPlayer)
     {
         return !this.playerList.contains(par1EntityPlayer);
     }
@@ -688,7 +689,7 @@ public abstract class Container
     /**
      * adds or removes the player from the container based on par2
      */
-    public void setPlayerIsPresent(EntityPlayer par1EntityPlayer, boolean par2)
+    public void setPlayerIsPresent(final EntityPlayer par1EntityPlayer, final boolean par2)
     {
         if (par2)
         {
@@ -705,7 +706,7 @@ public abstract class Container
     /**
      * merges provided ItemStack with the first avaliable one in the container/player inventory
      */
-    protected boolean mergeItemStack(ItemStack par1ItemStack, int par2, int par3, boolean par4)
+    protected boolean mergeItemStack(final ItemStack par1ItemStack, final int par2, final int par3, final boolean par4)
     {
         boolean flag1 = false;
         int k = par2;
@@ -727,7 +728,7 @@ public abstract class Container
 
                 if (itemstack1 != null && itemstack1.itemID == par1ItemStack.itemID && (!par1ItemStack.getHasSubtypes() || par1ItemStack.getItemDamage() == itemstack1.getItemDamage()) && ItemStack.areItemStackTagsEqual(par1ItemStack, itemstack1))
                 {
-                    int l = itemstack1.stackSize + par1ItemStack.stackSize;
+                    final int l = itemstack1.stackSize + par1ItemStack.stackSize;
 
                     if (l <= par1ItemStack.getMaxStackSize())
                     {
@@ -795,23 +796,23 @@ public abstract class Container
         return flag1;
     }
 
-    public static int func_94529_b(int par0)
+    public static int func_94529_b(final int par0)
     {
         return par0 >> 2 & 3;
     }
 
-    public static int func_94532_c(int par0)
+    public static int func_94532_c(final int par0)
     {
         return par0 & 3;
     }
 
     @SideOnly(Side.CLIENT)
-    public static int func_94534_d(int par0, int par1)
+    public static int func_94534_d(final int par0, final int par1)
     {
         return par0 & 3 | (par1 & 3) << 2;
     }
 
-    public static boolean func_94528_d(int par0)
+    public static boolean func_94528_d(final int par0)
     {
         return par0 == 0 || par0 == 1;
     }
@@ -822,20 +823,20 @@ public abstract class Container
         this.field_94537_h.clear();
     }
 
-    public static boolean func_94527_a(Slot par0Slot, ItemStack par1ItemStack, boolean par2)
+    public static boolean func_94527_a(final Slot par0Slot, final ItemStack par1ItemStack, final boolean par2)
     {
         boolean flag1 = par0Slot == null || !par0Slot.getHasStack();
 
         if (par0Slot != null && par0Slot.getHasStack() && par1ItemStack != null && par1ItemStack.isItemEqual(par0Slot.getStack()) && ItemStack.areItemStackTagsEqual(par0Slot.getStack(), par1ItemStack))
         {
-            int i = par2 ? 0 : par1ItemStack.stackSize;
+            final int i = par2 ? 0 : par1ItemStack.stackSize;
             flag1 |= par0Slot.getStack().stackSize + i <= par1ItemStack.getMaxStackSize();
         }
 
         return flag1;
     }
 
-    public static void func_94525_a(Set par0Set, int par1, ItemStack par2ItemStack, int par3)
+    public static void func_94525_a(final Set par0Set, final int par1, final ItemStack par2ItemStack, final int par3)
     {
         switch (par1)
         {
@@ -853,12 +854,12 @@ public abstract class Container
      * Returns true if the player can "drag-spilt" items into this slot,. returns true by default. Called to check if
      * the slot can be added to a list of Slots to split the held ItemStack across.
      */
-    public boolean canDragIntoSlot(Slot par1Slot)
+    public boolean canDragIntoSlot(final Slot par1Slot)
     {
         return true;
     }
 
-    public static int calcRedstoneFromInventory(IInventory par0IInventory)
+    public static int calcRedstoneFromInventory(final IInventory par0IInventory)
     {
         if (par0IInventory == null)
         {
@@ -871,7 +872,7 @@ public abstract class Container
 
             for (int j = 0; j < par0IInventory.getSizeInventory(); ++j)
             {
-                ItemStack itemstack = par0IInventory.getStackInSlot(j);
+                final ItemStack itemstack = par0IInventory.getStackInSlot(j);
 
                 if (itemstack != null)
                 {

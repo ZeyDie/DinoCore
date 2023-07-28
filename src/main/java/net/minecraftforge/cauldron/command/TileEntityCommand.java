@@ -30,7 +30,7 @@ public class TileEntityCommand extends Command
     }
 
     @Override
-    public boolean execute(CommandSender sender, String commandLabel, String[] args)
+    public boolean execute(final CommandSender sender, final String commandLabel, final String[] args)
     {
         if (!testPermission(sender))
         {
@@ -70,7 +70,7 @@ public class TileEntityCommand extends Command
         return false;
     }
 
-    private boolean getToggle(CommandSender sender, String[] args)
+    private boolean getToggle(final CommandSender sender, final String[] args)
     {
         try
         {
@@ -97,11 +97,11 @@ public class TileEntityCommand extends Command
                 sender.sendMessage(ChatColor.RED + "Could not find option: " + args[1]);
                 return false;
             }
-            Object value = toggle.getValue();
-            String option = (Boolean.TRUE.equals(value) ? ChatColor.GREEN : ChatColor.RED) + " " + value;
+            final Object value = toggle.getValue();
+            final String option = (Boolean.TRUE.equals(value) ? ChatColor.GREEN : ChatColor.RED) + " " + value;
             sender.sendMessage(ChatColor.GOLD + args[1] + " " + option);
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             ex.printStackTrace();
@@ -109,14 +109,14 @@ public class TileEntityCommand extends Command
         return true;
     }
 
-    private boolean intervalSet(CommandSender sender, String[] args)
+    private boolean intervalSet(final CommandSender sender, final String[] args)
     {
         try
         {
-            int setting = NumberUtils.toInt(args[2], 1);
+            final int setting = NumberUtils.toInt(args[2], 1);
             MinecraftServer.getServer().tileEntityConfig.set(args[1], setting);
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
@@ -124,7 +124,7 @@ public class TileEntityCommand extends Command
         return true;
     }
 
-    private boolean setToggle(CommandSender sender, String[] args)
+    private boolean setToggle(final CommandSender sender, final String[] args)
     {
         try
         {
@@ -147,12 +147,12 @@ public class TileEntityCommand extends Command
                 return false;
             }
             toggle.setValue(args[2]);
-            Object value = toggle.getValue();
-            String option = (Boolean.TRUE.equals(value) ? ChatColor.GREEN : ChatColor.RED) + " " + value;
+            final Object value = toggle.getValue();
+            final String option = (Boolean.TRUE.equals(value) ? ChatColor.GREEN : ChatColor.RED) + " " + value;
             sender.sendMessage(ChatColor.GOLD + args[1] + " " + option);
             MinecraftServer.getServer().tileEntityConfig.save();
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             ex.printStackTrace();
@@ -161,7 +161,7 @@ public class TileEntityCommand extends Command
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args)
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args)
     {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");

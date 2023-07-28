@@ -4,7 +4,7 @@ public class CauldronWorldConfig extends WorldConfig
 {
     public boolean entityDespawnImmediate = true;
 
-    public CauldronWorldConfig(String worldName, ConfigBase configFile)
+    public CauldronWorldConfig(final String worldName, final ConfigBase configFile)
     {
         super(worldName, configFile);
         init();

@@ -69,7 +69,7 @@ public class NetLoginHandler extends NetHandler {
     }
     //TODO ZeyCodeEnd
 
-    public NetLoginHandler(MinecraftServer par1MinecraftServer, Socket par2Socket, String par3Str) throws IOException {
+    public NetLoginHandler(final MinecraftServer par1MinecraftServer, final Socket par2Socket, final String par3Str) throws IOException {
         this.mcServer = par1MinecraftServer;
         this.myTCPConnection = new TcpConnection(par1MinecraftServer.getLogAgent(), par2Socket, par3Str, this, par1MinecraftServer.getKeyPair().getPrivate());
         this.myTCPConnection.field_74468_e = 0;
@@ -99,20 +99,20 @@ public class NetLoginHandler extends NetHandler {
         }
     }
 
-    public void raiseErrorAndDisconnect(String par1Str) {
+    public void raiseErrorAndDisconnect(final String par1Str) {
         try {
             this.mcServer.getLogAgent().logInfo("Disconnecting " + this.getUsernameAndAddress() + ": " + par1Str);
             this.myTCPConnection.addToSendQueue(new Packet255KickDisconnect(par1Str));
             this.myTCPConnection.serverShutdown();
             this.connectionComplete = true;
-        } catch (Exception exception) {
+        } catch (final Exception exception) {
             exception.printStackTrace();
         }
     }
 
     private static final java.util.regex.Pattern validName = java.util.regex.Pattern.compile("^[a-zA-Z0-9_-]{2,16}$"); // Spigot
 
-    public void handleClientProtocol(Packet2ClientProtocol par1Packet2ClientProtocol) {
+    public void handleClientProtocol(final Packet2ClientProtocol par1Packet2ClientProtocol) {
         if (this.clientUsername != null) {
             this.raiseErrorAndDisconnect("Quit repeating yourself!");
         } else {
@@ -123,7 +123,7 @@ public class NetLoginHandler extends NetHandler {
             {
                 this.raiseErrorAndDisconnect("Invalid username!");
             } else {
-                PublicKey publickey = this.mcServer.getKeyPair().getPublic();
+                final PublicKey publickey = this.mcServer.getKeyPair().getPublic();
 
                 if (par1Packet2ClientProtocol.getProtocolVersion() != 78) {
                     if (par1Packet2ClientProtocol.getProtocolVersion() > 78) {
@@ -141,8 +141,8 @@ public class NetLoginHandler extends NetHandler {
         }
     }
 
-    public void handleSharedKey(Packet252SharedKey par1Packet252SharedKey) {
-        PrivateKey privatekey = this.mcServer.getKeyPair().getPrivate();
+    public void handleSharedKey(final Packet252SharedKey par1Packet252SharedKey) {
+        final PrivateKey privatekey = this.mcServer.getKeyPair().getPrivate();
         this.sharedKey = par1Packet252SharedKey.getSharedKey(privatekey);
 
         if (!Arrays.equals(this.verifyToken, par1Packet252SharedKey.getVerifyToken(privatekey))) {
@@ -152,7 +152,7 @@ public class NetLoginHandler extends NetHandler {
         this.myTCPConnection.addToSendQueue(new Packet252SharedKey());
     }
 
-    public void handleClientCommand(Packet205ClientCommand par1Packet205ClientCommand) {
+    public void handleClientCommand(final Packet205ClientCommand par1Packet205ClientCommand) {
         if (par1Packet205ClientCommand.forceRespawn == 0) {
             if (this.field_92079_k) {
                 this.raiseErrorAndDisconnect("Duplicate login");
@@ -169,7 +169,7 @@ public class NetLoginHandler extends NetHandler {
         }
     }
 
-    public void handleLogin(Packet1Login par1Packet1Login) {
+    public void handleLogin(final Packet1Login par1Packet1Login) {
         FMLNetworkHandler.handleLoginPacketOnServer(this, par1Packet1Login);
     }
 
@@ -180,7 +180,7 @@ public class NetLoginHandler extends NetHandler {
         FMLNetworkHandler.onConnectionReceivedFromClient(this, this.mcServer, this.myTCPConnection.getSocketAddress(), this.clientUsername);
     }
 
-    public void completeConnection(String s) {
+    public void completeConnection(final String s) {
         if (s != null) {
             this.raiseErrorAndDisconnect(s);
         } else {
@@ -228,7 +228,7 @@ public class NetLoginHandler extends NetHandler {
         this.connectionComplete = true;
     }
 
-    public void handleErrorMessage(String par1Str, Object[] par2ArrayOfObj) {
+    public void handleErrorMessage(final String par1Str, final Object[] par2ArrayOfObj) {
         //TODO ZeyCodeClear
         //this.mcServer.getLogAgent().logInfo(this.getUsernameAndAddress() + " lost connection");
         //TODO ZeyCodeStart
@@ -240,27 +240,27 @@ public class NetLoginHandler extends NetHandler {
     /**
      * Handle a server ping packet.
      */
-    public void handleServerPing(Packet254ServerPing par1Packet254ServerPing) {
+    public void handleServerPing(final Packet254ServerPing par1Packet254ServerPing) {
         if (this.getSocket() == null) // Cauldron - remove myTCPConnection
         {
             return;    // CraftBukkit - fix NPE when a client queries a server that is unable to handle it.
         }
 
         try {
-            ServerConfigurationManager serverconfigurationmanager = this.mcServer.getConfigurationManager();
+            final ServerConfigurationManager serverconfigurationmanager = this.mcServer.getConfigurationManager();
             String s = null;
             // CraftBukkit
-            org.bukkit.event.server.ServerListPingEvent pingEvent = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callServerListPingEvent(this.mcServer.server, getSocket().getInetAddress(), this.mcServer.getMOTD(), serverconfigurationmanager.getCurrentPlayerCount(), serverconfigurationmanager.getMaxPlayers());
+            final org.bukkit.event.server.ServerListPingEvent pingEvent = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callServerListPingEvent(this.mcServer.server, getSocket().getInetAddress(), this.mcServer.getMOTD(), serverconfigurationmanager.getCurrentPlayerCount(), serverconfigurationmanager.getMaxPlayers());
 
             if (par1Packet254ServerPing.func_140050_d()) {
                 // CraftBukkit
                 s = pingEvent.getMotd() + "\u00A7" + serverconfigurationmanager.getCurrentPlayerCount() + "\u00A7" + pingEvent.getMaxPlayers();
             } else {
                 // CraftBukkit start - Don't create a list from an array
-                Object[] list = new Object[]{1, 78, this.mcServer.getMinecraftVersion(), pingEvent.getMotd(), serverconfigurationmanager.getCurrentPlayerCount(), pingEvent.getMaxPlayers()};
-                StringBuilder builder = new StringBuilder();
+                final Object[] list = {1, 78, this.mcServer.getMinecraftVersion(), pingEvent.getMotd(), serverconfigurationmanager.getCurrentPlayerCount(), pingEvent.getMaxPlayers()};
+                final StringBuilder builder = new StringBuilder();
 
-                for (Object object : list) {
+                for (final Object object : list) {
                     if (builder.length() == 0) {
                         builder.append('\u00A7');
                     } else {
@@ -299,7 +299,7 @@ public class NetLoginHandler extends NetHandler {
             }
 
             this.connectionComplete = true;
-        } catch (Exception exception) {
+        } catch (final Exception exception) {
             exception.printStackTrace();
         }
     }
@@ -308,7 +308,7 @@ public class NetLoginHandler extends NetHandler {
      * Default handler called for packets that don't have their own handlers in NetClientHandler; currentlly does
      * nothing.
      */
-    public void unexpectedPacket(Packet par1Packet) {
+    public void unexpectedPacket(final Packet par1Packet) {
         this.raiseErrorAndDisconnect("Protocol error");
     }
 
@@ -330,7 +330,7 @@ public class NetLoginHandler extends NetHandler {
     /**
      * Returns the server Id randomly generated by this login handler.
      */
-    static String getServerId(NetLoginHandler par0NetLoginHandler) {
+    static String getServerId(final NetLoginHandler par0NetLoginHandler) {
         return par0NetLoginHandler.loginServerId;
     }
 
@@ -338,14 +338,14 @@ public class NetLoginHandler extends NetHandler {
      * Returns the reference to Minecraft Server.
      */
     //TODO ZoomCodeReplace private on public
-    public static MinecraftServer getLoginMinecraftServer(NetLoginHandler par0NetLoginHandler) {
+    public static MinecraftServer getLoginMinecraftServer(final NetLoginHandler par0NetLoginHandler) {
         return par0NetLoginHandler.mcServer;
     }
 
     /**
      * Return the secret AES sharedKey
      */
-    static SecretKey getSharedKey(NetLoginHandler par0NetLoginHandler) {
+    static SecretKey getSharedKey(final NetLoginHandler par0NetLoginHandler) {
         return par0NetLoginHandler.sharedKey;
     }
 
@@ -353,20 +353,20 @@ public class NetLoginHandler extends NetHandler {
      * Returns the connecting client username.
      */
     //TODO ZoomCodeReplace private on public
-    public static String getClientUsername(NetLoginHandler par0NetLoginHandler) {
+    public static String getClientUsername(final NetLoginHandler par0NetLoginHandler) {
         return par0NetLoginHandler.clientUsername;
     }
 
-    public static boolean func_72531_a(NetLoginHandler par0NetLoginHandler, boolean par1) {
+    public static boolean func_72531_a(final NetLoginHandler par0NetLoginHandler, final boolean par1) {
         return par0NetLoginHandler.field_72544_i = par1;
     }
 
     // Spigot start
     @Override
-    public void handleCustomPayload(Packet250CustomPayload par1Packet250CustomPayload) {
+    public void handleCustomPayload(final Packet250CustomPayload par1Packet250CustomPayload) {
         if (par1Packet250CustomPayload.channel.equals("BungeeCord") && org.spigotmc.SpigotConfig.bungee && getSocket() != null && getSocket().getInetAddress() != null && org.spigotmc.SpigotConfig.bungeeAddresses.contains(getSocket().getInetAddress().getHostAddress())) {
-            com.google.common.io.ByteArrayDataInput in = com.google.common.io.ByteStreams.newDataInput(par1Packet250CustomPayload.data);
-            String subTag = in.readUTF();
+            final com.google.common.io.ByteArrayDataInput in = com.google.common.io.ByteStreams.newDataInput(par1Packet250CustomPayload.data);
+            final String subTag = in.readUTF();
 
             if (subTag.equals("Login")) {
                 myTCPConnection.setSocketAddress(new java.net.InetSocketAddress(in.readUTF(), in.readInt()));
@@ -378,7 +378,7 @@ public class NetLoginHandler extends NetHandler {
     // Spigot end    
 
     @Override
-    public void handleVanilla250Packet(Packet250CustomPayload payload) {
+    public void handleVanilla250Packet(final Packet250CustomPayload payload) {
         // NOOP for login
     }
 

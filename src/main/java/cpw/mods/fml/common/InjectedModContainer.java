@@ -27,7 +27,7 @@ public class InjectedModContainer implements ModContainer
     private File source;
     public final ModContainer wrappedContainer;
 
-    public InjectedModContainer(ModContainer mc, File source)
+    public InjectedModContainer(final ModContainer mc, final File source)
     {
         this.source = source != null ? source : new File("minecraft.jar");
         this.wrappedContainer = mc;
@@ -58,12 +58,12 @@ public class InjectedModContainer implements ModContainer
         return wrappedContainer.getMetadata();
     }
 
-    public void bindMetadata(MetadataCollection mc)
+    public void bindMetadata(final MetadataCollection mc)
     {
         wrappedContainer.bindMetadata(mc);
     }
 
-    public void setEnabledState(boolean enabled)
+    public void setEnabledState(final boolean enabled)
     {
         wrappedContainer.setEnabledState(enabled);
     }
@@ -88,12 +88,12 @@ public class InjectedModContainer implements ModContainer
         return wrappedContainer.getSortingRules();
     }
 
-    public boolean registerBus(EventBus bus, LoadController controller)
+    public boolean registerBus(final EventBus bus, final LoadController controller)
     {
         return wrappedContainer.registerBus(bus, controller);
     }
 
-    public boolean matches(Object mod)
+    public boolean matches(final Object mod)
     {
         return wrappedContainer.matches(mod);
     }

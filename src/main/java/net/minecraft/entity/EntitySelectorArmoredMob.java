@@ -8,7 +8,7 @@ public class EntitySelectorArmoredMob implements IEntitySelector
 {
     private final ItemStack field_96567_c;
 
-    public EntitySelectorArmoredMob(ItemStack par1ItemStack)
+    public EntitySelectorArmoredMob(final ItemStack par1ItemStack)
     {
         this.field_96567_c = par1ItemStack;
     }
@@ -16,7 +16,7 @@ public class EntitySelectorArmoredMob implements IEntitySelector
     /**
      * Return whether the specified entity is applicable to this filter.
      */
-    public boolean isEntityApplicable(Entity par1Entity)
+    public boolean isEntityApplicable(final Entity par1Entity)
     {
         if (!par1Entity.isEntityAlive())
         {
@@ -28,7 +28,7 @@ public class EntitySelectorArmoredMob implements IEntitySelector
         }
         else
         {
-            EntityLivingBase entitylivingbase = (EntityLivingBase)par1Entity;
+            final EntityLivingBase entitylivingbase = (EntityLivingBase)par1Entity;
             return entitylivingbase.getCurrentItemOrArmor(EntityLiving.getArmorPosition(this.field_96567_c)) != null ? false : (entitylivingbase instanceof EntityLiving ? ((EntityLiving)entitylivingbase).canPickUpLoot() : entitylivingbase instanceof EntityPlayer);
         }
     }

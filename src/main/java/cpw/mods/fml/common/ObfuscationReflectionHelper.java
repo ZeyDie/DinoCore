@@ -29,43 +29,43 @@ import java.util.logging.Level;
 public class ObfuscationReflectionHelper
 {
     @SuppressWarnings("unchecked")
-    public static <T, E> T getPrivateValue(Class<? super E> classToAccess, E instance, int fieldIndex)
+    public static <T, E> T getPrivateValue(final Class<? super E> classToAccess, final E instance, final int fieldIndex)
     {
         try
         {
             return ReflectionHelper.getPrivateValue(classToAccess, instance, fieldIndex);
         }
-        catch (UnableToAccessFieldException e)
+        catch (final UnableToAccessFieldException e)
         {
             FMLLog.log(Level.SEVERE, e, "There was a problem getting field index %d from %s", fieldIndex, classToAccess.getName());
             throw e;
         }
     }
 
-    public static String[] remapFieldNames(String className, String... fieldNames)
+    public static String[] remapFieldNames(final String className, final String... fieldNames)
     {
-        String internalClassName = FMLDeobfuscatingRemapper.INSTANCE.unmap(className.replace('.', '/'));
-        String[] mappedNames = new String[fieldNames.length];
+        final String internalClassName = FMLDeobfuscatingRemapper.INSTANCE.unmap(className.replace('.', '/'));
+        final String[] mappedNames = new String[fieldNames.length];
         int i = 0;
-        for (String fName : fieldNames)
+        for (final String fName : fieldNames)
         {
             mappedNames[i++] = FMLDeobfuscatingRemapper.INSTANCE.mapFieldName(internalClassName, fName, null);
         }
         return mappedNames;
     }
     @SuppressWarnings("unchecked")
-    public static <T, E> T getPrivateValue(Class<? super E> classToAccess, E instance, String... fieldNames)
+    public static <T, E> T getPrivateValue(final Class<? super E> classToAccess, final E instance, final String... fieldNames)
     {
         try
         {
             return ReflectionHelper.getPrivateValue(classToAccess, instance, remapFieldNames(classToAccess.getName(),fieldNames));
         }
-        catch (UnableToFindFieldException e)
+        catch (final UnableToFindFieldException e)
         {
             FMLLog.log(Level.SEVERE,e,"Unable to locate any field %s on type %s", Arrays.toString(fieldNames), classToAccess.getName());
             throw e;
         }
-        catch (UnableToAccessFieldException e)
+        catch (final UnableToAccessFieldException e)
         {
             FMLLog.log(Level.SEVERE, e, "Unable to access any field %s on type %s", Arrays.toString(fieldNames), classToAccess.getName());
             throw e;
@@ -73,18 +73,18 @@ public class ObfuscationReflectionHelper
     }
 
     @Deprecated
-    public static <T, E> void setPrivateValue(Class<? super T> classToAccess, T instance, int fieldIndex, E value)
+    public static <T, E> void setPrivateValue(final Class<? super T> classToAccess, final T instance, final int fieldIndex, final E value)
     {
         setPrivateValue(classToAccess, instance, value, fieldIndex);
     }
 
-    public static <T, E> void setPrivateValue(Class<? super T> classToAccess, T instance, E value, int fieldIndex)
+    public static <T, E> void setPrivateValue(final Class<? super T> classToAccess, final T instance, final E value, final int fieldIndex)
     {
         try
         {
             ReflectionHelper.setPrivateValue(classToAccess, instance, value, fieldIndex);
         }
-        catch (UnableToAccessFieldException e)
+        catch (final UnableToAccessFieldException e)
         {
             FMLLog.log(Level.SEVERE, e, "There was a problem setting field index %d on type %s", fieldIndex, classToAccess.getName());
             throw e;
@@ -92,23 +92,23 @@ public class ObfuscationReflectionHelper
     }
 
     @Deprecated
-    public static <T, E> void setPrivateValue(Class<? super T> classToAccess, T instance, String fieldName, E value)
+    public static <T, E> void setPrivateValue(final Class<? super T> classToAccess, final T instance, final String fieldName, final E value)
     {
         setPrivateValue(classToAccess, instance, value, fieldName);
     }
 
-    public static <T, E> void setPrivateValue(Class<? super T> classToAccess, T instance, E value, String... fieldNames)
+    public static <T, E> void setPrivateValue(final Class<? super T> classToAccess, final T instance, final E value, final String... fieldNames)
     {
         try
         {
             ReflectionHelper.setPrivateValue(classToAccess, instance, value, remapFieldNames(classToAccess.getName(), fieldNames));
         }
-        catch (UnableToFindFieldException e)
+        catch (final UnableToFindFieldException e)
         {
             FMLLog.log(Level.SEVERE, e, "Unable to locate any field %s on type %s", Arrays.toString(fieldNames), classToAccess.getName());
             throw e;
         }
-        catch (UnableToAccessFieldException e)
+        catch (final UnableToAccessFieldException e)
         {
             FMLLog.log(Level.SEVERE, e, "Unable to set any field %s on type %s", Arrays.toString(fieldNames), classToAccess.getName());
             throw e;

@@ -7,7 +7,7 @@ import org.bukkit.entity.PigZombie;
 
 public class CraftPigZombie extends CraftZombie implements PigZombie {
 
-    public CraftPigZombie(CraftServer server, net.minecraft.entity.monster.EntityPigZombie entity) {
+    public CraftPigZombie(final CraftServer server, final net.minecraft.entity.monster.EntityPigZombie entity) {
         super(server, entity);
     }
 
@@ -15,11 +15,11 @@ public class CraftPigZombie extends CraftZombie implements PigZombie {
         return getHandle().angerLevel;
     }
 
-    public void setAnger(int level) {
+    public void setAnger(final int level) {
         getHandle().angerLevel = level;
     }
 
-    public void setAngry(boolean angry) {
+    public void setAngry(final boolean angry) {
         setAnger(angry ? 400 : 0);
     }
 

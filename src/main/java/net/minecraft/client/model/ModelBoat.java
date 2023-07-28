@@ -16,10 +16,10 @@ public class ModelBoat extends ModelBase
         this.boatSides[2] = new ModelRenderer(this, 0, 0);
         this.boatSides[3] = new ModelRenderer(this, 0, 0);
         this.boatSides[4] = new ModelRenderer(this, 0, 0);
-        byte b0 = 24;
-        byte b1 = 6;
-        byte b2 = 20;
-        byte b3 = 4;
+        final byte b0 = 24;
+        final byte b1 = 6;
+        final byte b2 = 20;
+        final byte b3 = 4;
         this.boatSides[0].addBox((float)(-b0 / 2), (float)(-b2 / 2 + 2), -3.0F, b0, b2 - 4, 4, 0.0F);
         this.boatSides[0].setRotationPoint(0.0F, (float)b3, 0.0F);
         this.boatSides[1].addBox((float)(-b0 / 2 + 2), (float)(-b1 - 1), -1.0F, b0 - 4, b1, 2, 0.0F);
@@ -30,16 +30,16 @@ public class ModelBoat extends ModelBase
         this.boatSides[3].setRotationPoint(0.0F, (float)b3, (float)(-b2 / 2 + 1));
         this.boatSides[4].addBox((float)(-b0 / 2 + 2), (float)(-b1 - 1), -1.0F, b0 - 4, b1, 2, 0.0F);
         this.boatSides[4].setRotationPoint(0.0F, (float)b3, (float)(b2 / 2 - 1));
-        this.boatSides[0].rotateAngleX = ((float)Math.PI / 2F);
-        this.boatSides[1].rotateAngleY = ((float)Math.PI * 3F / 2F);
-        this.boatSides[2].rotateAngleY = ((float)Math.PI / 2F);
+        this.boatSides[0].rotateAngleX = ((float)Math.PI / 2.0F);
+        this.boatSides[1].rotateAngleY = ((float)Math.PI * 3.0F / 2.0F);
+        this.boatSides[2].rotateAngleY = ((float)Math.PI / 2.0F);
         this.boatSides[3].rotateAngleY = (float)Math.PI;
     }
 
     /**
      * Sets the models various rotation angles then renders the model.
      */
-    public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7)
+    public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7)
     {
         for (int i = 0; i < 5; ++i)
         {

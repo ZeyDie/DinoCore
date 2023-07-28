@@ -55,7 +55,7 @@ public class MapColor
     /** Holds the index of the color used on map. */
     public final int colorIndex;
 
-    private MapColor(int par1, int par2)
+    private MapColor(final int par1, final int par2)
     {
         this.colorIndex = par1;
         this.colorValue = par2;

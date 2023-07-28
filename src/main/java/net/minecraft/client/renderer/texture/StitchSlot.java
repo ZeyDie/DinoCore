@@ -17,7 +17,7 @@ public class StitchSlot
     private List subSlots;
     private StitchHolder holder;
 
-    public StitchSlot(int par1, int par2, int par3, int par4)
+    public StitchSlot(final int par1, final int par2, final int par3, final int par4)
     {
         this.originX = par1;
         this.originY = par2;
@@ -40,7 +40,7 @@ public class StitchSlot
         return this.originY;
     }
 
-    public boolean addSlot(StitchHolder par1StitchHolder)
+    public boolean addSlot(final StitchHolder par1StitchHolder)
     {
         if (this.holder != null)
         {
@@ -48,8 +48,8 @@ public class StitchSlot
         }
         else
         {
-            int i = par1StitchHolder.getWidth();
-            int j = par1StitchHolder.getHeight();
+            final int i = par1StitchHolder.getWidth();
+            final int j = par1StitchHolder.getHeight();
 
             if (i <= this.width && j <= this.height)
             {
@@ -64,13 +64,13 @@ public class StitchSlot
                     {
                         this.subSlots = new ArrayList(1);
                         this.subSlots.add(new StitchSlot(this.originX, this.originY, i, j));
-                        int k = this.width - i;
-                        int l = this.height - j;
+                        final int k = this.width - i;
+                        final int l = this.height - j;
 
                         if (l > 0 && k > 0)
                         {
-                            int i1 = Math.max(this.height, k);
-                            int j1 = Math.max(this.width, l);
+                            final int i1 = Math.max(this.height, k);
+                            final int j1 = Math.max(this.width, l);
 
                             if (i1 >= j1)
                             {
@@ -93,7 +93,7 @@ public class StitchSlot
                         }
                     }
 
-                    Iterator iterator = this.subSlots.iterator();
+                    final Iterator iterator = this.subSlots.iterator();
                     StitchSlot stitchslot;
 
                     do
@@ -120,7 +120,7 @@ public class StitchSlot
     /**
      * Gets the slot and all its subslots
      */
-    public void getAllStitchSlots(List par1List)
+    public void getAllStitchSlots(final List par1List)
     {
         if (this.holder != null)
         {
@@ -128,11 +128,11 @@ public class StitchSlot
         }
         else if (this.subSlots != null)
         {
-            Iterator iterator = this.subSlots.iterator();
+            final Iterator iterator = this.subSlots.iterator();
 
             while (iterator.hasNext())
             {
-                StitchSlot stitchslot = (StitchSlot)iterator.next();
+                final StitchSlot stitchslot = (StitchSlot)iterator.next();
                 stitchslot.getAllStitchSlots(par1List);
             }
         }

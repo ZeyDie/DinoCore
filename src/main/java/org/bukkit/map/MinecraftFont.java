@@ -18,7 +18,7 @@ public class MinecraftFont extends MapFont {
         "\u00E1\u00ED\u00F3\u00FA\u00F1\u00D1\u00AA\u00BA" + // áíóúñÑªº
         "\u00BF\u00AE\u00AC\u00BD\u00BC\u00A1\u00AB\u00BB";  // ¿®¬½¼¡«»
 
-    private static final int[][] fontData = new int[][] {
+    private static final int[][] fontData = {
         /* null */  {0,0,0,0,0,0,0,0},
         /* 1 */  {126,129,165,129,189,153,129,126},
         /* 2 */  {126,255,219,255,195,231,255,126},
@@ -289,7 +289,7 @@ public class MinecraftFont extends MapFont {
         this(true);
     }
 
-    private MinecraftFont(boolean malleable) {
+    private MinecraftFont(final boolean malleable) {
         for (int i = 1; i < fontData.length; ++i) {
             char ch = (char) i;
             if (i >= 32 && i < 32 + fontChars.length()) {
@@ -301,7 +301,7 @@ public class MinecraftFont extends MapFont {
                 continue;
             }
 
-            int[] rows = fontData[i];
+            final int[] rows = fontData[i];
             int width = 0;
             for (int r = 0; r < 8; ++r) {
                 for (int c = 0; c < 8; ++c) {
@@ -312,7 +312,7 @@ public class MinecraftFont extends MapFont {
             }
             ++width;
 
-            boolean[] data = new boolean[width * 8];
+            final boolean[] data = new boolean[width * 8];
             for (int r = 0; r < 8; ++r) {
                 for (int c = 0; c < width; ++c) {
                     data[r * width + c] = (rows[r] & (1 << c)) != 0;

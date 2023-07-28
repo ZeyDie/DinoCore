@@ -30,7 +30,7 @@ public class RConThreadMain extends RConThreadBase
     /** A map of client addresses to their running Threads */
     private Map clientThreads;
 
-    public RConThreadMain(IServer par1IServer)
+    public RConThreadMain(final IServer par1IServer)
     {
         super(par1IServer);
         this.rconPort = par1IServer.getIntProperty("rcon.port", 0);
@@ -44,7 +44,7 @@ public class RConThreadMain extends RConThreadBase
             this.logInfo("Setting default rcon port to " + this.rconPort);
             par1IServer.setProperty("rcon.port", Integer.valueOf(this.rconPort));
 
-            if (0 == this.rconPassword.length())
+            if (this.rconPassword.isEmpty())
             {
                 par1IServer.setProperty("rcon.password", "");
             }
@@ -52,7 +52,7 @@ public class RConThreadMain extends RConThreadBase
             par1IServer.saveProperties();
         }
 
-        if (0 == this.hostname.length())
+        if (this.hostname.isEmpty())
         {
             this.hostname = "0.0.0.0";
         }
@@ -71,11 +71,11 @@ public class RConThreadMain extends RConThreadBase
      */
     private void cleanClientThreadsMap()
     {
-        Iterator iterator = this.clientThreads.entrySet().iterator();
+        final Iterator iterator = this.clientThreads.entrySet().iterator();
 
         while (iterator.hasNext())
         {
-            Entry entry = (Entry)iterator.next();
+            final Entry entry = (Entry)iterator.next();
 
             if (!((RConThreadClient)entry.getValue()).isRunning())
             {
@@ -94,18 +94,18 @@ public class RConThreadMain extends RConThreadBase
             {
                 try
                 {
-                    Socket socket = this.serverSocket.accept();
+                    final Socket socket = this.serverSocket.accept();
                     socket.setSoTimeout(500);
-                    RConThreadClient rconthreadclient = new RConThreadClient(this.server, socket);
+                    final RConThreadClient rconthreadclient = new RConThreadClient(this.server, socket);
                     rconthreadclient.startThread();
                     this.clientThreads.put(socket.getRemoteSocketAddress(), rconthreadclient);
                     this.cleanClientThreadsMap();
                 }
-                catch (SocketTimeoutException sockettimeoutexception)
+                catch (final SocketTimeoutException sockettimeoutexception)
                 {
                     this.cleanClientThreadsMap();
                 }
-                catch (IOException ioexception)
+                catch (final IOException ioexception)
                 {
                     if (this.running)
                     {
@@ -125,7 +125,7 @@ public class RConThreadMain extends RConThreadBase
      */
     public void startThread()
     {
-        if (0 == this.rconPassword.length())
+        if (this.rconPassword.isEmpty())
         {
             this.logWarning("No rcon password set in \'" + this.server.getSettingsFilename() + "\', rcon disabled!");
         }
@@ -139,7 +139,7 @@ public class RConThreadMain extends RConThreadBase
                     this.serverSocket.setSoTimeout(500);
                     super.startThread();
                 }
-                catch (IOException ioexception)
+                catch (final IOException ioexception)
                 {
                     this.logWarning("Unable to initialise rcon on " + this.hostname + ":" + this.rconPort + " : " + ioexception.getMessage());
                 }

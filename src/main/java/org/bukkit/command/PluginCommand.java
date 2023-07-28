@@ -13,7 +13,7 @@ public final class PluginCommand extends Command implements PluginIdentifiableCo
     private CommandExecutor executor;
     private TabCompleter completer;
 
-    protected PluginCommand(String name, Plugin owner) {
+    protected PluginCommand(final String name, final Plugin owner) {
         super(name);
         this.executor = owner;
         this.owningPlugin = owner;
@@ -29,7 +29,7 @@ public final class PluginCommand extends Command implements PluginIdentifiableCo
      * @return true if the command was successful, otherwise false
      */
     @Override
-    public boolean execute(CommandSender sender, String commandLabel, String[] args) {
+    public boolean execute(final CommandSender sender, final String commandLabel, final String[] args) {
         boolean success = false;
 
         if (!owningPlugin.isEnabled()) {
@@ -42,12 +42,12 @@ public final class PluginCommand extends Command implements PluginIdentifiableCo
 
         try {
             success = executor.onCommand(sender, this, commandLabel, args);
-        } catch (Throwable ex) {
+        } catch (final Throwable ex) {
             throw new CommandException("Unhandled exception executing command '" + commandLabel + "' in plugin " + owningPlugin.getDescription().getFullName(), ex);
         }
 
-        if (!success && usageMessage.length() > 0) {
-            for (String line : usageMessage.replace("<command>", commandLabel).split("\n")) {
+        if (!success && !usageMessage.isEmpty()) {
+            for (final String line : usageMessage.replace("<command>", commandLabel).split("\n")) {
                 sender.sendMessage(line);
             }
         }
@@ -60,7 +60,7 @@ public final class PluginCommand extends Command implements PluginIdentifiableCo
      *
      * @param executor New executor to run
      */
-    public void setExecutor(CommandExecutor executor) {
+    public void setExecutor(final CommandExecutor executor) {
         this.executor = executor == null ? owningPlugin : executor;
     }
 
@@ -81,7 +81,7 @@ public final class PluginCommand extends Command implements PluginIdentifiableCo
      *
      * @param completer New tab completer
      */
-    public void setTabCompleter(TabCompleter completer) {
+    public void setTabCompleter(final TabCompleter completer) {
         this.completer = completer;
     }
 
@@ -118,7 +118,7 @@ public final class PluginCommand extends Command implements PluginIdentifiableCo
      * @throws IllegalArgumentException if sender, alias, or args is null
      */
     @Override
-    public java.util.List<String> tabComplete(CommandSender sender, String alias, String[] args) throws CommandException, IllegalArgumentException {
+    public java.util.List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) throws CommandException, IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");
@@ -131,10 +131,10 @@ public final class PluginCommand extends Command implements PluginIdentifiableCo
             if (completions == null && executor instanceof TabCompleter) {
                 completions = ((TabCompleter) executor).onTabComplete(sender, this, alias, args);
             }
-        } catch (Throwable ex) {
-            StringBuilder message = new StringBuilder();
+        } catch (final Throwable ex) {
+            final StringBuilder message = new StringBuilder();
             message.append("Unhandled exception during tab completion for command '/").append(alias).append(' ');
-            for (String arg : args) {
+            for (final String arg : args) {
                 message.append(arg).append(' ');
             }
             message.deleteCharAt(message.length() - 1).append("' in plugin ").append(owningPlugin.getDescription().getFullName());
@@ -149,7 +149,7 @@ public final class PluginCommand extends Command implements PluginIdentifiableCo
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder(super.toString());
+        final StringBuilder stringBuilder = new StringBuilder(super.toString());
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         stringBuilder.append(", ").append(owningPlugin.getDescription().getFullName()).append(')');
         return stringBuilder.toString();

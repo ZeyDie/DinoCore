@@ -35,12 +35,12 @@ public class EntityLightningBolt extends EntityWeatherEffect
     // CraftBukkit start
     public boolean isEffect = false;
 
-    public EntityLightningBolt(World par1World, double par2, double par4, double par6)
+    public EntityLightningBolt(final World par1World, final double par2, final double par4, final double par6)
     {
         this(par1World, par2, par4, par6, false);
     }
 
-    public EntityLightningBolt(World par1World, double par2, double par4, double par6, boolean isEffect)
+    public EntityLightningBolt(final World par1World, final double par2, final double par4, final double par6, final boolean isEffect)
     {
         // CraftBukkit end
         super(par1World);
@@ -73,7 +73,7 @@ public class EntityLightningBolt extends EntityWeatherEffect
             {
                 j = MathHelper.floor_double(par2) + this.rand.nextInt(3) - 1;
                 k = MathHelper.floor_double(par4) + this.rand.nextInt(3) - 1;
-                int l = MathHelper.floor_double(par6) + this.rand.nextInt(3) - 1;
+                final int l = MathHelper.floor_double(par6) + this.rand.nextInt(3) - 1;
 
                 if (par1World.getBlockId(j, k, l) == 0 && Block.fire.canPlaceBlockAt(par1World, j, k, l))
                 {
@@ -118,9 +118,9 @@ public class EntityLightningBolt extends EntityWeatherEffect
                 // CraftBukkit
                 if (!isEffect && !this.worldObj.isRemote && this.worldObj.getGameRules().getGameRuleBooleanValue("doFireTick") && this.worldObj.doChunksNearChunkExist(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ), 10))
                 {
-                    int i = MathHelper.floor_double(this.posX);
-                    int j = MathHelper.floor_double(this.posY);
-                    int k = MathHelper.floor_double(this.posZ);
+                    final int i = MathHelper.floor_double(this.posX);
+                    final int j = MathHelper.floor_double(this.posY);
+                    final int k = MathHelper.floor_double(this.posZ);
 
                     if (this.worldObj.getBlockId(i, j, k) == 0 && Block.fire.canPlaceBlockAt(this.worldObj, i, j, k))
                     {
@@ -143,12 +143,12 @@ public class EntityLightningBolt extends EntityWeatherEffect
             }
             else
             {
-                double d0 = 3.0D;
-                List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, AxisAlignedBB.getAABBPool().getAABB(this.posX - d0, this.posY - d0, this.posZ - d0, this.posX + d0, this.posY + 6.0D + d0, this.posZ + d0));
+                final double d0 = 3.0D;
+                final List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, AxisAlignedBB.getAABBPool().getAABB(this.posX - d0, this.posY - d0, this.posZ - d0, this.posX + d0, this.posY + 6.0D + d0, this.posZ + d0));
 
                 for (int l = 0; l < list.size(); ++l)
                 {
-                    Entity entity = (Entity)list.get(l);
+                    final Entity entity = (Entity)list.get(l);
                     if (!MinecraftForge.EVENT_BUS.post(new EntityStruckByLightningEvent(entity, this)))
                     {
                         entity.onStruckByLightning(this);
@@ -163,19 +163,19 @@ public class EntityLightningBolt extends EntityWeatherEffect
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    protected void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {}
+    protected void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound) {}
 
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    protected void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {}
+    protected void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound) {}
 
     @SideOnly(Side.CLIENT)
 
     /**
      * Checks using a Vec3d to determine if this entity is within range of that vector to be rendered. Args: vec3D
      */
-    public boolean isInRangeToRenderVec3D(Vec3 par1Vec3)
+    public boolean isInRangeToRenderVec3D(final Vec3 par1Vec3)
     {
         return this.lightningState >= 0;
     }

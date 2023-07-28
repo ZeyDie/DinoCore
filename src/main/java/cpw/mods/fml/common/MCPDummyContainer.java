@@ -15,12 +15,12 @@ package cpw.mods.fml.common;
 import com.google.common.eventbus.EventBus;
 
 public class MCPDummyContainer extends DummyModContainer {
-	public MCPDummyContainer(ModMetadata metadata) {
+	public MCPDummyContainer(final ModMetadata metadata) {
 		super(metadata);
 	}
 
 	@Override
-	public boolean registerBus(EventBus bus, LoadController controller) {
+	public boolean registerBus(final EventBus bus, final LoadController controller) {
 		return true;
 	}
 }

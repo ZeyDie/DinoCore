@@ -17,7 +17,7 @@ public class Packet2ClientProtocol extends Packet
     public Packet2ClientProtocol() {}
 
     @SideOnly(Side.CLIENT)
-    public Packet2ClientProtocol(int par1, String par2Str, String par3Str, int par4)
+    public Packet2ClientProtocol(final int par1, final String par2Str, final String par3Str, final int par4)
     {
         this.protocolVersion = par1;
         this.username = par2Str;
@@ -28,7 +28,7 @@ public class Packet2ClientProtocol extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.protocolVersion = par1DataInput.readByte();
         this.username = readString(par1DataInput, 16);
@@ -39,7 +39,7 @@ public class Packet2ClientProtocol extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeByte(this.protocolVersion);
         writeString(this.username, par1DataOutput);
@@ -50,7 +50,7 @@ public class Packet2ClientProtocol extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleClientProtocol(this);
     }

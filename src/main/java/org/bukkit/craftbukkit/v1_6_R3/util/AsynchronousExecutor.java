@@ -52,7 +52,7 @@ public final class AsynchronousExecutor<P, T, C, E extends Throwable> {
     static final AtomicIntegerFieldUpdater STATE_FIELD = AtomicIntegerFieldUpdater.newUpdater(AsynchronousExecutor.Task.class, "state");
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private static boolean set(AsynchronousExecutor.Task $this, int expected, int value) {
+    private static boolean set(final AsynchronousExecutor.Task $this, final int expected, final int value) {
         return STATE_FIELD.compareAndSet($this, expected, value);
     }
 
@@ -122,7 +122,7 @@ public final class AsynchronousExecutor<P, T, C, E extends Throwable> {
                         while (state != STAGE_1_COMPLETE) {
                             try {
                                 this.wait();
-                            } catch (InterruptedException e) {
+                            } catch (final InterruptedException e) {
                                 Thread.currentThread().interrupt();
                                 throw new RuntimeException("Unable to handle interruption on " + parameter, e);
                             }
@@ -178,7 +178,7 @@ public final class AsynchronousExecutor<P, T, C, E extends Throwable> {
                         final T object = this.object;
 
                         provider.callStage2(parameter, object);
-                        for (C callback : callbacks) {
+                        for (final C callback : callbacks) {
                             if (callback == this) {
                                 // 'this' is a placeholder to prevent callbacks from being empty on a get() call
                                 // See get method above
@@ -228,7 +228,7 @@ public final class AsynchronousExecutor<P, T, C, E extends Throwable> {
      * <p>
      * This should always be synchronous.
      */
-    public void add(P parameter, C callback) {
+    public void add(final P parameter, final C callback) {
         Task task = tasks.get(parameter);
         if (task == null) {
             tasks.put(parameter, task = new Task(parameter));
@@ -252,7 +252,7 @@ public final class AsynchronousExecutor<P, T, C, E extends Throwable> {
      * @throws IllegalStateException if parameter is not in the queue anymore
      * @throws IllegalStateException if the callback was not specified for given parameter
      */
-    public boolean drop(P parameter, C callback) throws IllegalStateException {
+    public boolean drop(final P parameter, final C callback) throws IllegalStateException {
         final Task task = tasks.get(parameter);
         if (task == null) {
             // Cauldron start - Print debug info for QueuedChunk and avoid crash
@@ -277,7 +277,7 @@ public final class AsynchronousExecutor<P, T, C, E extends Throwable> {
      * This should always be synchronous.
      * @throws IllegalStateException if the parameter is not in the queue anymore, or sometimes if called from asynchronous thread
      */
-    public T get(P parameter) throws E, IllegalStateException {
+    public T get(final P parameter) throws E, IllegalStateException {
         final Task task = tasks.get(parameter);
         if (task == null) {
             throw new IllegalStateException("Unknown " + parameter);
@@ -288,14 +288,14 @@ public final class AsynchronousExecutor<P, T, C, E extends Throwable> {
     /**
      * Processes a parameter as if it was in the queue, without ever passing to another thread.
      */
-    public T getSkipQueue(P parameter) throws E {
+    public T getSkipQueue(final P parameter) throws E {
         return skipQueue(parameter);
     }
 
     /**
      * Processes a parameter as if it was in the queue, without ever passing to another thread.
      */
-    public T getSkipQueue(P parameter, C callback) throws E {
+    public T getSkipQueue(final P parameter, final C callback) throws E {
         final T object = skipQueue(parameter);
         provider.callStage3(parameter, object, callback);
         return object;
@@ -304,10 +304,10 @@ public final class AsynchronousExecutor<P, T, C, E extends Throwable> {
     /**
      * Processes a parameter as if it was in the queue, without ever passing to another thread.
      */
-    public T getSkipQueue(P parameter, C...callbacks) throws E {
+    public T getSkipQueue(final P parameter, final C...callbacks) throws E {
         final CallBackProvider<P, T, C, E> provider = this.provider;
         final T object = skipQueue(parameter);
-        for (C callback : callbacks) {
+        for (final C callback : callbacks) {
             provider.callStage3(parameter, object, callback);
         }
         return object;
@@ -316,21 +316,21 @@ public final class AsynchronousExecutor<P, T, C, E extends Throwable> {
     /**
      * Processes a parameter as if it was in the queue, without ever passing to another thread.
      */
-    public T getSkipQueue(P parameter, Iterable<C> callbacks) throws E {
+    public T getSkipQueue(final P parameter, final Iterable<C> callbacks) throws E {
         final CallBackProvider<P, T, C, E> provider = this.provider;
         final T object = skipQueue(parameter);
-        for (C callback : callbacks) {
+        for (final C callback : callbacks) {
             provider.callStage3(parameter, object, callback);
         }
         return object;
     }
 
-    private T skipQueue(P parameter) throws E {
-        Task task = tasks.get(parameter);
+    private T skipQueue(final P parameter) throws E {
+        final Task task = tasks.get(parameter);
         if (task != null) {
             return task.get();
         }
-        T object = provider.callStage1(parameter);
+        final T object = provider.callStage1(parameter);
         provider.callStage2(parameter, object);
         return object;
     }

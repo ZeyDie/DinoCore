@@ -4,7 +4,7 @@ import net.minecraft.entity.passive.EntityHorse;
 
 public class BiomeGenPlains extends BiomeGenBase
 {
-    protected BiomeGenPlains(int par1)
+    protected BiomeGenPlains(final int par1)
     {
         super(par1);
         this.spawnableCreatureList.add(new SpawnListEntry(EntityHorse.class, 5, 2, 6));

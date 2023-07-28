@@ -10,6 +10,6 @@ import net.minecraft.client.audio.SoundPoolEntry;
  */
 public class PlayBackgroundMusicEvent extends SoundResultEvent
 {
-    public PlayBackgroundMusicEvent(SoundManager manager, SoundPoolEntry entry)
+    public PlayBackgroundMusicEvent(final SoundManager manager, final SoundPoolEntry entry)
     { super(manager, entry, null, 0.0f, 0.0f); }
 }

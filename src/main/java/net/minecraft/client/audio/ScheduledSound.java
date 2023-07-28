@@ -14,7 +14,7 @@ class ScheduledSound
     float field_92063_f;
     int field_92064_g;
 
-    public ScheduledSound(String par1Str, float par2, float par3, float par4, float par5, float par6, int par7)
+    public ScheduledSound(final String par1Str, final float par2, final float par3, final float par4, final float par5, final float par6, final int par7)
     {
         this.field_92069_a = par1Str;
         this.field_92067_b = par2;

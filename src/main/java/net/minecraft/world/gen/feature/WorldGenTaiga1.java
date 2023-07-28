@@ -7,12 +7,12 @@ import java.util.Random;
 
 public class WorldGenTaiga1 extends WorldGenerator
 {
-    public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
+    public boolean generate(final World par1World, final Random par2Random, final int par3, final int par4, final int par5)
     {
-        int l = par2Random.nextInt(5) + 7;
-        int i1 = l - par2Random.nextInt(2) - 3;
-        int j1 = l - i1;
-        int k1 = 1 + par2Random.nextInt(j1 + 1);
+        final int l = par2Random.nextInt(5) + 7;
+        final int i1 = l - par2Random.nextInt(2) - 3;
+        final int j1 = l - i1;
+        final int k1 = 1 + par2Random.nextInt(j1 + 1);
         boolean flag = true;
 
         if (par4 >= 1 && par4 + l + 1 <= 128)
@@ -25,7 +25,7 @@ public class WorldGenTaiga1 extends WorldGenerator
 
             for (l1 = par4; l1 <= par4 + 1 + l && flag; ++l1)
             {
-                boolean flag1 = true;
+                final boolean flag1 = true;
 
                 if (l1 - par4 < i1)
                 {
@@ -44,7 +44,7 @@ public class WorldGenTaiga1 extends WorldGenerator
                         {
                             k2 = par1World.getBlockId(i2, l1, j2);
 
-                            Block block = Block.blocksList[k2];
+                            final Block block = Block.blocksList[k2];
 
                             if (k2 != 0 && (block == null || !block.isLeaves(par1World, i2, l1, j2)))
                             {
@@ -80,9 +80,9 @@ public class WorldGenTaiga1 extends WorldGenerator
 
                             for (int i3 = par5 - l2; i3 <= par5 + l2; ++i3)
                             {
-                                int j3 = i3 - par5;
+                                final int j3 = i3 - par5;
 
-                                Block block = Block.blocksList[par1World.getBlockId(j2, i2, i3)];
+                                final Block block = Block.blocksList[par1World.getBlockId(j2, i2, i3)];
 
                                 if ((Math.abs(k2) != l2 || Math.abs(j3) != l2 || l2 <= 0) && 
                                     (block == null || block.canBeReplacedByLeaves(par1World, j2, i2, i3)))
@@ -106,7 +106,7 @@ public class WorldGenTaiga1 extends WorldGenerator
                     {
                         j2 = par1World.getBlockId(par3, par4 + i2, par5);
 
-                        Block block = Block.blocksList[j2];
+                        final Block block = Block.blocksList[j2];
 
                         if (j2 == 0 || block == null || block.isLeaves(par1World, par3, par4 + i2, par5))
                         {

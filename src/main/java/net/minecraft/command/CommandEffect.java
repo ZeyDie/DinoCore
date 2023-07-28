@@ -23,12 +23,12 @@ public class CommandEffect extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.effect.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         if (par2ArrayOfStr.length < 2)
         {
@@ -36,7 +36,7 @@ public class CommandEffect extends CommandBase
         }
         else
         {
-            EntityPlayerMP entityplayermp = getPlayer(par1ICommandSender, par2ArrayOfStr[0]);
+            final EntityPlayerMP entityplayermp = getPlayer(par1ICommandSender, par2ArrayOfStr[0]);
 
             if (par2ArrayOfStr[1].equals("clear"))
             {
@@ -50,7 +50,7 @@ public class CommandEffect extends CommandBase
             }
             else
             {
-                int i = parseIntWithMin(par1ICommandSender, par2ArrayOfStr[1], 1);
+                final int i = parseIntWithMin(par1ICommandSender, par2ArrayOfStr[1], 1);
                 int j = 600;
                 int k = 30;
                 int l = 0;
@@ -95,7 +95,7 @@ public class CommandEffect extends CommandBase
                 }
                 else
                 {
-                    PotionEffect potioneffect = new PotionEffect(i, j, l);
+                    final PotionEffect potioneffect = new PotionEffect(i, j, l);
                     entityplayermp.addPotionEffect(potioneffect);
                     notifyAdmins(par1ICommandSender, "commands.effect.success", new Object[] {ChatMessageComponent.createFromTranslationKey(potioneffect.getEffectName()), Integer.valueOf(i), Integer.valueOf(l), entityplayermp.getEntityName(), Integer.valueOf(k)});
                 }
@@ -106,7 +106,7 @@ public class CommandEffect extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public List addTabCompletionOptions(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         return par2ArrayOfStr.length == 1 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, this.getAllUsernames()) : null;
     }
@@ -119,7 +119,7 @@ public class CommandEffect extends CommandBase
     /**
      * Return whether the specified command parameter index is a username parameter.
      */
-    public boolean isUsernameIndex(String[] par1ArrayOfStr, int par2)
+    public boolean isUsernameIndex(final String[] par1ArrayOfStr, final int par2)
     {
         return par2 == 0;
     }

@@ -11,10 +11,10 @@ class MinecraftServerGuiINNER3 extends FocusAdapter
 {
     final MinecraftServerGui field_120032_a;
 
-    MinecraftServerGuiINNER3(MinecraftServerGui par1MinecraftServerGui)
+    MinecraftServerGuiINNER3(final MinecraftServerGui par1MinecraftServerGui)
     {
         this.field_120032_a = par1MinecraftServerGui;
     }
 
-    public void focusGained(FocusEvent par1FocusEvent) {}
+    public void focusGained(final FocusEvent par1FocusEvent) {}
 }

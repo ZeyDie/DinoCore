@@ -22,7 +22,7 @@ public class EntityRendererProxy extends EntityRenderer
     private Minecraft game;
 
     @Deprecated
-    public EntityRendererProxy(Minecraft minecraft)
+    public EntityRendererProxy(final Minecraft minecraft)
     {
         super(minecraft);
         game = minecraft;
@@ -34,7 +34,7 @@ public class EntityRendererProxy extends EntityRenderer
     /**
      * Will update any inputs that effect the camera angle (mouse) and then render the world and GUI
      */
-    public void updateCameraAndRender(float tick)
+    public void updateCameraAndRender(final float tick)
     {
         super.updateCameraAndRender(tick);
         //This is where ModLoader does all of it's ticking

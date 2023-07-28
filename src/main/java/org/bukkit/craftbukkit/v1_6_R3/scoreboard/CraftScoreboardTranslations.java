@@ -13,11 +13,11 @@ class CraftScoreboardTranslations {
 
     private CraftScoreboardTranslations() {}
 
-    static DisplaySlot toBukkitSlot(int i) {
+    static DisplaySlot toBukkitSlot(final int i) {
         return SLOTS.inverse().get(net.minecraft.scoreboard.Scoreboard.getObjectiveDisplaySlot(i));
     }
 
-    static int fromBukkitSlot(DisplaySlot slot) {
+    static int fromBukkitSlot(final DisplaySlot slot) {
         return net.minecraft.scoreboard.Scoreboard.getObjectiveDisplaySlotNumber(SLOTS.get(slot));
     }
 

@@ -14,15 +14,15 @@ public class StringUtils
     /**
      * Returns the time elapsed for the given number of ticks, in "mm:ss" format.
      */
-    public static String ticksToElapsedTime(int par0)
+    public static String ticksToElapsedTime(final int par0)
     {
         int j = par0 / 20;
-        int k = j / 60;
+        final int k = j / 60;
         j %= 60;
         return j < 10 ? k + ":0" + j : k + ":" + j;
     }
 
-    public static String stripControlCodes(String par0Str)
+    public static String stripControlCodes(final String par0Str)
     {
         return patternControlCode.matcher(par0Str).replaceAll("");
     }

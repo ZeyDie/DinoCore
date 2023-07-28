@@ -7,7 +7,7 @@ import net.minecraftforge.cauldron.api.inventory.BukkitOreDictionary;
  */
 public class Cauldron {
     private static CauldronApi instance;
-    public static void setInterface(CauldronApi cauldron) {
+    public static void setInterface(final CauldronApi cauldron) {
         if (instance != null) {
             throw new IllegalStateException();
         }

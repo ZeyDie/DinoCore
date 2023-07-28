@@ -9,7 +9,7 @@ public class PlayStreamingSourceEvent extends SoundEvent
     public final float x;
     public final float y;
     public final float z;
-    public PlayStreamingSourceEvent(SoundManager manager, String name, float x, float y, float z)
+    public PlayStreamingSourceEvent(final SoundManager manager, final String name, final float x, final float y, final float z)
     {
         this.manager = manager;
         this.name = name;

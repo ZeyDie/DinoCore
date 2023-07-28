@@ -15,18 +15,18 @@ class GuiSlotStatsBlock extends GuiSlotStats
     /** Instance of GuiStats. */
     final GuiStats theStats;
 
-    public GuiSlotStatsBlock(GuiStats par1GuiStats)
+    public GuiSlotStatsBlock(final GuiStats par1GuiStats)
     {
         super(par1GuiStats);
         this.theStats = par1GuiStats;
         this.field_77266_h = new ArrayList();
-        Iterator iterator = StatList.objectMineStats.iterator();
+        final Iterator iterator = StatList.objectMineStats.iterator();
 
         while (iterator.hasNext())
         {
-            StatCrafting statcrafting = (StatCrafting)iterator.next();
+            final StatCrafting statcrafting = (StatCrafting)iterator.next();
             boolean flag = false;
-            int i = statcrafting.getItemID();
+            final int i = statcrafting.getItemID();
 
             if (GuiStats.getStatsFileWriter(par1GuiStats).writeStat(statcrafting) > 0)
             {
@@ -50,7 +50,7 @@ class GuiSlotStatsBlock extends GuiSlotStats
         this.field_77267_i = new SorterStatsBlock(this, par1GuiStats);
     }
 
-    protected void func_77222_a(int par1, int par2, Tessellator par3Tessellator)
+    protected void func_77222_a(final int par1, final int par2, final Tessellator par3Tessellator)
     {
         super.func_77222_a(par1, par2, par3Tessellator);
 
@@ -82,17 +82,17 @@ class GuiSlotStatsBlock extends GuiSlotStats
         }
     }
 
-    protected void drawSlot(int par1, int par2, int par3, int par4, Tessellator par5Tessellator)
+    protected void drawSlot(final int par1, final int par2, final int par3, final int par4, final Tessellator par5Tessellator)
     {
-        StatCrafting statcrafting = this.func_77257_d(par1);
-        int i1 = statcrafting.getItemID();
+        final StatCrafting statcrafting = this.func_77257_d(par1);
+        final int i1 = statcrafting.getItemID();
         GuiStats.drawItemSprite(this.theStats, par2 + 40, par3, i1);
         this.func_77260_a((StatCrafting)StatList.objectCraftStats[i1], par2 + 115, par3, par1 % 2 == 0);
         this.func_77260_a((StatCrafting)StatList.objectUseStats[i1], par2 + 165, par3, par1 % 2 == 0);
         this.func_77260_a(statcrafting, par2 + 215, par3, par1 % 2 == 0);
     }
 
-    protected String func_77258_c(int par1)
+    protected String func_77258_c(final int par1)
     {
         return par1 == 0 ? "stat.crafted" : (par1 == 1 ? "stat.used" : "stat.mined");
     }

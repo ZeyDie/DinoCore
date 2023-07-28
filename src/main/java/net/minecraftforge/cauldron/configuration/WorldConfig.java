@@ -10,7 +10,7 @@ public class WorldConfig
     public ConfigBase baseConfig;
     private boolean verbose;
 
-    public WorldConfig(String worldName, ConfigBase configFile)
+    public WorldConfig(final String worldName, final ConfigBase configFile)
     {
         this.worldName = worldName.toLowerCase();
         this.baseConfig = configFile;
@@ -22,7 +22,7 @@ public class WorldConfig
         baseConfig.save();
     }
 
-    private void log(String s)
+    private void log(final String s)
     {
         if ( verbose )
         {
@@ -30,17 +30,17 @@ public class WorldConfig
         }
     }
 
-    public void set(String path, Object val)
+    public void set(final String path, final Object val)
     {
         baseConfig.config.set( path, val );
     }
 
-    public boolean isBoolean(String path)
+    public boolean isBoolean(final String path)
     {
         return baseConfig.config.isBoolean(path);
     }
 
-    public boolean getBoolean(String path, boolean def)
+    public boolean getBoolean(final String path, final boolean def)
     {
         if (baseConfig.settings.get("world-settings.default." + path) == null)
         {
@@ -51,13 +51,13 @@ public class WorldConfig
         return baseConfig.config.getBoolean( "world-settings." + worldName + "." + path, baseConfig.config.getBoolean( "world-settings.default." + path ) );
     }
 
-    private double getDouble(String path, double def)
+    private double getDouble(final String path, final double def)
     {
         baseConfig.config.addDefault( "world-settings.default." + path, def );
         return baseConfig.config.getDouble( "world-settings." + worldName + "." + path, baseConfig.config.getDouble( "world-settings.default." + path ) );
     }
 
-    public int getInt(String path, int def)
+    public int getInt(final String path, final int def)
     {
         if (baseConfig.settings.get("world-settings.default." + path) == null)
         {
@@ -68,13 +68,13 @@ public class WorldConfig
         return baseConfig.config.getInt( "world-settings." + worldName + "." + path, baseConfig.config.getInt( "world-settings.default." + path ) );
     }
 
-    private <T> List getList(String path, T def)
+    private <T> List getList(final String path, final T def)
     {
         baseConfig.config.addDefault( "world-settings.default." + path, def );
         return (List<T>) baseConfig.config.getList( "world-settings." + worldName + "." + path, baseConfig.config.getList( "world-settings.default." + path ) );
     }
 
-    private String getString(String path, String def)
+    private String getString(final String path, final String def)
     {
         baseConfig.config.addDefault( "world-settings.default." + path, def );
         return baseConfig.config.getString( "world-settings." + worldName + "." + path, baseConfig.config.getString( "world-settings.default." + path ) );

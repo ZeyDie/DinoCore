@@ -12,8 +12,8 @@ import java.util.List;
 
 public class BlockSandStone extends Block
 {
-    public static final String[] SAND_STONE_TYPES = new String[] {"default", "chiseled", "smooth"};
-    private static final String[] field_94405_b = new String[] {"normal", "carved", "smooth"};
+    public static final String[] SAND_STONE_TYPES = {"default", "chiseled", "smooth"};
+    private static final String[] field_94405_b = {"normal", "carved", "smooth"};
     @SideOnly(Side.CLIENT)
     private Icon[] field_94406_c;
     @SideOnly(Side.CLIENT)
@@ -21,7 +21,7 @@ public class BlockSandStone extends Block
     @SideOnly(Side.CLIENT)
     private Icon field_94404_cP;
 
-    public BlockSandStone(int par1)
+    public BlockSandStone(final int par1)
     {
         super(par1, Material.rock);
         this.setCreativeTab(CreativeTabs.tabBlock);
@@ -32,9 +32,10 @@ public class BlockSandStone extends Block
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, int par2)
     {
-        if (par1 != 1 && (par1 != 0 || par2 != 1 && par2 != 2))
+        int par21 = par2;
+        if (par1 != 1 && (par1 != 0 || par21 != 1 && par21 != 2))
         {
             if (par1 == 0)
             {
@@ -42,12 +43,12 @@ public class BlockSandStone extends Block
             }
             else
             {
-                if (par2 < 0 || par2 >= this.field_94406_c.length)
+                if (par21 < 0 || par21 >= this.field_94406_c.length)
                 {
-                    par2 = 0;
+                    par21 = 0;
                 }
 
-                return this.field_94406_c[par2];
+                return this.field_94406_c[par21];
             }
         }
         else
@@ -59,7 +60,7 @@ public class BlockSandStone extends Block
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int par1)
+    public int damageDropped(final int par1)
     {
         return par1;
     }
@@ -69,7 +70,7 @@ public class BlockSandStone extends Block
     /**
      * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
      */
-    public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubBlocks(final int par1, final CreativeTabs par2CreativeTabs, final List par3List)
     {
         par3List.add(new ItemStack(par1, 1, 0));
         par3List.add(new ItemStack(par1, 1, 1));
@@ -82,7 +83,7 @@ public class BlockSandStone extends Block
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.field_94406_c = new Icon[field_94405_b.length];
 

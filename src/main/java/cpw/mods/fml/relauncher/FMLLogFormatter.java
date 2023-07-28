@@ -29,7 +29,7 @@ public final class FMLLogFormatter extends Formatter // Cauldron - public for Mi
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // Cauldron - static for setFormat (TODO)
     
     // Cauldron start
-    public static void setFormat(boolean nojline, SimpleDateFormat date_format)
+    public static void setFormat(final boolean nojline, final SimpleDateFormat date_format)
     {
         if (date_format != null)
             dateFormat = date_format;
@@ -38,11 +38,11 @@ public final class FMLLogFormatter extends Formatter // Cauldron - public for Mi
     }
     // Cauldron end
 
-    public String format(LogRecord record)
+    public String format(final LogRecord record)
     {
-        StringBuilder msg = new StringBuilder();
+        final StringBuilder msg = new StringBuilder();
         msg.append(this.dateFormat.format(Long.valueOf(record.getMillis())));
-        Level lvl = record.getLevel();
+        final Level lvl = record.getLevel();
 
         String name = lvl.getLocalizedName();
         if ( name == null )
@@ -50,9 +50,9 @@ public final class FMLLogFormatter extends Formatter // Cauldron - public for Mi
             name = lvl.getName();
         }
 
-        if ( ( name != null ) && ( name.length() > 0 ) )
+        if ( ( name != null ) && (!name.isEmpty()) )
         {
-            msg.append(" [" + name + "] ");
+            msg.append(" [").append(name).append("] ");
         }
         else
         {
@@ -61,7 +61,7 @@ public final class FMLLogFormatter extends Formatter // Cauldron - public for Mi
 
         if (record.getLoggerName() != null)
         {
-            msg.append("["+record.getLoggerName()+"] ");
+            msg.append("[").append(record.getLoggerName()).append("] ");
         }
         else
         {
@@ -69,11 +69,11 @@ public final class FMLLogFormatter extends Formatter // Cauldron - public for Mi
         }
         msg.append(formatMessage(record));
         msg.append(LINE_SEPARATOR);
-        Throwable thr = record.getThrown();
+        final Throwable thr = record.getThrown();
 
         if (thr != null)
         {
-            StringWriter thrDump = new StringWriter();
+            final StringWriter thrDump = new StringWriter();
             thr.printStackTrace(new PrintWriter(thrDump));
             msg.append(thrDump.toString());
         }

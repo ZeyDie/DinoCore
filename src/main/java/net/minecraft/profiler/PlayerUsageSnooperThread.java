@@ -10,7 +10,7 @@ class PlayerUsageSnooperThread extends TimerTask
     /** The PlayerUsageSnooper object. */
     final PlayerUsageSnooper snooper;
 
-    PlayerUsageSnooperThread(PlayerUsageSnooper par1PlayerUsageSnooper)
+    PlayerUsageSnooperThread(final PlayerUsageSnooper par1PlayerUsageSnooper)
     {
         this.snooper = par1PlayerUsageSnooper;
     }
@@ -19,7 +19,7 @@ class PlayerUsageSnooperThread extends TimerTask
     {
         if (PlayerUsageSnooper.getStatsCollectorFor(this.snooper).isSnooperEnabled())
         {
-            HashMap hashmap;
+            final HashMap hashmap;
 
             synchronized (PlayerUsageSnooper.getSyncLockFor(this.snooper))
             {

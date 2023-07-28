@@ -17,26 +17,26 @@ public class PendingInvitesList extends ValueObject
 {
     public List field_130096_a = Lists.newArrayList();
 
-    public static PendingInvitesList func_130095_a(String par0Str)
+    public static PendingInvitesList func_130095_a(final String par0Str)
     {
-        PendingInvitesList pendinginviteslist = new PendingInvitesList();
+        final PendingInvitesList pendinginviteslist = new PendingInvitesList();
 
         try
         {
-            JsonRootNode jsonrootnode = (new JdomParser()).parse(par0Str);
+            final JsonRootNode jsonrootnode = (new JdomParser()).parse(par0Str);
 
             if (jsonrootnode.isArrayNode(new Object[] {"invites"}))
             {
-                Iterator iterator = jsonrootnode.getArrayNode(new Object[] {"invites"}).iterator();
+                final Iterator iterator = jsonrootnode.getArrayNode(new Object[] {"invites"}).iterator();
 
                 while (iterator.hasNext())
                 {
-                    JsonNode jsonnode = (JsonNode)iterator.next();
+                    final JsonNode jsonnode = (JsonNode)iterator.next();
                     pendinginviteslist.field_130096_a.add(PendingInvite.func_130091_a(jsonnode));
                 }
             }
         }
-        catch (InvalidSyntaxException invalidsyntaxexception)
+        catch (final InvalidSyntaxException invalidsyntaxexception)
         {
             ;
         }

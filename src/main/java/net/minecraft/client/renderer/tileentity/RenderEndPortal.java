@@ -25,14 +25,14 @@ public class RenderEndPortal extends TileEntitySpecialRenderer
     /**
      * Renders the End Portal.
      */
-    public void renderEndPortalTileEntity(TileEntityEndPortal par1TileEntityEndPortal, double par2, double par4, double par6, float par8)
+    public void renderEndPortalTileEntity(final TileEntityEndPortal par1TileEntityEndPortal, final double par2, final double par4, final double par6, final float par8)
     {
-        float f1 = (float)this.tileEntityRenderer.playerX;
-        float f2 = (float)this.tileEntityRenderer.playerY;
-        float f3 = (float)this.tileEntityRenderer.playerZ;
+        final float f1 = (float)this.tileEntityRenderer.playerX;
+        final float f2 = (float)this.tileEntityRenderer.playerY;
+        final float f3 = (float)this.tileEntityRenderer.playerZ;
         GL11.glDisable(GL11.GL_LIGHTING);
         field_110644_e.setSeed(31100L);
-        float f4 = 0.75F;
+        final float f4 = 0.75F;
 
         for (int i = 0; i < 16; ++i)
         {
@@ -59,9 +59,9 @@ public class RenderEndPortal extends TileEntitySpecialRenderer
                 f6 = 0.5F;
             }
 
-            float f8 = (float)(-(par4 + (double)f4));
+            final float f8 = (float)(-(par4 + (double)f4));
             float f9 = f8 + ActiveRenderInfo.objectY;
-            float f10 = f8 + f5 + ActiveRenderInfo.objectY;
+            final float f10 = f8 + f5 + ActiveRenderInfo.objectY;
             float f11 = f9 / f10;
             f11 += (float)(par4 + (double)f4);
             GL11.glTranslatef(f1, f11, f3);
@@ -89,7 +89,7 @@ public class RenderEndPortal extends TileEntitySpecialRenderer
             GL11.glTranslatef(-f1, -f3, -f2);
             f9 = f8 + ActiveRenderInfo.objectY;
             GL11.glTranslatef(ActiveRenderInfo.objectX * f5 / f9, ActiveRenderInfo.objectZ * f5 / f9, -f2);
-            Tessellator tessellator = Tessellator.instance;
+            final Tessellator tessellator = Tessellator.instance;
             tessellator.startDrawingQuads();
             f11 = field_110644_e.nextFloat() * 0.5F + 0.1F;
             float f12 = field_110644_e.nextFloat() * 0.5F + 0.4F;
@@ -120,7 +120,7 @@ public class RenderEndPortal extends TileEntitySpecialRenderer
         GL11.glEnable(GL11.GL_LIGHTING);
     }
 
-    private FloatBuffer func_76907_a(float par1, float par2, float par3, float par4)
+    private FloatBuffer func_76907_a(final float par1, final float par2, final float par3, final float par4)
     {
         this.field_76908_a.clear();
         this.field_76908_a.put(par1).put(par2).put(par3).put(par4);
@@ -128,7 +128,7 @@ public class RenderEndPortal extends TileEntitySpecialRenderer
         return this.field_76908_a;
     }
 
-    public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8)
+    public void renderTileEntityAt(final TileEntity par1TileEntity, final double par2, final double par4, final double par6, final float par8)
     {
         this.renderEndPortalTileEntity((TileEntityEndPortal)par1TileEntity, par2, par4, par6, par8);
     }

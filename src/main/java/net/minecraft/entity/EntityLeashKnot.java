@@ -21,12 +21,12 @@ import java.util.List;
 
 public class EntityLeashKnot extends EntityHanging
 {
-    public EntityLeashKnot(World par1World)
+    public EntityLeashKnot(final World par1World)
     {
         super(par1World);
     }
 
-    public EntityLeashKnot(World par1World, int par2, int par3, int par4)
+    public EntityLeashKnot(final World par1World, final int par2, final int par3, final int par4)
     {
         super(par1World, par2, par3, par4, 0);
         this.setPosition((double)par2 + 0.5D, (double)par3 + 0.5D, (double)par4 + 0.5D);
@@ -37,7 +37,7 @@ public class EntityLeashKnot extends EntityHanging
         super.entityInit();
     }
 
-    public void setDirection(int par1) {}
+    public void setDirection(final int par1) {}
 
     public int getWidthPixels()
     {
@@ -55,7 +55,7 @@ public class EntityLeashKnot extends EntityHanging
      * Checks if the entity is in range to render by using the past in distance and comparing it to its average edge
      * length * 64 * renderDistanceWeight Args: distance
      */
-    public boolean isInRangeToRenderDist(double par1)
+    public boolean isInRangeToRenderDist(final double par1)
     {
         return par1 < 1024.0D;
     }
@@ -63,14 +63,14 @@ public class EntityLeashKnot extends EntityHanging
     /**
      * Called when this entity is broken. Entity parameter may be null.
      */
-    public void onBroken(Entity par1Entity) {}
+    public void onBroken(final Entity par1Entity) {}
 
     /**
      * Either write this entity to the NBT tag given and return true, or return false without doing anything. If this
      * returns false the entity is not saved on disk. Ridden entities return false here as they are saved with their
      * rider.
      */
-    public boolean writeToNBTOptional(NBTTagCompound par1NBTTagCompound)
+    public boolean writeToNBTOptional(final NBTTagCompound par1NBTTagCompound)
     {
         return false;
     }
@@ -78,19 +78,19 @@ public class EntityLeashKnot extends EntityHanging
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {}
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound) {}
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {}
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound) {}
 
     /**
      * First layer of player interaction
      */
-    public boolean interactFirst(EntityPlayer par1EntityPlayer)
+    public boolean interactFirst(final EntityPlayer par1EntityPlayer)
     {
-        ItemStack itemstack = par1EntityPlayer.getHeldItem();
+        final ItemStack itemstack = par1EntityPlayer.getHeldItem();
         boolean flag = false;
         double d0;
         List list;
@@ -179,30 +179,30 @@ public class EntityLeashKnot extends EntityHanging
      */
     public boolean onValidSurface()
     {
-        int i = this.worldObj.getBlockId(this.xPosition, this.yPosition, this.zPosition);
+        final int i = this.worldObj.getBlockId(this.xPosition, this.yPosition, this.zPosition);
         return Block.blocksList[i] != null && Block.blocksList[i].getRenderType() == 11;
     }
 
-    public static EntityLeashKnot func_110129_a(World par0World, int par1, int par2, int par3)
+    public static EntityLeashKnot func_110129_a(final World par0World, final int par1, final int par2, final int par3)
     {
-        EntityLeashKnot entityleashknot = new EntityLeashKnot(par0World, par1, par2, par3);
+        final EntityLeashKnot entityleashknot = new EntityLeashKnot(par0World, par1, par2, par3);
         entityleashknot.forceSpawn = true;
         par0World.spawnEntityInWorld(entityleashknot);
         return entityleashknot;
     }
 
-    public static EntityLeashKnot getKnotForBlock(World par0World, int par1, int par2, int par3)
+    public static EntityLeashKnot getKnotForBlock(final World par0World, final int par1, final int par2, final int par3)
     {
-        List list = par0World.getEntitiesWithinAABB(EntityLeashKnot.class, AxisAlignedBB.getAABBPool().getAABB((double)par1 - 1.0D, (double)par2 - 1.0D, (double)par3 - 1.0D, (double)par1 + 1.0D, (double)par2 + 1.0D, (double)par3 + 1.0D));
-        Object object = null;
+        final List list = par0World.getEntitiesWithinAABB(EntityLeashKnot.class, AxisAlignedBB.getAABBPool().getAABB((double)par1 - 1.0D, (double)par2 - 1.0D, (double)par3 - 1.0D, (double)par1 + 1.0D, (double)par2 + 1.0D, (double)par3 + 1.0D));
+        final Object object = null;
 
         if (list != null)
         {
-            Iterator iterator = list.iterator();
+            final Iterator iterator = list.iterator();
 
             while (iterator.hasNext())
             {
-                EntityLeashKnot entityleashknot = (EntityLeashKnot)iterator.next();
+                final EntityLeashKnot entityleashknot = (EntityLeashKnot)iterator.next();
 
                 if (entityleashknot.xPosition == par1 && entityleashknot.yPosition == par2 && entityleashknot.zPosition == par3)
                 {

@@ -10,7 +10,7 @@ public class EntityUnleashEvent extends EntityEvent {
     private static final HandlerList handlers = new HandlerList();
     private final UnleashReason reason;
 
-    public EntityUnleashEvent(Entity entity, UnleashReason reason) {
+    public EntityUnleashEvent(final Entity entity, final UnleashReason reason) {
         super(entity);
         this.reason = reason;
     }

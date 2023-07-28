@@ -17,7 +17,7 @@ public class EntityMetadataStore extends MetadataStoreBase<Entity> implements Me
      * @return a unique metadata key
      */
     @Override
-    protected String disambiguate(Entity entity, String metadataKey) {
+    protected String disambiguate(final Entity entity, final String metadataKey) {
         return entity.getUniqueId().toString() + ":" + metadataKey;
     }
 }

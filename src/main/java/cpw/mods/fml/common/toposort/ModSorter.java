@@ -38,14 +38,14 @@ public class ModSorter
     private ModContainer before = new DummyModContainer("Before");
     private ModContainer after = new DummyModContainer("After");
 
-    public ModSorter(List<ModContainer> modList, Map<String, ModContainer> nameLookup)
+    public ModSorter(final List<ModContainer> modList, final Map<String, ModContainer> nameLookup)
     {
-        HashMap<String, ModContainer> sortingNameLookup = Maps.newHashMap(nameLookup);
+        final HashMap<String, ModContainer> sortingNameLookup = Maps.newHashMap(nameLookup);
         ModAPIManager.INSTANCE.injectAPIModContainers(modList, sortingNameLookup);
         buildGraph(modList, sortingNameLookup);
     }
 
-    private void buildGraph(List<ModContainer> modList, Map<String, ModContainer> nameLookup)
+    private void buildGraph(final List<ModContainer> modList, final Map<String, ModContainer> nameLookup)
     {
         modGraph = new DirectedGraph<ModContainer>();
         modGraph.addNode(beforeAll);
@@ -56,12 +56,12 @@ public class ModSorter
         modGraph.addEdge(beforeAll, before);
         modGraph.addEdge(after, afterAll);
 
-        for (ModContainer mod : modList)
+        for (final ModContainer mod : modList)
         {
             modGraph.addNode(mod);
         }
 
-        for (ModContainer mod : modList)
+        for (final ModContainer mod : modList)
         {
             if (mod.isImmutable())
             {
@@ -73,11 +73,11 @@ public class ModSorter
             boolean preDepAdded = false;
             boolean postDepAdded = false;
 
-            for (ArtifactVersion dep : mod.getDependencies())
+            for (final ArtifactVersion dep : mod.getDependencies())
             {
                 preDepAdded = true;
 
-                String modid = dep.getLabel();
+                final String modid = dep.getLabel();
                 if (modid.equals("*"))
                 {
                     // We are "after" everything
@@ -94,11 +94,11 @@ public class ModSorter
                 }
             }
 
-            for (ArtifactVersion dep : mod.getDependants())
+            for (final ArtifactVersion dep : mod.getDependants())
             {
                 postDepAdded = true;
 
-                String modid = dep.getLabel();
+                final String modid = dep.getLabel();
                 if (modid.equals("*"))
                 {
                     // We are "before" everything
@@ -129,7 +129,7 @@ public class ModSorter
 
     public List<ModContainer> sort()
     {
-        List<ModContainer> sortedList = TopologicalSort.topologicalSort(modGraph);
+        final List<ModContainer> sortedList = TopologicalSort.topologicalSort(modGraph);
         sortedList.removeAll(Arrays.asList(new ModContainer[] {beforeAll, before, after, afterAll}));
         return sortedList;
     }

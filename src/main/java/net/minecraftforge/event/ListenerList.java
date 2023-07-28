@@ -17,27 +17,27 @@ public class ListenerList
         resizeLists(maxSize);
     }
     
-    public ListenerList(ListenerList parent)
+    public ListenerList(final ListenerList parent)
     {
         allLists.add(this);
         this.parent = parent;
         resizeLists(maxSize);
     }
     
-    public static void resize(int max)
+    public static void resize(final int max)
     {
         if (max <= maxSize)
         {
             return;
         }
-        for (ListenerList list : allLists)
+        for (final ListenerList list : allLists)
         {
             list.resizeLists(max);
         }
         maxSize = max;
     }
     
-    public void resizeLists(int max)
+    public void resizeLists(final int max)
     {
         if (parent != null)
         {
@@ -49,7 +49,7 @@ public class ListenerList
             return;
         }
         
-        ListenerListInst[] newList = new ListenerListInst[max];
+        final ListenerListInst[] newList = new ListenerListInst[max];
         int x = 0;
         for (; x < lists.length; x++)
         {
@@ -69,37 +69,37 @@ public class ListenerList
         lists = newList;
     }
     
-    public static void clearBusID(int id)
+    public static void clearBusID(final int id)
     {
-        for (ListenerList list : allLists)
+        for (final ListenerList list : allLists)
         {
             list.lists[id].dispose();
         }
     }
     
-    protected ListenerListInst getInstance(int id)
+    protected ListenerListInst getInstance(final int id)
     {
         return lists[id];
     }
 
-    public IEventListener[] getListeners(int id)
+    public IEventListener[] getListeners(final int id)
     {
         return lists[id].getListeners();
     }
     
-    public void register(int id, EventPriority priority, IEventListener listener)
+    public void register(final int id, final EventPriority priority, final IEventListener listener)
     {
         lists[id].register(priority, listener);
     }
     
-    public void unregister(int id, IEventListener listener)
+    public void unregister(final int id, final IEventListener listener)
     {
         lists[id].unregister(listener);
     }
     
-    public static void unregiterAll(int id, IEventListener listener)
+    public static void unregiterAll(final int id, final IEventListener listener)
     {
-        for (ListenerList list : allLists)
+        for (final ListenerList list : allLists)
         {
             list.unregister(id, listener);
         }
@@ -114,7 +114,7 @@ public class ListenerList
         
         private ListenerListInst()
         {
-            int count = EventPriority.values().length;
+            final int count = EventPriority.values().length;
             priorities = new ArrayList<ArrayList<IEventListener>>(count);
             
             for (int x = 0; x < count; x++)
@@ -125,7 +125,7 @@ public class ListenerList
         
         public void dispose()
         {
-            for (ArrayList<IEventListener> listeners : priorities)
+            for (final ArrayList<IEventListener> listeners : priorities)
             {
                 listeners.clear();
             }
@@ -134,7 +134,7 @@ public class ListenerList
             listeners = null;
         }
 
-        private ListenerListInst(ListenerListInst parent)
+        private ListenerListInst(final ListenerListInst parent)
         {
             this();
             this.parent = parent;
@@ -149,9 +149,9 @@ public class ListenerList
          * @param priority The Priority to get
          * @return ArrayList containing listeners
          */
-        public ArrayList<IEventListener> getListeners(EventPriority priority)
+        public ArrayList<IEventListener> getListeners(final EventPriority priority)
         {
-            ArrayList<IEventListener> ret = new ArrayList<IEventListener>(priorities.get(priority.ordinal()));
+            final ArrayList<IEventListener> ret = new ArrayList<IEventListener>(priorities.get(priority.ordinal()));
             if (parent != null)
             {
                 ret.addAll(parent.getListeners(priority));
@@ -190,24 +190,24 @@ public class ListenerList
                 parent.buildCache();
             }
             
-            ArrayList<IEventListener> ret = new ArrayList<IEventListener>();
-            for (EventPriority value : EventPriority.values())
+            final ArrayList<IEventListener> ret = new ArrayList<IEventListener>();
+            for (final EventPriority value : EventPriority.values())
             {
                 ret.addAll(getListeners(value));
             }
-            listeners = ret.toArray(new IEventListener[ret.size()]);
+            listeners = ret.toArray(new IEventListener[0]);
             rebuild = false;
         }
         
-        public void register(EventPriority priority, IEventListener listener)
+        public void register(final EventPriority priority, final IEventListener listener)
         {
             priorities.get(priority.ordinal()).add(listener);
             rebuild = true;
         }
         
-        public void unregister(IEventListener listener)
+        public void unregister(final IEventListener listener)
         {
-            for(ArrayList<IEventListener> list : priorities)
+            for(final ArrayList<IEventListener> list : priorities)
             {
                 if (list.remove(listener))
                 {

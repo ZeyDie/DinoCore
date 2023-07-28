@@ -18,7 +18,7 @@ public enum PotionType {
     private final int damageValue, maxLevel;
     private final PotionEffectType effect;
 
-    PotionType(int damageValue, PotionEffectType effect, int maxLevel) {
+    PotionType(final int damageValue, final PotionEffectType effect, final int maxLevel) {
         this.damageValue = damageValue;
         this.effect = effect;
         this.maxLevel = maxLevel;
@@ -50,18 +50,18 @@ public enum PotionType {
      * @deprecated Magic value
      */
     @Deprecated
-    public static PotionType getByDamageValue(int damage) {
-        for (PotionType type : PotionType.values()) {
+    public static PotionType getByDamageValue(final int damage) {
+        for (final PotionType type : PotionType.values()) {
             if (type.damageValue == damage)
                 return type;
         }
         return null;
     }
 
-    public static PotionType getByEffect(PotionEffectType effectType) {
+    public static PotionType getByEffect(final PotionEffectType effectType) {
         if (effectType == null)
             return WATER;
-        for (PotionType type : PotionType.values()) {
+        for (final PotionType type : PotionType.values()) {
             if (effectType.equals(type.effect))
                 return type;
         }

@@ -25,7 +25,7 @@ public class ResourcePackRepositoryEntry
 
     final ResourcePackRepository reResourcePackRepository;
 
-    private ResourcePackRepositoryEntry(ResourcePackRepository par1ResourcePackRepository, File par2File)
+    private ResourcePackRepositoryEntry(final ResourcePackRepository par1ResourcePackRepository, final File par2File)
     {
         this.reResourcePackRepository = par1ResourcePackRepository;
         this.resourcePackFile = par2File;
@@ -40,7 +40,7 @@ public class ResourcePackRepositoryEntry
         {
             this.texturePackIcon = this.reResourcePack.getPackImage();
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             ;
         }
@@ -53,7 +53,7 @@ public class ResourcePackRepositoryEntry
         this.closeResourcePack();
     }
 
-    public void bindTexturePackIcon(TextureManager par1TextureManager)
+    public void bindTexturePackIcon(final TextureManager par1TextureManager)
     {
         if (this.locationTexturePackIcon == null)
         {
@@ -86,7 +86,7 @@ public class ResourcePackRepositoryEntry
         return this.rePackMetadataSection == null ? EnumChatFormatting.RED + "Invalid pack.mcmeta (or missing \'pack\' section)" : this.rePackMetadataSection.getPackDescription();
     }
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         return this == par1Obj ? true : (par1Obj instanceof ResourcePackRepositoryEntry ? this.toString().equals(par1Obj.toString()) : false);
     }
@@ -101,7 +101,7 @@ public class ResourcePackRepositoryEntry
         return String.format("%s:%s:%d", new Object[] {this.resourcePackFile.getName(), this.resourcePackFile.isDirectory() ? "folder" : "zip", Long.valueOf(this.resourcePackFile.lastModified())});
     }
 
-    ResourcePackRepositoryEntry(ResourcePackRepository par1ResourcePackRepository, File par2File, ResourcePackRepositoryFilter par3ResourcePackRepositoryFilter)
+    ResourcePackRepositoryEntry(final ResourcePackRepository par1ResourcePackRepository, final File par2File, final ResourcePackRepositoryFilter par3ResourcePackRepositoryFilter)
     {
         this(par1ResourcePackRepository, par2File);
     }

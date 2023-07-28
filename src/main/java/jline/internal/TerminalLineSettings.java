@@ -48,7 +48,7 @@ public final class TerminalLineSettings
         Log.debug("Config: ", config);
 
         // sanity check
-        if (config.length() == 0) {
+        if (config.isEmpty()) {
             throw new IOException(MessageFormat.format("Unrecognized stty code: {0}", config));
         }
     }
@@ -77,17 +77,17 @@ public final class TerminalLineSettings
      * @param name the stty property.
      * @return the stty property value.                        
      */
-    public int getProperty(String name) {
+    public int getProperty(final String name) {
         assert name != null;
         // CraftBukkit start
-        long currentTime = System.currentTimeMillis();
+        final long currentTime = System.currentTimeMillis();
 
         try {
             // tty properties are cached so we don't have to worry too much about getting term widht/height
             if (config == null || currentTime - configLastFetched > 1000) {
                 config = get("-a");
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.debug("Failed to query stty ", name, "\n", e);
         }
 
@@ -109,7 +109,7 @@ public final class TerminalLineSettings
      * @param stty string resulting of stty -a execution.
      * @return value of the given property.
      */
-    protected static int getProperty(String name, String stty) {
+    protected static int getProperty(final String name, final String stty) {
         // try the first kind of regex
         Pattern pattern = Pattern.compile(name + "\\s+=\\s+([^;]*)[;\\n\\r]");
         Matcher matcher = pattern.matcher(stty);
@@ -129,7 +129,7 @@ public final class TerminalLineSettings
         return parseControlChar(matcher.group(1));
     }
 
-    private static int parseControlChar(String str) {
+    private static int parseControlChar(final String str) {
         // under
         if ("<undef>".equals(str)) {
             return -1;
@@ -177,11 +177,11 @@ public final class TerminalLineSettings
     private String exec(final String... cmd) throws IOException, InterruptedException {
         assert cmd != null;
 
-        ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
 
         Log.trace("Running: ", cmd);
 
-        Process p = Runtime.getRuntime().exec(cmd);
+        final Process p = Runtime.getRuntime().exec(cmd);
 
         InputStream in = null;
         InputStream err = null;
@@ -203,7 +203,7 @@ public final class TerminalLineSettings
             close(in, out, err);
         }
 
-        String result = bout.toString();
+        final String result = bout.toString();
 
         Log.trace("Result: ", result);
 
@@ -211,11 +211,11 @@ public final class TerminalLineSettings
     }
 
     private static void close(final Closeable... closeables) {
-        for (Closeable c : closeables) {
+        for (final Closeable c : closeables) {
             try {
                 c.close();
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 // Ignore
             }
         }

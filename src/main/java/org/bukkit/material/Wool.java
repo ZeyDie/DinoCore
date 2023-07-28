@@ -11,7 +11,7 @@ public class Wool extends MaterialData implements Colorable {
         super(Material.WOOL);
     }
 
-    public Wool(DyeColor color) {
+    public Wool(final DyeColor color) {
         this();
         setColor(color);
     }
@@ -61,7 +61,7 @@ public class Wool extends MaterialData implements Colorable {
      *
      * @param color New color of this dye
      */
-    public void setColor(DyeColor color) {
+    public void setColor(final DyeColor color) {
         setData(color.getWoolData());
     }
 

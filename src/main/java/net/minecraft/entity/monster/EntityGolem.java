@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 
 public abstract class EntityGolem extends EntityCreature implements IAnimals
 {
-    public EntityGolem(World par1World)
+    public EntityGolem(final World par1World)
     {
         super(par1World);
     }
@@ -14,7 +14,7 @@ public abstract class EntityGolem extends EntityCreature implements IAnimals
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float par1) {}
+    protected void fall(final float par1) {}
 
     /**
      * Returns the sound this mob makes while it's alive.

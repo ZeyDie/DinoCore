@@ -13,7 +13,7 @@ public class EntityAIFollowParent extends EntityAIBase
     double field_75347_c;
     private int field_75345_d;
 
-    public EntityAIFollowParent(EntityAnimal par1EntityAnimal, double par2)
+    public EntityAIFollowParent(final EntityAnimal par1EntityAnimal, final double par2)
     {
         this.childAnimal = par1EntityAnimal;
         this.field_75347_c = par2;
@@ -30,18 +30,18 @@ public class EntityAIFollowParent extends EntityAIBase
         }
         else
         {
-            List list = this.childAnimal.worldObj.getEntitiesWithinAABB(this.childAnimal.getClass(), this.childAnimal.boundingBox.expand(8.0D, 4.0D, 8.0D));
+            final List list = this.childAnimal.worldObj.getEntitiesWithinAABB(this.childAnimal.getClass(), this.childAnimal.boundingBox.expand(8.0D, 4.0D, 8.0D));
             EntityAnimal entityanimal = null;
             double d0 = Double.MAX_VALUE;
-            Iterator iterator = list.iterator();
+            final Iterator iterator = list.iterator();
 
             while (iterator.hasNext())
             {
-                EntityAnimal entityanimal1 = (EntityAnimal)iterator.next();
+                final EntityAnimal entityanimal1 = (EntityAnimal)iterator.next();
 
                 if (entityanimal1.getGrowingAge() >= 0)
                 {
-                    double d1 = this.childAnimal.getDistanceSqToEntity(entityanimal1);
+                    final double d1 = this.childAnimal.getDistanceSqToEntity(entityanimal1);
 
                     if (d1 <= d0)
                     {
@@ -78,7 +78,7 @@ public class EntityAIFollowParent extends EntityAIBase
         }
         else
         {
-            double d0 = this.childAnimal.getDistanceSqToEntity(this.parentAnimal);
+            final double d0 = this.childAnimal.getDistanceSqToEntity(this.parentAnimal);
             return d0 >= 9.0D && d0 <= 256.0D;
         }
     }

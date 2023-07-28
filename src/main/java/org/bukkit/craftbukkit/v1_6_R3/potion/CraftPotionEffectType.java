@@ -6,7 +6,7 @@ import org.bukkit.potion.PotionEffectType;
 public class CraftPotionEffectType extends PotionEffectType {
     private final net.minecraft.potion.Potion handle;
 
-    public CraftPotionEffectType(net.minecraft.potion.Potion handle) {
+    public CraftPotionEffectType(final net.minecraft.potion.Potion handle) {
         super(handle.id);
         this.handle = handle;
     }

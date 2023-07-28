@@ -15,7 +15,7 @@ class CraftMetaCharge extends CraftMetaItem implements FireworkEffectMeta {
 
     private FireworkEffect effect;
 
-    CraftMetaCharge(CraftMetaItem meta) {
+    CraftMetaCharge(final CraftMetaItem meta) {
         super(meta);
 
         if (meta instanceof CraftMetaCharge) {
@@ -23,13 +23,13 @@ class CraftMetaCharge extends CraftMetaItem implements FireworkEffectMeta {
         }
     }
 
-    CraftMetaCharge(Map<String, Object> map) {
+    CraftMetaCharge(final Map<String, Object> map) {
         super(map);
 
         setEffect(SerializableMeta.getObject(FireworkEffect.class, map, EXPLOSION.BUKKIT, true));
     }
 
-    CraftMetaCharge(net.minecraft.nbt.NBTTagCompound tag) {
+    CraftMetaCharge(final net.minecraft.nbt.NBTTagCompound tag) {
         super(tag);
 
         if (tag.hasKey(EXPLOSION.NBT)) {
@@ -37,7 +37,7 @@ class CraftMetaCharge extends CraftMetaItem implements FireworkEffectMeta {
         }
     }
 
-    public void setEffect(FireworkEffect effect) {
+    public void setEffect(final FireworkEffect effect) {
         this.effect = effect;
     }
 
@@ -50,7 +50,7 @@ class CraftMetaCharge extends CraftMetaItem implements FireworkEffectMeta {
     }
 
     @Override
-    void applyToItem(net.minecraft.nbt.NBTTagCompound itemTag) {
+    void applyToItem(final net.minecraft.nbt.NBTTagCompound itemTag) {
         super.applyToItem(itemTag);
 
         if (hasEffect()) {
@@ -59,7 +59,7 @@ class CraftMetaCharge extends CraftMetaItem implements FireworkEffectMeta {
     }
 
     @Override
-    boolean applicableTo(Material type) {
+    boolean applicableTo(final Material type) {
         switch (type) {
             case FIREWORK_CHARGE:
                 return true;
@@ -78,12 +78,12 @@ class CraftMetaCharge extends CraftMetaItem implements FireworkEffectMeta {
     }
 
     @Override
-    boolean equalsCommon(CraftMetaItem meta) {
+    boolean equalsCommon(final CraftMetaItem meta) {
         if (!super.equalsCommon(meta)) {
             return false;
         }
         if (meta instanceof CraftMetaCharge) {
-            CraftMetaCharge that = (CraftMetaCharge) meta;
+            final CraftMetaCharge that = (CraftMetaCharge) meta;
 
             return (hasEffect() ? that.hasEffect() && this.effect.equals(that.effect) : !that.hasEffect());
         }
@@ -91,7 +91,7 @@ class CraftMetaCharge extends CraftMetaItem implements FireworkEffectMeta {
     }
 
     @Override
-    boolean notUncommon(CraftMetaItem meta) {
+    boolean notUncommon(final CraftMetaItem meta) {
         return super.notUncommon(meta) && (meta instanceof CraftMetaCharge || !hasChargeMeta());
     }
 
@@ -113,7 +113,7 @@ class CraftMetaCharge extends CraftMetaItem implements FireworkEffectMeta {
     }
 
     @Override
-    Builder<String, Object> serialize(Builder<String, Object> builder) {
+    Builder<String, Object> serialize(final Builder<String, Object> builder) {
         super.serialize(builder);
 
         if (hasEffect()) {

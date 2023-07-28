@@ -18,21 +18,21 @@ public class CommandServerSaveOff extends CommandBase
         return 4;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.save-off.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
-        MinecraftServer minecraftserver = MinecraftServer.getServer();
+        final MinecraftServer minecraftserver = MinecraftServer.getServer();
         boolean flag = false;
 
         for (int i = 0; i < minecraftserver.worldServers.length; ++i)
         {
             if (minecraftserver.worldServers[i] != null)
             {
-                WorldServer worldserver = minecraftserver.worldServers[i];
+                final WorldServer worldserver = minecraftserver.worldServers[i];
 
                 if (!worldserver.canNotSave)
                 {

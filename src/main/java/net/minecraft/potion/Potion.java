@@ -101,7 +101,7 @@ public class Potion
     private double effectiveness;
     private boolean usable;
 
-    protected Potion(int par1, boolean par2, int par3)
+    protected Potion(final int par1, final boolean par2, final int par3)
     {
         this.id = par1;
         potionTypes[par1] = this;
@@ -123,7 +123,7 @@ public class Potion
     /**
      * Sets the index for the icon displayed in the player's inventory when the status is active.
      */
-    public Potion setIconIndex(int par1, int par2)
+    public Potion setIconIndex(final int par1, final int par2)
     {
         this.statusIconIndex = par1 + par2 * 8;
         return this;
@@ -137,7 +137,7 @@ public class Potion
         return this.id;
     }
 
-    public void performEffect(EntityLivingBase par1EntityLivingBase, int par2)
+    public void performEffect(final EntityLivingBase par1EntityLivingBase, final int par2)
     {
         if (this.id == regeneration.id)
         {
@@ -184,16 +184,16 @@ public class Potion
     /**
      * Hits the provided entity with this potion's instant effect.
      */
-    public void affectEntity(EntityLivingBase par1EntityLivingBase, EntityLivingBase par2EntityLivingBase, int par3, double par4)
+    public void affectEntity(final EntityLivingBase par1EntityLivingBase, final EntityLivingBase par2EntityLivingBase, final int par3, final double par4)
     {
         // CraftBukkit start - Delegate; we need EntityPotion
         applyInstantEffect(par1EntityLivingBase, par2EntityLivingBase, par3, par4, null);
     }
 
-    public void applyInstantEffect(EntityLivingBase entityliving, EntityLivingBase entitylivingbase1, int i, double d0, EntityPotion potion)
+    public void applyInstantEffect(final EntityLivingBase entityliving, final EntityLivingBase entitylivingbase1, final int i, final double d0, final EntityPotion potion)
     {
         // CraftBukkit end
-        int j;
+        final int j;
 
         if ((this.id != heal.id || entitylivingbase1.isEntityUndead()) && (this.id != harm.id || !entitylivingbase1.isEntityUndead()))
         {
@@ -230,9 +230,9 @@ public class Potion
     /**
      * checks if Potion effect is ready to be applied this tick.
      */
-    public boolean isReady(int par1, int par2)
+    public boolean isReady(final int par1, final int par2)
     {
-        int k;
+        final int k;
 
         if (this.id == regeneration.id)
         {
@@ -258,7 +258,7 @@ public class Potion
     /**
      * Set the potion name.
      */
-    public Potion setPotionName(String par1Str)
+    public Potion setPotionName(final String par1Str)
     {
         this.name = par1Str;
         return this;
@@ -272,7 +272,7 @@ public class Potion
         return this.name;
     }
 
-    protected Potion setEffectiveness(double par1)
+    protected Potion setEffectiveness(final double par1)
     {
         this.effectiveness = par1;
         return this;
@@ -309,7 +309,7 @@ public class Potion
     }
 
     @SideOnly(Side.CLIENT)
-    public static String getDurationString(PotionEffect par0PotionEffect)
+    public static String getDurationString(final PotionEffect par0PotionEffect)
     {
         if (par0PotionEffect.getIsPotionDurationMax())
         {
@@ -317,7 +317,7 @@ public class Potion
         }
         else
         {
-            int i = par0PotionEffect.getDuration();
+            final int i = par0PotionEffect.getDuration();
             return StringUtils.ticksToElapsedTime(i);
         }
     }
@@ -340,21 +340,21 @@ public class Potion
         return this.liquidColor;
     }
 
-    public Potion func_111184_a(Attribute par1Attribute, String par2Str, double par3, int par5)
+    public Potion func_111184_a(final Attribute par1Attribute, final String par2Str, final double par3, final int par5)
     {
-        AttributeModifier attributemodifier = new AttributeModifier(UUID.fromString(par2Str), this.getName(), par3, par5);
+        final AttributeModifier attributemodifier = new AttributeModifier(UUID.fromString(par2Str), this.getName(), par3, par5);
         this.field_111188_I.put(par1Attribute, attributemodifier);
         return this;
     }
 
-    public void removeAttributesModifiersFromEntity(EntityLivingBase par1EntityLivingBase, BaseAttributeMap par2BaseAttributeMap, int par3)
+    public void removeAttributesModifiersFromEntity(final EntityLivingBase par1EntityLivingBase, final BaseAttributeMap par2BaseAttributeMap, final int par3)
     {
-        Iterator iterator = this.field_111188_I.entrySet().iterator();
+        final Iterator iterator = this.field_111188_I.entrySet().iterator();
 
         while (iterator.hasNext())
         {
-            Entry entry = (Entry)iterator.next();
-            AttributeInstance attributeinstance = par2BaseAttributeMap.getAttributeInstance((Attribute)entry.getKey());
+            final Entry entry = (Entry)iterator.next();
+            final AttributeInstance attributeinstance = par2BaseAttributeMap.getAttributeInstance((Attribute)entry.getKey());
 
             if (attributeinstance != null)
             {
@@ -369,25 +369,25 @@ public class Potion
         return this.field_111188_I;
     }
 
-    public void applyAttributesModifiersToEntity(EntityLivingBase par1EntityLivingBase, BaseAttributeMap par2BaseAttributeMap, int par3)
+    public void applyAttributesModifiersToEntity(final EntityLivingBase par1EntityLivingBase, final BaseAttributeMap par2BaseAttributeMap, final int par3)
     {
-        Iterator iterator = this.field_111188_I.entrySet().iterator();
+        final Iterator iterator = this.field_111188_I.entrySet().iterator();
 
         while (iterator.hasNext())
         {
-            Entry entry = (Entry)iterator.next();
-            AttributeInstance attributeinstance = par2BaseAttributeMap.getAttributeInstance((Attribute)entry.getKey());
+            final Entry entry = (Entry)iterator.next();
+            final AttributeInstance attributeinstance = par2BaseAttributeMap.getAttributeInstance((Attribute)entry.getKey());
 
             if (attributeinstance != null)
             {
-                AttributeModifier attributemodifier = (AttributeModifier)entry.getValue();
+                final AttributeModifier attributemodifier = (AttributeModifier)entry.getValue();
                 attributeinstance.removeModifier(attributemodifier);
                 attributeinstance.applyModifier(new AttributeModifier(attributemodifier.getID(), this.getName() + " " + par3, this.func_111183_a(par3, attributemodifier), attributemodifier.getOperation()));
             }
         }
     }
 
-    public double func_111183_a(int par1, AttributeModifier par2AttributeModifier)
+    public double func_111183_a(final int par1, final AttributeModifier par2AttributeModifier)
     {
         return par2AttributeModifier.getAmount() * (double)(par1 + 1);
     }

@@ -13,7 +13,7 @@ public class GuiButtonMerchant extends GuiButton
      */
     private final boolean mirrored;
 
-    public GuiButtonMerchant(int par1, int par2, int par3, boolean par4)
+    public GuiButtonMerchant(final int par1, final int par2, final int par3, final boolean par4)
     {
         super(par1, par2, par3, 12, 19, "");
         this.mirrored = par4;
@@ -22,13 +22,13 @@ public class GuiButtonMerchant extends GuiButton
     /**
      * Draws this button to the screen.
      */
-    public void drawButton(Minecraft par1Minecraft, int par2, int par3)
+    public void drawButton(final Minecraft par1Minecraft, final int par2, final int par3)
     {
         if (this.drawButton)
         {
             par1Minecraft.getTextureManager().bindTexture(GuiMerchant.func_110417_h());
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            boolean flag = par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height;
+            final boolean flag = par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height;
             int k = 0;
             int l = 176;
 

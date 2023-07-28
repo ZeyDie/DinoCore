@@ -9,7 +9,7 @@ public class MapCoord
 
     final MapData data;
 
-    public MapCoord(MapData par1MapData, byte par2, byte par3, byte par4, byte par5)
+    public MapCoord(final MapData par1MapData, final byte par2, final byte par3, final byte par4, final byte par5)
     {
         this.data = par1MapData;
         this.iconSize = par2;

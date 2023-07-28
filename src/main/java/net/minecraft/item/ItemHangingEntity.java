@@ -18,7 +18,7 @@ public class ItemHangingEntity extends Item
 {
     private final Class hangingEntityClass;
 
-    public ItemHangingEntity(int par1, Class par2Class)
+    public ItemHangingEntity(final int par1, final Class par2Class)
     {
         super(par1);
         this.hangingEntityClass = par2Class;
@@ -29,7 +29,7 @@ public class ItemHangingEntity extends Item
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final World par3World, final int par4, final int par5, final int par6, final int par7, final float par8, final float par9, final float par10)
     {
         if (par7 == 0)
         {
@@ -41,8 +41,8 @@ public class ItemHangingEntity extends Item
         }
         else
         {
-            int i1 = Direction.facingToDirection[par7];
-            EntityHanging entityhanging = this.createHangingEntity(par3World, par4, par5, par6, i1);
+            final int i1 = Direction.facingToDirection[par7];
+            final EntityHanging entityhanging = this.createHangingEntity(par3World, par4, par5, par6, i1);
 
             if (!par2EntityPlayer.canPlayerEdit(par4, par5, par6, par7, par1ItemStack))
             {
@@ -55,10 +55,10 @@ public class ItemHangingEntity extends Item
                     if (!par3World.isRemote)
                     {
                         // CraftBukkit start
-                        Player who = (par2EntityPlayer == null) ? null : (Player) par2EntityPlayer.getBukkitEntity();
-                        org.bukkit.block.Block blockClicked = par3World.getWorld().getBlockAt(par4, par5, par6);
-                        org.bukkit.block.BlockFace blockFace = org.bukkit.craftbukkit.v1_6_R3.block.CraftBlock.notchToBlockFace(par7);
-                        HangingPlaceEvent event = new HangingPlaceEvent((org.bukkit.entity.Hanging) entityhanging.getBukkitEntity(), who, blockClicked, blockFace);
+                        final Player who = (par2EntityPlayer == null) ? null : (Player) par2EntityPlayer.getBukkitEntity();
+                        final org.bukkit.block.Block blockClicked = par3World.getWorld().getBlockAt(par4, par5, par6);
+                        final org.bukkit.block.BlockFace blockFace = org.bukkit.craftbukkit.v1_6_R3.block.CraftBlock.notchToBlockFace(par7);
+                        final HangingPlaceEvent event = new HangingPlaceEvent((org.bukkit.entity.Hanging) entityhanging.getBukkitEntity(), who, blockClicked, blockFace);
                         par3World.getServer().getPluginManager().callEvent(event);
                         PaintingPlaceEvent paintingEvent = null;
 
@@ -90,7 +90,7 @@ public class ItemHangingEntity extends Item
     /**
      * Create the hanging entity associated to this item.
      */
-    private EntityHanging createHangingEntity(World par1World, int par2, int par3, int par4, int par5)
+    private EntityHanging createHangingEntity(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         return (EntityHanging)(this.hangingEntityClass == EntityPainting.class ? new EntityPainting(par1World, par2, par3, par4, par5) : (this.hangingEntityClass == EntityItemFrame.class ? new EntityItemFrame(par1World, par2, par3, par4, par5) : null));
     }

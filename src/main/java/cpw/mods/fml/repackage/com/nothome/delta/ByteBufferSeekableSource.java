@@ -40,33 +40,33 @@ public class ByteBufferSeekableSource implements SeekableSource {
     /**
      * Constructs a new ByteArraySeekableSource.
      */
-    public ByteBufferSeekableSource(byte[] source) {
+    public ByteBufferSeekableSource(final byte[] source) {
         this(ByteBuffer.wrap(source));
     }
     
     /**
      * Constructs a new ByteArraySeekableSource.
      */
-    public ByteBufferSeekableSource(ByteBuffer bb) {
+    public ByteBufferSeekableSource(final ByteBuffer bb) {
         if (bb == null)
             throw new NullPointerException("bb");
         this.bb = bb;
         bb.rewind();
         try {
             seek(0);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new RuntimeException(e);
         }
     }
     
-    public void seek(long pos) throws IOException {
+    public void seek(final long pos) throws IOException {
         cur = bb.slice();
         if (pos > cur.limit())
             throw new IOException("pos " + pos + " cannot seek " + cur.limit());
         cur.position((int) pos);
     }
     
-    public int read(ByteBuffer dest) throws IOException {
+    public int read(final ByteBuffer dest) throws IOException {
         if (!cur.hasRemaining())
             return -1;
         int c = 0;

@@ -19,7 +19,7 @@ public class Packet254ServerPing extends Packet
     public Packet254ServerPing() {}
 
     @SideOnly(Side.CLIENT)
-    public Packet254ServerPing(int par1, String par2Str, int par3)
+    public Packet254ServerPing(final int par1, final String par2Str, final int par3)
     {
         this.readSuccessfully = par1;
         this.field_140052_b = par2Str;
@@ -29,7 +29,7 @@ public class Packet254ServerPing extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         try
         {
@@ -48,12 +48,12 @@ public class Packet254ServerPing extends Packet
                     this.field_140053_c = par1DataInput.readInt();
                 }
             }
-            catch (Throwable throwable)
+            catch (final Throwable throwable)
             {
                 this.field_140052_b = "";
             }
         }
-        catch (Throwable throwable1)
+        catch (final Throwable throwable1)
         {
             this.readSuccessfully = 0;
             this.field_140052_b = "";
@@ -63,7 +63,7 @@ public class Packet254ServerPing extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeByte(1);
         par1DataOutput.writeByte(field_140051_d);
@@ -77,7 +77,7 @@ public class Packet254ServerPing extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleServerPing(this);
     }

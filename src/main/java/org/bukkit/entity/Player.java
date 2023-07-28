@@ -727,7 +727,7 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
             throw new UnsupportedOperationException( "Not supported yet." );
         }
 
-        public void playEffect(Location location, Effect effect, int id, int data, float offsetX, float offsetY, float offsetZ, float speed, int particleCount, int radius)
+        public void playEffect(final Location location, final Effect effect, final int id, final int data, final float offsetX, final float offsetY, final float offsetZ, final float speed, final int particleCount, final int radius)
         {
             throw new UnsupportedOperationException( "Not supported yet." );
         }
@@ -748,7 +748,7 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
          * @param collides whether the player should collide with entities or
          * not.
          */
-        public void setCollidesWithEntities(boolean collides)
+        public void setCollidesWithEntities(final boolean collides)
         {
             throw new UnsupportedOperationException( "Not supported yet." );
         }

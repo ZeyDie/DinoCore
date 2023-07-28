@@ -25,7 +25,7 @@ public class ShapedRecipe implements Recipe {
      * @see ShapedRecipe#setIngredient(char, Material, int)
      * @see ShapedRecipe#setIngredient(char, MaterialData)
      */
-    public ShapedRecipe(ItemStack result) {
+    public ShapedRecipe(final ItemStack result) {
         this.output = new ItemStack(result);
     }
 
@@ -42,19 +42,17 @@ public class ShapedRecipe implements Recipe {
         Validate.notNull(shape, "Must provide a shape");
         Validate.isTrue(shape.length > 0 && shape.length < 4, "Crafting recipes should be 1, 2, 3 rows, not ", shape.length);
 
-        for (String row : shape) {
+        for (final String row : shape) {
             Validate.notNull(row, "Shape cannot have null rows");
-            Validate.isTrue(row.length() > 0 && row.length() < 4, "Crafting rows should be 1, 2, or 3 characters, not ", row.length());
+            Validate.isTrue(!row.isEmpty() && row.length() < 4, "Crafting rows should be 1, 2, or 3 characters, not ", row.length());
         }
         this.rows = new String[shape.length];
-        for (int i = 0; i < shape.length; i++) {
-            this.rows[i] = shape[i];
-        }
+        System.arraycopy(shape, 0, this.rows, 0, shape.length);
 
         // Remove character mappings for characters that no longer exist in the shape
-        HashMap<Character, ItemStack> newIngredients = new HashMap<Character, ItemStack>();
-        for (String row : shape) {
-            for (Character c : row.toCharArray()) {
+        final HashMap<Character, ItemStack> newIngredients = new HashMap<Character, ItemStack>();
+        for (final String row : shape) {
+            for (final Character c : row.toCharArray()) {
                 newIngredients.put(c, ingredients.get(c));
             }
         }
@@ -70,7 +68,7 @@ public class ShapedRecipe implements Recipe {
      * @param ingredient The ingredient.
      * @return The changed recipe, so you can chain calls.
      */
-    public ShapedRecipe setIngredient(char key, MaterialData ingredient) {
+    public ShapedRecipe setIngredient(final char key, final MaterialData ingredient) {
         return setIngredient(key, ingredient.getItemType(), ingredient.getData());
     }
 
@@ -81,7 +79,7 @@ public class ShapedRecipe implements Recipe {
      * @param ingredient The ingredient.
      * @return The changed recipe, so you can chain calls.
      */
-    public ShapedRecipe setIngredient(char key, Material ingredient) {
+    public ShapedRecipe setIngredient(final char key, final Material ingredient) {
         return setIngredient(key, ingredient, 0);
     }
 
@@ -95,15 +93,16 @@ public class ShapedRecipe implements Recipe {
      * @deprecated Magic value
      */
     @Deprecated
-    public ShapedRecipe setIngredient(char key, Material ingredient, int raw) {
+    public ShapedRecipe setIngredient(final char key, final Material ingredient, int raw) {
+        int raw1 = raw;
         Validate.isTrue(ingredients.containsKey(key), "Symbol does not appear in the shape:", key);
 
         // -1 is the old wildcard, map to Short.MAX_VALUE as the new one
-        if (raw == -1) {
-            raw = Short.MAX_VALUE;
+        if (raw1 == -1) {
+            raw1 = Short.MAX_VALUE;
         }
 
-        ingredients.put(key, new ItemStack(ingredient, 1, (short) raw));
+        ingredients.put(key, new ItemStack(ingredient, 1, (short) raw1));
         return this;
     }
 
@@ -113,8 +112,8 @@ public class ShapedRecipe implements Recipe {
      * @return The mapping of character to ingredients.
      */
     public Map<Character, ItemStack> getIngredientMap() {
-        HashMap<Character, ItemStack> result = new HashMap<Character, ItemStack>();
-        for (Map.Entry<Character, ItemStack> ingredient : ingredients.entrySet()) {
+        final HashMap<Character, ItemStack> result = new HashMap<Character, ItemStack>();
+        for (final Map.Entry<Character, ItemStack> ingredient : ingredients.entrySet()) {
             if (ingredient.getValue() == null) {
                 result.put(ingredient.getKey(), null);
             } else {

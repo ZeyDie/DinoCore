@@ -9,7 +9,7 @@ public class FakePlayerFactory
     private static java.util.Map<String, FakePlayer> fakePlayers = new java.util.HashMap<String, FakePlayer>();
     private static FakePlayer MINECRAFT_PLAYER = null;
     
-    public static FakePlayer getMinecraft(World world)
+    public static FakePlayer getMinecraft(final World world)
     {
         if (MINECRAFT_PLAYER == null)
         {
@@ -21,11 +21,11 @@ public class FakePlayerFactory
     /**
      * Get a fake player with a given username
      */
-    public static FakePlayer get(World world, String username)
+    public static FakePlayer get(final World world, final String username)
     {
         if (!fakePlayers.containsKey(username))
         {
-            FakePlayer fakePlayer = new FakePlayer(world, username);
+            final FakePlayer fakePlayer = new FakePlayer(world, username);
             fakePlayers.put(username, fakePlayer);
         }
 

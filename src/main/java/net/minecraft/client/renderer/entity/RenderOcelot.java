@@ -18,17 +18,17 @@ public class RenderOcelot extends RenderLiving
     private static final ResourceLocation redOcelotTextures = new ResourceLocation("textures/entity/cat/red.png");
     private static final ResourceLocation siameseOcelotTextures = new ResourceLocation("textures/entity/cat/siamese.png");
 
-    public RenderOcelot(ModelBase par1ModelBase, float par2)
+    public RenderOcelot(final ModelBase par1ModelBase, final float par2)
     {
         super(par1ModelBase, par2);
     }
 
-    public void renderLivingOcelot(EntityOcelot par1EntityOcelot, double par2, double par4, double par6, float par8, float par9)
+    public void renderLivingOcelot(final EntityOcelot par1EntityOcelot, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         super.doRenderLiving(par1EntityOcelot, par2, par4, par6, par8, par9);
     }
 
-    protected ResourceLocation func_110874_a(EntityOcelot par1EntityOcelot)
+    protected ResourceLocation func_110874_a(final EntityOcelot par1EntityOcelot)
     {
         switch (par1EntityOcelot.getTameSkin())
         {
@@ -47,7 +47,7 @@ public class RenderOcelot extends RenderLiving
     /**
      * Pre-Renders the Ocelot.
      */
-    protected void preRenderOcelot(EntityOcelot par1EntityOcelot, float par2)
+    protected void preRenderOcelot(final EntityOcelot par1EntityOcelot, final float par2)
     {
         super.preRenderCallback(par1EntityOcelot, par2);
 
@@ -57,7 +57,7 @@ public class RenderOcelot extends RenderLiving
         }
     }
 
-    public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9)
+    public void doRenderLiving(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.renderLivingOcelot((EntityOcelot)par1EntityLiving, par2, par4, par6, par8, par9);
     }
@@ -66,12 +66,12 @@ public class RenderOcelot extends RenderLiving
      * Allows the render to do any OpenGL state modifications necessary before the model is rendered. Args:
      * entityLiving, partialTickTime
      */
-    protected void preRenderCallback(EntityLivingBase par1EntityLivingBase, float par2)
+    protected void preRenderCallback(final EntityLivingBase par1EntityLivingBase, final float par2)
     {
         this.preRenderOcelot((EntityOcelot)par1EntityLivingBase, par2);
     }
 
-    public void renderPlayer(EntityLivingBase par1EntityLivingBase, double par2, double par4, double par6, float par8, float par9)
+    public void renderPlayer(final EntityLivingBase par1EntityLivingBase, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.renderLivingOcelot((EntityOcelot)par1EntityLivingBase, par2, par4, par6, par8, par9);
     }
@@ -79,7 +79,7 @@ public class RenderOcelot extends RenderLiving
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.func_110874_a((EntityOcelot)par1Entity);
     }
@@ -90,7 +90,7 @@ public class RenderOcelot extends RenderLiving
      * (Render<T extends Entity) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.renderLivingOcelot((EntityOcelot)par1Entity, par2, par4, par6, par8, par9);
     }

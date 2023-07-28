@@ -44,7 +44,7 @@ public enum CreatureType {
     private static final Map<Short, CreatureType> ID_MAP = new HashMap<Short, CreatureType>();
 
     static {
-        for (CreatureType type : EnumSet.allOf(CreatureType.class)) {
+        for (final CreatureType type : EnumSet.allOf(CreatureType.class)) {
             NAME_MAP.put(type.name, type);
             if (type.typeId != 0) {
                 ID_MAP.put(type.typeId, type);
@@ -52,7 +52,7 @@ public enum CreatureType {
         }
     }
 
-    private CreatureType(String name, Class<? extends Entity> clazz, int typeId) {
+    private CreatureType(final String name, final Class<? extends Entity> clazz, final int typeId) {
         this.name = name;
         this.clazz = clazz;
         this.typeId = (short) typeId;
@@ -75,7 +75,7 @@ public enum CreatureType {
         return typeId;
     }
 
-    public static CreatureType fromName(String name) {
+    public static CreatureType fromName(final String name) {
         return NAME_MAP.get(name);
     }
 
@@ -84,7 +84,7 @@ public enum CreatureType {
      * @deprecated Magic value
      */
     @Deprecated
-    public static CreatureType fromId(int id) {
+    public static CreatureType fromId(final int id) {
         if (id > Short.MAX_VALUE) {
             return null;
         }
@@ -96,7 +96,7 @@ public enum CreatureType {
         return EntityType.fromName(getName());
     }
 
-    public static CreatureType fromEntityType(EntityType creatureType) {
+    public static CreatureType fromEntityType(final EntityType creatureType) {
         return fromName(creatureType.getName());
     }
 }

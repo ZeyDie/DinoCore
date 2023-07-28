@@ -26,14 +26,14 @@ public class Packet52MultiBlockChange extends Packet
         this.isChunkDataPacket = true;
     }
 
-    public Packet52MultiBlockChange(int par1, int par2, short[] par3ArrayOfShort, int par4, World par5World)
+    public Packet52MultiBlockChange(final int par1, final int par2, final short[] par3ArrayOfShort, final int par4, final World par5World)
     {
         this.isChunkDataPacket = true;
         this.xPosition = par1;
         this.zPosition = par2;
         this.size = par4;
-        int l = 4 * par4;
-        Chunk chunk = par5World.getChunkFromChunkCoords(par1, par2);
+        final int l = 4 * par4;
+        final Chunk chunk = par5World.getChunkFromChunkCoords(par1, par2);
 
         try
         {
@@ -46,14 +46,14 @@ public class Packet52MultiBlockChange extends Packet
             }
             else
             {
-                ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream(l);
-                DataOutputStream dataoutputstream = new DataOutputStream(bytearrayoutputstream);
+                final ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream(l);
+                final DataOutputStream dataoutputstream = new DataOutputStream(bytearrayoutputstream);
 
                 for (int i1 = 0; i1 < par4; ++i1)
                 {
-                    int j1 = par3ArrayOfShort[i1] >> 12 & 15;
-                    int k1 = par3ArrayOfShort[i1] >> 8 & 15;
-                    int l1 = par3ArrayOfShort[i1] & 255;
+                    final int j1 = par3ArrayOfShort[i1] >> 12 & 15;
+                    final int k1 = par3ArrayOfShort[i1] >> 8 & 15;
+                    final int l1 = par3ArrayOfShort[i1] & 255;
                     dataoutputstream.writeShort(par3ArrayOfShort[i1]);
                     dataoutputstream.writeShort((short)((chunk.getBlockID(j1, l1, k1) & 4095) << 4 | chunk.getBlockMetadata(j1, l1, k1) & 15));
                 }
@@ -66,7 +66,7 @@ public class Packet52MultiBlockChange extends Packet
                 }
             }
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             this.field_98193_m.logSevereException("Couldn\'t create chunk packet", ioexception);
             this.metadataArray = null;
@@ -76,12 +76,12 @@ public class Packet52MultiBlockChange extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.xPosition = par1DataInput.readInt();
         this.zPosition = par1DataInput.readInt();
         this.size = par1DataInput.readShort() & 65535;
-        int i = par1DataInput.readInt();
+        final int i = par1DataInput.readInt();
 
         if (i > 0)
         {
@@ -93,7 +93,7 @@ public class Packet52MultiBlockChange extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.xPosition);
         par1DataOutput.writeInt(this.zPosition);
@@ -113,7 +113,7 @@ public class Packet52MultiBlockChange extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleMultiBlockChange(this);
     }

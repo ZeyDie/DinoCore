@@ -42,7 +42,7 @@ public class PlayerKickEvent extends PlayerEvent implements Cancellable {
         return cancel;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 
@@ -51,7 +51,7 @@ public class PlayerKickEvent extends PlayerEvent implements Cancellable {
      *
      * @param kickReason kick reason
      */
-    public void setReason(String kickReason) {
+    public void setReason(final String kickReason) {
         this.kickReason = kickReason;
     }
 
@@ -60,7 +60,7 @@ public class PlayerKickEvent extends PlayerEvent implements Cancellable {
      *
      * @param leaveMessage leave message
      */
-    public void setLeaveMessage(String leaveMessage) {
+    public void setLeaveMessage(final String leaveMessage) {
         this.leaveMessage = leaveMessage;
     }
 

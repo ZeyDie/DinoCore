@@ -14,7 +14,7 @@ public class ModelSkeleton extends ModelZombie
         this(0.0F);
     }
 
-    public ModelSkeleton(float par1)
+    public ModelSkeleton(final float par1)
     {
         super(par1, 0.0F, 64, 32);
         this.bipedRightArm = new ModelRenderer(this, 40, 16);
@@ -37,7 +37,7 @@ public class ModelSkeleton extends ModelZombie
      * Used for easily adding entity-dependent animations. The second and third float params here are the same second
      * and third as in the setRotationAngles method.
      */
-    public void setLivingAnimations(EntityLivingBase par1EntityLivingBase, float par2, float par3, float par4)
+    public void setLivingAnimations(final EntityLivingBase par1EntityLivingBase, final float par2, final float par3, final float par4)
     {
         this.aimedBow = ((EntitySkeleton)par1EntityLivingBase).getSkeletonType() == 1;
         super.setLivingAnimations(par1EntityLivingBase, par2, par3, par4);
@@ -48,7 +48,7 @@ public class ModelSkeleton extends ModelZombie
      * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how
      * "far" arms and legs can swing at most.
      */
-    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity)
+    public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity)
     {
         super.setRotationAngles(par1, par2, par3, par4, par5, par6, par7Entity);
     }

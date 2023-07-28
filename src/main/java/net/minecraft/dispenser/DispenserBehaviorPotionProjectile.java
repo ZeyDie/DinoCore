@@ -11,7 +11,7 @@ class DispenserBehaviorPotionProjectile extends BehaviorProjectileDispense
 
     final DispenserBehaviorPotion dispenserPotionBehavior;
 
-    DispenserBehaviorPotionProjectile(DispenserBehaviorPotion par1DispenserBehaviorPotion, ItemStack par2ItemStack)
+    DispenserBehaviorPotionProjectile(final DispenserBehaviorPotion par1DispenserBehaviorPotion, final ItemStack par2ItemStack)
     {
         this.dispenserPotionBehavior = par1DispenserBehaviorPotion;
         this.potionItemStack = par2ItemStack;
@@ -20,7 +20,7 @@ class DispenserBehaviorPotionProjectile extends BehaviorProjectileDispense
     /**
      * Return the projectile entity spawned by this dispense behavior.
      */
-    protected IProjectile getProjectileEntity(World par1World, IPosition par2IPosition)
+    protected IProjectile getProjectileEntity(final World par1World, final IPosition par2IPosition)
     {
         return new EntityPotion(par1World, par2IPosition.getX(), par2IPosition.getY(), par2IPosition.getZ(), this.potionItemStack.copy());
     }

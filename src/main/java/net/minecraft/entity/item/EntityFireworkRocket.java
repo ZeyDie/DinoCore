@@ -18,7 +18,7 @@ public class EntityFireworkRocket extends Entity
      */
     public int lifetime; // CraftBukkit - private -> public
 
-    public EntityFireworkRocket(World par1World)
+    public EntityFireworkRocket(final World par1World)
     {
         super(par1World);
         this.setSize(0.25F, 0.25F);
@@ -35,12 +35,12 @@ public class EntityFireworkRocket extends Entity
      * Checks if the entity is in range to render by using the past in distance and comparing it to its average edge
      * length * 64 * renderDistanceWeight Args: distance
      */
-    public boolean isInRangeToRenderDist(double par1)
+    public boolean isInRangeToRenderDist(final double par1)
     {
         return par1 < 4096.0D;
     }
 
-    public EntityFireworkRocket(World par1World, double par2, double par4, double par6, ItemStack par8ItemStack)
+    public EntityFireworkRocket(final World par1World, final double par2, final double par4, final double par6, final ItemStack par8ItemStack)
     {
         super(par1World);
         this.fireworkAge = 0;
@@ -52,8 +52,8 @@ public class EntityFireworkRocket extends Entity
         if (par8ItemStack != null && par8ItemStack.hasTagCompound())
         {
             this.dataWatcher.updateObject(8, par8ItemStack);
-            NBTTagCompound nbttagcompound = par8ItemStack.getTagCompound();
-            NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("Fireworks");
+            final NBTTagCompound nbttagcompound = par8ItemStack.getTagCompound();
+            final NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("Fireworks");
 
             if (nbttagcompound1 != null)
             {
@@ -72,7 +72,7 @@ public class EntityFireworkRocket extends Entity
     /**
      * Sets the velocity to the args. Args: x, y, z
      */
-    public void setVelocity(double par1, double par3, double par5)
+    public void setVelocity(final double par1, final double par3, final double par5)
     {
         this.motionX = par1;
         this.motionY = par3;
@@ -80,7 +80,7 @@ public class EntityFireworkRocket extends Entity
 
         if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F)
         {
-            float f = MathHelper.sqrt_double(par1 * par1 + par5 * par5);
+            final float f = MathHelper.sqrt_double(par1 * par1 + par5 * par5);
             this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(par1, par5) * 180.0D / Math.PI);
             this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(par3, (double)f) * 180.0D / Math.PI);
         }
@@ -99,7 +99,7 @@ public class EntityFireworkRocket extends Entity
         this.motionZ *= 1.15D;
         this.motionY += 0.04D;
         this.moveEntity(this.motionX, this.motionY, this.motionZ);
-        float f = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+        final float f = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
         this.rotationYaw = (float)(Math.atan2(this.motionX, this.motionZ) * 180.0D / Math.PI);
 
         for (this.rotationPitch = (float)(Math.atan2(this.motionY, (double)f) * 180.0D / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F)
@@ -145,11 +145,11 @@ public class EntityFireworkRocket extends Entity
     }
 
     @SideOnly(Side.CLIENT)
-    public void handleHealthUpdate(byte par1)
+    public void handleHealthUpdate(final byte par1)
     {
         if (par1 == 17 && this.worldObj.isRemote)
         {
-            ItemStack itemstack = this.dataWatcher.getWatchableObjectItemStack(8);
+            final ItemStack itemstack = this.dataWatcher.getWatchableObjectItemStack(8);
             NBTTagCompound nbttagcompound = null;
 
             if (itemstack != null && itemstack.hasTagCompound())
@@ -166,15 +166,15 @@ public class EntityFireworkRocket extends Entity
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         par1NBTTagCompound.setInteger("Life", this.fireworkAge);
         par1NBTTagCompound.setInteger("LifeTime", this.lifetime);
-        ItemStack itemstack = this.dataWatcher.getWatchableObjectItemStack(8);
+        final ItemStack itemstack = this.dataWatcher.getWatchableObjectItemStack(8);
 
         if (itemstack != null)
         {
-            NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+            final NBTTagCompound nbttagcompound1 = new NBTTagCompound();
             itemstack.writeToNBT(nbttagcompound1);
             par1NBTTagCompound.setCompoundTag("FireworksItem", nbttagcompound1);
         }
@@ -183,15 +183,15 @@ public class EntityFireworkRocket extends Entity
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         this.fireworkAge = par1NBTTagCompound.getInteger("Life");
         this.lifetime = par1NBTTagCompound.getInteger("LifeTime");
-        NBTTagCompound nbttagcompound1 = par1NBTTagCompound.getCompoundTag("FireworksItem");
+        final NBTTagCompound nbttagcompound1 = par1NBTTagCompound.getCompoundTag("FireworksItem");
 
         if (nbttagcompound1 != null)
         {
-            ItemStack itemstack = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+            final ItemStack itemstack = ItemStack.loadItemStackFromNBT(nbttagcompound1);
 
             if (itemstack != null)
             {
@@ -209,13 +209,13 @@ public class EntityFireworkRocket extends Entity
     /**
      * Gets how bright this entity is.
      */
-    public float getBrightness(float par1)
+    public float getBrightness(final float par1)
     {
         return super.getBrightness(par1);
     }
 
     @SideOnly(Side.CLIENT)
-    public int getBrightnessForRender(float par1)
+    public int getBrightnessForRender(final float par1)
     {
         return super.getBrightnessForRender(par1);
     }

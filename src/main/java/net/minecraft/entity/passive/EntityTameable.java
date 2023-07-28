@@ -14,7 +14,7 @@ public abstract class EntityTameable extends EntityAnimal implements EntityOwnab
 {
     protected EntityAISit aiSit = new EntityAISit(this);
 
-    public EntityTameable(World par1World)
+    public EntityTameable(final World par1World)
     {
         super(par1World);
     }
@@ -29,7 +29,7 @@ public abstract class EntityTameable extends EntityAnimal implements EntityOwnab
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
 
@@ -48,12 +48,12 @@ public abstract class EntityTameable extends EntityAnimal implements EntityOwnab
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
-        String s = par1NBTTagCompound.getString("Owner");
+        final String s = par1NBTTagCompound.getString("Owner");
 
-        if (s.length() > 0)
+        if (!s.isEmpty())
         {
             this.setOwner(s);
             this.setTamed(true);
@@ -66,7 +66,7 @@ public abstract class EntityTameable extends EntityAnimal implements EntityOwnab
     /**
      * Play the taming effect, will either be hearts or smoke depending on status
      */
-    protected void playTameEffect(boolean par1)
+    protected void playTameEffect(final boolean par1)
     {
         String s = "heart";
 
@@ -77,15 +77,15 @@ public abstract class EntityTameable extends EntityAnimal implements EntityOwnab
 
         for (int i = 0; i < 7; ++i)
         {
-            double d0 = this.rand.nextGaussian() * 0.02D;
-            double d1 = this.rand.nextGaussian() * 0.02D;
-            double d2 = this.rand.nextGaussian() * 0.02D;
+            final double d0 = this.rand.nextGaussian() * 0.02D;
+            final double d1 = this.rand.nextGaussian() * 0.02D;
+            final double d2 = this.rand.nextGaussian() * 0.02D;
             this.worldObj.spawnParticle(s, this.posX + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, this.posY + 0.5D + (double)(this.rand.nextFloat() * this.height), this.posZ + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, d0, d1, d2);
         }
     }
 
     @SideOnly(Side.CLIENT)
-    public void handleHealthUpdate(byte par1)
+    public void handleHealthUpdate(final byte par1)
     {
         if (par1 == 7)
         {
@@ -106,9 +106,9 @@ public abstract class EntityTameable extends EntityAnimal implements EntityOwnab
         return (this.dataWatcher.getWatchableObjectByte(16) & 4) != 0;
     }
 
-    public void setTamed(boolean par1)
+    public void setTamed(final boolean par1)
     {
-        byte b0 = this.dataWatcher.getWatchableObjectByte(16);
+        final byte b0 = this.dataWatcher.getWatchableObjectByte(16);
 
         if (par1)
         {
@@ -125,9 +125,9 @@ public abstract class EntityTameable extends EntityAnimal implements EntityOwnab
         return (this.dataWatcher.getWatchableObjectByte(16) & 1) != 0;
     }
 
-    public void setSitting(boolean par1)
+    public void setSitting(final boolean par1)
     {
-        byte b0 = this.dataWatcher.getWatchableObjectByte(16);
+        final byte b0 = this.dataWatcher.getWatchableObjectByte(16);
 
         if (par1)
         {
@@ -144,7 +144,7 @@ public abstract class EntityTameable extends EntityAnimal implements EntityOwnab
         return this.dataWatcher.getWatchableObjectString(17);
     }
 
-    public void setOwner(String par1Str)
+    public void setOwner(final String par1Str)
     {
         this.dataWatcher.updateObject(17, par1Str);
     }
@@ -159,7 +159,7 @@ public abstract class EntityTameable extends EntityAnimal implements EntityOwnab
         return this.aiSit;
     }
 
-    public boolean func_142018_a(EntityLivingBase par1EntityLivingBase, EntityLivingBase par2EntityLivingBase)
+    public boolean func_142018_a(final EntityLivingBase par1EntityLivingBase, final EntityLivingBase par2EntityLivingBase)
     {
         return true;
     }
@@ -168,7 +168,7 @@ public abstract class EntityTameable extends EntityAnimal implements EntityOwnab
     {
         if (this.isTamed())
         {
-            EntityLivingBase entitylivingbase = this.func_130012_q();
+            final EntityLivingBase entitylivingbase = this.func_130012_q();
 
             if (entitylivingbase != null)
             {
@@ -179,11 +179,11 @@ public abstract class EntityTameable extends EntityAnimal implements EntityOwnab
         return super.getTeam();
     }
 
-    public boolean isOnSameTeam(EntityLivingBase par1EntityLivingBase)
+    public boolean isOnSameTeam(final EntityLivingBase par1EntityLivingBase)
     {
         if (this.isTamed())
         {
-            EntityLivingBase entitylivingbase1 = this.func_130012_q();
+            final EntityLivingBase entitylivingbase1 = this.func_130012_q();
 
             if (par1EntityLivingBase == entitylivingbase1)
             {

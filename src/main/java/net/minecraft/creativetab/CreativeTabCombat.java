@@ -6,7 +6,7 @@ import net.minecraft.block.Block;
 
 final class CreativeTabCombat extends CreativeTabs
 {
-    CreativeTabCombat(int par1, String par2Str)
+    CreativeTabCombat(final int par1, final String par2Str)
     {
         super(par1, par2Str);
     }

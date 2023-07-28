@@ -32,7 +32,7 @@ public class LiquidContainerRegistry
     /**
      * To register a container with a non-bucket size, the LiquidContainerData entry simply needs to use a size other than LiquidManager.BUCKET_VOLUME
      */
-    public static void registerLiquid(LiquidContainerData data)
+    public static void registerLiquid(final LiquidContainerData data)
     {
         mapFilledItemFromLiquid.put(Arrays.asList(data.container.itemID, data.container.getItemDamage(), data.stillLiquid.itemID, data.stillLiquid.itemMeta), data);
         mapLiquidFromFilledItem.put(Arrays.asList(data.filled.itemID, data.filled.getItemDamage()), data);
@@ -42,25 +42,25 @@ public class LiquidContainerRegistry
         liquids.add(data);
     }
 
-    public static LiquidStack getLiquidForFilledItem(ItemStack filledContainer)
+    public static LiquidStack getLiquidForFilledItem(final ItemStack filledContainer)
     {
         if (filledContainer == null)
         {
             return null;
         }
 
-        LiquidContainerData ret = mapLiquidFromFilledItem.get(Arrays.asList(filledContainer.itemID, filledContainer.getItemDamage()));
+        final LiquidContainerData ret = mapLiquidFromFilledItem.get(Arrays.asList(filledContainer.itemID, filledContainer.getItemDamage()));
         return ret == null ? null : ret.stillLiquid.copy();
     }
 
-    public static ItemStack fillLiquidContainer(LiquidStack liquid, ItemStack emptyContainer)
+    public static ItemStack fillLiquidContainer(final LiquidStack liquid, final ItemStack emptyContainer)
     {
         if (emptyContainer == null || liquid == null)
         {
             return null;
         }
 
-        LiquidContainerData ret = mapFilledItemFromLiquid.get(Arrays.asList(emptyContainer.itemID, emptyContainer.getItemDamage(), liquid.itemID, liquid.itemMeta));
+        final LiquidContainerData ret = mapFilledItemFromLiquid.get(Arrays.asList(emptyContainer.itemID, emptyContainer.getItemDamage(), liquid.itemID, liquid.itemMeta));
 
         if (ret != null && liquid.amount >= ret.stillLiquid.amount)
         {
@@ -70,19 +70,19 @@ public class LiquidContainerRegistry
         return null;
     }
 
-    public static boolean containsLiquid(ItemStack filledContainer, LiquidStack liquid)
+    public static boolean containsLiquid(final ItemStack filledContainer, final LiquidStack liquid)
     {
         if (filledContainer == null || liquid == null)
         {
             return false;
         }
 
-        LiquidContainerData ret = mapLiquidFromFilledItem.get(Arrays.asList(filledContainer.itemID, filledContainer.getItemDamage()));
+        final LiquidContainerData ret = mapLiquidFromFilledItem.get(Arrays.asList(filledContainer.itemID, filledContainer.getItemDamage()));
 
         return ret != null && ret.stillLiquid.isLiquidEqual(liquid);
     }
 
-    public static boolean isBucket(ItemStack container)
+    public static boolean isBucket(final ItemStack container)
     {
         if (container == null)
         {
@@ -94,32 +94,32 @@ public class LiquidContainerRegistry
             return true;
         }
 
-        LiquidContainerData ret = mapLiquidFromFilledItem.get(Arrays.asList(container.itemID, container.getItemDamage()));
+        final LiquidContainerData ret = mapLiquidFromFilledItem.get(Arrays.asList(container.itemID, container.getItemDamage()));
         return ret != null && ret.container.isItemEqual(EMPTY_BUCKET);
     }
 
-    public static boolean isContainer(ItemStack container)
+    public static boolean isContainer(final ItemStack container)
     {
         return isEmptyContainer(container) || isFilledContainer(container);
     }
 
-    public static boolean isEmptyContainer(ItemStack emptyContainer)
+    public static boolean isEmptyContainer(final ItemStack emptyContainer)
     {
         return emptyContainer != null && setContainerValidation.contains(Arrays.asList(emptyContainer.itemID, emptyContainer.getItemDamage()));
     }
 
-    public static boolean isFilledContainer(ItemStack filledContainer)
+    public static boolean isFilledContainer(final ItemStack filledContainer)
     {
         return filledContainer != null && getLiquidForFilledItem(filledContainer) != null;
     }
 
-    public static boolean isLiquid(ItemStack item)
+    public static boolean isLiquid(final ItemStack item)
     {
         return item != null && setLiquidValidation.contains(Arrays.asList(item.itemID, item.getItemDamage()));
     }
 
     public static LiquidContainerData[] getRegisteredLiquidContainerData()
     {
-        return liquids.toArray(new LiquidContainerData[liquids.size()]);
+        return liquids.toArray(new LiquidContainerData[0]);
     }
 }

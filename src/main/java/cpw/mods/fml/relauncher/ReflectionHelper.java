@@ -26,7 +26,7 @@ public class ReflectionHelper
     {
         private String[] methodNames;
 
-        public UnableToFindMethodException(String[] methodNames, Exception failed)
+        public UnableToFindMethodException(final String[] methodNames, final Exception failed)
         {
             super(failed);
             this.methodNames = methodNames;
@@ -38,7 +38,7 @@ public class ReflectionHelper
     {
         private String[] classNames;
 
-        public UnableToFindClassException(String[] classNames, Exception err)
+        public UnableToFindClassException(final String[] classNames, final Exception err)
         {
             super(err);
             this.classNames = classNames;
@@ -51,7 +51,7 @@ public class ReflectionHelper
 
         private String[] fieldNameList;
 
-        public UnableToAccessFieldException(String[] fieldNames, Exception e)
+        public UnableToAccessFieldException(final String[] fieldNames, final Exception e)
         {
             super(e);
             this.fieldNameList = fieldNames;
@@ -61,25 +61,25 @@ public class ReflectionHelper
     public static class UnableToFindFieldException extends RuntimeException
     {
         private String[] fieldNameList;
-        public UnableToFindFieldException(String[] fieldNameList, Exception e)
+        public UnableToFindFieldException(final String[] fieldNameList, final Exception e)
         {
             super(e);
             this.fieldNameList = fieldNameList;
         }
     }
 
-    public static Field findField(Class<?> clazz, String... fieldNames)
+    public static Field findField(final Class<?> clazz, final String... fieldNames)
     {
         Exception failed = null;
-        for (String fieldName : fieldNames)
+        for (final String fieldName : fieldNames)
         {
             try
             {
-                Field f = clazz.getDeclaredField(fieldName);
+                final Field f = clazz.getDeclaredField(fieldName);
                 f.setAccessible(true);
                 return f;
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 failed = e;
             }
@@ -88,69 +88,69 @@ public class ReflectionHelper
     }
 
     @SuppressWarnings("unchecked")
-    public static <T, E> T getPrivateValue(Class <? super E > classToAccess, E instance, int fieldIndex)
+    public static <T, E> T getPrivateValue(final Class <? super E > classToAccess, final E instance, final int fieldIndex)
     {
         try
         {
-            Field f = classToAccess.getDeclaredFields()[fieldIndex];
+            final Field f = classToAccess.getDeclaredFields()[fieldIndex];
             f.setAccessible(true);
             return (T) f.get(instance);
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             throw new UnableToAccessFieldException(new String[0], e);
         }
     }
 
     @SuppressWarnings("unchecked")
-    public static <T, E> T getPrivateValue(Class <? super E > classToAccess, E instance, String... fieldNames)
+    public static <T, E> T getPrivateValue(final Class <? super E > classToAccess, final E instance, final String... fieldNames)
     {
         try
         {
             return (T) findField(classToAccess, fieldNames).get(instance);
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             throw new UnableToAccessFieldException(fieldNames, e);
         }
     }
 
-    public static <T, E> void setPrivateValue(Class <? super T > classToAccess, T instance, E value, int fieldIndex)
+    public static <T, E> void setPrivateValue(final Class <? super T > classToAccess, final T instance, final E value, final int fieldIndex)
     {
         try
         {
-            Field f = classToAccess.getDeclaredFields()[fieldIndex];
+            final Field f = classToAccess.getDeclaredFields()[fieldIndex];
             f.setAccessible(true);
             f.set(instance, value);
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             throw new UnableToAccessFieldException(new String[0] , e);
         }
     }
 
-    public static <T, E> void setPrivateValue(Class <? super T > classToAccess, T instance, E value, String... fieldNames)
+    public static <T, E> void setPrivateValue(final Class <? super T > classToAccess, final T instance, final E value, final String... fieldNames)
     {
         try
         {
             findField(classToAccess, fieldNames).set(instance, value);
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             throw new UnableToAccessFieldException(fieldNames, e);
         }
     }
 
-    public static Class<? super Object> getClass(ClassLoader loader, String... classNames)
+    public static Class<? super Object> getClass(final ClassLoader loader, final String... classNames)
     {
         Exception err = null;
-        for (String className : classNames)
+        for (final String className : classNames)
         {
             try
             {
                 return (Class<? super Object>) Class.forName(className, false, loader);
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 err = e;
             }
@@ -160,18 +160,18 @@ public class ReflectionHelper
     }
 
 
-    public static <E> Method findMethod(Class<? super E> clazz, E instance, String[] methodNames, Class<?>... methodTypes)
+    public static <E> Method findMethod(final Class<? super E> clazz, final E instance, final String[] methodNames, final Class<?>... methodTypes)
     {
         Exception failed = null;
-        for (String methodName : methodNames)
+        for (final String methodName : methodNames)
         {
             try
             {
-                Method m = clazz.getDeclaredMethod(methodName, methodTypes);
+                final Method m = clazz.getDeclaredMethod(methodName, methodTypes);
                 m.setAccessible(true);
                 return m;
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 failed = e;
             }

@@ -17,16 +17,16 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
     private static class CustomBiomeGrid implements BiomeGrid {
         net.minecraft.world.biome.BiomeGenBase[] biome;
 
-        public Biome getBiome(int x, int z) {
+        public Biome getBiome(final int x, final int z) {
             return CraftBlock.biomeBaseToBiome(biome[(z << 4) | x]);
         }
 
-        public void setBiome(int x, int z, Biome bio) {
+        public void setBiome(final int x, final int z, final Biome bio) {
            biome[(z << 4) | x] = CraftBlock.biomeToBiomeBase(bio);
         }
     }
 
-    public CustomChunkGenerator(net.minecraft.world.World world, long seed, ChunkGenerator generator) {
+    public CustomChunkGenerator(final net.minecraft.world.World world, final long seed, final ChunkGenerator generator) {
         this.world = (net.minecraft.world.WorldServer) world;
         this.generator = generator;
 
@@ -36,7 +36,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
     /**
      * Checks to see if a chunk exists at x, y
      */
-    public boolean chunkExists(int x, int z) {
+    public boolean chunkExists(final int x, final int z) {
         return true;
     }
 
@@ -44,37 +44,37 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
      * Will return back a chunk, if it doesn't exist and its not a MP client it will generates all the blocks for the
      * specified chunk from the map seed and chunk seed
      */
-    public net.minecraft.world.chunk.Chunk provideChunk(int x, int z) {
+    public net.minecraft.world.chunk.Chunk provideChunk(final int x, final int z) {
         random.setSeed((long) x * 341873128712L + (long) z * 132897987541L);
 
-        net.minecraft.world.chunk.Chunk chunk;
+        final net.minecraft.world.chunk.Chunk chunk;
 
         // Get default biome data for chunk
-        CustomBiomeGrid biomegrid = new CustomBiomeGrid();
+        final CustomBiomeGrid biomegrid = new CustomBiomeGrid();
         biomegrid.biome = new net.minecraft.world.biome.BiomeGenBase[256];
         world.getWorldChunkManager().loadBlockGeneratorData(biomegrid.biome, x << 4, z << 4, 16, 16);
 
         // Try extended block method (1.2+)
-        short[][] xbtypes = generator.generateExtBlockSections(this.world.getWorld(), this.random, x, z, biomegrid);
+        final short[][] xbtypes = generator.generateExtBlockSections(this.world.getWorld(), this.random, x, z, biomegrid);
         if (xbtypes != null) {
             chunk = new net.minecraft.world.chunk.Chunk(this.world, x, z);
 
-            net.minecraft.world.chunk.storage.ExtendedBlockStorage[] csect = chunk.getBlockStorageArray();
-            int scnt = Math.min(csect.length, xbtypes.length);
+            final net.minecraft.world.chunk.storage.ExtendedBlockStorage[] csect = chunk.getBlockStorageArray();
+            final int scnt = Math.min(csect.length, xbtypes.length);
 
             // Loop through returned sections
             for (int sec = 0; sec < scnt; sec++) {
                 if (xbtypes[sec] == null) {
                     continue;
                 }
-                byte[] secBlkID = new byte[4096]; // Allocate blk ID bytes
+                final byte[] secBlkID = new byte[4096]; // Allocate blk ID bytes
                 byte[] secExtBlkID = null; // Delay getting extended ID nibbles
-                short[] bdata = xbtypes[sec];
+                final short[] bdata = xbtypes[sec];
                 // Loop through data, 2 blocks at a time
                 for (int i = 0, j = 0; i < bdata.length; i += 2, j++) {
-                    short b1 = bdata[i];
-                    short b2 = bdata[i + 1];
-                    byte extb = (byte) ((b1 >> 8) | ((b2 >> 4) & 0xF0));
+                    final short b1 = bdata[i];
+                    final short b2 = bdata[i + 1];
+                    final byte extb = (byte) ((b1 >> 8) | ((b2 >> 4) & 0xF0));
 
                     secBlkID[i] = (byte) b1;
                     secBlkID[(i + 1)] = (byte) b2;
@@ -91,13 +91,13 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
             }
         }
         else { // Else check for byte-per-block section data
-            byte[][] btypes = generator.generateBlockSections(this.world.getWorld(), this.random, x, z, biomegrid);
+            final byte[][] btypes = generator.generateBlockSections(this.world.getWorld(), this.random, x, z, biomegrid);
 
             if (btypes != null) {
                 chunk = new net.minecraft.world.chunk.Chunk(this.world, x, z);
 
-                net.minecraft.world.chunk.storage.ExtendedBlockStorage[] csect = chunk.getBlockStorageArray();
-                int scnt = Math.min(csect.length, btypes.length);
+                final net.minecraft.world.chunk.storage.ExtendedBlockStorage[] csect = chunk.getBlockStorageArray();
+                final int scnt = Math.min(csect.length, btypes.length);
 
                 for (int sec = 0; sec < scnt; sec++) {
                     if (btypes[sec] == null) {
@@ -107,14 +107,13 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
                 }
             }
             else { // Else, fall back to pre 1.2 method
-                @SuppressWarnings("deprecation")
-                byte[] types = generator.generate(this.world.getWorld(), this.random, x, z);
-                int ydim = types.length / 256;
+                @SuppressWarnings("deprecation") final byte[] types = generator.generate(this.world.getWorld(), this.random, x, z);
+                final int ydim = types.length / 256;
                 int scnt = ydim / 16;
 
                 chunk = new net.minecraft.world.chunk.Chunk(this.world, x, z); // Create empty chunk
 
-                net.minecraft.world.chunk.storage.ExtendedBlockStorage[] csect = chunk.getBlockStorageArray();
+                final net.minecraft.world.chunk.storage.ExtendedBlockStorage[] csect = chunk.getBlockStorageArray();
 
                 scnt = Math.min(scnt, csect.length);
                 // Loop through sections
@@ -123,13 +122,13 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
                     byte[] csbytes = null;
 
                     for (int cy = 0; cy < 16; cy++) {
-                        int cyoff = cy | (sec << 4);
+                        final int cyoff = cy | (sec << 4);
 
                         for (int cx = 0; cx < 16; cx++) {
-                            int cxyoff = (cx * ydim * 16) + cyoff;
+                            final int cxyoff = (cx * ydim * 16) + cyoff;
 
                             for (int cz = 0; cz < 16; cz++) {
-                                byte blk = types[cxyoff + (cz * ydim)];
+                                final byte blk = types[cxyoff + (cz * ydim)];
 
                                 if (blk != 0) { // If non-empty
                                     if (cs == null) { // If no section yet, get one
@@ -149,7 +148,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
             }
         }
         // Set biome grid
-        byte[] biomeIndex = chunk.getBiomeArray();
+        final byte[] biomeIndex = chunk.getBiomeArray();
         for (int i = 0; i < biomeIndex.length; i++) {
             biomeIndex[i] = (byte) (biomegrid.biome[i].biomeID & 0xFF);
         }
@@ -162,7 +161,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
     /**
      * Populates chunk with ores etc etc
      */
-    public void populate(net.minecraft.world.chunk.IChunkProvider icp, int i, int i1) {
+    public void populate(final net.minecraft.world.chunk.IChunkProvider icp, final int i, final int i1) {
         // Nothing!
     }
 
@@ -170,7 +169,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
      * Two modes of operation: if passed true, save all Chunks in one go.  If passed false, save up to two chunks.
      * Return true if all chunks have been saved.
      */
-    public boolean saveChunks(boolean bln, net.minecraft.util.IProgressUpdate ipu) {
+    public boolean saveChunks(final boolean bln, final net.minecraft.util.IProgressUpdate ipu) {
         return true;
     }
 
@@ -189,37 +188,37 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
     }
 
     @SuppressWarnings("deprecation")
-    public byte[] generate(org.bukkit.World world, Random random, int x, int z) {
+    public byte[] generate(final org.bukkit.World world, final Random random, final int x, final int z) {
         return generator.generate(world, random, x, z);
     }
 
-    public byte[][] generateBlockSections(org.bukkit.World world, Random random, int x, int z, BiomeGrid biomes) {
+    public byte[][] generateBlockSections(final org.bukkit.World world, final Random random, final int x, final int z, final BiomeGrid biomes) {
         return generator.generateBlockSections(world, random, x, z, biomes);
     }
 
-    public short[][] generateExtBlockSections(org.bukkit.World world, Random random, int x, int z, BiomeGrid biomes) {
+    public short[][] generateExtBlockSections(final org.bukkit.World world, final Random random, final int x, final int z, final BiomeGrid biomes) {
         return generator.generateExtBlockSections(world, random, x, z, biomes);
     }
 
     /**
      * loads or generates the chunk at the chunk location specified
      */
-    public net.minecraft.world.chunk.Chunk loadChunk(int x, int z) {
+    public net.minecraft.world.chunk.Chunk loadChunk(final int x, final int z) {
         return provideChunk(x, z);
     }
 
     @Override
-    public boolean canSpawn(org.bukkit.World world, int x, int z) {
+    public boolean canSpawn(final org.bukkit.World world, final int x, final int z) {
         return generator.canSpawn(world, x, z);
     }
 
     @Override
-    public List<BlockPopulator> getDefaultPopulators(org.bukkit.World world) {
+    public List<BlockPopulator> getDefaultPopulators(final org.bukkit.World world) {
         return generator.getDefaultPopulators(world);
     }
 
-    public List<?> getPossibleCreatures(net.minecraft.entity.EnumCreatureType type, int x, int y, int z) {
-        net.minecraft.world.biome.BiomeGenBase biomebase = world.getBiomeGenForCoords(x, z);
+    public List<?> getPossibleCreatures(final net.minecraft.entity.EnumCreatureType type, final int x, final int y, final int z) {
+        final net.minecraft.world.biome.BiomeGenBase biomebase = world.getBiomeGenForCoords(x, z);
 
         return biomebase == null ? null : biomebase.getSpawnableList(type);
     }
@@ -227,11 +226,11 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
     /**
      * Returns the location of the closest structure of the specified type. If not found returns null.
      */
-    public net.minecraft.world.ChunkPosition findClosestStructure(net.minecraft.world.World world, String type, int x, int y, int z) {
+    public net.minecraft.world.ChunkPosition findClosestStructure(final net.minecraft.world.World world, final String type, final int x, final int y, final int z) {
         return "Stronghold".equals(type) && this.strongholdGen != null ? this.strongholdGen.getNearestInstance(world, x, y, z) : null;
     }
 
-    public void recreateStructures(int i, int j) {}
+    public void recreateStructures(final int i, final int j) {}
 
     public int getLoadedChunkCount() {
         return 0;

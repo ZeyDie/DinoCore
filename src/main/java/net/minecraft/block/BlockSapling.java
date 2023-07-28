@@ -22,15 +22,15 @@ import java.util.Random;
 
 public class BlockSapling extends BlockFlower
 {
-    public static final String[] WOOD_TYPES = new String[] {"oak", "spruce", "birch", "jungle"};
+    public static final String[] WOOD_TYPES = {"oak", "spruce", "birch", "jungle"};
     @SideOnly(Side.CLIENT)
     private Icon[] saplingIcon;
     public static TreeType treeType; // CraftBukkit
 
-    protected BlockSapling(int par1)
+    protected BlockSapling(final int par1)
     {
         super(par1);
-        float f = 0.4F;
+        final float f = 0.4F;
         this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
         this.setCreativeTab(CreativeTabs.tabDecorations);
     }
@@ -38,7 +38,7 @@ public class BlockSapling extends BlockFlower
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (!par1World.isRemote)
         {
@@ -50,12 +50,12 @@ public class BlockSapling extends BlockFlower
                 par1World.captureTreeGeneration = true;
                 this.growTree(par1World, par2, par3, par4, par5Random);
                 par1World.captureTreeGeneration = false;
-                if (par1World.capturedBlockStates.size() > 0)
+                if (!par1World.capturedBlockStates.isEmpty())
                 {
-                    TreeType treeType = BlockSapling.treeType;
+                    final TreeType treeType = BlockSapling.treeType;
                     BlockSapling.treeType = null;
-                    Location location = new Location(par1World.getWorld(), par2, par3, par4);
-                    List<BlockState> blocks = (List<BlockState>) par1World.capturedBlockStates.clone();
+                    final Location location = new Location(par1World.getWorld(), par2, par3, par4);
+                    final List<BlockState> blocks = (List<BlockState>) par1World.capturedBlockStates.clone();
                     par1World.capturedBlockStates.clear();
                     StructureGrowEvent event = null;
                     if (treeType != null) {
@@ -63,7 +63,7 @@ public class BlockSapling extends BlockFlower
                         org.bukkit.Bukkit.getPluginManager().callEvent(event);
                     }
                     if (event == null || !event.isCancelled()) {
-                        for (BlockState blockstate : blocks) {
+                        for (final BlockState blockstate : blocks) {
                             blockstate.update(true);
                         }
                     }
@@ -78,15 +78,16 @@ public class BlockSapling extends BlockFlower
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, int par2)
     {
-        par2 &= 3;
-        return this.saplingIcon[par2];
+        int par21 = par2;
+        par21 &= 3;
+        return this.saplingIcon[par21];
     }
 
-    public void markOrGrowMarked(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void markOrGrowMarked(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
-        int l = par1World.getBlockMetadata(par2, par3, par4);
+        final int l = par1World.getBlockMetadata(par2, par3, par4);
 
         if ((l & 8) == 0)
         {
@@ -101,11 +102,11 @@ public class BlockSapling extends BlockFlower
     /**
      * Attempts to grow a sapling into a tree
      */
-    public void growTree(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void growTree(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (!TerrainGen.saplingGrowTree(par1World, par5Random, par2, par3, par4)) return;
 
-        int l = par1World.getBlockMetadata(par2, par3, par4) & 3;
+        final int l = par1World.getBlockMetadata(par2, par3, par4) & 3;
         Object object = null;
         int i1 = 0;
         int j1 = 0;
@@ -193,7 +194,7 @@ public class BlockSapling extends BlockFlower
     /**
      * Determines if the same sapling is present at the given location.
      */
-    public boolean isSameSapling(World par1World, int par2, int par3, int par4, int par5)
+    public boolean isSameSapling(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         return par1World.getBlockId(par2, par3, par4) == this.blockID && (par1World.getBlockMetadata(par2, par3, par4) & 3) == par5;
     }
@@ -201,7 +202,7 @@ public class BlockSapling extends BlockFlower
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int par1)
+    public int damageDropped(final int par1)
     {
         return par1 & 3;
     }
@@ -211,7 +212,7 @@ public class BlockSapling extends BlockFlower
     /**
      * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
      */
-    public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubBlocks(final int par1, final CreativeTabs par2CreativeTabs, final List par3List)
     {
         par3List.add(new ItemStack(par1, 1, 0));
         par3List.add(new ItemStack(par1, 1, 1));
@@ -225,7 +226,7 @@ public class BlockSapling extends BlockFlower
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.saplingIcon = new Icon[WOOD_TYPES.length];
 

@@ -53,7 +53,7 @@ public class Timer
      */
     private double timeSyncAdjustment = 1.0D;
 
-    public Timer(float par1)
+    public Timer(final float par1)
     {
         this.ticksPerSecond = par1;
         this.lastSyncSysClock = Minecraft.getSystemTime();
@@ -65,10 +65,10 @@ public class Timer
      */
     public void updateTimer()
     {
-        long i = Minecraft.getSystemTime();
-        long j = i - this.lastSyncSysClock;
-        long k = System.nanoTime() / 1000000L;
-        double d0 = (double)k / 1000.0D;
+        final long i = Minecraft.getSystemTime();
+        final long j = i - this.lastSyncSysClock;
+        final long k = System.nanoTime() / 1000000L;
+        final double d0 = (double)k / 1000.0D;
 
         if (j <= 1000L && j >= 0L)
         {
@@ -76,8 +76,8 @@ public class Timer
 
             if (this.field_74285_i > 1000L)
             {
-                long l = k - this.lastSyncHRClock;
-                double d1 = (double)this.field_74285_i / (double)l;
+                final long l = k - this.lastSyncHRClock;
+                final double d1 = (double)this.field_74285_i / (double)l;
                 this.timeSyncAdjustment += (d1 - this.timeSyncAdjustment) * 0.20000000298023224D;
                 this.lastSyncHRClock = k;
                 this.field_74285_i = 0L;

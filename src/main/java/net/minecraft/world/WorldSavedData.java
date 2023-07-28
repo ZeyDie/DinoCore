@@ -10,7 +10,7 @@ public abstract class WorldSavedData
     /** Whether this MapDataBase needs saving to disk. */
     private boolean dirty;
 
-    public WorldSavedData(String par1Str)
+    public WorldSavedData(final String par1Str)
     {
         this.mapName = par1Str;
     }
@@ -36,7 +36,7 @@ public abstract class WorldSavedData
     /**
      * Sets the dirty state of this MapDataBase, whether it needs saving to disk.
      */
-    public void setDirty(boolean par1)
+    public void setDirty(final boolean par1)
     {
         this.dirty = par1;
     }

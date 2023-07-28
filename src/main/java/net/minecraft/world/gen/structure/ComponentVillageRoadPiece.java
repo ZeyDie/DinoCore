@@ -4,7 +4,7 @@ public abstract class ComponentVillageRoadPiece extends ComponentVillage
 {
     public ComponentVillageRoadPiece() {}
 
-    protected ComponentVillageRoadPiece(ComponentVillageStartPiece par1ComponentVillageStartPiece, int par2)
+    protected ComponentVillageRoadPiece(final ComponentVillageStartPiece par1ComponentVillageStartPiece, final int par2)
     {
         super(par1ComponentVillageStartPiece, par2);
     }

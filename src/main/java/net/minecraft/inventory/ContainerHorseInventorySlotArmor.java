@@ -11,7 +11,7 @@ class ContainerHorseInventorySlotArmor extends Slot
 
     final ContainerHorseInventory field_111240_b;
 
-    ContainerHorseInventorySlotArmor(ContainerHorseInventory par1ContainerHorseInventory, IInventory par2IInventory, int par3, int par4, int par5, EntityHorse par6EntityHorse)
+    ContainerHorseInventorySlotArmor(final ContainerHorseInventory par1ContainerHorseInventory, final IInventory par2IInventory, final int par3, final int par4, final int par5, final EntityHorse par6EntityHorse)
     {
         super(par2IInventory, par3, par4, par5);
         this.field_111240_b = par1ContainerHorseInventory;
@@ -21,7 +21,7 @@ class ContainerHorseInventorySlotArmor extends Slot
     /**
      * Check if the stack is a valid item for this slot. Always true beside for the armor slots.
      */
-    public boolean isItemValid(ItemStack par1ItemStack)
+    public boolean isItemValid(final ItemStack par1ItemStack)
     {
         return super.isItemValid(par1ItemStack) && this.theHorse.func_110259_cr() && EntityHorse.func_110211_v(par1ItemStack.itemID);
     }

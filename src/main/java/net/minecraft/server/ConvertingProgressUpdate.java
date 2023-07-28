@@ -9,7 +9,7 @@ public class ConvertingProgressUpdate implements IProgressUpdate
     /** Reference to the MinecraftServer object. */
     final MinecraftServer mcServer;
 
-    public ConvertingProgressUpdate(MinecraftServer par1MinecraftServer)
+    public ConvertingProgressUpdate(final MinecraftServer par1MinecraftServer)
     {
         this.mcServer = par1MinecraftServer;
         this.field_96245_b = MinecraftServer.getSystemTimeMillis();
@@ -18,12 +18,12 @@ public class ConvertingProgressUpdate implements IProgressUpdate
     /**
      * "Saving level", or the loading,or downloading equivelent
      */
-    public void displayProgressMessage(String par1Str) {}
+    public void displayProgressMessage(final String par1Str) {}
 
     /**
      * Updates the progress bar on the loading screen to the specified amount. Args: loadProgress
      */
-    public void setLoadingProgress(int par1)
+    public void setLoadingProgress(final int par1)
     {
         if (MinecraftServer.getSystemTimeMillis() - this.field_96245_b >= 1000L)
         {
@@ -35,5 +35,5 @@ public class ConvertingProgressUpdate implements IProgressUpdate
     /**
      * This is called with "Working..." by resetProgressAndMessage
      */
-    public void resetProgresAndWorkingMessage(String par1Str) {}
+    public void resetProgresAndWorkingMessage(final String par1Str) {}
 }

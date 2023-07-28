@@ -33,7 +33,7 @@ public class TradeEntry
     public int max = 0;
 
     @Deprecated
-    public TradeEntry(int id, float chance, boolean buying, int min, int max)
+    public TradeEntry(final int id, final float chance, final boolean buying, final int min, final int max)
     {
         this.id = id;
         this.chance = chance;
@@ -43,7 +43,7 @@ public class TradeEntry
     }
 
     @Deprecated
-    public TradeEntry(int id, float chance, boolean buying)
+    public TradeEntry(final int id, final float chance, final boolean buying)
     {
         this(id, chance, buying, 0, 0);
     }

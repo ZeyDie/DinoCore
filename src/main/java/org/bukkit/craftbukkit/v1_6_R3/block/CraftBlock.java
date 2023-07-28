@@ -36,7 +36,7 @@ public class CraftBlock implements Block {
     private static final net.minecraft.world.biome.BiomeGenBase[] BIOMEBASE_MAPPING = new net.minecraft.world.biome.BiomeGenBase[net.minecraft.world.biome.BiomeGenBase.biomeList.length];
     // Cauldron end
 
-    public CraftBlock(CraftChunk chunk, int x, int y, int z) {
+    public CraftBlock(final CraftChunk chunk, final int x, final int y, final int z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -51,7 +51,7 @@ public class CraftBlock implements Block {
         return new Location(getWorld(), x, y, z);
     }
 
-    public Location getLocation(Location loc) {
+    public Location getLocation(final Location loc) {
         if (loc != null) {
             loc.setWorld(getWorld());
             loc.setX(x);
@@ -88,7 +88,7 @@ public class CraftBlock implements Block {
         chunk.getHandle().worldObj.setBlockMetadataWithNotify(x, y, z, data, 3);
     }
 
-    public void setData(final byte data, boolean applyPhysics) {
+    public void setData(final byte data, final boolean applyPhysics) {
         if (applyPhysics) {
             chunk.getHandle().worldObj.setBlockMetadataWithNotify(x, y, z, data, 3);
         } else {
@@ -120,7 +120,7 @@ public class CraftBlock implements Block {
         if (applyPhysics) {
             return chunk.getHandle().worldObj.setBlock(x, y, z, type, data, 3);
         } else {
-            boolean success = chunk.getHandle().worldObj.setBlock(x, y, z, type, data, 2);
+            final boolean success = chunk.getHandle().worldObj.setBlock(x, y, z, type, data, 2);
             if (success) {
                 chunk.getHandle().worldObj.markBlockForUpdate(x, y, z);
             }
@@ -161,18 +161,18 @@ public class CraftBlock implements Block {
         return getWorld().getBlockAt(getX() + modX, getY() + modY, getZ() + modZ);
     }
 
-    public Block getRelative(BlockFace face) {
+    public Block getRelative(final BlockFace face) {
         return getRelative(face, 1);
     }
 
-    public Block getRelative(BlockFace face, int distance) {
+    public Block getRelative(final BlockFace face, final int distance) {
         return getRelative(face.getModX() * distance, face.getModY() * distance, face.getModZ() * distance);
     }
 
     public BlockFace getFace(final Block block) {
-        BlockFace[] values = BlockFace.values();
+        final BlockFace[] values = BlockFace.values();
 
-        for (BlockFace face : values) {
+        for (final BlockFace face : values) {
             if ((this.getX() + face.getModX() == block.getX()) &&
                     (this.getY() + face.getModY() == block.getY()) &&
                     (this.getZ() + face.getModZ() == block.getZ())
@@ -195,7 +195,7 @@ public class CraftBlock implements Block {
      *
      * @return BlockFace the BlockFace represented by this number
      */
-    public static BlockFace notchToBlockFace(int notch) {
+    public static BlockFace notchToBlockFace(final int notch) {
         switch (notch) {
             case 0:
                 return BlockFace.DOWN;
@@ -214,7 +214,7 @@ public class CraftBlock implements Block {
         }
     }
 
-    public static int blockFaceToNotch(BlockFace face) {
+    public static int blockFaceToNotch(final BlockFace face) {
         switch (face) {
             case DOWN:
                 return 0;
@@ -234,10 +234,10 @@ public class CraftBlock implements Block {
     }
 
     public BlockState getState() {
-        Material material = getType();
+        final Material material = getType();
         // Cauldron start - if null, check for TE that implements IInventory
         if (material == null) {
-            TileEntity te = ((CraftWorld) this.getWorld()).getHandle().getBlockTileEntity(this.getX(), this.getY(), this.getZ());
+            final TileEntity te = ((CraftWorld) this.getWorld()).getHandle().getBlockTileEntity(this.getX(), this.getY(), this.getZ());
             if (te != null && te instanceof IInventory) {
                 // In order to allow plugins to properly grab the container location, we must pass a class that extends CraftBlockState and implements InventoryHolder.
                 // Note: This will be returned when TileEntity.getOwner() is called
@@ -280,7 +280,7 @@ public class CraftBlock implements Block {
                 return new CraftBeacon(this);
             default:
                 // Cauldron start
-                TileEntity te = ((CraftWorld) this.getWorld()).getHandle().getBlockTileEntity(this.getX(), this.getY(), this.getZ());
+                final TileEntity te = ((CraftWorld) this.getWorld()).getHandle().getBlockTileEntity(this.getX(), this.getY(), this.getZ());
                 if (te != null && te instanceof IInventory) {
                     // In order to allow plugins to properly grab the container location, we must pass a class that extends CraftBlockState and implements InventoryHolder.
                     // Note: This will be returned when TileEntity.getOwner() is called
@@ -296,11 +296,11 @@ public class CraftBlock implements Block {
         return getWorld().getBiome(x, z);
     }
 
-    public void setBiome(Biome bio) {
+    public void setBiome(final Biome bio) {
         getWorld().setBiome(x, z, bio);
     }
 
-    public static Biome biomeBaseToBiome(net.minecraft.world.biome.BiomeGenBase base) {
+    public static Biome biomeBaseToBiome(final net.minecraft.world.biome.BiomeGenBase base) {
         if (base == null) {
             return null;
         }
@@ -308,7 +308,7 @@ public class CraftBlock implements Block {
         return BIOME_MAPPING[base.biomeID];
     }
 
-    public static net.minecraft.world.biome.BiomeGenBase biomeToBiomeBase(Biome bio) {
+    public static net.minecraft.world.biome.BiomeGenBase biomeToBiomeBase(final Biome bio) {
         if (bio == null) {
             return null;
         }
@@ -332,10 +332,10 @@ public class CraftBlock implements Block {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (o == this) return true;
         if (!(o instanceof CraftBlock)) return false;
-        CraftBlock other = (CraftBlock) o;
+        final CraftBlock other = (CraftBlock) o;
 
         return this.x == other.x && this.y == other.y && this.z == other.z && this.getWorld().equals(other.getWorld());
     }
@@ -345,14 +345,14 @@ public class CraftBlock implements Block {
         return this.y << 24 ^ this.x ^ this.z ^ this.getWorld().hashCode();
     }
 
-    public boolean isBlockFacePowered(BlockFace face) {
+    public boolean isBlockFacePowered(final BlockFace face) {
         return chunk.getHandle().worldObj.getIndirectPowerOutput(x, y, z, blockFaceToNotch(face));
     }
 
-    public boolean isBlockFaceIndirectlyPowered(BlockFace face) {
-        int power = chunk.getHandle().worldObj.getIndirectPowerLevelTo(x, y, z, blockFaceToNotch(face));
+    public boolean isBlockFaceIndirectlyPowered(final BlockFace face) {
+        final int power = chunk.getHandle().worldObj.getIndirectPowerLevelTo(x, y, z, blockFaceToNotch(face));
 
-        Block relative = getRelative(face);
+        final Block relative = getRelative(face);
         if (relative.getType() == Material.REDSTONE_WIRE) {
             return Math.max(power, relative.getData()) > 0;
         }
@@ -360,10 +360,10 @@ public class CraftBlock implements Block {
         return power > 0;
     }
 
-    public int getBlockPower(BlockFace face) {
+    public int getBlockPower(final BlockFace face) {
         int power = 0;
-        net.minecraft.block.BlockRedstoneWire wire = net.minecraft.block.Block.redstoneWire;
-        net.minecraft.world.World world = chunk.getHandle().worldObj;
+        final net.minecraft.block.BlockRedstoneWire wire = net.minecraft.block.Block.redstoneWire;
+        final net.minecraft.world.World world = chunk.getHandle().worldObj;
         if ((face == BlockFace.DOWN || face == BlockFace.SELF) && world.getIndirectPowerOutput(x, y - 1, z, 0))
             power = wire.getMaxCurrentStrength(world, x, y - 1, z, power);
         if ((face == BlockFace.UP || face == BlockFace.SELF) && world.getIndirectPowerOutput(x, y + 1, z, 1))
@@ -400,16 +400,16 @@ public class CraftBlock implements Block {
         return PistonMoveReaction.getById(net.minecraft.block.Block.blocksList[this.getTypeId()].blockMaterial.getMaterialMobility());
     }
 
-    private boolean itemCausesDrops(ItemStack item) {
-        net.minecraft.block.Block block = net.minecraft.block.Block.blocksList[this.getTypeId()];
-        net.minecraft.item.Item itemType = item != null ? net.minecraft.item.Item.itemsList[item.getTypeId()] : null;
+    private boolean itemCausesDrops(final ItemStack item) {
+        final net.minecraft.block.Block block = net.minecraft.block.Block.blocksList[this.getTypeId()];
+        final net.minecraft.item.Item itemType = item != null ? net.minecraft.item.Item.itemsList[item.getTypeId()] : null;
         return block != null && (block.blockMaterial.isToolNotRequired() || (itemType != null && itemType.canHarvestBlock(block)));
     }
 
     public boolean breakNaturally() {
         // Order matters here, need to drop before setting to air so skulls can get their data
-        net.minecraft.block.Block block = net.minecraft.block.Block.blocksList[this.getTypeId()];
-        byte data = getData();
+        final net.minecraft.block.Block block = net.minecraft.block.Block.blocksList[this.getTypeId()];
+        final byte data = getData();
         boolean result = false;
 
         if (block != null) {
@@ -421,7 +421,7 @@ public class CraftBlock implements Block {
         return result;
     }
 
-    public boolean breakNaturally(ItemStack item) {
+    public boolean breakNaturally(final ItemStack item) {
         if (itemCausesDrops(item)) {
             return breakNaturally();
         } else {
@@ -430,22 +430,22 @@ public class CraftBlock implements Block {
     }
 
     public Collection<ItemStack> getDrops() {
-        List<ItemStack> drops = new ArrayList<ItemStack>();
+        final List<ItemStack> drops = new ArrayList<ItemStack>();
 
-        net.minecraft.block.Block block = net.minecraft.block.Block.blocksList[this.getTypeId()];
+        final net.minecraft.block.Block block = net.minecraft.block.Block.blocksList[this.getTypeId()];
         if (block != null) {
-            byte data = getData();
+            final byte data = getData();
             // based on nms.Block.dropNaturally
-            int count = block.quantityDroppedWithBonus(0, chunk.getHandle().worldObj.rand);
+            final int count = block.quantityDroppedWithBonus(0, chunk.getHandle().worldObj.rand);
             for (int i = 0; i < count; ++i) {
-                int item = block.idDropped(data, chunk.getHandle().worldObj.rand, 0);
+                final int item = block.idDropped(data, chunk.getHandle().worldObj.rand, 0);
                 if (item > 0) {
                     // Skulls are special, their data is based on the tile entity
                     if (net.minecraft.block.Block.skull.blockID == this.getTypeId()) {
-                        net.minecraft.item.ItemStack nmsStack = new net.minecraft.item.ItemStack(item, 1, block.getDamageValue(chunk.getHandle().worldObj, x, y, z));
-                        net.minecraft.tileentity.TileEntitySkull tileentityskull = (net.minecraft.tileentity.TileEntitySkull) chunk.getHandle().worldObj.getBlockTileEntity(x, y, z);
+                        final net.minecraft.item.ItemStack nmsStack = new net.minecraft.item.ItemStack(item, 1, block.getDamageValue(chunk.getHandle().worldObj, x, y, z));
+                        final net.minecraft.tileentity.TileEntitySkull tileentityskull = (net.minecraft.tileentity.TileEntitySkull) chunk.getHandle().worldObj.getBlockTileEntity(x, y, z);
 
-                        if (tileentityskull.getSkullType() == 3 && tileentityskull.getExtraType() != null && tileentityskull.getExtraType().length() > 0) {
+                        if (tileentityskull.getSkullType() == 3 && tileentityskull.getExtraType() != null && !tileentityskull.getExtraType().isEmpty()) {
                             nmsStack.setTagCompound(new net.minecraft.nbt.NBTTagCompound());
                             nmsStack.getTagCompound().setString("SkullOwner", tileentityskull.getExtraType());
                         }
@@ -460,7 +460,7 @@ public class CraftBlock implements Block {
         return drops;
     }
 
-    public Collection<ItemStack> getDrops(ItemStack item) {
+    public Collection<ItemStack> getDrops(final ItemStack item) {
         if (itemCausesDrops(item)) {
             return getDrops();
         } else {
@@ -501,8 +501,8 @@ public class CraftBlock implements Block {
             if ((net.minecraft.world.biome.BiomeGenBase.biomeList[i] != null) && (BIOME_MAPPING[i] == null)) {
                 // Cauldron start - add support for mod biomes
                 //throw new IllegalArgumentException("Missing Biome mapping for BiomeBase[" + i + "]");
-                String name = net.minecraft.world.biome.BiomeGenBase.biomeList[i].biomeName;
-                int id = net.minecraft.world.biome.BiomeGenBase.biomeList[i].biomeID;
+                final String name = net.minecraft.world.biome.BiomeGenBase.biomeList[i].biomeName;
+                final int id = net.minecraft.world.biome.BiomeGenBase.biomeList[i].biomeID;
 
                 System.out.println("Adding biome mapping " + net.minecraft.world.biome.BiomeGenBase.biomeList[i].biomeID + " " + name + " at BiomeBase[" + i + "]");
                 net.minecraftforge.common.EnumHelper.addBukkitBiome(name); // Forge
@@ -520,7 +520,7 @@ public class CraftBlock implements Block {
         if (MinecraftServer.getServer().cauldronConfig.dumpMaterials.getValue()) {
             FMLLog.info("Cauldron Dump Materials is ENABLED. Starting dump...");
             for (int i = 0; i < 32000; i++) {
-                Material material = Material.getMaterial(i);
+                final Material material = Material.getMaterial(i);
                 if (material != null) {
                     FMLLog.info("Found material " + material + " with ID " + i);
                 }
@@ -531,19 +531,19 @@ public class CraftBlock implements Block {
     }
     // Cauldron end
 
-    public void setMetadata(String metadataKey, MetadataValue newMetadataValue) {
+    public void setMetadata(final String metadataKey, final MetadataValue newMetadataValue) {
         chunk.getCraftWorld().getBlockMetadata().setMetadata(this, metadataKey, newMetadataValue);
     }
 
-    public List<MetadataValue> getMetadata(String metadataKey) {
+    public List<MetadataValue> getMetadata(final String metadataKey) {
         return chunk.getCraftWorld().getBlockMetadata().getMetadata(this, metadataKey);
     }
 
-    public boolean hasMetadata(String metadataKey) {
+    public boolean hasMetadata(final String metadataKey) {
         return chunk.getCraftWorld().getBlockMetadata().hasMetadata(this, metadataKey);
     }
 
-    public void removeMetadata(String metadataKey, Plugin owningPlugin) {
+    public void removeMetadata(final String metadataKey, final Plugin owningPlugin) {
         chunk.getCraftWorld().getBlockMetadata().removeMetadata(this, metadataKey, owningPlugin);
     }
 }

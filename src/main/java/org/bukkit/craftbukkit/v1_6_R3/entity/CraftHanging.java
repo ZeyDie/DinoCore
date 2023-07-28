@@ -7,7 +7,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Hanging;
 
 public class CraftHanging extends CraftEntity implements Hanging {
-    public CraftHanging(CraftServer server, net.minecraft.entity.EntityHanging entity) {
+    public CraftHanging(final CraftServer server, final net.minecraft.entity.EntityHanging entity) {
         super(server, entity);
     }
 
@@ -15,14 +15,17 @@ public class CraftHanging extends CraftEntity implements Hanging {
         return getFacing().getOppositeFace();
     }
 
-    public void setFacingDirection(BlockFace face) {
+    public void setFacingDirection(final BlockFace face) {
         setFacingDirection(face, false);
     }
 
-    public boolean setFacingDirection(BlockFace face, boolean force) {
-        Block block = getLocation().getBlock().getRelative(getAttachedFace()).getRelative(face.getOppositeFace()).getRelative(getFacing());
-        net.minecraft.entity.EntityHanging hanging = getHandle();
-        int x = hanging.xPosition, y = hanging.yPosition, z = hanging.zPosition, dir = hanging.hangingDirection;
+    public boolean setFacingDirection(final BlockFace face, final boolean force) {
+        final Block block = getLocation().getBlock().getRelative(getAttachedFace()).getRelative(face.getOppositeFace()).getRelative(getFacing());
+        final net.minecraft.entity.EntityHanging hanging = getHandle();
+        final int x = hanging.xPosition;
+        int y = hanging.yPosition;
+        int z = hanging.zPosition;
+        final int dir = hanging.hangingDirection;
         hanging.xPosition = block.getX();
         hanging.yPosition = block.getY();
         hanging.zPosition = block.getZ();

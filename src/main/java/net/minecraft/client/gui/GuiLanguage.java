@@ -22,7 +22,7 @@ public class GuiLanguage extends GuiScreen
     /** This GUI's 'Done' button. */
     private GuiSmallButton doneButton;
 
-    public GuiLanguage(GuiScreen par1GuiScreen, GameSettings par2GameSettings, LanguageManager par3LanguageManager)
+    public GuiLanguage(final GuiScreen par1GuiScreen, final GameSettings par2GameSettings, final LanguageManager par3LanguageManager)
     {
         this.parentGui = par1GuiScreen;
         this.theGameSettings = par2GameSettings;
@@ -42,7 +42,7 @@ public class GuiLanguage extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
@@ -62,7 +62,7 @@ public class GuiLanguage extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.languageList.drawScreen(par1, par2, par3);
         this.drawCenteredString(this.fontRenderer, I18n.getString("options.language"), this.width / 2, 16, 16777215);
@@ -70,7 +70,7 @@ public class GuiLanguage extends GuiScreen
         super.drawScreen(par1, par2, par3);
     }
 
-    static LanguageManager func_135011_a(GuiLanguage par0GuiLanguage)
+    static LanguageManager func_135011_a(final GuiLanguage par0GuiLanguage)
     {
         return par0GuiLanguage.field_135014_d;
     }
@@ -78,7 +78,7 @@ public class GuiLanguage extends GuiScreen
     /**
      * Gets the relevant instance of GameSettings. Synthetic method for use in GuiSlotLanguage
      */
-    static GameSettings getGameSettings(GuiLanguage par0GuiLanguage)
+    static GameSettings getGameSettings(final GuiLanguage par0GuiLanguage)
     {
         return par0GuiLanguage.theGameSettings;
     }
@@ -86,7 +86,7 @@ public class GuiLanguage extends GuiScreen
     /**
      * Returns the private doneButton field.
      */
-    static GuiSmallButton getDoneButton(GuiLanguage par0GuiLanguage)
+    static GuiSmallButton getDoneButton(final GuiLanguage par0GuiLanguage)
     {
         return par0GuiLanguage.doneButton;
     }

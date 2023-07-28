@@ -37,7 +37,7 @@ public class PlayerAnimationEvent extends PlayerEvent implements Cancellable {
         return this.isCancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.isCancelled = cancel;
     }
 

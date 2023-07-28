@@ -8,7 +8,7 @@ class CallableLevelSpawnLocation implements Callable
 {
     final WorldInfo worldInfoInstance;
 
-    CallableLevelSpawnLocation(WorldInfo par1WorldInfo)
+    CallableLevelSpawnLocation(final WorldInfo par1WorldInfo)
     {
         this.worldInfoInstance = par1WorldInfo;
     }

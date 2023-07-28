@@ -44,11 +44,11 @@ public class GuiScreen extends Gui
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         for (int k = 0; k < this.buttonList.size(); ++k)
         {
-            GuiButton guibutton = (GuiButton)this.buttonList.get(k);
+            final GuiButton guibutton = (GuiButton)this.buttonList.get(k);
             guibutton.drawButton(this.mc, par1, par2);
         }
     }
@@ -56,7 +56,7 @@ public class GuiScreen extends Gui
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         if (par2 == 1)
         {
@@ -72,14 +72,14 @@ public class GuiScreen extends Gui
     {
         try
         {
-            Transferable transferable = Toolkit.getDefaultToolkit().getSystemClipboard().getContents((Object)null);
+            final Transferable transferable = Toolkit.getDefaultToolkit().getSystemClipboard().getContents((Object)null);
 
             if (transferable != null && transferable.isDataFlavorSupported(DataFlavor.stringFlavor))
             {
                 return (String)transferable.getTransferData(DataFlavor.stringFlavor);
             }
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             ;
         }
@@ -90,14 +90,14 @@ public class GuiScreen extends Gui
     /**
      * store a string in the system clipboard
      */
-    public static void setClipboardString(String par0Str)
+    public static void setClipboardString(final String par0Str)
     {
         try
         {
-            StringSelection stringselection = new StringSelection(par0Str);
+            final StringSelection stringselection = new StringSelection(par0Str);
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringselection, (ClipboardOwner)null);
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             ;
         }
@@ -106,13 +106,13 @@ public class GuiScreen extends Gui
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int par1, int par2, int par3)
+    protected void mouseClicked(final int par1, final int par2, final int par3)
     {
         if (par3 == 0)
         {
             for (int l = 0; l < this.buttonList.size(); ++l)
             {
-                GuiButton guibutton = (GuiButton)this.buttonList.get(l);
+                final GuiButton guibutton = (GuiButton)this.buttonList.get(l);
 
                 if (guibutton.mousePressed(this.mc, par1, par2))
                 {
@@ -128,7 +128,7 @@ public class GuiScreen extends Gui
      * Called when the mouse is moved or a mouse button is released.  Signature: (mouseX, mouseY, which) which==-1 is
      * mouseMove, which==0 or which==1 is mouseUp
      */
-    protected void mouseMovedOrUp(int par1, int par2, int par3)
+    protected void mouseMovedOrUp(final int par1, final int par2, final int par3)
     {
         if (this.selectedButton != null && par3 == 0)
         {
@@ -141,18 +141,18 @@ public class GuiScreen extends Gui
      * Called when a mouse button is pressed and the mouse is moved around. Parameters are : mouseX, mouseY,
      * lastButtonClicked & timeSinceMouseClick.
      */
-    protected void mouseClickMove(int par1, int par2, int par3, long par4) {}
+    protected void mouseClickMove(final int par1, final int par2, final int par3, final long par4) {}
 
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton) {}
+    protected void actionPerformed(final GuiButton par1GuiButton) {}
 
     /**
      * Causes the screen to lay out its subcomponents again. This is the equivalent of the Java call
      * Container.validate()
      */
-    public void setWorldAndResolution(Minecraft par1Minecraft, int par2, int par3)
+    public void setWorldAndResolution(final Minecraft par1Minecraft, final int par2, final int par3)
     {
         this.mc = par1Minecraft;
         this.fontRenderer = par1Minecraft.fontRenderer;
@@ -188,8 +188,8 @@ public class GuiScreen extends Gui
      */
     public void handleMouseInput()
     {
-        int i = Mouse.getEventX() * this.width / this.mc.displayWidth;
-        int j = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
+        final int i = Mouse.getEventX() * this.width / this.mc.displayWidth;
+        final int j = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
         int k = Mouse.getEventButton();
 
         if (Minecraft.isRunningOnMac && k == 0 && (Keyboard.isKeyDown(29) || Keyboard.isKeyDown(157)))
@@ -220,7 +220,7 @@ public class GuiScreen extends Gui
         }
         else if (this.eventButton != -1 && this.lastMouseEvent > 0L)
         {
-            long l = Minecraft.getSystemTime() - this.lastMouseEvent;
+            final long l = Minecraft.getSystemTime() - this.lastMouseEvent;
             this.mouseClickMove(i, j, this.eventButton, l);
         }
     }
@@ -232,8 +232,8 @@ public class GuiScreen extends Gui
     {
         if (Keyboard.getEventKeyState())
         {
-            int i = Keyboard.getEventKey();
-            char c0 = Keyboard.getEventCharacter();
+            final int i = Keyboard.getEventKey();
+            final char c0 = Keyboard.getEventCharacter();
 
             if (i == 87)
             {
@@ -263,7 +263,7 @@ public class GuiScreen extends Gui
         this.drawWorldBackground(0);
     }
 
-    public void drawWorldBackground(int par1)
+    public void drawWorldBackground(final int par1)
     {
         if (this.mc.theWorld != null)
         {
@@ -278,14 +278,14 @@ public class GuiScreen extends Gui
     /**
      * Draws the background (i is always 0 as of 1.2.2)
      */
-    public void drawBackground(int par1)
+    public void drawBackground(final int par1)
     {
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_FOG);
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         this.mc.getTextureManager().bindTexture(optionsBackground);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        float f = 32.0F;
+        final float f = 32.0F;
         tessellator.startDrawingQuads();
         tessellator.setColorOpaque_I(4210752);
         tessellator.addVertexWithUV(0.0D, (double)this.height, 0.0D, 0.0D, (double)((float)this.height / f + (float)par1));
@@ -303,7 +303,7 @@ public class GuiScreen extends Gui
         return true;
     }
 
-    public void confirmClicked(boolean par1, int par2) {}
+    public void confirmClicked(final boolean par1, final int par2) {}
 
     public static boolean isCtrlKeyDown()
     {

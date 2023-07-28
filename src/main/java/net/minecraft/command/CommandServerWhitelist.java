@@ -22,12 +22,12 @@ public class CommandServerWhitelist extends CommandBase
         return 3;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.whitelist.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         if (par2ArrayOfStr.length >= 1)
         {
@@ -48,8 +48,8 @@ public class CommandServerWhitelist extends CommandBase
             if (par2ArrayOfStr[0].equals("list"))
             {
                 par1ICommandSender.sendChatToPlayer(ChatMessageComponent.createFromTranslationWithSubstitutions("commands.whitelist.list", new Object[] {Integer.valueOf(MinecraftServer.getServer().getConfigurationManager().getWhiteListedPlayers().size()), Integer.valueOf(MinecraftServer.getServer().getConfigurationManager().getAvailablePlayerDat().length)}));
-                Set set = MinecraftServer.getServer().getConfigurationManager().getWhiteListedPlayers();
-                par1ICommandSender.sendChatToPlayer(ChatMessageComponent.createFromText(joinNiceString(set.toArray(new String[set.size()]))));
+                final Set set = MinecraftServer.getServer().getConfigurationManager().getWhiteListedPlayers();
+                par1ICommandSender.sendChatToPlayer(ChatMessageComponent.createFromText(joinNiceString(set.toArray(new String[0]))));
                 return;
             }
 
@@ -91,7 +91,7 @@ public class CommandServerWhitelist extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public List addTabCompletionOptions(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         if (par2ArrayOfStr.length == 1)
         {
@@ -103,15 +103,15 @@ public class CommandServerWhitelist extends CommandBase
             {
                 if (par2ArrayOfStr[0].equals("add"))
                 {
-                    String[] astring1 = MinecraftServer.getServer().getConfigurationManager().getAvailablePlayerDat();
-                    ArrayList arraylist = new ArrayList();
-                    String s = par2ArrayOfStr[par2ArrayOfStr.length - 1];
-                    String[] astring2 = astring1;
-                    int i = astring1.length;
+                    final String[] astring1 = MinecraftServer.getServer().getConfigurationManager().getAvailablePlayerDat();
+                    final ArrayList arraylist = new ArrayList();
+                    final String s = par2ArrayOfStr[par2ArrayOfStr.length - 1];
+                    final String[] astring2 = astring1;
+                    final int i = astring1.length;
 
                     for (int j = 0; j < i; ++j)
                     {
-                        String s1 = astring2[j];
+                        final String s1 = astring2[j];
 
                         if (doesStringStartWith(s, s1) && !MinecraftServer.getServer().getConfigurationManager().getWhiteListedPlayers().contains(s1))
                         {

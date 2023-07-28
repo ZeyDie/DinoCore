@@ -17,7 +17,7 @@ public class Pumpkin extends MaterialData implements Directional {
      *
      * @param direction the direction the pumkin's face is facing
      */
-    public Pumpkin(BlockFace direction) {
+    public Pumpkin(final BlockFace direction) {
         this();
         setFacingDirection(direction);
     }
@@ -57,8 +57,8 @@ public class Pumpkin extends MaterialData implements Directional {
         return getItemType() == Material.JACK_O_LANTERN;
     }
 
-    public void setFacingDirection(BlockFace face) {
-        byte data;
+    public void setFacingDirection(final BlockFace face) {
+        final byte data;
 
         switch (face) {
         case NORTH:
@@ -82,7 +82,7 @@ public class Pumpkin extends MaterialData implements Directional {
     }
 
     public BlockFace getFacing() {
-        byte data = getData();
+        final byte data = getData();
 
         switch (data) {
         case 0x0:

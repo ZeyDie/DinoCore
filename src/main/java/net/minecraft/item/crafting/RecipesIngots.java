@@ -16,12 +16,12 @@ public class RecipesIngots
     /**
      * Adds the ingot recipes to the CraftingManager.
      */
-    public void addRecipes(CraftingManager par1CraftingManager)
+    public void addRecipes(final CraftingManager par1CraftingManager)
     {
         for (int i = 0; i < this.recipeItems.length; ++i)
         {
-            Block block = (Block)this.recipeItems[i][0];
-            ItemStack itemstack = (ItemStack)this.recipeItems[i][1];
+            final Block block = (Block)this.recipeItems[i][0];
+            final ItemStack itemstack = (ItemStack)this.recipeItems[i][1];
             par1CraftingManager.addRecipe(new ItemStack(block), new Object[] {"###", "###", "###", '#', itemstack});
             par1CraftingManager.addRecipe(itemstack, new Object[] {"#", '#', block});
         }

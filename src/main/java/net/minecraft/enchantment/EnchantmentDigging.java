@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 
 public class EnchantmentDigging extends Enchantment
 {
-    protected EnchantmentDigging(int par1, int par2)
+    protected EnchantmentDigging(final int par1, final int par2)
     {
         super(par1, par2, EnumEnchantmentType.digger);
         this.setName("digging");
@@ -14,7 +14,7 @@ public class EnchantmentDigging extends Enchantment
     /**
      * Returns the minimal value of enchantability needed on the enchantment level passed.
      */
-    public int getMinEnchantability(int par1)
+    public int getMinEnchantability(final int par1)
     {
         return 1 + 10 * (par1 - 1);
     }
@@ -22,7 +22,7 @@ public class EnchantmentDigging extends Enchantment
     /**
      * Returns the maximum value of enchantability nedded on the enchantment level passed.
      */
-    public int getMaxEnchantability(int par1)
+    public int getMaxEnchantability(final int par1)
     {
         return super.getMinEnchantability(par1) + 50;
     }
@@ -35,7 +35,7 @@ public class EnchantmentDigging extends Enchantment
         return 5;
     }
 
-    public boolean canApply(ItemStack par1ItemStack)
+    public boolean canApply(final ItemStack par1ItemStack)
     {
         return par1ItemStack.getItem().itemID == Item.shears.itemID ? true : super.canApply(par1ItemStack);
     }

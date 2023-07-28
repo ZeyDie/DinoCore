@@ -23,16 +23,16 @@ import java.util.List;
 
 public class ItemMap extends ItemMapBase
 {
-    protected ItemMap(int par1)
+    protected ItemMap(final int par1)
     {
         super(par1);
         this.setHasSubtypes(true);
     }
 
     @SideOnly(Side.CLIENT)
-    public static MapData getMPMapData(short par0, World par1World)
+    public static MapData getMPMapData(final short par0, final World par1World)
     {
-        String s = "map_" + par0;
+        final String s = "map_" + par0;
         MapData mapdata = (MapData)par1World.loadItemData(MapData.class, s);
 
         if (mapdata == null)
@@ -44,7 +44,7 @@ public class ItemMap extends ItemMapBase
         return mapdata;
     }
 
-    public MapData getMapData(ItemStack par1ItemStack, World par2World)
+    public MapData getMapData(final ItemStack par1ItemStack, final World par2World)
     {
         String s = "map_" + par1ItemStack.getItemDamage();
         MapData mapdata = (MapData)par2World.loadItemData(MapData.class, s);
@@ -55,14 +55,14 @@ public class ItemMap extends ItemMapBase
             s = "map_" + par1ItemStack.getItemDamage();
             mapdata = new MapData(s);
             mapdata.scale = 3;
-            int i = 128 * (1 << mapdata.scale);
+            final int i = 128 * (1 << mapdata.scale);
             mapdata.xCenter = Math.round((float)par2World.getWorldInfo().getSpawnX() / (float)i) * i;
             mapdata.zCenter = Math.round((float)(par2World.getWorldInfo().getSpawnZ() / i)) * i;
             mapdata.dimension = par2World.provider.dimensionId;
             mapdata.markDirty();
             par2World.setItemData(s, mapdata);
             // CraftBukkit start
-            MapInitializeEvent event = new MapInitializeEvent(mapdata.mapView);
+            final MapInitializeEvent event = new MapInitializeEvent(mapdata.mapView);
             Bukkit.getServer().getPluginManager().callEvent(event);
             // CraftBukkit end
         }
@@ -70,17 +70,17 @@ public class ItemMap extends ItemMapBase
         return mapdata;
     }
 
-    public void updateMapData(World par1World, Entity par2Entity, MapData par3MapData)
+    public void updateMapData(final World par1World, final Entity par2Entity, final MapData par3MapData)
     {
         if (par1World.provider.dimensionId == par3MapData.dimension && par2Entity instanceof EntityPlayer)
         {
-            short short1 = 128;
-            short short2 = 128;
-            int i = 1 << par3MapData.scale;
-            int j = par3MapData.xCenter;
-            int k = par3MapData.zCenter;
-            int l = MathHelper.floor_double(par2Entity.posX - (double)j) / i + short1 / 2;
-            int i1 = MathHelper.floor_double(par2Entity.posZ - (double)k) / i + short2 / 2;
+            final short short1 = 128;
+            final short short2 = 128;
+            final int i = 1 << par3MapData.scale;
+            final int j = par3MapData.xCenter;
+            final int k = par3MapData.zCenter;
+            final int l = MathHelper.floor_double(par2Entity.posX - (double)j) / i + short1 / 2;
+            final int i1 = MathHelper.floor_double(par2Entity.posZ - (double)k) / i + short2 / 2;
             int j1 = 128 / i;
 
             if (par1World.provider.hasNoSky)
@@ -88,7 +88,7 @@ public class ItemMap extends ItemMapBase
                 j1 /= 2;
             }
 
-            MapInfo mapinfo = par3MapData.func_82568_a((EntityPlayer)par2Entity);
+            final MapInfo mapinfo = par3MapData.func_82568_a((EntityPlayer)par2Entity);
             ++mapinfo.field_82569_d;
 
             for (int k1 = l - j1 + 1; k1 < l + j1; ++k1)
@@ -103,18 +103,18 @@ public class ItemMap extends ItemMapBase
                     {
                         if (k1 >= 0 && j2 >= -1 && k1 < short1 && j2 < short2)
                         {
-                            int k2 = k1 - l;
-                            int l2 = j2 - i1;
-                            boolean flag = k2 * k2 + l2 * l2 > (j1 - 2) * (j1 - 2);
-                            int i3 = (j / i + k1 - short1 / 2) * i;
-                            int j3 = (k / i + j2 - short2 / 2) * i;
-                            int[] aint = new int[Block.blocksList.length];
-                            Chunk chunk = par1World.getChunkFromBlockCoords(i3, j3);
+                            final int k2 = k1 - l;
+                            final int l2 = j2 - i1;
+                            final boolean flag = k2 * k2 + l2 * l2 > (j1 - 2) * (j1 - 2);
+                            final int i3 = (j / i + k1 - short1 / 2) * i;
+                            final int j3 = (k / i + j2 - short2 / 2) * i;
+                            final int[] aint = new int[Block.blocksList.length];
+                            final Chunk chunk = par1World.getChunkFromBlockCoords(i3, j3);
 
                             if (!chunk.isEmpty())
                             {
-                                int k3 = i3 & 15;
-                                int l3 = j3 & 15;
+                                final int k3 = i3 & 15;
+                                final int l3 = j3 & 15;
                                 int i4 = 0;
                                 double d1 = 0.0D;
                                 int j4;
@@ -182,7 +182,7 @@ public class ItemMap extends ItemMapBase
                                                 if (l4 > 0 && j5 != 0 && Block.blocksList[j5].blockMaterial.isLiquid())
                                                 {
                                                     i5 = l4 - 1;
-                                                    boolean flag2 = false;
+                                                    final boolean flag2 = false;
                                                     int k5;
 
                                                     do
@@ -230,7 +230,7 @@ public class ItemMap extends ItemMapBase
 
                                 if (k4 > 0)
                                 {
-                                    MapColor mapcolor = Block.blocksList[k4].blockMaterial.materialMapColor;
+                                    final MapColor mapcolor = Block.blocksList[k4].blockMaterial.materialMapColor;
 
                                     if (mapcolor == MapColor.waterColor)
                                     {
@@ -255,8 +255,8 @@ public class ItemMap extends ItemMapBase
 
                                 if (j2 >= 0 && k2 * k2 + l2 * l2 < j1 * j1 && (!flag || (k1 + j2 & 1) != 0))
                                 {
-                                    byte b1 = par3MapData.colors[k1 + j2 * short1];
-                                    byte b2 = (byte)(i5 * 4 + b0);
+                                    final byte b1 = par3MapData.colors[k1 + j2 * short1];
+                                    final byte b2 = (byte)(i5 * 4 + b0);
 
                                     if (b1 != b2)
                                     {
@@ -290,15 +290,15 @@ public class ItemMap extends ItemMapBase
      * Called each tick as long the item is on a player inventory. Uses by maps to check if is on a player hand and
      * update it's contents.
      */
-    public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5)
+    public void onUpdate(final ItemStack par1ItemStack, final World par2World, final Entity par3Entity, final int par4, final boolean par5)
     {
         if (!par2World.isRemote)
         {
-            MapData mapdata = this.getMapData(par1ItemStack, par2World);
+            final MapData mapdata = this.getMapData(par1ItemStack, par2World);
 
             if (par3Entity instanceof EntityPlayer)
             {
-                EntityPlayer entityplayer = (EntityPlayer)par3Entity;
+                final EntityPlayer entityplayer = (EntityPlayer)par3Entity;
                 mapdata.updateVisiblePlayers(entityplayer, par1ItemStack);
             }
 
@@ -312,22 +312,22 @@ public class ItemMap extends ItemMapBase
     /**
      * returns null if no update is to be sent
      */
-    public Packet createMapDataPacket(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public Packet createMapDataPacket(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
-        byte[] abyte = this.getMapData(par1ItemStack, par2World).getUpdatePacketData(par1ItemStack, par2World, par3EntityPlayer);
+        final byte[] abyte = this.getMapData(par1ItemStack, par2World).getUpdatePacketData(par1ItemStack, par2World, par3EntityPlayer);
         return abyte == null ? null : new Packet131MapData((short)Item.map.itemID, (short)par1ItemStack.getItemDamage(), abyte);
     }
 
     /**
      * Called when item is crafted/smelted. Used only by maps so far.
      */
-    public void onCreated(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public void onCreated(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         if (par1ItemStack.hasTagCompound() && par1ItemStack.getTagCompound().getBoolean("map_is_scaling"))
         {
-            MapData mapdata = Item.map.getMapData(par1ItemStack, par2World);
+            final MapData mapdata = Item.map.getMapData(par1ItemStack, par2World);
             par1ItemStack.setItemDamage(par2World.getUniqueDataId("map"));
-            MapData mapdata1 = new MapData("map_" + par1ItemStack.getItemDamage());
+            final MapData mapdata1 = new MapData("map_" + par1ItemStack.getItemDamage());
             mapdata1.scale = (byte)(mapdata.scale + 1);
 
             if (mapdata1.scale > 4)
@@ -341,7 +341,7 @@ public class ItemMap extends ItemMapBase
             mapdata1.markDirty();
             par2World.setItemData("map_" + par1ItemStack.getItemDamage(), mapdata1);
             // CraftBukkit start
-            MapInitializeEvent event = new MapInitializeEvent(mapdata1.mapView);
+            final MapInitializeEvent event = new MapInitializeEvent(mapdata1.mapView);
             Bukkit.getServer().getPluginManager().callEvent(event);
             // CraftBukkit end
         }
@@ -352,9 +352,9 @@ public class ItemMap extends ItemMapBase
     /**
      * allows items to add custom lines of information to the mouseover description
      */
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    public void addInformation(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final List par3List, final boolean par4)
     {
-        MapData mapdata = this.getMapData(par1ItemStack, par2EntityPlayer.worldObj);
+        final MapData mapdata = this.getMapData(par1ItemStack, par2EntityPlayer.worldObj);
 
         if (par4)
         {

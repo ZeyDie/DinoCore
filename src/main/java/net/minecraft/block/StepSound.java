@@ -6,7 +6,7 @@ public class StepSound
     public final float stepSoundVolume;
     public final float stepSoundPitch;
 
-    public StepSound(String par1Str, float par2, float par3)
+    public StepSound(final String par1Str, final float par2, final float par3)
     {
         this.stepSoundName = par1Str;
         this.stepSoundVolume = par2;

@@ -10,7 +10,7 @@ final class DispenserBehaviorPotion implements IBehaviorDispenseItem
     /**
      * Dispenses the specified ItemStack from a dispenser.
      */
-    public ItemStack dispense(IBlockSource par1IBlockSource, ItemStack par2ItemStack)
+    public ItemStack dispense(final IBlockSource par1IBlockSource, final ItemStack par2ItemStack)
     {
         return ItemPotion.isSplash(par2ItemStack.getItemDamage()) ? (new DispenserBehaviorPotionProjectile(this, par2ItemStack)).dispense(par1IBlockSource, par2ItemStack) : this.defaultDispenserItemBehavior.dispense(par1IBlockSource, par2ItemStack);
     }

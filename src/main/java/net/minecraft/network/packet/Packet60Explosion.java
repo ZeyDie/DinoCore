@@ -31,7 +31,7 @@ public class Packet60Explosion extends Packet
 
     public Packet60Explosion() {}
 
-    public Packet60Explosion(double par1, double par3, double par5, float par7, List par8List, Vec3 par9Vec3)
+    public Packet60Explosion(final double par1, final double par3, final double par5, final float par7, final List par8List, final Vec3 par9Vec3)
     {
         this.explosionX = par1;
         this.explosionY = par3;
@@ -50,23 +50,23 @@ public class Packet60Explosion extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.explosionX = par1DataInput.readDouble();
         this.explosionY = par1DataInput.readDouble();
         this.explosionZ = par1DataInput.readDouble();
         this.explosionSize = par1DataInput.readFloat();
-        int i = par1DataInput.readInt();
+        final int i = par1DataInput.readInt();
         this.chunkPositionRecords = new ArrayList(i);
-        int j = (int)this.explosionX;
-        int k = (int)this.explosionY;
-        int l = (int)this.explosionZ;
+        final int j = (int)this.explosionX;
+        final int k = (int)this.explosionY;
+        final int l = (int)this.explosionZ;
 
         for (int i1 = 0; i1 < i; ++i1)
         {
-            int j1 = par1DataInput.readByte() + j;
-            int k1 = par1DataInput.readByte() + k;
-            int l1 = par1DataInput.readByte() + l;
+            final int j1 = par1DataInput.readByte() + j;
+            final int k1 = par1DataInput.readByte() + k;
+            final int l1 = par1DataInput.readByte() + l;
             this.chunkPositionRecords.add(new ChunkPosition(j1, k1, l1));
         }
 
@@ -78,24 +78,24 @@ public class Packet60Explosion extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeDouble(this.explosionX);
         par1DataOutput.writeDouble(this.explosionY);
         par1DataOutput.writeDouble(this.explosionZ);
         par1DataOutput.writeFloat(this.explosionSize);
         par1DataOutput.writeInt(this.chunkPositionRecords.size());
-        int i = (int)this.explosionX;
-        int j = (int)this.explosionY;
-        int k = (int)this.explosionZ;
-        Iterator iterator = this.chunkPositionRecords.iterator();
+        final int i = (int)this.explosionX;
+        final int j = (int)this.explosionY;
+        final int k = (int)this.explosionZ;
+        final Iterator iterator = this.chunkPositionRecords.iterator();
 
         while (iterator.hasNext())
         {
-            ChunkPosition chunkposition = (ChunkPosition)iterator.next();
-            int l = chunkposition.x - i;
-            int i1 = chunkposition.y - j;
-            int j1 = chunkposition.z - k;
+            final ChunkPosition chunkposition = (ChunkPosition)iterator.next();
+            final int l = chunkposition.x - i;
+            final int i1 = chunkposition.y - j;
+            final int j1 = chunkposition.z - k;
             par1DataOutput.writeByte(l);
             par1DataOutput.writeByte(i1);
             par1DataOutput.writeByte(j1);
@@ -109,7 +109,7 @@ public class Packet60Explosion extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleExplosion(this);
     }

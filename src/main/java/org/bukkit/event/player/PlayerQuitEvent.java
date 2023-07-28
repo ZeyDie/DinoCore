@@ -29,7 +29,7 @@ public class PlayerQuitEvent extends PlayerEvent {
      *
      * @param quitMessage quit message
      */
-    public void setQuitMessage(String quitMessage) {
+    public void setQuitMessage(final String quitMessage) {
         this.quitMessage = quitMessage;
     }
 

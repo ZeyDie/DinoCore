@@ -14,20 +14,20 @@ public class ComponentNetherBridgeThrone extends ComponentNetherBridgePiece
 
     public ComponentNetherBridgeThrone() {}
 
-    public ComponentNetherBridgeThrone(int par1, Random par2Random, StructureBoundingBox par3StructureBoundingBox, int par4)
+    public ComponentNetherBridgeThrone(final int par1, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox, final int par4)
     {
         super(par1);
         this.coordBaseMode = par4;
         this.boundingBox = par3StructureBoundingBox;
     }
 
-    protected void func_143011_b(NBTTagCompound par1NBTTagCompound)
+    protected void func_143011_b(final NBTTagCompound par1NBTTagCompound)
     {
         super.func_143011_b(par1NBTTagCompound);
         this.hasSpawner = par1NBTTagCompound.getBoolean("Mob");
     }
 
-    protected void func_143012_a(NBTTagCompound par1NBTTagCompound)
+    protected void func_143012_a(final NBTTagCompound par1NBTTagCompound)
     {
         super.func_143012_a(par1NBTTagCompound);
         par1NBTTagCompound.setBoolean("Mob", this.hasSpawner);
@@ -36,9 +36,9 @@ public class ComponentNetherBridgeThrone extends ComponentNetherBridgePiece
     /**
      * Creates and returns a new component piece. Or null if it could not find enough room to place it.
      */
-    public static ComponentNetherBridgeThrone createValidComponent(List par0List, Random par1Random, int par2, int par3, int par4, int par5, int par6)
+    public static ComponentNetherBridgeThrone createValidComponent(final List par0List, final Random par1Random, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
-        StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(par2, par3, par4, -2, 0, 0, 7, 8, 9, par5);
+        final StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(par2, par3, par4, -2, 0, 0, 7, 8, 9, par5);
         return isAboveGround(structureboundingbox) && StructureComponent.findIntersecting(par0List, structureboundingbox) == null ? new ComponentNetherBridgeThrone(par6, par1Random, structureboundingbox, par5) : null;
     }
 
@@ -46,7 +46,7 @@ public class ComponentNetherBridgeThrone extends ComponentNetherBridgePiece
      * second Part of Structure generating, this for example places Spiderwebs, Mob Spawners, it closes Mineshafts at
      * the end, it adds Fences...
      */
-    public boolean addComponentParts(World par1World, Random par2Random, StructureBoundingBox par3StructureBoundingBox)
+    public boolean addComponentParts(final World par1World, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox)
     {
         this.fillWithBlocks(par1World, par3StructureBoundingBox, 0, 2, 0, 6, 7, 7, 0, 0, false);
         this.fillWithBlocks(par1World, par3StructureBoundingBox, 1, 0, 0, 5, 1, 7, Block.netherBrick.blockID, Block.netherBrick.blockID, false);
@@ -73,13 +73,13 @@ public class ComponentNetherBridgeThrone extends ComponentNetherBridgePiece
         {
             i = this.getYWithOffset(5);
             j = this.getXWithOffset(3, 5);
-            int k = this.getZWithOffset(3, 5);
+            final int k = this.getZWithOffset(3, 5);
 
             if (par3StructureBoundingBox.isVecInside(j, i, k))
             {
                 this.hasSpawner = true;
                 par1World.setBlock(j, i, k, Block.mobSpawner.blockID, 0, 2);
-                TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)par1World.getBlockTileEntity(j, i, k);
+                final TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)par1World.getBlockTileEntity(j, i, k);
 
                 if (tileentitymobspawner != null)
                 {

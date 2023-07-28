@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ItemFirework extends Item
 {
-    public ItemFirework(int par1)
+    public ItemFirework(final int par1)
     {
         super(par1);
     }
@@ -23,11 +23,11 @@ public class ItemFirework extends Item
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final World par3World, final int par4, final int par5, final int par6, final int par7, final float par8, final float par9, final float par10)
     {
         if (!par3World.isRemote)
         {
-            EntityFireworkRocket entityfireworkrocket = new EntityFireworkRocket(par3World, (double)((float)par4 + par8), (double)((float)par5 + par9), (double)((float)par6 + par10), par1ItemStack);
+            final EntityFireworkRocket entityfireworkrocket = new EntityFireworkRocket(par3World, (double)((float)par4 + par8), (double)((float)par5 + par9), (double)((float)par6 + par10), par1ItemStack);
             par3World.spawnEntityInWorld(entityfireworkrocket);
 
             if (!par2EntityPlayer.capabilities.isCreativeMode)
@@ -48,11 +48,11 @@ public class ItemFirework extends Item
     /**
      * allows items to add custom lines of information to the mouseover description
      */
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    public void addInformation(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final List par3List, final boolean par4)
     {
         if (par1ItemStack.hasTagCompound())
         {
-            NBTTagCompound nbttagcompound = par1ItemStack.getTagCompound().getCompoundTag("Fireworks");
+            final NBTTagCompound nbttagcompound = par1ItemStack.getTagCompound().getCompoundTag("Fireworks");
 
             if (nbttagcompound != null)
             {
@@ -61,17 +61,17 @@ public class ItemFirework extends Item
                     par3List.add(StatCollector.translateToLocal("item.fireworks.flight") + " " + nbttagcompound.getByte("Flight"));
                 }
 
-                NBTTagList nbttaglist = nbttagcompound.getTagList("Explosions");
+                final NBTTagList nbttaglist = nbttagcompound.getTagList("Explosions");
 
                 if (nbttaglist != null && nbttaglist.tagCount() > 0)
                 {
                     for (int i = 0; i < nbttaglist.tagCount(); ++i)
                     {
-                        NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
-                        ArrayList arraylist = new ArrayList();
+                        final NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
+                        final ArrayList arraylist = new ArrayList();
                         ItemFireworkCharge.func_92107_a(nbttagcompound1, arraylist);
 
-                        if (arraylist.size() > 0)
+                        if (!arraylist.isEmpty())
                         {
                             for (int j = 1; j < arraylist.size(); ++j)
                             {

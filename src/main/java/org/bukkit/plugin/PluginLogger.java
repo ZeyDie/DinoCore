@@ -18,16 +18,16 @@ public class PluginLogger extends Logger {
      *
      * @param context A reference to the plugin
      */
-    public PluginLogger(Plugin context) {
+    public PluginLogger(final Plugin context) {
         super(context.getClass().getCanonicalName(), null);
-        String prefix = context.getDescription().getPrefix();
+        final String prefix = context.getDescription().getPrefix();
         pluginName = prefix != null ? new StringBuilder().append("[").append(prefix).append("] ").toString() : "[" + context.getDescription().getName() + "] ";
         setParent(context.getServer().getLogger());
         setLevel(Level.ALL);
     }
 
     @Override
-    public void log(LogRecord logRecord) {
+    public void log(final LogRecord logRecord) {
         logRecord.setMessage(pluginName + logRecord.getMessage());
         super.log(logRecord);
     }

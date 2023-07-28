@@ -17,12 +17,12 @@ public class CommandToggleDownfall extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.downfall.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         this.toggleDownfall();
         notifyAdmins(par1ICommandSender, "commands.downfall.success", new Object[0]);

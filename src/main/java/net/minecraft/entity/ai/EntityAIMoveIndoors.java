@@ -13,7 +13,7 @@ public class EntityAIMoveIndoors extends EntityAIBase
     private int insidePosX = -1;
     private int insidePosZ = -1;
 
-    public EntityAIMoveIndoors(EntityCreature par1EntityCreature)
+    public EntityAIMoveIndoors(final EntityCreature par1EntityCreature)
     {
         this.entityObj = par1EntityCreature;
         this.setMutexBits(1);
@@ -36,7 +36,7 @@ public class EntityAIMoveIndoors extends EntityAIBase
             }
             else
             {
-                Village village = this.entityObj.worldObj.villageCollectionObj.findNearestVillage(MathHelper.floor_double(this.entityObj.posX), MathHelper.floor_double(this.entityObj.posY), MathHelper.floor_double(this.entityObj.posZ), 14);
+                final Village village = this.entityObj.worldObj.villageCollectionObj.findNearestVillage(MathHelper.floor_double(this.entityObj.posX), MathHelper.floor_double(this.entityObj.posY), MathHelper.floor_double(this.entityObj.posZ), 14);
 
                 if (village == null)
                 {
@@ -72,7 +72,7 @@ public class EntityAIMoveIndoors extends EntityAIBase
 
         if (this.entityObj.getDistanceSq((double)this.doorInfo.getInsidePosX(), (double)this.doorInfo.posY, (double)this.doorInfo.getInsidePosZ()) > 256.0D)
         {
-            Vec3 vec3 = RandomPositionGenerator.findRandomTargetBlockTowards(this.entityObj, 14, 3, this.entityObj.worldObj.getWorldVec3Pool().getVecFromPool((double)this.doorInfo.getInsidePosX() + 0.5D, (double)this.doorInfo.getInsidePosY(), (double)this.doorInfo.getInsidePosZ() + 0.5D));
+            final Vec3 vec3 = RandomPositionGenerator.findRandomTargetBlockTowards(this.entityObj, 14, 3, this.entityObj.worldObj.getWorldVec3Pool().getVecFromPool((double)this.doorInfo.getInsidePosX() + 0.5D, (double)this.doorInfo.getInsidePosY(), (double)this.doorInfo.getInsidePosZ() + 0.5D));
 
             if (vec3 != null)
             {

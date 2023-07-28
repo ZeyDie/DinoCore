@@ -55,11 +55,11 @@ public class InventoryClickEvent extends InventoryInteractEvent {
     private int hotbarKey = -1;
 
     @Deprecated
-    public InventoryClickEvent(InventoryView view, SlotType type, int slot, boolean right, boolean shift) {
+    public InventoryClickEvent(final InventoryView view, final SlotType type, final int slot, final boolean right, final boolean shift) {
         this(view, type, slot, right ? (shift ? ClickType.SHIFT_RIGHT : ClickType.RIGHT) : (shift ? ClickType.SHIFT_LEFT : ClickType.LEFT), InventoryAction.SWAP_WITH_CURSOR);
     }
 
-    public InventoryClickEvent(InventoryView view, SlotType type, int slot, ClickType click, InventoryAction action) {
+    public InventoryClickEvent(final InventoryView view, final SlotType type, final int slot, final ClickType click, final InventoryAction action) {
         super(view);
         this.slot_type = type;
         this.rawSlot = slot;
@@ -75,7 +75,7 @@ public class InventoryClickEvent extends InventoryInteractEvent {
         this.action = action;
     }
 
-    public InventoryClickEvent(InventoryView view, SlotType type, int slot, ClickType click, InventoryAction action, int key) {
+    public InventoryClickEvent(final InventoryView view, final SlotType type, final int slot, final ClickType click, final InventoryAction action, final int key) {
         this(view, type, slot, click, action);
         this.hotbarKey = key;
     }
@@ -161,7 +161,7 @@ public class InventoryClickEvent extends InventoryInteractEvent {
      *     make unexpected changes in the behavior of the clicked Inventory.
      */
     @Deprecated
-    public void setCursor(ItemStack stack) {
+    public void setCursor(final ItemStack stack) {
         getView().setCursor(stack);
     }
 
@@ -170,7 +170,7 @@ public class InventoryClickEvent extends InventoryInteractEvent {
      *
      * @param stack the item to be placed in the current slot
      */
-    public void setCurrentItem(ItemStack stack) {
+    public void setCurrentItem(final ItemStack stack) {
         if (slot_type == SlotType.OUTSIDE) {
             current = stack;
         } else {

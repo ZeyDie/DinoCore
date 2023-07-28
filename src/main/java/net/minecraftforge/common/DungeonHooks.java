@@ -24,14 +24,14 @@ public class DungeonHooks
      *        Meaning, Zombies are twice as common as spiders or skeletons.
      * @return The new rarity of the monster,
      */
-    public static float addDungeonMob(String name, int rarity)
+    public static float addDungeonMob(final String name, final int rarity)
     {
         if (rarity <= 0)
         {
             throw new IllegalArgumentException("Rarity must be greater then zero");
         }
 
-        for (DungeonMob mob : dungeonMobs)
+        for (final DungeonMob mob : dungeonMobs)
         {
             if (name.equals(mob.type))
             {
@@ -49,9 +49,9 @@ public class DungeonHooks
      * @param name The name of the mob to remove
      * @return The rarity of the removed mob, prior to being removed.
      */
-    public static int removeDungeonMob(String name)
+    public static int removeDungeonMob(final String name)
     {
-        for (DungeonMob mob : dungeonMobs)
+        for (final DungeonMob mob : dungeonMobs)
         {
             if (name.equals(mob.type))
             {
@@ -67,9 +67,9 @@ public class DungeonHooks
      * @param rand World generation random number generator
      * @return The mob name
      */
-    public static String getRandomDungeonMob(Random rand)
+    public static String getRandomDungeonMob(final Random rand)
     {
-        DungeonMob mob = (DungeonMob)WeightedRandom.getRandomItem(rand, dungeonMobs);
+        final DungeonMob mob = (DungeonMob)WeightedRandom.getRandomItem(rand, dungeonMobs);
         if (mob == null)
         {
             return "";
@@ -81,14 +81,14 @@ public class DungeonHooks
     public static class DungeonMob extends WeightedRandomItem
     {
         public String type;
-        public DungeonMob(int weight, String type)
+        public DungeonMob(final int weight, final String type)
         {
             super(weight);
             this.type = type;
         }
 
         @Override
-        public boolean equals(Object target)
+        public boolean equals(final Object target)
         {
             return target instanceof DungeonMob && type.equals(((DungeonMob)target).type);
         }

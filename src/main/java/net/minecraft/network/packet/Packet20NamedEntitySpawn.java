@@ -42,7 +42,7 @@ public class Packet20NamedEntitySpawn extends Packet
 
     public Packet20NamedEntitySpawn() {}
 
-    public Packet20NamedEntitySpawn(EntityPlayer par1EntityPlayer)
+    public Packet20NamedEntitySpawn(final EntityPlayer par1EntityPlayer)
     {
         this.entityId = par1EntityPlayer.entityId;
 
@@ -63,7 +63,7 @@ public class Packet20NamedEntitySpawn extends Packet
         this.zPosition = MathHelper.floor_double(par1EntityPlayer.posZ * 32.0D);
         this.rotation = (byte)((int)(par1EntityPlayer.rotationYaw * 256.0F / 360.0F));
         this.pitch = (byte)((int)(par1EntityPlayer.rotationPitch * 256.0F / 360.0F));
-        ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
+        final ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
         this.currentItem = itemstack == null ? 0 : itemstack.itemID;
         this.metadata = par1EntityPlayer.getDataWatcher();
     }
@@ -71,7 +71,7 @@ public class Packet20NamedEntitySpawn extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.entityId = par1DataInput.readInt();
         this.name = readString(par1DataInput, 16);
@@ -87,7 +87,7 @@ public class Packet20NamedEntitySpawn extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.entityId);
         writeString(this.name, par1DataOutput);
@@ -103,7 +103,7 @@ public class Packet20NamedEntitySpawn extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleNamedEntitySpawn(this);
     }

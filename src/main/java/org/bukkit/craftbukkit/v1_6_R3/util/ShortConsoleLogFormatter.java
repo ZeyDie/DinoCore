@@ -12,18 +12,18 @@ import java.util.logging.LogRecord;
 public class ShortConsoleLogFormatter extends Formatter {
     private final SimpleDateFormat date;
 
-    public ShortConsoleLogFormatter(net.minecraft.server.MinecraftServer server) {
-        OptionSet options = server.options;
+    public ShortConsoleLogFormatter(final net.minecraft.server.MinecraftServer server) {
+        final OptionSet options = server.options;
         SimpleDateFormat date = null;
 
         if (options.has("date-format")) {
             try {
-                Object object = options.valueOf("date-format");
+                final Object object = options.valueOf("date-format");
 
                 if ((object != null) && (object instanceof SimpleDateFormat)) {
                     date = (SimpleDateFormat) object;
                 }
-            } catch (OptionException ex) {
+            } catch (final OptionException ex) {
                 System.err.println("Given date format is not valid. Falling back to default.");
             }
         } else if (options.has("nojline")) {
@@ -38,9 +38,9 @@ public class ShortConsoleLogFormatter extends Formatter {
     }
 
     @Override
-    public String format(LogRecord record) {
-        StringBuilder builder = new StringBuilder();
-        Throwable ex = record.getThrown();
+    public String format(final LogRecord record) {
+        final StringBuilder builder = new StringBuilder();
+        final Throwable ex = record.getThrown();
 
         builder.append(date.format(record.getMillis()));
         builder.append(" [");
@@ -50,7 +50,7 @@ public class ShortConsoleLogFormatter extends Formatter {
         builder.append('\n');
 
         if (ex != null) {
-            StringWriter writer = new StringWriter();
+            final StringWriter writer = new StringWriter();
             ex.printStackTrace(new PrintWriter(writer));
             builder.append(writer);
         }

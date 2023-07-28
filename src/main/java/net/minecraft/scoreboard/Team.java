@@ -8,7 +8,7 @@ public abstract class Team
     /**
      * Same as ==
      */
-    public boolean isSameTeam(Team par1Team)
+    public boolean isSameTeam(final Team par1Team)
     {
         return par1Team == null ? false : this == par1Team;
     }

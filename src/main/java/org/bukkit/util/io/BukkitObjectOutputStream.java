@@ -37,17 +37,18 @@ public class BukkitObjectOutputStream extends ObjectOutputStream {
      * @throws IOException
      * @see ObjectOutputStream#ObjectOutputStream(OutputStream)
      */
-    public BukkitObjectOutputStream(OutputStream out) throws IOException {
+    public BukkitObjectOutputStream(final OutputStream out) throws IOException {
         super(out);
         super.enableReplaceObject(true);
     }
 
     @Override
     protected Object replaceObject(Object obj) throws IOException {
-        if (!(obj instanceof Serializable) && (obj instanceof ConfigurationSerializable)) {
-            obj = Wrapper.newWrapper((ConfigurationSerializable) obj);
+        Object obj1 = obj;
+        if (!(obj1 instanceof Serializable) && (obj1 instanceof ConfigurationSerializable)) {
+            obj1 = Wrapper.newWrapper((ConfigurationSerializable) obj1);
         }
 
-        return super.replaceObject(obj);
+        return super.replaceObject(obj1);
     }
 }

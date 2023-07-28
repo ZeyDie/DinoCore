@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 
 final class CreativeTabDeco extends CreativeTabs
 {
-    CreativeTabDeco(int par1, String par2Str)
+    CreativeTabDeco(final int par1, final String par2Str)
     {
         super(par1, par2Str);
     }

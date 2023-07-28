@@ -20,7 +20,7 @@ public class ModClassVisitor extends ClassVisitor
 {
     private ASMModParser discoverer;
 
-    public ModClassVisitor(ASMModParser discoverer)
+    public ModClassVisitor(final ASMModParser discoverer)
     {
         //TODO ZeyCodeReplace ASM4 on ASM5
         super(Opcodes.ASM5);
@@ -29,13 +29,13 @@ public class ModClassVisitor extends ClassVisitor
 
 
     @Override
-    public void visit(int version, int access, String name, String signature, String superName, String[] interfaces)
+    public void visit(final int version, final int access, final String name, final String signature, final String superName, final String[] interfaces)
     {
         discoverer.beginNewTypeName(name, version, superName);
     }
 
     @Override
-    public AnnotationVisitor visitAnnotation(String annotationName, boolean runtimeVisible)
+    public AnnotationVisitor visitAnnotation(final String annotationName, final boolean runtimeVisible)
     {
         discoverer.startClassAnnotation(annotationName);
         return new ModAnnotationVisitor(discoverer);
@@ -43,13 +43,13 @@ public class ModClassVisitor extends ClassVisitor
 
 
     @Override
-    public FieldVisitor visitField(int access, String name, String desc, String signature, Object value)
+    public FieldVisitor visitField(final int access, final String name, final String desc, final String signature, final Object value)
     {
         return new ModFieldVisitor(name, discoverer);
     }
 
     @Override
-    public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions)
+    public MethodVisitor visitMethod(final int access, final String name, final String desc, final String signature, final String[] exceptions)
     {
         if (discoverer.isBaseMod(Collections.<String>emptyList()) && name.equals("getPriorities") && desc.equals(Type.getMethodDescriptor(Type.getType(String.class))))
         {

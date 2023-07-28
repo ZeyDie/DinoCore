@@ -31,20 +31,21 @@ public class ClientCommandHandler extends CommandHandler
      *         it was canceled.
      */
     @Override
-    public int executeCommand(ICommandSender sender, String message)
+    public int executeCommand(final ICommandSender sender, String message)
     {
-        message = message.trim();
+        String message1 = message;
+        message1 = message1.trim();
 
-        if (message.startsWith("/"))
+        if (message1.startsWith("/"))
         {
-            message = message.substring(1);
+            message1 = message1.substring(1);
         }
 
-        String[] temp = message.split(" ");
-        String[] args = new String[temp.length - 1];
-        String commandName = temp[0];
+        final String[] temp = message1.split(" ");
+        final String[] args = new String[temp.length - 1];
+        final String commandName = temp[0];
         System.arraycopy(temp, 1, args, 0, args.length);
-        ICommand icommand = (ICommand) getCommands().get(commandName);
+        final ICommand icommand = (ICommand) getCommands().get(commandName);
 
         try
         {
@@ -55,7 +56,7 @@ public class ClientCommandHandler extends CommandHandler
 
             if (icommand.canCommandSenderUseCommand(sender))
             {
-                CommandEvent event = new CommandEvent(icommand, sender, args);
+                final CommandEvent event = new CommandEvent(icommand, sender, args);
                 if (MinecraftForge.EVENT_BUS.post(event))
                 {
                     if (event.exception != null)
@@ -73,15 +74,15 @@ public class ClientCommandHandler extends CommandHandler
                 sender.sendChatToPlayer(format("commands.generic.permission").setColor(RED));
             }
         }
-        catch (WrongUsageException wue)
+        catch (final WrongUsageException wue)
         {
             sender.sendChatToPlayer(format("commands.generic.usage", format(wue.getMessage(), wue.getErrorOjbects())).setColor(RED));
         }
-        catch (CommandException ce)
+        catch (final CommandException ce)
         {
             sender.sendChatToPlayer(format(ce.getMessage(), ce.getErrorOjbects()).setColor(RED));
         }
-        catch (Throwable t)
+        catch (final Throwable t)
         {
             sender.sendChatToPlayer(format("commands.generic.exception").setColor(RED));
             t.printStackTrace();
@@ -91,31 +92,32 @@ public class ClientCommandHandler extends CommandHandler
     }
 
     //Couple of helpers because the mcp names are stupid and long...
-    private ChatMessageComponent format(String str, Object... args)
+    private ChatMessageComponent format(final String str, final Object... args)
     {
         return ChatMessageComponent.createFromTranslationWithSubstitutions(str, args);
     }
 
-    private ChatMessageComponent format(String str)
+    private ChatMessageComponent format(final String str)
     {
         return ChatMessageComponent.createFromTranslationKey(str);
     }
 
-    public void autoComplete(String leftOfCursor, String full)
+    public void autoComplete(String leftOfCursor, final String full)
     {
+        String leftOfCursor1 = leftOfCursor;
         latestAutoComplete = null;
 
-        if (leftOfCursor.charAt(0) == '/')
+        if (leftOfCursor1.charAt(0) == '/')
         {
-            leftOfCursor = leftOfCursor.substring(1);
+            leftOfCursor1 = leftOfCursor1.substring(1);
 
-            Minecraft mc = FMLClientHandler.instance().getClient();
+            final Minecraft mc = FMLClientHandler.instance().getClient();
             if (mc.currentScreen instanceof GuiChat)
             {
-                List<String> commands = getPossibleCommands(mc.thePlayer, leftOfCursor);
+                final List<String> commands = getPossibleCommands(mc.thePlayer, leftOfCursor1);
                 if (commands != null && !commands.isEmpty())
                 {
-                    if (leftOfCursor.indexOf(' ') == -1)
+                    if (leftOfCursor1.indexOf(' ') == -1)
                     {
                         for (int i = 0; i < commands.size(); i++)
                         {
@@ -130,7 +132,7 @@ public class ClientCommandHandler extends CommandHandler
                         }
                     }
 
-                    latestAutoComplete = commands.toArray(new String[commands.size()]);
+                    latestAutoComplete = commands.toArray(new String[0]);
                 }
             }
         }

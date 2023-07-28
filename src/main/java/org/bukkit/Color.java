@@ -113,7 +113,7 @@ public final class Color implements ConfigurationSerializable {
      * @return a new Color object for the red, green, blue
      * @throws IllegalArgumentException if any value is strictly >255 or <0
      */
-    public static Color fromRGB(int red, int green, int blue) throws IllegalArgumentException {
+    public static Color fromRGB(final int red, final int green, final int blue) throws IllegalArgumentException {
         return new Color(red, green, blue);
     }
 
@@ -126,7 +126,7 @@ public final class Color implements ConfigurationSerializable {
      * @return a new Color object for the red, green, blue
      * @throws IllegalArgumentException if any value is strictly >255 or <0
      */
-    public static Color fromBGR(int blue, int green, int red) throws IllegalArgumentException {
+    public static Color fromBGR(final int blue, final int green, final int red) throws IllegalArgumentException {
         return new Color(red, green, blue);
     }
 
@@ -137,7 +137,7 @@ public final class Color implements ConfigurationSerializable {
      * @return a new color object for specified values
      * @throws IllegalArgumentException if any data is in the highest order 8 bits
      */
-    public static Color fromRGB(int rgb) throws IllegalArgumentException {
+    public static Color fromRGB(final int rgb) throws IllegalArgumentException {
         Validate.isTrue((rgb >> 24) == 0, "Extrenuous data in: ", rgb);
         return fromRGB(rgb >> 16 & BIT_MASK, rgb >> 8 & BIT_MASK, rgb >> 0 & BIT_MASK);
     }
@@ -149,12 +149,12 @@ public final class Color implements ConfigurationSerializable {
      * @return a new color object for specified values
      * @throws IllegalArgumentException if any data is in the highest order 8 bits
      */
-    public static Color fromBGR(int bgr) throws IllegalArgumentException {
+    public static Color fromBGR(final int bgr) throws IllegalArgumentException {
         Validate.isTrue((bgr >> 24) == 0, "Extrenuous data in: ", bgr);
         return fromBGR(bgr >> 16 & BIT_MASK, bgr >> 8 & BIT_MASK, bgr >> 0 & BIT_MASK);
     }
 
-    private Color(int red, int green, int blue) {
+    private Color(final int red, final int green, final int blue) {
         Validate.isTrue(red >= 0 && red <= BIT_MASK, "Red is not between 0-255: ", red);
         Validate.isTrue(green >= 0 && green <= BIT_MASK, "Green is not between 0-255: ", green);
         Validate.isTrue(blue >= 0 && blue <= BIT_MASK, "Blue is not between 0-255: ", blue);
@@ -179,7 +179,7 @@ public final class Color implements ConfigurationSerializable {
      * @param red the red component, from 0 to 255
      * @return a new color object with the red component
      */
-    public Color setRed(int red) {
+    public Color setRed(final int red) {
         return fromRGB(red, getGreen(), getBlue());
     }
 
@@ -198,7 +198,7 @@ public final class Color implements ConfigurationSerializable {
      * @param green the red component, from 0 to 255
      * @return a new color object with the red component
      */
-    public Color setGreen(int green) {
+    public Color setGreen(final int green) {
         return fromRGB(getRed(), green, getBlue());
     }
 
@@ -217,7 +217,7 @@ public final class Color implements ConfigurationSerializable {
      * @param blue the red component, from 0 to 255
      * @return a new color object with the red component
      */
-    public Color setBlue(int blue) {
+    public Color setBlue(final int blue) {
         return fromRGB(getRed(), getGreen(), blue);
     }
 
@@ -245,10 +245,10 @@ public final class Color implements ConfigurationSerializable {
      * @return A new color with the changed rgb components
      */
     // TODO: Javadoc what this method does, not what it mimics. API != Implementation
-    public Color mixDyes(DyeColor... colors) {
+    public Color mixDyes(final DyeColor... colors) {
         Validate.noNullElements(colors, "Colors cannot be null");
 
-        Color[] toPass = new Color[colors.length];
+        final Color[] toPass = new Color[colors.length];
         for (int i = 0; i < colors.length; i++) {
             toPass[i] = colors[i].getColor();
         }
@@ -264,33 +264,33 @@ public final class Color implements ConfigurationSerializable {
      * @return A new color with the changed rgb components
      */
     // TODO: Javadoc what this method does, not what it mimics. API != Implementation
-    public Color mixColors(Color... colors) {
+    public Color mixColors(final Color... colors) {
         Validate.noNullElements(colors, "Colors cannot be null");
 
         int totalRed = this.getRed();
         int totalGreen = this.getGreen();
         int totalBlue = this.getBlue();
         int totalMax = Math.max(Math.max(totalRed, totalGreen), totalBlue);
-        for (Color color : colors) {
+        for (final Color color : colors) {
             totalRed += color.getRed();
             totalGreen += color.getGreen();
             totalBlue += color.getBlue();
             totalMax += Math.max(Math.max(color.getRed(), color.getGreen()), color.getBlue());
         }
 
-        float averageRed = totalRed / (colors.length + 1);
-        float averageGreen = totalGreen / (colors.length + 1);
-        float averageBlue = totalBlue / (colors.length + 1);
-        float averageMax = totalMax / (colors.length + 1);
+        final float averageRed = totalRed / (colors.length + 1);
+        final float averageGreen = totalGreen / (colors.length + 1);
+        final float averageBlue = totalBlue / (colors.length + 1);
+        final float averageMax = totalMax / (colors.length + 1);
 
-        float maximumOfAverages = Math.max(Math.max(averageRed, averageGreen), averageBlue);
-        float gainFactor = averageMax / maximumOfAverages;
+        final float maximumOfAverages = Math.max(Math.max(averageRed, averageGreen), averageBlue);
+        final float gainFactor = averageMax / maximumOfAverages;
 
         return Color.fromRGB((int) (averageRed * gainFactor), (int) (averageGreen * gainFactor), (int) (averageBlue * gainFactor));
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (!(o instanceof Color)) {
             return false;
         }
@@ -312,7 +312,7 @@ public final class Color implements ConfigurationSerializable {
     }
 
     @SuppressWarnings("javadoc")
-    public static Color deserialize(Map<String, Object> map) {
+    public static Color deserialize(final Map<String, Object> map) {
         return fromRGB(
             asInt("RED", map),
             asInt("GREEN", map),
@@ -320,8 +320,8 @@ public final class Color implements ConfigurationSerializable {
         );
     }
 
-    private static int asInt(String string, Map<String, Object> map) {
-        Object value = map.get(string);
+    private static int asInt(final String string, final Map<String, Object> map) {
+        final Object value = map.get(string);
         if (value == null) {
             throw new IllegalArgumentException(string + " not in map " + map);
         }

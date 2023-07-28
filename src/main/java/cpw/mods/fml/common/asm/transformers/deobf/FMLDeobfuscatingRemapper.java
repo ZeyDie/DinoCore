@@ -62,23 +62,23 @@ public class FMLDeobfuscatingRemapper extends Remapper {
         mcpNameBiMap=ImmutableBiMap.of();
     }
 
-    public void setupLoadOnly(String deobfFileName, boolean loadAll)
+    public void setupLoadOnly(final String deobfFileName, final boolean loadAll)
     {
         try
         {
-            File mapData = new File(deobfFileName);
-            LZMAInputSupplier zis = new LZMAInputSupplier(new FileInputStream(mapData));
-            InputSupplier<InputStreamReader> srgSupplier = CharStreams.newReaderSupplier(zis,Charsets.UTF_8);
-            List<String> srgList = CharStreams.readLines(srgSupplier);
+            final File mapData = new File(deobfFileName);
+            final LZMAInputSupplier zis = new LZMAInputSupplier(new FileInputStream(mapData));
+            final InputSupplier<InputStreamReader> srgSupplier = CharStreams.newReaderSupplier(zis,Charsets.UTF_8);
+            final List<String> srgList = CharStreams.readLines(srgSupplier);
             rawMethodMaps = Maps.newHashMap();
             rawFieldMaps = Maps.newHashMap();
-            Builder<String, String> builder = ImmutableBiMap.<String,String>builder();
-            Builder<String, String> mcpBuilder = ImmutableBiMap.<String,String>builder();
-            Splitter splitter = Splitter.on(CharMatcher.anyOf(": ")).omitEmptyStrings().trimResults();
-            for (String line : srgList)
+            final Builder<String, String> builder = ImmutableBiMap.<String,String>builder();
+            final Builder<String, String> mcpBuilder = ImmutableBiMap.<String,String>builder();
+            final Splitter splitter = Splitter.on(CharMatcher.anyOf(": ")).omitEmptyStrings().trimResults();
+            for (final String line : srgList)
             {
-                String[] parts = Iterables.toArray(splitter.split(line),String.class);
-                String typ = parts[0];
+                final String[] parts = Iterables.toArray(splitter.split(line),String.class);
+                final String typ = parts[0];
                 if ("CL".equals(typ))
                 {
                     parseClass(builder, parts);
@@ -102,7 +102,7 @@ public class FMLDeobfuscatingRemapper extends Remapper {
             mcpBuilder.put("TradeEntry","net/minecraft/src/TradeEntry");
             mcpNameBiMap = mcpBuilder.build();
         }
-        catch (IOException ioe)
+        catch (final IOException ioe)
         {
             Logger.getLogger("FML").log(Level.SEVERE, "An error occurred loading the deobfuscation map data", ioe);
         }
@@ -110,24 +110,24 @@ public class FMLDeobfuscatingRemapper extends Remapper {
         fieldNameMaps = Maps.newHashMapWithExpectedSize(rawFieldMaps.size());
 
     }
-    public void setup(File mcDir, LaunchClassLoader classLoader, String deobfFileName)
+    public void setup(final File mcDir, final LaunchClassLoader classLoader, final String deobfFileName)
     {
         this.classLoader = classLoader;
         try
         {
-            InputStream classData = getClass().getResourceAsStream(deobfFileName);
-            LZMAInputSupplier zis = new LZMAInputSupplier(classData);
-            InputSupplier<InputStreamReader> srgSupplier = CharStreams.newReaderSupplier(zis,Charsets.UTF_8);
-            List<String> srgList = CharStreams.readLines(srgSupplier);
+            final InputStream classData = getClass().getResourceAsStream(deobfFileName);
+            final LZMAInputSupplier zis = new LZMAInputSupplier(classData);
+            final InputSupplier<InputStreamReader> srgSupplier = CharStreams.newReaderSupplier(zis,Charsets.UTF_8);
+            final List<String> srgList = CharStreams.readLines(srgSupplier);
             rawMethodMaps = Maps.newHashMap();
             rawFieldMaps = Maps.newHashMap();
-            Builder<String, String> builder = ImmutableBiMap.<String,String>builder();
-            Builder<String, String> mcpBuilder = ImmutableBiMap.<String,String>builder();
-            Splitter splitter = Splitter.on(CharMatcher.anyOf(": ")).omitEmptyStrings().trimResults();
-            for (String line : srgList)
+            final Builder<String, String> builder = ImmutableBiMap.<String,String>builder();
+            final Builder<String, String> mcpBuilder = ImmutableBiMap.<String,String>builder();
+            final Splitter splitter = Splitter.on(CharMatcher.anyOf(": ")).omitEmptyStrings().trimResults();
+            for (final String line : srgList)
             {
-                String[] parts = Iterables.toArray(splitter.split(line),String.class);
-                String typ = parts[0];
+                final String[] parts = Iterables.toArray(splitter.split(line),String.class);
+                final String typ = parts[0];
                 if ("CL".equals(typ))
                 {
                     parseClass(builder, parts);
@@ -151,7 +151,7 @@ public class FMLDeobfuscatingRemapper extends Remapper {
             mcpBuilder.put("TradeEntry","net/minecraft/src/TradeEntry");
             mcpNameBiMap = mcpBuilder.build();
         }
-        catch (IOException ioe)
+        catch (final IOException ioe)
         {
             FMLRelaunchLog.log(Level.SEVERE, ioe, "An error occurred loading the deobfuscation map data");
         }
@@ -161,19 +161,19 @@ public class FMLDeobfuscatingRemapper extends Remapper {
 
     public boolean isRemappedClass(String className)
     {
-        className = className.replace('.', '/');
-        return classNameBiMap.containsKey(className) || mcpNameBiMap.containsKey(className) || (!classNameBiMap.isEmpty() && className.indexOf('/') == -1);
+        String className1 = className.replace('.', '/');
+        return classNameBiMap.containsKey(className1) || mcpNameBiMap.containsKey(className1) || (!classNameBiMap.isEmpty() && className1.indexOf('/') == -1);
     }
 
-    private void parseField(String[] parts)
+    private void parseField(final String[] parts)
     {
-        String oldSrg = parts[1];
-        int lastOld = oldSrg.lastIndexOf('/');
-        String cl = oldSrg.substring(0,lastOld);
-        String oldName = oldSrg.substring(lastOld+1);
-        String newSrg = parts[2];
-        int lastNew = newSrg.lastIndexOf('/');
-        String newName = newSrg.substring(lastNew+1);
+        final String oldSrg = parts[1];
+        final int lastOld = oldSrg.lastIndexOf('/');
+        final String cl = oldSrg.substring(0,lastOld);
+        final String oldName = oldSrg.substring(lastOld+1);
+        final String newSrg = parts[2];
+        final int lastNew = newSrg.lastIndexOf('/');
+        final String newName = newSrg.substring(lastNew+1);
         if (!rawFieldMaps.containsKey(cl))
         {
             rawFieldMaps.put(cl, Maps.<String,String>newHashMap());
@@ -191,7 +191,7 @@ public class FMLDeobfuscatingRemapper extends Remapper {
     private Set<String> negativeCacheMethods = Sets.newHashSet();
     private Set<String> negativeCacheFields = Sets.newHashSet();
 
-    private String getFieldType(String owner, String name)
+    private String getFieldType(final String owner, final String name)
     {
         if (fieldDescriptions.containsKey(owner))
         {
@@ -201,22 +201,22 @@ public class FMLDeobfuscatingRemapper extends Remapper {
         {
             try
             {
-                byte[] classBytes = ClassPatchManager.INSTANCE.getPatchedResource(owner, map(owner).replace('/', '.'), classLoader);
+                final byte[] classBytes = ClassPatchManager.INSTANCE.getPatchedResource(owner, map(owner).replace('/', '.'), classLoader);
                 if (classBytes == null)
                 {
                     return null;
                 }
-                ClassReader cr = new ClassReader(classBytes);
-                ClassNode classNode = new ClassNode();
+                final ClassReader cr = new ClassReader(classBytes);
+                final ClassNode classNode = new ClassNode();
                 cr.accept(classNode, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
-                Map<String,String> resMap = Maps.newHashMap();
-                for (FieldNode fieldNode : (List<FieldNode>) classNode.fields) {
+                final Map<String,String> resMap = Maps.newHashMap();
+                for (final FieldNode fieldNode : (List<FieldNode>) classNode.fields) {
                     resMap.put(fieldNode.name, fieldNode.desc);
                 }
                 fieldDescriptions.put(owner, resMap);
                 return resMap.get(name);
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 FMLLog.log(Level.SEVERE,e, "A critical exception occured reading a class file %s", owner);
             }
@@ -224,27 +224,27 @@ public class FMLDeobfuscatingRemapper extends Remapper {
         }
     }
 
-    private void parseClass(Builder<String, String> builder, String[] parts)
+    private void parseClass(final Builder<String, String> builder, final String[] parts)
     {
         builder.put(parts[1],parts[2]);
     }
 
-    private void parseMCPClass(Builder<String, String> builder, String[] parts)
+    private void parseMCPClass(final Builder<String, String> builder, final String[] parts)
     {
-        int clIdx = parts[2].lastIndexOf('/');
+        final int clIdx = parts[2].lastIndexOf('/');
         builder.put("net/minecraft/src/"+parts[2].substring(clIdx+1),parts[2]);
     }
 
-    private void parseMethod(String[] parts)
+    private void parseMethod(final String[] parts)
     {
-        String oldSrg = parts[1];
-        int lastOld = oldSrg.lastIndexOf('/');
-        String cl = oldSrg.substring(0,lastOld);
-        String oldName = oldSrg.substring(lastOld+1);
-        String sig = parts[2];
-        String newSrg = parts[3];
-        int lastNew = newSrg.lastIndexOf('/');
-        String newName = newSrg.substring(lastNew+1);
+        final String oldSrg = parts[1];
+        final int lastOld = oldSrg.lastIndexOf('/');
+        final String cl = oldSrg.substring(0,lastOld);
+        final String oldName = oldSrg.substring(lastOld+1);
+        final String sig = parts[2];
+        final String newSrg = parts[3];
+        final int lastNew = newSrg.lastIndexOf('/');
+        final String newName = newSrg.substring(lastNew+1);
         if (!rawMethodMaps.containsKey(cl))
         {
             rawMethodMaps.put(cl, Maps.<String,String>newHashMap());
@@ -253,42 +253,42 @@ public class FMLDeobfuscatingRemapper extends Remapper {
     }
 
     @Override
-    public String mapFieldName(String owner, String name, String desc)
+    public String mapFieldName(final String owner, final String name, final String desc)
     {
         if (classNameBiMap == null || classNameBiMap.isEmpty())
         {
             return name;
         }
-        Map<String, String> fieldMap = getFieldMap(owner);
+        final Map<String, String> fieldMap = getFieldMap(owner);
         return fieldMap!=null && fieldMap.containsKey(name+":"+desc) ? fieldMap.get(name+":"+desc) : name;
     }
 
     @Override
-    public String map(String typeName)
+    public String map(final String typeName)
     {
         if (classNameBiMap == null || classNameBiMap.isEmpty())
         {
             return typeName;
         }
 
-        int dollarIdx = typeName.indexOf('$');
-        String realType = dollarIdx > -1 ? typeName.substring(0, dollarIdx) : typeName;
-        String subType = dollarIdx > -1 ? typeName.substring(dollarIdx+1) : "";
+        final int dollarIdx = typeName.indexOf('$');
+        final String realType = dollarIdx > -1 ? typeName.substring(0, dollarIdx) : typeName;
+        final String subType = dollarIdx > -1 ? typeName.substring(dollarIdx+1) : "";
 
         String result = classNameBiMap.containsKey(realType) ? classNameBiMap.get(realType) : mcpNameBiMap.containsKey(realType) ? mcpNameBiMap.get(realType) : realType;
         result = dollarIdx > -1 ? result+"$"+subType : result;
         return result;
     }
 
-    public String unmap(String typeName)
+    public String unmap(final String typeName)
     {
         if (classNameBiMap == null || classNameBiMap.isEmpty())
         {
             return typeName;
         }
-        int dollarIdx = typeName.indexOf('$');
-        String realType = dollarIdx > -1 ? typeName.substring(0, dollarIdx) : typeName;
-        String subType = dollarIdx > -1 ? typeName.substring(dollarIdx+1) : "";
+        final int dollarIdx = typeName.indexOf('$');
+        final String realType = dollarIdx > -1 ? typeName.substring(0, dollarIdx) : typeName;
+        final String subType = dollarIdx > -1 ? typeName.substring(dollarIdx+1) : "";
 
 
         String result = classNameBiMap.containsValue(realType) ? classNameBiMap.inverse().get(realType) : mcpNameBiMap.containsValue(realType) ? mcpNameBiMap.inverse().get(realType) : realType;
@@ -298,18 +298,18 @@ public class FMLDeobfuscatingRemapper extends Remapper {
 
 
     @Override
-    public String mapMethodName(String owner, String name, String desc)
+    public String mapMethodName(final String owner, final String name, final String desc)
     {
         if (classNameBiMap==null || classNameBiMap.isEmpty())
         {
             return name;
         }
-        Map<String, String> methodMap = getMethodMap(owner);
-        String methodDescriptor = name+desc;
+        final Map<String, String> methodMap = getMethodMap(owner);
+        final String methodDescriptor = name+desc;
         return methodMap!=null && methodMap.containsKey(methodDescriptor) ? methodMap.get(methodDescriptor) : name;
     }
 
-    private Map<String,String> getFieldMap(String className)
+    private Map<String,String> getFieldMap(final String className)
     {
         if (!fieldNameMaps.containsKey(className) && !negativeCacheFields.contains(className))
         {
@@ -327,7 +327,7 @@ public class FMLDeobfuscatingRemapper extends Remapper {
         return fieldNameMaps.get(className);
     }
 
-    private Map<String,String> getMethodMap(String className)
+    private Map<String,String> getMethodMap(final String className)
     {
         if (!methodNameMaps.containsKey(className) && !negativeCacheMethods.contains(className))
         {
@@ -345,27 +345,27 @@ public class FMLDeobfuscatingRemapper extends Remapper {
         return methodNameMaps.get(className);
     }
 
-    private void findAndMergeSuperMaps(String name)
+    private void findAndMergeSuperMaps(final String name)
     {
         try
         {
             String superName = null;
             String[] interfaces = new String[0];
-            byte[] classBytes = ClassPatchManager.INSTANCE.getPatchedResource(name, map(name), classLoader);
+            final byte[] classBytes = ClassPatchManager.INSTANCE.getPatchedResource(name, map(name), classLoader);
             if (classBytes != null)
             {
-                ClassReader cr = new ClassReader(classBytes);
+                final ClassReader cr = new ClassReader(classBytes);
                 superName = cr.getSuperName();
                 interfaces = cr.getInterfaces();
             }
             mergeSuperMaps(name, superName, interfaces);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             e.printStackTrace();
         }
     }
-    public void mergeSuperMaps(String name, String superName, String[] interfaces)
+    public void mergeSuperMaps(final String name, final String superName, final String[] interfaces)
     {
 //        System.out.printf("Computing super maps for %s: %s %s\n", name, superName, Arrays.asList(interfaces));
         if (classNameBiMap == null || classNameBiMap.isEmpty())
@@ -378,18 +378,18 @@ public class FMLDeobfuscatingRemapper extends Remapper {
             return;
         }
 
-        List<String> allParents = ImmutableList.<String>builder().add(superName).addAll(Arrays.asList(interfaces)).build();
+        final List<String> allParents = ImmutableList.<String>builder().add(superName).addAll(Arrays.asList(interfaces)).build();
         // generate maps for all parent objects
-        for (String parentThing : allParents)
+        for (final String parentThing : allParents)
         {
             if (!methodNameMaps.containsKey(parentThing))
             {
                 findAndMergeSuperMaps(parentThing);
             }
         }
-        Map<String, String> methodMap = Maps.<String,String>newHashMap();
-        Map<String, String> fieldMap = Maps.<String,String>newHashMap();
-        for (String parentThing : allParents)
+        final Map<String, String> methodMap = Maps.<String,String>newHashMap();
+        final Map<String, String> fieldMap = Maps.<String,String>newHashMap();
+        for (final String parentThing : allParents)
         {
             if (methodNameMaps.containsKey(parentThing))
             {

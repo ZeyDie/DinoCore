@@ -10,12 +10,12 @@ import org.bukkit.inventory.ItemStack;
 public class CraftItem extends CraftEntity implements Item {
     private final net.minecraft.entity.item.EntityItem item;
 
-    public CraftItem(CraftServer server, net.minecraft.entity.Entity entity, net.minecraft.entity.item.EntityItem item) {
+    public CraftItem(final CraftServer server, final net.minecraft.entity.Entity entity, final net.minecraft.entity.item.EntityItem item) {
         super(server, entity);
         this.item = item;
     }
 
-    public CraftItem(CraftServer server, net.minecraft.entity.item.EntityItem entity) {
+    public CraftItem(final CraftServer server, final net.minecraft.entity.item.EntityItem entity) {
         this(server, entity, entity);
     }
 
@@ -23,7 +23,7 @@ public class CraftItem extends CraftEntity implements Item {
         return CraftItemStack.asCraftMirror(item.getEntityItem());
     }
 
-    public void setItemStack(ItemStack stack) {
+    public void setItemStack(final ItemStack stack) {
         item.setEntityItemStack(CraftItemStack.asNMSCopy(stack));
     }
 
@@ -31,7 +31,7 @@ public class CraftItem extends CraftEntity implements Item {
         return item.delayBeforeCanPickup;
     }
 
-    public void setPickupDelay(int delay) {
+    public void setPickupDelay(final int delay) {
         item.delayBeforeCanPickup = delay;
     }
 

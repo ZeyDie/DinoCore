@@ -11,7 +11,7 @@ import org.bukkit.inventory.InventoryView;
 public abstract class InventoryInteractEvent extends InventoryEvent implements Cancellable {
     private Result result = Result.DEFAULT;
 
-    public InventoryInteractEvent(InventoryView transaction) {
+    public InventoryInteractEvent(final InventoryView transaction) {
         super(transaction);
     }
 
@@ -31,7 +31,7 @@ public abstract class InventoryInteractEvent extends InventoryEvent implements C
      * @see #isCancelled()
      * @param newResult the new {@link Result} for this event
      */
-    public void setResult(Result newResult) {
+    public void setResult(final Result newResult) {
         result = newResult;
     }
 
@@ -69,7 +69,7 @@ public abstract class InventoryInteractEvent extends InventoryEvent implements C
      *
      * @param toCancel result becomes DENY if true, ALLOW if false
      */
-    public void setCancelled(boolean toCancel) {
+    public void setCancelled(final boolean toCancel) {
         setResult(toCancel ? Result.DENY : Result.ALLOW);
     }
 

@@ -13,7 +13,7 @@ public final class MainProxyAuthenticator extends Authenticator
 
     final String field_111236_b;
 
-    public MainProxyAuthenticator(String par1Str, String par2Str)
+    public MainProxyAuthenticator(final String par1Str, final String par2Str)
     {
         this.field_111237_a = par1Str;
         this.field_111236_b = par2Str;

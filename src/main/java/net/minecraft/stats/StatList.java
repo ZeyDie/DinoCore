@@ -134,12 +134,12 @@ public class StatList
     {
         if (blockStatsInitialized && itemStatsInitialized)
         {
-            HashSet hashset = new HashSet();
+            final HashSet hashset = new HashSet();
             Iterator iterator = CraftingManager.getInstance().getRecipeList().iterator();
 
             while (iterator.hasNext())
             {
-                IRecipe irecipe = (IRecipe)iterator.next();
+                final IRecipe irecipe = (IRecipe)iterator.next();
 
                 if (irecipe.getRecipeOutput() != null)
                 {
@@ -151,7 +151,7 @@ public class StatList
 
             while (iterator.hasNext())
             {
-                ItemStack itemstack = (ItemStack)iterator.next();
+                final ItemStack itemstack = (ItemStack)iterator.next();
                 hashset.add(Integer.valueOf(itemstack.itemID));
             }
 
@@ -160,11 +160,11 @@ public class StatList
 
             while (iterator.hasNext())
             {
-                Integer integer = (Integer)iterator.next();
+                final Integer integer = (Integer)iterator.next();
 
                 if (Item.itemsList[integer.intValue()] != null)
                 {
-                    String s = StatCollector.translateToLocalFormatted("stat.craftItem", new Object[] {Item.itemsList[integer.intValue()].getStatName()});
+                    final String s = StatCollector.translateToLocalFormatted("stat.craftItem", new Object[] {Item.itemsList[integer.intValue()].getStatName()});
                     objectCraftStats[integer.intValue()] = (new StatCrafting(16842752 + integer.intValue(), s, integer.intValue())).registerStat();
                 }
             }
@@ -176,15 +176,15 @@ public class StatList
     /**
      * Initializes statistic fields related to minable items and blocks.
      */
-    private static StatBase[] initMinableStats(String par0Str, int par1)
+    private static StatBase[] initMinableStats(final String par0Str, final int par1)
     {
-        StatBase[] astatbase = new StatBase[Block.blocksList.length];
+        final StatBase[] astatbase = new StatBase[Block.blocksList.length];
 
         for (int j = 0; j < Block.blocksList.length; ++j)
         {
             if (Block.blocksList[j] != null && Block.blocksList[j].getEnableStats())
             {
-                String s1 = StatCollector.translateToLocalFormatted(par0Str, new Object[] {Block.blocksList[j].getLocalizedName()});
+                final String s1 = StatCollector.translateToLocalFormatted(par0Str, new Object[] {Block.blocksList[j].getLocalizedName()});
                 astatbase[j] = (new StatCrafting(par1 + j, s1, j)).registerStat();
                 objectMineStats.add((StatCrafting)astatbase[j]);
             }
@@ -197,55 +197,57 @@ public class StatList
     /**
      * Initializes statistic fields related to usable items and blocks.
      */
-    private static StatBase[] initUsableStats(StatBase[] par0ArrayOfStatBase, String par1Str, int par2, int par3, int par4)
+    private static StatBase[] initUsableStats(StatBase[] par0ArrayOfStatBase, final String par1Str, final int par2, final int par3, final int par4)
     {
-        if (par0ArrayOfStatBase == null)
+        StatBase[] par0ArrayOfStatBase1 = par0ArrayOfStatBase;
+        if (par0ArrayOfStatBase1 == null)
         {
-            par0ArrayOfStatBase = new StatBase[32000];
+            par0ArrayOfStatBase1 = new StatBase[32000];
         }
 
         for (int l = par3; l < par4; ++l)
         {
             if (Item.itemsList[l] != null)
             {
-                String s1 = StatCollector.translateToLocalFormatted(par1Str, new Object[] {Item.itemsList[l].getStatName()});
-                par0ArrayOfStatBase[l] = (new StatCrafting(par2 + l, s1, l)).registerStat();
+                final String s1 = StatCollector.translateToLocalFormatted(par1Str, new Object[] {Item.itemsList[l].getStatName()});
+                par0ArrayOfStatBase1[l] = (new StatCrafting(par2 + l, s1, l)).registerStat();
 
                 if (l >= 256)
                 {
-                    itemStats.add((StatCrafting)par0ArrayOfStatBase[l]);
+                    itemStats.add((StatCrafting) par0ArrayOfStatBase1[l]);
                 }
             }
         }
 
-        replaceAllSimilarBlocks(par0ArrayOfStatBase);
-        return par0ArrayOfStatBase;
+        replaceAllSimilarBlocks(par0ArrayOfStatBase1);
+        return par0ArrayOfStatBase1;
     }
 
-    private static StatBase[] initBreakStats(StatBase[] par0ArrayOfStatBase, String par1Str, int par2, int par3, int par4)
+    private static StatBase[] initBreakStats(StatBase[] par0ArrayOfStatBase, final String par1Str, final int par2, final int par3, final int par4)
     {
-        if (par0ArrayOfStatBase == null)
+        StatBase[] par0ArrayOfStatBase1 = par0ArrayOfStatBase;
+        if (par0ArrayOfStatBase1 == null)
         {
-            par0ArrayOfStatBase = new StatBase[32000];
+            par0ArrayOfStatBase1 = new StatBase[32000];
         }
 
         for (int l = par3; l < par4; ++l)
         {
             if (Item.itemsList[l] != null && Item.itemsList[l].isDamageable())
             {
-                String s1 = StatCollector.translateToLocalFormatted(par1Str, new Object[] {Item.itemsList[l].getStatName()});
-                par0ArrayOfStatBase[l] = (new StatCrafting(par2 + l, s1, l)).registerStat();
+                final String s1 = StatCollector.translateToLocalFormatted(par1Str, new Object[] {Item.itemsList[l].getStatName()});
+                par0ArrayOfStatBase1[l] = (new StatCrafting(par2 + l, s1, l)).registerStat();
             }
         }
 
-        replaceAllSimilarBlocks(par0ArrayOfStatBase);
-        return par0ArrayOfStatBase;
+        replaceAllSimilarBlocks(par0ArrayOfStatBase1);
+        return par0ArrayOfStatBase1;
     }
 
     /**
      * Forces all dual blocks to count for each other on the stats list
      */
-    private static void replaceAllSimilarBlocks(StatBase[] par0ArrayOfStatBase)
+    private static void replaceAllSimilarBlocks(final StatBase[] par0ArrayOfStatBase)
     {
         replaceSimilarBlocks(par0ArrayOfStatBase, Block.waterStill.blockID, Block.waterMoving.blockID);
         replaceSimilarBlocks(par0ArrayOfStatBase, Block.lavaStill.blockID, Block.lavaStill.blockID);
@@ -264,7 +266,7 @@ public class StatList
     /**
      * Forces stats for one block to add to another block, such as idle and active furnaces
      */
-    private static void replaceSimilarBlocks(StatBase[] par0ArrayOfStatBase, int par1, int par2)
+    private static void replaceSimilarBlocks(final StatBase[] par0ArrayOfStatBase, final int par1, final int par2)
     {
         if (par0ArrayOfStatBase[par1] != null && par0ArrayOfStatBase[par2] == null)
         {
@@ -280,7 +282,7 @@ public class StatList
     }
 
     @SideOnly(Side.CLIENT)
-    public static StatBase getOneShotStat(int par0)
+    public static StatBase getOneShotStat(final int par0)
     {
         return (StatBase)oneShotStats.get(Integer.valueOf(par0));
     }

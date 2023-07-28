@@ -9,7 +9,7 @@ public class PackMetadataSection implements MetadataSection
     private final String packDescription;
     private final int packFormat;
 
-    public PackMetadataSection(String par1Str, int par2)
+    public PackMetadataSection(final String par1Str, final int par2)
     {
         this.packDescription = par1Str;
         this.packFormat = par2;

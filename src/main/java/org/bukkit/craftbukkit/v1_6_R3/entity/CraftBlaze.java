@@ -6,7 +6,7 @@ import org.bukkit.entity.Blaze;
 import org.bukkit.entity.EntityType;
 
 public class CraftBlaze extends CraftMonster implements Blaze {
-    public CraftBlaze(CraftServer server, net.minecraft.entity.monster.EntityBlaze entity) {
+    public CraftBlaze(final CraftServer server, final net.minecraft.entity.monster.EntityBlaze entity) {
         super(server, entity);
     }
 

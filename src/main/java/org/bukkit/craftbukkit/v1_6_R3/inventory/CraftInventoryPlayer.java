@@ -8,7 +8,7 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 
 public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.inventory.PlayerInventory, EntityEquipment {
-    public CraftInventoryPlayer(net.minecraft.entity.player.InventoryPlayer inventory) {
+    public CraftInventoryPlayer(final net.minecraft.entity.player.InventoryPlayer inventory) {
         super(inventory);
     }
 
@@ -26,7 +26,7 @@ public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.i
         return CraftItemStack.asCraftMirror(getInventory().getCurrentItem());
     }
 
-    public void setItemInHand(ItemStack stack) {
+    public void setItemInHand(final ItemStack stack) {
         setItem(getHeldItemSlot(), stack);
     }
 
@@ -34,7 +34,7 @@ public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.i
         return getInventory().currentItem;
     }
 
-    public void setHeldItemSlot(int slot) {
+    public void setHeldItemSlot(final int slot) {
         Validate.isTrue(slot >= 0 && slot < net.minecraft.entity.player.InventoryPlayer.getHotbarSize(), "Slot is not between 0 and 8 inclusive");
         this.getInventory().currentItem = slot;
         ((CraftPlayer) this.getHolder()).getHandle().playerNetServerHandler.sendPacketToPlayer(new net.minecraft.network.packet.Packet16BlockItemSwitch(slot));
@@ -56,25 +56,25 @@ public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.i
         return getItem(getSize() + 0);
     }
 
-    public void setHelmet(ItemStack helmet) {
+    public void setHelmet(final ItemStack helmet) {
         setItem(getSize() + 3, helmet);
     }
 
-    public void setChestplate(ItemStack chestplate) {
+    public void setChestplate(final ItemStack chestplate) {
         setItem(getSize() + 2, chestplate);
     }
 
-    public void setLeggings(ItemStack leggings) {
+    public void setLeggings(final ItemStack leggings) {
         setItem(getSize() + 1, leggings);
     }
 
-    public void setBoots(ItemStack boots) {
+    public void setBoots(final ItemStack boots) {
         setItem(getSize() + 0, boots);
     }
 
     public ItemStack[] getArmorContents() {
-        net.minecraft.item.ItemStack[] mcItems = getInventory().getArmorContents();
-        ItemStack[] ret = new ItemStack[mcItems.length];
+        final net.minecraft.item.ItemStack[] mcItems = getInventory().getArmorContents();
+        final ItemStack[] ret = new ItemStack[mcItems.length];
 
         for (int i = 0; i < mcItems.length; i++) {
             ret[i] = CraftItemStack.asCraftMirror(mcItems[i]);
@@ -83,12 +83,13 @@ public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.i
     }
 
     public void setArmorContents(ItemStack[] items) {
+        ItemStack[] items1 = items;
         int cnt = getSize();
 
-        if (items == null) {
-            items = new ItemStack[4];
+        if (items1 == null) {
+            items1 = new ItemStack[4];
         }
-        for (ItemStack item : items) {
+        for (final ItemStack item : items1) {
             if (item == null || item.getTypeId() == 0) {
                 clear(cnt++);
             } else {
@@ -97,14 +98,14 @@ public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.i
         }
     }
 
-    public int clear(int id, int data) {
+    public int clear(final int id, final int data) {
         int count = 0;
-        ItemStack[] items = getContents();
-        ItemStack[] armor = getArmorContents();
+        final ItemStack[] items = getContents();
+        final ItemStack[] armor = getArmorContents();
         int armorSlot = getSize();
 
         for (int i = 0; i < items.length; i++) {
-            ItemStack item = items[i];
+            final ItemStack item = items[i];
             if (item == null) continue;
             if (id > -1 && item.getTypeId() != id) continue;
             if (data > -1 && item.getData().getData() != data) continue;
@@ -113,7 +114,7 @@ public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.i
             setItem(i, null);
         }
 
-        for (ItemStack item : armor) {
+        for (final ItemStack item : armor) {
             if (item == null) continue;
             if (id > -1 && item.getTypeId() != id) continue;
             if (data > -1 && item.getData().getData() != data) continue;
@@ -133,7 +134,7 @@ public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.i
         return 1;
     }
 
-    public void setItemInHandDropChance(float chance) {
+    public void setItemInHandDropChance(final float chance) {
         throw new UnsupportedOperationException();
     }
 
@@ -141,7 +142,7 @@ public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.i
         return 1;
     }
 
-    public void setHelmetDropChance(float chance) {
+    public void setHelmetDropChance(final float chance) {
         throw new UnsupportedOperationException();
     }
 
@@ -149,7 +150,7 @@ public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.i
         return 1;
     }
 
-    public void setChestplateDropChance(float chance) {
+    public void setChestplateDropChance(final float chance) {
         throw new UnsupportedOperationException();
     }
 
@@ -157,7 +158,7 @@ public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.i
         return 1;
     }
 
-    public void setLeggingsDropChance(float chance) {
+    public void setLeggingsDropChance(final float chance) {
         throw new UnsupportedOperationException();
     }
 
@@ -165,7 +166,7 @@ public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.i
         return 1;
     }
 
-    public void setBootsDropChance(float chance) {
+    public void setBootsDropChance(final float chance) {
         throw new UnsupportedOperationException();
     }
 }

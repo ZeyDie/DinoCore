@@ -31,7 +31,7 @@ public class PlayerVelocityEvent extends PlayerEvent implements Cancellable {
      *
      * @param cancel true if you wish to cancel this event
      */
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 
@@ -49,7 +49,7 @@ public class PlayerVelocityEvent extends PlayerEvent implements Cancellable {
      *
      * @param velocity The velocity vector that will be sent to the player
      */
-    public void setVelocity(Vector velocity) {
+    public void setVelocity(final Vector velocity) {
         this.velocity = velocity;
     }
 

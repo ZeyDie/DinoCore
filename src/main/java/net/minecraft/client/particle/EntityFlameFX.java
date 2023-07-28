@@ -11,7 +11,7 @@ public class EntityFlameFX extends EntityFX
     /** the scale of the flame FX */
     private float flameScale;
 
-    public EntityFlameFX(World par1World, double par2, double par4, double par6, double par8, double par10, double par12)
+    public EntityFlameFX(final World par1World, final double par2, final double par4, final double par6, final double par8, final double par10, final double par12)
     {
         super(par1World, par2, par4, par6, par8, par10, par12);
         this.motionX = this.motionX * 0.009999999776482582D + par8;
@@ -27,14 +27,14 @@ public class EntityFlameFX extends EntityFX
         this.setParticleTextureIndex(48);
     }
 
-    public void renderParticle(Tessellator par1Tessellator, float par2, float par3, float par4, float par5, float par6, float par7)
+    public void renderParticle(final Tessellator par1Tessellator, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7)
     {
-        float f6 = ((float)this.particleAge + par2) / (float)this.particleMaxAge;
+        final float f6 = ((float)this.particleAge + par2) / (float)this.particleMaxAge;
         this.particleScale = this.flameScale * (1.0F - f6 * f6 * 0.5F);
         super.renderParticle(par1Tessellator, par2, par3, par4, par5, par6, par7);
     }
 
-    public int getBrightnessForRender(float par1)
+    public int getBrightnessForRender(final float par1)
     {
         float f1 = ((float)this.particleAge + par1) / (float)this.particleMaxAge;
 
@@ -48,9 +48,9 @@ public class EntityFlameFX extends EntityFX
             f1 = 1.0F;
         }
 
-        int i = super.getBrightnessForRender(par1);
+        final int i = super.getBrightnessForRender(par1);
         int j = i & 255;
-        int k = i >> 16 & 255;
+        final int k = i >> 16 & 255;
         j += (int)(f1 * 15.0F * 16.0F);
 
         if (j > 240)
@@ -64,7 +64,7 @@ public class EntityFlameFX extends EntityFX
     /**
      * Gets how bright this entity is.
      */
-    public float getBrightness(float par1)
+    public float getBrightness(final float par1)
     {
         float f1 = ((float)this.particleAge + par1) / (float)this.particleMaxAge;
 
@@ -78,7 +78,7 @@ public class EntityFlameFX extends EntityFX
             f1 = 1.0F;
         }
 
-        float f2 = super.getBrightness(par1);
+        final float f2 = super.getBrightness(par1);
         return f2 * f1 + (1.0F - f1);
     }
 

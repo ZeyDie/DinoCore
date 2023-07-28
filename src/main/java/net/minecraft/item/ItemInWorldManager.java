@@ -58,14 +58,14 @@ public class ItemInWorldManager
     private int field_73093_n;
     private int durabilityRemainingOnBlock;
 
-    public ItemInWorldManager(World par1World)
+    public ItemInWorldManager(final World par1World)
     {
         this.gameType = EnumGameType.NOT_SET;
         this.durabilityRemainingOnBlock = -1;
         this.theWorld = par1World;
     }
 
-    public void setGameType(EnumGameType par1EnumGameType)
+    public void setGameType(final EnumGameType par1EnumGameType)
     {
         this.gameType = par1EnumGameType;
         par1EnumGameType.configurePlayerCapabilities(this.thisPlayerMP.capabilities);
@@ -88,7 +88,7 @@ public class ItemInWorldManager
     /**
      * if the gameType is currently NOT_SET then change it to par1
      */
-    public void initializeGameType(EnumGameType par1EnumGameType)
+    public void initializeGameType(final EnumGameType par1EnumGameType)
     {
         if (this.gameType == EnumGameType.NOT_SET)
         {
@@ -101,14 +101,14 @@ public class ItemInWorldManager
     public void updateBlockRemoving()
     {
         this.curblockDamage = MinecraftServer.currentTick; // CraftBukkit
-        int i;
-        float f;
-        int j;
+        final int i;
+        final float f;
+        final int j;
 
         if (this.receivedFinishDiggingPacket)
         {
             i = this.curblockDamage - this.field_73093_n;
-            int k = this.theWorld.getBlockId(this.posX, this.posY, this.posZ);
+            final int k = this.theWorld.getBlockId(this.posX, this.posY, this.posZ);
 
             if (k == 0)
             {
@@ -116,7 +116,7 @@ public class ItemInWorldManager
             }
             else
             {
-                Block block = Block.blocksList[k];
+                final Block block = Block.blocksList[k];
                 f = block.getPlayerRelativeBlockHardness(this.thisPlayerMP, this.thisPlayerMP.worldObj, this.posX, this.posY, this.posZ) * (float)(i + 1);
                 j = (int)(f * 10.0F);
 
@@ -136,7 +136,7 @@ public class ItemInWorldManager
         else if (this.isDestroyingBlock)
         {
             i = this.theWorld.getBlockId(this.partiallyDestroyedBlockX, this.partiallyDestroyedBlockY, this.partiallyDestroyedBlockZ);
-            Block block1 = Block.blocksList[i];
+            final Block block1 = Block.blocksList[i];
 
             if (block1 == null)
             {
@@ -146,7 +146,7 @@ public class ItemInWorldManager
             }
             else
             {
-                int l = this.curblockDamage - this.initialDamage;
+                final int l = this.curblockDamage - this.initialDamage;
                 f = block1.getPlayerRelativeBlockHardness(this.thisPlayerMP, this.thisPlayerMP.worldObj, this.partiallyDestroyedBlockX, this.partiallyDestroyedBlockY, this.partiallyDestroyedBlockZ) * (float)(l + 1);
                 j = (int)(f * 10.0F);
 
@@ -163,15 +163,15 @@ public class ItemInWorldManager
      * if not creative, it calls destroyBlockInWorldPartially untill the block is broken first. par4 is the specific
      * side. tryHarvestBlock can also be the result of this call
      */
-    public void onBlockClicked(int par1, int par2, int par3, int par4) // Cauldron - merge this whole method by hand
+    public void onBlockClicked(final int par1, final int par2, final int par3, final int par4) // Cauldron - merge this whole method by hand
     {
         // this.world.douseFire((EntityHuman) null, i, j, k, l); // CraftBukkit - moved down
         // CraftBukkit
-        org.bukkit.event.player.PlayerInteractEvent playerinteractevent = CraftEventFactory.callPlayerInteractEvent(this.thisPlayerMP, org.bukkit.event.block.Action.LEFT_CLICK_BLOCK, par1, par2, par3, par4, this.thisPlayerMP.inventory.getCurrentItem());
+        final org.bukkit.event.player.PlayerInteractEvent playerinteractevent = CraftEventFactory.callPlayerInteractEvent(this.thisPlayerMP, org.bukkit.event.block.Action.LEFT_CLICK_BLOCK, par1, par2, par3, par4, this.thisPlayerMP.inventory.getCurrentItem());
 
         if (!this.gameType.isAdventure() || this.thisPlayerMP.isCurrentToolAdventureModeExempt(par1, par2, par3))
         {
-            net.minecraftforge.event.entity.player.PlayerInteractEvent playerinteractevent1 = ForgeEventFactory.onPlayerInteract(this.thisPlayerMP, net.minecraftforge.event.entity.player.PlayerInteractEvent.Action.LEFT_CLICK_BLOCK, par1, par2, par3, par4); // Forge
+            final net.minecraftforge.event.entity.player.PlayerInteractEvent playerinteractevent1 = ForgeEventFactory.onPlayerInteract(this.thisPlayerMP, net.minecraftforge.event.entity.player.PlayerInteractEvent.Action.LEFT_CLICK_BLOCK, par1, par2, par3, par4); // Forge
 
             // CraftBukkit start
             if (playerinteractevent.isCancelled() || playerinteractevent1.isCanceled())
@@ -179,7 +179,7 @@ public class ItemInWorldManager
                 // Let the client know the block still exists
                 ((EntityPlayerMP) this.thisPlayerMP).playerNetServerHandler.sendPacketToPlayer(new Packet53BlockChange(par1, par2, par3, this.theWorld));
                 // Update any tile entity data for this block
-                TileEntity tileentity = this.theWorld.getBlockTileEntity(par1, par2, par3);
+                final TileEntity tileentity = this.theWorld.getBlockTileEntity(par1, par2, par3);
 
                 if (tileentity != null)
                 {
@@ -202,9 +202,9 @@ public class ItemInWorldManager
                 //this.world.douseFire(this.player, i, j, k, l);  // Forge
                 this.initialDamage = this.curblockDamage;
                 float f = 1.0F;
-                int i1 = this.theWorld.getBlockId(par1, par2, par3);
+                final int i1 = this.theWorld.getBlockId(par1, par2, par3);
                 // CraftBukkit start - Swings at air do *NOT* exist.
-                Block block = Block.blocksList[i1]; // Forge
+                final Block block = Block.blocksList[i1]; // Forge
 
                 if (block != null)
                 {
@@ -214,7 +214,7 @@ public class ItemInWorldManager
                         if (i1 == Block.doorWood.blockID)
                         {
                             // For some reason *BOTH* the bottom/top part have to be marked updated.
-                            boolean bottom = (this.theWorld.getBlockMetadata(par1, par2, par3) & 8) == 0;
+                            final boolean bottom = (this.theWorld.getBlockMetadata(par1, par2, par3) & 8) == 0;
                             ((EntityPlayerMP) this.thisPlayerMP).playerNetServerHandler.sendPacketToPlayer(new Packet53BlockChange(par1, par2, par3, this.theWorld));
                             ((EntityPlayerMP) this.thisPlayerMP).playerNetServerHandler.sendPacketToPlayer(new Packet53BlockChange(par1, par2 + (bottom ? 1 : -1), par3, this.theWorld));
                         }
@@ -244,7 +244,7 @@ public class ItemInWorldManager
                     return;
                 }
 
-                org.bukkit.event.block.BlockDamageEvent blockEvent = CraftEventFactory.callBlockDamageEvent(this.thisPlayerMP, par1, par2, par3, this.thisPlayerMP.inventory.getCurrentItem(), f >= 1.0f);
+                final org.bukkit.event.block.BlockDamageEvent blockEvent = CraftEventFactory.callBlockDamageEvent(this.thisPlayerMP, par1, par2, par3, this.thisPlayerMP.inventory.getCurrentItem(), f >= 1.0f);
 
                 if (blockEvent.isCancelled())
                 {
@@ -270,7 +270,7 @@ public class ItemInWorldManager
                     this.partiallyDestroyedBlockX = par1;
                     this.partiallyDestroyedBlockY = par2;
                     this.partiallyDestroyedBlockZ = par3;
-                    int j1 = (int)(f * 10.0F);
+                    final int j1 = (int)(f * 10.0F);
                     this.theWorld.destroyBlockInWorldPartially(this.thisPlayerMP.entityId, par1, par2, par3, j1);
                     this.durabilityRemainingOnBlock = j1;
                 }
@@ -279,18 +279,18 @@ public class ItemInWorldManager
         }
     }
 
-    public void uncheckedTryHarvestBlock(int par1, int par2, int par3)
+    public void uncheckedTryHarvestBlock(final int par1, final int par2, final int par3)
     {
         if (par1 == this.partiallyDestroyedBlockX && par2 == this.partiallyDestroyedBlockY && par3 == this.partiallyDestroyedBlockZ)
         {
             this.curblockDamage = MinecraftServer.currentTick; // CraftBukkit
-            int l = this.curblockDamage - this.initialDamage;
-            int i1 = this.theWorld.getBlockId(par1, par2, par3);
+            final int l = this.curblockDamage - this.initialDamage;
+            final int i1 = this.theWorld.getBlockId(par1, par2, par3);
 
             if (i1 != 0)
             {
-                Block block = Block.blocksList[i1];
-                float f = block.getPlayerRelativeBlockHardness(this.thisPlayerMP, this.thisPlayerMP.worldObj, par1, par2, par3) * (float)(l + 1);
+                final Block block = Block.blocksList[i1];
+                final float f = block.getPlayerRelativeBlockHardness(this.thisPlayerMP, this.thisPlayerMP.worldObj, par1, par2, par3) * (float)(l + 1);
 
                 if (f >= 0.7F)
                 {
@@ -321,7 +321,7 @@ public class ItemInWorldManager
     /**
      * note: this ignores the pars passed in and continues to destroy the onClickedBlock
      */
-    public void cancelDestroyingBlock(int par1, int par2, int par3)
+    public void cancelDestroyingBlock(final int par1, final int par2, final int par3)
     {
         this.isDestroyingBlock = false;
         this.theWorld.destroyBlockInWorldPartially(this.thisPlayerMP.entityId, this.partiallyDestroyedBlockX, this.partiallyDestroyedBlockY, this.partiallyDestroyedBlockZ, -1);
@@ -330,17 +330,17 @@ public class ItemInWorldManager
     /**
      * Removes a block and triggers the appropriate events
      */
-    private boolean removeBlock(int par1, int par2, int par3)
+    private boolean removeBlock(final int par1, final int par2, final int par3)
     {
-        Block block = Block.blocksList[this.theWorld.getBlockId(par1, par2, par3)];
-        int l = this.theWorld.getBlockMetadata(par1, par2, par3);
+        final Block block = Block.blocksList[this.theWorld.getBlockId(par1, par2, par3)];
+        final int l = this.theWorld.getBlockMetadata(par1, par2, par3);
 
         if (block != null)
         {
             block.onBlockHarvested(this.theWorld, par1, par2, par3, l, this.thisPlayerMP);
         }
 
-        boolean flag = (block != null && block.removeBlockByPlayer(theWorld, thisPlayerMP, par1, par2, par3));
+        final boolean flag = (block != null && block.removeBlockByPlayer(theWorld, thisPlayerMP, par1, par2, par3));
 
         if (block != null && flag)
         {
@@ -353,28 +353,28 @@ public class ItemInWorldManager
     /**
      * Attempts to harvest a block at the given coordinate
      */
-    public boolean tryHarvestBlock(int par1, int par2, int par3)
+    public boolean tryHarvestBlock(final int par1, final int par2, final int par3)
     {
-        BlockEvent.BreakEvent event = ForgeHooks.onBlockBreakEvent(theWorld, gameType, thisPlayerMP, par1, par2, par3);
+        final BlockEvent.BreakEvent event = ForgeHooks.onBlockBreakEvent(theWorld, gameType, thisPlayerMP, par1, par2, par3);
         if (event.isCanceled())
                 {
                 return false;
             }
         else
         {
-        ItemStack stack = thisPlayerMP.getCurrentEquippedItem();
+        final ItemStack stack = thisPlayerMP.getCurrentEquippedItem();
         if (stack != null && stack.getItem().onBlockStartBreak(stack, par1, par2, par3, thisPlayerMP))
         {
             return false;
         }
-            int l = this.theWorld.getBlockId(par1, par2, par3);
+            final int l = this.theWorld.getBlockId(par1, par2, par3);
 
             if (Block.blocksList[l] == null)
             {
                 return false;    // CraftBukkit - A plugin set block to air without cancelling
             }
 
-            int i1 = this.theWorld.getBlockMetadata(par1, par2, par3);
+            final int i1 = this.theWorld.getBlockMetadata(par1, par2, par3);
 
             this.theWorld.playAuxSFXAtEntity(this.thisPlayerMP, 2001, par1, par2, par3, l + (this.theWorld.getBlockMetadata(par1, par2, par3) << 12));
             boolean flag = false;
@@ -386,9 +386,9 @@ public class ItemInWorldManager
             }
             else
             {
-                ItemStack itemstack = this.thisPlayerMP.getCurrentEquippedItem();
+                final ItemStack itemstack = this.thisPlayerMP.getCurrentEquippedItem();
                 boolean flag1 = false;
-                Block block = Block.blocksList[l];
+                final Block block = Block.blocksList[l];
                 if (block != null)
                 {
                     flag1 = block.canHarvestBlock(thisPlayerMP, i1);
@@ -424,11 +424,11 @@ public class ItemInWorldManager
     /**
      * Attempts to right-click use an item by the given EntityPlayer in the given World
      */
-    public boolean tryUseItem(EntityPlayer par1EntityPlayer, World par2World, ItemStack par3ItemStack)
+    public boolean tryUseItem(final EntityPlayer par1EntityPlayer, final World par2World, final ItemStack par3ItemStack)
     {
-        int i = par3ItemStack.stackSize;
-        int j = par3ItemStack.getItemDamage();
-        ItemStack itemstack1 = par3ItemStack.useItemRightClick(par2World, par1EntityPlayer);
+        final int i = par3ItemStack.stackSize;
+        final int j = par3ItemStack.getItemDamage();
+        final ItemStack itemstack1 = par3ItemStack.useItemRightClick(par2World, par1EntityPlayer);
 
         if (itemstack1 == par3ItemStack && (itemstack1 == null || itemstack1.stackSize == i && itemstack1.getMaxItemUseDuration() <= 0 && itemstack1.getItemDamage() == j))
         {
@@ -467,17 +467,17 @@ public class ItemInWorldManager
      * Activate the clicked on block, otherwise use the held item. Args: player, world, itemStack, x, y, z, side,
      * xOffset, yOffset, zOffset
      */
-    public boolean activateBlockOrUseItem(EntityPlayer par1EntityPlayer, World par2World, ItemStack par3ItemStack, int par4, int par5, int par6, int par7, float par8, float par9, float par10) // Cauldron - manually merge whole method by hand
+    public boolean activateBlockOrUseItem(final EntityPlayer par1EntityPlayer, final World par2World, final ItemStack par3ItemStack, final int par4, final int par5, final int par6, final int par7, final float par8, final float par9, final float par10) // Cauldron - manually merge whole method by hand
     {
-        int i1 = par2World.getBlockId(par4, par5, par6);
+        final int i1 = par2World.getBlockId(par4, par5, par6);
 
         // CraftBukkit start - Interact
         boolean result = false;
 
         if (i1 > 0)
         {
-            org.bukkit.event.player.PlayerInteractEvent event = CraftEventFactory.callPlayerInteractEvent(par1EntityPlayer, org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK, par4, par5, par6, par7, par3ItemStack);
-            net.minecraftforge.event.entity.player.PlayerInteractEvent forgeEvent = ForgeEventFactory.onPlayerInteract(par1EntityPlayer, net.minecraftforge.event.entity.player.PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK, par4, par5, par6, par7);
+            final org.bukkit.event.player.PlayerInteractEvent event = CraftEventFactory.callPlayerInteractEvent(par1EntityPlayer, org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK, par4, par5, par6, par7, par3ItemStack);
+            final net.minecraftforge.event.entity.player.PlayerInteractEvent forgeEvent = ForgeEventFactory.onPlayerInteract(par1EntityPlayer, net.minecraftforge.event.entity.player.PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK, par4, par5, par6, par7);
             // Cauldron start
             // if forge event is explicitly cancelled, return
             if (forgeEvent.isCanceled())
@@ -488,7 +488,7 @@ public class ItemInWorldManager
             // if we have no explicit deny, check if item can be used
             if (event.useItemInHand() != org.bukkit.event.Event.Result.DENY && forgeEvent.useItem != net.minecraftforge.event.Event.Result.DENY)
             {
-                Item item = (par3ItemStack != null ? par3ItemStack.getItem() : null);
+                final Item item = (par3ItemStack != null ? par3ItemStack.getItem() : null);
                 // try to use an item in hand before activating a block. Used for items such as IC2's wrench.
                 if (item != null && item.onItemUseFirst(par3ItemStack, par1EntityPlayer, par2World, par4, par5, par6, par7, par8, par9, par10))
                 {
@@ -502,7 +502,7 @@ public class ItemInWorldManager
                 // If we denied a door from opening, we need to send a correcting update to the client, as it already opened the door.
                 if (i1 == Block.doorWood.blockID)
                 {
-                    boolean bottom = (par2World.getBlockMetadata(par4, par5, par6) & 8) == 0;
+                    final boolean bottom = (par2World.getBlockMetadata(par4, par5, par6) & 8) == 0;
                     ((EntityPlayerMP) par1EntityPlayer).playerNetServerHandler.sendPacketToPlayer(new Packet53BlockChange(par4, par5 + (bottom ? 1 : -1), par6, par2World));
                 }
 
@@ -516,11 +516,11 @@ public class ItemInWorldManager
                 {
                     if (thisPlayerMP.openContainer.getBukkitView() == null)
                     {
-                        TileEntity te = thisPlayerMP.worldObj.getBlockTileEntity(par4, par5, par6);
+                        final TileEntity te = thisPlayerMP.worldObj.getBlockTileEntity(par4, par5, par6);
                         if (te != null && te instanceof IInventory)
                         {
-                            IInventory teInv = (IInventory)te;
-                            CraftInventory inventory = new CraftInventory(teInv);
+                            final IInventory teInv = (IInventory)te;
+                            final CraftInventory inventory = new CraftInventory(teInv);
                             thisPlayerMP.openContainer.bukkitView = new CraftInventoryView(thisPlayerMP.getBukkitEntity(), inventory, thisPlayerMP.openContainer);
                         }
                         else
@@ -541,8 +541,8 @@ public class ItemInWorldManager
 
             if (par3ItemStack != null && !result)
             {
-                int meta = par3ItemStack.getItemDamage();
-                int size = par3ItemStack.stackSize;
+                final int meta = par3ItemStack.getItemDamage();
+                final int size = par3ItemStack.stackSize;
                 result = par3ItemStack.tryPlaceItemIntoWorld(par1EntityPlayer, par2World, par4, par5, par6, par7, par8, par9, par10);
 
                 // The item count should not decrement in Creative mode.
@@ -572,7 +572,7 @@ public class ItemInWorldManager
     /**
      * Sets the world instance.
      */
-    public void setWorld(WorldServer par1WorldServer)
+    public void setWorld(final WorldServer par1WorldServer)
     {
         this.theWorld = par1WorldServer;
     }
@@ -581,7 +581,7 @@ public class ItemInWorldManager
     {
         return blockReachDistance;
     }
-    public void setBlockReachDistance(double distance)
+    public void setBlockReachDistance(final double distance)
     {
         blockReachDistance = distance;
     }

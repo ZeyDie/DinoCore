@@ -18,7 +18,7 @@ public class Property
 
         private static Type[] values = {STRING, INTEGER, BOOLEAN, DOUBLE};
 
-        public static Type tryParse(char id)
+        public static Type tryParse(final char id)
         {
             for (int x = 0; x < values.length; x++)
             {
@@ -54,12 +54,12 @@ public class Property
         isList  = false;
     }
 
-    public Property(String name, String value, Type type)
+    public Property(final String name, final String value, final Type type)
     {
         this(name, value, type, false);
     }
 
-    Property(String name, String value, Type type, boolean read)
+    Property(final String name, final String value, final Type type, final boolean read)
     {
         setName(name);
         this.value = value;
@@ -68,12 +68,12 @@ public class Property
         isList     = false;
     }
 
-    public Property(String name, String[] values, Type type)
+    public Property(final String name, final String[] values, final Type type)
     {
         this(name, values, type, false);
     }
 
-    Property(String name, String[] values, Type type, boolean read)
+    Property(final String name, final String[] values, final Type type, final boolean read)
     {
         setName(name);
         this.type   = type;
@@ -111,13 +111,13 @@ public class Property
      * @param _default The default to provide if the current value is not a valid integer
      * @return The value
      */
-    public int getInt(int _default)
+    public int getInt(final int _default)
     {
         try
         {
             return Integer.parseInt(value);
         }
-        catch (NumberFormatException e)
+        catch (final NumberFormatException e)
         {
             return _default;
         }
@@ -134,7 +134,7 @@ public class Property
             Integer.parseInt(value);
             return true;
         }
-        catch (NumberFormatException e)
+        catch (final NumberFormatException e)
         {
             return false;
         }
@@ -148,7 +148,7 @@ public class Property
      * @param _default The default to provide
      * @return The value as a boolean, or the default
      */
-    public boolean getBoolean(boolean _default)
+    public boolean getBoolean(final boolean _default)
     {
         if (isBooleanValue())
         {
@@ -180,7 +180,7 @@ public class Property
             Double.parseDouble(value);
             return true;
         }
-        catch (NumberFormatException e)
+        catch (final NumberFormatException e)
         {
             return false;
         }
@@ -194,13 +194,13 @@ public class Property
      * @param _default The default to provide if the current value is not a valid double
      * @return The value
      */
-    public double getDouble(double _default)
+    public double getDouble(final double _default)
     {
         try
         {
             return Double.parseDouble(value);
         }
-        catch (NumberFormatException e)
+        catch (final NumberFormatException e)
         {
             return _default;
         }
@@ -219,18 +219,18 @@ public class Property
      */
     public int[] getIntList()
     {
-        ArrayList<Integer> nums = new ArrayList<Integer>();
+        final ArrayList<Integer> nums = new ArrayList<Integer>();
         
-        for (String value : values)
+        for (final String value : values)
         {
             try
             {
                 nums.add(Integer.parseInt(value));
             }
-            catch (NumberFormatException e){}
+            catch (final NumberFormatException e){}
         }
 
-        int[] primitives = new int[nums.size()];
+        final int[] primitives = new int[nums.size()];
 
         for (int i = 0; i < nums.size(); i++)
         {
@@ -246,13 +246,13 @@ public class Property
      */
     public boolean isIntList()
     {
-        for (String value : values)
+        for (final String value : values)
         {
             try
             {
                 Integer.parseInt(value);
             }
-            catch (NumberFormatException e)
+            catch (final NumberFormatException e)
             {
                 return false;
             }
@@ -268,17 +268,17 @@ public class Property
      */
     public boolean[] getBooleanList()
     {
-        ArrayList<Boolean> tmp = new ArrayList<Boolean>();
-        for (String value : values)
+        final ArrayList<Boolean> tmp = new ArrayList<Boolean>();
+        for (final String value : values)
         {
             try
             {
                 tmp.add(Boolean.parseBoolean(value));
             }
-            catch (NumberFormatException e){}
+            catch (final NumberFormatException e){}
         }
 
-        boolean[] primitives = new boolean[tmp.size()];
+        final boolean[] primitives = new boolean[tmp.size()];
 
         for (int i = 0; i < tmp.size(); i++)
         {
@@ -294,7 +294,7 @@ public class Property
      */
     public boolean isBooleanList()
     {
-        for (String value : values)
+        for (final String value : values)
         {
             if (!"true".equalsIgnoreCase(value) && !"false".equalsIgnoreCase(value))
             {
@@ -313,17 +313,17 @@ public class Property
      */
     public double[] getDoubleList()
     {
-        ArrayList<Double> tmp = new ArrayList<Double>();
-        for (String value : values)
+        final ArrayList<Double> tmp = new ArrayList<Double>();
+        for (final String value : values)
         {
             try
             {
                 tmp.add(Double.parseDouble(value));
             }
-            catch (NumberFormatException e) {}
+            catch (final NumberFormatException e) {}
         }
 
-        double[] primitives = new double[tmp.size()];
+        final double[] primitives = new double[tmp.size()];
 
         for (int i = 0; i < tmp.size(); i++)
         {
@@ -339,13 +339,13 @@ public class Property
      */
     public boolean isDoubleList()
     {
-        for (String value : values)
+        for (final String value : values)
         {
             try
             {
                 Double.parseDouble(value);
             }
-            catch (NumberFormatException e)
+            catch (final NumberFormatException e)
             {
                 return false;
             }
@@ -359,7 +359,7 @@ public class Property
         return name;
     }
 
-    public void setName(String name)
+    public void setName(final String name)
     {
         this.name = name;
     }
@@ -389,19 +389,19 @@ public class Property
     public boolean hasChanged(){ return changed; }
     void resetChangedState(){ changed = false; }
 
-    public void set(String value)
+    public void set(final String value)
     {
         this.value = value;
         changed = true;
     }
 
-    public void set(String[] values)
+    public void set(final String[] values)
     {
         this.values = values;
         changed = true;
     }
 
-    public void set(int     value){ set(Integer.toString(value)); }
-    public void set(boolean value){ set(Boolean.toString(value)); }
-    public void set(double  value){ set(Double.toString(value));  }
+    public void set(final int     value){ set(Integer.toString(value)); }
+    public void set(final boolean value){ set(Boolean.toString(value)); }
+    public void set(final double  value){ set(Double.toString(value));  }
 }

@@ -12,12 +12,12 @@ import java.util.List;
 
 public class FMLDeobfTweaker implements ITweaker {
     @Override
-    public void acceptOptions(List<String> args, File gameDir, File assetsDir, String profile)
+    public void acceptOptions(final List<String> args, final File gameDir, final File assetsDir, final String profile)
     {
     }
 
     @Override
-    public void injectIntoClassLoader(LaunchClassLoader classLoader)
+    public void injectIntoClassLoader(final LaunchClassLoader classLoader)
     {
         // Deobfuscation transformer, always last
         if (!(Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment"))
@@ -27,14 +27,14 @@ public class FMLDeobfTweaker implements ITweaker {
         try
         {
             FMLRelaunchLog.fine("Validating minecraft");
-            Class<?> loaderClazz = Class.forName("cpw.mods.fml.common.Loader", true, classLoader);
+            final Class<?> loaderClazz = Class.forName("cpw.mods.fml.common.Loader", true, classLoader);
             Method m = loaderClazz.getMethod("injectData", Object[].class);
             m.invoke(null, (Object)FMLInjectionData.data());
             m = loaderClazz.getMethod("instance");
             m.invoke(null);
             FMLRelaunchLog.fine("Minecraft validated, launching...");
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             // Load in the Loader, make sure he's ready to roll - this will initialize most of the rest of minecraft here
             System.out.println("A CRITICAL PROBLEM OCCURED INITIALIZING MINECRAFT - LIKELY YOU HAVE AN INCORRECT VERSION FOR THIS FML");

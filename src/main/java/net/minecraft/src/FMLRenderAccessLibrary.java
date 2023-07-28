@@ -32,35 +32,35 @@ public class FMLRenderAccessLibrary
 {
     public static Logger getLogger()
     {
-        Logger l = Logger.getLogger("FMLRenderAccessLibrary");
+        final Logger l = Logger.getLogger("FMLRenderAccessLibrary");
         l.setParent(FMLLog.getLogger());
         return l;
     }
 
-    public static void log(Level level, String message)
+    public static void log(final Level level, final String message)
     {
         FMLLog.log("FMLRenderAccessLibrary", level, message);
     }
 
-    public static void log(Level level, String message, Throwable throwable)
+    public static void log(final Level level, final String message, final Throwable throwable)
     {
         FMLLog.log(level, throwable, message);
     }
 
     @SuppressWarnings("deprecation")
-    public static boolean renderWorldBlock(RenderBlocks renderer, IBlockAccess world, int x, int y, int z, Block block, int modelId)
+    public static boolean renderWorldBlock(final RenderBlocks renderer, final IBlockAccess world, final int x, final int y, final int z, final Block block, final int modelId)
     {
         return RenderingRegistry.instance().renderWorldBlock(renderer, world, x, y, z, block, modelId);
     }
 
     @SuppressWarnings("deprecation")
-    public static void renderInventoryBlock(RenderBlocks renderer, Block block, int metadata, int modelID)
+    public static void renderInventoryBlock(final RenderBlocks renderer, final Block block, final int metadata, final int modelID)
     {
         RenderingRegistry.instance().renderInventoryBlock(renderer, block, metadata, modelID);
     }
 
     @SuppressWarnings("deprecation")
-    public static boolean renderItemAsFull3DBlock(int modelId)
+    public static boolean renderItemAsFull3DBlock(final int modelId)
     {
         return RenderingRegistry.instance().renderItemAsFull3DBlock(modelId);
     }

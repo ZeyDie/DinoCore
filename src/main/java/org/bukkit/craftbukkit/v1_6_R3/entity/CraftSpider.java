@@ -7,7 +7,7 @@ import org.bukkit.entity.Spider;
 
 public class CraftSpider extends CraftMonster implements Spider {
 
-    public CraftSpider(CraftServer server, net.minecraft.entity.monster.EntitySpider entity) {
+    public CraftSpider(final CraftServer server, final net.minecraft.entity.monster.EntitySpider entity) {
         super(server, entity);
     }
 

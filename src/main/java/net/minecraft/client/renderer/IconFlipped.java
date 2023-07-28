@@ -11,7 +11,7 @@ public class IconFlipped implements Icon
     private final boolean flipU;
     private final boolean flipV;
 
-    public IconFlipped(Icon par1Icon, boolean par2, boolean par3)
+    public IconFlipped(final Icon par1Icon, final boolean par2, final boolean par3)
     {
         this.baseIcon = par1Icon;
         this.flipU = par2;
@@ -53,9 +53,9 @@ public class IconFlipped implements Icon
     /**
      * Gets a U coordinate on the icon. 0 returns uMin and 16 returns uMax. Other arguments return in-between values.
      */
-    public float getInterpolatedU(double par1)
+    public float getInterpolatedU(final double par1)
     {
-        float f = this.getMaxU() - this.getMinU();
+        final float f = this.getMaxU() - this.getMinU();
         return this.getMinU() + f * ((float)par1 / 16.0F);
     }
 
@@ -78,9 +78,9 @@ public class IconFlipped implements Icon
     /**
      * Gets a V coordinate on the icon. 0 returns vMin and 16 returns vMax. Other arguments return in-between values.
      */
-    public float getInterpolatedV(double par1)
+    public float getInterpolatedV(final double par1)
     {
-        float f = this.getMaxV() - this.getMinV();
+        final float f = this.getMaxV() - this.getMinV();
         return this.getMinV() + f * ((float)par1 / 16.0F);
     }
 

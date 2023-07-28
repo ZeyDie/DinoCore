@@ -39,7 +39,7 @@ public class EntityXPOrb extends Entity
     /** Threshold color for tracking players */
     private int xpTargetColor;
 
-    public EntityXPOrb(World par1World, double par2, double par4, double par6, int par8)
+    public EntityXPOrb(final World par1World, final double par2, final double par4, final double par6, final int par8)
     {
         super(par1World);
         this.setSize(0.5F, 0.5F);
@@ -61,7 +61,7 @@ public class EntityXPOrb extends Entity
         return false;
     }
 
-    public EntityXPOrb(World par1World)
+    public EntityXPOrb(final World par1World)
     {
         super(par1World);
         this.setSize(0.25F, 0.25F);
@@ -71,7 +71,7 @@ public class EntityXPOrb extends Entity
     protected void entityInit() {}
 
     @SideOnly(Side.CLIENT)
-    public int getBrightnessForRender(float par1)
+    public int getBrightnessForRender(final float par1)
     {
         float f1 = 0.5F;
 
@@ -85,9 +85,9 @@ public class EntityXPOrb extends Entity
             f1 = 1.0F;
         }
 
-        int i = super.getBrightnessForRender(par1);
+        final int i = super.getBrightnessForRender(par1);
         int j = i & 255;
-        int k = i >> 16 & 255;
+        final int k = i >> 16 & 255;
         j += (int)(f1 * 15.0F * 16.0F);
 
         if (j > 240)
@@ -124,7 +124,7 @@ public class EntityXPOrb extends Entity
         }
 
         this.pushOutOfBlocks(this.posX, (this.boundingBox.minY + this.boundingBox.maxY) / 2.0D, this.posZ);
-        double d0 = 8.0D;
+        final double d0 = 8.0D;
 
         if (this.xpTargetColor < this.xpColor - 20 + this.entityId % 100)
         {
@@ -139,15 +139,15 @@ public class EntityXPOrb extends Entity
         if (this.closestPlayer != null)
         {
             // CraftBukkit start
-            EntityTargetEvent event = CraftEventFactory.callEntityTargetEvent(this, closestPlayer, EntityTargetEvent.TargetReason.CLOSEST_PLAYER);
-            Entity target = event.getTarget() == null ? null : ((org.bukkit.craftbukkit.v1_6_R3.entity.CraftEntity) event.getTarget()).getHandle();
+            final EntityTargetEvent event = CraftEventFactory.callEntityTargetEvent(this, closestPlayer, EntityTargetEvent.TargetReason.CLOSEST_PLAYER);
+            final Entity target = event.getTarget() == null ? null : ((org.bukkit.craftbukkit.v1_6_R3.entity.CraftEntity) event.getTarget()).getHandle();
 
             if (!event.isCancelled() && target != null)
             {
-                double d1 = (target.posX - this.posX) / d0;
-                double d2 = (target.posY + (double) target.getEyeHeight() - this.posY) / d0;
-                double d3 = (target.posZ - this.posZ) / d0;
-                double d4 = Math.sqrt(d1 * d1 + d2 * d2 + d3 * d3);
+                final double d1 = (target.posX - this.posX) / d0;
+                final double d2 = (target.posY + (double) target.getEyeHeight() - this.posY) / d0;
+                final double d3 = (target.posZ - this.posZ) / d0;
+                final double d4 = Math.sqrt(d1 * d1 + d2 * d2 + d3 * d3);
                 double d5 = 1.0D - d4;
 
                 if (d5 > 0.0D)
@@ -168,7 +168,7 @@ public class EntityXPOrb extends Entity
         if (this.onGround)
         {
             f = 0.58800006F;
-            int i = this.worldObj.getBlockId(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1, MathHelper.floor_double(this.posZ));
+            final int i = this.worldObj.getBlockId(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1, MathHelper.floor_double(this.posZ));
 
             if (i > 0)
             {
@@ -206,7 +206,7 @@ public class EntityXPOrb extends Entity
      * Will deal the specified amount of damage to the entity if the entity isn't immune to fire damage. Args:
      * amountDamage
      */
-    protected void dealFireDamage(int par1)
+    protected void dealFireDamage(final int par1)
     {
         this.attackEntityFrom(DamageSource.inFire, (float)par1);
     }
@@ -214,7 +214,7 @@ public class EntityXPOrb extends Entity
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2)
     {
         if (this.isEntityInvulnerable())
         {
@@ -237,7 +237,7 @@ public class EntityXPOrb extends Entity
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         par1NBTTagCompound.setShort("Health", (short)((byte)this.xpOrbHealth));
         par1NBTTagCompound.setShort("Age", (short)this.xpOrbAge);
@@ -247,7 +247,7 @@ public class EntityXPOrb extends Entity
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         this.xpOrbHealth = par1NBTTagCompound.getShort("Health") & 255;
         this.xpOrbAge = par1NBTTagCompound.getShort("Age");
@@ -257,7 +257,7 @@ public class EntityXPOrb extends Entity
     /**
      * Called by a player entity when they collide with an entity
      */
-    public void onCollideWithPlayer(EntityPlayer par1EntityPlayer)
+    public void onCollideWithPlayer(final EntityPlayer par1EntityPlayer)
     {
         if (!this.worldObj.isRemote)
         {
@@ -294,7 +294,7 @@ public class EntityXPOrb extends Entity
     /**
      * Get xp split rate (Is called until the xp drop code in EntityLiving.onEntityUpdate is complete)
      */
-    public static int getXPSplit(int par0)
+    public static int getXPSplit(final int par0)
     {
         // CraftBukkit start
         if (par0 > 162670129)

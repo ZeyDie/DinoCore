@@ -13,7 +13,7 @@ import java.util.Random;
 
 public class BlockCommandBlock extends BlockContainer
 {
-    public BlockCommandBlock(int par1)
+    public BlockCommandBlock(final int par1)
     {
         super(par1, Material.iron);
     }
@@ -21,7 +21,7 @@ public class BlockCommandBlock extends BlockContainer
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World par1World)
+    public TileEntity createNewTileEntity(final World par1World)
     {
         return new TileEntityCommandBlock();
     }
@@ -30,18 +30,18 @@ public class BlockCommandBlock extends BlockContainer
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         if (!par1World.isRemote)
         {
-            boolean flag = par1World.isBlockIndirectlyGettingPowered(par2, par3, par4);
-            int i1 = par1World.getBlockMetadata(par2, par3, par4);
-            boolean flag1 = (i1 & 1) != 0;
+            final boolean flag = par1World.isBlockIndirectlyGettingPowered(par2, par3, par4);
+            final int i1 = par1World.getBlockMetadata(par2, par3, par4);
+            final boolean flag1 = (i1 & 1) != 0;
             // CraftBukkit start
-            org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2, par3, par4);
-            int old = flag1 ? 15 : 0;
-            int current = flag ? 15 : 0;
-            BlockRedstoneEvent eventRedstone = new BlockRedstoneEvent(block, old, current);
+            final org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2, par3, par4);
+            final int old = flag1 ? 15 : 0;
+            final int current = flag ? 15 : 0;
+            final BlockRedstoneEvent eventRedstone = new BlockRedstoneEvent(block, old, current);
             par1World.getServer().getPluginManager().callEvent(eventRedstone);
             // CraftBukkit end
 
@@ -60,13 +60,13 @@ public class BlockCommandBlock extends BlockContainer
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
-        TileEntity tileentity = par1World.getBlockTileEntity(par2, par3, par4);
+        final TileEntity tileentity = par1World.getBlockTileEntity(par2, par3, par4);
 
         if (tileentity != null && tileentity instanceof TileEntityCommandBlock)
         {
-            TileEntityCommandBlock tileentitycommandblock = (TileEntityCommandBlock)tileentity;
+            final TileEntityCommandBlock tileentitycommandblock = (TileEntityCommandBlock)tileentity;
             tileentitycommandblock.setSignalStrength(tileentitycommandblock.executeCommandOnPowered(par1World));
             par1World.func_96440_m(par2, par3, par4, this.blockID);
         }
@@ -75,7 +75,7 @@ public class BlockCommandBlock extends BlockContainer
     /**
      * How many world ticks before ticking
      */
-    public int tickRate(World par1World)
+    public int tickRate(final World par1World)
     {
         return 1;
     }
@@ -83,9 +83,9 @@ public class BlockCommandBlock extends BlockContainer
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9)
     {
-        TileEntityCommandBlock tileentitycommandblock = (TileEntityCommandBlock)par1World.getBlockTileEntity(par2, par3, par4);
+        final TileEntityCommandBlock tileentitycommandblock = (TileEntityCommandBlock)par1World.getBlockTileEntity(par2, par3, par4);
 
         if (tileentitycommandblock != null)
         {
@@ -108,18 +108,18 @@ public class BlockCommandBlock extends BlockContainer
      * If hasComparatorInputOverride returns true, the return value from this is used instead of the redstone signal
      * strength when this block inputs to a comparator.
      */
-    public int getComparatorInputOverride(World par1World, int par2, int par3, int par4, int par5)
+    public int getComparatorInputOverride(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
-        TileEntity tileentity = par1World.getBlockTileEntity(par2, par3, par4);
+        final TileEntity tileentity = par1World.getBlockTileEntity(par2, par3, par4);
         return tileentity != null && tileentity instanceof TileEntityCommandBlock ? ((TileEntityCommandBlock)tileentity).getSignalStrength() : 0;
     }
 
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
+    public void onBlockPlacedBy(final World par1World, final int par2, final int par3, final int par4, final EntityLivingBase par5EntityLivingBase, final ItemStack par6ItemStack)
     {
-        TileEntityCommandBlock tileentitycommandblock = (TileEntityCommandBlock)par1World.getBlockTileEntity(par2, par3, par4);
+        final TileEntityCommandBlock tileentitycommandblock = (TileEntityCommandBlock)par1World.getBlockTileEntity(par2, par3, par4);
 
         if (par6ItemStack.hasDisplayName())
         {
@@ -130,7 +130,7 @@ public class BlockCommandBlock extends BlockContainer
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random par1Random)
+    public int quantityDropped(final Random par1Random)
     {
         return 0;
     }

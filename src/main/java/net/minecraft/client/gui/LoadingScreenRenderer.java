@@ -24,7 +24,7 @@ public class LoadingScreenRenderer implements IProgressUpdate
     private long field_73723_d = Minecraft.getSystemTime();
     private boolean field_73724_e;
 
-    public LoadingScreenRenderer(Minecraft par1Minecraft)
+    public LoadingScreenRenderer(final Minecraft par1Minecraft)
     {
         this.mc = par1Minecraft;
     }
@@ -33,7 +33,7 @@ public class LoadingScreenRenderer implements IProgressUpdate
      * this string, followed by "working..." and then the "% complete" are the 3 lines shown. This resets progress to 0,
      * and the WorkingString to "working...".
      */
-    public void resetProgressAndMessage(String par1Str)
+    public void resetProgressAndMessage(final String par1Str)
     {
         this.field_73724_e = false;
         this.func_73722_d(par1Str);
@@ -42,13 +42,13 @@ public class LoadingScreenRenderer implements IProgressUpdate
     /**
      * "Saving level", or the loading,or downloading equivelent
      */
-    public void displayProgressMessage(String par1Str)
+    public void displayProgressMessage(final String par1Str)
     {
         this.field_73724_e = true;
         this.func_73722_d(par1Str);
     }
 
-    public void func_73722_d(String par1Str)
+    public void func_73722_d(final String par1Str)
     {
         this.currentlyDisplayedText = par1Str;
 
@@ -61,7 +61,7 @@ public class LoadingScreenRenderer implements IProgressUpdate
         }
         else
         {
-            ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+            final ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
             GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
             GL11.glMatrixMode(GL11.GL_PROJECTION);
             GL11.glLoadIdentity();
@@ -75,7 +75,7 @@ public class LoadingScreenRenderer implements IProgressUpdate
     /**
      * This is called with "Working..." by resetProgressAndMessage
      */
-    public void resetProgresAndWorkingMessage(String par1Str)
+    public void resetProgresAndWorkingMessage(final String par1Str)
     {
         if (!this.mc.running)
         {
@@ -96,7 +96,7 @@ public class LoadingScreenRenderer implements IProgressUpdate
     /**
      * Updates the progress bar on the loading screen to the specified amount. Args: loadProgress
      */
-    public void setLoadingProgress(int par1)
+    public void setLoadingProgress(final int par1)
     {
         if (!this.mc.running)
         {
@@ -107,14 +107,14 @@ public class LoadingScreenRenderer implements IProgressUpdate
         }
         else
         {
-            long j = Minecraft.getSystemTime();
+            final long j = Minecraft.getSystemTime();
 
             if (j - this.field_73723_d >= 100L)
             {
                 this.field_73723_d = j;
-                ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
-                int k = scaledresolution.getScaledWidth();
-                int l = scaledresolution.getScaledHeight();
+                final ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+                final int k = scaledresolution.getScaledWidth();
+                final int l = scaledresolution.getScaledHeight();
                 GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
                 GL11.glMatrixMode(GL11.GL_PROJECTION);
                 GL11.glLoadIdentity();
@@ -123,9 +123,9 @@ public class LoadingScreenRenderer implements IProgressUpdate
                 GL11.glLoadIdentity();
                 GL11.glTranslatef(0.0F, 0.0F, -200.0F);
                 GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-                Tessellator tessellator = Tessellator.instance;
+                final Tessellator tessellator = Tessellator.instance;
                 this.mc.getTextureManager().bindTexture(Gui.optionsBackground);
-                float f = 32.0F;
+                final float f = 32.0F;
                 tessellator.startDrawingQuads();
                 tessellator.setColorOpaque_I(4210752);
                 tessellator.addVertexWithUV(0.0D, (double)l, 0.0D, 0.0D, (double)((float)l / f));
@@ -136,10 +136,10 @@ public class LoadingScreenRenderer implements IProgressUpdate
 
                 if (par1 >= 0)
                 {
-                    byte b0 = 100;
-                    byte b1 = 2;
-                    int i1 = k / 2 - b0 / 2;
-                    int j1 = l / 2 + 16;
+                    final byte b0 = 100;
+                    final byte b1 = 2;
+                    final int i1 = k / 2 - b0 / 2;
+                    final int j1 = l / 2 + 16;
                     GL11.glDisable(GL11.GL_TEXTURE_2D);
                     tessellator.startDrawingQuads();
                     tessellator.setColorOpaque_I(8421504);
@@ -164,7 +164,7 @@ public class LoadingScreenRenderer implements IProgressUpdate
                 {
                     Thread.yield();
                 }
-                catch (Exception exception)
+                catch (final Exception exception)
                 {
                     ;
                 }

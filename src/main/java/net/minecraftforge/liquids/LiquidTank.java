@@ -13,29 +13,29 @@ public class LiquidTank implements ILiquidTank {
     private int tankPressure;
     private TileEntity tile;
 
-    public LiquidTank(int capacity)
+    public LiquidTank(final int capacity)
     {
         this(null, capacity);
     }
 
-    public LiquidTank(int liquidId, int quantity, int capacity)
+    public LiquidTank(final int liquidId, final int quantity, final int capacity)
     {
         this(new LiquidStack(liquidId, quantity), capacity);
     }
 
-    public LiquidTank(int liquidId, int quantity, int capacity, TileEntity tile)
+    public LiquidTank(final int liquidId, final int quantity, final int capacity, final TileEntity tile)
     {
         this(liquidId, quantity, capacity);
         this.tile = tile;
     }
 
-    public LiquidTank(LiquidStack liquid, int capacity)
+    public LiquidTank(final LiquidStack liquid, final int capacity)
     {
         this.liquid = liquid;
         this.capacity = capacity;
     }
 
-    public LiquidTank(LiquidStack liquid, int capacity, TileEntity tile)
+    public LiquidTank(final LiquidStack liquid, final int capacity, final TileEntity tile)
     {
         this(liquid, capacity);
         this.tile = tile;
@@ -53,18 +53,18 @@ public class LiquidTank implements ILiquidTank {
         return this.capacity;
     }
 
-    public void setLiquid(LiquidStack liquid)
+    public void setLiquid(final LiquidStack liquid)
     {
         this.liquid = liquid;
     }
 
-    public void setCapacity(int capacity)
+    public void setCapacity(final int capacity)
     {
         this.capacity = capacity;
     }
 
     @Override
-    public int fill(LiquidStack resource, boolean doFill)
+    public int fill(final LiquidStack resource, final boolean doFill)
     {
         if (resource == null || resource.itemID <= 0) return 0;
 
@@ -90,7 +90,7 @@ public class LiquidTank implements ILiquidTank {
 
         if (!liquid.isLiquidEqual(resource)) return 0;
 
-        int space = capacity - liquid.amount;
+        final int space = capacity - liquid.amount;
         if (resource.amount <= space)
         {
             if (doFill) this.liquid.amount += resource.amount;
@@ -106,7 +106,7 @@ public class LiquidTank implements ILiquidTank {
     }
 
     @Override
-    public LiquidStack drain(int maxDrain, boolean doDrain)
+    public LiquidStack drain(final int maxDrain, final boolean doDrain)
     {
         if (liquid == null || liquid.itemID <= 0) return null;
         if (liquid.amount <= 0) return null;
@@ -119,7 +119,7 @@ public class LiquidTank implements ILiquidTank {
             liquid.amount -= used;
         }
 
-        LiquidStack drained = new LiquidStack(liquid.itemID, used, liquid.itemMeta);
+        final LiquidStack drained = new LiquidStack(liquid.itemID, used, liquid.itemMeta);
 
         // Reset liquid if emptied
         if (liquid.amount <= 0) liquid = null;
@@ -136,7 +136,7 @@ public class LiquidTank implements ILiquidTank {
         return tankPressure;
     }
 
-    public void setTankPressure(int pressure)
+    public void setTankPressure(final int pressure)
     {
         this.tankPressure = pressure;
     }
@@ -153,7 +153,7 @@ public class LiquidTank implements ILiquidTank {
     }
 
 
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
+    public NBTTagCompound writeToNBT(final NBTTagCompound nbt)
     {
         if (containsValidLiquid())
         {
@@ -166,11 +166,11 @@ public class LiquidTank implements ILiquidTank {
         return nbt;
     }
 
-    public LiquidTank readFromNBT(NBTTagCompound nbt)
+    public LiquidTank readFromNBT(final NBTTagCompound nbt)
     {
         if (!nbt.hasKey("emptyTank"))
         {
-            LiquidStack liquid = LiquidStack.loadLiquidStackFromNBT(nbt);
+            final LiquidStack liquid = LiquidStack.loadLiquidStackFromNBT(nbt);
             if (liquid != null)
             {
                 setLiquid(liquid);

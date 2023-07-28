@@ -24,13 +24,13 @@ public class ModLoaderWorldGenerator implements IWorldGenerator
 {
     private BaseModProxy mod;
 
-    public ModLoaderWorldGenerator(BaseModProxy mod)
+    public ModLoaderWorldGenerator(final BaseModProxy mod)
     {
         this.mod = mod;
     }
 
     @Override
-    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
+    public void generate(final Random random, final int chunkX, final int chunkZ, final World world, final IChunkProvider chunkGenerator, final IChunkProvider chunkProvider)
     {
         if (chunkGenerator instanceof ChunkProviderGenerate)
         {

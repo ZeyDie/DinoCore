@@ -28,7 +28,7 @@ public class BlockPumpkin extends BlockDirectional
     @SideOnly(Side.CLIENT)
     private Icon field_94475_c;
 
-    protected BlockPumpkin(int par1, boolean par2)
+    protected BlockPumpkin(final int par1, final boolean par2)
     {
         super(par1, Material.pumpkin);
         this.setTickRandomly(true);
@@ -41,7 +41,7 @@ public class BlockPumpkin extends BlockDirectional
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
         return par1 == 1 ? this.field_94474_b : (par1 == 0 ? this.field_94474_b : (par2 == 2 && par1 == 2 ? this.field_94475_c : (par2 == 3 && par1 == 5 ? this.field_94475_c : (par2 == 0 && par1 == 3 ? this.field_94475_c : (par2 == 1 && par1 == 4 ? this.field_94475_c : this.blockIcon)))));
     }
@@ -49,7 +49,7 @@ public class BlockPumpkin extends BlockDirectional
     /**
      * Called whenever the block is added into the world. Args: world, x, y, z
      */
-    public void onBlockAdded(World par1World, int par2, int par3, int par4)
+    public void onBlockAdded(final World par1World, final int par2, final int par3, final int par4)
     {
         super.onBlockAdded(par1World, par2, par3, par4);
 
@@ -58,11 +58,11 @@ public class BlockPumpkin extends BlockDirectional
             if (!par1World.isRemote)
             {
                 // CraftBukkit start - Use BlockStateListPopulator
-                BlockStateListPopulator blockList = new BlockStateListPopulator(par1World.getWorld());
+                final BlockStateListPopulator blockList = new BlockStateListPopulator(par1World.getWorld());
                 blockList.setTypeId(par2, par3, par4, 0);
                 blockList.setTypeId(par2, par3 - 1, par4, 0);
                 blockList.setTypeId(par2, par3 - 2, par4, 0);
-                EntitySnowman entitysnowman = new EntitySnowman(par1World);
+                final EntitySnowman entitysnowman = new EntitySnowman(par1World);
                 entitysnowman.setLocationAndAngles((double)par2 + 0.5D, (double)par3 - 1.95D, (double)par4 + 0.5D, 0.0F, 0.0F);
 
                 if (par1World.addEntity(entitysnowman, SpawnReason.BUILD_SNOWMAN))
@@ -80,13 +80,13 @@ public class BlockPumpkin extends BlockDirectional
         }
         else if (par1World.getBlockId(par2, par3 - 1, par4) == Block.blockIron.blockID && par1World.getBlockId(par2, par3 - 2, par4) == Block.blockIron.blockID)
         {
-            boolean flag = par1World.getBlockId(par2 - 1, par3 - 1, par4) == Block.blockIron.blockID && par1World.getBlockId(par2 + 1, par3 - 1, par4) == Block.blockIron.blockID;
-            boolean flag1 = par1World.getBlockId(par2, par3 - 1, par4 - 1) == Block.blockIron.blockID && par1World.getBlockId(par2, par3 - 1, par4 + 1) == Block.blockIron.blockID;
+            final boolean flag = par1World.getBlockId(par2 - 1, par3 - 1, par4) == Block.blockIron.blockID && par1World.getBlockId(par2 + 1, par3 - 1, par4) == Block.blockIron.blockID;
+            final boolean flag1 = par1World.getBlockId(par2, par3 - 1, par4 - 1) == Block.blockIron.blockID && par1World.getBlockId(par2, par3 - 1, par4 + 1) == Block.blockIron.blockID;
 
             if (flag || flag1)
             {
                 // CraftBukkit start - Use BlockStateListPopulator
-                BlockStateListPopulator blockList = new BlockStateListPopulator(par1World.getWorld());
+                final BlockStateListPopulator blockList = new BlockStateListPopulator(par1World.getWorld());
                 blockList.setTypeId(par2, par3, par4, 0);
                 blockList.setTypeId(par2, par3 - 1, par4, 0);
                 blockList.setTypeId(par2, par3 - 2, par4, 0);
@@ -102,7 +102,7 @@ public class BlockPumpkin extends BlockDirectional
                     blockList.setTypeId(par2, par3 - 1, par4 + 1, 0);
                 }
 
-                EntityIronGolem entityirongolem = new EntityIronGolem(par1World);
+                final EntityIronGolem entityirongolem = new EntityIronGolem(par1World);
                 entityirongolem.setPlayerCreated(true);
                 entityirongolem.setLocationAndAngles((double)par2 + 0.5D, (double)par3 - 1.95D, (double)par4 + 0.5D, 0.0F, 0.0F);
 
@@ -123,19 +123,19 @@ public class BlockPumpkin extends BlockDirectional
     /**
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
      */
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
+    public boolean canPlaceBlockAt(final World par1World, final int par2, final int par3, final int par4)
     {
-        int l = par1World.getBlockId(par2, par3, par4);
-        Block block = Block.blocksList[l];
+        final int l = par1World.getBlockId(par2, par3, par4);
+        final Block block = Block.blocksList[l];
         return (block == null || block.isBlockReplaceable(par1World, par2, par3, par4)) && par1World.doesBlockHaveSolidTopSurface(par2, par3 - 1, par4);
     }
 
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
+    public void onBlockPlacedBy(final World par1World, final int par2, final int par3, final int par4, final EntityLivingBase par5EntityLivingBase, final ItemStack par6ItemStack)
     {
-        int l = MathHelper.floor_double((double)(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F) + 2.5D) & 3;
+        final int l = MathHelper.floor_double((double)(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F) + 2.5D) & 3;
         par1World.setBlockMetadataWithNotify(par2, par3, par4, l, 2);
     }
 
@@ -144,13 +144,13 @@ public class BlockPumpkin extends BlockDirectional
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World world, int i, int j, int k, int l)
+    public void onNeighborBlockChange(final World world, final int i, final int j, final int k, final int l)
     {
         if (Block.blocksList[l] != null && Block.blocksList[l].canProvidePower())
         {
-            org.bukkit.block.Block block = world.getWorld().getBlockAt(i, j, k);
-            int power = block.getBlockPower();
-            BlockRedstoneEvent eventRedstone = new BlockRedstoneEvent(block, power, power);
+            final org.bukkit.block.Block block = world.getWorld().getBlockAt(i, j, k);
+            final int power = block.getBlockPower();
+            final BlockRedstoneEvent eventRedstone = new BlockRedstoneEvent(block, power, power);
             world.getServer().getPluginManager().callEvent(eventRedstone);
         }
     }
@@ -162,7 +162,7 @@ public class BlockPumpkin extends BlockDirectional
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.field_94475_c = par1IconRegister.registerIcon(this.getTextureName() + "_face_" + (this.blockType ? "on" : "off"));
         this.field_94474_b = par1IconRegister.registerIcon(this.getTextureName() + "_top");

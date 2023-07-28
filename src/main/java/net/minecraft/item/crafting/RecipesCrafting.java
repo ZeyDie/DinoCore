@@ -9,7 +9,7 @@ public class RecipesCrafting
     /**
      * Adds the crafting recipes to the CraftingManager.
      */
-    public void addRecipes(CraftingManager par1CraftingManager)
+    public void addRecipes(final CraftingManager par1CraftingManager)
     {
         par1CraftingManager.addRecipe(new ItemStack(Block.chest), new Object[] {"###", "# #", "###", '#', Block.planks});
         par1CraftingManager.addRecipe(new ItemStack(Block.chestTrapped), new Object[] {"#-", '#', Block.chest, '-', Block.tripWireSource});

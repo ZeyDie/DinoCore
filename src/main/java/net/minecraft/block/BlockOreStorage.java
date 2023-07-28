@@ -5,7 +5,7 @@ import net.minecraft.creativetab.CreativeTabs;
 
 public class BlockOreStorage extends Block
 {
-    public BlockOreStorage(int par1)
+    public BlockOreStorage(final int par1)
     {
         super(par1, Material.iron);
         this.setCreativeTab(CreativeTabs.tabBlock);

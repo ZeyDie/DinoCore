@@ -19,15 +19,15 @@ public class StopCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
 
         Command.broadcastCommandMessage(sender, "Stopping the server..");
         Bukkit.shutdown();
 
-        String reason = this.createString(args, 0);
+        final String reason = this.createString(args, 0);
         if (StringUtils.isNotEmpty(reason)) {
-            for (Player player : Bukkit.getOnlinePlayers()) {
+            for (final Player player : Bukkit.getOnlinePlayers()) {
                 player.kickPlayer(reason);
             }
         }
@@ -36,7 +36,7 @@ public class StopCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) throws IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");

@@ -21,13 +21,13 @@ public class BlockSign extends BlockContainer
     /** Whether this is a freestanding sign or a wall-mounted sign */
     private boolean isFreestanding;
 
-    protected BlockSign(int par1, Class par2Class, boolean par3)
+    protected BlockSign(final int par1, final Class par2Class, final boolean par3)
     {
         super(par1, Material.wood);
         this.isFreestanding = par3;
         this.signEntityClass = par2Class;
-        float f = 0.25F;
-        float f1 = 1.0F;
+        final float f = 0.25F;
+        final float f1 = 1.0F;
         this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f1, 0.5F + f);
     }
 
@@ -36,7 +36,7 @@ public class BlockSign extends BlockContainer
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
         return Block.planks.getBlockTextureFromSide(par1);
     }
@@ -45,7 +45,7 @@ public class BlockSign extends BlockContainer
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4)
     {
         return null;
     }
@@ -55,7 +55,7 @@ public class BlockSign extends BlockContainer
     /**
      * Returns the bounding box of the wired rectangular prism to render.
      */
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    public AxisAlignedBB getSelectedBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4)
     {
         this.setBlockBoundsBasedOnState(par1World, par2, par3, par4);
         return super.getSelectedBoundingBoxFromPool(par1World, par2, par3, par4);
@@ -64,16 +64,16 @@ public class BlockSign extends BlockContainer
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         if (!this.isFreestanding)
         {
-            int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
-            float f = 0.28125F;
-            float f1 = 0.78125F;
-            float f2 = 0.0F;
-            float f3 = 1.0F;
-            float f4 = 0.125F;
+            final int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
+            final float f = 0.28125F;
+            final float f1 = 0.78125F;
+            final float f2 = 0.0F;
+            final float f3 = 1.0F;
+            final float f4 = 0.125F;
             this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 
             if (l == 2)
@@ -114,7 +114,7 @@ public class BlockSign extends BlockContainer
         return false;
     }
 
-    public boolean getBlocksMovement(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public boolean getBlocksMovement(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         return true;
     }
@@ -131,13 +131,13 @@ public class BlockSign extends BlockContainer
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World par1World)
+    public TileEntity createNewTileEntity(final World par1World)
     {
         try
         {
             return (TileEntity)this.signEntityClass.newInstance();
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             throw new RuntimeException(exception);
         }
@@ -146,7 +146,7 @@ public class BlockSign extends BlockContainer
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return Item.sign.itemID;
     }
@@ -155,7 +155,7 @@ public class BlockSign extends BlockContainer
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         boolean flag = false;
 
@@ -168,7 +168,7 @@ public class BlockSign extends BlockContainer
         }
         else
         {
-            int i1 = par1World.getBlockMetadata(par2, par3, par4);
+            final int i1 = par1World.getBlockMetadata(par2, par3, par4);
             flag = true;
 
             if (i1 == 2 && par1World.getBlockMaterial(par2, par3, par4 + 1).isSolid())
@@ -202,9 +202,9 @@ public class BlockSign extends BlockContainer
         // CraftBukkit start
         if (Block.blocksList[par5] != null && Block.blocksList[par5].canProvidePower())
         {
-            org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2, par3, par4);
-            int power = block.getBlockPower();
-            BlockRedstoneEvent eventRedstone = new BlockRedstoneEvent(block, power, power);
+            final org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2, par3, par4);
+            final int power = block.getBlockPower();
+            final BlockRedstoneEvent eventRedstone = new BlockRedstoneEvent(block, power, power);
             par1World.getServer().getPluginManager().callEvent(eventRedstone);
         }
         // CraftBukkit end
@@ -215,7 +215,7 @@ public class BlockSign extends BlockContainer
     /**
      * only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
      */
-    public int idPicked(World par1World, int par2, int par3, int par4)
+    public int idPicked(final World par1World, final int par2, final int par3, final int par4)
     {
         return Item.sign.itemID;
     }
@@ -226,5 +226,5 @@ public class BlockSign extends BlockContainer
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister) {}
+    public void registerIcons(final IconRegister par1IconRegister) {}
 }

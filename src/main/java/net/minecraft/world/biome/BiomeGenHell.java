@@ -6,7 +6,7 @@ import net.minecraft.entity.monster.EntityPigZombie;
 
 public class BiomeGenHell extends BiomeGenBase
 {
-    public BiomeGenHell(int par1)
+    public BiomeGenHell(final int par1)
     {
         super(par1);
         this.spawnableMonsterList.clear();

@@ -9,7 +9,7 @@ public class LivingHurtEvent extends LivingEvent
 {
     public final DamageSource source;
     public float ammount;
-    public LivingHurtEvent(EntityLivingBase entity, DamageSource source, float ammount)
+    public LivingHurtEvent(final EntityLivingBase entity, final DamageSource source, final float ammount)
     {
         super(entity);
         this.source = source;

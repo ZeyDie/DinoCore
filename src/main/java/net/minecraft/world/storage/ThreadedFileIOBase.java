@@ -15,7 +15,7 @@ public class ThreadedFileIOBase implements Runnable
 
     private ThreadedFileIOBase()
     {
-        Thread thread = new Thread(this, "File IO Thread");
+        final Thread thread = new Thread(this, "File IO Thread");
         thread.setPriority(1);
         thread.start();
     }
@@ -35,8 +35,8 @@ public class ThreadedFileIOBase implements Runnable
     {
         for (int i = 0; i < this.threadedIOQueue.size(); ++i)
         {
-            IThreadedFileIO ithreadedfileio = (IThreadedFileIO)this.threadedIOQueue.get(i);
-            boolean flag = ithreadedfileio.writeNextIO();
+            final IThreadedFileIO ithreadedfileio = (IThreadedFileIO)this.threadedIOQueue.get(i);
+            final boolean flag = ithreadedfileio.writeNextIO();
 
             if (!flag)
             {
@@ -48,7 +48,7 @@ public class ThreadedFileIOBase implements Runnable
             {
                 Thread.sleep(this.isThreadWaiting ? 0L : 10L);
             }
-            catch (InterruptedException interruptedexception)
+            catch (final InterruptedException interruptedexception)
             {
                 interruptedexception.printStackTrace();
             }
@@ -60,7 +60,7 @@ public class ThreadedFileIOBase implements Runnable
             {
                 Thread.sleep(25L);
             }
-            catch (InterruptedException interruptedexception1)
+            catch (final InterruptedException interruptedexception1)
             {
                 interruptedexception1.printStackTrace();
             }
@@ -70,7 +70,7 @@ public class ThreadedFileIOBase implements Runnable
     /**
      * threaded io
      */
-    public void queueIO(IThreadedFileIO par1IThreadedFileIO)
+    public void queueIO(final IThreadedFileIO par1IThreadedFileIO)
     {
         if (!this.threadedIOQueue.contains(par1IThreadedFileIO))
         {

@@ -36,25 +36,25 @@ public class TextureAtlasSprite implements Icon
     protected int frameCounter;
     protected int tickCounter;
 
-    protected TextureAtlasSprite(String par1Str)
+    protected TextureAtlasSprite(final String par1Str)
     {
         this.iconName = par1Str;
     }
 
-    public void initSprite(int par1, int par2, int par3, int par4, boolean par5)
+    public void initSprite(final int par1, final int par2, final int par3, final int par4, final boolean par5)
     {
         this.originX = par3;
         this.originY = par4;
         this.rotated = par5;
-        float f = (float)(0.009999999776482582D / (double)par1);
-        float f1 = (float)(0.009999999776482582D / (double)par2);
+        final float f = (float)(0.009999999776482582D / (double)par1);
+        final float f1 = (float)(0.009999999776482582D / (double)par2);
         this.minU = (float)par3 / (float)((double)par1) + f;
         this.maxU = (float)(par3 + this.width) / (float)((double)par1) - f;
         this.minV = (float)par4 / (float)par2 + f1;
         this.maxV = (float)(par4 + this.height) / (float)par2 - f1;
     }
 
-    public void copyFrom(TextureAtlasSprite par1TextureAtlasSprite)
+    public void copyFrom(final TextureAtlasSprite par1TextureAtlasSprite)
     {
         this.originX = par1TextureAtlasSprite.originX;
         this.originY = par1TextureAtlasSprite.originY;
@@ -118,9 +118,9 @@ public class TextureAtlasSprite implements Icon
     /**
      * Gets a U coordinate on the icon. 0 returns uMin and 16 returns uMax. Other arguments return in-between values.
      */
-    public float getInterpolatedU(double par1)
+    public float getInterpolatedU(final double par1)
     {
-        float f = this.maxU - this.minU;
+        final float f = this.maxU - this.minU;
         return this.minU + f * (float)par1 / 16.0F;
     }
 
@@ -143,9 +143,9 @@ public class TextureAtlasSprite implements Icon
     /**
      * Gets a V coordinate on the icon. 0 returns vMin and 16 returns vMax. Other arguments return in-between values.
      */
-    public float getInterpolatedV(double par1)
+    public float getInterpolatedV(final double par1)
     {
-        float f = this.maxV - this.minV;
+        final float f = this.maxV - this.minV;
         return this.minV + f * ((float)par1 / 16.0F);
     }
 
@@ -160,11 +160,11 @@ public class TextureAtlasSprite implements Icon
 
         if (this.tickCounter >= this.animationMetadata.getFrameTimeSingle(this.frameCounter))
         {
-            int i = this.animationMetadata.getFrameIndex(this.frameCounter);
-            int j = this.animationMetadata.getFrameCount() == 0 ? this.framesTextureData.size() : this.animationMetadata.getFrameCount();
+            final int i = this.animationMetadata.getFrameIndex(this.frameCounter);
+            final int j = this.animationMetadata.getFrameCount() == 0 ? this.framesTextureData.size() : this.animationMetadata.getFrameCount();
             this.frameCounter = (this.frameCounter + 1) % j;
             this.tickCounter = 0;
-            int k = this.animationMetadata.getFrameIndex(this.frameCounter);
+            final int k = this.animationMetadata.getFrameIndex(this.frameCounter);
 
             if (i != k && k >= 0 && k < this.framesTextureData.size())
             {
@@ -173,7 +173,7 @@ public class TextureAtlasSprite implements Icon
         }
     }
 
-    public int[] getFrameTextureData(int par1)
+    public int[] getFrameTextureData(final int par1)
     {
         return (int[])this.framesTextureData.get(par1);
     }
@@ -183,25 +183,25 @@ public class TextureAtlasSprite implements Icon
         return this.framesTextureData.size();
     }
 
-    public void setIconWidth(int par1)
+    public void setIconWidth(final int par1)
     {
         this.width = par1;
     }
 
-    public void setIconHeight(int par1)
+    public void setIconHeight(final int par1)
     {
         this.height = par1;
     }
 
-    public void loadSprite(Resource par1Resource) throws IOException
+    public void loadSprite(final Resource par1Resource) throws IOException
     {
         this.resetSprite();
-        InputStream inputstream = par1Resource.getInputStream();
-        AnimationMetadataSection animationmetadatasection = (AnimationMetadataSection)par1Resource.getMetadata("animation");
-        BufferedImage bufferedimage = ImageIO.read(inputstream);
+        final InputStream inputstream = par1Resource.getInputStream();
+        final AnimationMetadataSection animationmetadatasection = (AnimationMetadataSection)par1Resource.getMetadata("animation");
+        final BufferedImage bufferedimage = ImageIO.read(inputstream);
         this.height = bufferedimage.getHeight();
         this.width = bufferedimage.getWidth();
-        int[] aint = new int[this.height * this.width];
+        final int[] aint = new int[this.height * this.width];
         bufferedimage.getRGB(0, 0, this.width, this.height, aint, 0, this.width);
 
         if (animationmetadatasection == null)
@@ -215,15 +215,15 @@ public class TextureAtlasSprite implements Icon
         }
         else
         {
-            int i = this.height / this.width;
-            int j = this.width;
-            int k = this.width;
+            final int i = this.height / this.width;
+            final int j = this.width;
+            final int k = this.width;
             this.height = this.width;
             int l;
 
             if (animationmetadatasection.getFrameCount() > 0)
             {
-                Iterator iterator = animationmetadatasection.getFrameIndexSet().iterator();
+                final Iterator iterator = animationmetadatasection.getFrameIndexSet().iterator();
 
                 while (iterator.hasNext())
                 {
@@ -242,7 +242,7 @@ public class TextureAtlasSprite implements Icon
             }
             else
             {
-                ArrayList arraylist = Lists.newArrayList();
+                final ArrayList arraylist = Lists.newArrayList();
 
                 for (l = 0; l < i; ++l)
                 {
@@ -255,7 +255,7 @@ public class TextureAtlasSprite implements Icon
         }
     }
 
-    private void allocateFrameTextureData(int par1)
+    private void allocateFrameTextureData(final int par1)
     {
         if (this.framesTextureData.size() <= par1)
         {
@@ -266,9 +266,9 @@ public class TextureAtlasSprite implements Icon
         }
     }
 
-    private static int[] getFrameTextureData(int[] par0ArrayOfInteger, int par1, int par2, int par3)
+    private static int[] getFrameTextureData(final int[] par0ArrayOfInteger, final int par1, final int par2, final int par3)
     {
-        int[] aint1 = new int[par1 * par2];
+        final int[] aint1 = new int[par1 * par2];
         System.arraycopy(par0ArrayOfInteger, par3 * aint1.length, aint1, 0, aint1.length);
         return aint1;
     }
@@ -283,7 +283,7 @@ public class TextureAtlasSprite implements Icon
         return this.animationMetadata != null;
     }
 
-    public void setFramesTextureData(List par1List)
+    public void setFramesTextureData(final List par1List)
     {
         this.framesTextureData = par1List;
     }
@@ -309,7 +309,7 @@ public class TextureAtlasSprite implements Icon
      * @return False to prevent this Icon from being stitched
      * @throws IOException
      */
-    public boolean load(ResourceManager manager, ResourceLocation location) throws IOException
+    public boolean load(final ResourceManager manager, final ResourceLocation location) throws IOException
     {
         loadSprite(manager.getResource(location));
         return true;

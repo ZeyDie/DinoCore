@@ -44,7 +44,7 @@ public class ServerListPingEvent extends ServerEvent {
      *
      * @param motd the message of the day
      */
-    public void setMotd(String motd) {
+    public void setMotd(final String motd) {
         this.motd = motd;
     }
 
@@ -71,7 +71,7 @@ public class ServerListPingEvent extends ServerEvent {
      *
      * @param maxPlayers the maximum number of player
      */
-    public void setMaxPlayers(int maxPlayers) {
+    public void setMaxPlayers(final int maxPlayers) {
         this.maxPlayers = maxPlayers;
     }
 

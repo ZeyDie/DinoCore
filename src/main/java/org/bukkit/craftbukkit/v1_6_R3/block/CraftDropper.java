@@ -24,18 +24,18 @@ public class CraftDropper extends CraftBlockState implements Dropper {
     }
 
     public void drop() {
-        Block block = getBlock();
+        final Block block = getBlock();
 
         if (block.getType() == Material.DROPPER) {
-            net.minecraft.block.BlockDropper drop = (net.minecraft.block.BlockDropper) net.minecraft.block.Block.dropper;
+            final net.minecraft.block.BlockDropper drop = (net.minecraft.block.BlockDropper) net.minecraft.block.Block.dropper;
 
             drop.dispense(world.getHandle(), getX(), getY(), getZ());
         }
     }
 
     @Override
-    public boolean update(boolean force, boolean applyPhysics) {
-        boolean result = super.update(force, applyPhysics);
+    public boolean update(final boolean force, final boolean applyPhysics) {
+        final boolean result = super.update(force, applyPhysics);
 
         if (result) {
             dropper.onInventoryChanged();

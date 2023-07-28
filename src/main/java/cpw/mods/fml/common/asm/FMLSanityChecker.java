@@ -53,7 +53,7 @@ public class FMLSanityChecker implements IFMLCallHook
         }
 
         @Override
-        public FieldVisitor visitField(int arg0, String arg1, String arg2, String arg3, Object arg4)
+        public FieldVisitor visitField(final int arg0, final String arg1, final String arg2, final String arg3, final Object arg4)
         {
             if ("fmlMarker".equals(arg1))
             {
@@ -75,13 +75,13 @@ public class FMLSanityChecker implements IFMLCallHook
         if (codeSource.getLocation().getProtocol().equals("jar"))
         {
             fmlIsJar = true;
-            Certificate[] certificates = codeSource.getCertificates();
+            final Certificate[] certificates = codeSource.getCertificates();
             if (certificates!=null)
             {
 
-                for (Certificate cert : certificates)
+                for (final Certificate cert : certificates)
                 {
-                    String fingerprint = CertificateHelper.getFingerprint(cert);
+                    final String fingerprint = CertificateHelper.getFingerprint(cert);
                     if (fingerprint.equals(FMLFINGERPRINT))
                     {
                         FMLRelaunchLog.info("Found valid fingerprint for FML. Certificate fingerprint %s", fingerprint);
@@ -108,10 +108,10 @@ public class FMLSanityChecker implements IFMLCallHook
         int certCount = 0;
         try
         {
-            Class cbr = Class.forName("net.minecraft.client.ClientBrandRetriever",false, cl);
+            final Class cbr = Class.forName("net.minecraft.client.ClientBrandRetriever",false, cl);
             codeSource = cbr.getProtectionDomain().getCodeSource();
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             // Probably a development environment, or the server (the server is not signed)
             goodMC = true;
@@ -126,16 +126,16 @@ public class FMLSanityChecker implements IFMLCallHook
                 mcPath = URLDecoder.decode(mcPath, Charsets.UTF_8.name());
                 mcJarFile = new JarFile(mcPath,true);
                 mcJarFile.getManifest();
-                JarEntry cbrEntry = mcJarFile.getJarEntry("net/minecraft/client/ClientBrandRetriever.class");
+                final JarEntry cbrEntry = mcJarFile.getJarEntry("net/minecraft/client/ClientBrandRetriever.class");
                 ByteStreams.toByteArray(mcJarFile.getInputStream(cbrEntry));
-                Certificate[] certificates = cbrEntry.getCertificates();
+                final Certificate[] certificates = cbrEntry.getCertificates();
                 certCount = certificates != null ? certificates.length : 0;
                 if (certificates!=null)
                 {
 
-                    for (Certificate cert : certificates)
+                    for (final Certificate cert : certificates)
                     {
-                        String fingerprint = CertificateHelper.getFingerprint(cert);
+                        final String fingerprint = CertificateHelper.getFingerprint(cert);
                         if (fingerprint.equals(MCFINGERPRINT))
                         {
                             FMLRelaunchLog.info("Found valid fingerprint for Minecraft. Certificate fingerprint %s", fingerprint);
@@ -144,7 +144,7 @@ public class FMLSanityChecker implements IFMLCallHook
                     }
                 }
             }
-            catch (Throwable e)
+            catch (final Throwable e)
             {
                 FMLRelaunchLog.log(Level.SEVERE, e, "A critical error occurred trying to read the minecraft jar file");
             }
@@ -156,7 +156,7 @@ public class FMLSanityChecker implements IFMLCallHook
                     {
                         mcJarFile.close();
                     }
-                    catch (IOException ioe)
+                    catch (final IOException ioe)
                     {
                         // Noise
                     }
@@ -191,14 +191,14 @@ public class FMLSanityChecker implements IFMLCallHook
             FMLRelaunchLog.severe("FML appears to be missing any signature data. This is not a good thing");
         }*/
         // Cauldron end
-        byte[] mlClass = cl.getClassBytes("ModLoader");
+        final byte[] mlClass = cl.getClassBytes("ModLoader");
         // Only care in obfuscated env
         if (mlClass == null)
         {
             return null;
         }
-        MLDetectorClassVisitor mlTester = new MLDetectorClassVisitor();
-        ClassReader cr = new ClassReader(mlClass);
+        final MLDetectorClassVisitor mlTester = new MLDetectorClassVisitor();
+        final ClassReader cr = new ClassReader(mlClass);
         cr.accept(mlTester, ClassReader.SKIP_CODE);
         if (!mlTester.foundMarker)
         {
@@ -217,10 +217,10 @@ public class FMLSanityChecker implements IFMLCallHook
     }
 
     @Override
-    public void injectData(Map<String, Object> data)
+    public void injectData(final Map<String, Object> data)
     {
         cl = (LaunchClassLoader) data.get("classLoader");
-        File mcDir = (File)data.get("mcLocation");
+        final File mcDir = (File)data.get("mcLocation");
         fmlLocation = (File)data.get("coremodLocation");
         ClassPatchManager.INSTANCE.setup(FMLLaunchHandler.side());
         FMLDeobfuscatingRemapper.INSTANCE.setup(mcDir, cl, (String) data.get("deobfuscationFileName"));

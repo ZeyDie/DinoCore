@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 public class CraftEnchantment extends Enchantment {
     private final net.minecraft.enchantment.Enchantment target;
 
-    public CraftEnchantment(net.minecraft.enchantment.Enchantment target) {
+    public CraftEnchantment(final net.minecraft.enchantment.Enchantment target) {
         super(target.effectId);
         this.target = target;
     }
@@ -52,7 +52,7 @@ public class CraftEnchantment extends Enchantment {
     }
 
     @Override
-    public boolean canEnchantItem(ItemStack item) {
+    public boolean canEnchantItem(final ItemStack item) {
         return target.canApply(CraftItemStack.asNMSCopy(item));
     }
 
@@ -118,9 +118,9 @@ public class CraftEnchantment extends Enchantment {
     }
 
     // Cauldron start - generate based on the class name
-    private static String generateName(net.minecraft.enchantment.Enchantment target) {
+    private static String generateName(final net.minecraft.enchantment.Enchantment target) {
         String candidate;
-        Class<?> clz = target.getClass();
+        final Class<?> clz = target.getClass();
         if (clz.getName().startsWith("net.minecraft")) {
             // Keep pattern for vanilla
             candidate = "UNKNOWN_ENCHANT_" + target.effectId;
@@ -143,7 +143,7 @@ public class CraftEnchantment extends Enchantment {
         return candidate;
     }
 
-    private static String addSuffix(String enchName) {
+    private static String addSuffix(final String enchName) {
         if (Enchantment.getByName(enchName) == null) {
             return enchName;
         }
@@ -157,12 +157,13 @@ public class CraftEnchantment extends Enchantment {
     // Cauldron end
 
     public static net.minecraft.enchantment.Enchantment getRaw(Enchantment enchantment) {
-        if (enchantment instanceof EnchantmentWrapper) {
-            enchantment = ((EnchantmentWrapper) enchantment).getEnchantment();
+        Enchantment enchantment1 = enchantment;
+        if (enchantment1 instanceof EnchantmentWrapper) {
+            enchantment1 = ((EnchantmentWrapper) enchantment1).getEnchantment();
         }
 
-        if (enchantment instanceof CraftEnchantment) {
-            return ((CraftEnchantment) enchantment).target;
+        if (enchantment1 instanceof CraftEnchantment) {
+            return ((CraftEnchantment) enchantment1).target;
         }
 
         return null;
@@ -170,13 +171,14 @@ public class CraftEnchantment extends Enchantment {
 
     @Override
     public boolean conflictsWith(Enchantment other) {
-        if (other instanceof EnchantmentWrapper) {
-            other = ((EnchantmentWrapper) other).getEnchantment();
+        Enchantment other1 = other;
+        if (other1 instanceof EnchantmentWrapper) {
+            other1 = ((EnchantmentWrapper) other1).getEnchantment();
         }
-        if (!(other instanceof CraftEnchantment)) {
+        if (!(other1 instanceof CraftEnchantment)) {
             return false;
         }
-        CraftEnchantment ench = (CraftEnchantment) other;
+        final CraftEnchantment ench = (CraftEnchantment) other1;
         return !target.canApplyTogether(ench.target);
     }
 }

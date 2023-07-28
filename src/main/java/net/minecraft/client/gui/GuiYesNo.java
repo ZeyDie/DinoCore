@@ -27,7 +27,7 @@ public class GuiYesNo extends GuiScreen
     /** World number to be deleted. */
     protected int worldNumber;
 
-    public GuiYesNo(GuiScreen par1GuiScreen, String par2Str, String par3Str, int par4)
+    public GuiYesNo(final GuiScreen par1GuiScreen, final String par2Str, final String par3Str, final int par4)
     {
         this.parentScreen = par1GuiScreen;
         this.message1 = par2Str;
@@ -37,7 +37,7 @@ public class GuiYesNo extends GuiScreen
         this.buttonText2 = I18n.getString("gui.no");
     }
 
-    public GuiYesNo(GuiScreen par1GuiScreen, String par2Str, String par3Str, String par4Str, String par5Str, int par6)
+    public GuiYesNo(final GuiScreen par1GuiScreen, final String par2Str, final String par3Str, final String par4Str, final String par5Str, final int par6)
     {
         this.parentScreen = par1GuiScreen;
         this.message1 = par2Str;
@@ -59,7 +59,7 @@ public class GuiYesNo extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         this.parentScreen.confirmClicked(par1GuiButton.id == 0, this.worldNumber);
     }
@@ -67,7 +67,7 @@ public class GuiYesNo extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRenderer, this.message1, this.width / 2, 70, 16777215);

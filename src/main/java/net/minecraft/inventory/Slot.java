@@ -32,7 +32,7 @@ public class Slot
     @SideOnly(Side.CLIENT)
     protected ResourceLocation texture;
 
-    public Slot(IInventory par1IInventory, int par2, int par3, int par4)
+    public Slot(final IInventory par1IInventory, final int par2, final int par3, final int par4)
     {
         this.inventory = par1IInventory;
         this.slotIndex = par2;
@@ -43,13 +43,13 @@ public class Slot
     /**
      * if par2 has more items than par1, onCrafting(item,countIncrease) is called
      */
-    public void onSlotChange(ItemStack par1ItemStack, ItemStack par2ItemStack)
+    public void onSlotChange(final ItemStack par1ItemStack, final ItemStack par2ItemStack)
     {
         if (par1ItemStack != null && par2ItemStack != null)
         {
             if (par1ItemStack.itemID == par2ItemStack.itemID)
             {
-                int i = par2ItemStack.stackSize - par1ItemStack.stackSize;
+                final int i = par2ItemStack.stackSize - par1ItemStack.stackSize;
 
                 if (i > 0)
                 {
@@ -63,14 +63,14 @@ public class Slot
      * the itemStack passed in is the output - ie, iron ingots, and pickaxes, not ore and wood. Typically increases an
      * internal count then calls onCrafting(item).
      */
-    protected void onCrafting(ItemStack par1ItemStack, int par2) {}
+    protected void onCrafting(final ItemStack par1ItemStack, final int par2) {}
 
     /**
      * the itemStack passed in is the output - ie, iron ingots, and pickaxes, not ore and wood.
      */
-    protected void onCrafting(ItemStack par1ItemStack) {}
+    protected void onCrafting(final ItemStack par1ItemStack) {}
 
-    public void onPickupFromSlot(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack)
+    public void onPickupFromSlot(final EntityPlayer par1EntityPlayer, final ItemStack par2ItemStack)
     {
         this.onSlotChanged();
     }
@@ -78,7 +78,7 @@ public class Slot
     /**
      * Check if the stack is a valid item for this slot. Always true beside for the armor slots.
      */
-    public boolean isItemValid(ItemStack par1ItemStack)
+    public boolean isItemValid(final ItemStack par1ItemStack)
     {
         return true;
     }
@@ -102,7 +102,7 @@ public class Slot
     /**
      * Helper method to put a stack in the slot.
      */
-    public void putStack(ItemStack par1ItemStack)
+    public void putStack(final ItemStack par1ItemStack)
     {
         this.inventory.setInventorySlotContents(this.slotIndex, par1ItemStack);
         this.onSlotChanged();
@@ -129,7 +129,7 @@ public class Slot
      * Decrease the size of the stack in slot (first int arg) by the amount of the second int arg. Returns the new
      * stack.
      */
-    public ItemStack decrStackSize(int par1)
+    public ItemStack decrStackSize(final int par1)
     {
         return this.inventory.decrStackSize(this.slotIndex, par1);
     }
@@ -137,7 +137,7 @@ public class Slot
     /**
      * returns true if this slot is in par2 of par1
      */
-    public boolean isSlotInInventory(IInventory par1IInventory, int par2)
+    public boolean isSlotInInventory(final IInventory par1IInventory, final int par2)
     {
         return par1IInventory == this.inventory && par2 == this.slotIndex;
     }
@@ -145,7 +145,7 @@ public class Slot
     /**
      * Return whether this slot's stack can be taken from this slot.
      */
-    public boolean canTakeStack(EntityPlayer par1EntityPlayer)
+    public boolean canTakeStack(final EntityPlayer par1EntityPlayer)
     {
         return true;
     }
@@ -180,7 +180,7 @@ public class Slot
      * Sets which icon index to use as the background image of the slot when it's empty.
      * @param icon The icon to use, null for none
      */
-    public void setBackgroundIcon(Icon icon)
+    public void setBackgroundIcon(final Icon icon)
     {
         backgroundIcon = icon;
     }
@@ -190,7 +190,7 @@ public class Slot
      * @param textureFilename String: Path of texture file to use, or null to use "/gui/items.png"
      */
     @SideOnly(Side.CLIENT)
-    public void setBackgroundIconTexture(ResourceLocation texture)
+    public void setBackgroundIconTexture(final ResourceLocation texture)
     {
         this.texture = texture;
     }

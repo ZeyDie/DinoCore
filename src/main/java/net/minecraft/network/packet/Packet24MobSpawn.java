@@ -47,7 +47,7 @@ public class Packet24MobSpawn extends Packet
 
     public Packet24MobSpawn() {}
 
-    public Packet24MobSpawn(EntityLivingBase par1EntityLivingBase)
+    public Packet24MobSpawn(final EntityLivingBase par1EntityLivingBase)
     {
         this.entityId = par1EntityLivingBase.entityId;
         this.type = (byte)EntityList.getEntityID(par1EntityLivingBase);
@@ -57,7 +57,7 @@ public class Packet24MobSpawn extends Packet
         this.yaw = (byte)((int)(par1EntityLivingBase.rotationYaw * 256.0F / 360.0F));
         this.pitch = (byte)((int)(par1EntityLivingBase.rotationPitch * 256.0F / 360.0F));
         this.headYaw = (byte)((int)(par1EntityLivingBase.rotationYawHead * 256.0F / 360.0F));
-        double d0 = 3.9D;
+        final double d0 = 3.9D;
         double d1 = par1EntityLivingBase.motionX;
         double d2 = par1EntityLivingBase.motionY;
         double d3 = par1EntityLivingBase.motionZ;
@@ -101,7 +101,7 @@ public class Packet24MobSpawn extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.entityId = par1DataInput.readInt();
         this.type = par1DataInput.readByte() & 255;
@@ -120,7 +120,7 @@ public class Packet24MobSpawn extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.entityId);
         par1DataOutput.writeByte(this.type & 255);
@@ -139,7 +139,7 @@ public class Packet24MobSpawn extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleMobSpawn(this);
     }

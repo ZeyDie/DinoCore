@@ -2,7 +2,7 @@ package net.minecraft.block.material;
 
 public class MaterialPortal extends Material
 {
-    public MaterialPortal(MapColor par1MapColor)
+    public MaterialPortal(final MapColor par1MapColor)
     {
         super(par1MapColor);
     }

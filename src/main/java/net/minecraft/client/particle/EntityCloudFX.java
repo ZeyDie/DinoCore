@@ -11,10 +11,10 @@ public class EntityCloudFX extends EntityFX
 {
     float field_70569_a;
 
-    public EntityCloudFX(World par1World, double par2, double par4, double par6, double par8, double par10, double par12)
+    public EntityCloudFX(final World par1World, final double par2, final double par4, final double par6, final double par8, final double par10, final double par12)
     {
         super(par1World, par2, par4, par6, 0.0D, 0.0D, 0.0D);
-        float f = 2.5F;
+        final float f = 2.5F;
         this.motionX *= 0.10000000149011612D;
         this.motionY *= 0.10000000149011612D;
         this.motionZ *= 0.10000000149011612D;
@@ -30,7 +30,7 @@ public class EntityCloudFX extends EntityFX
         this.noClip = false;
     }
 
-    public void renderParticle(Tessellator par1Tessellator, float par2, float par3, float par4, float par5, float par6, float par7)
+    public void renderParticle(final Tessellator par1Tessellator, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7)
     {
         float f6 = ((float)this.particleAge + par2) / (float)this.particleMaxAge * 32.0F;
 
@@ -67,7 +67,7 @@ public class EntityCloudFX extends EntityFX
         this.motionX *= 0.9599999785423279D;
         this.motionY *= 0.9599999785423279D;
         this.motionZ *= 0.9599999785423279D;
-        EntityPlayer entityplayer = this.worldObj.getClosestPlayerToEntity(this, 2.0D);
+        final EntityPlayer entityplayer = this.worldObj.getClosestPlayerToEntity(this, 2.0D);
 
         if (entityplayer != null && this.posY > entityplayer.boundingBox.minY)
         {

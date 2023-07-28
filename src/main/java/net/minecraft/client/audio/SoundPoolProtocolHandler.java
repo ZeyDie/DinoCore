@@ -12,12 +12,12 @@ class SoundPoolProtocolHandler extends URLStreamHandler
 {
     final SoundPool theSoundPool;
 
-    SoundPoolProtocolHandler(SoundPool par1SoundPool)
+    SoundPoolProtocolHandler(final SoundPool par1SoundPool)
     {
         this.theSoundPool = par1SoundPool;
     }
 
-    protected URLConnection openConnection(URL par1URL)
+    protected URLConnection openConnection(final URL par1URL)
     {
         return new SoundPoolURLConnection(this.theSoundPool, par1URL, (SoundPoolProtocolHandler)null);
     }

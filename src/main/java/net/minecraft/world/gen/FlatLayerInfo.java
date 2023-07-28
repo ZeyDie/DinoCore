@@ -12,14 +12,14 @@ public class FlatLayerInfo
     private int layerFillBlockMeta;
     private int layerMinimumY;
 
-    public FlatLayerInfo(int par1, int par2)
+    public FlatLayerInfo(final int par1, final int par2)
     {
         this.layerCount = 1;
         this.layerCount = par1;
         this.layerFillBlock = par2;
     }
 
-    public FlatLayerInfo(int par1, int par2, int par3)
+    public FlatLayerInfo(final int par1, final int par2, final int par3)
     {
         this(par1, par2);
         this.layerFillBlockMeta = par3;
@@ -60,7 +60,7 @@ public class FlatLayerInfo
     /**
      * Set the minimum Y coordinate for this layer.
      */
-    public void setMinY(int par1)
+    public void setMinY(final int par1)
     {
         this.layerMinimumY = par1;
     }

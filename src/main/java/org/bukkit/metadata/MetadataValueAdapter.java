@@ -16,7 +16,7 @@ import java.lang.ref.WeakReference;
 public abstract class MetadataValueAdapter implements MetadataValue {
     protected final WeakReference<Plugin> owningPlugin;
 
-    protected MetadataValueAdapter(Plugin owningPlugin) {
+    protected MetadataValueAdapter(final Plugin owningPlugin) {
         Validate.notNull(owningPlugin, "owningPlugin cannot be null");
         this.owningPlugin = new WeakReference<Plugin>(owningPlugin);
     }
@@ -50,7 +50,7 @@ public abstract class MetadataValueAdapter implements MetadataValue {
     }
 
     public boolean asBoolean() {
-        Object value = value();
+        final Object value = value();
         if (value instanceof Boolean) {
             return (Boolean) value;
         }
@@ -67,7 +67,7 @@ public abstract class MetadataValueAdapter implements MetadataValue {
     }
 
     public String asString() {
-        Object value = value();
+        final Object value = value();
 
         if (value == null) {
             return "";

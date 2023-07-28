@@ -61,7 +61,7 @@ public enum GameMode {
     }
 
     static {
-        for (GameMode mode : values()) {
+        for (final GameMode mode : values()) {
             BY_ID.put(mode.getValue(), mode);
         }
     }

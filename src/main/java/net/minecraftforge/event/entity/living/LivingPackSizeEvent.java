@@ -16,7 +16,7 @@ public class LivingPackSizeEvent extends LivingEvent
      */
     public int maxPackSize;
     
-    public LivingPackSizeEvent(EntityLiving entity)
+    public LivingPackSizeEvent(final EntityLiving entity)
     {
         super(entity);
     }

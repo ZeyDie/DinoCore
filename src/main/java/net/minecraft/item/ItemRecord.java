@@ -21,7 +21,7 @@ public class ItemRecord extends Item
     /** The name of the record. */
     public final String recordName;
 
-    protected ItemRecord(int par1, String par2Str)
+    protected ItemRecord(final int par1, final String par2Str)
     {
         super(par1);
         this.recordName = par2Str;
@@ -35,7 +35,7 @@ public class ItemRecord extends Item
     /**
      * Gets an icon index based on an item's damage value
      */
-    public Icon getIconFromDamage(int par1)
+    public Icon getIconFromDamage(final int par1)
     {
         return this.itemIcon;
     }
@@ -44,7 +44,7 @@ public class ItemRecord extends Item
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final World par3World, final int par4, final int par5, final int par6, final int par7, final float par8, final float par9, final float par10)
     {
         if (par3World.getBlockId(par4, par5, par6) == Block.jukebox.blockID && par3World.getBlockMetadata(par4, par5, par6) == 0)
         {
@@ -71,7 +71,7 @@ public class ItemRecord extends Item
     /**
      * allows items to add custom lines of information to the mouseover description
      */
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    public void addInformation(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final List par3List, final boolean par4)
     {
         par3List.add(this.getRecordTitle());
     }
@@ -91,7 +91,7 @@ public class ItemRecord extends Item
     /**
      * Return an item rarity from EnumRarity
      */
-    public EnumRarity getRarity(ItemStack par1ItemStack)
+    public EnumRarity getRarity(final ItemStack par1ItemStack)
     {
         return EnumRarity.rare;
     }
@@ -101,7 +101,7 @@ public class ItemRecord extends Item
     /**
      * Return the record item corresponding to the given name.
      */
-    public static ItemRecord getRecord(String par0Str)
+    public static ItemRecord getRecord(final String par0Str)
     {
         return (ItemRecord)records.get(par0Str);
     }

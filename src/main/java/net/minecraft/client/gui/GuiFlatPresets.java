@@ -29,7 +29,7 @@ public class GuiFlatPresets extends GuiScreen
     private GuiButton theButton;
     private GuiTextField theTextField;
 
-    public GuiFlatPresets(GuiCreateFlatWorld par1GuiCreateFlatWorld)
+    public GuiFlatPresets(final GuiCreateFlatWorld par1GuiCreateFlatWorld)
     {
         this.createFlatWorldGui = par1GuiCreateFlatWorld;
     }
@@ -64,7 +64,7 @@ public class GuiFlatPresets extends GuiScreen
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int par1, int par2, int par3)
+    protected void mouseClicked(final int par1, final int par2, final int par3)
     {
         this.theTextField.mouseClicked(par1, par2, par3);
         super.mouseClicked(par1, par2, par3);
@@ -73,7 +73,7 @@ public class GuiFlatPresets extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         if (!this.theTextField.textboxKeyTyped(par1, par2))
         {
@@ -84,7 +84,7 @@ public class GuiFlatPresets extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.id == 0 && this.func_82293_j())
         {
@@ -100,7 +100,7 @@ public class GuiFlatPresets extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.theFlatPresetsListSlot.drawScreen(par1, par2, par3);
@@ -122,7 +122,7 @@ public class GuiFlatPresets extends GuiScreen
 
     public void func_82296_g()
     {
-        boolean flag = this.func_82293_j();
+        final boolean flag = this.func_82293_j();
         this.theButton.enabled = flag;
     }
 
@@ -134,7 +134,7 @@ public class GuiFlatPresets extends GuiScreen
     /**
      * Add a flat world preset with no world features.
      */
-    public static void addPresetNoFeatures(String par0Str, int par1, BiomeGenBase par2BiomeGenBase, FlatLayerInfo ... par3ArrayOfFlatLayerInfo)
+    public static void addPresetNoFeatures(final String par0Str, final int par1, final BiomeGenBase par2BiomeGenBase, final FlatLayerInfo ... par3ArrayOfFlatLayerInfo)
     {
         addPreset(par0Str, par1, par2BiomeGenBase, (List)null, par3ArrayOfFlatLayerInfo);
     }
@@ -142,9 +142,9 @@ public class GuiFlatPresets extends GuiScreen
     /**
      * Add a flat world preset.
      */
-    public static void addPreset(String par0Str, int par1, BiomeGenBase par2BiomeGenBase, List par3List, FlatLayerInfo ... par4ArrayOfFlatLayerInfo)
+    public static void addPreset(final String par0Str, final int par1, final BiomeGenBase par2BiomeGenBase, final List par3List, final FlatLayerInfo ... par4ArrayOfFlatLayerInfo)
     {
-        FlatGeneratorInfo flatgeneratorinfo = new FlatGeneratorInfo();
+        final FlatGeneratorInfo flatgeneratorinfo = new FlatGeneratorInfo();
 
         for (int j = par4ArrayOfFlatLayerInfo.length - 1; j >= 0; --j)
         {
@@ -156,11 +156,11 @@ public class GuiFlatPresets extends GuiScreen
 
         if (par3List != null)
         {
-            Iterator iterator = par3List.iterator();
+            final Iterator iterator = par3List.iterator();
 
             while (iterator.hasNext())
             {
-                String s1 = (String)iterator.next();
+                final String s1 = (String)iterator.next();
                 flatgeneratorinfo.getWorldFeatures().put(s1, new HashMap());
             }
         }
@@ -184,12 +184,12 @@ public class GuiFlatPresets extends GuiScreen
         return presets;
     }
 
-    static GuiFlatPresetsListSlot func_82292_a(GuiFlatPresets par0GuiFlatPresets)
+    static GuiFlatPresetsListSlot func_82292_a(final GuiFlatPresets par0GuiFlatPresets)
     {
         return par0GuiFlatPresets.theFlatPresetsListSlot;
     }
 
-    static GuiTextField func_82298_b(GuiFlatPresets par0GuiFlatPresets)
+    static GuiTextField func_82298_b(final GuiFlatPresets par0GuiFlatPresets)
     {
         return par0GuiFlatPresets.theTextField;
     }

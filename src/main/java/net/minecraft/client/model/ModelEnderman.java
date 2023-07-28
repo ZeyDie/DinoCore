@@ -16,8 +16,8 @@ public class ModelEnderman extends ModelBiped
     public ModelEnderman()
     {
         super(0.0F, -14.0F, 64, 32);
-        float f = -14.0F;
-        float f1 = 0.0F;
+        final float f = -14.0F;
+        final float f1 = 0.0F;
         this.bipedHeadwear = new ModelRenderer(this, 0, 16);
         this.bipedHeadwear.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, f1 - 0.5F);
         this.bipedHeadwear.setRotationPoint(0.0F, 0.0F + f, 0.0F);
@@ -45,11 +45,11 @@ public class ModelEnderman extends ModelBiped
      * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how
      * "far" arms and legs can swing at most.
      */
-    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity)
+    public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity)
     {
         super.setRotationAngles(par1, par2, par3, par4, par5, par6, par7Entity);
         this.bipedHead.showModel = true;
-        float f6 = -14.0F;
+        final float f6 = -14.0F;
         this.bipedBody.rotateAngleX = 0.0F;
         this.bipedBody.rotationPointY = f6;
         this.bipedBody.rotationPointZ = -0.0F;
@@ -59,7 +59,7 @@ public class ModelEnderman extends ModelBiped
         this.bipedLeftArm.rotateAngleX = (float)((double)this.bipedLeftArm.rotateAngleX * 0.5D);
         this.bipedRightLeg.rotateAngleX = (float)((double)this.bipedRightLeg.rotateAngleX * 0.5D);
         this.bipedLeftLeg.rotateAngleX = (float)((double)this.bipedLeftLeg.rotateAngleX * 0.5D);
-        float f7 = 0.4F;
+        final float f7 = 0.4F;
 
         if (this.bipedRightArm.rotateAngleX > f7)
         {
@@ -126,7 +126,7 @@ public class ModelEnderman extends ModelBiped
 
         if (this.isAttacking)
         {
-            float f8 = 1.0F;
+            final float f8 = 1.0F;
             this.bipedHead.rotationPointY -= f8 * 5.0F;
         }
     }

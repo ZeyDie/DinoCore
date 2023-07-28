@@ -7,7 +7,7 @@ public class MinecartEvent extends EntityEvent
 {
     public final EntityMinecart minecart;
 
-    public MinecartEvent(EntityMinecart minecart)
+    public MinecartEvent(final EntityMinecart minecart)
     {
         super(minecart);
         this.minecart = minecart;

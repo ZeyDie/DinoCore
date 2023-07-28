@@ -6,7 +6,7 @@ class CallableStructureType implements Callable
 {
     final MapGenStructure theMapStructureGenerator;
 
-    CallableStructureType(MapGenStructure par1MapGenStructure)
+    CallableStructureType(final MapGenStructure par1MapGenStructure)
     {
         this.theMapStructureGenerator = par1MapGenStructure;
     }

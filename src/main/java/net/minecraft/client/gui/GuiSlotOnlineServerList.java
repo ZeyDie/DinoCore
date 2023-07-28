@@ -12,7 +12,7 @@ class GuiSlotOnlineServerList extends GuiScreenSelectLocation
 {
     final GuiScreenOnlineServers field_96294_a;
 
-    public GuiSlotOnlineServerList(GuiScreenOnlineServers par1GuiScreenOnlineServers)
+    public GuiSlotOnlineServerList(final GuiScreenOnlineServers par1GuiScreenOnlineServers)
     {
         super(GuiScreenOnlineServers.func_140037_f(par1GuiScreenOnlineServers), par1GuiScreenOnlineServers.width, par1GuiScreenOnlineServers.height, 32, par1GuiScreenOnlineServers.height - 64, 36);
         this.field_96294_a = par1GuiScreenOnlineServers;
@@ -29,11 +29,11 @@ class GuiSlotOnlineServerList extends GuiScreenSelectLocation
     /**
      * the element in the slot that was clicked, boolean for wether it was double clicked or not
      */
-    protected void elementClicked(int par1, boolean par2)
+    protected void elementClicked(final int par1, final boolean par2)
     {
         if (par1 < GuiScreenOnlineServers.func_140013_c(this.field_96294_a).size())
         {
-            McoServer mcoserver = (McoServer)GuiScreenOnlineServers.func_140013_c(this.field_96294_a).get(par1);
+            final McoServer mcoserver = (McoServer)GuiScreenOnlineServers.func_140013_c(this.field_96294_a).get(par1);
             GuiScreenOnlineServers.func_140036_b(this.field_96294_a, mcoserver.field_96408_a);
 
             if (!GuiScreenOnlineServers.func_140015_g(this.field_96294_a).getSession().getUsername().equals(mcoserver.field_96405_e))
@@ -57,18 +57,18 @@ class GuiSlotOnlineServerList extends GuiScreenSelectLocation
     /**
      * returns true if the element passed in is currently selected
      */
-    protected boolean isSelected(int par1)
+    protected boolean isSelected(final int par1)
     {
         return par1 == GuiScreenOnlineServers.func_140027_d(this.field_96294_a, GuiScreenOnlineServers.func_140041_a(this.field_96294_a));
     }
 
-    protected boolean func_104086_b(int par1)
+    protected boolean func_104086_b(final int par1)
     {
         try
         {
             return par1 >= 0 && par1 < GuiScreenOnlineServers.func_140013_c(this.field_96294_a).size() && ((McoServer)GuiScreenOnlineServers.func_140013_c(this.field_96294_a).get(par1)).field_96405_e.toLowerCase().equals(GuiScreenOnlineServers.func_104032_j(this.field_96294_a).getSession().getUsername());
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             return false;
         }
@@ -84,7 +84,7 @@ class GuiSlotOnlineServerList extends GuiScreenSelectLocation
         this.field_96294_a.drawDefaultBackground();
     }
 
-    protected void drawSlot(int par1, int par2, int par3, int par4, Tessellator par5Tessellator)
+    protected void drawSlot(final int par1, final int par2, final int par3, final int par4, final Tessellator par5Tessellator)
     {
         if (par1 < GuiScreenOnlineServers.func_140013_c(this.field_96294_a).size())
         {
@@ -92,12 +92,12 @@ class GuiSlotOnlineServerList extends GuiScreenSelectLocation
         }
     }
 
-    private void func_96292_b(int par1, int par2, int par3, int par4, Tessellator par5Tessellator)
+    private void func_96292_b(final int par1, final int par2, final int par3, final int par4, final Tessellator par5Tessellator)
     {
-        McoServer mcoserver = (McoServer)GuiScreenOnlineServers.func_140013_c(this.field_96294_a).get(par1);
+        final McoServer mcoserver = (McoServer)GuiScreenOnlineServers.func_140013_c(this.field_96294_a).get(par1);
         this.field_96294_a.drawString(GuiScreenOnlineServers.func_140023_k(this.field_96294_a), mcoserver.func_96398_b(), par2 + 2, par3 + 1, 16777215);
-        short short1 = 207;
-        byte b0 = 1;
+        final short short1 = 207;
+        final byte b0 = 1;
 
         if (mcoserver.field_98166_h)
         {
@@ -122,7 +122,7 @@ class GuiSlotOnlineServerList extends GuiScreenSelectLocation
         this.field_96294_a.drawString(GuiScreenOnlineServers.func_98079_k(this.field_96294_a), mcoserver.field_96405_e, par2 + 2, par3 + 12 + 11, 5000268);
     }
 
-    private void func_96293_a(int par1, int par2, int par3, McoServer par4McoServer)
+    private void func_96293_a(final int par1, final int par2, final int par3, final McoServer par4McoServer)
     {
         if (par4McoServer.field_96403_g != null)
         {

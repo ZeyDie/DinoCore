@@ -16,7 +16,7 @@ public class Packet208SetDisplayObjective extends Packet
 
     public Packet208SetDisplayObjective() {}
 
-    public Packet208SetDisplayObjective(int par1, ScoreObjective par2ScoreObjective)
+    public Packet208SetDisplayObjective(final int par1, final ScoreObjective par2ScoreObjective)
     {
         this.scoreboardPosition = par1;
 
@@ -33,7 +33,7 @@ public class Packet208SetDisplayObjective extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.scoreboardPosition = par1DataInput.readByte();
         this.scoreName = readString(par1DataInput, 16);
@@ -42,7 +42,7 @@ public class Packet208SetDisplayObjective extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeByte(this.scoreboardPosition);
         writeString(this.scoreName, par1DataOutput);
@@ -51,7 +51,7 @@ public class Packet208SetDisplayObjective extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleSetDisplayObjective(this);
     }

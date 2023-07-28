@@ -23,7 +23,7 @@ public class Packet54PlayNoteBlock extends Packet
 
     public Packet54PlayNoteBlock() {}
 
-    public Packet54PlayNoteBlock(int par1, int par2, int par3, int par4, int par5, int par6)
+    public Packet54PlayNoteBlock(final int par1, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         this.xLocation = par1;
         this.yLocation = par2;
@@ -36,7 +36,7 @@ public class Packet54PlayNoteBlock extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.xLocation = par1DataInput.readInt();
         this.yLocation = par1DataInput.readShort();
@@ -49,7 +49,7 @@ public class Packet54PlayNoteBlock extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.xLocation);
         par1DataOutput.writeShort(this.yLocation);
@@ -62,7 +62,7 @@ public class Packet54PlayNoteBlock extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleBlockEvent(this);
     }

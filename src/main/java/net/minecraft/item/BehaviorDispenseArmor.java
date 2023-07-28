@@ -26,26 +26,26 @@ final class BehaviorDispenseArmor extends BehaviorDefaultDispenseItem
     /**
      * Dispense the specified stack, play the dispense sound and spawn particles.
      */
-    protected ItemStack dispenseStack(IBlockSource par1IBlockSource, ItemStack par2ItemStack)
+    protected ItemStack dispenseStack(final IBlockSource par1IBlockSource, final ItemStack par2ItemStack)
     {
-        EnumFacing enumfacing = BlockDispenser.getFacing(par1IBlockSource.getBlockMetadata());
-        int i = par1IBlockSource.getXInt() + enumfacing.getFrontOffsetX();
-        int j = par1IBlockSource.getYInt() + enumfacing.getFrontOffsetY();
-        int k = par1IBlockSource.getZInt() + enumfacing.getFrontOffsetZ();
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double)i, (double)j, (double)k, (double)(i + 1), (double)(j + 1), (double)(k + 1));
-        List list = par1IBlockSource.getWorld().selectEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb, new EntitySelectorArmoredMob(par2ItemStack));
+        final EnumFacing enumfacing = BlockDispenser.getFacing(par1IBlockSource.getBlockMetadata());
+        final int i = par1IBlockSource.getXInt() + enumfacing.getFrontOffsetX();
+        final int j = par1IBlockSource.getYInt() + enumfacing.getFrontOffsetY();
+        final int k = par1IBlockSource.getZInt() + enumfacing.getFrontOffsetZ();
+        final AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double)i, (double)j, (double)k, (double)(i + 1), (double)(j + 1), (double)(k + 1));
+        final List list = par1IBlockSource.getWorld().selectEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb, new EntitySelectorArmoredMob(par2ItemStack));
 
-        if (list.size() > 0)
+        if (!list.isEmpty())
         {
-            EntityLivingBase entitylivingbase = (EntityLivingBase)list.get(0);
-            int l = entitylivingbase instanceof EntityPlayer ? 1 : 0;
-            int i1 = EntityLiving.getArmorPosition(par2ItemStack);
+            final EntityLivingBase entitylivingbase = (EntityLivingBase)list.get(0);
+            final int l = entitylivingbase instanceof EntityPlayer ? 1 : 0;
+            final int i1 = EntityLiving.getArmorPosition(par2ItemStack);
             // CraftBukkit start
-            ItemStack itemstack1 = par2ItemStack.splitStack(1);
-            World world = par1IBlockSource.getWorld();
-            org.bukkit.block.Block block = world.getWorld().getBlockAt(par1IBlockSource.getXInt(), par1IBlockSource.getYInt(), par1IBlockSource.getZInt());
-            CraftItemStack craftItem = CraftItemStack.asCraftMirror(itemstack1);
-            BlockDispenseEvent event = new BlockDispenseEvent(block, craftItem.clone(), new org.bukkit.util.Vector(0, 0, 0));
+            final ItemStack itemstack1 = par2ItemStack.splitStack(1);
+            final World world = par1IBlockSource.getWorld();
+            final org.bukkit.block.Block block = world.getWorld().getBlockAt(par1IBlockSource.getXInt(), par1IBlockSource.getYInt(), par1IBlockSource.getZInt());
+            final CraftItemStack craftItem = CraftItemStack.asCraftMirror(itemstack1);
+            final BlockDispenseEvent event = new BlockDispenseEvent(block, craftItem.clone(), new org.bukkit.util.Vector(0, 0, 0));
 
             if (!BlockDispenser.eventFired)
             {
@@ -62,8 +62,8 @@ final class BehaviorDispenseArmor extends BehaviorDefaultDispenseItem
             {
                 par2ItemStack.stackSize++;
                 // Chain to handler for new item
-                ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-                IBehaviorDispenseItem ibehaviordispenseitem = (IBehaviorDispenseItem) BlockDispenser.dispenseBehaviorRegistry.getObject(eventStack.getItem());
+                final ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
+                final IBehaviorDispenseItem ibehaviordispenseitem = (IBehaviorDispenseItem) BlockDispenser.dispenseBehaviorRegistry.getObject(eventStack.getItem());
 
                 if (ibehaviordispenseitem != IBehaviorDispenseItem.itemDispenseBehaviorProvider && ibehaviordispenseitem != this)
                 {

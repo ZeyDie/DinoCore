@@ -23,9 +23,9 @@ public class DifficultyCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
-        if (args.length != 1 || args[0].length() == 0) {
+        if (args.length != 1 || args[0].isEmpty()) {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
@@ -52,7 +52,7 @@ public class DifficultyCommand extends VanillaCommand {
         return true;
     }
 
-    protected int getDifficultyForString(CommandSender sender, String name) {
+    protected int getDifficultyForString(final CommandSender sender, final String name) {
         if (name.equalsIgnoreCase("peaceful") || name.equalsIgnoreCase("p")) {
             return 0;
         } else if (name.equalsIgnoreCase("easy") || name.equalsIgnoreCase("e")) {
@@ -67,7 +67,7 @@ public class DifficultyCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");

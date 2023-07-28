@@ -11,7 +11,7 @@ public class LivingSpawnEvent extends LivingEvent
     public final float y;
     public final float z;
     
-    public LivingSpawnEvent(EntityLiving entity, World world, float x, float y, float z)
+    public LivingSpawnEvent(final EntityLiving entity, final World world, final float x, final float y, final float z)
     {
         super(entity);
         this.world = world;
@@ -32,7 +32,7 @@ public class LivingSpawnEvent extends LivingEvent
     @HasResult
     public static class CheckSpawn extends LivingSpawnEvent
     {
-        public CheckSpawn(EntityLiving entity, World world, float x, float y, float z)
+        public CheckSpawn(final EntityLiving entity, final World world, final float x, final float y, final float z)
         {
             super(entity, world, x, y, z);
             entity.spawnReason = "natural"; // Cauldron - used to handle CraftBukkit's SpawnReason with CustomSpawners
@@ -42,7 +42,7 @@ public class LivingSpawnEvent extends LivingEvent
     @Cancelable
     public static class SpecialSpawn extends LivingSpawnEvent
     {
-        public SpecialSpawn(EntityLiving entity, World world, float x, float y, float z)
+        public SpecialSpawn(final EntityLiving entity, final World world, final float x, final float y, final float z)
         {
             super(entity, world, x, y, z);
             entity.spawnReason = "spawner"; // Cauldron - used to handle CraftBukkit's SpawnReason with CustomSpawners
@@ -65,7 +65,7 @@ public class LivingSpawnEvent extends LivingEvent
     @HasResult
     public static class AllowDespawn extends LivingSpawnEvent
     {
-        public AllowDespawn(EntityLiving entity)
+        public AllowDespawn(final EntityLiving entity)
         {
             super(entity, entity.worldObj, (float)entity.posX, (float)entity.posY, (float)entity.posZ);
         }

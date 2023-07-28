@@ -13,7 +13,7 @@ public class EntityAIFollowGolem extends EntityAIBase
     private int takeGolemRoseTick;
     private boolean tookGolemRose;
 
-    public EntityAIFollowGolem(EntityVillager par1EntityVillager)
+    public EntityAIFollowGolem(final EntityVillager par1EntityVillager)
     {
         this.theVillager = par1EntityVillager;
         this.setMutexBits(3);
@@ -34,7 +34,7 @@ public class EntityAIFollowGolem extends EntityAIBase
         }
         else
         {
-            List list = this.theVillager.worldObj.getEntitiesWithinAABB(EntityIronGolem.class, this.theVillager.boundingBox.expand(6.0D, 2.0D, 6.0D));
+            final List list = this.theVillager.worldObj.getEntitiesWithinAABB(EntityIronGolem.class, this.theVillager.boundingBox.expand(6.0D, 2.0D, 6.0D));
 
             if (list.isEmpty())
             {
@@ -42,11 +42,11 @@ public class EntityAIFollowGolem extends EntityAIBase
             }
             else
             {
-                Iterator iterator = list.iterator();
+                final Iterator iterator = list.iterator();
 
                 while (iterator.hasNext())
                 {
-                    EntityIronGolem entityirongolem = (EntityIronGolem)iterator.next();
+                    final EntityIronGolem entityirongolem = (EntityIronGolem)iterator.next();
 
                     if (entityirongolem.getHoldRoseTick() > 0)
                     {

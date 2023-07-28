@@ -5,7 +5,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.WitherSkull;
 
 public class CraftWitherSkull extends CraftFireball implements WitherSkull {
-    public CraftWitherSkull(CraftServer server, net.minecraft.entity.projectile.EntityWitherSkull entity) {
+    public CraftWitherSkull(final CraftServer server, final net.minecraft.entity.projectile.EntityWitherSkull entity) {
         super(server, entity);
     }
 

@@ -17,7 +17,7 @@ public class EnderTeleportEvent extends LivingEvent
     public double targetZ;
     public float attackDamage;
 
-    public EnderTeleportEvent(EntityLivingBase entity, double targetX, double targetY, double targetZ, float attackDamage)
+    public EnderTeleportEvent(final EntityLivingBase entity, final double targetX, final double targetY, final double targetZ, final float attackDamage)
     {
         super(entity);
         this.targetX = targetX;

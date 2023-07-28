@@ -5,7 +5,7 @@ public class IntSetting extends Setting<Integer>
     private Integer value;
     private ConfigBase config;
     
-    public IntSetting(ConfigBase config, String path, Integer def, String description)
+    public IntSetting(final ConfigBase config, final String path, final Integer def, final String description)
     {
         super(path, def, description);
         this.value = def;
@@ -19,7 +19,7 @@ public class IntSetting extends Setting<Integer>
     }
 
     @Override
-    public void setValue(String value)
+    public void setValue(final String value)
     {
         this.value = org.apache.commons.lang.math.NumberUtils.toInt(value, def);
         config.set(path, this.value);

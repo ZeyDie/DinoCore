@@ -15,7 +15,7 @@ class GuiWorldSlot extends GuiSlot
 {
     final GuiSelectWorld parentWorldGui;
 
-    public GuiWorldSlot(GuiSelectWorld par1GuiSelectWorld)
+    public GuiWorldSlot(final GuiSelectWorld par1GuiSelectWorld)
     {
         super(par1GuiSelectWorld.mc, par1GuiSelectWorld.width, par1GuiSelectWorld.height, 32, par1GuiSelectWorld.height - 64, 36);
         this.parentWorldGui = par1GuiSelectWorld;
@@ -32,10 +32,10 @@ class GuiWorldSlot extends GuiSlot
     /**
      * the element in the slot that was clicked, boolean for wether it was double clicked or not
      */
-    protected void elementClicked(int par1, boolean par2)
+    protected void elementClicked(final int par1, final boolean par2)
     {
         GuiSelectWorld.onElementSelected(this.parentWorldGui, par1);
-        boolean flag1 = GuiSelectWorld.getSelectedWorld(this.parentWorldGui) >= 0 && GuiSelectWorld.getSelectedWorld(this.parentWorldGui) < this.getSize();
+        final boolean flag1 = GuiSelectWorld.getSelectedWorld(this.parentWorldGui) >= 0 && GuiSelectWorld.getSelectedWorld(this.parentWorldGui) < this.getSize();
         GuiSelectWorld.getSelectButton(this.parentWorldGui).enabled = flag1;
         GuiSelectWorld.getRenameButton(this.parentWorldGui).enabled = flag1;
         GuiSelectWorld.getDeleteButton(this.parentWorldGui).enabled = flag1;
@@ -50,7 +50,7 @@ class GuiWorldSlot extends GuiSlot
     /**
      * returns true if the element passed in is currently selected
      */
-    protected boolean isSelected(int par1)
+    protected boolean isSelected(final int par1)
     {
         return par1 == GuiSelectWorld.getSelectedWorld(this.parentWorldGui);
     }
@@ -68,9 +68,9 @@ class GuiWorldSlot extends GuiSlot
         this.parentWorldGui.drawDefaultBackground();
     }
 
-    protected void drawSlot(int par1, int par2, int par3, int par4, Tessellator par5Tessellator)
+    protected void drawSlot(final int par1, final int par2, final int par3, final int par4, final Tessellator par5Tessellator)
     {
-        SaveFormatComparator saveformatcomparator = (SaveFormatComparator)GuiSelectWorld.getSize(this.parentWorldGui).get(par1);
+        final SaveFormatComparator saveformatcomparator = (SaveFormatComparator)GuiSelectWorld.getSize(this.parentWorldGui).get(par1);
         String s = saveformatcomparator.getDisplayName();
 
         if (s == null || MathHelper.stringNullOrLengthZero(s))

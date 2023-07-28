@@ -14,13 +14,13 @@ public class MultipleCommandAliasHelpTopic extends HelpTopic {
 
     private final MultipleCommandAlias alias;
 
-    public MultipleCommandAliasHelpTopic(MultipleCommandAlias alias) {
+    public MultipleCommandAliasHelpTopic(final MultipleCommandAlias alias) {
         this.alias = alias;
 
         name = "/" + alias.getLabel();
 
         // Build short text
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         for (int i = 0; i < alias.getCommands().length; i++) {
             if (i != 0) {
                 sb.append(ChatColor.GOLD + " > " + ChatColor.WHITE);
@@ -34,13 +34,13 @@ public class MultipleCommandAliasHelpTopic extends HelpTopic {
         fullText = ChatColor.GOLD + "Alias for: " + ChatColor.WHITE + getShortText();
     }
 
-    public boolean canSee(CommandSender sender) {
+    public boolean canSee(final CommandSender sender) {
         if (amendedPermission == null) {
             if (sender instanceof ConsoleCommandSender) {
                 return true;
             }
 
-            for (Command command : alias.getCommands()) {
+            for (final Command command : alias.getCommands()) {
                 if (!command.testPermissionSilent(sender)) {
                     return false;
                 }

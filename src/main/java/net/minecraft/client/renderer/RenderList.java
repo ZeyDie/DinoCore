@@ -19,7 +19,7 @@ public class RenderList
     private boolean field_78430_h;
     private boolean field_78431_i;
 
-    public void func_78422_a(int par1, int par2, int par3, double par4, double par6, double par8)
+    public void func_78422_a(final int par1, final int par2, final int par3, final double par4, final double par6, final double par8)
     {
         this.field_78430_h = true;
         this.field_78424_g.clear();
@@ -31,12 +31,12 @@ public class RenderList
         this.field_78423_f = par8;
     }
 
-    public boolean func_78418_a(int par1, int par2, int par3)
+    public boolean func_78418_a(final int par1, final int par2, final int par3)
     {
         return !this.field_78430_h ? false : par1 == this.field_78429_a && par2 == this.field_78427_b && par3 == this.field_78428_c;
     }
 
-    public void func_78420_a(int par1)
+    public void func_78420_a(final int par1)
     {
         this.field_78424_g.put(par1);
 

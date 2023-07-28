@@ -5,7 +5,7 @@ import org.bukkit.craftbukkit.v1_6_R3.inventory.CraftInventory;
 
 public class CraftCustomInventory extends CraftInventory {
 
-    public CraftCustomInventory(IInventory inventory) {
+    public CraftCustomInventory(final IInventory inventory) {
         super(inventory);
         // TODO Auto-generated constructor stub
     }

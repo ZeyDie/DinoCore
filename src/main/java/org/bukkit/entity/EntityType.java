@@ -171,7 +171,7 @@ public enum EntityType {
     private static final Map<Short, EntityType> ID_MAP = new HashMap<Short, EntityType>();
 
     static {
-        for (EntityType type : values()) {
+        for (final EntityType type : values()) {
             if (type.name != null) {
                 NAME_MAP.put(type.name.toLowerCase(), type);
             }
@@ -181,11 +181,11 @@ public enum EntityType {
         }
     }
 
-    private EntityType(String name, Class<? extends Entity> clazz, int typeId) {
+    private EntityType(final String name, final Class<? extends Entity> clazz, final int typeId) {
         this(name, clazz, typeId, true);
     }
 
-    private EntityType(String name, Class<? extends Entity> clazz, int typeId, boolean independent) {
+    private EntityType(final String name, final Class<? extends Entity> clazz, final int typeId, final boolean independent) {
         this.name = name;
         this.clazz = clazz;
         this.typeId = (short) typeId;
@@ -222,7 +222,7 @@ public enum EntityType {
      * @deprecated Magic value
      */
     @Deprecated
-    public static EntityType fromName(String name) {
+    public static EntityType fromName(final String name) {
         if (name == null) {
             return null;
         }
@@ -234,7 +234,7 @@ public enum EntityType {
      * @deprecated Magic value
      */
     @Deprecated
-    public static EntityType fromId(int id) {
+    public static EntityType fromId(final int id) {
         if (id > Short.MAX_VALUE) {
             return null;
         }

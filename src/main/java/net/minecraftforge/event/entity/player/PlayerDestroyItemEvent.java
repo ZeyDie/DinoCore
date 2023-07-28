@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 public class PlayerDestroyItemEvent extends PlayerEvent
 {
     public final ItemStack original;
-    public PlayerDestroyItemEvent(EntityPlayer player, ItemStack original)
+    public PlayerDestroyItemEvent(final EntityPlayer player, final ItemStack original)
     {
         super(player);
         this.original = original;

@@ -38,7 +38,7 @@ public class FMLForgePlugin implements IFMLLoadingPlugin
     }
 
     @Override
-    public void injectData(Map<String, Object> data)
+    public void injectData(final Map<String, Object> data)
     {
         RUNTIME_DEOBF = (Boolean)data.get("runtimeDeobfuscationEnabled");
         forgeLocation = (File)data.get("coremodLocation");

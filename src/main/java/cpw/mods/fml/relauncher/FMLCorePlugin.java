@@ -46,7 +46,7 @@ public class FMLCorePlugin implements IFMLLoadingPlugin
     }
 
     @Override
-    public void injectData(Map<String, Object> data)
+    public void injectData(final Map<String, Object> data)
     {
         // don't care about this data
     }

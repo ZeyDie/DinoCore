@@ -47,12 +47,12 @@ public class TileEntityHopper extends TileEntity implements Hopper
         return this.hopperItemStacks;
     }
 
-    public void onOpen(CraftHumanEntity who)
+    public void onOpen(final CraftHumanEntity who)
     {
         transaction.add(who);
     }
 
-    public void onClose(CraftHumanEntity who)
+    public void onClose(final CraftHumanEntity who)
     {
         transaction.remove(who);
     }
@@ -62,7 +62,7 @@ public class TileEntityHopper extends TileEntity implements Hopper
         return transaction;
     }
 
-    public void setMaxStackSize(int size)
+    public void setMaxStackSize(final int size)
     {
         maxStack = size;
     }
@@ -73,10 +73,10 @@ public class TileEntityHopper extends TileEntity implements Hopper
     /**
      * Reads a tile entity from NBT.
      */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
-        NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
+        final NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
         this.hopperItemStacks = new ItemStack[this.getSizeInventory()];
 
         if (par1NBTTagCompound.hasKey("CustomName"))
@@ -88,8 +88,8 @@ public class TileEntityHopper extends TileEntity implements Hopper
 
         for (int i = 0; i < nbttaglist.tagCount(); ++i)
         {
-            NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
-            byte b0 = nbttagcompound1.getByte("Slot");
+            final NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
+            final byte b0 = nbttagcompound1.getByte("Slot");
 
             if (b0 >= 0 && b0 < this.hopperItemStacks.length)
             {
@@ -101,16 +101,16 @@ public class TileEntityHopper extends TileEntity implements Hopper
     /**
      * Writes a tile entity to NBT.
      */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
-        NBTTagList nbttaglist = new NBTTagList();
+        final NBTTagList nbttaglist = new NBTTagList();
 
         for (int i = 0; i < this.hopperItemStacks.length; ++i)
         {
             if (this.hopperItemStacks[i] != null)
             {
-                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+                final NBTTagCompound nbttagcompound1 = new NBTTagCompound();
                 nbttagcompound1.setByte("Slot", (byte)i);
                 this.hopperItemStacks[i].writeToNBT(nbttagcompound1);
                 nbttaglist.appendTag(nbttagcompound1);
@@ -145,7 +145,7 @@ public class TileEntityHopper extends TileEntity implements Hopper
     /**
      * Returns the stack in slot i
      */
-    public ItemStack getStackInSlot(int par1)
+    public ItemStack getStackInSlot(final int par1)
     {
         return this.hopperItemStacks[par1];
     }
@@ -154,11 +154,11 @@ public class TileEntityHopper extends TileEntity implements Hopper
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
      * new stack.
      */
-    public ItemStack decrStackSize(int par1, int par2)
+    public ItemStack decrStackSize(final int par1, final int par2)
     {
         if (this.hopperItemStacks[par1] != null)
         {
-            ItemStack itemstack;
+            final ItemStack itemstack;
 
             if (this.hopperItemStacks[par1].stackSize <= par2)
             {
@@ -188,11 +188,11 @@ public class TileEntityHopper extends TileEntity implements Hopper
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      */
-    public ItemStack getStackInSlotOnClosing(int par1)
+    public ItemStack getStackInSlotOnClosing(final int par1)
     {
         if (this.hopperItemStacks[par1] != null)
         {
-            ItemStack itemstack = this.hopperItemStacks[par1];
+            final ItemStack itemstack = this.hopperItemStacks[par1];
             this.hopperItemStacks[par1] = null;
             return itemstack;
         }
@@ -205,7 +205,7 @@ public class TileEntityHopper extends TileEntity implements Hopper
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
-    public void setInventorySlotContents(int par1, ItemStack par2ItemStack)
+    public void setInventorySlotContents(final int par1, final ItemStack par2ItemStack)
     {
         this.hopperItemStacks[par1] = par2ItemStack;
 
@@ -229,10 +229,10 @@ public class TileEntityHopper extends TileEntity implements Hopper
      */
     public boolean isInvNameLocalized()
     {
-        return this.inventoryName != null && this.inventoryName.length() > 0;
+        return this.inventoryName != null && !this.inventoryName.isEmpty();
     }
 
-    public void setInventoryName(String par1Str)
+    public void setInventoryName(final String par1Str)
     {
         this.inventoryName = par1Str;
     }
@@ -249,7 +249,7 @@ public class TileEntityHopper extends TileEntity implements Hopper
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
+    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer)
     {
         return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
     }
@@ -261,7 +261,7 @@ public class TileEntityHopper extends TileEntity implements Hopper
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack)
+    public boolean isItemValidForSlot(final int par1, final ItemStack par2ItemStack)
     {
         return true;
     }
@@ -320,7 +320,7 @@ public class TileEntityHopper extends TileEntity implements Hopper
      */
     private boolean insertItemToInventory()
     {
-        IInventory iinventory = this.getOutputInventory();
+        final IInventory iinventory = this.getOutputInventory();
 
         if (iinventory == null)
         {
@@ -332,9 +332,9 @@ public class TileEntityHopper extends TileEntity implements Hopper
             {
                 if (this.getStackInSlot(i) != null)
                 {
-                    ItemStack itemstack = this.getStackInSlot(i).copy();
+                    final ItemStack itemstack = this.getStackInSlot(i).copy();
                     // CraftBukkit start - Call event when pushing items into other inventories
-                    CraftItemStack oitemstack = CraftItemStack.asCraftMirror(this.decrStackSize(i, 1));
+                    final CraftItemStack oitemstack = CraftItemStack.asCraftMirror(this.decrStackSize(i, 1));
                     Inventory destinationInventory;
 
                     // Have to special case large chests as they work oddly
@@ -352,9 +352,9 @@ public class TileEntityHopper extends TileEntity implements Hopper
                                 // TODO: create a mod inventory for passing to the event, instead of null
                                 destinationInventory = null;
                             }
-                         } catch (AbstractMethodError e) { // fixes openblocks AbstractMethodError
+                         } catch (final AbstractMethodError e) { // fixes openblocks AbstractMethodError
                             if (iinventory instanceof net.minecraft.tileentity.TileEntity) {
-                                org.bukkit.inventory.InventoryHolder holder = net.minecraftforge.cauldron.CauldronUtils.getOwner((net.minecraft.tileentity.TileEntity)iinventory);
+                                final org.bukkit.inventory.InventoryHolder holder = net.minecraftforge.cauldron.CauldronUtils.getOwner((net.minecraft.tileentity.TileEntity)iinventory);
                                 if (holder != null) {
                                     destinationInventory = holder.getInventory();
                                 } else {
@@ -367,7 +367,7 @@ public class TileEntityHopper extends TileEntity implements Hopper
                         // Cauldron end
                     }
 
-                    InventoryMoveItemEvent event = new InventoryMoveItemEvent(this.getOwner().getInventory(), oitemstack.clone(), destinationInventory, true);
+                    final InventoryMoveItemEvent event = new InventoryMoveItemEvent(this.getOwner().getInventory(), oitemstack.clone(), destinationInventory, true);
                     this.getWorldObj().getServer().getPluginManager().callEvent(event);
 
                     if (event.isCancelled())
@@ -377,7 +377,7 @@ public class TileEntityHopper extends TileEntity implements Hopper
                         return false;
                     }
 
-                    ItemStack itemstack1 = insertStack(iinventory, CraftItemStack.asNMSCopy(event.getItem()), Facing.oppositeSide[BlockHopper.getDirectionFromMetadata(this.getBlockMetadata())]);
+                    final ItemStack itemstack1 = insertStack(iinventory, CraftItemStack.asNMSCopy(event.getItem()), Facing.oppositeSide[BlockHopper.getDirectionFromMetadata(this.getBlockMetadata())]);
 
                     if (itemstack1 == null || itemstack1.stackSize == 0)
                     {
@@ -405,18 +405,18 @@ public class TileEntityHopper extends TileEntity implements Hopper
     /**
      * Sucks one item into the given hopper from an inventory or EntityItem above it.
      */
-    public static boolean suckItemsIntoHopper(Hopper par0Hopper)
+    public static boolean suckItemsIntoHopper(final Hopper par0Hopper)
     {
-        IInventory iinventory = getInventoryAboveHopper(par0Hopper);
+        final IInventory iinventory = getInventoryAboveHopper(par0Hopper);
 
         if (iinventory != null)
         {
-            byte b0 = 0;
+            final byte b0 = 0;
 
             if (iinventory instanceof ISidedInventory && b0 > -1)
             {
-                ISidedInventory isidedinventory = (ISidedInventory)iinventory;
-                int[] aint = isidedinventory.getAccessibleSlotsFromSide(b0);
+                final ISidedInventory isidedinventory = (ISidedInventory)iinventory;
+                final int[] aint = isidedinventory.getAccessibleSlotsFromSide(b0);
 
                 for (int i = 0; i < aint.length; ++i)
                 {
@@ -428,7 +428,7 @@ public class TileEntityHopper extends TileEntity implements Hopper
             }
             else
             {
-                int j = iinventory.getSizeInventory();
+                final int j = iinventory.getSizeInventory();
 
                 for (int k = 0; k < j; ++k)
                 {
@@ -441,7 +441,7 @@ public class TileEntityHopper extends TileEntity implements Hopper
         }
         else
         {
-            EntityItem entityitem = getEntityAbove(par0Hopper.getWorldObj(), par0Hopper.getXPos(), par0Hopper.getYPos() + 1.0D, par0Hopper.getZPos());
+            final EntityItem entityitem = getEntityAbove(par0Hopper.getWorldObj(), par0Hopper.getXPos(), par0Hopper.getYPos() + 1.0D, par0Hopper.getZPos());
 
             if (entityitem != null)
             {
@@ -452,15 +452,15 @@ public class TileEntityHopper extends TileEntity implements Hopper
         return false;
     }
 
-    private static boolean insertStackFromInventory(Hopper par0Hopper, IInventory par1IInventory, int par2, int par3)
+    private static boolean insertStackFromInventory(final Hopper par0Hopper, final IInventory par1IInventory, final int par2, final int par3)
     {
-        ItemStack itemstack = par1IInventory.getStackInSlot(par2);
+        final ItemStack itemstack = par1IInventory.getStackInSlot(par2);
 
         if (itemstack != null && canExtractItemFromInventory(par1IInventory, itemstack, par2, par3))
         {
-            ItemStack itemstack1 = itemstack.copy();
+            final ItemStack itemstack1 = itemstack.copy();
             // CraftBukkit start - Call event on collection of items from inventories into the hopper
-            CraftItemStack oitemstack = CraftItemStack.asCraftMirror(par1IInventory.decrStackSize(par2, 1));
+            final CraftItemStack oitemstack = CraftItemStack.asCraftMirror(par1IInventory.decrStackSize(par2, 1));
             Inventory sourceInventory;
 
             // Have to special case large chests as they work oddly
@@ -483,14 +483,14 @@ public class TileEntityHopper extends TileEntity implements Hopper
                         sourceInventory = null;
                     }
                 }
-                catch (AbstractMethodError e)
+                catch (final AbstractMethodError e)
                 {
                     sourceInventory = null;
                 }
                 // Cauldron end
             }
 
-            InventoryMoveItemEvent event = new InventoryMoveItemEvent(sourceInventory, oitemstack.clone(), par0Hopper.getOwner().getInventory(), false);
+            final InventoryMoveItemEvent event = new InventoryMoveItemEvent(sourceInventory, oitemstack.clone(), par0Hopper.getOwner().getInventory(), false);
             par0Hopper.getWorldObj().getServer().getPluginManager().callEvent(event);
 
             if (event.isCancelled())
@@ -509,7 +509,7 @@ public class TileEntityHopper extends TileEntity implements Hopper
                 return false;
             }
 
-            ItemStack itemstack2 = insertStack(par0Hopper, CraftItemStack.asNMSCopy(event.getItem()), -1);
+            final ItemStack itemstack2 = insertStack(par0Hopper, CraftItemStack.asNMSCopy(event.getItem()), -1);
 
             if (itemstack2 == null || itemstack2.stackSize == 0)
             {
@@ -532,7 +532,7 @@ public class TileEntityHopper extends TileEntity implements Hopper
         return false;
     }
 
-    public static boolean insertStackFromEntity(IInventory par0IInventory, EntityItem par1EntityItem)
+    public static boolean insertStackFromEntity(final IInventory par0IInventory, final EntityItem par1EntityItem)
     {
         boolean flag = false;
 
@@ -546,7 +546,7 @@ public class TileEntityHopper extends TileEntity implements Hopper
             // Cauldron start - vanilla compatibility
             if (par0IInventory.getOwner() != null && par1EntityItem.getBukkitEntity() != null)
             {
-                InventoryPickupItemEvent event = new InventoryPickupItemEvent(par0IInventory.getOwner().getInventory(), (org.bukkit.entity.Item) par1EntityItem.getBukkitEntity());
+                final InventoryPickupItemEvent event = new InventoryPickupItemEvent(par0IInventory.getOwner().getInventory(), (org.bukkit.entity.Item) par1EntityItem.getBukkitEntity());
                 par1EntityItem.worldObj.getServer().getPluginManager().callEvent(event);
     
                 if (event.isCancelled())
@@ -556,8 +556,8 @@ public class TileEntityHopper extends TileEntity implements Hopper
             }
             // Cauldron end
             // CraftBukkit end
-            ItemStack itemstack = par1EntityItem.getEntityItem().copy();
-            ItemStack itemstack1 = insertStack(par0IInventory, itemstack, -1);
+            final ItemStack itemstack = par1EntityItem.getEntityItem().copy();
+            final ItemStack itemstack1 = insertStack(par0IInventory, itemstack, -1);
 
             if (itemstack1 != null && itemstack1.stackSize != 0)
             {
@@ -576,68 +576,70 @@ public class TileEntityHopper extends TileEntity implements Hopper
     /**
      * Inserts a stack into an inventory. Args: Inventory, stack, side. Returns leftover items.
      */
-    public static ItemStack insertStack(IInventory par0IInventory, ItemStack par1ItemStack, int par2)
+    public static ItemStack insertStack(final IInventory par0IInventory, ItemStack par1ItemStack, final int par2)
     {
+        ItemStack par1ItemStack1 = par1ItemStack;
         if (par0IInventory instanceof ISidedInventory && par2 > -1)
         {
-            ISidedInventory isidedinventory = (ISidedInventory)par0IInventory;
-            int[] aint = isidedinventory.getAccessibleSlotsFromSide(par2);
+            final ISidedInventory isidedinventory = (ISidedInventory)par0IInventory;
+            final int[] aint = isidedinventory.getAccessibleSlotsFromSide(par2);
 
-            for (int j = 0; j < aint.length && par1ItemStack != null && par1ItemStack.stackSize > 0; ++j)
+            for (int j = 0; j < aint.length && par1ItemStack1 != null && par1ItemStack1.stackSize > 0; ++j)
             {
-                par1ItemStack = func_102014_c(par0IInventory, par1ItemStack, aint[j], par2);
+                par1ItemStack1 = func_102014_c(par0IInventory, par1ItemStack1, aint[j], par2);
             }
         }
         else
         {
-            int k = par0IInventory.getSizeInventory();
+            final int k = par0IInventory.getSizeInventory();
 
-            for (int l = 0; l < k && par1ItemStack != null && par1ItemStack.stackSize > 0; ++l)
+            for (int l = 0; l < k && par1ItemStack1 != null && par1ItemStack1.stackSize > 0; ++l)
             {
-                par1ItemStack = func_102014_c(par0IInventory, par1ItemStack, l, par2);
+                par1ItemStack1 = func_102014_c(par0IInventory, par1ItemStack1, l, par2);
             }
         }
 
-        if (par1ItemStack != null && par1ItemStack.stackSize == 0)
+        if (par1ItemStack1 != null && par1ItemStack1.stackSize == 0)
         {
-            par1ItemStack = null;
+            par1ItemStack1 = null;
         }
 
-        return par1ItemStack;
+        return par1ItemStack1;
     }
 
     /**
      * Args: inventory, item, slot, side
      */
-    private static boolean canInsertItemToInventory(IInventory par0IInventory, ItemStack par1ItemStack, int par2, int par3)
+    private static boolean canInsertItemToInventory(final IInventory par0IInventory, final ItemStack par1ItemStack, final int par2, final int par3)
     {
         return !par0IInventory.isItemValidForSlot(par2, par1ItemStack) ? false : !(par0IInventory instanceof ISidedInventory) || ((ISidedInventory)par0IInventory).canInsertItem(par2, par1ItemStack, par3);
     }
 
-    private static boolean canExtractItemFromInventory(IInventory par0IInventory, ItemStack par1ItemStack, int par2, int par3)
+    private static boolean canExtractItemFromInventory(final IInventory par0IInventory, final ItemStack par1ItemStack, final int par2, final int par3)
     {
         return !(par0IInventory instanceof ISidedInventory) || ((ISidedInventory)par0IInventory).canExtractItem(par2, par1ItemStack, par3);
     }
 
-    private static ItemStack func_102014_c(IInventory par0IInventory, ItemStack par1ItemStack, int par2, int par3)
+    private static ItemStack func_102014_c(final IInventory par0IInventory, ItemStack par1ItemStack, final int par2, final int par3)
     {
-        ItemStack itemstack1 = par0IInventory.getStackInSlot(par2);
+        ItemStack par1ItemStack1 = par1ItemStack;
+        final ItemStack itemstack1 = par0IInventory.getStackInSlot(par2);
 
-        if (canInsertItemToInventory(par0IInventory, par1ItemStack, par2, par3))
+        if (canInsertItemToInventory(par0IInventory, par1ItemStack1, par2, par3))
         {
             boolean flag = false;
 
             if (itemstack1 == null)
             {
-                par0IInventory.setInventorySlotContents(par2, par1ItemStack);
-                par1ItemStack = null;
+                par0IInventory.setInventorySlotContents(par2, par1ItemStack1);
+                par1ItemStack1 = null;
                 flag = true;
             }
-            else if (areItemStacksEqualItem(itemstack1, par1ItemStack))
+            else if (areItemStacksEqualItem(itemstack1, par1ItemStack1))
             {
-                int k = par1ItemStack.getMaxStackSize() - itemstack1.stackSize;
-                int l = Math.min(par1ItemStack.stackSize, k);
-                par1ItemStack.stackSize -= l;
+                final int k = par1ItemStack1.getMaxStackSize() - itemstack1.stackSize;
+                final int l = Math.min(par1ItemStack1.stackSize, k);
+                par1ItemStack1.stackSize -= l;
                 itemstack1.stackSize += l;
                 flag = l > 0;
             }
@@ -654,7 +656,7 @@ public class TileEntityHopper extends TileEntity implements Hopper
             }
         }
 
-        return par1ItemStack;
+        return par1ItemStack1;
     }
 
     /**
@@ -662,35 +664,35 @@ public class TileEntityHopper extends TileEntity implements Hopper
      */
     private IInventory getOutputInventory()
     {
-        int i = BlockHopper.getDirectionFromMetadata(this.getBlockMetadata());
+        final int i = BlockHopper.getDirectionFromMetadata(this.getBlockMetadata());
         return getInventoryAtLocation(this.getWorldObj(), (double)(this.xCoord + Facing.offsetsXForSide[i]), (double)(this.yCoord + Facing.offsetsYForSide[i]), (double)(this.zCoord + Facing.offsetsZForSide[i]));
     }
 
     /**
      * Looks for anything, that can hold items (like chests, furnaces, etc.) one block above the given hopper.
      */
-    public static IInventory getInventoryAboveHopper(Hopper par0Hopper)
+    public static IInventory getInventoryAboveHopper(final Hopper par0Hopper)
     {
         return getInventoryAtLocation(par0Hopper.getWorldObj(), par0Hopper.getXPos(), par0Hopper.getYPos() + 1.0D, par0Hopper.getZPos());
     }
 
-    public static EntityItem getEntityAbove(World par0World, double par1, double par3, double par5)
+    public static EntityItem getEntityAbove(final World par0World, final double par1, final double par3, final double par5)
     {
-        List list = par0World.selectEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getAABBPool().getAABB(par1, par3, par5, par1 + 1.0D, par3 + 1.0D, par5 + 1.0D), IEntitySelector.selectAnything);
-        return list.size() > 0 ? (EntityItem)list.get(0) : null;
+        final List list = par0World.selectEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getAABBPool().getAABB(par1, par3, par5, par1 + 1.0D, par3 + 1.0D, par5 + 1.0D), IEntitySelector.selectAnything);
+        return !list.isEmpty() ? (EntityItem)list.get(0) : null;
     }
 
     /**
      * Gets an inventory at the given location to extract items into or take items from. Can find either a tile entity
      * or regular entity implementing IInventory.
      */
-    public static IInventory getInventoryAtLocation(World par0World, double par1, double par3, double par5)
+    public static IInventory getInventoryAtLocation(final World par0World, final double par1, final double par3, final double par5)
     {
         IInventory iinventory = null;
-        int i = MathHelper.floor_double(par1);
-        int j = MathHelper.floor_double(par3);
-        int k = MathHelper.floor_double(par5);
-        TileEntity tileentity = par0World.getBlockTileEntity(i, j, k);
+        final int i = MathHelper.floor_double(par1);
+        final int j = MathHelper.floor_double(par3);
+        final int k = MathHelper.floor_double(par5);
+        final TileEntity tileentity = par0World.getBlockTileEntity(i, j, k);
 
         if (tileentity != null && tileentity instanceof IInventory)
         {
@@ -698,8 +700,8 @@ public class TileEntityHopper extends TileEntity implements Hopper
 
             if (iinventory instanceof TileEntityChest)
             {
-                int l = par0World.getBlockId(i, j, k);
-                Block block = Block.blocksList[l];
+                final int l = par0World.getBlockId(i, j, k);
+                final Block block = Block.blocksList[l];
 
                 if (block instanceof BlockChest)
                 {
@@ -710,9 +712,9 @@ public class TileEntityHopper extends TileEntity implements Hopper
 
         if (iinventory == null)
         {
-            List list = par0World.getEntitiesWithinAABBExcludingEntity((Entity)null, AxisAlignedBB.getAABBPool().getAABB(par1, par3, par5, par1 + 1.0D, par3 + 1.0D, par5 + 1.0D), IEntitySelector.selectInventories);
+            final List list = par0World.getEntitiesWithinAABBExcludingEntity((Entity)null, AxisAlignedBB.getAABBPool().getAABB(par1, par3, par5, par1 + 1.0D, par3 + 1.0D, par5 + 1.0D), IEntitySelector.selectInventories);
 
-            if (list != null && list.size() > 0)
+            if (list != null && !list.isEmpty())
             {
                 iinventory = (IInventory)list.get(par0World.rand.nextInt(list.size()));
             }
@@ -721,7 +723,7 @@ public class TileEntityHopper extends TileEntity implements Hopper
         return iinventory;
     }
 
-    private static boolean areItemStacksEqualItem(ItemStack par0ItemStack, ItemStack par1ItemStack)
+    private static boolean areItemStacksEqualItem(final ItemStack par0ItemStack, final ItemStack par1ItemStack)
     {
         return par0ItemStack.itemID != par1ItemStack.itemID ? false : (par0ItemStack.getItemDamage() != par1ItemStack.getItemDamage() ? false : (par0ItemStack.stackSize > par0ItemStack.getMaxStackSize() ? false : ItemStack.areItemStackTagsEqual(par0ItemStack, par1ItemStack)));
     }
@@ -750,7 +752,7 @@ public class TileEntityHopper extends TileEntity implements Hopper
         return (double)this.zCoord;
     }
 
-    public void setTransferCooldown(int par1)
+    public void setTransferCooldown(final int par1)
     {
         this.transferCooldown = par1;
     }

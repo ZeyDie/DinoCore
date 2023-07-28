@@ -16,7 +16,7 @@ public class EntityAIFleeSun extends EntityAIBase
     private double movementSpeed;
     private World theWorld;
 
-    public EntityAIFleeSun(EntityCreature par1EntityCreature, double par2)
+    public EntityAIFleeSun(final EntityCreature par1EntityCreature, final double par2)
     {
         this.theCreature = par1EntityCreature;
         this.movementSpeed = par2;
@@ -43,7 +43,7 @@ public class EntityAIFleeSun extends EntityAIBase
         }
         else
         {
-            Vec3 vec3 = this.findPossibleShelter();
+            final Vec3 vec3 = this.findPossibleShelter();
 
             if (vec3 == null)
             {
@@ -77,13 +77,13 @@ public class EntityAIFleeSun extends EntityAIBase
 
     private Vec3 findPossibleShelter()
     {
-        Random random = this.theCreature.getRNG();
+        final Random random = this.theCreature.getRNG();
 
         for (int i = 0; i < 10; ++i)
         {
-            int j = MathHelper.floor_double(this.theCreature.posX + (double)random.nextInt(20) - 10.0D);
-            int k = MathHelper.floor_double(this.theCreature.boundingBox.minY + (double)random.nextInt(6) - 3.0D);
-            int l = MathHelper.floor_double(this.theCreature.posZ + (double)random.nextInt(20) - 10.0D);
+            final int j = MathHelper.floor_double(this.theCreature.posX + (double)random.nextInt(20) - 10.0D);
+            final int k = MathHelper.floor_double(this.theCreature.boundingBox.minY + (double)random.nextInt(6) - 3.0D);
+            final int l = MathHelper.floor_double(this.theCreature.posZ + (double)random.nextInt(20) - 10.0D);
 
             if (!this.theWorld.canBlockSeeTheSky(j, k, l) && this.theCreature.getBlockPathWeight(j, k, l) < 0.0F)
             {

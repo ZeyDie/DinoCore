@@ -21,17 +21,18 @@ public class UnsafeList<E> extends AbstractList<E> implements List<E>, RandomAcc
     private int maxPool;
     private int poolCounter;
 
-    public UnsafeList(int capacity, int maxIterPool) {
+    public UnsafeList(int capacity, final int maxIterPool) {
         super();
-        if (capacity < 0) capacity = 32;
-        int rounded = Integer.highestOneBit(capacity - 1) << 1;
+        int capacity1 = capacity;
+        if (capacity1 < 0) capacity1 = 32;
+        final int rounded = Integer.highestOneBit(capacity1 - 1) << 1;
         data = new Object[rounded];
         initialCapacity = rounded;
         maxPool = maxIterPool;
         iterPool[0] = new Itr();
     }
 
-    public UnsafeList(int capacity) {
+    public UnsafeList(final int capacity) {
         this(capacity, 5);
     }
 
@@ -39,42 +40,42 @@ public class UnsafeList<E> extends AbstractList<E> implements List<E>, RandomAcc
         this(32);
     }
 
-    public E get(int index) {
+    public E get(final int index) {
         rangeCheck(index);
 
         return (E) data[index];
     }
 
-    public E unsafeGet(int index) {
+    public E unsafeGet(final int index) {
         return (E) data[index];
     }
 
-    public E set(int index, E element) {
+    public E set(final int index, final E element) {
         rangeCheck(index);
 
-        E old = (E) data[index];
+        final E old = (E) data[index];
         data[index] = element;
         return old;
     }
 
-    public boolean add(E element) {
+    public boolean add(final E element) {
         growIfNeeded();
         data[size++] = element;
         return true;
     }
 
-    public void add(int index, E element) {
+    public void add(final int index, final E element) {
         growIfNeeded();
         System.arraycopy(data, index, data, index + 1, size - index);
         data[index] = element;
         size++;
     }
 
-    public E remove(int index) {
+    public E remove(final int index) {
         rangeCheck(index);
 
-        E old = (E) data[index];
-        int movedCount = size - index - 1;
+        final E old = (E) data[index];
+        final int movedCount = size - index - 1;
         if (movedCount > 0) {
             System.arraycopy(data, index + 1, data, index, movedCount);
         }
@@ -83,8 +84,8 @@ public class UnsafeList<E> extends AbstractList<E> implements List<E>, RandomAcc
         return old;
     }
 
-    public boolean remove(Object o) {
-        int index = indexOf(o);
+    public boolean remove(final Object o) {
+        final int index = indexOf(o);
         if (index >= 0) {
             remove(index);
             return true;
@@ -93,7 +94,7 @@ public class UnsafeList<E> extends AbstractList<E> implements List<E>, RandomAcc
         return false;
     }
 
-    public int indexOf(Object o) {
+    public int indexOf(final Object o) {
         for (int i = 0; i < size; i++) {
             if (o == data[i] || o.equals(data[i])) {
                 return i;
@@ -103,7 +104,7 @@ public class UnsafeList<E> extends AbstractList<E> implements List<E>, RandomAcc
         return -1;
     }
 
-    public boolean contains(Object o) {
+    public boolean contains(final Object o) {
         return indexOf(o) >= 0;
     }
 
@@ -123,8 +124,8 @@ public class UnsafeList<E> extends AbstractList<E> implements List<E>, RandomAcc
 
     // actually rounds up to nearest power of two
     public void trimToSize() {
-        int old = data.length;
-        int rounded = Integer.highestOneBit(size - 1) << 1;
+        final int old = data.length;
+        final int rounded = Integer.highestOneBit(size - 1) << 1;
         if (rounded < old) {
             data = Java15Compat.Arrays_copyOf(data, rounded);
         }
@@ -139,7 +140,7 @@ public class UnsafeList<E> extends AbstractList<E> implements List<E>, RandomAcc
     }
 
     public Object clone() throws CloneNotSupportedException {
-        UnsafeList<E> copy = (UnsafeList<E>) super.clone();
+        final UnsafeList<E> copy = (UnsafeList<E>) super.clone();
         copy.data = Java15Compat.Arrays_copyOf(data, size);
         copy.size = size;
         copy.initialCapacity = initialCapacity;
@@ -152,9 +153,9 @@ public class UnsafeList<E> extends AbstractList<E> implements List<E>, RandomAcc
 
     public Iterator<E> iterator() {
         // Try to find an iterator that isn't in use
-        for (Iterator iter : iterPool) {
+        for (final Iterator iter : iterPool) {
             if (!((Itr) iter).valid) {
-                Itr iterator = (Itr) iter;
+                final Itr iterator = (Itr) iter;
                 iterator.reset();
                 return iterator;
             }
@@ -162,7 +163,7 @@ public class UnsafeList<E> extends AbstractList<E> implements List<E>, RandomAcc
 
         // Couldn't find one, see if we can grow our pool size
         if (iterPool.length < maxPool) {
-            Iterator[] newPool = new Iterator[iterPool.length + 1];
+            final Iterator[] newPool = new Iterator[iterPool.length + 1];
             System.arraycopy(iterPool, 0, newPool, 0, iterPool.length);
             iterPool = newPool;
 
@@ -177,7 +178,7 @@ public class UnsafeList<E> extends AbstractList<E> implements List<E>, RandomAcc
         return iterPool[poolCounter];
     }
 
-    private void rangeCheck(int index) {
+    private void rangeCheck(final int index) {
         if (index >= size || index < 0) {
 
             //TODO ZoomCodeStart
@@ -190,13 +191,13 @@ public class UnsafeList<E> extends AbstractList<E> implements List<E>, RandomAcc
 
     private void growIfNeeded() {
         if (size == data.length) {
-            Object[] newData = new Object[data.length << 1];
+            final Object[] newData = new Object[data.length << 1];
             System.arraycopy(data, 0, newData, 0, size);
             data = newData;
         }
     }
 
-    private void writeObject(ObjectOutputStream os) throws IOException {
+    private void writeObject(final ObjectOutputStream os) throws IOException {
         os.defaultWriteObject();
 
         os.writeInt(size);
@@ -207,7 +208,7 @@ public class UnsafeList<E> extends AbstractList<E> implements List<E>, RandomAcc
         os.writeInt(maxPool);
     }
 
-    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream is) throws IOException, ClassNotFoundException {
         is.defaultReadObject();
 
         size = is.readInt();
@@ -244,7 +245,7 @@ public class UnsafeList<E> extends AbstractList<E> implements List<E>, RandomAcc
                 throw new ConcurrentModificationException();
             }
 
-            int i = index;
+            final int i = index;
             if (i >= size) {
                 throw new NoSuchElementException();
             }
@@ -271,7 +272,7 @@ public class UnsafeList<E> extends AbstractList<E> implements List<E>, RandomAcc
                 index = lastRet;
                 lastRet = -1;
                 expectedModCount = modCount;
-            } catch (IndexOutOfBoundsException ex) {
+            } catch (final IndexOutOfBoundsException ex) {
                 throw new ConcurrentModificationException();
             }
         }

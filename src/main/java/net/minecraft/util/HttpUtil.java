@@ -18,14 +18,14 @@ public class HttpUtil
     /**
      * Builds an encoded HTTP POST content string from a string map
      */
-    public static String buildPostString(Map par0Map)
+    public static String buildPostString(final Map par0Map)
     {
-        StringBuilder stringbuilder = new StringBuilder();
-        Iterator iterator = par0Map.entrySet().iterator();
+        final StringBuilder stringbuilder = new StringBuilder();
+        final Iterator iterator = par0Map.entrySet().iterator();
 
         while (iterator.hasNext())
         {
-            Entry entry = (Entry)iterator.next();
+            final Entry entry = (Entry)iterator.next();
 
             if (stringbuilder.length() > 0)
             {
@@ -36,7 +36,7 @@ public class HttpUtil
             {
                 stringbuilder.append(URLEncoder.encode((String)entry.getKey(), "UTF-8"));
             }
-            catch (UnsupportedEncodingException unsupportedencodingexception)
+            catch (final UnsupportedEncodingException unsupportedencodingexception)
             {
                 unsupportedencodingexception.printStackTrace();
             }
@@ -49,7 +49,7 @@ public class HttpUtil
                 {
                     stringbuilder.append(URLEncoder.encode(entry.getValue().toString(), "UTF-8"));
                 }
-                catch (UnsupportedEncodingException unsupportedencodingexception1)
+                catch (final UnsupportedEncodingException unsupportedencodingexception1)
                 {
                     unsupportedencodingexception1.printStackTrace();
                 }
@@ -62,7 +62,7 @@ public class HttpUtil
     /**
      * Sends a HTTP POST request to the given URL with data from a map
      */
-    public static String sendPost(ILogAgent par0ILogAgent, URL par1URL, Map par2Map, boolean par3)
+    public static String sendPost(final ILogAgent par0ILogAgent, final URL par1URL, final Map par2Map, final boolean par3)
     {
         return sendPost(par0ILogAgent, par1URL, buildPostString(par2Map), par3);
     }
@@ -70,7 +70,7 @@ public class HttpUtil
     /**
      * Sends a HTTP POST request to the given URL with data from a string
      */
-    private static String sendPost(ILogAgent par0ILogAgent, URL par1URL, String par2Str, boolean par3)
+    private static String sendPost(final ILogAgent par0ILogAgent, final URL par1URL, final String par2Str, final boolean par3)
     {
         try
         {
@@ -81,7 +81,7 @@ public class HttpUtil
                 proxy = Proxy.NO_PROXY;
             }
 
-            HttpURLConnection httpurlconnection = (HttpURLConnection)par1URL.openConnection(proxy);
+            final HttpURLConnection httpurlconnection = (HttpURLConnection)par1URL.openConnection(proxy);
             httpurlconnection.setRequestMethod("POST");
             httpurlconnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             httpurlconnection.setRequestProperty("Content-Length", "" + par2Str.getBytes().length);
@@ -89,12 +89,12 @@ public class HttpUtil
             httpurlconnection.setUseCaches(false);
             httpurlconnection.setDoInput(true);
             httpurlconnection.setDoOutput(true);
-            DataOutputStream dataoutputstream = new DataOutputStream(httpurlconnection.getOutputStream());
+            final DataOutputStream dataoutputstream = new DataOutputStream(httpurlconnection.getOutputStream());
             dataoutputstream.writeBytes(par2Str);
             dataoutputstream.flush();
             dataoutputstream.close();
-            BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(httpurlconnection.getInputStream()));
-            StringBuffer stringbuffer = new StringBuffer();
+            final BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(httpurlconnection.getInputStream()));
+            final StringBuffer stringbuffer = new StringBuffer();
             String s1;
 
             while ((s1 = bufferedreader.readLine()) != null)
@@ -106,7 +106,7 @@ public class HttpUtil
             bufferedreader.close();
             return stringbuffer.toString();
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             if (!par3)
             {
@@ -128,7 +128,7 @@ public class HttpUtil
     public static int func_76181_a() throws IOException
     {
         ServerSocket serversocket = null;
-        boolean flag = true;
+        final boolean flag = true;
         int i;
 
         try
@@ -145,7 +145,7 @@ public class HttpUtil
                     serversocket.close();
                 }
             }
-            catch (IOException ioexception)
+            catch (final IOException ioexception)
             {
                 ;
             }

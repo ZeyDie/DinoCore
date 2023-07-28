@@ -13,7 +13,7 @@ class GuiSlotStatsGeneral extends GuiSlot
 {
     final GuiStats statsGui;
 
-    public GuiSlotStatsGeneral(GuiStats par1GuiStats)
+    public GuiSlotStatsGeneral(final GuiStats par1GuiStats)
     {
         super(GuiStats.getMinecraft(par1GuiStats), par1GuiStats.width, par1GuiStats.height, 32, par1GuiStats.height - 64, 10);
         this.statsGui = par1GuiStats;
@@ -31,12 +31,12 @@ class GuiSlotStatsGeneral extends GuiSlot
     /**
      * the element in the slot that was clicked, boolean for wether it was double clicked or not
      */
-    protected void elementClicked(int par1, boolean par2) {}
+    protected void elementClicked(final int par1, final boolean par2) {}
 
     /**
      * returns true if the element passed in is currently selected
      */
-    protected boolean isSelected(int par1)
+    protected boolean isSelected(final int par1)
     {
         return false;
     }
@@ -54,11 +54,11 @@ class GuiSlotStatsGeneral extends GuiSlot
         this.statsGui.drawDefaultBackground();
     }
 
-    protected void drawSlot(int par1, int par2, int par3, int par4, Tessellator par5Tessellator)
+    protected void drawSlot(final int par1, final int par2, final int par3, final int par4, final Tessellator par5Tessellator)
     {
-        StatBase statbase = (StatBase)StatList.generalStats.get(par1);
+        final StatBase statbase = (StatBase)StatList.generalStats.get(par1);
         this.statsGui.drawString(GuiStats.getFontRenderer1(this.statsGui), I18n.getString(statbase.getName()), par2 + 2, par3 + 1, par1 % 2 == 0 ? 16777215 : 9474192);
-        String s = statbase.func_75968_a(GuiStats.getStatsFileWriter(this.statsGui).writeStat(statbase));
+        final String s = statbase.func_75968_a(GuiStats.getStatsFileWriter(this.statsGui).writeStat(statbase));
         this.statsGui.drawString(GuiStats.getFontRenderer2(this.statsGui), s, par2 + 2 + 213 - GuiStats.getFontRenderer3(this.statsGui).getStringWidth(s), par3 + 1, par1 % 2 == 0 ? 16777215 : 9474192);
     }
 }

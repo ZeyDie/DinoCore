@@ -23,9 +23,9 @@ public class PlayerCapabilities
     private float flySpeed = 0.05F;
     private float walkSpeed = 0.1F;
 
-    public void writeCapabilitiesToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeCapabilitiesToNBT(final NBTTagCompound par1NBTTagCompound)
     {
-        NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+        final NBTTagCompound nbttagcompound1 = new NBTTagCompound();
         nbttagcompound1.setBoolean("invulnerable", this.disableDamage);
         nbttagcompound1.setBoolean("flying", this.isFlying);
         nbttagcompound1.setBoolean("mayfly", this.allowFlying);
@@ -36,11 +36,11 @@ public class PlayerCapabilities
         par1NBTTagCompound.setTag("abilities", nbttagcompound1);
     }
 
-    public void readCapabilitiesFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readCapabilitiesFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         if (par1NBTTagCompound.hasKey("abilities"))
         {
-            NBTTagCompound nbttagcompound1 = par1NBTTagCompound.getCompoundTag("abilities");
+            final NBTTagCompound nbttagcompound1 = par1NBTTagCompound.getCompoundTag("abilities");
             this.disableDamage = nbttagcompound1.getBoolean("invulnerable");
             this.isFlying = nbttagcompound1.getBoolean("flying");
             this.allowFlying = nbttagcompound1.getBoolean("mayfly");
@@ -65,7 +65,7 @@ public class PlayerCapabilities
     }
 
     //@SideOnly(Side.CLIENT) // Cauldron - used by CraftPlayer
-    public void setFlySpeed(float par1)
+    public void setFlySpeed(final float par1)
     {
         this.flySpeed = par1;
     }
@@ -76,7 +76,7 @@ public class PlayerCapabilities
     }
 
     // @SideOnly(Side.CLIENT) // Cauldron - used by CraftPlayer
-    public void setPlayerWalkSpeed(float par1)
+    public void setPlayerWalkSpeed(final float par1)
     {
         this.walkSpeed = par1;
     }

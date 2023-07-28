@@ -42,17 +42,17 @@ public class RandomAccessFileSeekableSource implements SeekableSource {
      * Constructs a new RandomAccessFileSeekableSource.
      * @param raf
      */
-    public RandomAccessFileSeekableSource(RandomAccessFile raf) {
+    public RandomAccessFileSeekableSource(final RandomAccessFile raf) {
         if (raf == null)
             throw new NullPointerException("raf");
         this.raf = raf;
     }
 
-    public void seek(long pos) throws IOException {
+    public void seek(final long pos) throws IOException {
         raf.seek(pos);
     }
 
-    public int read(byte[] b, int off, int len) throws IOException {
+    public int read(final byte[] b, final int off, final int len) throws IOException {
         return raf.read(b, off, len);
     }
 
@@ -64,8 +64,8 @@ public class RandomAccessFileSeekableSource implements SeekableSource {
         raf.close();
     }
 
-    public int read(ByteBuffer bb) throws IOException {
-        int c = raf.read(bb.array(), bb.position(), bb.remaining());
+    public int read(final ByteBuffer bb) throws IOException {
+        final int c = raf.read(bb.array(), bb.position(), bb.remaining());
         if (c == -1)
             return -1;
         bb.position(bb.position() + c);

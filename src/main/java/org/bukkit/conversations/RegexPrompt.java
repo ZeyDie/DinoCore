@@ -9,11 +9,11 @@ public abstract class RegexPrompt extends ValidatingPrompt {
 
     private Pattern pattern;
 
-    public RegexPrompt(String regex) {
+    public RegexPrompt(final String regex) {
         this(Pattern.compile(regex));
     }
 
-    public RegexPrompt(Pattern pattern) {
+    public RegexPrompt(final Pattern pattern) {
         super();
         this.pattern = pattern;
     }
@@ -21,7 +21,7 @@ public abstract class RegexPrompt extends ValidatingPrompt {
     private RegexPrompt() {}
 
     @Override
-    protected boolean isInputValid(ConversationContext context, String input) {
+    protected boolean isInputValid(final ConversationContext context, final String input) {
         return pattern.matcher(input).matches();
     }
 }

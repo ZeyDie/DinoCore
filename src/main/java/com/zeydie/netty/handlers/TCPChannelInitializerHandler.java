@@ -21,7 +21,7 @@ public final class TCPChannelInitializerHandler extends ChannelInitializer<Socke
 
             socketChannelConfig.setOption(ChannelOption.IP_TOS, 24);
             socketChannelConfig.setOption(ChannelOption.TCP_NODELAY, Boolean.TRUE);
-        } catch (ChannelException exception) {
+        } catch (final ChannelException exception) {
             exception.printStackTrace();
         }
     }

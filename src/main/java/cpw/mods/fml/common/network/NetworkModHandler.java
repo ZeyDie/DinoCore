@@ -48,7 +48,7 @@ public class NetworkModHandler
     private VersionRange acceptableRange;
     private ITinyPacketHandler tinyPacketHandler;
 
-    public NetworkModHandler(ModContainer container, NetworkMod modAnnotation)
+    public NetworkModHandler(final ModContainer container, final NetworkMod modAnnotation)
     {
         this.container = container;
         this.mod = modAnnotation;
@@ -60,7 +60,7 @@ public class NetworkModHandler
             assignedIds++;
         }
     }
-    public NetworkModHandler(ModContainer container, Class<?> networkModClass, ASMDataTable table)
+    public NetworkModHandler(final ModContainer container, final Class<?> networkModClass, final ASMDataTable table)
     {
         this(container, networkModClass.getAnnotation(NetworkMod.class));
         if (this.mod == null)
@@ -68,9 +68,9 @@ public class NetworkModHandler
             return;
         }
 
-        Set<ASMData> versionCheckHandlers = table.getAnnotationsFor(container).get(NetworkMod.VersionCheckHandler.class.getName());
+        final Set<ASMData> versionCheckHandlers = table.getAnnotationsFor(container).get(NetworkMod.VersionCheckHandler.class.getName());
         String versionCheckHandlerMethod = null;
-        for (ASMData vch : versionCheckHandlers)
+        for (final ASMData vch : versionCheckHandlers)
         {
             if (vch.getClassName().equals(networkModClass.getName()))
             {
@@ -83,13 +83,13 @@ public class NetworkModHandler
         {
             try
             {
-                Method checkHandlerMethod = networkModClass.getDeclaredMethod(versionCheckHandlerMethod, String.class);
+                final Method checkHandlerMethod = networkModClass.getDeclaredMethod(versionCheckHandlerMethod, String.class);
                 if (checkHandlerMethod.isAnnotationPresent(NetworkMod.VersionCheckHandler.class))
                 {
                     this.checkHandler = checkHandlerMethod;
                 }
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 FMLLog.log(Level.WARNING, e, "The declared version check handler method %s on network mod id %s is not accessible", versionCheckHandlerMethod, container.getModId());
             }
@@ -97,18 +97,18 @@ public class NetworkModHandler
 
         configureNetworkMod(container);
     }
-    protected void configureNetworkMod(ModContainer container)
+    protected void configureNetworkMod(final ModContainer container)
     {
         if (this.checkHandler == null)
         {
-            String versionBounds = mod.versionBounds();
+            final String versionBounds = mod.versionBounds();
             if (!Strings.isNullOrEmpty(versionBounds))
             {
                 try
                 {
                     this.acceptableRange = VersionRange.createFromVersionSpec(versionBounds);
                 }
-                catch (InvalidVersionSpecificationException e)
+                catch (final InvalidVersionSpecificationException e)
                 {
                     FMLLog.log(Level.WARNING, e, "Invalid bounded range %s specified for network mod id %s", versionBounds, container.getModId());
                 }
@@ -116,7 +116,7 @@ public class NetworkModHandler
         }
 
         FMLLog.finest("Testing mod %s to verify it accepts its own version in a remote connection", container.getModId());
-        boolean acceptsSelf = acceptVersion(container.getVersion());
+        final boolean acceptsSelf = acceptVersion(container.getVersion());
         if (!acceptsSelf)
         {
             FMLLog.severe("The mod %s appears to reject its own version number (%s) in its version handling. This is likely a severe bug in the mod!", container.getModId(), container.getVersion());
@@ -141,12 +141,12 @@ public class NetworkModHandler
 
         if (mod.connectionHandler() != getConnectionHandlerDefaultValue())
         {
-            IConnectionHandler instance;
+            final IConnectionHandler instance;
             try
             {
                 instance = mod.connectionHandler().newInstance();
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 FMLLog.log(Level.SEVERE, e, "Unable to create connection handler instance %s", mod.connectionHandler().getName());
                 throw new FMLNetworkException(e);
@@ -161,7 +161,7 @@ public class NetworkModHandler
             {
                 tinyPacketHandler = mod.tinyPacketHandler().newInstance();
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 FMLLog.log(Level.SEVERE, e, "Unable to create tiny packet handler instance %s", mod.tinyPacketHandler().getName());
                 throw new FMLNetworkException(e);
@@ -171,7 +171,7 @@ public class NetworkModHandler
     /**
      * @param container
      */
-    private void tryCreatingPacketHandler(ModContainer container, Class<? extends IPacketHandler> clazz, String[] channels, Side side)
+    private void tryCreatingPacketHandler(final ModContainer container, final Class<? extends IPacketHandler> clazz, final String[] channels, final Side side)
     {
         if (side!=null && side.isClient() && ! FMLCommonHandler.instance().getSide().isClient())
         {
@@ -185,18 +185,18 @@ public class NetworkModHandler
             }
             else
             {
-                IPacketHandler instance;
+                final IPacketHandler instance;
                 try
                 {
                     instance = clazz.newInstance();
                 }
-                catch (Exception e)
+                catch (final Exception e)
                 {
                     FMLLog.log(Level.SEVERE, e, "Unable to create a packet handler instance %s for mod %s", clazz.getName(), container.getModId());
                     throw new FMLNetworkException(e);
                 }
 
-                for (String channel : channels)
+                for (final String channel : channels)
                 {
                     NetworkRegistry.instance().registerChannel(instance, channel, side);
                 }
@@ -219,7 +219,7 @@ public class NetworkModHandler
             }
             return connectionHandlerDefaultValue;
         }
-        catch (NoSuchMethodException e)
+        catch (final NoSuchMethodException e)
         {
             throw new RuntimeException("Derp?", e);
         }
@@ -237,7 +237,7 @@ public class NetworkModHandler
             }
             return packetHandlerDefaultValue;
         }
-        catch (NoSuchMethodException e)
+        catch (final NoSuchMethodException e)
         {
             throw new RuntimeException("Derp?", e);
         }
@@ -255,7 +255,7 @@ public class NetworkModHandler
             }
             return tinyPacketHandlerDefaultValue;
         }
-        catch (NoSuchMethodException e)
+        catch (final NoSuchMethodException e)
         {
             throw new RuntimeException("Derp?", e);
         }
@@ -272,7 +272,7 @@ public class NetworkModHandler
             }
             return clientHandlerDefaultValue;
         }
-        catch (NoSuchMethodException e)
+        catch (final NoSuchMethodException e)
         {
             throw new RuntimeException("Derp?", e);
         }
@@ -289,7 +289,7 @@ public class NetworkModHandler
             }
             return serverHandlerDefaultValue;
         }
-        catch (NoSuchMethodException e)
+        catch (final NoSuchMethodException e)
         {
             throw new RuntimeException("Derp?", e);
         }
@@ -304,7 +304,7 @@ public class NetworkModHandler
         return mod.serverSideRequired();
     }
 
-    public boolean acceptVersion(String version)
+    public boolean acceptVersion(final String version)
     {
         if (checkHandler != null)
         {
@@ -312,7 +312,7 @@ public class NetworkModHandler
             {
                 return (Boolean)checkHandler.invoke(container.getMod(), version);
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 FMLLog.log(Level.WARNING, e, "There was a problem invoking the checkhandler method %s for network mod id %s", checkHandler.getName(), container.getModId());
                 return false;
@@ -352,7 +352,7 @@ public class NetworkModHandler
         return mod != null;
     }
 
-    public void setNetworkId(int value)
+    public void setNetworkId(final int value)
     {
         this.networkId = value;
     }

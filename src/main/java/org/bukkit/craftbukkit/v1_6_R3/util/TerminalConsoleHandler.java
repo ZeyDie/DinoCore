@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class TerminalConsoleHandler extends ConsoleHandler {
     private final ConsoleReader reader;
 
-    public TerminalConsoleHandler(ConsoleReader reader) {
+    public TerminalConsoleHandler(final ConsoleReader reader) {
         super();
         this.reader = reader;
     }
@@ -25,14 +25,14 @@ public class TerminalConsoleHandler extends ConsoleHandler {
                 super.flush();
                 try {
                     reader.drawLine();
-                } catch (Throwable ex) {
+                } catch (final Throwable ex) {
                     reader.getCursorBuffer().clear();
                 }
                 reader.flush();
             } else {
                 super.flush();
             }
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             Logger.getLogger(TerminalConsoleHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

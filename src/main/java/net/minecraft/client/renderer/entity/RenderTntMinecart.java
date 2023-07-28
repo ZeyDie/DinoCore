@@ -10,9 +10,9 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class RenderTntMinecart extends RenderMinecart
 {
-    protected void func_94146_a(EntityMinecartTNT par1EntityMinecartTNT, float par2, Block par3Block, int par4)
+    protected void func_94146_a(final EntityMinecartTNT par1EntityMinecartTNT, final float par2, final Block par3Block, final int par4)
     {
-        int j = par1EntityMinecartTNT.func_94104_d();
+        final int j = par1EntityMinecartTNT.func_94104_d();
 
         if (j > -1 && (float)j - par2 + 1.0F < 10.0F)
         {
@@ -30,7 +30,7 @@ public class RenderTntMinecart extends RenderMinecart
 
             f1 *= f1;
             f1 *= f1;
-            float f2 = 1.0F + f1 * 0.3F;
+            final float f2 = 1.0F + f1 * 0.3F;
             GL11.glScalef(f2, f2, f2);
         }
 
@@ -56,7 +56,7 @@ public class RenderTntMinecart extends RenderMinecart
     /**
      * Renders the block that is inside the minecart.
      */
-    protected void renderBlockInMinecart(EntityMinecart par1EntityMinecart, float par2, Block par3Block, int par4)
+    protected void renderBlockInMinecart(final EntityMinecart par1EntityMinecart, final float par2, final Block par3Block, final int par4)
     {
         this.func_94146_a((EntityMinecartTNT)par1EntityMinecart, par2, par3Block, par4);
     }

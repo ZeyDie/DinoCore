@@ -17,17 +17,17 @@ public class InactivityConversationCanceller implements ConversationCanceller {
      * @param plugin The owning plugin.
      * @param timeoutSeconds The number of seconds of inactivity to wait.
      */
-    public InactivityConversationCanceller(Plugin plugin, int timeoutSeconds) {
+    public InactivityConversationCanceller(final Plugin plugin, final int timeoutSeconds) {
         this.plugin = plugin;
         this.timeoutSeconds = timeoutSeconds;
     }
 
-    public void setConversation(Conversation conversation) {
+    public void setConversation(final Conversation conversation) {
         this.conversation = conversation;
         startTimer();
     }
 
-    public boolean cancelBasedOnInput(ConversationContext context, String input) {
+    public boolean cancelBasedOnInput(final ConversationContext context, final String input) {
         // Reset the inactivity timer
         stopTimer();
         startTimer();
@@ -70,7 +70,7 @@ public class InactivityConversationCanceller implements ConversationCanceller {
      *
      * @param conversation The conversation being abandoned.
      */
-    protected void cancelling(Conversation conversation) {
+    protected void cancelling(final Conversation conversation) {
 
     }
 }

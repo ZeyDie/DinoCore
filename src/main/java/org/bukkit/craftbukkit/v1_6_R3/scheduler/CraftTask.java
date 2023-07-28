@@ -35,13 +35,13 @@ public class CraftTask implements BukkitTask, Runnable { // Spigot
 
     // Spigot start
     public String timingName = null;
-    CraftTask(String timingName) {
+    CraftTask(final String timingName) {
         this(timingName, null, null, -1, -1);
     }
-    CraftTask(String timingName, final Runnable task) {
+    CraftTask(final String timingName, final Runnable task) {
         this(timingName, null, task, -1, -1);
     }
-    CraftTask(String timingName, final Plugin plugin, final Runnable task, final int id, final long period) {
+    CraftTask(final String timingName, final Plugin plugin, final Runnable task, final int id, final long period) {
         this.plugin = plugin;
         this.task = task;
         this.id = id;
@@ -75,7 +75,7 @@ public class CraftTask implements BukkitTask, Runnable { // Spigot
         return period;
     }
 
-    void setPeriod(long period) {
+    void setPeriod(final long period) {
         this.period = period;
     }
 
@@ -83,7 +83,7 @@ public class CraftTask implements BukkitTask, Runnable { // Spigot
         return nextRun;
     }
 
-    void setNextRun(long nextRun) {
+    void setNextRun(final long nextRun) {
         this.nextRun = nextRun;
     }
 
@@ -91,7 +91,7 @@ public class CraftTask implements BukkitTask, Runnable { // Spigot
         return next;
     }
 
-    void setNext(CraftTask next) {
+    void setNext(final CraftTask next) {
         this.next = next;
     }
 

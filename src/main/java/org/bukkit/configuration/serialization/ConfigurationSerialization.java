@@ -35,13 +35,13 @@ public class ConfigurationSerialization {
         registerClass(FireworkEffect.class);
     }
 
-    protected ConfigurationSerialization(Class<? extends ConfigurationSerializable> clazz) {
+    protected ConfigurationSerialization(final Class<? extends ConfigurationSerializable> clazz) {
         this.clazz = clazz;
     }
 
-    protected Method getMethod(String name, boolean isStatic) {
+    protected Method getMethod(final String name, final boolean isStatic) {
         try {
-            Method method = clazz.getDeclaredMethod(name, Map.class);
+            final Method method = clazz.getDeclaredMethod(name, Map.class);
 
             if (!ConfigurationSerializable.class.isAssignableFrom(method.getReturnType())) {
                 return null;
@@ -51,9 +51,9 @@ public class ConfigurationSerialization {
             }
 
             return method;
-        } catch (NoSuchMethodException ex) {
+        } catch (final NoSuchMethodException ex) {
             return null;
-        } catch (SecurityException ex) {
+        } catch (final SecurityException ex) {
             return null;
         }
     }
@@ -61,23 +61,23 @@ public class ConfigurationSerialization {
     protected Constructor<? extends ConfigurationSerializable> getConstructor() {
         try {
             return clazz.getConstructor(Map.class);
-        } catch (NoSuchMethodException ex) {
+        } catch (final NoSuchMethodException ex) {
             return null;
-        } catch (SecurityException ex) {
+        } catch (final SecurityException ex) {
             return null;
         }
     }
 
-    protected ConfigurationSerializable deserializeViaMethod(Method method, Map<String, ?> args) {
+    protected ConfigurationSerializable deserializeViaMethod(final Method method, final Map<String, ?> args) {
         try {
-            ConfigurationSerializable result = (ConfigurationSerializable) method.invoke(null, args);
+            final ConfigurationSerializable result = (ConfigurationSerializable) method.invoke(null, args);
 
             if (result == null) {
                 Logger.getLogger(ConfigurationSerialization.class.getName()).log(Level.SEVERE, "Could not call method '" + method.toString() + "' of " + clazz + " for deserialization: method returned null");
             } else {
                 return result;
             }
-        } catch (Throwable ex) {
+        } catch (final Throwable ex) {
             Logger.getLogger(ConfigurationSerialization.class.getName()).log(
                     Level.SEVERE,
                     "Could not call method '" + method.toString() + "' of " + clazz + " for deserialization",
@@ -87,10 +87,10 @@ public class ConfigurationSerialization {
         return null;
     }
 
-    protected ConfigurationSerializable deserializeViaCtor(Constructor<? extends ConfigurationSerializable> ctor, Map<String, ?> args) {
+    protected ConfigurationSerializable deserializeViaCtor(final Constructor<? extends ConfigurationSerializable> ctor, final Map<String, ?> args) {
         try {
             return ctor.newInstance(args);
-        } catch (Throwable ex) {
+        } catch (final Throwable ex) {
             Logger.getLogger(ConfigurationSerialization.class.getName()).log(
                     Level.SEVERE,
                     "Could not call constructor '" + ctor.toString() + "' of " + clazz + " for deserialization",
@@ -100,7 +100,7 @@ public class ConfigurationSerialization {
         return null;
     }
 
-    public ConfigurationSerializable deserialize(Map<String, ?> args) {
+    public ConfigurationSerializable deserialize(final Map<String, ?> args) {
         Validate.notNull(args, "Args must not be null");
 
         ConfigurationSerializable result = null;
@@ -123,7 +123,7 @@ public class ConfigurationSerialization {
         }
 
         if (result == null) {
-            Constructor<? extends ConfigurationSerializable> constructor = getConstructor();
+            final Constructor<? extends ConfigurationSerializable> constructor = getConstructor();
 
             if (constructor != null) {
                 result = deserializeViaCtor(constructor, args);
@@ -146,7 +146,7 @@ public class ConfigurationSerialization {
      * @param clazz Class to deserialize into
      * @return New instance of the specified class
      */
-    public static ConfigurationSerializable deserializeObject(Map<String, ?> args, Class<? extends ConfigurationSerializable> clazz) {
+    public static ConfigurationSerializable deserializeObject(final Map<String, ?> args, final Class<? extends ConfigurationSerializable> clazz) {
         return new ConfigurationSerialization(clazz).deserialize(args);
     }
 
@@ -162,12 +162,12 @@ public class ConfigurationSerialization {
      * @param args Arguments for deserialization
      * @return New instance of the specified class
      */
-    public static ConfigurationSerializable deserializeObject(Map<String, ?> args) {
+    public static ConfigurationSerializable deserializeObject(final Map<String, ?> args) {
         Class<? extends ConfigurationSerializable> clazz = null;
 
         if (args.containsKey(SERIALIZED_TYPE_KEY)) {
             try {
-                String alias = (String) args.get(SERIALIZED_TYPE_KEY);
+                final String alias = (String) args.get(SERIALIZED_TYPE_KEY);
 
                 if (alias == null) {
                     throw new IllegalArgumentException("Cannot have null alias");
@@ -176,7 +176,7 @@ public class ConfigurationSerialization {
                 if (clazz == null) {
                     throw new IllegalArgumentException("Specified class does not exist ('" + alias + "')");
                 }
-            } catch (ClassCastException ex) {
+            } catch (final ClassCastException ex) {
                 ex.fillInStackTrace();
                 throw ex;
             }
@@ -192,8 +192,8 @@ public class ConfigurationSerialization {
      *
      * @param clazz Class to register
      */
-    public static void registerClass(Class<? extends ConfigurationSerializable> clazz) {
-        DelegateDeserialization delegate = clazz.getAnnotation(DelegateDeserialization.class);
+    public static void registerClass(final Class<? extends ConfigurationSerializable> clazz) {
+        final DelegateDeserialization delegate = clazz.getAnnotation(DelegateDeserialization.class);
 
         if (delegate == null) {
             registerClass(clazz, getAlias(clazz));
@@ -208,7 +208,7 @@ public class ConfigurationSerialization {
      * @param alias Alias to register as
      * @see SerializableAs
      */
-    public static void registerClass(Class<? extends ConfigurationSerializable> clazz, String alias) {
+    public static void registerClass(final Class<? extends ConfigurationSerializable> clazz, final String alias) {
         aliases.put(alias, clazz);
     }
 
@@ -217,7 +217,7 @@ public class ConfigurationSerialization {
      *
      * @param alias Alias to unregister
      */
-    public static void unregisterClass(String alias) {
+    public static void unregisterClass(final String alias) {
         aliases.remove(alias);
     }
 
@@ -226,7 +226,7 @@ public class ConfigurationSerialization {
      *
      * @param clazz Class to unregister
      */
-    public static void unregisterClass(Class<? extends ConfigurationSerializable> clazz) {
+    public static void unregisterClass(final Class<? extends ConfigurationSerializable> clazz) {
         while (aliases.values().remove(clazz)) {
             ;
         }
@@ -238,7 +238,7 @@ public class ConfigurationSerialization {
      * @param alias Alias of the serializable
      * @return Registered class, or null if not found
      */
-    public static Class<? extends ConfigurationSerializable> getClassByAlias(String alias) {
+    public static Class<? extends ConfigurationSerializable> getClassByAlias(final String alias) {
         return aliases.get(alias);
     }
 
@@ -248,7 +248,7 @@ public class ConfigurationSerialization {
      * @param clazz Class to get alias for
      * @return Alias to use for the class
      */
-    public static String getAlias(Class<? extends ConfigurationSerializable> clazz) {
+    public static String getAlias(final Class<? extends ConfigurationSerializable> clazz) {
         DelegateDeserialization delegate = clazz.getAnnotation(DelegateDeserialization.class);
 
         if (delegate != null) {
@@ -260,7 +260,7 @@ public class ConfigurationSerialization {
         }
 
         if (delegate == null) {
-            SerializableAs alias = clazz.getAnnotation(SerializableAs.class);
+            final SerializableAs alias = clazz.getAnnotation(SerializableAs.class);
 
             if ((alias != null) && (alias.value() != null)) {
                 return alias.value();

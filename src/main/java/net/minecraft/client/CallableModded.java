@@ -11,7 +11,7 @@ class CallableModded implements Callable
     /** Reference to the Minecraft object. */
     final Minecraft mc;
 
-    CallableModded(Minecraft par1Minecraft)
+    CallableModded(final Minecraft par1Minecraft)
     {
         this.mc = par1Minecraft;
     }
@@ -21,7 +21,7 @@ class CallableModded implements Callable
      */
     public String getClientProfilerEnabled()
     {
-        String s = ClientBrandRetriever.getClientModName();
+        final String s = ClientBrandRetriever.getClientModName();
         return !s.equals("vanilla") ? "Definitely; Client brand changed to \'" + s + "\'" : (Minecraft.class.getSigners() == null ? "Very likely; Jar signature invalidated" : "Probably not. Jar signature remains and client brand is untouched.");
     }
 

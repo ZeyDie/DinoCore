@@ -8,9 +8,9 @@ public class SpiderEffectsGroupData implements EntityLivingData
 {
     public int field_111105_a;
 
-    public void func_111104_a(Random par1Random)
+    public void func_111104_a(final Random par1Random)
     {
-        int i = par1Random.nextInt(5);
+        final int i = par1Random.nextInt(5);
 
         if (i <= 1)
         {

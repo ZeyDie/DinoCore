@@ -21,7 +21,7 @@ public class SaveFormatComparator implements Comparable
     private final boolean hardcore;
     private final boolean cheatsEnabled;
 
-    public SaveFormatComparator(String par1Str, String par2Str, long par3, long par5, EnumGameType par7EnumGameType, boolean par8, boolean par9, boolean par10)
+    public SaveFormatComparator(final String par1Str, final String par2Str, final long par3, final long par5, final EnumGameType par7EnumGameType, final boolean par8, final boolean par9, final boolean par10)
     {
         this.fileName = par1Str;
         this.displayName = par2Str;
@@ -59,7 +59,7 @@ public class SaveFormatComparator implements Comparable
         return this.lastTimePlayed;
     }
 
-    public int compareTo(SaveFormatComparator par1SaveFormatComparator)
+    public int compareTo(final SaveFormatComparator par1SaveFormatComparator)
     {
         return this.lastTimePlayed < par1SaveFormatComparator.lastTimePlayed ? 1 : (this.lastTimePlayed > par1SaveFormatComparator.lastTimePlayed ? -1 : this.fileName.compareTo(par1SaveFormatComparator.fileName));
     }
@@ -85,7 +85,7 @@ public class SaveFormatComparator implements Comparable
         return this.cheatsEnabled;
     }
 
-    public int compareTo(Object par1Obj)
+    public int compareTo(final Object par1Obj)
     {
         return this.compareTo((SaveFormatComparator)par1Obj);
     }

@@ -16,7 +16,7 @@ public abstract class LazyHashSet<E> implements Set<E> {
         return getReference().isEmpty();
     }
 
-    public boolean contains(Object o) {
+    public boolean contains(final Object o) {
         return getReference().contains(o);
     }
 
@@ -28,31 +28,31 @@ public abstract class LazyHashSet<E> implements Set<E> {
         return getReference().toArray();
     }
 
-    public <T> T[] toArray(T[] a) {
+    public <T> T[] toArray(final T[] a) {
         return getReference().toArray(a);
     }
 
-    public boolean add(E o) {
+    public boolean add(final E o) {
         return getReference().add(o);
     }
 
-    public boolean remove(Object o) {
+    public boolean remove(final Object o) {
         return getReference().remove(o);
     }
 
-    public boolean containsAll(Collection<?> c) {
+    public boolean containsAll(final Collection<?> c) {
         return getReference().containsAll(c);
     }
 
-    public boolean addAll(Collection<? extends E> c) {
+    public boolean addAll(final Collection<? extends E> c) {
         return getReference().addAll(c);
     }
 
-    public boolean retainAll(Collection<?> c) {
+    public boolean retainAll(final Collection<?> c) {
         return getReference().retainAll(c);
     }
 
-    public boolean removeAll(Collection<?> c) {
+    public boolean removeAll(final Collection<?> c) {
         return getReference().removeAll(c);
     }
 
@@ -61,7 +61,7 @@ public abstract class LazyHashSet<E> implements Set<E> {
     }
 
     public Set<E> getReference() {
-        Set<E> reference = this.reference ;
+        final Set<E> reference = this.reference ;
         if (reference != null) {
             return reference;
         }
@@ -80,14 +80,14 @@ public abstract class LazyHashSet<E> implements Set<E> {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == this) {
             return true;
         }
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        LazyHashSet<?> that = (LazyHashSet<?>) obj;
+        final LazyHashSet<?> that = (LazyHashSet<?>) obj;
         return (this.isLazy() && that.isLazy()) || this.getReference().equals(that.getReference());
     }
 

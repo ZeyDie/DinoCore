@@ -23,7 +23,7 @@ public class BiomeCacheBlock
     /** The BiomeCache object that contains this BiomeCacheBlock */
     final BiomeCache theBiomeCache;
 
-    public BiomeCacheBlock(BiomeCache par1BiomeCache, int par2, int par3)
+    public BiomeCacheBlock(final BiomeCache par1BiomeCache, final int par2, final int par3)
     {
         this.theBiomeCache = par1BiomeCache;
         this.temperatureValues = new float[256];
@@ -39,7 +39,7 @@ public class BiomeCacheBlock
     /**
      * Returns the BiomeGenBase related to the x, z position from the cache block.
      */
-    public BiomeGenBase getBiomeGenAt(int par1, int par2)
+    public BiomeGenBase getBiomeGenAt(final int par1, final int par2)
     {
         return this.biomes[par1 & 15 | (par2 & 15) << 4];
     }

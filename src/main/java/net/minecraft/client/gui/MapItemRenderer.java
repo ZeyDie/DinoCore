@@ -24,7 +24,7 @@ public class MapItemRenderer
     private GameSettings gameSettings;
     private final ResourceLocation field_111276_e;
 
-    public MapItemRenderer(GameSettings par1GameSettings, TextureManager par2TextureManager)
+    public MapItemRenderer(final GameSettings par1GameSettings, final TextureManager par2TextureManager)
     {
         this.gameSettings = par1GameSettings;
         this.bufferedImage = new DynamicTexture(128, 128);
@@ -37,11 +37,11 @@ public class MapItemRenderer
         }
     }
 
-    public void renderMap(EntityPlayer par1EntityPlayer, TextureManager par2TextureManager, MapData par3MapData)
+    public void renderMap(final EntityPlayer par1EntityPlayer, final TextureManager par2TextureManager, final MapData par3MapData)
     {
         for (int i = 0; i < 16384; ++i)
         {
-            byte b0 = par3MapData.colors[i];
+            final byte b0 = par3MapData.colors[i];
 
             if (b0 / 4 == 0)
             {
@@ -49,8 +49,8 @@ public class MapItemRenderer
             }
             else
             {
-                int j = MapColor.mapColorArray[b0 / 4].colorValue;
-                int k = b0 & 3;
+                final int j = MapColor.mapColorArray[b0 / 4].colorValue;
+                final int k = b0 & 3;
                 short short1 = 220;
 
                 if (k == 2)
@@ -63,18 +63,18 @@ public class MapItemRenderer
                     short1 = 180;
                 }
 
-                int l = (j >> 16 & 255) * short1 / 255;
-                int i1 = (j >> 8 & 255) * short1 / 255;
-                int j1 = (j & 255) * short1 / 255;
+                final int l = (j >> 16 & 255) * short1 / 255;
+                final int i1 = (j >> 8 & 255) * short1 / 255;
+                final int j1 = (j & 255) * short1 / 255;
                 this.intArray[i] = -16777216 | l << 16 | i1 << 8 | j1;
             }
         }
 
         this.bufferedImage.updateDynamicTexture();
-        byte b1 = 0;
-        byte b2 = 0;
-        Tessellator tessellator = Tessellator.instance;
-        float f = 0.0F;
+        final byte b1 = 0;
+        final byte b2 = 0;
+        final Tessellator tessellator = Tessellator.instance;
+        final float f = 0.0F;
         par2TextureManager.bindTexture(this.field_111276_e);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -90,18 +90,18 @@ public class MapItemRenderer
         par2TextureManager.bindTexture(field_111277_a);
         int k1 = 0;
 
-        for (Iterator iterator = par3MapData.playersVisibleOnMap.values().iterator(); iterator.hasNext(); ++k1)
+        for (final Iterator iterator = par3MapData.playersVisibleOnMap.values().iterator(); iterator.hasNext(); ++k1)
         {
-            MapCoord mapcoord = (MapCoord)iterator.next();
+            final MapCoord mapcoord = (MapCoord)iterator.next();
             GL11.glPushMatrix();
             GL11.glTranslatef((float)b1 + (float)mapcoord.centerX / 2.0F + 64.0F, (float)b2 + (float)mapcoord.centerZ / 2.0F + 64.0F, -0.02F);
             GL11.glRotatef((float)(mapcoord.iconRotation * 360) / 16.0F, 0.0F, 0.0F, 1.0F);
             GL11.glScalef(4.0F, 4.0F, 3.0F);
             GL11.glTranslatef(-0.125F, 0.125F, 0.0F);
-            float f1 = (float)(mapcoord.iconSize % 4 + 0) / 4.0F;
-            float f2 = (float)(mapcoord.iconSize / 4 + 0) / 4.0F;
-            float f3 = (float)(mapcoord.iconSize % 4 + 1) / 4.0F;
-            float f4 = (float)(mapcoord.iconSize / 4 + 1) / 4.0F;
+            final float f1 = (float)(mapcoord.iconSize % 4 + 0) / 4.0F;
+            final float f2 = (float)(mapcoord.iconSize / 4 + 0) / 4.0F;
+            final float f3 = (float)(mapcoord.iconSize % 4 + 1) / 4.0F;
+            final float f4 = (float)(mapcoord.iconSize / 4 + 1) / 4.0F;
             tessellator.startDrawingQuads();
             tessellator.addVertexWithUV(-1.0D, 1.0D, (double)((float)k1 * 0.001F), (double)f1, (double)f2);
             tessellator.addVertexWithUV(1.0D, 1.0D, (double)((float)k1 * 0.001F), (double)f3, (double)f2);

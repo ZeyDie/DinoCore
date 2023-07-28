@@ -10,7 +10,7 @@ public abstract class TaskLongRunning implements Runnable
     /** The GUI screen showing progress of this task. */
     protected GuiScreenLongRunningTask taskGUI;
 
-    public void setGUI(GuiScreenLongRunningTask par1GuiScreenLongRunningTask)
+    public void setGUI(final GuiScreenLongRunningTask par1GuiScreenLongRunningTask)
     {
         this.taskGUI = par1GuiScreenLongRunningTask;
     }
@@ -18,12 +18,12 @@ public abstract class TaskLongRunning implements Runnable
     /**
      * Displays the given message in place of the progress bar, and adds a "Back" button.
      */
-    public void setFailedMessage(String par1Str)
+    public void setFailedMessage(final String par1Str)
     {
         this.taskGUI.setFailedMessage(par1Str);
     }
 
-    public void setMessage(String par1Str)
+    public void setMessage(final String par1Str)
     {
         this.taskGUI.setMessage(par1Str);
     }
@@ -40,7 +40,7 @@ public abstract class TaskLongRunning implements Runnable
 
     public void updateScreen() {}
 
-    public void buttonClicked(GuiButton par1GuiButton) {}
+    public void buttonClicked(final GuiButton par1GuiButton) {}
 
     public void initGUI() {}
 }

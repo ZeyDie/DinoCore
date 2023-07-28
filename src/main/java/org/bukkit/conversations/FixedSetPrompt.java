@@ -18,7 +18,7 @@ public abstract class FixedSetPrompt extends ValidatingPrompt {
      *
      * @param fixedSet A fixed set of strings, one of which the user must type.
      */
-    public FixedSetPrompt(String... fixedSet) {
+    public FixedSetPrompt(final String... fixedSet) {
         super();
         this.fixedSet = Arrays.asList(fixedSet);
     }
@@ -26,7 +26,7 @@ public abstract class FixedSetPrompt extends ValidatingPrompt {
     private FixedSetPrompt() {}
 
     @Override
-    protected boolean isInputValid(ConversationContext context, String input) {
+    protected boolean isInputValid(final ConversationContext context, final String input) {
         return fixedSet.contains(input);
     }
 

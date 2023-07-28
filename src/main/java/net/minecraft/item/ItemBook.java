@@ -2,7 +2,7 @@ package net.minecraft.item;
 
 public class ItemBook extends Item
 {
-    public ItemBook(int par1)
+    public ItemBook(final int par1)
     {
         super(par1);
     }
@@ -10,7 +10,7 @@ public class ItemBook extends Item
     /**
      * Checks isDamagable and if it cannot be stacked
      */
-    public boolean isItemTool(ItemStack par1ItemStack)
+    public boolean isItemTool(final ItemStack par1ItemStack)
     {
         return par1ItemStack.stackSize == 1;
     }

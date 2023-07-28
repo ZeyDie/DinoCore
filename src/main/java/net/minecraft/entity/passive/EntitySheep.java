@@ -32,7 +32,7 @@ public class EntitySheep extends EntityAnimal implements IShearable
     /**
      * Holds the RGB table of the sheep colors - in OpenGL glColor3f values - used to render the sheep colored fleece.
      */
-    public static final float[][] fleeceColorTable = new float[][] {{1.0F, 1.0F, 1.0F}, {0.85F, 0.5F, 0.2F}, {0.7F, 0.3F, 0.85F}, {0.4F, 0.6F, 0.85F}, {0.9F, 0.9F, 0.2F}, {0.5F, 0.8F, 0.1F}, {0.95F, 0.5F, 0.65F}, {0.3F, 0.3F, 0.3F}, {0.6F, 0.6F, 0.6F}, {0.3F, 0.5F, 0.6F}, {0.5F, 0.25F, 0.7F}, {0.2F, 0.3F, 0.7F}, {0.4F, 0.3F, 0.2F}, {0.4F, 0.5F, 0.2F}, {0.6F, 0.2F, 0.2F}, {0.1F, 0.1F, 0.1F}};
+    public static final float[][] fleeceColorTable = {{1.0F, 1.0F, 1.0F}, {0.85F, 0.5F, 0.2F}, {0.7F, 0.3F, 0.85F}, {0.4F, 0.6F, 0.85F}, {0.9F, 0.9F, 0.2F}, {0.5F, 0.8F, 0.1F}, {0.95F, 0.5F, 0.65F}, {0.3F, 0.3F, 0.3F}, {0.6F, 0.6F, 0.6F}, {0.3F, 0.5F, 0.6F}, {0.5F, 0.25F, 0.7F}, {0.2F, 0.3F, 0.7F}, {0.4F, 0.3F, 0.2F}, {0.4F, 0.5F, 0.2F}, {0.6F, 0.2F, 0.2F}, {0.1F, 0.1F, 0.1F}};
 
     /**
      * Used to control movement as well as wool regrowth. Set to 40 on handleHealthUpdate and counts down with each
@@ -43,7 +43,7 @@ public class EntitySheep extends EntityAnimal implements IShearable
     /** The eat grass AI task for this mob. */
     private EntityAIEatGrass aiEatGrass = new EntityAIEatGrass(this);
 
-    public EntitySheep(World par1World)
+    public EntitySheep(final World par1World)
     {
         super(par1World);
         this.setSize(0.9F, 1.3F);
@@ -109,7 +109,7 @@ public class EntitySheep extends EntityAnimal implements IShearable
      * Drop 0-2 items of this living's type. @param par1 - Whether this entity has recently been hit by a player. @param
      * par2 - Level of Looting used to kill this mob.
      */
-    protected void dropFewItems(boolean par1, int par2)
+    protected void dropFewItems(final boolean par1, final int par2)
     {
         if (!this.getSheared())
         {
@@ -126,7 +126,7 @@ public class EntitySheep extends EntityAnimal implements IShearable
     }
 
     @SideOnly(Side.CLIENT)
-    public void handleHealthUpdate(byte par1)
+    public void handleHealthUpdate(final byte par1)
     {
         if (par1 == 10)
         {
@@ -141,36 +141,36 @@ public class EntitySheep extends EntityAnimal implements IShearable
     /**
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
-    public boolean interact(EntityPlayer par1EntityPlayer)
+    public boolean interact(final EntityPlayer par1EntityPlayer)
     {
         return super.interact(par1EntityPlayer);
         // Cauldron - TODO: missing PlayerShearEvent!
     }
 
     @SideOnly(Side.CLIENT)
-    public float func_70894_j(float par1)
+    public float func_70894_j(final float par1)
     {
         return this.sheepTimer <= 0 ? 0.0F : (this.sheepTimer >= 4 && this.sheepTimer <= 36 ? 1.0F : (this.sheepTimer < 4 ? ((float)this.sheepTimer - par1) / 4.0F : -((float)(this.sheepTimer - 40) - par1) / 4.0F));
     }
 
     @SideOnly(Side.CLIENT)
-    public float func_70890_k(float par1)
+    public float func_70890_k(final float par1)
     {
         if (this.sheepTimer > 4 && this.sheepTimer <= 36)
         {
-            float f1 = ((float)(this.sheepTimer - 4) - par1) / 32.0F;
-            return ((float)Math.PI / 5F) + ((float)Math.PI * 7F / 100F) * MathHelper.sin(f1 * 28.7F);
+            final float f1 = ((float)(this.sheepTimer - 4) - par1) / 32.0F;
+            return ((float)Math.PI / 5.0F) + ((float)Math.PI * 7.0F / 100.0F) * MathHelper.sin(f1 * 28.7F);
         }
         else
         {
-            return this.sheepTimer > 0 ? ((float)Math.PI / 5F) : this.rotationPitch / (180F / (float)Math.PI);
+            return this.sheepTimer > 0 ? ((float)Math.PI / 5.0F) : this.rotationPitch / (180.0F / (float)Math.PI);
         }
     }
 
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setBoolean("Sheared", this.getSheared());
@@ -180,7 +180,7 @@ public class EntitySheep extends EntityAnimal implements IShearable
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.setSheared(par1NBTTagCompound.getBoolean("Sheared"));
@@ -214,7 +214,7 @@ public class EntitySheep extends EntityAnimal implements IShearable
     /**
      * Plays step sound at given x, y, z for the entity
      */
-    protected void playStepSound(int par1, int par2, int par3, int par4)
+    protected void playStepSound(final int par1, final int par2, final int par3, final int par4)
     {
         this.playSound("mob.sheep.step", 0.15F, 1.0F);
     }
@@ -224,9 +224,9 @@ public class EntitySheep extends EntityAnimal implements IShearable
         return this.dataWatcher.getWatchableObjectByte(16) & 15;
     }
 
-    public void setFleeceColor(int par1)
+    public void setFleeceColor(final int par1)
     {
-        byte b0 = this.dataWatcher.getWatchableObjectByte(16);
+        final byte b0 = this.dataWatcher.getWatchableObjectByte(16);
         this.dataWatcher.updateObject(16, Byte.valueOf((byte)(b0 & 240 | par1 & 15)));
     }
 
@@ -241,9 +241,9 @@ public class EntitySheep extends EntityAnimal implements IShearable
     /**
      * make a sheep sheared if set to true
      */
-    public void setSheared(boolean par1)
+    public void setSheared(final boolean par1)
     {
-        byte b0 = this.dataWatcher.getWatchableObjectByte(16);
+        final byte b0 = this.dataWatcher.getWatchableObjectByte(16);
 
         if (par1)
         {
@@ -258,17 +258,17 @@ public class EntitySheep extends EntityAnimal implements IShearable
     /**
      * This method is called when a sheep spawns in the world to select the color of sheep fleece.
      */
-    public static int getRandomFleeceColor(Random par0Random)
+    public static int getRandomFleeceColor(final Random par0Random)
     {
-        int i = par0Random.nextInt(100);
+        final int i = par0Random.nextInt(100);
         return i < 5 ? 15 : (i < 10 ? 7 : (i < 15 ? 8 : (i < 18 ? 12 : (par0Random.nextInt(500) == 0 ? 6 : 0))));
     }
 
-    public EntitySheep func_90015_b(EntityAgeable par1EntityAgeable)
+    public EntitySheep func_90015_b(final EntityAgeable par1EntityAgeable)
     {
-        EntitySheep entitysheep = (EntitySheep)par1EntityAgeable;
-        EntitySheep entitysheep1 = new EntitySheep(this.worldObj);
-        int i = this.func_90014_a(this, entitysheep);
+        final EntitySheep entitysheep = (EntitySheep)par1EntityAgeable;
+        final EntitySheep entitysheep1 = new EntitySheep(this.worldObj);
+        final int i = this.func_90014_a(this, entitysheep);
         entitysheep1.setFleeceColor(15 - i);
         return entitysheep1;
     }
@@ -280,7 +280,7 @@ public class EntitySheep extends EntityAnimal implements IShearable
     public void eatGrassBonus()
     {
         // CraftBukkit start
-        SheepRegrowWoolEvent event = new SheepRegrowWoolEvent((org.bukkit.entity.Sheep) this.getBukkitEntity());
+        final SheepRegrowWoolEvent event = new SheepRegrowWoolEvent((org.bukkit.entity.Sheep) this.getBukkitEntity());
         this.worldObj.getServer().getPluginManager().callEvent(event);
 
         if (!event.isCancelled())
@@ -298,19 +298,19 @@ public class EntitySheep extends EntityAnimal implements IShearable
 
     public EntityLivingData onSpawnWithEgg(EntityLivingData par1EntityLivingData)
     {
-        par1EntityLivingData = super.onSpawnWithEgg(par1EntityLivingData);
+        EntityLivingData par1EntityLivingData1 = super.onSpawnWithEgg(par1EntityLivingData);
         this.setFleeceColor(getRandomFleeceColor(this.worldObj.rand));
-        return par1EntityLivingData;
+        return par1EntityLivingData1;
     }
 
-    private int func_90014_a(EntityAnimal par1EntityAnimal, EntityAnimal par2EntityAnimal)
+    private int func_90014_a(final EntityAnimal par1EntityAnimal, final EntityAnimal par2EntityAnimal)
     {
-        int i = this.func_90013_b(par1EntityAnimal);
-        int j = this.func_90013_b(par2EntityAnimal);
+        final int i = this.func_90013_b(par1EntityAnimal);
+        final int j = this.func_90013_b(par2EntityAnimal);
         this.field_90016_e.getStackInSlot(0).setItemDamage(i);
         this.field_90016_e.getStackInSlot(1).setItemDamage(j);
-        ItemStack itemstack = CraftingManager.getInstance().findMatchingRecipe(this.field_90016_e, ((EntitySheep)par1EntityAnimal).worldObj);
-        int k;
+        final ItemStack itemstack = CraftingManager.getInstance().findMatchingRecipe(this.field_90016_e, ((EntitySheep)par1EntityAnimal).worldObj);
+        final int k;
 
         if (itemstack != null && itemstack.getItem().itemID == Item.dyePowder.itemID)
         {
@@ -324,28 +324,28 @@ public class EntitySheep extends EntityAnimal implements IShearable
         return k;
     }
 
-    private int func_90013_b(EntityAnimal par1EntityAnimal)
+    private int func_90013_b(final EntityAnimal par1EntityAnimal)
     {
         return 15 - ((EntitySheep)par1EntityAnimal).getFleeceColor();
     }
 
-    public EntityAgeable createChild(EntityAgeable par1EntityAgeable)
+    public EntityAgeable createChild(final EntityAgeable par1EntityAgeable)
     {
         return this.func_90015_b(par1EntityAgeable);
     }
 
     @Override
-    public boolean isShearable(ItemStack item, World world, int X, int Y, int Z)
+    public boolean isShearable(final ItemStack item, final World world, final int X, final int Y, final int Z)
     {
         return !getSheared() && !isChild();
     }
 
     @Override
-    public ArrayList<ItemStack> onSheared(ItemStack item, World world, int X, int Y, int Z, int fortune)
+    public ArrayList<ItemStack> onSheared(final ItemStack item, final World world, final int X, final int Y, final int Z, final int fortune)
     {
-        ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+        final ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
         setSheared(true);
-        int i = 1 + rand.nextInt(3);
+        final int i = 1 + rand.nextInt(3);
         for (int j = 0; j < i; j++)
         {
             ret.add(new ItemStack(Block.cloth.blockID, 1, getFleeceColor()));

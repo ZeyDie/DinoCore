@@ -69,7 +69,7 @@ public class EntityTrackerEntry {
      */
     public Set trackingPlayers = new HashSet();
 
-    public EntityTrackerEntry(Entity par1Entity, int par2, int par3, boolean par4) {
+    public EntityTrackerEntry(final Entity par1Entity, final int par2, final int par3, final boolean par4) {
         this.myEntity = par1Entity;
         this.blocksDistanceThreshold = par2;
         this.updateFrequency = par3;
@@ -82,7 +82,7 @@ public class EntityTrackerEntry {
         this.lastHeadMotion = MathHelper.floor_float(par1Entity.getRotationYawHead() * 256.0F / 360.0F);
     }
 
-    public boolean equals(Object par1Obj) {
+    public boolean equals(final Object par1Obj) {
         return par1Obj instanceof EntityTrackerEntry && ((EntityTrackerEntry) par1Obj).myEntity.entityId == this.myEntity.entityId;
     }
 
@@ -93,7 +93,7 @@ public class EntityTrackerEntry {
     /**
      * also sends velocity, rotation, and riding info.
      */
-    public void sendLocationToAllClients(List par1List) {
+    public void sendLocationToAllClients(final List par1List) {
         this.playerEntitiesUpdated = false;
 
         if (!this.isDataInitialized || this.myEntity.getDistanceSq(this.posX, this.posY, this.posZ) > 16.0D) {
@@ -112,21 +112,21 @@ public class EntityTrackerEntry {
 
         if (this.myEntity instanceof EntityItemFrame /*&& this.m % 10 == 0*/)   // CraftBukkit - Moved below, should always enter this block
         {
-            EntityItemFrame entityitemframe = (EntityItemFrame) this.myEntity;
-            ItemStack itemstack = entityitemframe.getDisplayedItem();
+            final EntityItemFrame entityitemframe = (EntityItemFrame) this.myEntity;
+            final ItemStack itemstack = entityitemframe.getDisplayedItem();
 
             if (this.ticks % 10 == 0 && itemstack != null && itemstack.getItem() instanceof ItemMap)  // CraftBukkit - Moved this.m % 10 logic here so item frames do not enter the other blocks
             {
-                MapData mapdata = Item.map.getMapData(itemstack, this.myEntity.worldObj);
+                final MapData mapdata = Item.map.getMapData(itemstack, this.myEntity.worldObj);
                 // CraftBukkit
 
-                for (Object trackingPlayer : this.trackingPlayers) {
-                    EntityPlayer entityplayer = (EntityPlayer) trackingPlayer;
-                    EntityPlayerMP entityplayermp = (EntityPlayerMP) entityplayer;
+                for (final Object trackingPlayer : this.trackingPlayers) {
+                    final EntityPlayer entityplayer = (EntityPlayer) trackingPlayer;
+                    final EntityPlayerMP entityplayermp = (EntityPlayerMP) entityplayer;
                     mapdata.updateVisiblePlayers(entityplayermp, itemstack);
 
                     if (entityplayermp.playerNetServerHandler.packetSize() <= 5) {
-                        Packet packet = Item.map.createMapDataPacket(itemstack, this.myEntity.worldObj, entityplayermp);
+                        final Packet packet = Item.map.createMapDataPacket(itemstack, this.myEntity.worldObj, entityplayermp);
 
                         if (packet != null) {
                             entityplayermp.playerNetServerHandler.sendPacketToPlayer(packet);
@@ -138,22 +138,22 @@ public class EntityTrackerEntry {
             this.func_111190_b();
         } else if (this.ticks % this.updateFrequency == 0 || this.myEntity.isAirBorne || this.myEntity.getDataWatcher().hasChanges()) {
             int i;
-            int j;
+            final int j;
 
             if (this.myEntity.ridingEntity == null) {
                 ++this.ticksSinceLastForcedTeleport;
                 i = this.myEntity.myEntitySize.multiplyBy32AndRound(this.myEntity.posX);
                 j = MathHelper.floor_double(this.myEntity.posY * 32.0D);
-                int k = this.myEntity.myEntitySize.multiplyBy32AndRound(this.myEntity.posZ);
-                int l = MathHelper.floor_float(this.myEntity.rotationYaw * 256.0F / 360.0F);
-                int i1 = MathHelper.floor_float(this.myEntity.rotationPitch * 256.0F / 360.0F);
-                int j1 = i - this.lastScaledXPosition;
-                int k1 = j - this.lastScaledYPosition;
-                int l1 = k - this.lastScaledZPosition;
+                final int k = this.myEntity.myEntitySize.multiplyBy32AndRound(this.myEntity.posZ);
+                final int l = MathHelper.floor_float(this.myEntity.rotationYaw * 256.0F / 360.0F);
+                final int i1 = MathHelper.floor_float(this.myEntity.rotationPitch * 256.0F / 360.0F);
+                final int j1 = i - this.lastScaledXPosition;
+                final int k1 = j - this.lastScaledYPosition;
+                final int l1 = k - this.lastScaledZPosition;
                 Object object = null;
-                boolean flag = Math.abs(j1) >= 4 || Math.abs(k1) >= 4 || Math.abs(l1) >= 4 || this.ticks % 60 == 0;
+                final boolean flag = Math.abs(j1) >= 4 || Math.abs(k1) >= 4 || Math.abs(l1) >= 4 || this.ticks % 60 == 0;
 
-                boolean flag1 = Math.abs(l - this.lastYaw) >= 4 || Math.abs(i1 - this.lastPitch) >= 4;
+                final boolean flag1 = Math.abs(l - this.lastYaw) >= 4 || Math.abs(i1 - this.lastPitch) >= 4;
 
                 // CraftBukkit start - Code moved from below
                 if (flag) {
@@ -189,11 +189,11 @@ public class EntityTrackerEntry {
                 }
 
                 if (this.sendVelocityUpdates) {
-                    double d0 = this.myEntity.motionX - this.motionX;
-                    double d1 = this.myEntity.motionY - this.motionY;
-                    double d2 = this.myEntity.motionZ - this.motionZ;
-                    double d3 = 0.02D;
-                    double d4 = d0 * d0 + d1 * d1 + d2 * d2;
+                    final double d0 = this.myEntity.motionX - this.motionX;
+                    final double d1 = this.myEntity.motionY - this.motionY;
+                    final double d2 = this.myEntity.motionZ - this.motionZ;
+                    final double d3 = 0.02D;
+                    final double d4 = d0 * d0 + d1 * d1 + d2 * d2;
 
                     if (d4 > d3 * d3 || d4 > 0.0D && this.myEntity.motionX == 0.0D && this.myEntity.motionY == 0.0D && this.myEntity.motionZ == 0.0D) {
                         this.motionX = this.myEntity.motionX;
@@ -227,7 +227,7 @@ public class EntityTrackerEntry {
             } else {
                 i = MathHelper.floor_float(this.myEntity.rotationYaw * 256.0F / 360.0F);
                 j = MathHelper.floor_float(this.myEntity.rotationPitch * 256.0F / 360.0F);
-                boolean flag2 = Math.abs(i - this.lastYaw) >= 4 || Math.abs(j - this.lastPitch) >= 4;
+                final boolean flag2 = Math.abs(i - this.lastYaw) >= 4 || Math.abs(j - this.lastPitch) >= 4;
 
                 if (flag2) {
                     this.sendPacketToAllTrackingPlayers(new Packet32EntityLook(this.myEntity.entityId, (byte) i, (byte) j));
@@ -259,9 +259,9 @@ public class EntityTrackerEntry {
             boolean cancelled = false;
 
             if (this.myEntity instanceof EntityPlayerMP) {
-                Player player = (Player) this.myEntity.getBukkitEntity();
-                org.bukkit.util.Vector velocity = player.getVelocity();
-                PlayerVelocityEvent event = new PlayerVelocityEvent(player, velocity);
+                final Player player = (Player) this.myEntity.getBukkitEntity();
+                final org.bukkit.util.Vector velocity = player.getVelocity();
+                final PlayerVelocityEvent event = new PlayerVelocityEvent(player, velocity);
                 this.myEntity.worldObj.getServer().getPluginManager().callEvent(event);
 
                 if (event.isCancelled()) {
@@ -280,15 +280,15 @@ public class EntityTrackerEntry {
     }
 
     private void func_111190_b() {
-        DataWatcher datawatcher = this.myEntity.getDataWatcher();
+        final DataWatcher datawatcher = this.myEntity.getDataWatcher();
 
         if (datawatcher.hasChanges()) {
             this.sendPacketToAllAssociatedPlayers(new Packet40EntityMetadata(this.myEntity.entityId, datawatcher, false));
         }
 
         if (this.myEntity instanceof EntityLivingBase) {
-            ServersideAttributeMap serversideattributemap = (ServersideAttributeMap) ((EntityLivingBase) this.myEntity).getAttributeMap();
-            Set set = serversideattributemap.func_111161_b();
+            final ServersideAttributeMap serversideattributemap = (ServersideAttributeMap) ((EntityLivingBase) this.myEntity).getAttributeMap();
+            final Set set = serversideattributemap.func_111161_b();
 
             if (!set.isEmpty()) {
                 // CraftBukkit start - Send scaled max health
@@ -306,9 +306,9 @@ public class EntityTrackerEntry {
     /**
      * if this is a player, then it is not informed
      */
-    public void sendPacketToAllTrackingPlayers(Packet par1Packet) {
-        for (Object trackingPlayer : this.trackingPlayers) {
-            EntityPlayerMP entityplayermp = (EntityPlayerMP) trackingPlayer;
+    public void sendPacketToAllTrackingPlayers(final Packet par1Packet) {
+        for (final Object trackingPlayer : this.trackingPlayers) {
+            final EntityPlayerMP entityplayermp = (EntityPlayerMP) trackingPlayer;
             entityplayermp.playerNetServerHandler.sendPacketToPlayer(par1Packet);
         }
     }
@@ -316,7 +316,7 @@ public class EntityTrackerEntry {
     /**
      * if this is a player, then it recieves the message also
      */
-    public void sendPacketToAllAssociatedPlayers(Packet par1Packet) {
+    public void sendPacketToAllAssociatedPlayers(final Packet par1Packet) {
         this.sendPacketToAllTrackingPlayers(par1Packet);
 
         if (this.myEntity instanceof EntityPlayerMP) {
@@ -325,13 +325,13 @@ public class EntityTrackerEntry {
     }
 
     public void informAllAssociatedPlayersOfItemDestruction() {
-        for (Object trackingPlayer : this.trackingPlayers) {
-            EntityPlayerMP entityplayermp = (EntityPlayerMP) trackingPlayer;
+        for (final Object trackingPlayer : this.trackingPlayers) {
+            final EntityPlayerMP entityplayermp = (EntityPlayerMP) trackingPlayer;
             entityplayermp.destroyedItemsNetCache.add(this.myEntity.entityId);
         }
     }
 
-    public void removeFromWatchingList(EntityPlayerMP par1EntityPlayerMP) {
+    public void removeFromWatchingList(final EntityPlayerMP par1EntityPlayerMP) {
         if (this.trackingPlayers.contains(par1EntityPlayerMP)) {
             par1EntityPlayerMP.destroyedItemsNetCache.add(this.myEntity.entityId);
             this.trackingPlayers.remove(par1EntityPlayerMP);
@@ -341,7 +341,7 @@ public class EntityTrackerEntry {
     /**
      * if the player is more than the distance threshold (typically 64) then the player is removed instead
      */
-    public void tryStartWachingThis(EntityPlayerMP par1EntityPlayerMP) {
+    public void tryStartWachingThis(final EntityPlayerMP par1EntityPlayerMP) {
 
         //TODO ZoomCodeStart
         if (CoreSettings.getInstance().getSettings().isAsynchronousWarnings())
@@ -352,14 +352,14 @@ public class EntityTrackerEntry {
             }
 
         if (par1EntityPlayerMP != this.myEntity) {
-            double d0 = par1EntityPlayerMP.posX - (double) (this.lastScaledXPosition / 32);
-            double d1 = par1EntityPlayerMP.posZ - (double) (this.lastScaledZPosition / 32);
+            final double d0 = par1EntityPlayerMP.posX - (double) (this.lastScaledXPosition / 32);
+            final double d1 = par1EntityPlayerMP.posZ - (double) (this.lastScaledZPosition / 32);
 
             if (d0 >= (double) (-this.blocksDistanceThreshold) && d0 <= (double) this.blocksDistanceThreshold && d1 >= (double) (-this.blocksDistanceThreshold) && d1 <= (double) this.blocksDistanceThreshold) {
                 if (!this.trackingPlayers.contains(par1EntityPlayerMP) && (this.isPlayerWatchingThisChunk(par1EntityPlayerMP) || this.myEntity.forceSpawn)) {
                     // CraftBukkit start
                     if (this.myEntity instanceof EntityPlayerMP) {
-                        Player player = ((EntityPlayerMP) this.myEntity).getBukkitEntity();
+                        final Player player = ((EntityPlayerMP) this.myEntity).getBukkitEntity();
 
                         if (!par1EntityPlayerMP.getBukkitEntity().canSee(player)) {
                             return;
@@ -368,7 +368,7 @@ public class EntityTrackerEntry {
                     par1EntityPlayerMP.destroyedItemsNetCache.remove(Integer.valueOf(this.myEntity.entityId));
                     // CraftBukkit end
                     this.trackingPlayers.add(par1EntityPlayerMP);
-                    Packet packet = this.getPacketForThisEntity();
+                    final Packet packet = this.getPacketForThisEntity();
                     par1EntityPlayerMP.playerNetServerHandler.sendPacketToPlayer(packet);
 
                     if (!this.myEntity.getDataWatcher().getIsBlank()) {
@@ -376,8 +376,8 @@ public class EntityTrackerEntry {
                     }
 
                     if (this.myEntity instanceof EntityLivingBase) {
-                        ServersideAttributeMap serversideattributemap = (ServersideAttributeMap) ((EntityLivingBase) this.myEntity).getAttributeMap();
-                        Collection collection = serversideattributemap.func_111160_c();
+                        final ServersideAttributeMap serversideattributemap = (ServersideAttributeMap) ((EntityLivingBase) this.myEntity).getAttributeMap();
+                        final Collection collection = serversideattributemap.func_111160_c();
 
                         // CraftBukkit start - If sending own attributes send scaled health instead of current maximum health
                         if (this.myEntity.entityId == par1EntityPlayerMP.entityId) {
@@ -393,9 +393,9 @@ public class EntityTrackerEntry {
                     this.motionY = this.myEntity.motionY;
                     this.motionZ = this.myEntity.motionZ;
 
-                    int posX = MathHelper.floor_double(this.myEntity.posX * 32.0D);
-                    int posY = MathHelper.floor_double(this.myEntity.posY * 32.0D);
-                    int posZ = MathHelper.floor_double(this.myEntity.posZ * 32.0D);
+                    final int posX = MathHelper.floor_double(this.myEntity.posX * 32.0D);
+                    final int posY = MathHelper.floor_double(this.myEntity.posY * 32.0D);
+                    final int posZ = MathHelper.floor_double(this.myEntity.posZ * 32.0D);
                     if (posX != this.lastScaledXPosition || posY != this.lastScaledYPosition || posZ != this.lastScaledZPosition) {
                         FMLNetworkHandler.makeEntitySpawnAdjustment(this.myEntity.entityId, par1EntityPlayerMP, this.lastScaledXPosition, this.lastScaledYPosition, this.lastScaledZPosition);
                     }
@@ -416,7 +416,7 @@ public class EntityTrackerEntry {
 
                     if (this.myEntity instanceof EntityLivingBase) {
                         for (int i = 0; i < 5; ++i) {
-                            ItemStack itemstack = ((EntityLivingBase) this.myEntity).getCurrentItemOrArmor(i);
+                            final ItemStack itemstack = ((EntityLivingBase) this.myEntity).getCurrentItemOrArmor(i);
 
                             if (itemstack != null) {
                                 par1EntityPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet5PlayerInventory(this.myEntity.entityId, i, itemstack));
@@ -425,7 +425,7 @@ public class EntityTrackerEntry {
                     }
 
                     if (this.myEntity instanceof EntityPlayer) {
-                        EntityPlayer entityplayer = (EntityPlayer) this.myEntity;
+                        final EntityPlayer entityplayer = (EntityPlayer) this.myEntity;
 
                         if (entityplayer.isPlayerSleeping()) {
                             par1EntityPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet17Sleep(this.myEntity, 0, MathHelper.floor_double(this.myEntity.posX), MathHelper.floor_double(this.myEntity.posY), MathHelper.floor_double(this.myEntity.posZ)));
@@ -438,10 +438,10 @@ public class EntityTrackerEntry {
                     // CraftBukkit end
 
                     if (this.myEntity instanceof EntityLivingBase) {
-                        EntityLivingBase entitylivingbase = (EntityLivingBase) this.myEntity;
+                        final EntityLivingBase entitylivingbase = (EntityLivingBase) this.myEntity;
 
-                        for (Object o : entitylivingbase.getActivePotionEffects()) {
-                            PotionEffect potioneffect = (PotionEffect) o;
+                        for (final Object o : entitylivingbase.getActivePotionEffects()) {
+                            final PotionEffect potioneffect = (PotionEffect) o;
                             par1EntityPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet41EntityEffect(this.myEntity.entityId, potioneffect));
                         }
                     }
@@ -453,11 +453,11 @@ public class EntityTrackerEntry {
         }
     }
 
-    private boolean isPlayerWatchingThisChunk(EntityPlayerMP par1EntityPlayerMP) {
+    private boolean isPlayerWatchingThisChunk(final EntityPlayerMP par1EntityPlayerMP) {
         return par1EntityPlayerMP.getServerForPlayer().getPlayerManager().isPlayerWatchingChunk(par1EntityPlayerMP, this.myEntity.chunkCoordX, this.myEntity.chunkCoordZ);
     }
 
-    public void sendEventsToPlayers(List par1List) {
+    public void sendEventsToPlayers(final List par1List) {
         for (int i = 0; i < par1List.size(); ++i) {
             this.tryStartWachingThis((EntityPlayerMP) par1List.get(i));
         }
@@ -471,7 +471,7 @@ public class EntityTrackerEntry {
             // CraftBukkit end
         }
 
-        Packet pkt = FMLNetworkHandler.getEntitySpawningPacket(this.myEntity);
+        final Packet pkt = FMLNetworkHandler.getEntitySpawningPacket(this.myEntity);
 
         if (pkt != null) {
             return pkt;
@@ -482,16 +482,16 @@ public class EntityTrackerEntry {
         } else if (this.myEntity instanceof EntityPlayerMP) {
             return new Packet20NamedEntitySpawn((EntityPlayer) this.myEntity);
         } else if (this.myEntity instanceof EntityMinecart) {
-            EntityMinecart entityminecart = (EntityMinecart) this.myEntity;
+            final EntityMinecart entityminecart = (EntityMinecart) this.myEntity;
             return new Packet23VehicleSpawn(this.myEntity, 10, entityminecart.getMinecartType());
         } else if (this.myEntity instanceof EntityBoat) {
             return new Packet23VehicleSpawn(this.myEntity, 1);
         } else if (!(this.myEntity instanceof IAnimals)) {
             if (this.myEntity instanceof EntityFishHook) {
-                EntityPlayer entityplayer = ((EntityFishHook) this.myEntity).angler;
+                final EntityPlayer entityplayer = ((EntityFishHook) this.myEntity).angler;
                 return new Packet23VehicleSpawn(this.myEntity, 90, entityplayer != null ? entityplayer.entityId : this.myEntity.entityId);
             } else if (this.myEntity instanceof EntityArrow) {
-                Entity entity = ((EntityArrow) this.myEntity).shootingEntity;
+                final Entity entity = ((EntityArrow) this.myEntity).shootingEntity;
                 return new Packet23VehicleSpawn(this.myEntity, 60, entity != null ? entity.entityId : this.myEntity.entityId);
             } else if (this.myEntity instanceof EntitySnowball) {
                 return new Packet23VehicleSpawn(this.myEntity, 61);
@@ -509,7 +509,7 @@ public class EntityTrackerEntry {
                 Packet23VehicleSpawn packet23vehiclespawn;
 
                 if (this.myEntity instanceof EntityFireball) {
-                    EntityFireball entityfireball = (EntityFireball) this.myEntity;
+                    final EntityFireball entityfireball = (EntityFireball) this.myEntity;
                     packet23vehiclespawn = null;
                     byte b0 = 63;
 
@@ -536,19 +536,19 @@ public class EntityTrackerEntry {
                 } else if (this.myEntity instanceof EntityEnderCrystal) {
                     return new Packet23VehicleSpawn(this.myEntity, 51);
                 } else if (this.myEntity instanceof EntityFallingSand) {
-                    EntityFallingSand entityfallingsand = (EntityFallingSand) this.myEntity;
+                    final EntityFallingSand entityfallingsand = (EntityFallingSand) this.myEntity;
                     return new Packet23VehicleSpawn(this.myEntity, 70, entityfallingsand.blockID | entityfallingsand.metadata << 16);
                 } else if (this.myEntity instanceof EntityPainting) {
                     return new Packet25EntityPainting((EntityPainting) this.myEntity);
                 } else if (this.myEntity instanceof EntityItemFrame) {
-                    EntityItemFrame entityitemframe = (EntityItemFrame) this.myEntity;
+                    final EntityItemFrame entityitemframe = (EntityItemFrame) this.myEntity;
                     packet23vehiclespawn = new Packet23VehicleSpawn(this.myEntity, 71, entityitemframe.hangingDirection);
                     packet23vehiclespawn.xPosition = MathHelper.floor_float((float) (entityitemframe.xPosition * 32));
                     packet23vehiclespawn.yPosition = MathHelper.floor_float((float) (entityitemframe.yPosition * 32));
                     packet23vehiclespawn.zPosition = MathHelper.floor_float((float) (entityitemframe.zPosition * 32));
                     return packet23vehiclespawn;
                 } else if (this.myEntity instanceof EntityLeashKnot) {
-                    EntityLeashKnot entityleashknot = (EntityLeashKnot) this.myEntity;
+                    final EntityLeashKnot entityleashknot = (EntityLeashKnot) this.myEntity;
                     packet23vehiclespawn = new Packet23VehicleSpawn(this.myEntity, 77);
                     packet23vehiclespawn.xPosition = MathHelper.floor_float((float) (entityleashknot.xPosition * 32));
                     packet23vehiclespawn.yPosition = MathHelper.floor_float((float) (entityleashknot.yPosition * 32));
@@ -566,7 +566,7 @@ public class EntityTrackerEntry {
         }
     }
 
-    public void removePlayerFromTracker(EntityPlayerMP par1EntityPlayerMP) {
+    public void removePlayerFromTracker(final EntityPlayerMP par1EntityPlayerMP) {
         //TODO ZoomCodeStart
         if (CoreSettings.getInstance().getSettings().isAsynchronousWarnings())
             //TODO ZoomCodeEnd

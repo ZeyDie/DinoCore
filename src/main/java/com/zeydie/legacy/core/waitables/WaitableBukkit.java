@@ -25,15 +25,15 @@ public final class WaitableBukkit extends Waitable {
             return null;
         }
 
-        String message = String.format(queueEvent.getFormat(), queueEvent.getPlayer().getDisplayName(), queueEvent.getMessage());
+        final String message = String.format(queueEvent.getFormat(), queueEvent.getPlayer().getDisplayName(), queueEvent.getMessage());
         this.netServerHandler.mcServer.console.sendMessage(message);
 
         if (((LazyPlayerSet) queueEvent.getRecipients()).isLazy()) {
-            for (Object player : this.netServerHandler.mcServer.getConfigurationManager().playerEntityList) {
+            for (final Object player : this.netServerHandler.mcServer.getConfigurationManager().playerEntityList) {
                 ((EntityPlayerMP) player).sendChatToPlayer(ChatMessageComponent.createFromText(message));
             }
         } else {
-            for (Player player : queueEvent.getRecipients()) {
+            for (final Player player : queueEvent.getRecipients()) {
                 player.sendMessage(message);
             }
         }

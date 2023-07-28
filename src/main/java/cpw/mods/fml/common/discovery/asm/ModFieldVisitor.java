@@ -22,7 +22,7 @@ public class ModFieldVisitor extends FieldVisitor
     private String fieldName;
     private ASMModParser discoverer;
 
-    public ModFieldVisitor(String name, ASMModParser discoverer)
+    public ModFieldVisitor(final String name, final ASMModParser discoverer)
     {
         //TODO ZeyCodeReplace ASM4 on ASM5
         super(Opcodes.ASM5);
@@ -31,7 +31,7 @@ public class ModFieldVisitor extends FieldVisitor
     }
     
     @Override
-    public AnnotationVisitor visitAnnotation(String annotationName, boolean runtimeVisible)
+    public AnnotationVisitor visitAnnotation(final String annotationName, final boolean runtimeVisible)
     {
         discoverer.startFieldAnnotation(fieldName, annotationName);
         return new ModAnnotationVisitor(discoverer);

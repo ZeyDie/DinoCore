@@ -10,25 +10,26 @@ public class EntityReddustFX extends EntityFX
 {
     float reddustParticleScale;
 
-    public EntityReddustFX(World par1World, double par2, double par4, double par6, float par8, float par9, float par10)
+    public EntityReddustFX(final World par1World, final double par2, final double par4, final double par6, final float par8, final float par9, final float par10)
     {
         this(par1World, par2, par4, par6, 1.0F, par8, par9, par10);
     }
 
-    public EntityReddustFX(World par1World, double par2, double par4, double par6, float par8, float par9, float par10, float par11)
+    public EntityReddustFX(final World par1World, final double par2, final double par4, final double par6, final float par8, float par9, final float par10, final float par11)
     {
         super(par1World, par2, par4, par6, 0.0D, 0.0D, 0.0D);
+        float par91 = par9;
         this.motionX *= 0.10000000149011612D;
         this.motionY *= 0.10000000149011612D;
         this.motionZ *= 0.10000000149011612D;
 
-        if (par9 == 0.0F)
+        if (par91 == 0.0F)
         {
-            par9 = 1.0F;
+            par91 = 1.0F;
         }
 
-        float f4 = (float)Math.random() * 0.4F + 0.6F;
-        this.particleRed = ((float)(Math.random() * 0.20000000298023224D) + 0.8F) * par9 * f4;
+        final float f4 = (float)Math.random() * 0.4F + 0.6F;
+        this.particleRed = ((float)(Math.random() * 0.20000000298023224D) + 0.8F) * par91 * f4;
         this.particleGreen = ((float)(Math.random() * 0.20000000298023224D) + 0.8F) * par10 * f4;
         this.particleBlue = ((float)(Math.random() * 0.20000000298023224D) + 0.8F) * par11 * f4;
         this.particleScale *= 0.75F;
@@ -39,7 +40,7 @@ public class EntityReddustFX extends EntityFX
         this.noClip = false;
     }
 
-    public void renderParticle(Tessellator par1Tessellator, float par2, float par3, float par4, float par5, float par6, float par7)
+    public void renderParticle(final Tessellator par1Tessellator, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7)
     {
         float f6 = ((float)this.particleAge + par2) / (float)this.particleMaxAge * 32.0F;
 

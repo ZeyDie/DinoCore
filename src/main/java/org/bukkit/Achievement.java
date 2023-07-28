@@ -43,7 +43,7 @@ public enum Achievement {
     private final static Map<Integer, Achievement> BY_ID = Maps.newHashMap();
     private final int id;
 
-    private Achievement(int id) {
+    private Achievement(final int id) {
         this.id = STATISTIC_OFFSET + id;
     }
 
@@ -70,12 +70,12 @@ public enum Achievement {
      * @deprecated Magic value
      */
     @Deprecated
-    public static Achievement getById(int id) {
+    public static Achievement getById(final int id) {
         return BY_ID.get(id);
     }
 
     static {
-        for (Achievement achievement : values()) {
+        for (final Achievement achievement : values()) {
             BY_ID.put(achievement.id, achievement);
         }
     }

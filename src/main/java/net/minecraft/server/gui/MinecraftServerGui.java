@@ -15,20 +15,20 @@ public class MinecraftServerGui extends JComponent
     private static boolean field_120022_a;
     private DedicatedServer field_120021_b;
 
-    public static void func_120016_a(DedicatedServer par0DedicatedServer)
+    public static void func_120016_a(final DedicatedServer par0DedicatedServer)
     {
         try
         {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             ;
         }
 
-        MinecraftServerGui minecraftservergui = new MinecraftServerGui(par0DedicatedServer);
+        final MinecraftServerGui minecraftservergui = new MinecraftServerGui(par0DedicatedServer);
         field_120022_a = true;
-        JFrame jframe = new JFrame("Minecraft server");
+        final JFrame jframe = new JFrame("Minecraft server");
         jframe.add(minecraftservergui);
         jframe.pack();
         jframe.setLocationRelativeTo((Component)null);
@@ -36,7 +36,7 @@ public class MinecraftServerGui extends JComponent
         jframe.addWindowListener(new MinecraftServerGuiINNER1(par0DedicatedServer));
     }
 
-    public MinecraftServerGui(DedicatedServer par1DedicatedServer)
+    public MinecraftServerGui(final DedicatedServer par1DedicatedServer)
     {
         this.field_120021_b = par1DedicatedServer;
         this.setPreferredSize(new Dimension(854, 480));
@@ -47,7 +47,7 @@ public class MinecraftServerGui extends JComponent
             this.add(this.func_120018_d(), "Center");
             this.add(this.func_120019_b(), "West");
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             exception.printStackTrace();
         }
@@ -55,7 +55,7 @@ public class MinecraftServerGui extends JComponent
 
     private JComponent func_120019_b()
     {
-        JPanel jpanel = new JPanel(new BorderLayout());
+        final JPanel jpanel = new JPanel(new BorderLayout());
         jpanel.add(new StatsComponent(this.field_120021_b), "North");
         jpanel.add(this.func_120020_c(), "Center");
         jpanel.setBorder(new TitledBorder(new EtchedBorder(), "Stats"));
@@ -64,20 +64,20 @@ public class MinecraftServerGui extends JComponent
 
     private JComponent func_120020_c()
     {
-        PlayerListComponent playerlistcomponent = new PlayerListComponent(this.field_120021_b);
-        JScrollPane jscrollpane = new JScrollPane(playerlistcomponent, 22, 30);
+        final PlayerListComponent playerlistcomponent = new PlayerListComponent(this.field_120021_b);
+        final JScrollPane jscrollpane = new JScrollPane(playerlistcomponent, 22, 30);
         jscrollpane.setBorder(new TitledBorder(new EtchedBorder(), "Players"));
         return jscrollpane;
     }
 
     private JComponent func_120018_d()
     {
-        JPanel jpanel = new JPanel(new BorderLayout());
-        JTextArea jtextarea = new JTextArea();
+        final JPanel jpanel = new JPanel(new BorderLayout());
+        final JTextArea jtextarea = new JTextArea();
         this.field_120021_b.getLogAgent().func_120013_a().addHandler(new TextAreaLogHandler(jtextarea));
-        JScrollPane jscrollpane = new JScrollPane(jtextarea, 22, 30);
+        final JScrollPane jscrollpane = new JScrollPane(jtextarea, 22, 30);
         jtextarea.setEditable(false);
-        JTextField jtextfield = new JTextField();
+        final JTextField jtextfield = new JTextField();
         jtextfield.addActionListener(new MinecraftServerGuiINNER2(this, jtextfield));
         jtextarea.addFocusListener(new MinecraftServerGuiINNER3(this));
         jpanel.add(jscrollpane, "Center");
@@ -86,7 +86,7 @@ public class MinecraftServerGui extends JComponent
         return jpanel;
     }
 
-    static DedicatedServer func_120017_a(MinecraftServerGui par0MinecraftServerGui)
+    static DedicatedServer func_120017_a(final MinecraftServerGui par0MinecraftServerGui)
     {
         return par0MinecraftServerGui.field_120021_b;
     }

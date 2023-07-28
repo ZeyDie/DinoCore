@@ -54,7 +54,7 @@ public class FurnaceRecipes
     /**
      * Adds a smelting recipe.
      */
-    public void addSmelting(int par1, ItemStack par2ItemStack, float par3)
+    public void addSmelting(final int par1, final ItemStack par2ItemStack, final float par3)
     {
         this.smeltingList.put(Integer.valueOf(par1), par2ItemStack);
         this.experienceList.put(Integer.valueOf(par2ItemStack.itemID), Float.valueOf(par3));
@@ -65,7 +65,7 @@ public class FurnaceRecipes
      * Deprecated in favor of a metadata sensitive version
      */
     @Deprecated
-    public ItemStack getSmeltingResult(int par1)
+    public ItemStack getSmeltingResult(final int par1)
     {
         return (ItemStack)this.smeltingList.get(Integer.valueOf(par1));
     }
@@ -76,7 +76,7 @@ public class FurnaceRecipes
     }
 
     @Deprecated //In favor of ItemStack sensitive version
-    public float getExperience(int par1)
+    public float getExperience(final int par1)
     {
         return this.experienceList.containsKey(Integer.valueOf(par1)) ? ((Float)this.experienceList.get(Integer.valueOf(par1))).floatValue() : 0.0F;
     }
@@ -84,7 +84,7 @@ public class FurnaceRecipes
     /**
      * A metadata sensitive version of adding a furnace recipe.
      */
-    public void addSmelting(int itemID, int metadata, ItemStack itemstack, float experience)
+    public void addSmelting(final int itemID, final int metadata, final ItemStack itemstack, final float experience)
     {
         metaSmeltingList.put(Arrays.asList(itemID, metadata), itemstack);
         metaExperience.put(Arrays.asList(itemstack.itemID, itemstack.getItemDamage()), experience);
@@ -95,13 +95,13 @@ public class FurnaceRecipes
      * @param item The Source ItemStack
      * @return The result ItemStack
      */
-    public ItemStack getSmeltingResult(ItemStack item) 
+    public ItemStack getSmeltingResult(final ItemStack item)
     {
         if (item == null)
         {
             return null;
         }
-        ItemStack ret = (ItemStack)metaSmeltingList.get(Arrays.asList(item.itemID, item.getItemDamage()));
+        final ItemStack ret = (ItemStack)metaSmeltingList.get(Arrays.asList(item.itemID, item.getItemDamage()));
         if (ret != null) 
         {
             return ret;
@@ -112,7 +112,7 @@ public class FurnaceRecipes
     /**
      * Grabs the amount of base experience for this item to give when pulled from the furnace slot.
      */
-    public float getExperience(ItemStack item)
+    public float getExperience(final ItemStack item)
     {
         if (item == null || item.getItem() == null)
         {

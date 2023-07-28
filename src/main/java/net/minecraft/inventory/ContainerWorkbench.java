@@ -28,7 +28,7 @@ public class ContainerWorkbench extends Container
     private InventoryPlayer player;
     // CraftBukkit end
 
-    public ContainerWorkbench(InventoryPlayer par1InventoryPlayer, World par2World, int par3, int par4, int par5)
+    public ContainerWorkbench(final InventoryPlayer par1InventoryPlayer, final World par2World, final int par3, final int par4, final int par5)
     {
         // CraftBukkit start - Switched order of IInventory construction and stored player
         this.craftResult = new InventoryCraftResult();
@@ -71,11 +71,11 @@ public class ContainerWorkbench extends Container
     /**
      * Callback for when the crafting matrix is changed.
      */
-    public void onCraftMatrixChanged(IInventory par1IInventory)
+    public void onCraftMatrixChanged(final IInventory par1IInventory)
     {
         // CraftBukkit start
         CraftingManager.getInstance().lastCraftView = getBukkitView();
-        ItemStack craftResult = CraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, this.worldObj);
+        final ItemStack craftResult = CraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, this.worldObj);
         this.craftResult.setInventorySlotContents(0, craftResult);
 
         if (super.crafters.size() < 1)
@@ -83,7 +83,7 @@ public class ContainerWorkbench extends Container
             return;
         }
 
-        EntityPlayerMP player = (EntityPlayerMP) super.crafters.get(0); // TODO: Is this _always_ correct? Seems like it.
+        final EntityPlayerMP player = (EntityPlayerMP) super.crafters.get(0); // TODO: Is this _always_ correct? Seems like it.
         player.playerNetServerHandler.sendPacketToPlayer(new Packet103SetSlot(player.openContainer.windowId, 0, craftResult));
         // CraftBukkit end
     }
@@ -91,7 +91,7 @@ public class ContainerWorkbench extends Container
     /**
      * Called when the container is closed.
      */
-    public void onContainerClosed(EntityPlayer par1EntityPlayer)
+    public void onContainerClosed(final EntityPlayer par1EntityPlayer)
     {
         super.onContainerClosed(par1EntityPlayer);
 
@@ -99,7 +99,7 @@ public class ContainerWorkbench extends Container
         {
             for (int i = 0; i < 9; ++i)
             {
-                ItemStack itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
+                final ItemStack itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
 
                 if (itemstack != null)
                 {
@@ -109,7 +109,7 @@ public class ContainerWorkbench extends Container
         }
     }
 
-    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
+    public boolean canInteractWith(final EntityPlayer par1EntityPlayer)
     {
         if (!this.checkReachable)
         {
@@ -122,14 +122,14 @@ public class ContainerWorkbench extends Container
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+    public ItemStack transferStackInSlot(final EntityPlayer par1EntityPlayer, final int par2)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(par2);
+        final Slot slot = (Slot)this.inventorySlots.get(par2);
 
         if (slot != null && slot.getHasStack())
         {
-            ItemStack itemstack1 = slot.getStack();
+            final ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
             if (par2 == 0)
@@ -180,7 +180,7 @@ public class ContainerWorkbench extends Container
         return itemstack;
     }
 
-    public boolean func_94530_a(ItemStack par1ItemStack, Slot par2Slot)
+    public boolean func_94530_a(final ItemStack par1ItemStack, final Slot par2Slot)
     {
         return par2Slot.inventory != this.craftResult && super.func_94530_a(par1ItemStack, par2Slot);
     }
@@ -193,7 +193,7 @@ public class ContainerWorkbench extends Container
             return bukkitEntity;
         }
 
-        CraftInventoryCrafting inventory = new CraftInventoryCrafting(this.craftMatrix, this.craftResult);
+        final CraftInventoryCrafting inventory = new CraftInventoryCrafting(this.craftMatrix, this.craftResult);
         bukkitEntity = new CraftInventoryView(this.player.player.getBukkitEntity(), inventory, this);
         return bukkitEntity;
     }

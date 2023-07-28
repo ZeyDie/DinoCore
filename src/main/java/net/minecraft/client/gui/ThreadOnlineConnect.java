@@ -18,7 +18,7 @@ class ThreadOnlineConnect extends Thread
 
     final TaskOnlineConnect field_96594_c;
 
-    ThreadOnlineConnect(TaskOnlineConnect par1TaskOnlineConnect, String par2Str, int par3)
+    ThreadOnlineConnect(final TaskOnlineConnect par1TaskOnlineConnect, final String par2Str, final int par3)
     {
         this.field_96594_c = par1TaskOnlineConnect;
         this.field_96595_a = par2Str;
@@ -39,7 +39,7 @@ class ThreadOnlineConnect extends Thread
             this.field_96594_c.setMessage(I18n.getString("mco.connect.authorizing"));
             TaskOnlineConnect.func_96580_a(this.field_96594_c).addToSendQueue(new Packet2ClientProtocol(78, this.field_96594_c.getMinecraft().getSession().getUsername(), this.field_96595_a, this.field_96593_b));
         }
-        catch (UnknownHostException unknownhostexception)
+        catch (final UnknownHostException unknownhostexception)
         {
             if (this.field_96594_c.wasScreenClosed())
             {
@@ -48,7 +48,7 @@ class ThreadOnlineConnect extends Thread
 
             this.field_96594_c.getMinecraft().displayGuiScreen(new GuiScreenDisconnectedOnline(TaskOnlineConnect.func_98172_a(this.field_96594_c), "connect.failed", "disconnect.genericReason", new Object[] {"Unknown host \'" + this.field_96595_a + "\'"}));
         }
-        catch (ConnectException connectexception)
+        catch (final ConnectException connectexception)
         {
             if (this.field_96594_c.wasScreenClosed())
             {
@@ -57,7 +57,7 @@ class ThreadOnlineConnect extends Thread
 
             this.field_96594_c.getMinecraft().displayGuiScreen(new GuiScreenDisconnectedOnline(TaskOnlineConnect.func_98172_a(this.field_96594_c), "connect.failed", "disconnect.genericReason", new Object[] {connectexception.getMessage()}));
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             if (this.field_96594_c.wasScreenClosed())
             {

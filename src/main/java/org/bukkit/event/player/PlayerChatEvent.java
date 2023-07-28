@@ -44,7 +44,7 @@ public class PlayerChatEvent extends PlayerEvent implements Cancellable {
         return cancel;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 
@@ -62,7 +62,7 @@ public class PlayerChatEvent extends PlayerEvent implements Cancellable {
      *
      * @param message New message that the player will send
      */
-    public void setMessage(String message) {
+    public void setMessage(final String message) {
         this.message = message;
     }
 
@@ -95,7 +95,7 @@ public class PlayerChatEvent extends PlayerEvent implements Cancellable {
         // Oh for a better way to do this!
         try {
             String.format(format, player, message);
-        } catch (RuntimeException ex) {
+        } catch (final RuntimeException ex) {
             ex.fillInStackTrace();
             throw ex;
         }

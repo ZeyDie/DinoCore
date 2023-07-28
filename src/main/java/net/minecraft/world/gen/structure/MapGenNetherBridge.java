@@ -31,16 +31,16 @@ public class MapGenNetherBridge extends MapGenStructure
         return this.spawnList;
     }
 
-    protected boolean canSpawnStructureAtCoords(int par1, int par2)
+    protected boolean canSpawnStructureAtCoords(final int par1, final int par2)
     {
-        int k = par1 >> 4;
-        int l = par2 >> 4;
+        final int k = par1 >> 4;
+        final int l = par2 >> 4;
         this.rand.setSeed((long)(k ^ l << 4) ^ this.worldObj.getSeed());
         this.rand.nextInt();
         return this.rand.nextInt(3) != 0 ? false : (par1 != (k << 4) + 4 + this.rand.nextInt(8) ? false : par2 == (l << 4) + 4 + this.rand.nextInt(8));
     }
 
-    protected StructureStart getStructureStart(int par1, int par2)
+    protected StructureStart getStructureStart(final int par1, final int par2)
     {
         return new StructureNetherBridgeStart(this.worldObj, this.rand, par1, par2);
     }

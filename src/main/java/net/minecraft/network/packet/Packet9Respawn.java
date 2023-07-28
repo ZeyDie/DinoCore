@@ -23,7 +23,7 @@ public class Packet9Respawn extends Packet
 
     public Packet9Respawn() {}
 
-    public Packet9Respawn(int par1, byte par2, WorldType par3WorldType, int par4, EnumGameType par5EnumGameType)
+    public Packet9Respawn(final int par1, final byte par2, final WorldType par3WorldType, final int par4, final EnumGameType par5EnumGameType)
     {
         this.respawnDimension = par1;
         this.difficulty = par2;
@@ -35,7 +35,7 @@ public class Packet9Respawn extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleRespawn(this);
     }
@@ -43,13 +43,13 @@ public class Packet9Respawn extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.respawnDimension = par1DataInput.readInt();
         this.difficulty = par1DataInput.readByte();
         this.gameType = EnumGameType.getByID(par1DataInput.readByte());
         this.worldHeight = par1DataInput.readShort();
-        String s = readString(par1DataInput, 16);
+        final String s = readString(par1DataInput, 16);
         this.terrainType = WorldType.parseWorldType(s);
 
         if (this.terrainType == null)
@@ -61,7 +61,7 @@ public class Packet9Respawn extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.respawnDimension);
         par1DataOutput.writeByte(this.difficulty);

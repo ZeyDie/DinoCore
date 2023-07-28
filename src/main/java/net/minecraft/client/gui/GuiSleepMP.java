@@ -21,7 +21,7 @@ public class GuiSleepMP extends GuiChat
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         if (par2 == 1)
         {
@@ -33,9 +33,9 @@ public class GuiSleepMP extends GuiChat
         }
         else
         {
-            String s = this.inputField.getText().trim();
+            final String s = this.inputField.getText().trim();
 
-            if (s.length() > 0)
+            if (!s.isEmpty())
             {
                 this.mc.thePlayer.sendChatMessage(s);
             }
@@ -48,7 +48,7 @@ public class GuiSleepMP extends GuiChat
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.id == 1)
         {
@@ -65,7 +65,7 @@ public class GuiSleepMP extends GuiChat
      */
     private void wakeEntity()
     {
-        NetClientHandler netclienthandler = this.mc.thePlayer.sendQueue;
+        final NetClientHandler netclienthandler = this.mc.thePlayer.sendQueue;
         netclienthandler.addToSendQueue(new Packet19EntityAction(this.mc.thePlayer, 3));
     }
 }

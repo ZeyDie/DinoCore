@@ -74,7 +74,7 @@ public interface ISpecialArmor
         private static final boolean DEBUG = false; //Only enable this if you wish to be spamed with debugging information.
                                                     //Left it in because I figured it'd be useful for modders developing custom armor.
 
-        public ArmorProperties(int priority, double ratio, int max)
+        public ArmorProperties(final int priority, final double ratio, final int max)
         {
             Priority    = priority;
             AbsorbRatio = ratio;
@@ -90,17 +90,18 @@ public interface ISpecialArmor
          * @param damage The total damage being done
          * @return The left over damage that has not been absorbed by the armor
          */
-        public static float ApplyArmor(EntityLivingBase entity, ItemStack[] inventory, DamageSource source, double damage)
+        public static float ApplyArmor(final EntityLivingBase entity, final ItemStack[] inventory, final DamageSource source, double damage)
         {
+            double damage1 = damage;
             if (DEBUG)
             {
-                System.out.println("Start: " + damage + " " + (damage * 25));
+                System.out.println("Start: " + damage1 + " " + (damage1 * 25));
             }
-            damage *= 25;
-            ArrayList<ArmorProperties> dmgVals = new ArrayList<ArmorProperties>();
+            damage1 *= 25;
+            final ArrayList<ArmorProperties> dmgVals = new ArrayList<ArmorProperties>();
             for (int x = 0; x < inventory.length; x++)
             {
-                ItemStack stack = inventory[x];
+                final ItemStack stack = inventory[x];
                 if (stack == null)
                 {
                     continue;
@@ -108,13 +109,13 @@ public interface ISpecialArmor
                 ArmorProperties prop = null;
                 if (stack.getItem() instanceof ISpecialArmor)
                 {
-                    ISpecialArmor armor = (ISpecialArmor)stack.getItem();
-                    prop = armor.getProperties(entity, stack, source, damage / 25D, x).copy();
+                    final ISpecialArmor armor = (ISpecialArmor)stack.getItem();
+                    prop = armor.getProperties(entity, stack, source, damage1 / 25.0D, x).copy();
                 }
                 else if (stack.getItem() instanceof ItemArmor && !source.isUnblockable())
                 {
-                    ItemArmor armor = (ItemArmor)stack.getItem();
-                    prop = new ArmorProperties(0, armor.damageReduceAmount / 25D, armor.getMaxDamage() + 1 - stack.getItemDamage());
+                    final ItemArmor armor = (ItemArmor)stack.getItem();
+                    prop = new ArmorProperties(0, armor.damageReduceAmount / 25.0D, armor.getMaxDamage() + 1 - stack.getItemDamage());
                 }
                 if (prop != null)
                 {
@@ -122,27 +123,27 @@ public interface ISpecialArmor
                     dmgVals.add(prop);
                 }
             }
-            if (dmgVals.size() > 0)
+            if (!dmgVals.isEmpty())
             {
-                ArmorProperties[] props = dmgVals.toArray(new ArmorProperties[dmgVals.size()]);
-                StandardizeList(props, damage);
+                final ArmorProperties[] props = dmgVals.toArray(new ArmorProperties[0]);
+                StandardizeList(props, damage1);
                 int level = props[0].Priority;
                 double ratio = 0;
-                for (ArmorProperties prop : props)
+                for (final ArmorProperties prop : props)
                 {
                     if (level != prop.Priority)
                     {
-                        damage -= (damage * ratio);
+                        damage1 -= (damage1 * ratio);
                         ratio = 0;
                         level = prop.Priority;
                     }
                     ratio += prop.AbsorbRatio;
 
-                    double absorb = damage * prop.AbsorbRatio;
+                    final double absorb = damage1 * prop.AbsorbRatio;
                     if (absorb > 0)
                     {
-                        ItemStack stack = inventory[prop.Slot];
-                        int itemDamage = (int)(absorb / 25D < 1 ? 1 : absorb / 25D);
+                        final ItemStack stack = inventory[prop.Slot];
+                        final int itemDamage = (int)(absorb / 25.0D < 1 ? 1 : absorb / 25.0D);
                         if (stack.getItem() instanceof ISpecialArmor)
                         {
                             ((ISpecialArmor)stack.getItem()).damageArmor(entity, stack, source, itemDamage, prop.Slot);
@@ -151,7 +152,7 @@ public interface ISpecialArmor
                         {
                             if (DEBUG)
                             {
-                                System.out.println("Item: " + stack.toString() + " Absorbed: " + (absorb / 25D) + " Damaged: " + itemDamage);
+                                System.out.println("Item: " + stack.toString() + " Absorbed: " + (absorb / 25.0D) + " Damaged: " + itemDamage);
                             }
                             stack.damageItem(itemDamage, entity);
                         }
@@ -165,13 +166,13 @@ public interface ISpecialArmor
                         }
                     }
                 }
-                damage -= (damage * ratio);
+                damage1 -= (damage1 * ratio);
             }
             if (DEBUG)
             {
-                System.out.println("Return: " + (int)(damage / 25.0F) + " " + damage);
+                System.out.println("Return: " + (int)(damage1 / 25.0F) + " " + damage1);
             }
-            return (float)(damage / 25.0F);
+            return (float)(damage1 / 25.0F);
         }
 
         /**
@@ -180,8 +181,9 @@ public interface ISpecialArmor
          * @param armor The armor information
          * @param damage The total damage being received
          */
-        private static void StandardizeList(ArmorProperties[] armor, double damage)
+        private static void StandardizeList(final ArmorProperties[] armor, double damage)
         {
+            double damage1 = damage;
             Arrays.sort(armor);
 
             int     start     = 0;
@@ -193,7 +195,7 @@ public interface ISpecialArmor
 
             if (DEBUG)
             {
-                for (ArmorProperties prop : armor)
+                for (final ArmorProperties prop : armor)
                 {
                     System.out.println(prop);
                 }
@@ -215,10 +217,10 @@ public interface ISpecialArmor
                     {
                         for (int y = start; y <= x; y++)
                         {
-                            double newRatio = armor[y].AbsorbRatio / total;
-                            if (newRatio * damage > armor[y].AbsorbMax)
+                            final double newRatio = armor[y].AbsorbRatio / total;
+                            if (newRatio * damage1 > armor[y].AbsorbMax)
                             {
-                                armor[y].AbsorbRatio = (double)armor[y].AbsorbMax / damage;
+                                armor[y].AbsorbRatio = (double)armor[y].AbsorbMax / damage1;
                                 total = 0;
                                 for (int z = pStart; z <= y; z++)
                                 {
@@ -236,14 +238,14 @@ public interface ISpecialArmor
                         }
                         if (pChange && pFinished)
                         {
-                            damage -= (damage * total);
+                            damage1 -= (damage1 * total);
                             total = 0;
                             start = x + 1;
                             priority = armor[start].Priority;
                             pStart = start;
                             pChange = false;
                             pFinished = false;
-                            if (damage <= 0)
+                            if (damage1 <= 0)
                             {
                                 for (int y = x + 1; y < armor.length; y++)
                                 {
@@ -258,13 +260,13 @@ public interface ISpecialArmor
                         for (int y = start; y <= x; y++)
                         {
                             total -= armor[y].AbsorbRatio;
-                            if (damage * armor[y].AbsorbRatio > armor[y].AbsorbMax)
+                            if (damage1 * armor[y].AbsorbRatio > armor[y].AbsorbMax)
                             {
-                                armor[y].AbsorbRatio = (double)armor[y].AbsorbMax / damage;
+                                armor[y].AbsorbRatio = (double)armor[y].AbsorbMax / damage1;
                             }
                             total += armor[y].AbsorbRatio;
                         }
-                        damage -= (damage * total);
+                        damage1 -= (damage1 * total);
                         total = 0;
                         if (x != armor.length - 1)
                         {
@@ -272,7 +274,7 @@ public interface ISpecialArmor
                             priority = armor[start].Priority;
                             pStart = start;
                             pChange = false;
-                            if (damage <= 0)
+                            if (damage1 <= 0)
                             {
                                 for (int y = x + 1; y < armor.length; y++)
                                 {
@@ -286,21 +288,21 @@ public interface ISpecialArmor
             }
             if (DEBUG)
             {
-                for (ArmorProperties prop : armor)
+                for (final ArmorProperties prop : armor)
                 {
                     System.out.println(prop);
                 }
             }
         }
 
-        public int compareTo(ArmorProperties o)
+        public int compareTo(final ArmorProperties o)
         {
             if (o.Priority != Priority)
             {
                 return o.Priority - Priority;
             }
-            double left =  (  AbsorbRatio == 0 ? 0 :   AbsorbMax * 100.0D /   AbsorbRatio);
-            double right = (o.AbsorbRatio == 0 ? 0 : o.AbsorbMax * 100.0D / o.AbsorbRatio);
+            final double left =  (  AbsorbRatio == 0 ? 0 :   AbsorbMax * 100.0D /   AbsorbRatio);
+            final double right = (o.AbsorbRatio == 0 ? 0 : o.AbsorbMax * 100.0D / o.AbsorbRatio);
             return (int)(left - right);
         }
 

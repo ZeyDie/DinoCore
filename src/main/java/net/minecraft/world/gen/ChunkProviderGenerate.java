@@ -110,7 +110,7 @@ public class ChunkProviderGenerate implements IChunkProvider
         ravineGenerator = TerrainGen.getModdedMapGen(ravineGenerator, RAVINE);
     }
 
-    public ChunkProviderGenerate(World par1World, long par2, boolean par4)
+    public ChunkProviderGenerate(final World par1World, final long par2, final boolean par4)
     {
         this.worldObj = par1World;
         this.mapFeaturesEnabled = par4;
@@ -138,14 +138,14 @@ public class ChunkProviderGenerate implements IChunkProvider
      * Generates the shape of the terrain for the chunk though its all stone though the water is frozen if the
      * temperature is low enough
      */
-    public void generateTerrain(int par1, int par2, byte[] par3ArrayOfByte)
+    public void generateTerrain(final int par1, final int par2, final byte[] par3ArrayOfByte)
     {
-        byte b0 = 4;
-        byte b1 = 16;
-        byte b2 = 63;
-        int k = b0 + 1;
-        byte b3 = 17;
-        int l = b0 + 1;
+        final byte b0 = 4;
+        final byte b1 = 16;
+        final byte b2 = 63;
+        final int k = b0 + 1;
+        final byte b3 = 17;
+        final int l = b0 + 1;
         this.biomesForGeneration = this.worldObj.getWorldChunkManager().getBiomesForGeneration(this.biomesForGeneration, par1 * 4 - 2, par2 * 4 - 2, k + 5, l + 5);
         this.noiseArray = this.initializeNoiseField(this.noiseArray, par1 * b0, 0, par2 * b0, k, b3, l);
 
@@ -155,31 +155,31 @@ public class ChunkProviderGenerate implements IChunkProvider
             {
                 for (int k1 = 0; k1 < b1; ++k1)
                 {
-                    double d0 = 0.125D;
+                    final double d0 = 0.125D;
                     double d1 = this.noiseArray[((i1 + 0) * l + j1 + 0) * b3 + k1 + 0];
                     double d2 = this.noiseArray[((i1 + 0) * l + j1 + 1) * b3 + k1 + 0];
                     double d3 = this.noiseArray[((i1 + 1) * l + j1 + 0) * b3 + k1 + 0];
                     double d4 = this.noiseArray[((i1 + 1) * l + j1 + 1) * b3 + k1 + 0];
-                    double d5 = (this.noiseArray[((i1 + 0) * l + j1 + 0) * b3 + k1 + 1] - d1) * d0;
-                    double d6 = (this.noiseArray[((i1 + 0) * l + j1 + 1) * b3 + k1 + 1] - d2) * d0;
-                    double d7 = (this.noiseArray[((i1 + 1) * l + j1 + 0) * b3 + k1 + 1] - d3) * d0;
-                    double d8 = (this.noiseArray[((i1 + 1) * l + j1 + 1) * b3 + k1 + 1] - d4) * d0;
+                    final double d5 = (this.noiseArray[((i1 + 0) * l + j1 + 0) * b3 + k1 + 1] - d1) * d0;
+                    final double d6 = (this.noiseArray[((i1 + 0) * l + j1 + 1) * b3 + k1 + 1] - d2) * d0;
+                    final double d7 = (this.noiseArray[((i1 + 1) * l + j1 + 0) * b3 + k1 + 1] - d3) * d0;
+                    final double d8 = (this.noiseArray[((i1 + 1) * l + j1 + 1) * b3 + k1 + 1] - d4) * d0;
 
                     for (int l1 = 0; l1 < 8; ++l1)
                     {
-                        double d9 = 0.25D;
+                        final double d9 = 0.25D;
                         double d10 = d1;
                         double d11 = d2;
-                        double d12 = (d3 - d1) * d9;
-                        double d13 = (d4 - d2) * d9;
+                        final double d12 = (d3 - d1) * d9;
+                        final double d13 = (d4 - d2) * d9;
 
                         for (int i2 = 0; i2 < 4; ++i2)
                         {
                             int j2 = i2 + i1 * 4 << 11 | 0 + j1 * 4 << 7 | k1 * 8 + l1;
-                            short short1 = 128;
+                            final short short1 = 128;
                             j2 -= short1;
-                            double d14 = 0.25D;
-                            double d15 = (d11 - d10) * d14;
+                            final double d14 = 0.25D;
+                            final double d15 = (d11 - d10) * d14;
                             double d16 = d10 - d15;
 
                             for (int k2 = 0; k2 < 4; ++k2)
@@ -215,30 +215,30 @@ public class ChunkProviderGenerate implements IChunkProvider
     /**
      * Replaces the stone that was placed in with blocks that match the biome
      */
-    public void replaceBlocksForBiome(int par1, int par2, byte[] par3ArrayOfByte, BiomeGenBase[] par4ArrayOfBiomeGenBase)
+    public void replaceBlocksForBiome(final int par1, final int par2, final byte[] par3ArrayOfByte, final BiomeGenBase[] par4ArrayOfBiomeGenBase)
     {
-        ChunkProviderEvent.ReplaceBiomeBlocks event = new ChunkProviderEvent.ReplaceBiomeBlocks(this, par1, par2, par3ArrayOfByte, par4ArrayOfBiomeGenBase);
+        final ChunkProviderEvent.ReplaceBiomeBlocks event = new ChunkProviderEvent.ReplaceBiomeBlocks(this, par1, par2, par3ArrayOfByte, par4ArrayOfBiomeGenBase);
         MinecraftForge.EVENT_BUS.post(event);
         if (event.getResult() == Result.DENY) return;
 
-        byte b0 = 63;
-        double d0 = 0.03125D;
+        final byte b0 = 63;
+        final double d0 = 0.03125D;
         this.stoneNoise = this.noiseGen4.generateNoiseOctaves(this.stoneNoise, par1 * 16, par2 * 16, 0, 16, 16, 1, d0 * 2.0D, d0 * 2.0D, d0 * 2.0D);
 
         for (int k = 0; k < 16; ++k)
         {
             for (int l = 0; l < 16; ++l)
             {
-                BiomeGenBase biomegenbase = par4ArrayOfBiomeGenBase[l + k * 16];
-                float f = biomegenbase.getFloatTemperature();
-                int i1 = (int)(this.stoneNoise[k + l * 16] / 3.0D + 3.0D + this.rand.nextDouble() * 0.25D);
+                final BiomeGenBase biomegenbase = par4ArrayOfBiomeGenBase[l + k * 16];
+                final float f = biomegenbase.getFloatTemperature();
+                final int i1 = (int)(this.stoneNoise[k + l * 16] / 3.0D + 3.0D + this.rand.nextDouble() * 0.25D);
                 int j1 = -1;
                 byte b1 = biomegenbase.topBlock;
                 byte b2 = biomegenbase.fillerBlock;
 
                 for (int k1 = 127; k1 >= 0; --k1)
                 {
-                    int l1 = (l * 16 + k) * 128 + k1;
+                    final int l1 = (l * 16 + k) * 128 + k1;
 
                     if (k1 <= 0 + this.rand.nextInt(5))
                     {
@@ -246,7 +246,7 @@ public class ChunkProviderGenerate implements IChunkProvider
                     }
                     else
                     {
-                        byte b3 = par3ArrayOfByte[l1];
+                        final byte b3 = par3ArrayOfByte[l1];
 
                         if (b3 == 0)
                         {
@@ -311,7 +311,7 @@ public class ChunkProviderGenerate implements IChunkProvider
     /**
      * loads or generates the chunk at the chunk location specified
      */
-    public Chunk loadChunk(int par1, int par2)
+    public Chunk loadChunk(final int par1, final int par2)
     {
         return this.provideChunk(par1, par2);
     }
@@ -320,10 +320,10 @@ public class ChunkProviderGenerate implements IChunkProvider
      * Will return back a chunk, if it doesn't exist and its not a MP client it will generates all the blocks for the
      * specified chunk from the map seed and chunk seed
      */
-    public Chunk provideChunk(int par1, int par2)
+    public Chunk provideChunk(final int par1, final int par2)
     {
         this.rand.setSeed((long)par1 * 341873128712L + (long)par2 * 132897987541L);
-        byte[] abyte = new byte[32768];
+        final byte[] abyte = new byte[32768];
         this.generateTerrain(par1, par2, abyte);
         this.biomesForGeneration = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(this.biomesForGeneration, par1 * 16, par2 * 16, 16, 16);
         this.replaceBlocksForBiome(par1, par2, abyte, this.biomesForGeneration);
@@ -338,8 +338,8 @@ public class ChunkProviderGenerate implements IChunkProvider
             this.scatteredFeatureGenerator.generate(this, this.worldObj, par1, par2, abyte);
         }
 
-        Chunk chunk = new Chunk(this.worldObj, abyte, par1, par2);
-        byte[] abyte1 = chunk.getBiomeArray();
+        final Chunk chunk = new Chunk(this.worldObj, abyte, par1, par2);
+        final byte[] abyte1 = chunk.getBiomeArray();
 
         for (int k = 0; k < abyte1.length; ++k)
         {
@@ -354,15 +354,16 @@ public class ChunkProviderGenerate implements IChunkProvider
      * generates a subset of the level's terrain data. Takes 7 arguments: the [empty] noise array, the position, and the
      * size.
      */
-    private double[] initializeNoiseField(double[] par1ArrayOfDouble, int par2, int par3, int par4, int par5, int par6, int par7)
+    private double[] initializeNoiseField(double[] par1ArrayOfDouble, final int par2, final int par3, final int par4, final int par5, final int par6, final int par7)
     {
-        ChunkProviderEvent.InitNoiseField event = new ChunkProviderEvent.InitNoiseField(this, par1ArrayOfDouble, par2, par3, par4, par5, par6, par7);
+        double[] par1ArrayOfDouble1 = par1ArrayOfDouble;
+        final ChunkProviderEvent.InitNoiseField event = new ChunkProviderEvent.InitNoiseField(this, par1ArrayOfDouble1, par2, par3, par4, par5, par6, par7);
         MinecraftForge.EVENT_BUS.post(event);
         if (event.getResult() == Result.DENY) return event.noisefield;
 
-        if (par1ArrayOfDouble == null)
+        if (par1ArrayOfDouble1 == null)
         {
-            par1ArrayOfDouble = new double[par5 * par6 * par7];
+            par1ArrayOfDouble1 = new double[par5 * par6 * par7];
         }
 
         if (this.parabolicField == null)
@@ -373,21 +374,21 @@ public class ChunkProviderGenerate implements IChunkProvider
             {
                 for (int l1 = -2; l1 <= 2; ++l1)
                 {
-                    float f = 10.0F / MathHelper.sqrt_float((float)(k1 * k1 + l1 * l1) + 0.2F);
+                    final float f = 10.0F / MathHelper.sqrt_float((float)(k1 * k1 + l1 * l1) + 0.2F);
                     this.parabolicField[k1 + 2 + (l1 + 2) * 5] = f;
                 }
             }
         }
 
-        double d0 = 684.412D;
-        double d1 = 684.412D;
+        final double d0 = 684.412D;
+        final double d1 = 684.412D;
         this.noise5 = this.noiseGen5.generateNoiseOctaves(this.noise5, par2, par4, par5, par7, 1.121D, 1.121D, 0.5D);
         this.noise6 = this.noiseGen6.generateNoiseOctaves(this.noise6, par2, par4, par5, par7, 200.0D, 200.0D, 0.5D);
         this.noise3 = this.noiseGen3.generateNoiseOctaves(this.noise3, par2, par3, par4, par5, par6, par7, d0 / 80.0D, d1 / 160.0D, d0 / 80.0D);
         this.noise1 = this.noiseGen1.generateNoiseOctaves(this.noise1, par2, par3, par4, par5, par6, par7, d0, d1, d0);
         this.noise2 = this.noiseGen2.generateNoiseOctaves(this.noise2, par2, par3, par4, par5, par6, par7, d0, d1, d0);
-        boolean flag = false;
-        boolean flag1 = false;
+        final boolean flag = false;
+        final boolean flag1 = false;
         int i2 = 0;
         int j2 = 0;
 
@@ -398,14 +399,14 @@ public class ChunkProviderGenerate implements IChunkProvider
                 float f1 = 0.0F;
                 float f2 = 0.0F;
                 float f3 = 0.0F;
-                byte b0 = 2;
-                BiomeGenBase biomegenbase = this.biomesForGeneration[k2 + 2 + (l2 + 2) * (par5 + 5)];
+                final byte b0 = 2;
+                final BiomeGenBase biomegenbase = this.biomesForGeneration[k2 + 2 + (l2 + 2) * (par5 + 5)];
 
                 for (int i3 = -b0; i3 <= b0; ++i3)
                 {
                     for (int j3 = -b0; j3 <= b0; ++j3)
                     {
-                        BiomeGenBase biomegenbase1 = this.biomesForGeneration[k2 + i3 + 2 + (l2 + j3 + 2) * (par5 + 5)];
+                        final BiomeGenBase biomegenbase1 = this.biomesForGeneration[k2 + i3 + 2 + (l2 + j3 + 2) * (par5 + 5)];
                         float f4 = this.parabolicField[i3 + 2 + (j3 + 2) * 5] / (biomegenbase1.minHeight + 2.0F);
 
                         if (biomegenbase1.minHeight > biomegenbase.minHeight)
@@ -459,10 +460,10 @@ public class ChunkProviderGenerate implements IChunkProvider
                 for (int k3 = 0; k3 < par6; ++k3)
                 {
                     double d3 = (double)f2;
-                    double d4 = (double)f1;
+                    final double d4 = (double)f1;
                     d3 += d2 * 0.2D;
                     d3 = d3 * (double)par6 / 16.0D;
-                    double d5 = (double)par6 / 2.0D + d3 * 4.0D;
+                    final double d5 = (double)par6 / 2.0D + d3 * 4.0D;
                     double d6 = 0.0D;
                     double d7 = ((double)k3 - d5) * 12.0D * 128.0D / 128.0D / d4;
 
@@ -471,9 +472,9 @@ public class ChunkProviderGenerate implements IChunkProvider
                         d7 *= 4.0D;
                     }
 
-                    double d8 = this.noise1[i2] / 512.0D;
-                    double d9 = this.noise2[i2] / 512.0D;
-                    double d10 = (this.noise3[i2] / 10.0D + 1.0D) / 2.0D;
+                    final double d8 = this.noise1[i2] / 512.0D;
+                    final double d9 = this.noise2[i2] / 512.0D;
+                    final double d10 = (this.noise3[i2] / 10.0D + 1.0D) / 2.0D;
 
                     if (d10 < 0.0D)
                     {
@@ -492,23 +493,23 @@ public class ChunkProviderGenerate implements IChunkProvider
 
                     if (k3 > par6 - 4)
                     {
-                        double d11 = (double)((float)(k3 - (par6 - 4)) / 3.0F);
+                        final double d11 = (double)((float)(k3 - (par6 - 4)) / 3.0F);
                         d6 = d6 * (1.0D - d11) + -10.0D * d11;
                     }
 
-                    par1ArrayOfDouble[i2] = d6;
+                    par1ArrayOfDouble1[i2] = d6;
                     ++i2;
                 }
             }
         }
 
-        return par1ArrayOfDouble;
+        return par1ArrayOfDouble1;
     }
 
     /**
      * Checks to see if a chunk exists at x, y
      */
-    public boolean chunkExists(int par1, int par2)
+    public boolean chunkExists(final int par1, final int par2)
     {
         return true;
     }
@@ -516,15 +517,15 @@ public class ChunkProviderGenerate implements IChunkProvider
     /**
      * Populates chunk with ores etc etc
      */
-    public void populate(IChunkProvider par1IChunkProvider, int par2, int par3)
+    public void populate(final IChunkProvider par1IChunkProvider, final int par2, final int par3)
     {
         BlockSand.fallInstantly = true;
         int k = par2 * 16;
         int l = par3 * 16;
-        BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(k + 16, l + 16);
+        final BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(k + 16, l + 16);
         this.rand.setSeed(this.worldObj.getSeed());
-        long i1 = this.rand.nextLong() / 2L * 2L + 1L;
-        long j1 = this.rand.nextLong() / 2L * 2L + 1L;
+        final long i1 = this.rand.nextLong() / 2L * 2L + 1L;
+        final long j1 = this.rand.nextLong() / 2L * 2L + 1L;
         this.rand.setSeed((long)par2 * i1 + (long)par3 * j1 ^ this.worldObj.getSeed());
         boolean flag = false;
 
@@ -569,7 +570,7 @@ public class ChunkProviderGenerate implements IChunkProvider
         {
             l1 = k + this.rand.nextInt(16) + 8;
             i2 = this.rand.nextInt(128);
-            int j2 = l + this.rand.nextInt(16) + 8;
+            final int j2 = l + this.rand.nextInt(16) + 8;
             (new WorldGenDungeons()).generate(this.worldObj, this.rand, l1, i2, j2);
         }
 
@@ -606,7 +607,7 @@ public class ChunkProviderGenerate implements IChunkProvider
      * Two modes of operation: if passed true, save all Chunks in one go.  If passed false, save up to two chunks.
      * Return true if all chunks have been saved.
      */
-    public boolean saveChunks(boolean par1, IProgressUpdate par2IProgressUpdate)
+    public boolean saveChunks(final boolean par1, final IProgressUpdate par2IProgressUpdate)
     {
         return true;
     }
@@ -644,16 +645,16 @@ public class ChunkProviderGenerate implements IChunkProvider
     /**
      * Returns a list of creatures of the specified type that can spawn at the given location.
      */
-    public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int par2, int par3, int par4)
+    public List getPossibleCreatures(final EnumCreatureType par1EnumCreatureType, final int par2, final int par3, final int par4)
     {
-        BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(par2, par4);
+        final BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(par2, par4);
         return biomegenbase == null ? null : (par1EnumCreatureType == EnumCreatureType.monster && this.scatteredFeatureGenerator.func_143030_a(par2, par3, par4) ? this.scatteredFeatureGenerator.getScatteredFeatureSpawnList() : biomegenbase.getSpawnableList(par1EnumCreatureType));
     }
 
     /**
      * Returns the location of the closest structure of the specified type. If not found returns null.
      */
-    public ChunkPosition findClosestStructure(World par1World, String par2Str, int par3, int par4, int par5)
+    public ChunkPosition findClosestStructure(final World par1World, final String par2Str, final int par3, final int par4, final int par5)
     {
         return "Stronghold".equals(par2Str) && this.strongholdGenerator != null ? this.strongholdGenerator.getNearestInstance(par1World, par3, par4, par5) : null;
     }
@@ -663,7 +664,7 @@ public class ChunkProviderGenerate implements IChunkProvider
         return 0;
     }
 
-    public void recreateStructures(int par1, int par2)
+    public void recreateStructures(final int par1, final int par2)
     {
         if (this.mapFeaturesEnabled)
         {

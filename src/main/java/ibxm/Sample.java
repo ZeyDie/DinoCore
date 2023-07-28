@@ -41,19 +41,21 @@ public class Sample {
 		set_sample_data( new short[ 0 ], 0, 0, false );
 	}
 	
-	public void set_sample_data( short[] data, int loop_start, int loop_length, boolean ping_pong ) {
-		int offset;
+	public void set_sample_data(final short[] data, int loop_start, int loop_length, final boolean ping_pong ) {
+        int loop_length1 = loop_length;
+        int loop_start1 = loop_start;
+        int offset;
 		short sample;		
-		if( loop_start < 0 ) {
-			loop_start = 0;
+		if( loop_start1 < 0 ) {
+			loop_start1 = 0;
 		}
-		if( loop_start >= data.length ) {
-			loop_start = data.length - 1;
+		if( loop_start1 >= data.length ) {
+			loop_start1 = data.length - 1;
 		}
-		if( loop_start + loop_length > data.length ) {
-			loop_length = data.length - loop_start;
+		if( loop_start1 + loop_length1 > data.length ) {
+			loop_length1 = data.length - loop_start1;
 		}
-		if( loop_length <= 1 ) {
+		if( loop_length1 <= 1 ) {
 			sample_data = new short[ OVERLAP + data.length + OVERLAP * 3 ];
 			System.arraycopy( data, 0, sample_data, OVERLAP, data.length );
 			offset = 0;
@@ -63,172 +65,193 @@ public class Sample {
 				sample_data[ OVERLAP + data.length + offset ] = sample;
 				offset += 1;
 			}
-			loop_start = OVERLAP + data.length + OVERLAP;
-			loop_length = 1;
+			loop_start1 = OVERLAP + data.length + OVERLAP;
+			loop_length1 = 1;
 		} else {
 			if( ping_pong ) {
-				sample_data = new short[ OVERLAP + loop_start + loop_length * 2 + OVERLAP * 2 ];
-				System.arraycopy( data, 0, sample_data, OVERLAP, loop_start + loop_length );
+				sample_data = new short[ OVERLAP + loop_start1 + loop_length1 * 2 + OVERLAP * 2 ];
+				System.arraycopy( data, 0, sample_data, OVERLAP, loop_start1 + loop_length1);
 				offset = 0;
-				while( offset < loop_length ) {
-					sample = data[ loop_start + loop_length - offset - 1 ];
-					sample_data[ OVERLAP + loop_start + loop_length + offset ] = sample;
+				while( offset < loop_length1) {
+					sample = data[ loop_start1 + loop_length1 - offset - 1 ];
+					sample_data[ OVERLAP + loop_start1 + loop_length1 + offset ] = sample;
 					offset += 1;
 				}
-				loop_start = loop_start + OVERLAP;
-				loop_length = loop_length * 2;
+				loop_start1 = loop_start1 + OVERLAP;
+				loop_length1 = loop_length1 * 2;
 			} else {
-				sample_data = new short[ OVERLAP + loop_start + loop_length + OVERLAP * 2 ];
-				System.arraycopy( data, 0, sample_data, OVERLAP, loop_start + loop_length );
-				loop_start = loop_start + OVERLAP;
+				sample_data = new short[ OVERLAP + loop_start1 + loop_length1 + OVERLAP * 2 ];
+				System.arraycopy( data, 0, sample_data, OVERLAP, loop_start1 + loop_length1);
+				loop_start1 = loop_start1 + OVERLAP;
 			}
 			offset = 0;
 			while( offset < OVERLAP * 2 ) {
-				sample = sample_data[ loop_start + offset ];
-				sample_data[ loop_start + loop_length + offset ] = sample;
+				sample = sample_data[ loop_start1 + offset ];
+				sample_data[ loop_start1 + loop_length1 + offset ] = sample;
 				offset += 1;
 			}
 		}
-		this.loop_start = loop_start;
-		this.loop_length = loop_length;
+		this.loop_start = loop_start1;
+		this.loop_length = loop_length1;
 	}
 
 	public void resample_nearest(
-			int sample_idx, int sample_frac, int step, int left_gain, int right_gain,
-			int[] mix_buffer, int frame_offset, int frames ) {
-		int loop_end, offset, end, max_sample_idx;
-		sample_idx += OVERLAP;
+            int sample_idx, int sample_frac, final int step, final int left_gain, final int right_gain,
+            final int[] mix_buffer, final int frame_offset, int frames ) {
+        int sample_idx1 = sample_idx;
+        int sample_frac1 = sample_frac;
+        int frames1 = frames;
+        final int loop_end;
+        int offset;
+        final int end;
+        int max_sample_idx;
+        sample_idx1 += OVERLAP;
 		loop_end = loop_start + loop_length - 1;
 		offset = frame_offset << 1;
-		end = ( frame_offset + frames - 1 ) << 1;
-		while( frames > 0 ) {
-			if( sample_idx > loop_end ) {
+		end = ( frame_offset + frames1 - 1 ) << 1;
+		while( frames1 > 0 ) {
+			if( sample_idx1 > loop_end ) {
 				if( loop_length <= 1 ) {
 					break;
 				}
-				sample_idx = loop_start + ( sample_idx - loop_start ) % loop_length;
+				sample_idx1 = loop_start + ( sample_idx1 - loop_start ) % loop_length;
 			}
-			max_sample_idx = sample_idx + ( ( sample_frac + ( frames - 1 ) * step ) >> IBXM.FP_SHIFT );
+			max_sample_idx = sample_idx1 + ( ( sample_frac1 + ( frames1 - 1 ) * step ) >> IBXM.FP_SHIFT );
 			if( max_sample_idx > loop_end ) {
-				while( sample_idx <= loop_end ) {
-					mix_buffer[ offset++ ] += sample_data[ sample_idx ] * left_gain >> IBXM.FP_SHIFT;
-					mix_buffer[ offset++ ] += sample_data[ sample_idx ] * right_gain >> IBXM.FP_SHIFT;
-					sample_frac += step;
-					sample_idx += sample_frac >> IBXM.FP_SHIFT;
-					sample_frac &= IBXM.FP_MASK;
+				while( sample_idx1 <= loop_end ) {
+					mix_buffer[ offset++ ] += sample_data[sample_idx1] * left_gain >> IBXM.FP_SHIFT;
+					mix_buffer[ offset++ ] += sample_data[sample_idx1] * right_gain >> IBXM.FP_SHIFT;
+					sample_frac1 += step;
+					sample_idx1 += sample_frac1 >> IBXM.FP_SHIFT;
+					sample_frac1 &= IBXM.FP_MASK;
 				}
 			} else {
 				while( offset <= end ) {
-					mix_buffer[ offset++ ] += sample_data[ sample_idx ] * left_gain >> IBXM.FP_SHIFT;
-					mix_buffer[ offset++ ] += sample_data[ sample_idx ] * right_gain >> IBXM.FP_SHIFT;
-					sample_frac += step;
-					sample_idx += sample_frac >> IBXM.FP_SHIFT;
-					sample_frac &= IBXM.FP_MASK;
+					mix_buffer[ offset++ ] += sample_data[sample_idx1] * left_gain >> IBXM.FP_SHIFT;
+					mix_buffer[ offset++ ] += sample_data[sample_idx1] * right_gain >> IBXM.FP_SHIFT;
+					sample_frac1 += step;
+					sample_idx1 += sample_frac1 >> IBXM.FP_SHIFT;
+					sample_frac1 &= IBXM.FP_MASK;
 				}
 			}
-			frames = ( end - offset + 2 ) >> 1;
+			frames1 = ( end - offset + 2 ) >> 1;
 		}
 	}
 
 	public void resample_linear(
-			int sample_idx, int sample_frac, int step, int left_gain, int right_gain,
-			int[] mix_buffer, int frame_offset, int frames ) {
-		int loop_end, offset, end, max_sample_idx, amplitude;
-		sample_idx += OVERLAP;
+            int sample_idx, int sample_frac, final int step, final int left_gain, final int right_gain,
+            final int[] mix_buffer, final int frame_offset, int frames ) {
+        int sample_idx1 = sample_idx;
+        int sample_frac1 = sample_frac;
+        int frames1 = frames;
+        final int loop_end;
+        int offset;
+        final int end;
+        int max_sample_idx;
+        int amplitude;
+        sample_idx1 += OVERLAP;
 		loop_end = loop_start + loop_length - 1;
 		offset = frame_offset << 1;
-		end = ( frame_offset + frames - 1 ) << 1;
-		while( frames > 0 ) {
-			if( sample_idx > loop_end ) {
+		end = ( frame_offset + frames1 - 1 ) << 1;
+		while( frames1 > 0 ) {
+			if( sample_idx1 > loop_end ) {
 				if( loop_length <= 1 ) {
 					break;
 				}
-				sample_idx = loop_start + ( sample_idx - loop_start ) % loop_length;
+				sample_idx1 = loop_start + ( sample_idx1 - loop_start ) % loop_length;
 			}
-			max_sample_idx = sample_idx + ( ( sample_frac + ( frames - 1 ) * step ) >> IBXM.FP_SHIFT );
+			max_sample_idx = sample_idx1 + ( ( sample_frac1 + ( frames1 - 1 ) * step ) >> IBXM.FP_SHIFT );
 			if( max_sample_idx > loop_end ) {
-				while( sample_idx <= loop_end ) {
-					amplitude = sample_data[ sample_idx ];
-					amplitude += ( sample_data[ sample_idx + 1 ] - amplitude ) * sample_frac >> IBXM.FP_SHIFT;
+				while( sample_idx1 <= loop_end ) {
+					amplitude = sample_data[sample_idx1];
+					amplitude += ( sample_data[ sample_idx1 + 1 ] - amplitude ) * sample_frac1 >> IBXM.FP_SHIFT;
 					mix_buffer[ offset++ ] += amplitude * left_gain >> IBXM.FP_SHIFT;
 					mix_buffer[ offset++ ] += amplitude * right_gain >> IBXM.FP_SHIFT;
-					sample_frac += step;
-					sample_idx += sample_frac >> IBXM.FP_SHIFT;
-					sample_frac &= IBXM.FP_MASK;
+					sample_frac1 += step;
+					sample_idx1 += sample_frac1 >> IBXM.FP_SHIFT;
+					sample_frac1 &= IBXM.FP_MASK;
 				}
 			} else {
 				while( offset <= end ) {
-					amplitude = sample_data[ sample_idx ];
-					amplitude += ( sample_data[ sample_idx + 1 ] - amplitude ) * sample_frac >> IBXM.FP_SHIFT;
+					amplitude = sample_data[sample_idx1];
+					amplitude += ( sample_data[ sample_idx1 + 1 ] - amplitude ) * sample_frac1 >> IBXM.FP_SHIFT;
 					mix_buffer[ offset++ ] += amplitude * left_gain >> IBXM.FP_SHIFT;
 					mix_buffer[ offset++ ] += amplitude * right_gain >> IBXM.FP_SHIFT;
-					sample_frac += step;
-					sample_idx += sample_frac >> IBXM.FP_SHIFT;
-					sample_frac &= IBXM.FP_MASK;
+					sample_frac1 += step;
+					sample_idx1 += sample_frac1 >> IBXM.FP_SHIFT;
+					sample_frac1 &= IBXM.FP_MASK;
 				}
 			}
-			frames = ( end - offset + 2 ) >> 1;
+			frames1 = ( end - offset + 2 ) >> 1;
 		}
 	}
 
 	public void resample_sinc(
-			int sample_idx, int sample_frac, int step, int left_gain, int right_gain,
-			int[] mix_buffer, int frame_offset, int frames ) {
-		int offset, end, loop_end, table_idx, a1, a2, amplitude;
-		loop_end = loop_start + loop_length - 1;
+            int sample_idx, int sample_frac, final int step, final int left_gain, final int right_gain,
+            final int[] mix_buffer, final int frame_offset, final int frames ) {
+        int sample_idx1 = sample_idx;
+        int sample_frac1 = sample_frac;
+        int offset;
+        int end;
+        final int loop_end;
+        int table_idx;
+        int a1;
+        int a2;
+        int amplitude;
+        loop_end = loop_start + loop_length - 1;
 		offset = frame_offset << 1;
 		end = ( frame_offset + frames - 1 ) << 1;
 		while( offset <= end ) {
-			if( sample_idx > loop_end ) {
+			if( sample_idx1 > loop_end ) {
 				if( loop_length <= 1 ) {
 					break;
 				}
-				sample_idx = loop_start + ( sample_idx - loop_start ) % loop_length;
+				sample_idx1 = loop_start + ( sample_idx1 - loop_start ) % loop_length;
 			}
-			table_idx = ( sample_frac >> INTERP_SHIFT ) << POINT_SHIFT;
-			a1  = sinc_table[ table_idx + 0  ] * sample_data[ sample_idx + 0  ] >> 15;
-			a1 += sinc_table[ table_idx + 1  ] * sample_data[ sample_idx + 1  ] >> 15;
-			a1 += sinc_table[ table_idx + 2  ] * sample_data[ sample_idx + 2  ] >> 15;
-			a1 += sinc_table[ table_idx + 3  ] * sample_data[ sample_idx + 3  ] >> 15;
-			a1 += sinc_table[ table_idx + 4  ] * sample_data[ sample_idx + 4  ] >> 15;
-			a1 += sinc_table[ table_idx + 5  ] * sample_data[ sample_idx + 5  ] >> 15;
-			a1 += sinc_table[ table_idx + 6  ] * sample_data[ sample_idx + 6  ] >> 15;
-			a1 += sinc_table[ table_idx + 7  ] * sample_data[ sample_idx + 7  ] >> 15;
-			a1 += sinc_table[ table_idx + 8  ] * sample_data[ sample_idx + 8  ] >> 15;
-			a1 += sinc_table[ table_idx + 9  ] * sample_data[ sample_idx + 9  ] >> 15;
-			a1 += sinc_table[ table_idx + 10 ] * sample_data[ sample_idx + 10 ] >> 15;
-			a1 += sinc_table[ table_idx + 11 ] * sample_data[ sample_idx + 11 ] >> 15;
-			a1 += sinc_table[ table_idx + 12 ] * sample_data[ sample_idx + 12 ] >> 15;
-			a1 += sinc_table[ table_idx + 13 ] * sample_data[ sample_idx + 13 ] >> 15;
-			a1 += sinc_table[ table_idx + 14 ] * sample_data[ sample_idx + 14 ] >> 15;
-			a1 += sinc_table[ table_idx + 15 ] * sample_data[ sample_idx + 15 ] >> 15;
-			a2  = sinc_table[ table_idx + 16 ] * sample_data[ sample_idx + 0  ] >> 15;
-			a2 += sinc_table[ table_idx + 17 ] * sample_data[ sample_idx + 1  ] >> 15;
-			a2 += sinc_table[ table_idx + 18 ] * sample_data[ sample_idx + 2  ] >> 15;
-			a2 += sinc_table[ table_idx + 19 ] * sample_data[ sample_idx + 3  ] >> 15;
-			a2 += sinc_table[ table_idx + 20 ] * sample_data[ sample_idx + 4  ] >> 15;
-			a2 += sinc_table[ table_idx + 21 ] * sample_data[ sample_idx + 5  ] >> 15;
-			a2 += sinc_table[ table_idx + 22 ] * sample_data[ sample_idx + 6  ] >> 15;
-			a2 += sinc_table[ table_idx + 23 ] * sample_data[ sample_idx + 7  ] >> 15;
-			a2 += sinc_table[ table_idx + 24 ] * sample_data[ sample_idx + 8  ] >> 15;
-			a2 += sinc_table[ table_idx + 25 ] * sample_data[ sample_idx + 9  ] >> 15;
-			a2 += sinc_table[ table_idx + 26 ] * sample_data[ sample_idx + 10 ] >> 15;
-			a2 += sinc_table[ table_idx + 27 ] * sample_data[ sample_idx + 11 ] >> 15;
-			a2 += sinc_table[ table_idx + 28 ] * sample_data[ sample_idx + 12 ] >> 15;
-			a2 += sinc_table[ table_idx + 29 ] * sample_data[ sample_idx + 13 ] >> 15;
-			a2 += sinc_table[ table_idx + 30 ] * sample_data[ sample_idx + 14 ] >> 15;
-			a2 += sinc_table[ table_idx + 31 ] * sample_data[ sample_idx + 15 ] >> 15;			
-			amplitude = a1 + ( ( a2 - a1 ) * ( sample_frac & INTERP_BITMASK ) >> INTERP_SHIFT );
+			table_idx = ( sample_frac1 >> INTERP_SHIFT ) << POINT_SHIFT;
+			a1  = sinc_table[ table_idx + 0  ] * sample_data[ sample_idx1 + 0  ] >> 15;
+			a1 += sinc_table[ table_idx + 1  ] * sample_data[ sample_idx1 + 1  ] >> 15;
+			a1 += sinc_table[ table_idx + 2  ] * sample_data[ sample_idx1 + 2  ] >> 15;
+			a1 += sinc_table[ table_idx + 3  ] * sample_data[ sample_idx1 + 3  ] >> 15;
+			a1 += sinc_table[ table_idx + 4  ] * sample_data[ sample_idx1 + 4  ] >> 15;
+			a1 += sinc_table[ table_idx + 5  ] * sample_data[ sample_idx1 + 5  ] >> 15;
+			a1 += sinc_table[ table_idx + 6  ] * sample_data[ sample_idx1 + 6  ] >> 15;
+			a1 += sinc_table[ table_idx + 7  ] * sample_data[ sample_idx1 + 7  ] >> 15;
+			a1 += sinc_table[ table_idx + 8  ] * sample_data[ sample_idx1 + 8  ] >> 15;
+			a1 += sinc_table[ table_idx + 9  ] * sample_data[ sample_idx1 + 9  ] >> 15;
+			a1 += sinc_table[ table_idx + 10 ] * sample_data[ sample_idx1 + 10 ] >> 15;
+			a1 += sinc_table[ table_idx + 11 ] * sample_data[ sample_idx1 + 11 ] >> 15;
+			a1 += sinc_table[ table_idx + 12 ] * sample_data[ sample_idx1 + 12 ] >> 15;
+			a1 += sinc_table[ table_idx + 13 ] * sample_data[ sample_idx1 + 13 ] >> 15;
+			a1 += sinc_table[ table_idx + 14 ] * sample_data[ sample_idx1 + 14 ] >> 15;
+			a1 += sinc_table[ table_idx + 15 ] * sample_data[ sample_idx1 + 15 ] >> 15;
+			a2  = sinc_table[ table_idx + 16 ] * sample_data[ sample_idx1 + 0  ] >> 15;
+			a2 += sinc_table[ table_idx + 17 ] * sample_data[ sample_idx1 + 1  ] >> 15;
+			a2 += sinc_table[ table_idx + 18 ] * sample_data[ sample_idx1 + 2  ] >> 15;
+			a2 += sinc_table[ table_idx + 19 ] * sample_data[ sample_idx1 + 3  ] >> 15;
+			a2 += sinc_table[ table_idx + 20 ] * sample_data[ sample_idx1 + 4  ] >> 15;
+			a2 += sinc_table[ table_idx + 21 ] * sample_data[ sample_idx1 + 5  ] >> 15;
+			a2 += sinc_table[ table_idx + 22 ] * sample_data[ sample_idx1 + 6  ] >> 15;
+			a2 += sinc_table[ table_idx + 23 ] * sample_data[ sample_idx1 + 7  ] >> 15;
+			a2 += sinc_table[ table_idx + 24 ] * sample_data[ sample_idx1 + 8  ] >> 15;
+			a2 += sinc_table[ table_idx + 25 ] * sample_data[ sample_idx1 + 9  ] >> 15;
+			a2 += sinc_table[ table_idx + 26 ] * sample_data[ sample_idx1 + 10 ] >> 15;
+			a2 += sinc_table[ table_idx + 27 ] * sample_data[ sample_idx1 + 11 ] >> 15;
+			a2 += sinc_table[ table_idx + 28 ] * sample_data[ sample_idx1 + 12 ] >> 15;
+			a2 += sinc_table[ table_idx + 29 ] * sample_data[ sample_idx1 + 13 ] >> 15;
+			a2 += sinc_table[ table_idx + 30 ] * sample_data[ sample_idx1 + 14 ] >> 15;
+			a2 += sinc_table[ table_idx + 31 ] * sample_data[ sample_idx1 + 15 ] >> 15;
+			amplitude = a1 + ( ( a2 - a1 ) * ( sample_frac1 & INTERP_BITMASK ) >> INTERP_SHIFT );
 			mix_buffer[ offset ] += amplitude * left_gain >> IBXM.FP_SHIFT;
 			mix_buffer[ offset + 1 ] += amplitude * right_gain >> IBXM.FP_SHIFT;
 			offset += 2;
-			sample_frac += step;
-			sample_idx += sample_frac >> IBXM.FP_SHIFT;
-			sample_frac &= IBXM.FP_MASK;
+			sample_frac1 += step;
+			sample_idx1 += sample_frac1 >> IBXM.FP_SHIFT;
+			sample_frac1 &= IBXM.FP_MASK;
 		}
 	}
 
-	public boolean has_finished( int sample_idx ) {
+	public boolean has_finished(final int sample_idx ) {
 		boolean finished;
 		finished = false;
 		if( loop_length <= 1 && sample_idx > loop_start ) {

@@ -18,7 +18,7 @@ public class AutoUpdater {
     private ArtifactDetails latest = null;
     private boolean suggestChannels = true;
 
-    public AutoUpdater(BukkitDLUpdaterService service, Logger log, String channel) {
+    public AutoUpdater(final BukkitDLUpdaterService service, final Logger log, final String channel) {
         this.service = service;
         this.log = log;
         this.channel = channel;
@@ -32,7 +32,7 @@ public class AutoUpdater {
         return enabled;
     }
 
-    public void setEnabled(boolean isEnabled) {
+    public void setEnabled(final boolean isEnabled) {
         this.enabled = isEnabled;
     }
 
@@ -40,7 +40,7 @@ public class AutoUpdater {
         return suggestChannels;
     }
 
-    public void setSuggestChannels(boolean suggestChannels) {
+    public void setSuggestChannels(final boolean suggestChannels) {
         this.suggestChannels = suggestChannels;
     }
 
@@ -83,7 +83,7 @@ public class AutoUpdater {
                         log.severe("Your version of CraftBukkit is known to be broken. It is strongly advised that you update to a more recent version ASAP.");
                         log.severe("Known issues with your version:");
 
-                        for (String line : current.getBrokenReason().split("\n")) {
+                        for (final String line : current.getBrokenReason().split("\n")) {
                             log.severe("> " + line);
                         }
 
@@ -103,14 +103,14 @@ public class AutoUpdater {
                     log.severe("Your version of CraftBukkit is known to be broken. It is strongly advised that you update to a more recent version ASAP.");
                     log.severe("Known issues with your version:");
 
-                    for (String line : current.getBrokenReason().split("\n")) {
+                    for (final String line : current.getBrokenReason().split("\n")) {
                         log.severe("> " + line);
                     }
 
                     log.severe("Unfortunately, there is not yet a newer version suitable for your server. We would advise you wait an hour or two, or try out a dev build.");
                     log.severe("----- ------------------- -----");
                 } else if ((current != null) && (shouldSuggestChannels())) {
-                    ArtifactDetails.ChannelDetails prefChan = service.getChannel(channel, "preferred channel details");
+                    final ArtifactDetails.ChannelDetails prefChan = service.getChannel(channel, "preferred channel details");
 
                     if ((prefChan != null) && (current.getChannel().getPriority() < prefChan.getPriority())) {
                         log.info("----- Bukkit Auto Updater -----");

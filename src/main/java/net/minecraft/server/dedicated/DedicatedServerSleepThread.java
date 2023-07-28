@@ -5,7 +5,7 @@ class DedicatedServerSleepThread extends Thread
     /** Instance of the DecitatedServer. */
     final DedicatedServer theDecitatedServer;
 
-    DedicatedServerSleepThread(DedicatedServer par1DedicatedServer)
+    DedicatedServerSleepThread(final DedicatedServer par1DedicatedServer)
     {
         this.theDecitatedServer = par1DedicatedServer;
         this.setDaemon(true);
@@ -23,7 +23,7 @@ class DedicatedServerSleepThread extends Thread
                     Thread.sleep(2147483647L);
                 }
             }
-            catch (InterruptedException interruptedexception)
+            catch (final InterruptedException interruptedexception)
             {
                 ;
             }

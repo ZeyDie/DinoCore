@@ -10,7 +10,7 @@ public class PortalPosition extends ChunkCoordinates
     /** The teleporter to which this PortalPosition applies */
     final Teleporter teleporterInstance;
 
-    public PortalPosition(Teleporter par1Teleporter, int par2, int par3, int par4, long par5)
+    public PortalPosition(final Teleporter par1Teleporter, final int par2, final int par3, final int par4, final long par5)
     {
         super(par2, par3, par4);
         this.teleporterInstance = par1Teleporter;

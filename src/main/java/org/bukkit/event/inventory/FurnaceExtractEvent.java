@@ -13,7 +13,7 @@ public class FurnaceExtractEvent extends BlockExpEvent {
     private final Material itemType;
     private final int itemAmount;
 
-    public FurnaceExtractEvent(Player player, Block block, Material itemType, int itemAmount, int exp) {
+    public FurnaceExtractEvent(final Player player, final Block block, final Material itemType, final int itemAmount, final int exp) {
         super(block, exp);
         this.player = player;
         this.itemType = itemType;

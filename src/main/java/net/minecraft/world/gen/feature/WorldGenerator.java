@@ -17,7 +17,7 @@ public abstract class WorldGenerator
         this.doBlockNotify = false;
     }
 
-    public WorldGenerator(boolean par1)
+    public WorldGenerator(final boolean par1)
     {
         this.doBlockNotify = par1;
     }
@@ -27,12 +27,12 @@ public abstract class WorldGenerator
     /**
      * Rescales the generator settings, only used in WorldGenBigTree
      */
-    public void setScale(double par1, double par3, double par5) {}
+    public void setScale(final double par1, final double par3, final double par5) {}
 
     /**
      * Sets the block without metadata in the world, notifying neighbors if enabled.
      */
-    protected void setBlock(World par1World, int par2, int par3, int par4, int par5)
+    protected void setBlock(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         this.setBlockAndMetadata(par1World, par2, par3, par4, par5, 0);
     }
@@ -40,7 +40,7 @@ public abstract class WorldGenerator
     /**
      * Sets the block in the world, notifying neighbors if enabled.
      */
-    protected void setBlockAndMetadata(World par1World, int par2, int par3, int par4, int par5, int par6)
+    protected void setBlockAndMetadata(final World par1World, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         if (this.doBlockNotify)
         {

@@ -36,20 +36,17 @@ public class CreativeTabs
     private boolean drawTitle = true;
     private EnumEnchantmentType[] field_111230_s;
 
-    public CreativeTabs(String label)
+    public CreativeTabs(final String label)
     {
         this(getNextID(), label);
     }
 
-    public CreativeTabs(int par1, String par2Str)
+    public CreativeTabs(final int par1, final String par2Str)
     {
         if (par1 >= creativeTabArray.length)
         {
-            CreativeTabs[] tmp = new CreativeTabs[par1 + 1];
-            for (int x = 0; x < creativeTabArray.length; x++)
-            {
-                tmp[x] = creativeTabArray[x];
-            }
+            final CreativeTabs[] tmp = new CreativeTabs[par1 + 1];
+            System.arraycopy(creativeTabArray, 0, tmp, 0, creativeTabArray.length);
             creativeTabArray = tmp;
         }
         this.tabIndex = par1;
@@ -63,7 +60,7 @@ public class CreativeTabs
         return this.tabIndex;
     }
 
-    public CreativeTabs setBackgroundImageName(String par1Str)
+    public CreativeTabs setBackgroundImageName(final String par1Str)
     {
         this.backgroundImageName = par1Str;
         return this;
@@ -165,14 +162,14 @@ public class CreativeTabs
         return this.field_111230_s;
     }
 
-    public CreativeTabs func_111229_a(EnumEnchantmentType ... par1ArrayOfEnumEnchantmentType)
+    public CreativeTabs func_111229_a(final EnumEnchantmentType ... par1ArrayOfEnumEnchantmentType)
     {
         this.field_111230_s = par1ArrayOfEnumEnchantmentType;
         return this;
     }
 
     @SideOnly(Side.CLIENT)
-    public boolean func_111226_a(EnumEnchantmentType par1EnumEnchantmentType)
+    public boolean func_111226_a(final EnumEnchantmentType par1EnumEnchantmentType)
     {
         if (this.field_111230_s == null)
         {
@@ -180,12 +177,12 @@ public class CreativeTabs
         }
         else
         {
-            EnumEnchantmentType[] aenumenchantmenttype = this.field_111230_s;
-            int i = aenumenchantmenttype.length;
+            final EnumEnchantmentType[] aenumenchantmenttype = this.field_111230_s;
+            final int i = aenumenchantmenttype.length;
 
             for (int j = 0; j < i; ++j)
             {
-                EnumEnchantmentType enumenchantmenttype1 = aenumenchantmenttype[j];
+                final EnumEnchantmentType enumenchantmenttype1 = aenumenchantmenttype[j];
 
                 if (enumenchantmenttype1 == par1EnumEnchantmentType)
                 {
@@ -202,21 +199,21 @@ public class CreativeTabs
     /**
      * only shows items which have tabToDisplayOn == this
      */
-    public void displayAllReleventItems(List par1List)
+    public void displayAllReleventItems(final List par1List)
     {
-        Item[] aitem = Item.itemsList;
-        int i = aitem.length;
+        final Item[] aitem = Item.itemsList;
+        final int i = aitem.length;
 
         for (int j = 0; j < i; ++j)
         {
-            Item item = aitem[j];
+            final Item item = aitem[j];
 
             if (item == null)
             {
                 continue;
             }
 
-            for (CreativeTabs tab : item.getCreativeTabs())
+            for (final CreativeTabs tab : item.getCreativeTabs())
             {
                 if (tab == this)
                 {
@@ -236,14 +233,14 @@ public class CreativeTabs
     /**
      * Adds the enchantment books from the supplied EnumEnchantmentType to the given list.
      */
-    public void addEnchantmentBooksToList(List par1List, EnumEnchantmentType ... par2ArrayOfEnumEnchantmentType)
+    public void addEnchantmentBooksToList(final List par1List, final EnumEnchantmentType ... par2ArrayOfEnumEnchantmentType)
     {
-        Enchantment[] aenchantment = Enchantment.enchantmentsList;
-        int i = aenchantment.length;
+        final Enchantment[] aenchantment = Enchantment.enchantmentsList;
+        final int i = aenchantment.length;
 
         for (int j = 0; j < i; ++j)
         {
-            Enchantment enchantment = aenchantment[j];
+            final Enchantment enchantment = aenchantment[j];
 
             if (enchantment != null && enchantment.type != null)
             {

@@ -41,10 +41,8 @@ import org.bukkit.craftbukkit.v1_6_R3.inventory.CraftInventoryView;
 import org.bukkit.event.inventory.InventoryType;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.logging.Level;
 
 // Cauldron start
@@ -83,16 +81,16 @@ public class NetworkRegistry
      * Get the packet 250 channel registration string
      * @return the {@link Packet250CustomPayload} channel registration string
      */
-    byte[] getPacketRegistry(Side side)
+    byte[] getPacketRegistry(final Side side)
     {
-        return Joiner.on('\0').join(Iterables.concat(Arrays.asList("FML"),universalPacketHandlers.keySet(), side.isClient() ? clientPacketHandlers.keySet() : serverPacketHandlers.keySet())).getBytes(Charsets.UTF_8);
+        return Joiner.on('\0').join(Iterables.concat(Collections.singletonList("FML"),universalPacketHandlers.keySet(), side.isClient() ? clientPacketHandlers.keySet() : serverPacketHandlers.keySet())).getBytes(Charsets.UTF_8);
     }
     /**
      * Is the specified channel active for the player?
      * @param channel
      * @param player
      */
-    public boolean isChannelActive(String channel, Player player)
+    public boolean isChannelActive(final String channel, final Player player)
     {
         return activeChannels.containsEntry(player,channel);
     }
@@ -101,7 +99,7 @@ public class NetworkRegistry
      * @param handler the packet handler
      * @param channelName the channel name to register it with
      */
-    public void registerChannel(IPacketHandler handler, String channelName)
+    public void registerChannel(final IPacketHandler handler, final String channelName)
     {
         if (Strings.isNullOrEmpty(channelName) || (channelName!=null && channelName.length()>16))
         {
@@ -112,7 +110,7 @@ public class NetworkRegistry
         universalPacketHandlers.put(channelName, handler);
     }
 
-    public void registerChannel(IPacketHandler handler, String channelName, Side side)
+    public void registerChannel(final IPacketHandler handler, final String channelName, final Side side)
     {
         if (side == null)
         {
@@ -138,7 +136,7 @@ public class NetworkRegistry
      * Activate the channel for the player
      * @param player
      */
-    void activateChannel(Player player, String channel)
+    void activateChannel(final Player player, final String channel)
     {
         activeChannels.put(player, channel);
     }
@@ -147,7 +145,7 @@ public class NetworkRegistry
      * @param player
      * @param channel
      */
-    void deactivateChannel(Player player, String channel)
+    void deactivateChannel(final Player player, final String channel)
     {
         activeChannels.remove(player, channel);
     }
@@ -156,7 +154,7 @@ public class NetworkRegistry
      *
      * @param handler
      */
-    public void registerConnectionHandler(IConnectionHandler handler)
+    public void registerConnectionHandler(final IConnectionHandler handler)
     {
         connectionHandlers.add(handler);
     }
@@ -165,25 +163,25 @@ public class NetworkRegistry
      * Register a chat listener
      * @param listener
      */
-    public void registerChatListener(IChatListener listener)
+    public void registerChatListener(final IChatListener listener)
     {
         chatListeners.add(listener);
     }
 
-    void playerLoggedIn(EntityPlayerMP player, NetServerHandler netHandler, INetworkManager manager)
+    void playerLoggedIn(final EntityPlayerMP player, final NetServerHandler netHandler, final INetworkManager manager)
     {
         generateChannelRegistration(player, netHandler, manager);
-        for (IConnectionHandler handler : connectionHandlers)
+        for (final IConnectionHandler handler : connectionHandlers)
         {
             handler.playerLoggedIn((Player)player, netHandler, manager);
         }
     }
 
-    String connectionReceived(NetLoginHandler netHandler, INetworkManager manager)
+    String connectionReceived(final NetLoginHandler netHandler, final INetworkManager manager)
     {
-        for (IConnectionHandler handler : connectionHandlers)
+        for (final IConnectionHandler handler : connectionHandlers)
         {
-            String kick = handler.connectionReceived(netHandler, manager);
+            final String kick = handler.connectionReceived(netHandler, manager);
             if (!Strings.isNullOrEmpty(kick))
             {
                 return kick;
@@ -192,50 +190,50 @@ public class NetworkRegistry
         return null;
     }
 
-    void connectionOpened(NetHandler netClientHandler, String server, int port, INetworkManager networkManager)
+    void connectionOpened(final NetHandler netClientHandler, final String server, final int port, final INetworkManager networkManager)
     {
-        for (IConnectionHandler handler : connectionHandlers)
+        for (final IConnectionHandler handler : connectionHandlers)
         {
             handler.connectionOpened(netClientHandler, server, port, networkManager);
         }
     }
 
-    void connectionOpened(NetHandler netClientHandler, MinecraftServer server, INetworkManager networkManager)
+    void connectionOpened(final NetHandler netClientHandler, final MinecraftServer server, final INetworkManager networkManager)
     {
-        for (IConnectionHandler handler : connectionHandlers)
+        for (final IConnectionHandler handler : connectionHandlers)
         {
             handler.connectionOpened(netClientHandler, server, networkManager);
         }
     }
 
-    void clientLoggedIn(NetHandler clientHandler, INetworkManager manager, Packet1Login login)
+    void clientLoggedIn(final NetHandler clientHandler, final INetworkManager manager, final Packet1Login login)
     {
         generateChannelRegistration(clientHandler.getPlayer(), clientHandler, manager);
-        for (IConnectionHandler handler : connectionHandlers)
+        for (final IConnectionHandler handler : connectionHandlers)
         {
             handler.clientLoggedIn(clientHandler, manager, login);
         }
     }
 
-    void connectionClosed(INetworkManager manager, EntityPlayer player)
+    void connectionClosed(final INetworkManager manager, final EntityPlayer player)
     {
-        for (IConnectionHandler handler : connectionHandlers)
+        for (final IConnectionHandler handler : connectionHandlers)
         {
             handler.connectionClosed(manager);
         }
         activeChannels.removeAll(player);
     }
 
-    void generateChannelRegistration(EntityPlayer player, NetHandler netHandler, INetworkManager manager)
+    void generateChannelRegistration(final EntityPlayer player, final NetHandler netHandler, final INetworkManager manager)
     {
-        Packet250CustomPayload pkt = new Packet250CustomPayload();
+        final Packet250CustomPayload pkt = new Packet250CustomPayload();
         pkt.channel = "REGISTER";
         pkt.data = getPacketRegistry(player instanceof EntityPlayerMP ? Side.SERVER : Side.CLIENT);
         pkt.length = pkt.data.length;
         manager.addToSendQueue(pkt);
     }
 
-    void handleCustomPacket(Packet250CustomPayload packet, INetworkManager network, NetHandler handler)
+    void handleCustomPacket(final Packet250CustomPayload packet, final INetworkManager network, final NetHandler handler)
     {
         if ("REGISTER".equals(packet.channel))
         {
@@ -255,79 +253,65 @@ public class NetworkRegistry
     }
 
 
-    private void handlePacket(Packet250CustomPayload packet, INetworkManager network, Player player)
+    private void handlePacket(final Packet250CustomPayload packet, final INetworkManager network, final Player player)
     {
-        String channel = packet.channel;
-        for (IPacketHandler handler : Iterables.concat(universalPacketHandlers.get(channel), player instanceof EntityPlayerMP ? serverPacketHandlers.get(channel) : clientPacketHandlers.get(channel)))
+        final String channel = packet.channel;
+        for (final IPacketHandler handler : Iterables.concat(universalPacketHandlers.get(channel), player instanceof EntityPlayerMP ? serverPacketHandlers.get(channel) : clientPacketHandlers.get(channel)))
         {
             handler.onPacketData(network, packet, player);
         }
     }
 
-    private void handleRegistrationPacket(Packet250CustomPayload packet, Player player)
+    private void handleRegistrationPacket(final Packet250CustomPayload packet, final Player player)
     {
-        List<String> channels = extractChannelList(packet);
-        for (String channel : channels)
+        final List<String> channels = extractChannelList(packet);
+        for (final String channel : channels)
         {
             activateChannel(player, channel);
         }
     }
-    private void handleUnregistrationPacket(Packet250CustomPayload packet, Player player)
+    private void handleUnregistrationPacket(final Packet250CustomPayload packet, final Player player)
     {
-        List<String> channels = extractChannelList(packet);
-        for (String channel : channels)
+        final List<String> channels = extractChannelList(packet);
+        for (final String channel : channels)
         {
             deactivateChannel(player, channel);
         }
     }
 
     // Cauldron start - handle CB plugin registration
-    private void handleBukkitRegistrationPacket(Packet250CustomPayload packet, CraftPlayer player)
+    private void handleBukkitRegistrationPacket(final Packet250CustomPayload packet, final CraftPlayer player)
     {
-        try
-        {
-            String channels = new String(packet.data, "UTF8");
+        final String channels = new String(packet.data, StandardCharsets.UTF_8);
 
-            for (String channel : channels.split("\0"))
-            {
-                if (MinecraftServer.getServer().cauldronConfig.connectionLogging.getValue()) {
-                    System.out.println("adding plugin channel " + channel);
-                }
-                player.addChannel(channel);
-            }
-        }
-        catch (UnsupportedEncodingException ex)
+        for (final String channel : channels.split("\0"))
         {
-            throw new AssertionError(ex);
+            if (MinecraftServer.getServer().cauldronConfig.connectionLogging.getValue()) {
+                System.out.println("adding plugin channel " + channel);
+            }
+            player.addChannel(channel);
         }
     }
 
-    private void handleBukkitUnregistrationPacket(Packet250CustomPayload packet, CraftPlayer player)
+    private void handleBukkitUnregistrationPacket(final Packet250CustomPayload packet, final CraftPlayer player)
     {
-        try
-        {
-            String channels = new String(packet.data, "UTF8");
+        final String channels = new String(packet.data, StandardCharsets.UTF_8);
 
-            for (String channel : channels.split("\0"))
-            {
-                player.removeChannel(channel);
-            }
-        }
-        catch (UnsupportedEncodingException ex)
+        for (final String channel : channels.split("\0"))
         {
-            throw new AssertionError(ex);
+            player.removeChannel(channel);
         }
     }
     // Cauldron end
 
-    private List<String> extractChannelList(Packet250CustomPayload packet)
+    private List<String> extractChannelList(final Packet250CustomPayload packet)
     {
-        String request = new String(packet.data, Charsets.UTF_8);
-        List<String> channels = Lists.newArrayList(Splitter.on('\0').split(request));
+        final String request = new String(packet.data, Charsets.UTF_8);
+        final List<String> channels = Lists.newArrayList(Splitter.on('\0').split(request));
         return channels;
     }
 
-    public void registerGuiHandler(Object mod, IGuiHandler handler)
+    public void registerGuiHandler(final Object mod, final IGuiHandler handler)
     {
         ModContainer mc = FMLCommonHandler.instance().findContainerFor(mod);
         if (mc == null)
@@ -335,7 +319,7 @@ public class NetworkRegistry
             mc = Loader.instance().activeModContainer();
             FMLLog.log(Level.WARNING, "Mod %s attempted to register a gui network handler during a construction phase", mc.getModId());
         }
-        NetworkModHandler nmh = FMLNetworkHandler.instance().findNetworkModHandler(mc);
+        final NetworkModHandler nmh = FMLNetworkHandler.instance().findNetworkModHandler(mc);
         if (nmh == null)
         {
             FMLLog.log(Level.FINE, "The mod %s needs to be a @NetworkMod to register a Networked Gui Handler", mc.getModId());
@@ -346,10 +330,10 @@ public class NetworkRegistry
         }
         clientGuiHandlers.put(mc, handler);
     }
-    void openRemoteGui(ModContainer mc, EntityPlayerMP player, int modGuiId, World world, int x, int y, int z)
+    void openRemoteGui(final ModContainer mc, final EntityPlayerMP player, final int modGuiId, final World world, final int x, final int y, final int z)
     {
-        IGuiHandler handler = serverGuiHandlers.get(mc);
-        NetworkModHandler nmh = FMLNetworkHandler.instance().findNetworkModHandler(mc);
+        final IGuiHandler handler = serverGuiHandlers.get(mc);
+        final NetworkModHandler nmh = FMLNetworkHandler.instance().findNetworkModHandler(mc);
         if (handler != null && nmh != null)
         {
             Container container = (Container)handler.getServerGuiElement(modGuiId, player, world, x, y, z);
@@ -360,11 +344,11 @@ public class NetworkRegistry
                 {
                     if (container.getBukkitView() == null)
                     {
-                        TileEntity te = player.worldObj.getBlockTileEntity(x, y, z);
+                        final TileEntity te = player.worldObj.getBlockTileEntity(x, y, z);
                         if (te != null && te instanceof IInventory)
                         {
-                            IInventory teInv = (IInventory)te;
-                            CraftInventory inventory = new CraftInventory(teInv);
+                            final IInventory teInv = (IInventory)te;
+                            final CraftInventory inventory = new CraftInventory(teInv);
                             container.bukkitView = new CraftInventoryView(player.getBukkitEntity(), inventory, container);
                         }
                         else
@@ -382,8 +366,8 @@ public class NetworkRegistry
                 // Cauldron end
                 player.incrementWindowID();
                 player.closeContainer();
-                int windowId = player.currentWindowId;
-                Packet250CustomPayload pkt = new Packet250CustomPayload();
+                final int windowId = player.currentWindowId;
+                final Packet250CustomPayload pkt = new Packet250CustomPayload();
                 pkt.channel = "FML";
                 pkt.data = FMLPacket.makePacket(Type.GUIOPEN, windowId, nmh.getNetworkId(), modGuiId, x, y, z);
                 pkt.length = pkt.data.length;
@@ -394,28 +378,29 @@ public class NetworkRegistry
             }
         }
     }
-    void openLocalGui(ModContainer mc, EntityPlayer player, int modGuiId, World world, int x, int y, int z)
+    void openLocalGui(final ModContainer mc, final EntityPlayer player, final int modGuiId, final World world, final int x, final int y, final int z)
     {
-        IGuiHandler handler = clientGuiHandlers.get(mc);
+        final IGuiHandler handler = clientGuiHandlers.get(mc);
         FMLCommonHandler.instance().showGuiScreen(handler.getClientGuiElement(modGuiId, player, world, x, y, z));
     }
-    public Packet3Chat handleChat(NetHandler handler, Packet3Chat chat)
+    public Packet3Chat handleChat(final NetHandler handler, Packet3Chat chat)
     {
+        Packet3Chat chat1 = chat;
         Side s = Side.CLIENT;
         if (handler instanceof NetServerHandler)
         {
             s = Side.SERVER;
         }
-        for (IChatListener listener : chatListeners)
+        for (final IChatListener listener : chatListeners)
         {
-            chat = s.isClient() ? listener.clientChat(handler, chat) : listener.serverChat(handler, chat);
+            chat1 = s.isClient() ? listener.clientChat(handler, chat1) : listener.serverChat(handler, chat1);
         }
 
-        return chat;
+        return chat1;
     }
-    public void handleTinyPacket(NetHandler handler, Packet131MapData mapData)
+    public void handleTinyPacket(final NetHandler handler, final Packet131MapData mapData)
     {
-        NetworkModHandler nmh = FMLNetworkHandler.instance().findNetworkModHandler((int)mapData.itemID);
+        final NetworkModHandler nmh = FMLNetworkHandler.instance().findNetworkModHandler((int)mapData.itemID);
         if (nmh == null)
         {
             FMLLog.info("Received a tiny packet for network id %d that is not recognised here", mapData.itemID);

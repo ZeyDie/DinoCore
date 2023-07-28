@@ -17,7 +17,7 @@ import cpw.mods.fml.common.LoaderState.ModState;
 public class FMLServerStoppingEvent extends FMLStateEvent
 {
 
-    public FMLServerStoppingEvent(Object... data)
+    public FMLServerStoppingEvent(final Object... data)
     {
         super(data);
     }

@@ -29,17 +29,17 @@ public class MapGenStronghold extends MapGenStructure
         this.field_82672_i = 3;
     }
 
-    public MapGenStronghold(Map par1Map)
+    public MapGenStronghold(final Map par1Map)
     {
         this.allowedBiomeGenBases = allowedBiomes.toArray(new BiomeGenBase[0]);
         this.structureCoords = new ChunkCoordIntPair[3];
         this.field_82671_h = 32.0D;
         this.field_82672_i = 3;
-        Iterator iterator = par1Map.entrySet().iterator();
+        final Iterator iterator = par1Map.entrySet().iterator();
 
         while (iterator.hasNext())
         {
-            Entry entry = (Entry)iterator.next();
+            final Entry entry = (Entry)iterator.next();
 
             if (((String)entry.getKey()).equals("distance"))
             {
@@ -61,21 +61,21 @@ public class MapGenStronghold extends MapGenStructure
         return "Stronghold";
     }
 
-    protected boolean canSpawnStructureAtCoords(int par1, int par2)
+    protected boolean canSpawnStructureAtCoords(final int par1, final int par2)
     {
         if (!this.ranBiomeCheck)
         {
-            Random random = new Random();
+            final Random random = new Random();
             random.setSeed(this.worldObj.getSeed());
             double d0 = random.nextDouble() * Math.PI * 2.0D;
             int k = 1;
 
             for (int l = 0; l < this.structureCoords.length; ++l)
             {
-                double d1 = (1.25D * (double)k + random.nextDouble()) * this.field_82671_h * (double)k;
+                final double d1 = (1.25D * (double)k + random.nextDouble()) * this.field_82671_h * (double)k;
                 int i1 = (int)Math.round(Math.cos(d0) * d1);
                 int j1 = (int)Math.round(Math.sin(d0) * d1);
-                ArrayList arraylist = new ArrayList();
+                final ArrayList arraylist = new ArrayList();
                 Collections.addAll(arraylist, this.allowedBiomeGenBases);
                 // Cauldron start - catch invalid positions
                 ChunkPosition chunkposition = null;
@@ -83,7 +83,7 @@ public class MapGenStronghold extends MapGenStructure
                 {
                     chunkposition = this.worldObj.getWorldChunkManager().findBiomePosition((i1 << 4) + 8, (j1 << 4) + 8, 112, arraylist, random);
                 }
-                catch (ArrayIndexOutOfBoundsException e)
+                catch (final ArrayIndexOutOfBoundsException e)
                 {
                     // ignore
                 }
@@ -96,7 +96,7 @@ public class MapGenStronghold extends MapGenStructure
                 }
 
                 this.structureCoords[l] = new ChunkCoordIntPair(i1, j1);
-                d0 += (Math.PI * 2D) * (double)k / (double)this.field_82672_i;
+                d0 += (Math.PI * 2.0D) * (double)k / (double)this.field_82672_i;
 
                 if (l == this.field_82672_i)
                 {
@@ -108,12 +108,12 @@ public class MapGenStronghold extends MapGenStructure
             this.ranBiomeCheck = true;
         }
 
-        ChunkCoordIntPair[] achunkcoordintpair = this.structureCoords;
-        int k1 = achunkcoordintpair.length;
+        final ChunkCoordIntPair[] achunkcoordintpair = this.structureCoords;
+        final int k1 = achunkcoordintpair.length;
 
         for (int l1 = 0; l1 < k1; ++l1)
         {
-            ChunkCoordIntPair chunkcoordintpair = achunkcoordintpair[l1];
+            final ChunkCoordIntPair chunkcoordintpair = achunkcoordintpair[l1];
 
             if (par1 == chunkcoordintpair.chunkXPos && par2 == chunkcoordintpair.chunkZPos)
             {
@@ -130,13 +130,13 @@ public class MapGenStronghold extends MapGenStructure
      */
     protected List getCoordList()
     {
-        ArrayList arraylist = new ArrayList();
-        ChunkCoordIntPair[] achunkcoordintpair = this.structureCoords;
-        int i = achunkcoordintpair.length;
+        final ArrayList arraylist = new ArrayList();
+        final ChunkCoordIntPair[] achunkcoordintpair = this.structureCoords;
+        final int i = achunkcoordintpair.length;
 
         for (int j = 0; j < i; ++j)
         {
-            ChunkCoordIntPair chunkcoordintpair = achunkcoordintpair[j];
+            final ChunkCoordIntPair chunkcoordintpair = achunkcoordintpair[j];
 
             if (chunkcoordintpair != null)
             {
@@ -147,7 +147,7 @@ public class MapGenStronghold extends MapGenStructure
         return arraylist;
     }
 
-    protected StructureStart getStructureStart(int par1, int par2)
+    protected StructureStart getStructureStart(final int par1, final int par2)
     {
         StructureStrongholdStart structurestrongholdstart;
 

@@ -14,18 +14,18 @@ public final class MapPalette {
     // Internal mechanisms
     private MapPalette() {}
 
-    private static Color c(int r, int g, int b) {
+    private static Color c(final int r, final int g, final int b) {
         return new Color(r, g, b);
     }
 
-    private static double getDistance(Color c1, Color c2) {
-        double rmean = (c1.getRed() + c2.getRed()) / 2.0;
-        double r = c1.getRed() - c2.getRed();
-        double g = c1.getGreen() - c2.getGreen();
-        int b = c1.getBlue() - c2.getBlue();
-        double weightR = 2 + rmean / 256.0;
-        double weightG = 4.0;
-        double weightB = 2 + (255 - rmean) / 256.0;
+    private static double getDistance(final Color c1, final Color c2) {
+        final double rmean = (c1.getRed() + c2.getRed()) / 2.0;
+        final double r = c1.getRed() - c2.getRed();
+        final double g = c1.getGreen() - c2.getGreen();
+        final int b = c1.getBlue() - c2.getBlue();
+        final double weightR = 2 + rmean / 256.0;
+        final double weightG = 4.0;
+        final double weightB = 2 + (255 - rmean) / 256.0;
         return weightR * r * r + weightG * g * g + weightB * b * b;
     }
 
@@ -125,9 +125,9 @@ public final class MapPalette {
      * @param image The image to resize.
      * @return The resized image.
      */
-    public static BufferedImage resizeImage(Image image) {
-        BufferedImage result = new BufferedImage(128, 128, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D graphics = result.createGraphics();
+    public static BufferedImage resizeImage(final Image image) {
+        final BufferedImage result = new BufferedImage(128, 128, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D graphics = result.createGraphics();
         graphics.drawImage(image, 0, 0, 128, 128, null);
         graphics.dispose();
         return result;
@@ -141,16 +141,16 @@ public final class MapPalette {
      * @deprecated Magic value
      */
     @Deprecated
-    public static byte[] imageToBytes(Image image) {
-        BufferedImage temp = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D graphics = temp.createGraphics();
+    public static byte[] imageToBytes(final Image image) {
+        final BufferedImage temp = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D graphics = temp.createGraphics();
         graphics.drawImage(image, 0, 0, null);
         graphics.dispose();
 
-        int[] pixels = new int[temp.getWidth() * temp.getHeight()];
+        final int[] pixels = new int[temp.getWidth() * temp.getHeight()];
         temp.getRGB(0, 0, temp.getWidth(), temp.getHeight(), pixels, 0, temp.getWidth());
 
-        byte[] result = new byte[temp.getWidth() * temp.getHeight()];
+        final byte[] result = new byte[temp.getWidth() * temp.getHeight()];
         for (int i = 0; i < pixels.length; i++) {
             result[i] = matchColor(new Color(pixels[i], true));
         }
@@ -167,7 +167,7 @@ public final class MapPalette {
      * @deprecated Magic value
      */
     @Deprecated
-    public static byte matchColor(int r, int g, int b) {
+    public static byte matchColor(final int r, final int g, final int b) {
         return matchColor(new Color(r, g, b));
     }
 
@@ -179,14 +179,14 @@ public final class MapPalette {
      * @deprecated Magic value
      */
     @Deprecated
-    public static byte matchColor(Color color) {
+    public static byte matchColor(final Color color) {
         if (color.getAlpha() < 128) return 0;
 
         int index = 0;
         double best = -1;
 
         for (int i = 4; i < colors.length; i++) {
-            double distance = getDistance(color, colors[i]);
+            final double distance = getDistance(color, colors[i]);
             if (distance < best || best == -1) {
                 best = distance;
                 index = i;
@@ -204,7 +204,7 @@ public final class MapPalette {
      * @deprecated Magic value
      */
     @Deprecated
-    public static Color getColor(byte index) {
+    public static Color getColor(final byte index) {
         if (index < 0 || index >= colors.length) {
             throw new IndexOutOfBoundsException();
         } else {

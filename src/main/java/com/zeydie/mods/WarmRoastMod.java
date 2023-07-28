@@ -17,7 +17,7 @@ public final class WarmRoastMod {
 
             try {
                 WarmRoast.main(warmRoastSettingsData.getWarmRoastParams());
-            } catch (Exception exception) {
+            } catch (final Exception exception) {
                 exception.printStackTrace();
             }
         }

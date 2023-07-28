@@ -34,17 +34,17 @@ public class PotionEffect
     /** List of ItemStack that can cure the potion effect **/
     private List<ItemStack> curativeItems;
 
-    public PotionEffect(int par1, int par2)
+    public PotionEffect(final int par1, final int par2)
     {
         this(par1, par2, 0);
     }
 
-    public PotionEffect(int par1, int par2, int par3)
+    public PotionEffect(final int par1, final int par2, final int par3)
     {
         this(par1, par2, par3, false);
     }
 
-    public PotionEffect(int par1, int par2, int par3, boolean par4)
+    public PotionEffect(final int par1, final int par2, final int par3, final boolean par4)
     {
         this.potionID = par1;
         this.duration = par2;
@@ -54,7 +54,7 @@ public class PotionEffect
         this.curativeItems.add(new ItemStack(Item.bucketMilk));
     }
 
-    public PotionEffect(PotionEffect par1PotionEffect)
+    public PotionEffect(final PotionEffect par1PotionEffect)
     {
         this.potionID = par1PotionEffect.potionID;
         this.duration = par1PotionEffect.duration;
@@ -66,7 +66,7 @@ public class PotionEffect
      * merges the input PotionEffect into this one if this.amplifier <= tomerge.amplifier. The duration in the supplied
      * potion effect is assumed to be greater.
      */
-    public void combine(PotionEffect par1PotionEffect)
+    public void combine(final PotionEffect par1PotionEffect)
     {
         if (this.potionID != par1PotionEffect.potionID)
         {
@@ -120,10 +120,10 @@ public class PotionEffect
      * @param stack The ItemStack being checked against the list of curative items for the potion effect
      * @return true if the given ItemStack is in the list of curative items for the potion effect, false otherwise
      */
-    public boolean isCurativeItem(ItemStack stack)
+    public boolean isCurativeItem(final ItemStack stack)
     {
         boolean found = false;
-        for (ItemStack curativeItem : this.curativeItems)
+        for (final ItemStack curativeItem : this.curativeItems)
         {
             if (curativeItem.isItemEqual(stack))
             {
@@ -138,7 +138,7 @@ public class PotionEffect
      * Sets the array of curative items for the potion effect
      * @param curativeItems The list of ItemStacks being set to the potion effect
      */
-    public void setCurativeItems(List<ItemStack> curativeItems)
+    public void setCurativeItems(final List<ItemStack> curativeItems)
     {
         this.curativeItems = curativeItems;
     }
@@ -147,10 +147,10 @@ public class PotionEffect
      * Adds the given stack to list of curative items for the potion effect
      * @param stack The ItemStack being added to the curative item list
      */
-    public void addCurativeItem(ItemStack stack)
+    public void addCurativeItem(final ItemStack stack)
     {
         boolean found = false;
-        for (ItemStack curativeItem : this.curativeItems)
+        for (final ItemStack curativeItem : this.curativeItems)
         {
             if (curativeItem.isItemEqual(stack))
             {
@@ -166,7 +166,7 @@ public class PotionEffect
     /**
      * Set whether this potion is a splash potion.
      */
-    public void setSplashPotion(boolean par1)
+    public void setSplashPotion(final boolean par1)
     {
         this.isSplashPotion = par1;
     }
@@ -179,7 +179,7 @@ public class PotionEffect
         return this.isAmbient;
     }
 
-    public boolean onUpdate(EntityLivingBase par1EntityLivingBase)
+    public boolean onUpdate(final EntityLivingBase par1EntityLivingBase)
     {
         if (this.duration > 0)
         {
@@ -199,7 +199,7 @@ public class PotionEffect
         return --this.duration;
     }
 
-    public void performEffect(EntityLivingBase par1EntityLivingBase)
+    public void performEffect(final EntityLivingBase par1EntityLivingBase)
     {
         if (this.duration > 0)
         {
@@ -238,7 +238,7 @@ public class PotionEffect
         return Potion.potionTypes[this.potionID].isUsable() ? "(" + s + ")" : s;
     }
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         if (!(par1Obj instanceof PotionEffect))
         {
@@ -246,7 +246,7 @@ public class PotionEffect
         }
         else
         {
-            PotionEffect potioneffect = (PotionEffect)par1Obj;
+            final PotionEffect potioneffect = (PotionEffect)par1Obj;
             return this.potionID == potioneffect.potionID && this.amplifier == potioneffect.amplifier && this.duration == potioneffect.duration && this.isSplashPotion == potioneffect.isSplashPotion && this.isAmbient == potioneffect.isAmbient;
         }
     }
@@ -254,7 +254,7 @@ public class PotionEffect
     /**
      * Write a custom potion effect to a potion item's NBT data.
      */
-    public NBTTagCompound writeCustomPotionEffectToNBT(NBTTagCompound par1NBTTagCompound)
+    public NBTTagCompound writeCustomPotionEffectToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         par1NBTTagCompound.setByte("Id", (byte)this.getPotionID());
         par1NBTTagCompound.setByte("Amplifier", (byte)this.getAmplifier());
@@ -266,12 +266,12 @@ public class PotionEffect
     /**
      * Read a custom potion effect from a potion item's NBT data.
      */
-    public static PotionEffect readCustomPotionEffectFromNBT(NBTTagCompound par0NBTTagCompound)
+    public static PotionEffect readCustomPotionEffectFromNBT(final NBTTagCompound par0NBTTagCompound)
     {
-        byte b0 = par0NBTTagCompound.getByte("Id");
-        byte b1 = par0NBTTagCompound.getByte("Amplifier");
-        int i = par0NBTTagCompound.getInteger("Duration");
-        boolean flag = par0NBTTagCompound.getBoolean("Ambient");
+        final byte b0 = par0NBTTagCompound.getByte("Id");
+        final byte b1 = par0NBTTagCompound.getByte("Amplifier");
+        final int i = par0NBTTagCompound.getInteger("Duration");
+        final boolean flag = par0NBTTagCompound.getBoolean("Ambient");
         return new PotionEffect(b0, i, b1, flag);
     }
 
@@ -280,7 +280,7 @@ public class PotionEffect
     /**
      * Toggle the isPotionDurationMax field.
      */
-    public void setPotionDurationMax(boolean par1)
+    public void setPotionDurationMax(final boolean par1)
     {
         this.isPotionDurationMax = par1;
     }

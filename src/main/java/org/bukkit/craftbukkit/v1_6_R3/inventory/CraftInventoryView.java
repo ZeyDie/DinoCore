@@ -15,7 +15,7 @@ public class CraftInventoryView extends InventoryView {
     private final CraftHumanEntity player;
     private final CraftInventory viewing;
 
-    public CraftInventoryView(HumanEntity player, Inventory viewing, net.minecraft.inventory.Container container) {
+    public CraftInventoryView(final HumanEntity player, final Inventory viewing, final net.minecraft.inventory.Container container) {
         // TODO: Should we make sure it really IS a CraftHumanEntity first? And a CraftInventory?
         this.player = (CraftHumanEntity) player;
         this.viewing = (CraftInventory) viewing;
@@ -39,7 +39,7 @@ public class CraftInventoryView extends InventoryView {
 
     @Override
     public InventoryType getType() {
-        InventoryType type = viewing.getType();
+        final InventoryType type = viewing.getType();
         if (type == InventoryType.CRAFTING && player.getGameMode() == GameMode.CREATIVE) {
             return InventoryType.CREATIVE;
         }
@@ -47,8 +47,8 @@ public class CraftInventoryView extends InventoryView {
     }
 
     @Override
-    public void setItem(int slot, ItemStack item) {
-        net.minecraft.item.ItemStack stack = CraftItemStack.asNMSCopy(item);
+    public void setItem(final int slot, final ItemStack item) {
+        final net.minecraft.item.ItemStack stack = CraftItemStack.asNMSCopy(item);
         if (slot != -999) {
             container.getSlot(slot).putStack(stack);
         } else {
@@ -57,14 +57,14 @@ public class CraftInventoryView extends InventoryView {
     }
 
     @Override
-    public ItemStack getItem(int slot) {
+    public ItemStack getItem(final int slot) {
         if (slot == -999) {
             return null;
         }
         return CraftItemStack.asCraftMirror(container.getSlot(slot).getStack());
     }
 
-    public boolean isInTop(int rawSlot) {
+    public boolean isInTop(final int rawSlot) {
         return rawSlot < viewing.getSize();
     }
 
@@ -72,7 +72,7 @@ public class CraftInventoryView extends InventoryView {
         return container;
     }
 
-    public static SlotType getSlotType(InventoryView inventory, int slot) {
+    public static SlotType getSlotType(final InventoryView inventory, final int slot) {
         SlotType type = SlotType.CONTAINER;
         if (inventory == null) return type; // Cauldron - modded inventories with no Bukkit wrapper
         if (slot >= 0 && slot < inventory.getTopInventory().getSize()) {

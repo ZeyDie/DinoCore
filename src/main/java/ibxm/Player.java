@@ -22,13 +22,13 @@ public class Player {
 	/**
 		Simple command-line test player.
 	*/
-	public static void main( String[] args ) throws Exception {
+	public static void main(final String[] args ) throws Exception {
 		if( args.length < 1 ) {
 			System.err.println( "Usage: java ibxm.Player <module file>" );
 			System.exit( 0 );
 		}
-		FileInputStream file_input_stream = new FileInputStream( args[ 0 ] );
-		Player player = new Player();
+		final FileInputStream file_input_stream = new FileInputStream( args[ 0 ] );
+		final Player player = new Player();
 		player.set_module( Player.load_module( file_input_stream ) );
 		file_input_stream.close();
 		player.play();
@@ -39,21 +39,21 @@ public class Player {
 		@param input an InputStream containing the module file to be decoded.
 		@throws IllegalArgumentException if the data is not recognised as a module file.
 	*/
-	public static Module load_module( InputStream input ) throws IllegalArgumentException, IOException {
-		DataInputStream data_input_stream = new DataInputStream( input );
+	public static Module load_module(final InputStream input ) throws IllegalArgumentException, IOException {
+		final DataInputStream data_input_stream = new DataInputStream( input );
 		/* Check if data is in XM format.*/
-		byte[] xm_header = new byte[ 60 ];
+		final byte[] xm_header = new byte[ 60 ];
 		data_input_stream.readFully( xm_header );
 		if( FastTracker2.is_xm( xm_header ) )
 			return FastTracker2.load_xm( xm_header, data_input_stream );
 		/* Check if data is in ScreamTracker 3 format.*/	
-		byte[] s3m_header = new byte[ 96 ];
+		final byte[] s3m_header = new byte[ 96 ];
 		System.arraycopy( xm_header, 0, s3m_header, 0, 60 );
 		data_input_stream.readFully( s3m_header, 60, 36 );
 		if( ScreamTracker3.is_s3m( s3m_header ) )
 			return ScreamTracker3.load_s3m( s3m_header, data_input_stream );
 		/* Check if data is in ProTracker format.*/
-		byte[] mod_header = new byte[ 1084 ];
+		final byte[] mod_header = new byte[ 1084 ];
 		System.arraycopy( s3m_header, 0, mod_header, 0, 96 );
 		data_input_stream.readFully( mod_header, 96, 988 );
 			return ProTracker.load_mod( mod_header, data_input_stream );
@@ -72,7 +72,7 @@ public class Player {
 	/**
 		Set the Module instance to be played.
 	*/
-	public void set_module( Module m ) {
+	public void set_module(final Module m ) {
 		if( m != null ) module = m;
 		stop();
 		ibxm.set_module( module );
@@ -83,7 +83,7 @@ public class Player {
 		If loop is true, playback will continue indefinitely,
 		otherwise the module will play through once and stop.
 	*/
-	public void set_loop( boolean loop ) {
+	public void set_loop(final boolean loop ) {
 		this.loop = loop;
 	}
 	
@@ -105,7 +105,7 @@ public class Player {
 		if( play_thread != null ) {
 			try {
 				play_thread.join();
-			} catch( InterruptedException ie ) {}
+			} catch( final InterruptedException ie ) {}
 		}
 	}
 	
@@ -130,7 +130,7 @@ public class Player {
 				}
 				output_line.drain();
 				output_line.close();
-			} catch( LineUnavailableException lue ) {
+			} catch( final LineUnavailableException lue ) {
 				lue.printStackTrace();
 			}
 		}

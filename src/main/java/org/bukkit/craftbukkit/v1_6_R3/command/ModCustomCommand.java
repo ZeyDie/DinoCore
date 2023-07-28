@@ -7,18 +7,18 @@ import java.util.List;
 
 public class ModCustomCommand extends Command {
 
-    public ModCustomCommand(String name)
+    public ModCustomCommand(final String name)
     {
         super(name);
     }
 
-    public ModCustomCommand(String name, String description, String usageMessage, List<String> aliases)
+    public ModCustomCommand(final String name, final String description, final String usageMessage, final List<String> aliases)
     {
         super(name, description, usageMessage, aliases);
     }
 
     @Override
-    public boolean execute(CommandSender sender, String commandLabel, String[] args) {
+    public boolean execute(final CommandSender sender, final String commandLabel, final String[] args) {
         // Dummy method
         return false;
     }

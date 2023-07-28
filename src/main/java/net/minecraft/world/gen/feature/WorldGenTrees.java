@@ -22,12 +22,12 @@ public class WorldGenTrees extends WorldGenerator
     /** The metadata value of the leaves to use in tree generation. */
     private final int metaLeaves;
 
-    public WorldGenTrees(boolean par1)
+    public WorldGenTrees(final boolean par1)
     {
         this(par1, 4, 0, 0, false);
     }
 
-    public WorldGenTrees(boolean par1, int par2, int par3, int par4, boolean par5)
+    public WorldGenTrees(final boolean par1, final int par2, final int par3, final int par4, final boolean par5)
     {
         super(par1);
         this.minTreeHeight = par2;
@@ -36,9 +36,9 @@ public class WorldGenTrees extends WorldGenerator
         this.vinesGrow = par5;
     }
 
-    public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
+    public boolean generate(final World par1World, final Random par2Random, final int par3, final int par4, final int par5)
     {
-        int l = par2Random.nextInt(3) + this.minTreeHeight;
+        final int l = par2Random.nextInt(3) + this.minTreeHeight;
         boolean flag = true;
 
         if (par4 >= 1 && par4 + l + 1 <= 256)
@@ -70,7 +70,7 @@ public class WorldGenTrees extends WorldGenerator
                         {
                             k1 = par1World.getBlockId(l1, i1, j1);
 
-                            Block block = Block.blocksList[k1];
+                            final Block block = Block.blocksList[k1];
 
                             if (!par1World.isAirBlock(l1, i1, j1) &&
                                 !block.isLeaves(par1World, l1, i1, j1) &&
@@ -96,14 +96,14 @@ public class WorldGenTrees extends WorldGenerator
             else
             {
                 i1 = par1World.getBlockId(par3, par4 - 1, par5);
-                Block soil = Block.blocksList[i1];
-                boolean isSoil = (soil != null && soil.canSustainPlant(par1World, par3, par4 - 1, par5, ForgeDirection.UP, (BlockSapling)Block.sapling));
+                final Block soil = Block.blocksList[i1];
+                final boolean isSoil = (soil != null && soil.canSustainPlant(par1World, par3, par4 - 1, par5, ForgeDirection.UP, (BlockSapling)Block.sapling));
 
                 if (isSoil && par4 < 256 - l - 1)
                 {
                     soil.onPlantGrow(par1World, par3, par4 - 1, par5, par3, par4, par5);
                     b0 = 3;
-                    byte b1 = 0;
+                    final byte b1 = 0;
                     int i2;
                     int j2;
                     int k2;
@@ -119,12 +119,12 @@ public class WorldGenTrees extends WorldGenerator
 
                             for (int l2 = par5 - i2; l2 <= par5 + i2; ++l2)
                             {
-                                int i3 = l2 - par5;
+                                final int i3 = l2 - par5;
 
                                 if (Math.abs(k2) != i2 || Math.abs(i3) != i2 || par2Random.nextInt(2) != 0 && k1 != 0)
                                 {
-                                    int j3 = par1World.getBlockId(j2, j1, l2);
-                                    Block block = Block.blocksList[j3];
+                                    final int j3 = par1World.getBlockId(j2, j1, l2);
+                                    final Block block = Block.blocksList[j3];
 
                                     if (block == null || block.canBeReplacedByLeaves(par1World, j2, j1, l2))
                                     {
@@ -139,7 +139,7 @@ public class WorldGenTrees extends WorldGenerator
                     {
                         k1 = par1World.getBlockId(par3, par4 + j1, par5);
 
-                        Block block = Block.blocksList[k1];
+                        final Block block = Block.blocksList[k1];
 
                         if (block == null || block.isAirBlock(par1World, par3, par4 + j1, par5) || block.isLeaves(par1World, par3, par4 + j1, par5))
                         {
@@ -181,7 +181,7 @@ public class WorldGenTrees extends WorldGenerator
                             {
                                 for (k2 = par5 - i2; k2 <= par5 + i2; ++k2)
                                 {
-                                    Block block = Block.blocksList[par1World.getBlockId(j2, j1, k2)];
+                                    final Block block = Block.blocksList[par1World.getBlockId(j2, j1, k2)];
                                     if (block != null && block.isLeaves(par1World, j2, j1, k2))
                                     {
                                         if (par2Random.nextInt(4) == 0 && par1World.isAirBlock(j2 - 1, j1, k2))
@@ -241,21 +241,22 @@ public class WorldGenTrees extends WorldGenerator
     /**
      * Grows vines downward from the given block for a given length. Args: World, x, starty, z, vine-length
      */
-    private void growVines(World par1World, int par2, int par3, int par4, int par5)
+    private void growVines(final World par1World, final int par2, int par3, final int par4, final int par5)
     {
-        this.setBlockAndMetadata(par1World, par2, par3, par4, Block.vine.blockID, par5);
+        int par31 = par3;
+        this.setBlockAndMetadata(par1World, par2, par31, par4, Block.vine.blockID, par5);
         int i1 = 4;
 
         while (true)
         {
-            --par3;
+            --par31;
 
-            if (!par1World.isAirBlock(par2, par3, par4) || i1 <= 0)
+            if (!par1World.isAirBlock(par2, par31, par4) || i1 <= 0)
             {
                 return;
             }
 
-            this.setBlockAndMetadata(par1World, par2, par3, par4, Block.vine.blockID, par5);
+            this.setBlockAndMetadata(par1World, par2, par31, par4, Block.vine.blockID, par5);
             --i1;
         }
     }

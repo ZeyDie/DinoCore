@@ -10,7 +10,7 @@ public class RecipesDyes
     /**
      * Adds the dye recipes to the CraftingManager.
      */
-    public void addRecipes(CraftingManager par1CraftingManager)
+    public void addRecipes(final CraftingManager par1CraftingManager)
     {
         int i;
 

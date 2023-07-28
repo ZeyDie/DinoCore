@@ -18,22 +18,22 @@ public class RenderMooshroom extends RenderLiving
 {
     private static final ResourceLocation mooshroomTextures = new ResourceLocation("textures/entity/cow/mooshroom.png");
 
-    public RenderMooshroom(ModelBase par1ModelBase, float par2)
+    public RenderMooshroom(final ModelBase par1ModelBase, final float par2)
     {
         super(par1ModelBase, par2);
     }
 
-    public void renderLivingMooshroom(EntityMooshroom par1EntityMooshroom, double par2, double par4, double par6, float par8, float par9)
+    public void renderLivingMooshroom(final EntityMooshroom par1EntityMooshroom, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         super.doRenderLiving(par1EntityMooshroom, par2, par4, par6, par8, par9);
     }
 
-    protected ResourceLocation getMooshroomTextures(EntityMooshroom par1EntityMooshroom)
+    protected ResourceLocation getMooshroomTextures(final EntityMooshroom par1EntityMooshroom)
     {
         return mooshroomTextures;
     }
 
-    protected void renderMooshroomEquippedItems(EntityMooshroom par1EntityMooshroom, float par2)
+    protected void renderMooshroomEquippedItems(final EntityMooshroom par1EntityMooshroom, final float par2)
     {
         super.renderEquippedItems(par1EntityMooshroom, par2);
 
@@ -61,17 +61,17 @@ public class RenderMooshroom extends RenderLiving
         }
     }
 
-    public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9)
+    public void doRenderLiving(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.renderLivingMooshroom((EntityMooshroom)par1EntityLiving, par2, par4, par6, par8, par9);
     }
 
-    protected void renderEquippedItems(EntityLivingBase par1EntityLivingBase, float par2)
+    protected void renderEquippedItems(final EntityLivingBase par1EntityLivingBase, final float par2)
     {
         this.renderMooshroomEquippedItems((EntityMooshroom)par1EntityLivingBase, par2);
     }
 
-    public void renderPlayer(EntityLivingBase par1EntityLivingBase, double par2, double par4, double par6, float par8, float par9)
+    public void renderPlayer(final EntityLivingBase par1EntityLivingBase, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.renderLivingMooshroom((EntityMooshroom)par1EntityLivingBase, par2, par4, par6, par8, par9);
     }
@@ -79,7 +79,7 @@ public class RenderMooshroom extends RenderLiving
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.getMooshroomTextures((EntityMooshroom)par1Entity);
     }
@@ -90,7 +90,7 @@ public class RenderMooshroom extends RenderLiving
      * (Render<T extends Entity) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.renderLivingMooshroom((EntityMooshroom)par1Entity, par2, par4, par6, par8, par9);
     }

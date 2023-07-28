@@ -11,13 +11,13 @@ public abstract class ValueObject
 {
     public String toString()
     {
-        StringBuilder stringbuilder = new StringBuilder("{");
-        Field[] afield = this.getClass().getFields();
-        int i = afield.length;
+        final StringBuilder stringbuilder = new StringBuilder("{");
+        final Field[] afield = this.getClass().getFields();
+        final int i = afield.length;
 
         for (int j = 0; j < i; ++j)
         {
-            Field field = afield[j];
+            final Field field = afield[j];
 
             if (!func_96394_a(field))
             {
@@ -25,7 +25,7 @@ public abstract class ValueObject
                 {
                     stringbuilder.append(field.getName()).append("=").append(field.get(this)).append(" ");
                 }
-                catch (IllegalAccessException illegalaccessexception)
+                catch (final IllegalAccessException illegalaccessexception)
                 {
                     ;
                 }
@@ -37,7 +37,7 @@ public abstract class ValueObject
         return stringbuilder.toString();
     }
 
-    private static boolean func_96394_a(Field par0Field)
+    private static boolean func_96394_a(final Field par0Field)
     {
         return Modifier.isStatic(par0Field.getModifiers());
     }

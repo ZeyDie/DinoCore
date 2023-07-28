@@ -9,7 +9,7 @@ class ThreadClientSleep extends Thread
     /** A reference to the Minecraft object. */
     final Minecraft mc;
 
-    ThreadClientSleep(Minecraft par1Minecraft, String par2Str)
+    ThreadClientSleep(final Minecraft par1Minecraft, final String par2Str)
     {
         super(par2Str);
         this.mc = par1Minecraft;
@@ -23,7 +23,7 @@ class ThreadClientSleep extends Thread
             {
                 Thread.sleep(2147483647L);
             }
-            catch (InterruptedException interruptedexception)
+            catch (final InterruptedException interruptedexception)
             {
                 ;
             }

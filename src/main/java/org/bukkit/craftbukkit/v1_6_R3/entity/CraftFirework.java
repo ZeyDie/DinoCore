@@ -16,7 +16,7 @@ public class CraftFirework extends CraftEntity implements Firework {
     private final Random random = new Random();
     private final CraftItemStack item;
 
-    public CraftFirework(CraftServer server, net.minecraft.entity.item.EntityFireworkRocket entity) {
+    public CraftFirework(final CraftServer server, final net.minecraft.entity.item.EntityFireworkRocket entity) {
         super(server, entity);
 
         net.minecraft.item.ItemStack item = getHandle().getDataWatcher().getWatchableObjectItemStack(FIREWORK_ITEM_INDEX);
@@ -52,7 +52,7 @@ public class CraftFirework extends CraftEntity implements Firework {
         return (FireworkMeta) item.getItemMeta();
     }
 
-    public void setFireworkMeta(FireworkMeta meta) {
+    public void setFireworkMeta(final FireworkMeta meta) {
         item.setItemMeta(meta);
 
         // Copied from EntityFireworks constructor, update firework lifetime/power

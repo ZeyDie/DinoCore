@@ -29,7 +29,7 @@ public class GuiInventory extends InventoryEffectRenderer
      */
     private float ySize_lo;
 
-    public GuiInventory(EntityPlayer par1EntityPlayer)
+    public GuiInventory(final EntityPlayer par1EntityPlayer)
     {
         super(par1EntityPlayer.inventoryContainer);
         this.allowUserInput = true;
@@ -67,7 +67,7 @@ public class GuiInventory extends InventoryEffectRenderer
     /**
      * Draw the foreground layer for the GuiContainer (everything in front of the items)
      */
-    protected void drawGuiContainerForegroundLayer(int par1, int par2)
+    protected void drawGuiContainerForegroundLayer(final int par1, final int par2)
     {
         this.fontRenderer.drawString(I18n.getString("container.crafting"), 86, 16, 4210752);
     }
@@ -75,7 +75,7 @@ public class GuiInventory extends InventoryEffectRenderer
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         super.drawScreen(par1, par2, par3);
         this.xSize_lo = (float)par1;
@@ -85,28 +85,28 @@ public class GuiInventory extends InventoryEffectRenderer
     /**
      * Draw the background layer for the GuiContainer (everything behind the items)
      */
-    protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
+    protected void drawGuiContainerBackgroundLayer(final float par1, final int par2, final int par3)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(field_110408_a);
-        int k = this.guiLeft;
-        int l = this.guiTop;
+        final int k = this.guiLeft;
+        final int l = this.guiTop;
         this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
         func_110423_a(k + 51, l + 75, 30, (float)(k + 51) - this.xSize_lo, (float)(l + 75 - 50) - this.ySize_lo, this.mc.thePlayer);
     }
 
-    public static void func_110423_a(int par0, int par1, int par2, float par3, float par4, EntityLivingBase par5EntityLivingBase)
+    public static void func_110423_a(final int par0, final int par1, final int par2, final float par3, final float par4, final EntityLivingBase par5EntityLivingBase)
     {
         GL11.glEnable(GL11.GL_COLOR_MATERIAL);
         GL11.glPushMatrix();
         GL11.glTranslatef((float)par0, (float)par1, 50.0F);
         GL11.glScalef((float)(-par2), (float)par2, (float)par2);
         GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
-        float f2 = par5EntityLivingBase.renderYawOffset;
-        float f3 = par5EntityLivingBase.rotationYaw;
-        float f4 = par5EntityLivingBase.rotationPitch;
-        float f5 = par5EntityLivingBase.prevRotationYawHead;
-        float f6 = par5EntityLivingBase.rotationYawHead;
+        final float f2 = par5EntityLivingBase.renderYawOffset;
+        final float f3 = par5EntityLivingBase.rotationYaw;
+        final float f4 = par5EntityLivingBase.rotationPitch;
+        final float f5 = par5EntityLivingBase.prevRotationYawHead;
+        final float f6 = par5EntityLivingBase.rotationYawHead;
         GL11.glRotatef(135.0F, 0.0F, 1.0F, 0.0F);
         RenderHelper.enableStandardItemLighting();
         GL11.glRotatef(-135.0F, 0.0F, 1.0F, 0.0F);
@@ -135,7 +135,7 @@ public class GuiInventory extends InventoryEffectRenderer
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.id == 0)
         {

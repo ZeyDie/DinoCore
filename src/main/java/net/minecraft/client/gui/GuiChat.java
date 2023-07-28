@@ -42,7 +42,7 @@ public class GuiChat extends GuiScreen
 
     public GuiChat() {}
 
-    public GuiChat(String par1Str)
+    public GuiChat(final String par1Str)
     {
         this.defaultInputFieldText = par1Str;
     }
@@ -82,7 +82,7 @@ public class GuiChat extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         this.field_73905_m = false;
 
@@ -124,9 +124,9 @@ public class GuiChat extends GuiScreen
         }
         else
         {
-            String s = this.inputField.getText().trim();
+            final String s = this.inputField.getText().trim();
 
-            if (s.length() > 0)
+            if (!s.isEmpty())
             {
                 this.mc.ingameGUI.getChatGUI().addToSentMessages(s);
 
@@ -172,15 +172,15 @@ public class GuiChat extends GuiScreen
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int par1, int par2, int par3)
+    protected void mouseClicked(final int par1, final int par2, final int par3)
     {
         if (par3 == 0 && this.mc.gameSettings.chatLinks)
         {
-            ChatClickData chatclickdata = this.mc.ingameGUI.getChatGUI().func_73766_a(Mouse.getX(), Mouse.getY());
+            final ChatClickData chatclickdata = this.mc.ingameGUI.getChatGUI().func_73766_a(Mouse.getX(), Mouse.getY());
 
             if (chatclickdata != null)
             {
-                URI uri = chatclickdata.getURI();
+                final URI uri = chatclickdata.getURI();
 
                 if (uri != null)
                 {
@@ -203,7 +203,7 @@ public class GuiChat extends GuiScreen
         super.mouseClicked(par1, par2, par3);
     }
 
-    public void confirmClicked(boolean par1, int par2)
+    public void confirmClicked(final boolean par1, final int par2)
     {
         if (par2 == 0)
         {
@@ -217,15 +217,15 @@ public class GuiChat extends GuiScreen
         }
     }
 
-    private void func_73896_a(URI par1URI)
+    private void func_73896_a(final URI par1URI)
     {
         try
         {
-            Class oclass = Class.forName("java.awt.Desktop");
-            Object object = oclass.getMethod("getDesktop", new Class[0]).invoke((Object)null, new Object[0]);
+            final Class oclass = Class.forName("java.awt.Desktop");
+            final Object object = oclass.getMethod("getDesktop", new Class[0]).invoke((Object)null, new Object[0]);
             oclass.getMethod("browse", new Class[] {URI.class}).invoke(object, new Object[] {par1URI});
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
             throwable.printStackTrace();
         }
@@ -249,10 +249,10 @@ public class GuiChat extends GuiScreen
         }
         else
         {
-            int i = this.inputField.func_73798_a(-1, this.inputField.getCursorPosition(), false);
+            final int i = this.inputField.func_73798_a(-1, this.inputField.getCursorPosition(), false);
             this.field_73904_o.clear();
             this.field_73903_n = 0;
-            String s1 = this.inputField.getText().substring(i).toLowerCase();
+            final String s1 = this.inputField.getText().substring(i).toLowerCase();
             s = this.inputField.getText().substring(0, this.inputField.getCursorPosition());
             this.func_73893_a(s, s1);
 
@@ -267,9 +267,9 @@ public class GuiChat extends GuiScreen
 
         if (this.field_73904_o.size() > 1)
         {
-            StringBuilder stringbuilder = new StringBuilder();
+            final StringBuilder stringbuilder = new StringBuilder();
 
-            for (Iterator iterator = this.field_73904_o.iterator(); iterator.hasNext(); stringbuilder.append(s))
+            for (final Iterator iterator = this.field_73904_o.iterator(); iterator.hasNext(); stringbuilder.append(s))
             {
                 s = (String)iterator.next();
 
@@ -285,7 +285,7 @@ public class GuiChat extends GuiScreen
         this.inputField.writeText(EnumChatFormatting.func_110646_a((String)this.field_73904_o.get(this.field_73903_n++)));
     }
 
-    private void func_73893_a(String par1Str, String par2Str)
+    private void func_73893_a(final String par1Str, final String par2Str)
     {
         if (par1Str.length() >= 1)
         {
@@ -299,10 +299,10 @@ public class GuiChat extends GuiScreen
      * input is relative and is applied directly to the sentHistoryCursor so -1 is the previous message, 1 is the next
      * message from the current cursor position
      */
-    public void getSentHistory(int par1)
+    public void getSentHistory(final int par1)
     {
         int j = this.sentHistoryCursor + par1;
-        int k = this.mc.ingameGUI.getChatGUI().getSentMessages().size();
+        final int k = this.mc.ingameGUI.getChatGUI().getSentMessages().size();
 
         if (j < 0)
         {
@@ -337,14 +337,14 @@ public class GuiChat extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         drawRect(2, this.height - 14, this.width - 2, this.height - 2, Integer.MIN_VALUE);
         this.inputField.drawTextBox();
         super.drawScreen(par1, par2, par3);
     }
 
-    public void func_73894_a(String[] par1ArrayOfStr)
+    public void func_73894_a(final String[] par1ArrayOfStr)
     {
         if (this.field_73905_m)
         {
@@ -352,7 +352,7 @@ public class GuiChat extends GuiScreen
             String[] astring1 = par1ArrayOfStr;
             int i = par1ArrayOfStr.length;
 
-            String[] complete = ClientCommandHandler.instance.latestAutoComplete;
+            final String[] complete = ClientCommandHandler.instance.latestAutoComplete;
             if (complete != null)
             {
                 astring1 = ObjectArrays.concat(complete, astring1, String.class);
@@ -361,15 +361,15 @@ public class GuiChat extends GuiScreen
 
             for (int j = 0; j < i; ++j)
             {
-                String s = astring1[j];
+                final String s = astring1[j];
 
-                if (s.length() > 0)
+                if (!s.isEmpty())
                 {
                     this.field_73904_o.add(s);
                 }
             }
 
-            if (this.field_73904_o.size() > 0)
+            if (!this.field_73904_o.isEmpty())
             {
                 this.field_73897_d = true;
                 this.completePlayerName();

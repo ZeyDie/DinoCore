@@ -9,7 +9,7 @@ public class MinecartInteractEvent extends MinecartEvent
 {
     public final EntityPlayer player;
 
-    public MinecartInteractEvent(EntityMinecart minecart, EntityPlayer player)
+    public MinecartInteractEvent(final EntityMinecart minecart, final EntityPlayer player)
     {
         super(minecart);
         this.player = player;

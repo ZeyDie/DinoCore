@@ -64,7 +64,7 @@ public class GameRegistry
      *
      * @param generator
      */
-    public static void registerWorldGenerator(IWorldGenerator generator)
+    public static void registerWorldGenerator(final IWorldGenerator generator)
     {
         // Cauldron start - mod id's are not available during generateWorld so we must capture them here
         String modId = Loader.instance().activeModContainer().getModId();
@@ -85,13 +85,13 @@ public class GameRegistry
      * @param chunkGenerator
      * @param chunkProvider
      */
-    public static void generateWorld(int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
+    public static void generateWorld(final int chunkX, final int chunkZ, final World world, final IChunkProvider chunkGenerator, final IChunkProvider chunkProvider)
     {
-        long worldSeed = world.getSeed();
-        Random fmlRandom = new Random(worldSeed);
-        long xSeed = fmlRandom.nextLong() >> 2 + 1L;
-        long zSeed = fmlRandom.nextLong() >> 2 + 1L;
-        long chunkSeed = (xSeed * chunkX + zSeed * chunkZ) ^ worldSeed;
+        final long worldSeed = world.getSeed();
+        final Random fmlRandom = new Random(worldSeed);
+        final long xSeed = fmlRandom.nextLong() >> 2 + 1L;
+        final long zSeed = fmlRandom.nextLong() >> 2 + 1L;
+        final long chunkSeed = (xSeed * chunkX + zSeed * chunkZ) ^ worldSeed;
 
         // Cauldron start
         boolean before = true;
@@ -100,14 +100,14 @@ public class GameRegistry
             before = ((net.minecraft.world.WorldServer)world).theChunkProviderServer.loadChunkOnProvideRequest; // store value
             ((net.minecraft.world.WorldServer)world).theChunkProviderServer.loadChunkOnProvideRequest = true; // load chunks on provide requests
         }
-        for (IWorldGenerator generator : worldGenerators)
+        for (final IWorldGenerator generator : worldGenerators)
         {
             if (!configWorldGenCache.containsKey(generator.getClass().getName()))
             {
-                String modId = worldGenMap.get(generator.getClass().getName());
+                final String modId = worldGenMap.get(generator.getClass().getName());
                 String generatorName = "";
                 generatorName = modId + "-" + generator.getClass().getSimpleName();
-                boolean generatorEnabled = world.cauldronConfig.getBoolean("worldgen-" + generatorName, true);
+                final boolean generatorEnabled = world.cauldronConfig.getBoolean("worldgen-" + generatorName, true);
                 configWorldGenCache.put(generator.getClass().getName(), generatorEnabled);
             }
             if (configWorldGenCache.get(generator.getClass().getName()))
@@ -131,9 +131,9 @@ public class GameRegistry
      * @param annotation
      * @throws Exception
      */
-    public static Object buildBlock(ModContainer container, Class<?> type, Block annotation) throws Exception
+    public static Object buildBlock(final ModContainer container, final Class<?> type, final Block annotation) throws Exception
     {
-        Object o = type.getConstructor(int.class).newInstance(findSpareBlockId());
+        final Object o = type.getConstructor(int.class).newInstance(findSpareBlockId());
         registerBlock((net.minecraft.block.Block) o);
         return o;
     }
@@ -154,7 +154,7 @@ public class GameRegistry
      * @param item The item to register
      * @param name The mod-unique name of the item
      */
-    public static void registerItem(net.minecraft.item.Item item, String name)
+    public static void registerItem(final net.minecraft.item.Item item, final String name)
     {
         registerItem(item, name, null);
     }
@@ -166,7 +166,7 @@ public class GameRegistry
      * @param modId An optional modId that will "own" this block - generally used by multi-mod systems
      * where one mod should "own" all the blocks of all the mods, null defaults to the active mod
      */
-    public static void registerItem(net.minecraft.item.Item item, String name, String modId)
+    public static void registerItem(final net.minecraft.item.Item item, final String name, final String modId)
     {
         GameRegistry.registerMaterial(item, name, modId); // Cauldron - register bukkit material
         GameData.setName(item, name, modId);
@@ -177,7 +177,7 @@ public class GameRegistry
      *
      */
     @Deprecated
-    public static void registerBlock(net.minecraft.block.Block block)
+    public static void registerBlock(final net.minecraft.block.Block block)
     {
         registerBlock(block, ItemBlock.class);
     }
@@ -188,7 +188,7 @@ public class GameRegistry
      * @param block The block to register
      * @param name The mod-unique name to register it as
      */
-    public static void registerBlock(net.minecraft.block.Block block, String name)
+    public static void registerBlock(final net.minecraft.block.Block block, final String name)
     {
         registerBlock(block, ItemBlock.class, name);
     }
@@ -202,7 +202,7 @@ public class GameRegistry
      * @param itemclass The item type to register with it
      */
     @Deprecated
-    public static void registerBlock(net.minecraft.block.Block block, Class<? extends ItemBlock> itemclass)
+    public static void registerBlock(final net.minecraft.block.Block block, final Class<? extends ItemBlock> itemclass)
     {
         registerBlock(block, itemclass, null);
     }
@@ -212,7 +212,7 @@ public class GameRegistry
      * @param itemclass The item type to register with it
      * @param name The mod-unique name to register it with
      */
-    public static void registerBlock(net.minecraft.block.Block block, Class<? extends ItemBlock> itemclass, String name)
+    public static void registerBlock(final net.minecraft.block.Block block, final Class<? extends ItemBlock> itemclass, final String name)
     {
         registerBlock(block, itemclass, name, null);
     }
@@ -223,7 +223,7 @@ public class GameRegistry
      * @param name The mod-unique name to register it with
      * @param modId The modId that will own the block name. null defaults to the active modId
      */
-    public static void registerBlock(net.minecraft.block.Block block, Class<? extends ItemBlock> itemclass, String name, String modId)
+    public static void registerBlock(final net.minecraft.block.Block block, final Class<? extends ItemBlock> itemclass, final String name, final String modId)
     {
         if (Loader.instance().isInState(LoaderState.CONSTRUCTING))
         {
@@ -233,7 +233,7 @@ public class GameRegistry
         {
             assert block != null : "registerBlock: block cannot be null";
             assert itemclass != null : "registerBlock: itemclass cannot be null";
-            int blockItemId = block.blockID - 256;
+            final int blockItemId = block.blockID - 256;
             Constructor<? extends ItemBlock> itemCtor;
             Item i;
             try
@@ -241,14 +241,14 @@ public class GameRegistry
                 itemCtor = itemclass.getConstructor(int.class);
                 i = itemCtor.newInstance(blockItemId);
             }
-            catch (NoSuchMethodException e)
+            catch (final NoSuchMethodException e)
             {
                 itemCtor = itemclass.getConstructor(int.class, net.minecraft.block.Block.class);
                 i = itemCtor.newInstance(blockItemId, block);
             }
             GameRegistry.registerItem(i,name, modId);
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             FMLLog.log(Level.SEVERE, e, "Caught an exception during block registration");
             throw new LoaderException(e);
@@ -264,51 +264,52 @@ public class GameRegistry
      * @param modId An optional modId that will "own" this block - generally used by multi-mod systems
      * where one mod should "own" all the blocks of all the mods, null defaults to the active mod
      */
-    public static void registerMaterial(net.minecraft.item.Item item, String name, String modId)
+    public static void registerMaterial(final net.minecraft.item.Item item, final String name, String modId)
     {
+        String modId1 = modId;
         if (name != null)
         {
-            if (modId == null)
-                modId = Loader.instance().activeModContainer().getModId();
-            String materialName = modId + "_" + name;
+            if (modId1 == null)
+                modId1 = Loader.instance().activeModContainer().getModId();
+            final String materialName = modId1 + "_" + name;
             org.bukkit.Material.setMaterialName(item.itemID, materialName, false);
         }
         else
         {
-            if (modId == null)
-                modId = Loader.instance().activeModContainer().getModId();
-            String materialName = modId + "_" + String.valueOf(item.itemID);
+            if (modId1 == null)
+                modId1 = Loader.instance().activeModContainer().getModId();
+            final String materialName = modId1 + "_" + String.valueOf(item.itemID);
             org.bukkit.Material.setMaterialName(item.itemID, materialName, false);
         }
     }
     // Cauldron end
 
-    public static void addRecipe(ItemStack output, Object... params)
+    public static void addRecipe(final ItemStack output, final Object... params)
     {
         addShapedRecipe(output, params);
     }
 
-    public static IRecipe addShapedRecipe(ItemStack output, Object... params)
+    public static IRecipe addShapedRecipe(final ItemStack output, final Object... params)
     {
         return CraftingManager.getInstance().addRecipe(output, params);
     }
 
-    public static void addShapelessRecipe(ItemStack output, Object... params)
+    public static void addShapelessRecipe(final ItemStack output, final Object... params)
     {
         CraftingManager.getInstance().addShapelessRecipe(output, params);
     }
 
-    public static void addRecipe(IRecipe recipe)
+    public static void addRecipe(final IRecipe recipe)
     {
         CraftingManager.getInstance().getRecipeList().add(recipe);
     }
 
-    public static void addSmelting(int input, ItemStack output, float xp)
+    public static void addSmelting(final int input, final ItemStack output, final float xp)
     {
         FurnaceRecipes.smelting().addSmelting(input, output, xp);
     }
 
-    public static void registerTileEntity(Class<? extends TileEntity> tileEntityClass, String id)
+    public static void registerTileEntity(final Class<? extends TileEntity> tileEntityClass, final String id)
     {
         TileEntity.addMapping(tileEntityClass, id);
     }
@@ -321,11 +322,11 @@ public class GameRegistry
      * @param id The primary ID, this will be the ID that the tileentity saves as
      * @param alternatives A list of alternative IDs that will also map to this class. These will never save, but they will load
      */
-    public static void registerTileEntityWithAlternatives(Class<? extends TileEntity> tileEntityClass, String id, String... alternatives)
+    public static void registerTileEntityWithAlternatives(final Class<? extends TileEntity> tileEntityClass, final String id, final String... alternatives)
     {
         TileEntity.addMapping(tileEntityClass, id);
-        Map<String,Class> teMappings = ObfuscationReflectionHelper.getPrivateValue(TileEntity.class, null, "field_" + "70326_a", "nameToClassMap", "a");
-        for (String s: alternatives)
+        final Map<String,Class> teMappings = ObfuscationReflectionHelper.getPrivateValue(TileEntity.class, null, "field_" + "70326_a", "nameToClassMap", "a");
+        for (final String s: alternatives)
         {
             if (!teMappings.containsKey(s))
             {
@@ -334,133 +335,133 @@ public class GameRegistry
         }
     }
 
-    public static void addBiome(BiomeGenBase biome)
+    public static void addBiome(final BiomeGenBase biome)
     {
         WorldType.DEFAULT.addNewBiome(biome);
     }
 
-    public static void removeBiome(BiomeGenBase biome)
+    public static void removeBiome(final BiomeGenBase biome)
     {
         WorldType.DEFAULT.removeBiome(biome);
     }
 
-    public static void registerFuelHandler(IFuelHandler handler)
+    public static void registerFuelHandler(final IFuelHandler handler)
     {
         fuelHandlers.add(handler);
     }
-    public static int getFuelValue(ItemStack itemStack)
+    public static int getFuelValue(final ItemStack itemStack)
     {
         int fuelValue = 0;
-        for (IFuelHandler handler : fuelHandlers)
+        for (final IFuelHandler handler : fuelHandlers)
         {
             fuelValue = Math.max(fuelValue, handler.getBurnTime(itemStack));
         }
         return fuelValue;
     }
 
-    public static void registerCraftingHandler(ICraftingHandler handler)
+    public static void registerCraftingHandler(final ICraftingHandler handler)
     {
         craftingHandlers.add(handler);
     }
 
-    public static void onItemCrafted(EntityPlayer player, ItemStack item, IInventory craftMatrix)
+    public static void onItemCrafted(final EntityPlayer player, final ItemStack item, final IInventory craftMatrix)
     {
-        for (ICraftingHandler handler : craftingHandlers)
+        for (final ICraftingHandler handler : craftingHandlers)
         {
             handler.onCrafting(player, item, craftMatrix);
         }
     }
 
-    public static void onItemSmelted(EntityPlayer player, ItemStack item)
+    public static void onItemSmelted(final EntityPlayer player, final ItemStack item)
     {
-        for (ICraftingHandler handler : craftingHandlers)
+        for (final ICraftingHandler handler : craftingHandlers)
         {
             handler.onSmelting(player, item);
         }
     }
 
-    public static void registerPickupHandler(IPickupNotifier handler)
+    public static void registerPickupHandler(final IPickupNotifier handler)
     {
         pickupHandlers.add(handler);
     }
 
-    public static void onPickupNotification(EntityPlayer player, EntityItem item)
+    public static void onPickupNotification(final EntityPlayer player, final EntityItem item)
     {
-        for (IPickupNotifier notify : pickupHandlers)
+        for (final IPickupNotifier notify : pickupHandlers)
         {
             notify.notifyPickup(item, player);
         }
     }
 
-    public static void registerPlayerTracker(IPlayerTracker tracker)
+    public static void registerPlayerTracker(final IPlayerTracker tracker)
 	{
 		playerTrackers.add(tracker);
 	}
 
-	public static void onPlayerLogin(EntityPlayer player)
+	public static void onPlayerLogin(final EntityPlayer player)
 	{
-        for (IPlayerTracker tracker : playerTrackers)
+        for (final IPlayerTracker tracker : playerTrackers)
             try
             {
                 tracker.onPlayerLogin(player);
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 FMLLog.log(Level.SEVERE, e, "A critical error occured handling the onPlayerLogin event with player tracker %s", tracker.getClass().getName());
             }
 	}
 
-	public static void onPlayerLogout(EntityPlayer player)
+	public static void onPlayerLogout(final EntityPlayer player)
 	{
-        for (IPlayerTracker tracker : playerTrackers)
+        for (final IPlayerTracker tracker : playerTrackers)
             try
             {
                 tracker.onPlayerLogout(player);
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 FMLLog.log(Level.SEVERE, e, "A critical error occured handling the onPlayerLogout event with player tracker %s", tracker.getClass().getName());
             }
 	}
 
     // Cauldron start - wrapper for mods to call our new method
-    public static void onPlayerChangedDimension(EntityPlayer player)
+    public static void onPlayerChangedDimension(final EntityPlayer player)
     {
         onPlayerChangedDimension(player, player.worldObj.getWorld()); // use same world for fromWorld as this is the best we can do
     }
     // Cauldron end
 
-    public static void onPlayerChangedDimension(EntityPlayer player, CraftWorld fromWorld)
+    public static void onPlayerChangedDimension(final EntityPlayer player, final CraftWorld fromWorld)
     {
         // Cauldron start - needed for mods that do not use ServerConfigurationManager. This allows us to notify plugins that a player changed dimensions
-        PlayerChangedWorldEvent event = new PlayerChangedWorldEvent((Player) player.getBukkitEntity(), fromWorld);
+        final PlayerChangedWorldEvent event = new PlayerChangedWorldEvent((Player) player.getBukkitEntity(), fromWorld);
         Bukkit.getServer().getPluginManager().callEvent(event);
         // Cauldron end
-        for (IPlayerTracker tracker : playerTrackers)
+        for (final IPlayerTracker tracker : playerTrackers)
             try
             {
                 tracker.onPlayerChangedDimension(player);
                 // Cauldron start - update compassTarget to new world when changing dimensions or it will leave a reference to the last world object causing a memory leak
                 // This is required for mods that implement their own dimension transfer methods which bypass ServerConfigurationManager
-                EntityPlayerMP playermp = (EntityPlayerMP)player;
+                final EntityPlayerMP playermp = (EntityPlayerMP)player;
                 playermp.compassTarget = new Location(playermp.worldObj.getWorld(), playermp.posX, playermp.posY, playermp.posZ);
                 // Cauldron end
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 FMLLog.log(Level.SEVERE, e, "A critical error occured handling the onPlayerChangedDimension event with player tracker %s", tracker.getClass()
                         .getName());
             }
 	}
 
-	public static void onPlayerRespawn(EntityPlayer player)
+	public static void onPlayerRespawn(final EntityPlayer player)
 	{
-        for (IPlayerTracker tracker : playerTrackers)
+        for (final IPlayerTracker tracker : playerTrackers)
             try
             {
                 tracker.onPlayerRespawn(player);
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 FMLLog.log(Level.SEVERE, e, "A critical error occured handling the onPlayerRespawn event with player tracker %s", tracker.getClass().getName());
             }
@@ -473,7 +474,7 @@ public class GameRegistry
 	 * @param name The name of the block itself
 	 * @return The block or null if not found
 	 */
-	public static net.minecraft.block.Block findBlock(String modId, String name)
+	public static net.minecraft.block.Block findBlock(final String modId, final String name)
 	{
 	    return GameData.findBlock(modId, name);
 	}
@@ -484,7 +485,7 @@ public class GameRegistry
 	 * @param name The name of the item itself
 	 * @return The item or null if not found
 	 */
-	public static net.minecraft.item.Item findItem(String modId, String name)
+	public static net.minecraft.item.Item findItem(final String modId, final String name)
     {
         return GameData.findItem(modId, name);
     }
@@ -495,7 +496,7 @@ public class GameRegistry
 	 * @param name The name to register it under
 	 * @param itemStack The itemstack to register
 	 */
-	public static void registerCustomItemStack(String name, ItemStack itemStack)
+	public static void registerCustomItemStack(final String name, final ItemStack itemStack)
 	{
 	    GameData.registerCustomItemStack(name, itemStack);
 	}
@@ -513,12 +514,12 @@ public class GameRegistry
 	 * @param stackSize The size of the stack returned
 	 * @return The custom itemstack or null if no such itemstack was found
 	 */
-	public static ItemStack findItemStack(String modId, String name, int stackSize)
+	public static ItemStack findItemStack(final String modId, final String name, final int stackSize)
 	{
-	    ItemStack foundStack = GameData.findItemStack(modId, name);
+	    final ItemStack foundStack = GameData.findItemStack(modId, name);
 	    if (foundStack != null)
 	    {
-            ItemStack is = foundStack.copy();
+            final ItemStack is = foundStack.copy();
     	    is.stackSize = Math.min(stackSize, is.getMaxStackSize());
     	    return is;
 	    }
@@ -529,7 +530,7 @@ public class GameRegistry
 	{
 	    public final String modId;
 	    public final String name;
-        UniqueIdentifier(String modId, String name)
+        UniqueIdentifier(final String modId, final String name)
         {
             this.modId = modId;
             this.name = name;
@@ -547,7 +548,7 @@ public class GameRegistry
 	 * @param block to lookup
      * @return a {@link UniqueIdentifier} for the block or null
 	 */
-	public static UniqueIdentifier findUniqueIdentifierFor(net.minecraft.block.Block block)
+	public static UniqueIdentifier findUniqueIdentifierFor(final net.minecraft.block.Block block)
 	{
 	    return GameData.getUniqueName(block);
 	}
@@ -562,7 +563,7 @@ public class GameRegistry
      * @param item to lookup
      * @return a {@link UniqueIdentifier} for the item or null
      */
-    public static UniqueIdentifier findUniqueIdentifierFor(net.minecraft.item.Item item)
+    public static UniqueIdentifier findUniqueIdentifierFor(final net.minecraft.item.Item item)
     {
         return GameData.getUniqueName(item);
     }

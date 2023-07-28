@@ -18,7 +18,7 @@ public class EntityPig extends EntityAnimal
     /** AI task for player control. */
     private final EntityAIControlledByPlayer aiControlledByPlayer;
 
-    public EntityPig(World par1World)
+    public EntityPig(final World par1World)
     {
         super(par1World);
         this.setSize(0.9F, 0.9F);
@@ -62,7 +62,7 @@ public class EntityPig extends EntityAnimal
      */
     public boolean canBeSteered()
     {
-        ItemStack itemstack = ((EntityPlayer)this.riddenByEntity).getHeldItem();
+        final ItemStack itemstack = ((EntityPlayer)this.riddenByEntity).getHeldItem();
         return itemstack != null && itemstack.itemID == Item.carrotOnAStick.itemID;
     }
 
@@ -75,7 +75,7 @@ public class EntityPig extends EntityAnimal
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setBoolean("Saddle", this.getSaddled());
@@ -84,7 +84,7 @@ public class EntityPig extends EntityAnimal
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.setSaddled(par1NBTTagCompound.getBoolean("Saddle"));
@@ -117,7 +117,7 @@ public class EntityPig extends EntityAnimal
     /**
      * Plays step sound at given x, y, z for the entity
      */
-    protected void playStepSound(int par1, int par2, int par3, int par4)
+    protected void playStepSound(final int par1, final int par2, final int par3, final int par4)
     {
         this.playSound("mob.pig.step", 0.15F, 1.0F);
     }
@@ -125,7 +125,7 @@ public class EntityPig extends EntityAnimal
     /**
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
-    public boolean interact(EntityPlayer par1EntityPlayer)
+    public boolean interact(final EntityPlayer par1EntityPlayer)
     {
         if (super.interact(par1EntityPlayer))
         {
@@ -154,9 +154,9 @@ public class EntityPig extends EntityAnimal
      * Drop 0-2 items of this living's type. @param par1 - Whether this entity has recently been hit by a player. @param
      * par2 - Level of Looting used to kill this mob.
      */
-    protected void dropFewItems(boolean par1, int par2)
+    protected void dropFewItems(final boolean par1, final int par2)
     {
-        int j = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + par2);
+        final int j = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + par2);
 
         for (int k = 0; k < j; ++k)
         {
@@ -187,7 +187,7 @@ public class EntityPig extends EntityAnimal
     /**
      * Set or remove the saddle of the pig.
      */
-    public void setSaddled(boolean par1)
+    public void setSaddled(final boolean par1)
     {
         if (par1)
         {
@@ -202,11 +202,11 @@ public class EntityPig extends EntityAnimal
     /**
      * Called when a lightning bolt hits the entity.
      */
-    public void onStruckByLightning(EntityLightningBolt par1EntityLightningBolt)
+    public void onStruckByLightning(final EntityLightningBolt par1EntityLightningBolt)
     {
         if (!this.worldObj.isRemote)
         {
-            EntityPigZombie entitypigzombie = new EntityPigZombie(this.worldObj);
+            final EntityPigZombie entitypigzombie = new EntityPigZombie(this.worldObj);
 
             // Cauldron start
             if (par1EntityLightningBolt != null)
@@ -228,7 +228,7 @@ public class EntityPig extends EntityAnimal
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float par1)
+    protected void fall(final float par1)
     {
         super.fall(par1);
 
@@ -241,7 +241,7 @@ public class EntityPig extends EntityAnimal
     /**
      * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
      */
-    public EntityPig spawnBabyAnimal(EntityAgeable par1EntityAgeable)
+    public EntityPig spawnBabyAnimal(final EntityAgeable par1EntityAgeable)
     {
         return new EntityPig(this.worldObj);
     }
@@ -250,7 +250,7 @@ public class EntityPig extends EntityAnimal
      * Checks if the parameter is an item which this animal can be fed to breed it (wheat, carrots or seeds depending on
      * the animal type)
      */
-    public boolean isBreedingItem(ItemStack par1ItemStack)
+    public boolean isBreedingItem(final ItemStack par1ItemStack)
     {
         return par1ItemStack != null && par1ItemStack.itemID == Item.carrot.itemID;
     }
@@ -263,7 +263,7 @@ public class EntityPig extends EntityAnimal
         return this.aiControlledByPlayer;
     }
 
-    public EntityAgeable createChild(EntityAgeable par1EntityAgeable)
+    public EntityAgeable createChild(final EntityAgeable par1EntityAgeable)
     {
         return this.spawnBabyAnimal(par1EntityAgeable);
     }

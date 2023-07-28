@@ -11,7 +11,7 @@ public class TileEntityRecordPlayer extends TileEntity
     /**
      * Reads a tile entity from NBT.
      */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
 
@@ -28,7 +28,7 @@ public class TileEntityRecordPlayer extends TileEntity
     /**
      * Writes a tile entity to NBT.
      */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
 
@@ -44,7 +44,7 @@ public class TileEntityRecordPlayer extends TileEntity
         return this.record;
     }
 
-    public void func_96098_a(ItemStack par1ItemStack)
+    public void func_96098_a(final ItemStack par1ItemStack)
     {
         // CraftBukkit start - There can only be one
         if (par1ItemStack != null)

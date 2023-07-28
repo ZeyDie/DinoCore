@@ -18,7 +18,7 @@ public class LiquidContainerData {
     public final ItemStack container;
 
 
-    public LiquidContainerData(LiquidStack stillLiquid, ItemStack filled, ItemStack container) {
+    public LiquidContainerData(final LiquidStack stillLiquid, final ItemStack filled, final ItemStack container) {
         this.stillLiquid = stillLiquid;
         this.filled = filled;
         this.container = container;

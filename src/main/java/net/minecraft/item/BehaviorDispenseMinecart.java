@@ -21,18 +21,18 @@ final class BehaviorDispenseMinecart extends BehaviorDefaultDispenseItem
     /**
      * Dispense the specified stack, play the dispense sound and spawn particles.
      */
-    public ItemStack dispenseStack(IBlockSource par1IBlockSource, ItemStack par2ItemStack)
+    public ItemStack dispenseStack(final IBlockSource par1IBlockSource, final ItemStack par2ItemStack)
     {
-        EnumFacing enumfacing = BlockDispenser.getFacing(par1IBlockSource.getBlockMetadata());
-        World world = par1IBlockSource.getWorld();
-        double d0 = par1IBlockSource.getX() + (double)((float)enumfacing.getFrontOffsetX() * 1.125F);
-        double d1 = par1IBlockSource.getY() + (double)((float)enumfacing.getFrontOffsetY() * 1.125F);
-        double d2 = par1IBlockSource.getZ() + (double)((float)enumfacing.getFrontOffsetZ() * 1.125F);
-        int i = par1IBlockSource.getXInt() + enumfacing.getFrontOffsetX();
-        int j = par1IBlockSource.getYInt() + enumfacing.getFrontOffsetY();
-        int k = par1IBlockSource.getZInt() + enumfacing.getFrontOffsetZ();
-        int l = world.getBlockId(i, j, k);
-        double d3;
+        final EnumFacing enumfacing = BlockDispenser.getFacing(par1IBlockSource.getBlockMetadata());
+        final World world = par1IBlockSource.getWorld();
+        final double d0 = par1IBlockSource.getX() + (double)((float)enumfacing.getFrontOffsetX() * 1.125F);
+        final double d1 = par1IBlockSource.getY() + (double)((float)enumfacing.getFrontOffsetY() * 1.125F);
+        final double d2 = par1IBlockSource.getZ() + (double)((float)enumfacing.getFrontOffsetZ() * 1.125F);
+        final int i = par1IBlockSource.getXInt() + enumfacing.getFrontOffsetX();
+        final int j = par1IBlockSource.getYInt() + enumfacing.getFrontOffsetY();
+        final int k = par1IBlockSource.getZInt() + enumfacing.getFrontOffsetZ();
+        final int l = world.getBlockId(i, j, k);
+        final double d3;
 
         if (BlockRailBase.isRailBlock(l))
         {
@@ -50,9 +50,9 @@ final class BehaviorDispenseMinecart extends BehaviorDefaultDispenseItem
 
         // CraftBukkit start
         ItemStack itemstack1 = par2ItemStack.splitStack(1);
-        org.bukkit.block.Block block = world.getWorld().getBlockAt(par1IBlockSource.getXInt(), par1IBlockSource.getYInt(), par1IBlockSource.getZInt());
-        CraftItemStack craftItem = CraftItemStack.asCraftMirror(itemstack1);
-        BlockDispenseEvent event = new BlockDispenseEvent(block, craftItem.clone(), new org.bukkit.util.Vector(d0, d1 + d3, d2));
+        final org.bukkit.block.Block block = world.getWorld().getBlockAt(par1IBlockSource.getXInt(), par1IBlockSource.getYInt(), par1IBlockSource.getZInt());
+        final CraftItemStack craftItem = CraftItemStack.asCraftMirror(itemstack1);
+        final BlockDispenseEvent event = new BlockDispenseEvent(block, craftItem.clone(), new org.bukkit.util.Vector(d0, d1 + d3, d2));
 
         if (!BlockDispenser.eventFired)
         {
@@ -69,8 +69,8 @@ final class BehaviorDispenseMinecart extends BehaviorDefaultDispenseItem
         {
             par2ItemStack.stackSize++;
             // Chain to handler for new item
-            ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-            IBehaviorDispenseItem ibehaviordispenseitem = (IBehaviorDispenseItem) BlockDispenser.dispenseBehaviorRegistry.getObject(eventStack.getItem());
+            final ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
+            final IBehaviorDispenseItem ibehaviordispenseitem = (IBehaviorDispenseItem) BlockDispenser.dispenseBehaviorRegistry.getObject(eventStack.getItem());
 
             if (ibehaviordispenseitem != IBehaviorDispenseItem.itemDispenseBehaviorProvider && ibehaviordispenseitem != this)
             {
@@ -80,7 +80,7 @@ final class BehaviorDispenseMinecart extends BehaviorDefaultDispenseItem
         }
 
         itemstack1 = CraftItemStack.asNMSCopy(event.getItem());
-        EntityMinecart entityminecart = EntityMinecart.createMinecart(world, event.getVelocity().getX(), event.getVelocity().getY(), event.getVelocity().getZ(), ((ItemMinecart) itemstack1.getItem()).minecartType);
+        final EntityMinecart entityminecart = EntityMinecart.createMinecart(world, event.getVelocity().getX(), event.getVelocity().getY(), event.getVelocity().getZ(), ((ItemMinecart) itemstack1.getItem()).minecartType);
         // CraftBukkit end
 
         if (par2ItemStack.hasDisplayName())
@@ -96,7 +96,7 @@ final class BehaviorDispenseMinecart extends BehaviorDefaultDispenseItem
     /**
      * Play the dispense sound from the specified block.
      */
-    protected void playDispenseSound(IBlockSource par1IBlockSource)
+    protected void playDispenseSound(final IBlockSource par1IBlockSource)
     {
         par1IBlockSource.getWorld().playAuxSFX(1000, par1IBlockSource.getXInt(), par1IBlockSource.getYInt(), par1IBlockSource.getZInt(), 0);
     }

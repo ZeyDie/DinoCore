@@ -6,7 +6,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Pig;
 
 public class CraftPig extends CraftAnimals implements Pig {
-    public CraftPig(CraftServer server, net.minecraft.entity.passive.EntityPig entity) {
+    public CraftPig(final CraftServer server, final net.minecraft.entity.passive.EntityPig entity) {
         super(server, entity);
     }
 
@@ -14,7 +14,7 @@ public class CraftPig extends CraftAnimals implements Pig {
         return getHandle().getSaddled();
     }
 
-    public void setSaddle(boolean saddled) {
+    public void setSaddle(final boolean saddled) {
         getHandle().setSaddled(saddled);
     }
 

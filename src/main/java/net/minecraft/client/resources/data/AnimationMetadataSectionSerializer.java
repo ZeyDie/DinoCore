@@ -11,23 +11,23 @@ import java.util.ArrayList;
 @SideOnly(Side.CLIENT)
 public class AnimationMetadataSectionSerializer extends BaseMetadataSectionSerializer implements JsonSerializer
 {
-    public AnimationMetadataSection func_110493_a(JsonElement par1JsonElement, Type par2Type, JsonDeserializationContext par3JsonDeserializationContext)
+    public AnimationMetadataSection func_110493_a(final JsonElement par1JsonElement, final Type par2Type, final JsonDeserializationContext par3JsonDeserializationContext)
     {
-        ArrayList arraylist = Lists.newArrayList();
-        JsonObject jsonobject = (JsonObject)par1JsonElement;
-        int i = this.func_110485_a(jsonobject.get("frametime"), "frametime", Integer.valueOf(1), 1, Integer.MAX_VALUE);
+        final ArrayList arraylist = Lists.newArrayList();
+        final JsonObject jsonobject = (JsonObject)par1JsonElement;
+        final int i = this.func_110485_a(jsonobject.get("frametime"), "frametime", Integer.valueOf(1), 1, Integer.MAX_VALUE);
         int j;
 
         if (jsonobject.has("frames"))
         {
             try
             {
-                JsonArray jsonarray = jsonobject.getAsJsonArray("frames");
+                final JsonArray jsonarray = jsonobject.getAsJsonArray("frames");
 
                 for (j = 0; j < jsonarray.size(); ++j)
                 {
-                    JsonElement jsonelement1 = jsonarray.get(j);
-                    AnimationFrame animationframe = this.parseAnimationFrame(j, jsonelement1);
+                    final JsonElement jsonelement1 = jsonarray.get(j);
+                    final AnimationFrame animationframe = this.parseAnimationFrame(j, jsonelement1);
 
                     if (animationframe != null)
                     {
@@ -35,18 +35,18 @@ public class AnimationMetadataSectionSerializer extends BaseMetadataSectionSeria
                     }
                 }
             }
-            catch (ClassCastException classcastexception)
+            catch (final ClassCastException classcastexception)
             {
                 throw new JsonParseException("Invalid animation->frames: expected array, was " + jsonobject.get("frames"), classcastexception);
             }
         }
 
-        int k = this.func_110485_a(jsonobject.get("width"), "width", Integer.valueOf(-1), 1, Integer.MAX_VALUE);
+        final int k = this.func_110485_a(jsonobject.get("width"), "width", Integer.valueOf(-1), 1, Integer.MAX_VALUE);
         j = this.func_110485_a(jsonobject.get("height"), "height", Integer.valueOf(-1), 1, Integer.MAX_VALUE);
         return new AnimationMetadataSection(arraylist, k, j, i);
     }
 
-    private AnimationFrame parseAnimationFrame(int par1, JsonElement par2JsonElement)
+    private AnimationFrame parseAnimationFrame(final int par1, final JsonElement par2JsonElement)
     {
         if (par2JsonElement.isJsonPrimitive())
         {
@@ -54,16 +54,16 @@ public class AnimationMetadataSectionSerializer extends BaseMetadataSectionSeria
             {
                 return new AnimationFrame(par2JsonElement.getAsInt());
             }
-            catch (NumberFormatException numberformatexception)
+            catch (final NumberFormatException numberformatexception)
             {
                 throw new JsonParseException("Invalid animation->frames->" + par1 + ": expected number, was " + par2JsonElement, numberformatexception);
             }
         }
         else if (par2JsonElement.isJsonObject())
         {
-            JsonObject jsonobject = par2JsonElement.getAsJsonObject();
-            int j = this.func_110485_a(jsonobject.get("time"), "frames->" + par1 + "->time", Integer.valueOf(-1), 1, Integer.MAX_VALUE);
-            int k = this.func_110485_a(jsonobject.get("index"), "frames->" + par1 + "->index", (Integer)null, 0, Integer.MAX_VALUE);
+            final JsonObject jsonobject = par2JsonElement.getAsJsonObject();
+            final int j = this.func_110485_a(jsonobject.get("time"), "frames->" + par1 + "->time", Integer.valueOf(-1), 1, Integer.MAX_VALUE);
+            final int k = this.func_110485_a(jsonobject.get("index"), "frames->" + par1 + "->index", (Integer)null, 0, Integer.MAX_VALUE);
             return new AnimationFrame(k, j);
         }
         else
@@ -72,9 +72,9 @@ public class AnimationMetadataSectionSerializer extends BaseMetadataSectionSeria
         }
     }
 
-    public JsonElement func_110491_a(AnimationMetadataSection par1AnimationMetadataSection, Type par2Type, JsonSerializationContext par3JsonSerializationContext)
+    public JsonElement func_110491_a(final AnimationMetadataSection par1AnimationMetadataSection, final Type par2Type, final JsonSerializationContext par3JsonSerializationContext)
     {
-        JsonObject jsonobject = new JsonObject();
+        final JsonObject jsonobject = new JsonObject();
         jsonobject.addProperty("frametime", Integer.valueOf(par1AnimationMetadataSection.getFrameTime()));
 
         if (par1AnimationMetadataSection.getFrameWidth() != -1)
@@ -89,13 +89,13 @@ public class AnimationMetadataSectionSerializer extends BaseMetadataSectionSeria
 
         if (par1AnimationMetadataSection.getFrameCount() > 0)
         {
-            JsonArray jsonarray = new JsonArray();
+            final JsonArray jsonarray = new JsonArray();
 
             for (int i = 0; i < par1AnimationMetadataSection.getFrameCount(); ++i)
             {
                 if (par1AnimationMetadataSection.frameHasTime(i))
                 {
-                    JsonObject jsonobject1 = new JsonObject();
+                    final JsonObject jsonobject1 = new JsonObject();
                     jsonobject1.addProperty("index", Integer.valueOf(par1AnimationMetadataSection.getFrameIndex(i)));
                     jsonobject1.addProperty("time", Integer.valueOf(par1AnimationMetadataSection.getFrameTimeSingle(i)));
                     jsonarray.add(jsonobject1);
@@ -120,12 +120,12 @@ public class AnimationMetadataSectionSerializer extends BaseMetadataSectionSeria
         return "animation";
     }
 
-    public Object deserialize(JsonElement par1JsonElement, Type par2Type, JsonDeserializationContext par3JsonDeserializationContext)
+    public Object deserialize(final JsonElement par1JsonElement, final Type par2Type, final JsonDeserializationContext par3JsonDeserializationContext)
     {
         return this.func_110493_a(par1JsonElement, par2Type, par3JsonDeserializationContext);
     }
 
-    public JsonElement serialize(Object par1Obj, Type par2Type, JsonSerializationContext par3JsonSerializationContext)
+    public JsonElement serialize(final Object par1Obj, final Type par2Type, final JsonSerializationContext par3JsonSerializationContext)
     {
         return this.func_110491_a((AnimationMetadataSection)par1Obj, par2Type, par3JsonSerializationContext);
     }

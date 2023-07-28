@@ -36,22 +36,24 @@ public class RenderEnderman extends RenderLiving
     /**
      * Renders the enderman
      */
-    public void renderEnderman(EntityEnderman par1EntityEnderman, double par2, double par4, double par6, float par8, float par9)
+    public void renderEnderman(final EntityEnderman par1EntityEnderman, double par2, final double par4, double par6, final float par8, final float par9)
     {
+        double par21 = par2;
+        double par61 = par6;
         this.endermanModel.isCarrying = par1EntityEnderman.getCarried() > 0;
         this.endermanModel.isAttacking = par1EntityEnderman.isScreaming();
 
         if (par1EntityEnderman.isScreaming())
         {
-            double d3 = 0.02D;
-            par2 += this.rnd.nextGaussian() * d3;
-            par6 += this.rnd.nextGaussian() * d3;
+            final double d3 = 0.02D;
+            par21 += this.rnd.nextGaussian() * d3;
+            par61 += this.rnd.nextGaussian() * d3;
         }
 
-        super.doRenderLiving(par1EntityEnderman, par2, par4, par6, par8, par9);
+        super.doRenderLiving(par1EntityEnderman, par21, par4, par61, par8, par9);
     }
 
-    protected ResourceLocation getEndermanTextures(EntityEnderman par1EntityEnderman)
+    protected ResourceLocation getEndermanTextures(final EntityEnderman par1EntityEnderman)
     {
         return endermanTextures;
     }
@@ -59,7 +61,7 @@ public class RenderEnderman extends RenderLiving
     /**
      * Render the block an enderman is carrying
      */
-    protected void renderCarrying(EntityEnderman par1EntityEnderman, float par2)
+    protected void renderCarrying(final EntityEnderman par1EntityEnderman, final float par2)
     {
         super.renderEquippedItems(par1EntityEnderman, par2);
 
@@ -73,9 +75,9 @@ public class RenderEnderman extends RenderLiving
             GL11.glRotatef(20.0F, 1.0F, 0.0F, 0.0F);
             GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
             GL11.glScalef(-f1, -f1, f1);
-            int i = par1EntityEnderman.getBrightnessForRender(par2);
-            int j = i % 65536;
-            int k = i / 65536;
+            final int i = par1EntityEnderman.getBrightnessForRender(par2);
+            final int j = i % 65536;
+            final int k = i / 65536;
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j / 1.0F, (float)k / 1.0F);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -89,7 +91,7 @@ public class RenderEnderman extends RenderLiving
     /**
      * Render the endermans eyes
      */
-    protected int renderEyes(EntityEnderman par1EntityEnderman, int par2, float par3)
+    protected int renderEyes(final EntityEnderman par1EntityEnderman, final int par2, final float par3)
     {
         if (par2 != 0)
         {
@@ -98,7 +100,7 @@ public class RenderEnderman extends RenderLiving
         else
         {
             this.bindTexture(endermanEyesTexture);
-            float f1 = 1.0F;
+            final float f1 = 1.0F;
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glDisable(GL11.GL_ALPHA_TEST);
             GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
@@ -113,9 +115,9 @@ public class RenderEnderman extends RenderLiving
                 GL11.glDepthMask(true);
             }
 
-            char c0 = 61680;
-            int j = c0 % 65536;
-            int k = c0 / 65536;
+            final char c0 = 61680;
+            final int j = c0 % 65536;
+            final int k = c0 / 65536;
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j / 1.0F, (float)k / 1.0F);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             GL11.glEnable(GL11.GL_LIGHTING);
@@ -124,7 +126,7 @@ public class RenderEnderman extends RenderLiving
         }
     }
 
-    public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9)
+    public void doRenderLiving(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.renderEnderman((EntityEnderman)par1EntityLiving, par2, par4, par6, par8, par9);
     }
@@ -132,17 +134,17 @@ public class RenderEnderman extends RenderLiving
     /**
      * Queries whether should render the specified pass or not.
      */
-    protected int shouldRenderPass(EntityLivingBase par1EntityLivingBase, int par2, float par3)
+    protected int shouldRenderPass(final EntityLivingBase par1EntityLivingBase, final int par2, final float par3)
     {
         return this.renderEyes((EntityEnderman)par1EntityLivingBase, par2, par3);
     }
 
-    protected void renderEquippedItems(EntityLivingBase par1EntityLivingBase, float par2)
+    protected void renderEquippedItems(final EntityLivingBase par1EntityLivingBase, final float par2)
     {
         this.renderCarrying((EntityEnderman)par1EntityLivingBase, par2);
     }
 
-    public void renderPlayer(EntityLivingBase par1EntityLivingBase, double par2, double par4, double par6, float par8, float par9)
+    public void renderPlayer(final EntityLivingBase par1EntityLivingBase, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.renderEnderman((EntityEnderman)par1EntityLivingBase, par2, par4, par6, par8, par9);
     }
@@ -150,7 +152,7 @@ public class RenderEnderman extends RenderLiving
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.getEndermanTextures((EntityEnderman)par1Entity);
     }
@@ -161,7 +163,7 @@ public class RenderEnderman extends RenderLiving
      * (Render<T extends Entity) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.renderEnderman((EntityEnderman)par1Entity, par2, par4, par6, par8, par9);
     }

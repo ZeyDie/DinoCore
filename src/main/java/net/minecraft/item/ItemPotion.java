@@ -34,7 +34,7 @@ public class ItemPotion extends Item
     @SideOnly(Side.CLIENT)
     private Icon field_94592_ct;
 
-    public ItemPotion(int par1)
+    public ItemPotion(final int par1)
     {
         super(par1);
         this.setMaxStackSize(1);
@@ -46,16 +46,16 @@ public class ItemPotion extends Item
     /**
      * Returns a list of potion effects for the specified itemstack.
      */
-    public List getEffects(ItemStack par1ItemStack)
+    public List getEffects(final ItemStack par1ItemStack)
     {
         if (par1ItemStack.hasTagCompound() && par1ItemStack.getTagCompound().hasKey("CustomPotionEffects"))
         {
-            ArrayList arraylist = new ArrayList();
-            NBTTagList nbttaglist = par1ItemStack.getTagCompound().getTagList("CustomPotionEffects");
+            final ArrayList arraylist = new ArrayList();
+            final NBTTagList nbttaglist = par1ItemStack.getTagCompound().getTagList("CustomPotionEffects");
 
             for (int i = 0; i < nbttaglist.tagCount(); ++i)
             {
-                NBTTagCompound nbttagcompound = (NBTTagCompound)nbttaglist.tagAt(i);
+                final NBTTagCompound nbttagcompound = (NBTTagCompound)nbttaglist.tagAt(i);
                 arraylist.add(PotionEffect.readCustomPotionEffectFromNBT(nbttagcompound));
             }
 
@@ -78,7 +78,7 @@ public class ItemPotion extends Item
     /**
      * Returns a list of effects for the specified potion damage value.
      */
-    public List getEffects(int par1)
+    public List getEffects(final int par1)
     {
         List list = (List)this.effectCache.get(Integer.valueOf(par1));
 
@@ -91,7 +91,7 @@ public class ItemPotion extends Item
         return list;
     }
 
-    public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onEaten(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         if (!par3EntityPlayer.capabilities.isCreativeMode)
         {
@@ -100,15 +100,15 @@ public class ItemPotion extends Item
 
         if (!par2World.isRemote)
         {
-            List list = this.getEffects(par1ItemStack);
+            final List list = this.getEffects(par1ItemStack);
 
             if (list != null)
             {
-                Iterator iterator = list.iterator();
+                final Iterator iterator = list.iterator();
 
                 while (iterator.hasNext())
                 {
-                    PotionEffect potioneffect = (PotionEffect)iterator.next();
+                    final PotionEffect potioneffect = (PotionEffect)iterator.next();
                     par3EntityPlayer.addPotionEffect(new PotionEffect(potioneffect));
                 }
             }
@@ -130,7 +130,7 @@ public class ItemPotion extends Item
     /**
      * How long it takes to use or consume an item
      */
-    public int getMaxItemUseDuration(ItemStack par1ItemStack)
+    public int getMaxItemUseDuration(final ItemStack par1ItemStack)
     {
         return 32;
     }
@@ -138,7 +138,7 @@ public class ItemPotion extends Item
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    public EnumAction getItemUseAction(ItemStack par1ItemStack)
+    public EnumAction getItemUseAction(final ItemStack par1ItemStack)
     {
         return EnumAction.drink;
     }
@@ -146,7 +146,7 @@ public class ItemPotion extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         if (isSplash(par1ItemStack.getItemDamage()))
         {
@@ -175,7 +175,7 @@ public class ItemPotion extends Item
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final World par3World, final int par4, final int par5, final int par6, final int par7, final float par8, final float par9, final float par10)
     {
         return false;
     }
@@ -185,7 +185,7 @@ public class ItemPotion extends Item
     /**
      * Gets an icon index based on an item's damage value
      */
-    public Icon getIconFromDamage(int par1)
+    public Icon getIconFromDamage(final int par1)
     {
         return isSplash(par1) ? this.field_94591_c : this.field_94590_d;
     }
@@ -195,7 +195,7 @@ public class ItemPotion extends Item
     /**
      * Gets an icon index based on an item's damage value and the given render pass
      */
-    public Icon getIconFromDamageForRenderPass(int par1, int par2)
+    public Icon getIconFromDamageForRenderPass(final int par1, final int par2)
     {
         return par2 == 0 ? this.field_94592_ct : super.getIconFromDamageForRenderPass(par1, par2);
     }
@@ -203,19 +203,19 @@ public class ItemPotion extends Item
     /**
      * returns wether or not a potion is a throwable splash potion based on damage value
      */
-    public static boolean isSplash(int par0)
+    public static boolean isSplash(final int par0)
     {
         return (par0 & 16384) != 0;
     }
 
     @SideOnly(Side.CLIENT)
-    public int getColorFromDamage(int par1)
+    public int getColorFromDamage(final int par1)
     {
         return PotionHelper.func_77915_a(par1, false);
     }
 
     @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack par1ItemStack, int par2)
+    public int getColorFromItemStack(final ItemStack par1ItemStack, final int par2)
     {
         return par2 > 0 ? 16777215 : this.getColorFromDamage(par1ItemStack.getItemDamage());
     }
@@ -227,13 +227,13 @@ public class ItemPotion extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public boolean isEffectInstant(int par1)
+    public boolean isEffectInstant(final int par1)
     {
-        List list = this.getEffects(par1);
+        final List list = this.getEffects(par1);
 
         if (list != null && !list.isEmpty())
         {
-            Iterator iterator = list.iterator();
+            final Iterator iterator = list.iterator();
             PotionEffect potioneffect;
 
             do
@@ -255,7 +255,7 @@ public class ItemPotion extends Item
         }
     }
 
-    public String getItemDisplayName(ItemStack par1ItemStack)
+    public String getItemDisplayName(final ItemStack par1ItemStack)
     {
         if (par1ItemStack.getItemDamage() == 0)
         {
@@ -270,7 +270,7 @@ public class ItemPotion extends Item
                 s = StatCollector.translateToLocal("potion.prefix.grenade").trim() + " ";
             }
 
-            List list = Item.potion.getEffects(par1ItemStack);
+            final List list = Item.potion.getEffects(par1ItemStack);
             String s1;
 
             if (list != null && !list.isEmpty())
@@ -292,12 +292,12 @@ public class ItemPotion extends Item
     /**
      * allows items to add custom lines of information to the mouseover description
      */
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    public void addInformation(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final List par3List, final boolean par4)
     {
         if (par1ItemStack.getItemDamage() != 0)
         {
-            List list1 = Item.potion.getEffects(par1ItemStack);
-            HashMultimap hashmultimap = HashMultimap.create();
+            final List list1 = Item.potion.getEffects(par1ItemStack);
+            final HashMultimap hashmultimap = HashMultimap.create();
             Iterator iterator;
 
             if (list1 != null && !list1.isEmpty())
@@ -306,20 +306,20 @@ public class ItemPotion extends Item
 
                 while (iterator.hasNext())
                 {
-                    PotionEffect potioneffect = (PotionEffect)iterator.next();
+                    final PotionEffect potioneffect = (PotionEffect)iterator.next();
                     String s = StatCollector.translateToLocal(potioneffect.getEffectName()).trim();
-                    Potion potion = Potion.potionTypes[potioneffect.getPotionID()];
-                    Map map = potion.func_111186_k();
+                    final Potion potion = Potion.potionTypes[potioneffect.getPotionID()];
+                    final Map map = potion.func_111186_k();
 
-                    if (map != null && map.size() > 0)
+                    if (map != null && !map.isEmpty())
                     {
-                        Iterator iterator1 = map.entrySet().iterator();
+                        final Iterator iterator1 = map.entrySet().iterator();
 
                         while (iterator1.hasNext())
                         {
-                            Entry entry = (Entry)iterator1.next();
-                            AttributeModifier attributemodifier = (AttributeModifier)entry.getValue();
-                            AttributeModifier attributemodifier1 = new AttributeModifier(attributemodifier.getName(), potion.func_111183_a(potioneffect.getAmplifier(), attributemodifier), attributemodifier.getOperation());
+                            final Entry entry = (Entry)iterator1.next();
+                            final AttributeModifier attributemodifier = (AttributeModifier)entry.getValue();
+                            final AttributeModifier attributemodifier1 = new AttributeModifier(attributemodifier.getName(), potion.func_111183_a(potioneffect.getAmplifier(), attributemodifier), attributemodifier.getOperation());
                             hashmultimap.put(((Attribute)entry.getKey()).getAttributeUnlocalizedName(), attributemodifier1);
                         }
                     }
@@ -346,7 +346,7 @@ public class ItemPotion extends Item
             }
             else
             {
-                String s1 = StatCollector.translateToLocal("potion.empty").trim();
+                final String s1 = StatCollector.translateToLocal("potion.empty").trim();
                 par3List.add(EnumChatFormatting.GRAY + s1);
             }
 
@@ -358,9 +358,9 @@ public class ItemPotion extends Item
 
                 while (iterator.hasNext())
                 {
-                    Entry entry1 = (Entry)iterator.next();
-                    AttributeModifier attributemodifier2 = (AttributeModifier)entry1.getValue();
-                    double d0 = attributemodifier2.getAmount();
+                    final Entry entry1 = (Entry)iterator.next();
+                    final AttributeModifier attributemodifier2 = (AttributeModifier)entry1.getValue();
+                    final double d0 = attributemodifier2.getAmount();
                     double d1;
 
                     if (attributemodifier2.getOperation() != 1 && attributemodifier2.getOperation() != 2)
@@ -387,9 +387,9 @@ public class ItemPotion extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack par1ItemStack)
+    public boolean hasEffect(final ItemStack par1ItemStack)
     {
-        List list = this.getEffects(par1ItemStack);
+        final List list = this.getEffects(par1ItemStack);
         return list != null && !list.isEmpty();
     }
 
@@ -398,7 +398,7 @@ public class ItemPotion extends Item
     /**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */
-    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubItems(final int par1, final CreativeTabs par2CreativeTabs, final List par3List)
     {
         super.getSubItems(par1, par2CreativeTabs, par3List);
         int j;
@@ -409,7 +409,7 @@ public class ItemPotion extends Item
             {
                 for (j = 0; j <= 1; ++j)
                 {
-                    int l;
+                    final int l;
 
                     if (j == 0)
                     {
@@ -436,7 +436,7 @@ public class ItemPotion extends Item
                             }
                         }
 
-                        List list1 = PotionHelper.getPotionEffects(j1, false);
+                        final List list1 = PotionHelper.getPotionEffects(j1, false);
 
                         if (list1 != null && !list1.isEmpty())
                         {
@@ -447,7 +447,7 @@ public class ItemPotion extends Item
             }
         }
 
-        Iterator iterator = field_77835_b.values().iterator();
+        final Iterator iterator = field_77835_b.values().iterator();
 
         while (iterator.hasNext())
         {
@@ -457,7 +457,7 @@ public class ItemPotion extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.field_94590_d = par1IconRegister.registerIcon(this.getIconString() + "_" + "bottle_drinkable");
         this.field_94591_c = par1IconRegister.registerIcon(this.getIconString() + "_" + "bottle_splash");
@@ -465,7 +465,7 @@ public class ItemPotion extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public static Icon func_94589_d(String par0Str)
+    public static Icon func_94589_d(final String par0Str)
     {
         return par0Str.equals("bottle_drinkable") ? Item.potion.field_94590_d : (par0Str.equals("bottle_splash") ? Item.potion.field_94591_c : (par0Str.equals("overlay") ? Item.potion.field_94592_ct : null));
     }

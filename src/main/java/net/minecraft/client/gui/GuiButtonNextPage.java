@@ -13,7 +13,7 @@ class GuiButtonNextPage extends GuiButton
      */
     private final boolean nextPage;
 
-    public GuiButtonNextPage(int par1, int par2, int par3, boolean par4)
+    public GuiButtonNextPage(final int par1, final int par2, final int par3, final boolean par4)
     {
         super(par1, par2, par3, 23, 13, "");
         this.nextPage = par4;
@@ -22,11 +22,11 @@ class GuiButtonNextPage extends GuiButton
     /**
      * Draws this button to the screen.
      */
-    public void drawButton(Minecraft par1Minecraft, int par2, int par3)
+    public void drawButton(final Minecraft par1Minecraft, final int par2, final int par3)
     {
         if (this.drawButton)
         {
-            boolean flag = par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height;
+            final boolean flag = par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height;
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             par1Minecraft.getTextureManager().bindTexture(GuiScreenBook.func_110404_g());
             int k = 0;

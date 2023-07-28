@@ -17,19 +17,19 @@ import java.util.EnumSet;
 public class SingleIntervalHandler implements IScheduledTickHandler
 {
     public ITickHandler wrapped; // Cauldron - mobius access
-    public SingleIntervalHandler(ITickHandler handler)
+    public SingleIntervalHandler(final ITickHandler handler)
     {
         this.wrapped=handler;
     }
 
     @Override
-    public void tickStart(EnumSet<TickType> type, Object... tickData)
+    public void tickStart(final EnumSet<TickType> type, final Object... tickData)
     {
         wrapped.tickStart(type, tickData);
     }
 
     @Override
-    public void tickEnd(EnumSet<TickType> type, Object... tickData)
+    public void tickEnd(final EnumSet<TickType> type, final Object... tickData)
     {
         wrapped.tickEnd(type, tickData);
     }

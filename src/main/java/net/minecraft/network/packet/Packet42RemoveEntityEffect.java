@@ -16,7 +16,7 @@ public class Packet42RemoveEntityEffect extends Packet
 
     public Packet42RemoveEntityEffect() {}
 
-    public Packet42RemoveEntityEffect(int par1, PotionEffect par2PotionEffect)
+    public Packet42RemoveEntityEffect(final int par1, final PotionEffect par2PotionEffect)
     {
         this.entityId = par1;
         this.effectId = (byte)(par2PotionEffect.getPotionID() & 255);
@@ -25,7 +25,7 @@ public class Packet42RemoveEntityEffect extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.entityId = par1DataInput.readInt();
         this.effectId = par1DataInput.readByte();
@@ -34,7 +34,7 @@ public class Packet42RemoveEntityEffect extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.entityId);
         par1DataOutput.writeByte(this.effectId);
@@ -43,7 +43,7 @@ public class Packet42RemoveEntityEffect extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleRemoveEntityEffect(this);
     }

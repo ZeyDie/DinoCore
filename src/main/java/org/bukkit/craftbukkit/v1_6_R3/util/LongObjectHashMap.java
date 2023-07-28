@@ -25,7 +25,7 @@ public class LongObjectHashMap<V> implements Cloneable, Serializable {
         initialize();
     }
 
-    public LongObjectHashMap(Map<? extends Long, ? extends V> map) {
+    public LongObjectHashMap(final Map<? extends Long, ? extends V> map) {
         this();
         putAll(map);
     }
@@ -38,12 +38,12 @@ public class LongObjectHashMap<V> implements Cloneable, Serializable {
         return size == 0;
     }
 
-    public boolean containsKey(long key) {
+    public boolean containsKey(final long key) {
         return get(key) != null;
     }
 
-    public boolean containsValue(V value) {
-        for (V val : values()) {
+    public boolean containsValue(final V value) {
+        for (final V val : values()) {
             if (val == value || val.equals(value)) {
                 return true;
             }
@@ -52,24 +52,24 @@ public class LongObjectHashMap<V> implements Cloneable, Serializable {
         return false;
     }
 
-    public V get(long key) {
+    public V get(final long key) {
         // Spigot start
         if ( size == 0 )
         {
             return null;
         }
-        V val = flat.get( key );
+        final V val = flat.get( key );
         if ( val != null )
         {
             return val;
         }
         // Spigot end
-        int index = (int) (keyIndex(key) & (BUCKET_SIZE - 1));
-        long[] inner = keys[index];
+        final int index = (int) (keyIndex(key) & (BUCKET_SIZE - 1));
+        final long[] inner = keys[index];
         if (inner == null) return null;
 
         for (int i = 0; i < inner.length; i++) {
-            long innerKey = inner[i];
+            final long innerKey = inner[i];
             if (innerKey == EMPTY_KEY) {
                 return null;
             } else if (innerKey == key) {
@@ -80,9 +80,9 @@ public class LongObjectHashMap<V> implements Cloneable, Serializable {
         return null;
     }
 
-    public V put(long key, V value) {
+    public V put(final long key, final V value) {
         flat.put(key, value); // Spigot
-        int index = (int) (keyIndex(key) & (BUCKET_SIZE - 1));
+        final int index = (int) (keyIndex(key) & (BUCKET_SIZE - 1));
         long[] innerKeys = keys[index];
         V[] innerValues = values[index];
         modCount++;
@@ -108,7 +108,7 @@ public class LongObjectHashMap<V> implements Cloneable, Serializable {
 
                 // found an existing entry in the chain with this key, replace it
                 if (innerKeys[i] == key) {
-                    V oldValue = innerValues[i];
+                    final V oldValue = innerValues[i];
                     innerKeys[i] = key;
                     innerValues[i] = value;
                     return oldValue;
@@ -127,10 +127,10 @@ public class LongObjectHashMap<V> implements Cloneable, Serializable {
         return null;
     }
 
-    public V remove(long key) {
+    public V remove(final long key) {
         flat.remove(key); // Spigot
-        int index = (int) (keyIndex(key) & (BUCKET_SIZE - 1));
-        long[] inner = keys[index];
+        final int index = (int) (keyIndex(key) & (BUCKET_SIZE - 1));
+        final long[] inner = keys[index];
         if (inner == null) {
             return null;
         }
@@ -142,7 +142,7 @@ public class LongObjectHashMap<V> implements Cloneable, Serializable {
             }
 
             if (inner[i] == key) {
-                V value = values[index][i];
+                final V value = values[index][i];
 
                 for (i++; i < inner.length; i++) {
                     if (inner[i] == EMPTY_KEY) {
@@ -164,8 +164,8 @@ public class LongObjectHashMap<V> implements Cloneable, Serializable {
         return null;
     }
 
-    public void putAll(Map<? extends Long, ? extends V> map) {
-        for (Map.Entry entry : map.entrySet()) {
+    public void putAll(final Map<? extends Long, ? extends V> map) {
+        for (final Map.Entry entry : map.entrySet()) {
             put((Long) entry.getKey(), (V) entry.getValue());
         }
     }
@@ -200,8 +200,8 @@ public class LongObjectHashMap<V> implements Cloneable, Serializable {
      */
     @Deprecated
     public Set<Map.Entry<Long, V>> entrySet() {
-        HashSet<Map.Entry<Long, V>> set = new HashSet<Map.Entry<Long, V>>();
-        for (long key : keySet()) {
+        final HashSet<Map.Entry<Long, V>> set = new HashSet<Map.Entry<Long, V>>();
+        for (final long key : keySet()) {
             set.add(new Entry(key, get(key)));
         }
 
@@ -209,14 +209,14 @@ public class LongObjectHashMap<V> implements Cloneable, Serializable {
     }
 
     public Object clone() throws CloneNotSupportedException {
-        LongObjectHashMap clone = (LongObjectHashMap) super.clone();
+        final LongObjectHashMap clone = (LongObjectHashMap) super.clone();
         // Make sure we clear any existing information from the clone
         clone.clear();
         // Make sure the clone is properly setup for new entries
         clone.initialize();
 
         // Iterate through the data normally to do a safe clone
-        for (long key : keySet()) {
+        for (final long key : keySet()) {
             final V value = get(key);
             clone.put(key, value);
         }
@@ -230,19 +230,20 @@ public class LongObjectHashMap<V> implements Cloneable, Serializable {
     }
 
     private long keyIndex(long key) {
-        key ^= key >>> 33;
-        key *= 0xff51afd7ed558ccdL;
-        key ^= key >>> 33;
-        key *= 0xc4ceb9fe1a85ec53L;
-        key ^= key >>> 33;
-        return key;
+        long key1 = key;
+        key1 ^= key1 >>> 33;
+        key1 *= 0xff51afd7ed558ccdL;
+        key1 ^= key1 >>> 33;
+        key1 *= 0xc4ceb9fe1a85ec53L;
+        key1 ^= key1 >>> 33;
+        return key1;
     }
 
-    private void writeObject(ObjectOutputStream outputStream) throws IOException {
+    private void writeObject(final ObjectOutputStream outputStream) throws IOException {
         outputStream.defaultWriteObject();
 
-        for (long key : keySet()) {
-            V value = get(key);
+        for (final long key : keySet()) {
+            final V value = get(key);
             outputStream.writeLong(key);
             outputStream.writeObject(value);
         }
@@ -251,13 +252,13 @@ public class LongObjectHashMap<V> implements Cloneable, Serializable {
         outputStream.writeObject(null);
     }
 
-    private void readObject(ObjectInputStream inputStream) throws ClassNotFoundException, IOException {
+    private void readObject(final ObjectInputStream inputStream) throws ClassNotFoundException, IOException {
         inputStream.defaultReadObject();
         initialize();
 
         while (true) {
-            long key = inputStream.readLong();
-            V value = (V) inputStream.readObject();
+            final long key = inputStream.readLong();
+            final V value = (V) inputStream.readObject();
             if (key == EMPTY_KEY && value == null) {
                 break;
             }
@@ -309,7 +310,7 @@ public class LongObjectHashMap<V> implements Cloneable, Serializable {
                 throw new NoSuchElementException();
             }
 
-            long[][] keys = LongObjectHashMap.this.keys;
+            final long[][] keys = LongObjectHashMap.this.keys;
             count++;
 
             if (prevKey != EMPTY_KEY) {
@@ -319,8 +320,8 @@ public class LongObjectHashMap<V> implements Cloneable, Serializable {
             for (; index < keys.length; index++) {
                 if (keys[index] != null) {
                     for (; innerIndex < keys[index].length; innerIndex++) {
-                        long key = keys[index][innerIndex];
-                        V value = values[index][innerIndex];
+                        final long key = keys[index][innerIndex];
+                        final V value = values[index][innerIndex];
                         if (key == EMPTY_KEY) {
                             break;
                         }
@@ -369,12 +370,12 @@ public class LongObjectHashMap<V> implements Cloneable, Serializable {
             return LongObjectHashMap.this.size();
         }
 
-        public boolean contains(Object key) {
+        public boolean contains(final Object key) {
             return key instanceof Long && LongObjectHashMap.this.containsKey((Long) key);
 
         }
 
-        public boolean remove(Object key) {
+        public boolean remove(final Object key) {
             return LongObjectHashMap.this.remove((Long) key) != null;
         }
 
@@ -393,7 +394,7 @@ public class LongObjectHashMap<V> implements Cloneable, Serializable {
             return LongObjectHashMap.this.size();
         }
 
-        public boolean contains(Object value) {
+        public boolean contains(final Object value) {
             return LongObjectHashMap.this.containsValue((V) value);
         }
 
@@ -407,7 +408,7 @@ public class LongObjectHashMap<V> implements Cloneable, Serializable {
         private final Long key;
         private V value;
 
-        Entry(long k, V v) {
+        Entry(final long k, final V v) {
             key = k;
             value = v;
         }
@@ -420,8 +421,8 @@ public class LongObjectHashMap<V> implements Cloneable, Serializable {
             return value;
         }
 
-        public V setValue(V v) {
-            V old = value;
+        public V setValue(final V v) {
+            final V old = value;
             value = v;
             put(key, v);
             return old;

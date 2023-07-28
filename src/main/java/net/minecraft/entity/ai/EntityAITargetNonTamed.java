@@ -6,7 +6,7 @@ public class EntityAITargetNonTamed extends EntityAINearestAttackableTarget
 {
     private EntityTameable theTameable;
 
-    public EntityAITargetNonTamed(EntityTameable par1EntityTameable, Class par2Class, int par3, boolean par4)
+    public EntityAITargetNonTamed(final EntityTameable par1EntityTameable, final Class par2Class, final int par3, final boolean par4)
     {
         super(par1EntityTameable, par2Class, par3, par4);
         this.theTameable = par1EntityTameable;

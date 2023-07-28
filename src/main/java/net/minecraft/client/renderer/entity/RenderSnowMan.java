@@ -36,22 +36,22 @@ public class RenderSnowMan extends RenderLiving
     /**
      * Renders this snowman's pumpkin.
      */
-    protected void renderSnowmanPumpkin(EntitySnowman par1EntitySnowman, float par2)
+    protected void renderSnowmanPumpkin(final EntitySnowman par1EntitySnowman, final float par2)
     {
         super.renderEquippedItems(par1EntitySnowman, par2);
-        ItemStack itemstack = new ItemStack(Block.pumpkin, 1);
+        final ItemStack itemstack = new ItemStack(Block.pumpkin, 1);
 
         if (itemstack != null && itemstack.getItem() instanceof ItemBlock)
         {
             GL11.glPushMatrix();
             this.snowmanModel.head.postRender(0.0625F);
 
-            IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(itemstack, EQUIPPED);
-            boolean is3D = (customRenderer != null && customRenderer.shouldUseRenderHelper(EQUIPPED, itemstack, BLOCK_3D));
+            final IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(itemstack, EQUIPPED);
+            final boolean is3D = (customRenderer != null && customRenderer.shouldUseRenderHelper(EQUIPPED, itemstack, BLOCK_3D));
 
             if (is3D || RenderBlocks.renderItemIn3d(Block.blocksList[itemstack.itemID].getRenderType()))
             {
-                float f1 = 0.625F;
+                final float f1 = 0.625F;
                 GL11.glTranslatef(0.0F, -0.34375F, 0.0F);
                 GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
                 GL11.glScalef(f1, -f1, f1);
@@ -62,12 +62,12 @@ public class RenderSnowMan extends RenderLiving
         }
     }
 
-    protected ResourceLocation getSnowManTextures(EntitySnowman par1EntitySnowman)
+    protected ResourceLocation getSnowManTextures(final EntitySnowman par1EntitySnowman)
     {
         return snowManTextures;
     }
 
-    protected void renderEquippedItems(EntityLivingBase par1EntityLivingBase, float par2)
+    protected void renderEquippedItems(final EntityLivingBase par1EntityLivingBase, final float par2)
     {
         this.renderSnowmanPumpkin((EntitySnowman)par1EntityLivingBase, par2);
     }
@@ -75,7 +75,7 @@ public class RenderSnowMan extends RenderLiving
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.getSnowManTextures((EntitySnowman)par1Entity);
     }

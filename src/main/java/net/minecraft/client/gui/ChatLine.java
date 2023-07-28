@@ -15,7 +15,7 @@ public class ChatLine
      */
     private final int chatLineID;
 
-    public ChatLine(int par1, String par2Str, int par3)
+    public ChatLine(final int par1, final String par2Str, final int par3)
     {
         this.lineString = par2Str;
         this.updateCounterCreated = par1;

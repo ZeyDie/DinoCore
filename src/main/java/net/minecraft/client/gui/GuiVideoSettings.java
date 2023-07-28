@@ -23,9 +23,9 @@ public class GuiVideoSettings extends GuiScreen
     private boolean is64bit;
 
     /** An array of all of EnumOption's video options. */
-    private static EnumOptions[] videoOptions = new EnumOptions[] {EnumOptions.GRAPHICS, EnumOptions.RENDER_DISTANCE, EnumOptions.AMBIENT_OCCLUSION, EnumOptions.FRAMERATE_LIMIT, EnumOptions.ANAGLYPH, EnumOptions.VIEW_BOBBING, EnumOptions.GUI_SCALE, EnumOptions.ADVANCED_OPENGL, EnumOptions.GAMMA, EnumOptions.RENDER_CLOUDS, EnumOptions.PARTICLES, EnumOptions.USE_SERVER_TEXTURES, EnumOptions.USE_FULLSCREEN, EnumOptions.ENABLE_VSYNC};
+    private static EnumOptions[] videoOptions = {EnumOptions.GRAPHICS, EnumOptions.RENDER_DISTANCE, EnumOptions.AMBIENT_OCCLUSION, EnumOptions.FRAMERATE_LIMIT, EnumOptions.ANAGLYPH, EnumOptions.VIEW_BOBBING, EnumOptions.GUI_SCALE, EnumOptions.ADVANCED_OPENGL, EnumOptions.GAMMA, EnumOptions.RENDER_CLOUDS, EnumOptions.PARTICLES, EnumOptions.USE_SERVER_TEXTURES, EnumOptions.USE_FULLSCREEN, EnumOptions.ENABLE_VSYNC};
 
-    public GuiVideoSettings(GuiScreen par1GuiScreen, GameSettings par2GameSettings)
+    public GuiVideoSettings(final GuiScreen par1GuiScreen, final GameSettings par2GameSettings)
     {
         this.parentGuiScreen = par1GuiScreen;
         this.guiGameSettings = par2GameSettings;
@@ -40,14 +40,14 @@ public class GuiVideoSettings extends GuiScreen
         this.buttonList.clear();
         this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168, I18n.getString("gui.done")));
         this.is64bit = false;
-        String[] astring = new String[] {"sun.arch.data.model", "com.ibm.vm.bitmode", "os.arch"};
-        String[] astring1 = astring;
+        final String[] astring = {"sun.arch.data.model", "com.ibm.vm.bitmode", "os.arch"};
+        final String[] astring1 = astring;
         int i = astring.length;
 
         for (int j = 0; j < i; ++j)
         {
-            String s = astring1[j];
-            String s1 = System.getProperty(s);
+            final String s = astring1[j];
+            final String s1 = System.getProperty(s);
 
             if (s1 != null && s1.contains("64"))
             {
@@ -58,12 +58,12 @@ public class GuiVideoSettings extends GuiScreen
 
         int k = 0;
         i = this.is64bit ? 0 : -15;
-        EnumOptions[] aenumoptions = videoOptions;
-        int l = aenumoptions.length;
+        final EnumOptions[] aenumoptions = videoOptions;
+        final int l = aenumoptions.length;
 
         for (int i1 = 0; i1 < l; ++i1)
         {
-            EnumOptions enumoptions = aenumoptions[i1];
+            final EnumOptions enumoptions = aenumoptions[i1];
 
             if (enumoptions.getEnumFloat())
             {
@@ -81,11 +81,11 @@ public class GuiVideoSettings extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
-            int i = this.guiGameSettings.guiScale;
+            final int i = this.guiGameSettings.guiScale;
 
             if (par1GuiButton.id < 100 && par1GuiButton instanceof GuiSmallButton)
             {
@@ -101,9 +101,9 @@ public class GuiVideoSettings extends GuiScreen
 
             if (this.guiGameSettings.guiScale != i)
             {
-                ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
-                int j = scaledresolution.getScaledWidth();
-                int k = scaledresolution.getScaledHeight();
+                final ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+                final int j = scaledresolution.getScaledWidth();
+                final int k = scaledresolution.getScaledHeight();
                 this.setWorldAndResolution(this.mc, j, k);
             }
         }
@@ -112,7 +112,7 @@ public class GuiVideoSettings extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, this.is64bit ? 20 : 5, 16777215);

@@ -8,7 +8,7 @@ class SlotBrewingStandIngredient extends Slot
     /** The brewing stand this slot belongs to. */
     final ContainerBrewingStand brewingStand;
 
-    public SlotBrewingStandIngredient(ContainerBrewingStand par1ContainerBrewingStand, IInventory par2IInventory, int par3, int par4, int par5)
+    public SlotBrewingStandIngredient(final ContainerBrewingStand par1ContainerBrewingStand, final IInventory par2IInventory, final int par3, final int par4, final int par5)
     {
         super(par2IInventory, par3, par4, par5);
         this.brewingStand = par1ContainerBrewingStand;
@@ -17,7 +17,7 @@ class SlotBrewingStandIngredient extends Slot
     /**
      * Check if the stack is a valid item for this slot. Always true beside for the armor slots.
      */
-    public boolean isItemValid(ItemStack par1ItemStack)
+    public boolean isItemValid(final ItemStack par1ItemStack)
     {
         return par1ItemStack != null ? Item.itemsList[par1ItemStack.itemID].isPotionIngredient(par1ItemStack) : false;
     }

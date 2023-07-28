@@ -10,7 +10,7 @@ class RegionFileChunkBuffer extends ByteArrayOutputStream
 
     final RegionFile regionFile;
 
-    public RegionFileChunkBuffer(RegionFile par1RegionFile, int par2, int par3)
+    public RegionFileChunkBuffer(final RegionFile par1RegionFile, final int par2, final int par3)
     {
         super(8096);
         this.regionFile = par1RegionFile;

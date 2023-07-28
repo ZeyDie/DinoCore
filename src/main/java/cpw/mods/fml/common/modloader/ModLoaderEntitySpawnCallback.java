@@ -24,14 +24,14 @@ public class ModLoaderEntitySpawnCallback implements Function<EntitySpawnPacket,
     private EntityRegistration registration;
     private boolean isAnimal;
 
-    public ModLoaderEntitySpawnCallback(BaseModProxy mod, EntityRegistration er)
+    public ModLoaderEntitySpawnCallback(final BaseModProxy mod, final EntityRegistration er)
     {
         this.mod = mod;
         this.registration = er;
     }
 
     @Override
-    public Entity apply(EntitySpawnPacket input)
+    public Entity apply(final EntitySpawnPacket input)
     {
         return ModLoaderHelper.sidedHelper.spawnEntity(mod, input, registration);
     }

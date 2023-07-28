@@ -28,7 +28,7 @@ public class DimensionRegisterPacket extends ForgePacket
     // nullary constructor required by ForgePacket.make()
     public DimensionRegisterPacket() {}
 
-    public DimensionRegisterPacket(int dimensionId, int providerId)
+    public DimensionRegisterPacket(final int dimensionId, final int providerId)
     {
         this.dimensionId = dimensionId;
         this.providerId = providerId;
@@ -37,23 +37,23 @@ public class DimensionRegisterPacket extends ForgePacket
     @Override
     public byte[] generatePacket()
     {
-        ByteArrayDataOutput dat = ByteStreams.newDataOutput();
+        final ByteArrayDataOutput dat = ByteStreams.newDataOutput();
         dat.writeInt(this.dimensionId);
         dat.writeInt(this.providerId);
         return dat.toByteArray();
     }
 
     @Override
-    public ForgePacket consumePacket(byte[] data)
+    public ForgePacket consumePacket(final byte[] data)
     {
-        ByteArrayDataInput dat = ByteStreams.newDataInput(data);
+        final ByteArrayDataInput dat = ByteStreams.newDataInput(data);
         dimensionId = dat.readInt();
         providerId = dat.readInt();
         return this;
     }
 
     @Override
-    public void execute(INetworkManager network, EntityPlayer player)
+    public void execute(final INetworkManager network, final EntityPlayer player)
     {
         if (!(player instanceof EntityPlayerMP))
         {

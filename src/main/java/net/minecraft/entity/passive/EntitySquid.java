@@ -36,7 +36,7 @@ public class EntitySquid extends EntityWaterMob
     private float randomMotionVecY;
     private float randomMotionVecZ;
 
-    public EntitySquid(World par1World)
+    public EntitySquid(final World par1World)
     {
         super(par1World);
         this.setSize(0.95F, 0.95F);
@@ -102,9 +102,9 @@ public class EntitySquid extends EntityWaterMob
      * Drop 0-2 items of this living's type. @param par1 - Whether this entity has recently been hit by a player. @param
      * par2 - Level of Looting used to kill this mob.
      */
-    protected void dropFewItems(boolean par1, int par2)
+    protected void dropFewItems(final boolean par1, final int par2)
     {
-        int j = this.rand.nextInt(3 + par2) + 1;
+        final int j = this.rand.nextInt(3 + par2) + 1;
 
         for (int k = 0; k < j; ++k)
         {
@@ -136,9 +136,9 @@ public class EntitySquid extends EntityWaterMob
         this.prevTentacleAngle = this.tentacleAngle;
         this.squidRotation += this.rotationVelocity;
 
-        if (this.squidRotation > ((float)Math.PI * 2F))
+        if (this.squidRotation > ((float)Math.PI * 2.0F))
         {
-            this.squidRotation -= ((float)Math.PI * 2F);
+            this.squidRotation -= ((float)Math.PI * 2.0F);
 
             if (this.rand.nextInt(10) == 0)
             {
@@ -206,7 +206,7 @@ public class EntitySquid extends EntityWaterMob
     /**
      * Moves the entity based on the specified heading.  Args: strafe, forward
      */
-    public void moveEntityWithHeading(float par1, float par2)
+    public void moveEntityWithHeading(final float par1, final float par2)
     {
         this.moveEntity(this.motionX, this.motionY, this.motionZ);
     }
@@ -222,7 +222,7 @@ public class EntitySquid extends EntityWaterMob
         }
         else if (this.rand.nextInt(50) == 0 || !this.inWater || this.randomMotionVecX == 0.0F && this.randomMotionVecY == 0.0F && this.randomMotionVecZ == 0.0F)
         {
-            float f = this.rand.nextFloat() * (float)Math.PI * 2.0F;
+            final float f = this.rand.nextFloat() * (float)Math.PI * 2.0F;
             this.randomMotionVecX = MathHelper.cos(f) * 0.2F;
             this.randomMotionVecY = -0.1F + this.rand.nextFloat() * 0.2F;
             this.randomMotionVecZ = MathHelper.sin(f) * 0.2F;

@@ -12,7 +12,7 @@ public class CraftCustomContainer extends CraftBlockState implements InventoryHo
     private final CraftWorld world;
     private final net.minecraft.inventory.IInventory container;
 
-    public CraftCustomContainer(Block block) {
+    public CraftCustomContainer(final Block block) {
         super(block);
         world = (CraftWorld) block.getWorld();
         container = (IInventory)world.getTileEntityAt(getX(), getY(), getZ());
@@ -20,7 +20,7 @@ public class CraftCustomContainer extends CraftBlockState implements InventoryHo
 
     @Override
     public Inventory getInventory() {
-        CraftInventory inventory = new CraftInventory(container);
+        final CraftInventory inventory = new CraftInventory(container);
         return inventory;
     }
 }

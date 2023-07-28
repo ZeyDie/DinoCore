@@ -24,7 +24,7 @@ public class ItemBucket extends Item
     /** field for checking if the bucket has been filled. */
     private int isFull;
 
-    public ItemBucket(int par1, int par2)
+    public ItemBucket(final int par1, final int par2)
     {
         super(par1);
         this.maxStackSize = 1;
@@ -35,14 +35,14 @@ public class ItemBucket extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
-        float f = 1.0F;
-        double d0 = par3EntityPlayer.prevPosX + (par3EntityPlayer.posX - par3EntityPlayer.prevPosX) * (double)f;
-        double d1 = par3EntityPlayer.prevPosY + (par3EntityPlayer.posY - par3EntityPlayer.prevPosY) * (double)f + 1.62D - (double)par3EntityPlayer.yOffset;
-        double d2 = par3EntityPlayer.prevPosZ + (par3EntityPlayer.posZ - par3EntityPlayer.prevPosZ) * (double)f;
-        boolean flag = this.isFull == 0;
-        MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, flag);
+        final float f = 1.0F;
+        final double d0 = par3EntityPlayer.prevPosX + (par3EntityPlayer.posX - par3EntityPlayer.prevPosX) * (double)f;
+        final double d1 = par3EntityPlayer.prevPosY + (par3EntityPlayer.posY - par3EntityPlayer.prevPosY) * (double)f + 1.62D - (double)par3EntityPlayer.yOffset;
+        final double d2 = par3EntityPlayer.prevPosZ + (par3EntityPlayer.posZ - par3EntityPlayer.prevPosZ) * (double)f;
+        final boolean flag = this.isFull == 0;
+        final MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, flag);
 
         if (movingobjectposition == null)
         {
@@ -51,7 +51,7 @@ public class ItemBucket extends Item
         else
         {
             // Cauldron start - rename to forgeEvent fixing naming clash
-            FillBucketEvent forgeEvent = new FillBucketEvent(par3EntityPlayer, par1ItemStack, par2World, movingobjectposition);
+            final FillBucketEvent forgeEvent = new FillBucketEvent(par3EntityPlayer, par1ItemStack, par2World, movingobjectposition);
             if (MinecraftForge.EVENT_BUS.post(forgeEvent))
             {
                 return par1ItemStack;
@@ -99,7 +99,7 @@ public class ItemBucket extends Item
                     if (par2World.getBlockMaterial(i, j, k) == Material.water && par2World.getBlockMetadata(i, j, k) == 0)
                     {
                         // CraftBukkit start
-                        PlayerBucketFillEvent event = CraftEventFactory.callPlayerBucketFillEvent(par3EntityPlayer, i, j, k, -1, par1ItemStack, Item.bucketWater);
+                        final PlayerBucketFillEvent event = CraftEventFactory.callPlayerBucketFillEvent(par3EntityPlayer, i, j, k, -1, par1ItemStack, Item.bucketWater);
 
                         if (event.isCancelled())
                         {
@@ -114,7 +114,7 @@ public class ItemBucket extends Item
                             return par1ItemStack;
                         }
 
-                        ItemStack result = CraftItemStack.asNMSCopy(event.getItemStack()); // CraftBukkit - TODO: Check this stuff later... Not sure how this behavior should work
+                        final ItemStack result = CraftItemStack.asNMSCopy(event.getItemStack()); // CraftBukkit - TODO: Check this stuff later... Not sure how this behavior should work
 
                         if (--par1ItemStack.stackSize <= 0)
                         {
@@ -132,7 +132,7 @@ public class ItemBucket extends Item
                     if (par2World.getBlockMaterial(i, j, k) == Material.lava && par2World.getBlockMetadata(i, j, k) == 0)
                     {
                         // CraftBukkit start
-                        PlayerBucketFillEvent event = CraftEventFactory.callPlayerBucketFillEvent(par3EntityPlayer, i, j, k, -1, par1ItemStack, Item.bucketLava);
+                        final PlayerBucketFillEvent event = CraftEventFactory.callPlayerBucketFillEvent(par3EntityPlayer, i, j, k, -1, par1ItemStack, Item.bucketLava);
 
                         if (event.isCancelled())
                         {
@@ -147,7 +147,7 @@ public class ItemBucket extends Item
                             return par1ItemStack;
                         }
 
-                        ItemStack result = CraftItemStack.asNMSCopy(event.getItemStack()); // CraftBukkit - TODO: Check this stuff later... Not sure how this behavior should work
+                        final ItemStack result = CraftItemStack.asNMSCopy(event.getItemStack()); // CraftBukkit - TODO: Check this stuff later... Not sure how this behavior should work
 
                         if (--par1ItemStack.stackSize <= 0)
                         {
@@ -167,7 +167,7 @@ public class ItemBucket extends Item
                     if (this.isFull < 0)
                     {
                         // CraftBukkit start
-                        PlayerBucketEmptyEvent event = CraftEventFactory.callPlayerBucketEmptyEvent(par3EntityPlayer, i, j, k, movingobjectposition.sideHit, par1ItemStack);
+                        final PlayerBucketEmptyEvent event = CraftEventFactory.callPlayerBucketEmptyEvent(par3EntityPlayer, i, j, k, movingobjectposition.sideHit, par1ItemStack);
 
                         if (event.isCancelled())
                         {
@@ -177,7 +177,9 @@ public class ItemBucket extends Item
                         return CraftItemStack.asNMSCopy(event.getItemStack());
                     }
 
-                    int clickedX = i, clickedY = j, clickedZ = k;
+                    final int clickedX = i;
+                    final int clickedY = j;
+                    final int clickedZ = k;
                     // CraftBukkit end
 
                     if (movingobjectposition.sideHit == 0)
@@ -216,7 +218,7 @@ public class ItemBucket extends Item
                     }
 
                     // CraftBukkit start
-                    PlayerBucketEmptyEvent event = CraftEventFactory.callPlayerBucketEmptyEvent(par3EntityPlayer, clickedX, clickedY, clickedZ, movingobjectposition.sideHit, par1ItemStack);
+                    final PlayerBucketEmptyEvent event = CraftEventFactory.callPlayerBucketEmptyEvent(par3EntityPlayer, clickedX, clickedY, clickedZ, movingobjectposition.sideHit, par1ItemStack);
 
                     if (event.isCancelled())
                     {
@@ -234,8 +236,8 @@ public class ItemBucket extends Item
             else if (this.isFull == 0 && movingobjectposition.entityHit instanceof EntityCow)
             {
                 // CraftBukkit start - This codepath seems to be *NEVER* called
-                org.bukkit.Location loc = movingobjectposition.entityHit.getBukkitEntity().getLocation();
-                PlayerBucketFillEvent event = CraftEventFactory.callPlayerBucketFillEvent(par3EntityPlayer, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), -1, par1ItemStack, Item.bucketMilk);
+                final org.bukkit.Location loc = movingobjectposition.entityHit.getBukkitEntity().getLocation();
+                final PlayerBucketFillEvent event = CraftEventFactory.callPlayerBucketFillEvent(par3EntityPlayer, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), -1, par1ItemStack, Item.bucketMilk);
 
                 if (event.isCancelled())
                 {
@@ -253,7 +255,7 @@ public class ItemBucket extends Item
     /**
      * Attempts to place the liquid contained inside the bucket.
      */
-    public boolean tryPlaceContainedLiquid(World par1World, int par2, int par3, int par4)
+    public boolean tryPlaceContainedLiquid(final World par1World, final int par2, final int par3, final int par4)
     {
         if (this.isFull <= 0)
         {
@@ -261,8 +263,8 @@ public class ItemBucket extends Item
         }
         else
         {
-            Material material = par1World.getBlockMaterial(par2, par3, par4);
-            boolean flag = !material.isSolid();
+            final Material material = par1World.getBlockMaterial(par2, par3, par4);
+            final boolean flag = !material.isSolid();
 
             if (!par1World.isAirBlock(par2, par3, par4) && !flag)
             {

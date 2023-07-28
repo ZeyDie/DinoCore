@@ -22,14 +22,14 @@ public class MapGenVillage extends MapGenStructure
         this.field_82666_h = 8;
     }
 
-    public MapGenVillage(Map par1Map)
+    public MapGenVillage(final Map par1Map)
     {
         this();
-        Iterator iterator = par1Map.entrySet().iterator();
+        final Iterator iterator = par1Map.entrySet().iterator();
 
         while (iterator.hasNext())
         {
-            Entry entry = (Entry)iterator.next();
+            final Entry entry = (Entry)iterator.next();
 
             if (((String)entry.getKey()).equals("size"))
             {
@@ -49,22 +49,24 @@ public class MapGenVillage extends MapGenStructure
 
     protected boolean canSpawnStructureAtCoords(int par1, int par2)
     {
-        int k = par1;
-        int l = par2;
+        int par11 = par1;
+        int par21 = par2;
+        final int k = par11;
+        final int l = par21;
 
-        if (par1 < 0)
+        if (par11 < 0)
         {
-            par1 -= this.field_82665_g - 1;
+            par11 -= this.field_82665_g - 1;
         }
 
-        if (par2 < 0)
+        if (par21 < 0)
         {
-            par2 -= this.field_82665_g - 1;
+            par21 -= this.field_82665_g - 1;
         }
 
-        int i1 = par1 / this.field_82665_g;
-        int j1 = par2 / this.field_82665_g;
-        Random random = this.worldObj.setRandomSeed(i1, j1, 10387312);
+        int i1 = par11 / this.field_82665_g;
+        int j1 = par21 / this.field_82665_g;
+        final Random random = this.worldObj.setRandomSeed(i1, j1, 10387312);
         i1 *= this.field_82665_g;
         j1 *= this.field_82665_g;
         i1 += random.nextInt(this.field_82665_g - this.field_82666_h);
@@ -72,7 +74,7 @@ public class MapGenVillage extends MapGenStructure
 
         if (k == i1 && l == j1)
         {
-            boolean flag = this.worldObj.getWorldChunkManager().areBiomesViable(k * 16 + 8, l * 16 + 8, 0, villageSpawnBiomes);
+            final boolean flag = this.worldObj.getWorldChunkManager().areBiomesViable(k * 16 + 8, l * 16 + 8, 0, villageSpawnBiomes);
 
             if (flag)
             {
@@ -83,7 +85,7 @@ public class MapGenVillage extends MapGenStructure
         return false;
     }
 
-    protected StructureStart getStructureStart(int par1, int par2)
+    protected StructureStart getStructureStart(final int par1, final int par2)
     {
         return new StructureVillageStart(this.worldObj, this.rand, par1, par2, this.terrainType);
     }

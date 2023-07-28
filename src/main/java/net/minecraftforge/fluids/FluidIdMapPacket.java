@@ -19,10 +19,10 @@ public class FluidIdMapPacket extends ForgePacket
     @Override
     public byte[] generatePacket()
     {
-        ByteArrayDataOutput dat = ByteStreams.newDataOutput();
+        final ByteArrayDataOutput dat = ByteStreams.newDataOutput();
 
         dat.writeInt(FluidRegistry.maxID);
-        for (Map.Entry<String, Integer> entry : FluidRegistry.fluidIDs.entrySet())
+        for (final Map.Entry<String, Integer> entry : FluidRegistry.fluidIDs.entrySet())
         {
             dat.writeUTF(entry.getKey());
             dat.writeInt(entry.getValue());
@@ -31,20 +31,20 @@ public class FluidIdMapPacket extends ForgePacket
     }
 
     @Override
-    public ForgePacket consumePacket(byte[] data)
+    public ForgePacket consumePacket(final byte[] data)
     {
-        ByteArrayDataInput dat = ByteStreams.newDataInput(data);
-        int listSize = dat.readInt();
+        final ByteArrayDataInput dat = ByteStreams.newDataInput(data);
+        final int listSize = dat.readInt();
         for (int i = 0; i < listSize; i++) {
-            String fluidName = dat.readUTF();
-            int fluidId = dat.readInt();
+            final String fluidName = dat.readUTF();
+            final int fluidId = dat.readInt();
             fluidIds.put(fluidName, fluidId);
         }
         return this;
     }
 
     @Override
-    public void execute(INetworkManager network, EntityPlayer player)
+    public void execute(final INetworkManager network, final EntityPlayer player)
     {
         FluidRegistry.initFluidIDs(fluidIds);
     }

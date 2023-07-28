@@ -16,7 +16,7 @@ public class NotePlayEvent extends BlockEvent implements Cancellable {
     private Note note;
     private boolean cancelled = false;
 
-    public NotePlayEvent(Block block, Instrument instrument, Note note) {
+    public NotePlayEvent(final Block block, final Instrument instrument, final Note note) {
         super(block);
         this.instrument = instrument;
         this.note = note;
@@ -26,7 +26,7 @@ public class NotePlayEvent extends BlockEvent implements Cancellable {
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancelled = cancel;
     }
 
@@ -53,7 +53,7 @@ public class NotePlayEvent extends BlockEvent implements Cancellable {
      *
      * @param instrument the Instrument. Has no effect if null.
      */
-    public void setInstrument(Instrument instrument) {
+    public void setInstrument(final Instrument instrument) {
         if (instrument != null) {
             this.instrument = instrument;
         }
@@ -65,7 +65,7 @@ public class NotePlayEvent extends BlockEvent implements Cancellable {
      *
      * @param note the Note. Has no effect if null.
      */
-    public void setNote(Note note) {
+    public void setNote(final Note note) {
         if (note != null) {
             this.note = note;
         }

@@ -32,21 +32,25 @@ public class RenderMinecart extends Render
     /**
      * Renders the Minecart.
      */
-    public void renderTheMinecart(EntityMinecart par1EntityMinecart, double par2, double par4, double par6, float par8, float par9)
+    public void renderTheMinecart(final EntityMinecart par1EntityMinecart, double par2, double par4, double par6, float par8, final float par9)
     {
+        double par21 = par2;
+        double par41 = par4;
+        double par61 = par6;
+        float par81 = par8;
         GL11.glPushMatrix();
         this.bindEntityTexture(par1EntityMinecart);
         long i = (long)par1EntityMinecart.entityId * 493286711L;
         i = i * i * 4392167121L + i * 98761L;
-        float f2 = (((float)(i >> 16 & 7L) + 0.5F) / 8.0F - 0.5F) * 0.004F;
-        float f3 = (((float)(i >> 20 & 7L) + 0.5F) / 8.0F - 0.5F) * 0.004F;
-        float f4 = (((float)(i >> 24 & 7L) + 0.5F) / 8.0F - 0.5F) * 0.004F;
+        final float f2 = (((float)(i >> 16 & 7L) + 0.5F) / 8.0F - 0.5F) * 0.004F;
+        final float f3 = (((float)(i >> 20 & 7L) + 0.5F) / 8.0F - 0.5F) * 0.004F;
+        final float f4 = (((float)(i >> 24 & 7L) + 0.5F) / 8.0F - 0.5F) * 0.004F;
         GL11.glTranslatef(f2, f3, f4);
-        double d3 = par1EntityMinecart.lastTickPosX + (par1EntityMinecart.posX - par1EntityMinecart.lastTickPosX) * (double)par9;
-        double d4 = par1EntityMinecart.lastTickPosY + (par1EntityMinecart.posY - par1EntityMinecart.lastTickPosY) * (double)par9;
-        double d5 = par1EntityMinecart.lastTickPosZ + (par1EntityMinecart.posZ - par1EntityMinecart.lastTickPosZ) * (double)par9;
-        double d6 = 0.30000001192092896D;
-        Vec3 vec3 = par1EntityMinecart.func_70489_a(d3, d4, d5);
+        final double d3 = par1EntityMinecart.lastTickPosX + (par1EntityMinecart.posX - par1EntityMinecart.lastTickPosX) * (double)par9;
+        final double d4 = par1EntityMinecart.lastTickPosY + (par1EntityMinecart.posY - par1EntityMinecart.lastTickPosY) * (double)par9;
+        final double d5 = par1EntityMinecart.lastTickPosZ + (par1EntityMinecart.posZ - par1EntityMinecart.lastTickPosZ) * (double)par9;
+        final double d6 = 0.30000001192092896D;
+        final Vec3 vec3 = par1EntityMinecart.func_70489_a(d3, d4, d5);
         float f5 = par1EntityMinecart.prevRotationPitch + (par1EntityMinecart.rotationPitch - par1EntityMinecart.prevRotationPitch) * par9;
 
         if (vec3 != null)
@@ -64,23 +68,23 @@ public class RenderMinecart extends Render
                 vec32 = vec3;
             }
 
-            par2 += vec3.xCoord - d3;
-            par4 += (vec31.yCoord + vec32.yCoord) / 2.0D - d4;
-            par6 += vec3.zCoord - d5;
+            par21 += vec3.xCoord - d3;
+            par41 += (vec31.yCoord + vec32.yCoord) / 2.0D - d4;
+            par61 += vec3.zCoord - d5;
             Vec3 vec33 = vec32.addVector(-vec31.xCoord, -vec31.yCoord, -vec31.zCoord);
 
             if (vec33.lengthVector() != 0.0D)
             {
                 vec33 = vec33.normalize();
-                par8 = (float)(Math.atan2(vec33.zCoord, vec33.xCoord) * 180.0D / Math.PI);
+                par81 = (float)(Math.atan2(vec33.zCoord, vec33.xCoord) * 180.0D / Math.PI);
                 f5 = (float)(Math.atan(vec33.yCoord) * 73.0D);
             }
         }
 
-        GL11.glTranslatef((float)par2, (float)par4, (float)par6);
-        GL11.glRotatef(180.0F - par8, 0.0F, 1.0F, 0.0F);
+        GL11.glTranslatef((float) par21, (float) par41, (float) par61);
+        GL11.glRotatef(180.0F - par81, 0.0F, 1.0F, 0.0F);
         GL11.glRotatef(-f5, 0.0F, 0.0F, 1.0F);
-        float f6 = (float)par1EntityMinecart.getRollingAmplitude() - par9;
+        final float f6 = (float)par1EntityMinecart.getRollingAmplitude() - par9;
         float f7 = par1EntityMinecart.getDamage() - par9;
 
         if (f7 < 0.0F)
@@ -93,15 +97,15 @@ public class RenderMinecart extends Render
             GL11.glRotatef(MathHelper.sin(f6) * f6 * f7 / 10.0F * (float)par1EntityMinecart.getRollingDirection(), 1.0F, 0.0F, 0.0F);
         }
 
-        int j = par1EntityMinecart.getDisplayTileOffset();
-        Block block = par1EntityMinecart.getDisplayTile();
-        int k = par1EntityMinecart.getDisplayTileData();
+        final int j = par1EntityMinecart.getDisplayTileOffset();
+        final Block block = par1EntityMinecart.getDisplayTile();
+        final int k = par1EntityMinecart.getDisplayTileData();
 
         if (block != null)
         {
             GL11.glPushMatrix();
             this.bindTexture(TextureMap.locationBlocksTexture);
-            float f8 = 0.75F;
+            final float f8 = 0.75F;
             GL11.glScalef(f8, f8, f8);
             GL11.glTranslatef(0.0F, (float)j / 16.0F, 0.0F);
             this.renderBlockInMinecart(par1EntityMinecart, par9, block, k);
@@ -115,7 +119,7 @@ public class RenderMinecart extends Render
         GL11.glPopMatrix();
     }
 
-    protected ResourceLocation getMinecartTextures(EntityMinecart par1EntityMinecart)
+    protected ResourceLocation getMinecartTextures(final EntityMinecart par1EntityMinecart)
     {
         return minecartTextures;
     }
@@ -123,9 +127,9 @@ public class RenderMinecart extends Render
     /**
      * Renders the block that is inside the minecart.
      */
-    protected void renderBlockInMinecart(EntityMinecart par1EntityMinecart, float par2, Block par3Block, int par4)
+    protected void renderBlockInMinecart(final EntityMinecart par1EntityMinecart, final float par2, final Block par3Block, final int par4)
     {
-        float f1 = par1EntityMinecart.getBrightness(par2);
+        final float f1 = par1EntityMinecart.getBrightness(par2);
         GL11.glPushMatrix();
         this.field_94145_f.renderBlockAsItem(par3Block, par4, f1);
         GL11.glPopMatrix();
@@ -134,7 +138,7 @@ public class RenderMinecart extends Render
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.getMinecartTextures((EntityMinecart)par1Entity);
     }
@@ -145,7 +149,7 @@ public class RenderMinecart extends Render
      * (Render<T extends Entity) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.renderTheMinecart((EntityMinecart)par1Entity, par2, par4, par6, par8, par9);
     }

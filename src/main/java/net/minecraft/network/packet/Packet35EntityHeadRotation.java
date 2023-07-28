@@ -11,7 +11,7 @@ public class Packet35EntityHeadRotation extends Packet
 
     public Packet35EntityHeadRotation() {}
 
-    public Packet35EntityHeadRotation(int par1, byte par2)
+    public Packet35EntityHeadRotation(final int par1, final byte par2)
     {
         this.entityId = par1;
         this.headRotationYaw = par2;
@@ -20,7 +20,7 @@ public class Packet35EntityHeadRotation extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.entityId = par1DataInput.readInt();
         this.headRotationYaw = par1DataInput.readByte();
@@ -29,7 +29,7 @@ public class Packet35EntityHeadRotation extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.entityId);
         par1DataOutput.writeByte(this.headRotationYaw);
@@ -38,7 +38,7 @@ public class Packet35EntityHeadRotation extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleEntityHeadRotation(this);
     }
@@ -63,9 +63,9 @@ public class Packet35EntityHeadRotation extends Packet
      * eg return packet30entity.entityId == entityId; WARNING : will throw if you compare a packet to a different packet
      * class
      */
-    public boolean containsSameEntityIDAs(Packet par1Packet)
+    public boolean containsSameEntityIDAs(final Packet par1Packet)
     {
-        Packet35EntityHeadRotation packet35entityheadrotation = (Packet35EntityHeadRotation)par1Packet;
+        final Packet35EntityHeadRotation packet35entityheadrotation = (Packet35EntityHeadRotation)par1Packet;
         return packet35entityheadrotation.entityId == this.entityId;
     }
 

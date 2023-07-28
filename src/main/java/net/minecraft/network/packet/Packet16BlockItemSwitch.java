@@ -11,7 +11,7 @@ public class Packet16BlockItemSwitch extends Packet
 
     public Packet16BlockItemSwitch() {}
 
-    public Packet16BlockItemSwitch(int par1)
+    public Packet16BlockItemSwitch(final int par1)
     {
         this.id = par1;
     }
@@ -19,7 +19,7 @@ public class Packet16BlockItemSwitch extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.id = par1DataInput.readShort();
     }
@@ -27,7 +27,7 @@ public class Packet16BlockItemSwitch extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeShort(this.id);
     }
@@ -35,7 +35,7 @@ public class Packet16BlockItemSwitch extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleBlockItemSwitch(this);
     }
@@ -60,7 +60,7 @@ public class Packet16BlockItemSwitch extends Packet
      * eg return packet30entity.entityId == entityId; WARNING : will throw if you compare a packet to a different packet
      * class
      */
-    public boolean containsSameEntityIDAs(Packet par1Packet)
+    public boolean containsSameEntityIDAs(final Packet par1Packet)
     {
         return true;
     }

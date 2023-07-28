@@ -6,7 +6,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.MushroomCow;
 
 public class CraftMushroomCow extends CraftCow implements MushroomCow {
-    public CraftMushroomCow(CraftServer server, net.minecraft.entity.passive.EntityMooshroom entity) {
+    public CraftMushroomCow(final CraftServer server, final net.minecraft.entity.passive.EntityMooshroom entity) {
         super(server, entity);
     }
 

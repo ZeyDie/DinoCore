@@ -45,7 +45,7 @@ public class Conversation {
      * @param forWhom The entity for whom this conversation is mediating.
      * @param firstPrompt The first prompt in the conversation graph.
      */
-    public Conversation(Plugin plugin, Conversable forWhom, Prompt firstPrompt) {
+    public Conversation(final Plugin plugin, final Conversable forWhom, final Prompt firstPrompt) {
         this(plugin, forWhom, firstPrompt, new HashMap<Object, Object>());
     }
 
@@ -57,7 +57,7 @@ public class Conversation {
      * @param firstPrompt The first prompt in the conversation graph.
      * @param initialSessionData Any initial values to put in the conversation context sessionData map.
      */
-    public Conversation(Plugin plugin, Conversable forWhom, Prompt firstPrompt, Map<Object, Object> initialSessionData) {
+    public Conversation(final Plugin plugin, final Conversable forWhom, final Prompt firstPrompt, final Map<Object, Object> initialSessionData) {
         this.firstPrompt = firstPrompt;
         this.context = new ConversationContext(plugin, forWhom, initialSessionData);
         this.modal = true;
@@ -92,7 +92,7 @@ public class Conversation {
      *
      * @param modal The new conversation modality.
      */
-    void setModal(boolean modal) {
+    void setModal(final boolean modal) {
         this.modal = modal;
     }
 
@@ -112,7 +112,7 @@ public class Conversation {
      *
      * @param localEchoEnabled The status of local echo.
      */
-    public void setLocalEchoEnabled(boolean localEchoEnabled) {
+    public void setLocalEchoEnabled(final boolean localEchoEnabled) {
         this.localEchoEnabled = localEchoEnabled;
     }
 
@@ -130,7 +130,7 @@ public class Conversation {
      *
      * @param prefix The ConversationPrefix to use.
      */
-    void setPrefix(ConversationPrefix prefix) {
+    void setPrefix(final ConversationPrefix prefix) {
         this.prefix = prefix;
     }
 
@@ -139,7 +139,7 @@ public class Conversation {
      *
      * @param canceller The {@link ConversationCanceller} to add.
      */
-    void addConversationCanceller(ConversationCanceller canceller) {
+    void addConversationCanceller(final ConversationCanceller canceller) {
         canceller.setConversation(this);
         this.cancellers.add(canceller);
     }
@@ -192,7 +192,7 @@ public class Conversation {
      * displayed to the user.
      * @param input The user's chat text.
      */
-    public void acceptInput(String input) {
+    public void acceptInput(final String input) {
         try { // Spigot
         if (currentPrompt != null) {
 
@@ -202,7 +202,7 @@ public class Conversation {
             }
 
             // Test for conversation abandonment based on input
-            for(ConversationCanceller canceller : cancellers) {
+            for(final ConversationCanceller canceller : cancellers) {
                 if (canceller.cancelBasedOnInput(context, input)) {
                     abandon(new ConversationAbandonedEvent(this, canceller));
                     return;
@@ -214,7 +214,7 @@ public class Conversation {
             outputNextPrompt();
         }
         // Spigot Start
-        } catch ( Throwable t )
+        } catch ( final Throwable t )
         {
             org.bukkit.Bukkit.getLogger().log( java.util.logging.Level.SEVERE, "Error handling conversation prompt", t );
         }
@@ -225,7 +225,7 @@ public class Conversation {
      * Adds a {@link ConversationAbandonedListener}.
      * @param listener The listener to add.
      */
-    public synchronized void addConversationAbandonedListener(ConversationAbandonedListener listener) {
+    public synchronized void addConversationAbandonedListener(final ConversationAbandonedListener listener) {
         abandonedListeners.add(listener);
     }
 
@@ -233,7 +233,7 @@ public class Conversation {
      * Removes a {@link ConversationAbandonedListener}.
      * @param listener The listener to remove.
      */
-    public synchronized void removeConversationAbandonedListener(ConversationAbandonedListener listener) {
+    public synchronized void removeConversationAbandonedListener(final ConversationAbandonedListener listener) {
         abandonedListeners.remove(listener);
     }
 
@@ -248,12 +248,12 @@ public class Conversation {
      * Abandons and resets the current conversation. Restores the user's normal chat behavior.
      * @param details Details about why the conversation was abandoned
      */
-    public synchronized void abandon(ConversationAbandonedEvent details) {
+    public synchronized void abandon(final ConversationAbandonedEvent details) {
         if (!abandoned) {
             abandoned = true;
             currentPrompt = null;
             context.getForWhom().abandonConversation(this);
-            for (ConversationAbandonedListener listener : abandonedListeners) {
+            for (final ConversationAbandonedListener listener : abandonedListeners) {
                 listener.conversationAbandoned(details);
             }
         }

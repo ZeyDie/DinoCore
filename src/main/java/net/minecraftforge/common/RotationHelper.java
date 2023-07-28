@@ -41,15 +41,15 @@ public class RotationHelper {
         ANVIL
     }
 
-    private static final ForgeDirection[] UP_DOWN_AXES = new ForgeDirection[] { UP, DOWN };
+    private static final ForgeDirection[] UP_DOWN_AXES = { UP, DOWN };
     private static final Map<BlockType, BiMap<Integer, ForgeDirection>> MAPPINGS = new HashMap<BlockType, BiMap<Integer, ForgeDirection>>();
 
-    public static ForgeDirection[] getValidVanillaBlockRotations(Block block)
+    public static ForgeDirection[] getValidVanillaBlockRotations(final Block block)
     {
         return (block instanceof BlockBed || block instanceof BlockPumpkin || block instanceof BlockFenceGate || block instanceof BlockEndPortalFrame || block instanceof BlockTripWireSource || block instanceof BlockCocoa || block instanceof BlockRailPowered || block instanceof BlockDetectorRail || block instanceof BlockStairs || block instanceof BlockChest || block instanceof BlockEnderChest || block instanceof BlockFurnace || block instanceof BlockLadder || block.blockID == Block.signWall.blockID || block.blockID == Block.signPost.blockID || block instanceof BlockDoor || block instanceof BlockRail || block instanceof BlockButton || block instanceof BlockRedstoneRepeater || block instanceof BlockComparator || block instanceof BlockTrapDoor || block instanceof BlockMushroomCap || block instanceof BlockVine || block instanceof BlockSkull || block instanceof BlockAnvil) ? UP_DOWN_AXES : VALID_DIRECTIONS;
     }
 
-    public static boolean rotateVanillaBlock(Block block, World worldObj, int x, int y, int z, ForgeDirection axis)
+    public static boolean rotateVanillaBlock(final Block block, final World worldObj, final int x, final int y, final int z, final ForgeDirection axis)
     {
         if (worldObj.isRemote)
         {
@@ -136,15 +136,15 @@ public class RotationHelper {
         return false;
     }
 
-    private static boolean rotateBlock(World worldObj, int x, int y, int z, ForgeDirection axis, int mask, BlockType blockType)
+    private static boolean rotateBlock(final World worldObj, final int x, final int y, final int z, final ForgeDirection axis, final int mask, final BlockType blockType)
     {
-        int rotMeta = worldObj.getBlockMetadata(x, y, z);
+        final int rotMeta = worldObj.getBlockMetadata(x, y, z);
         if (blockType == BlockType.DOOR && (rotMeta & 0x8) == 0x8)
         {
             return false;
         }
-        int masked = rotMeta & ~mask;
-        int meta = rotateMetadata(axis, blockType, rotMeta & mask);
+        final int masked = rotMeta & ~mask;
+        final int meta = rotateMetadata(axis, blockType, rotMeta & mask);
         if (meta == -1)
         {
             return false;
@@ -153,9 +153,10 @@ public class RotationHelper {
         return true;
     }
 
-    private static int rotateMetadata(ForgeDirection axis, BlockType blockType, int meta)
+    private static int rotateMetadata(final ForgeDirection axis, BlockType blockType, final int meta)
     {
-        if (blockType == BlockType.RAIL || blockType == BlockType.RAIL_POWERED)
+        BlockType blockType1 = blockType;
+        if (blockType1 == BlockType.RAIL || blockType1 == BlockType.RAIL_POWERED)
         {
             if (meta == 0x0 || meta == 0x1)
             {
@@ -163,18 +164,18 @@ public class RotationHelper {
             }
             if (meta >= 0x2 && meta <= 0x5)
             {
-                blockType = BlockType.RAIL_ASCENDING;
+                blockType1 = BlockType.RAIL_ASCENDING;
             }
-            if (meta >= 0x6 && meta <= 0x9 && blockType == BlockType.RAIL)
+            if (meta >= 0x6 && meta <= 0x9 && blockType1 == BlockType.RAIL)
             {
-                blockType = BlockType.RAIL_CORNER;
+                blockType1 = BlockType.RAIL_CORNER;
             }
         }
-        if (blockType == BlockType.SIGNPOST)
+        if (blockType1 == BlockType.SIGNPOST)
         {
             return (axis == UP) ? (meta + 0x4) % 0x10 : (meta + 0xC) % 0x10;
         }
-        if (blockType == BlockType.LEVER && (axis == UP || axis == DOWN))
+        if (blockType1 == BlockType.LEVER && (axis == UP || axis == DOWN))
         {
             switch (meta)
             {
@@ -188,115 +189,117 @@ public class RotationHelper {
                 return 0x7;
             }
         }
-        if (blockType == BlockType.MUSHROOM_CAP)
+        if (blockType1 == BlockType.MUSHROOM_CAP)
         {
             if (meta % 0x2 == 0)
             {
-                blockType = BlockType.MUSHROOM_CAP_SIDE;
+                blockType1 = BlockType.MUSHROOM_CAP_SIDE;
             }
             else
             {
-                blockType = BlockType.MUSHROOM_CAP_CORNER;
+                blockType1 = BlockType.MUSHROOM_CAP_CORNER;
             }
         }
-        if (blockType == BlockType.VINE)
+        if (blockType1 == BlockType.VINE)
         {
             return ((meta << 1) | ((meta & 0x8) >> 3));
         }
 
-        ForgeDirection orientation = metadataToDirection(blockType, meta);
-        ForgeDirection rotated = orientation.getRotation(axis);
-        return directionToMetadata(blockType, rotated);
+        final ForgeDirection orientation = metadataToDirection(blockType1, meta);
+        final ForgeDirection rotated = orientation.getRotation(axis);
+        return directionToMetadata(blockType1, rotated);
     }
 
-    private static ForgeDirection metadataToDirection(BlockType blockType, int meta)
+    private static ForgeDirection metadataToDirection(final BlockType blockType, int meta)
     {
+        int meta1 = meta;
         if (blockType == BlockType.LEVER)
         {
-            if (meta == 0x6)
+            if (meta1 == 0x6)
             {
-                meta = 0x5;
+                meta1 = 0x5;
             }
-            else if (meta == 0x0)
+            else if (meta1 == 0x0)
             {
-                meta = 0x7;
+                meta1 = 0x7;
             }
         }
 
         if (MAPPINGS.containsKey(blockType))
         {
-            BiMap<Integer, ForgeDirection> biMap = MAPPINGS.get(blockType);
-            if (biMap.containsKey(meta))
+            final BiMap<Integer, ForgeDirection> biMap = MAPPINGS.get(blockType);
+            if (biMap.containsKey(meta1))
             {
-                return biMap.get(meta);
+                return biMap.get(meta1);
             }
         }
 
         if (blockType == BlockType.TORCH)
         {
-            return ForgeDirection.getOrientation(6 - meta);
+            return ForgeDirection.getOrientation(6 - meta1);
         }
         if (blockType == BlockType.STAIR)
         {
-            return ForgeDirection.getOrientation(5 - meta);
+            return ForgeDirection.getOrientation(5 - meta1);
         }
         if (blockType == BlockType.CHEST || blockType == BlockType.DISPENSER || blockType == BlockType.SKULL)
         {
-            return ForgeDirection.getOrientation(meta);
+            return ForgeDirection.getOrientation(meta1);
         }
         if (blockType == BlockType.BUTTON)
         {
-            return ForgeDirection.getOrientation(6 - meta);
+            return ForgeDirection.getOrientation(6 - meta1);
         }
         if (blockType == BlockType.TRAPDOOR)
         {
-            return ForgeDirection.getOrientation(meta + 2).getOpposite();
+            return ForgeDirection.getOrientation(meta1 + 2).getOpposite();
         }
 
         return ForgeDirection.UNKNOWN;
     }
 
-    private static int directionToMetadata(BlockType blockType, ForgeDirection direction)
+    private static int directionToMetadata(final BlockType blockType, ForgeDirection direction)
     {
-        if ((blockType == BlockType.LOG || blockType == BlockType.ANVIL) && (direction.offsetX + direction.offsetY + direction.offsetZ) < 0)
+        ForgeDirection direction1 = direction;
+        if ((blockType == BlockType.LOG || blockType == BlockType.ANVIL) && (direction1.offsetX + direction1.offsetY + direction1.offsetZ) < 0)
         {
-            direction = direction.getOpposite();
+            direction1 = direction1.getOpposite();
         }
 
         if (MAPPINGS.containsKey(blockType))
         {
-            BiMap<ForgeDirection, Integer> biMap = MAPPINGS.get(blockType).inverse();
-            if (biMap.containsKey(direction))
+            final BiMap<ForgeDirection, Integer> biMap = MAPPINGS.get(blockType).inverse();
+            if (biMap.containsKey(direction1))
             {
-                return biMap.get(direction);
+                return biMap.get(direction1);
             }
         }
 
         if (blockType == BlockType.TORCH)
         {
-            if (direction.ordinal() >= 1)
+            if (direction1.ordinal() >= 1)
             {
-                return 6 - direction.ordinal();
+                return 6 - direction1.ordinal();
             }
         }
         if (blockType == BlockType.STAIR)
         {
-            return 5 - direction.ordinal();
+            return 5 - direction1.ordinal();
         }
         if (blockType == BlockType.CHEST || blockType == BlockType.DISPENSER || blockType == BlockType.SKULL)
         {
-            return direction.ordinal();
+            return direction1.ordinal();
         }
         if (blockType == BlockType.BUTTON)
         {
-            if (direction.ordinal() >= 2)
+            if (direction1.ordinal() >= 2)
             {
-                return 6 - direction.ordinal();
+                return 6 - direction1.ordinal();
             }
         }
         if (blockType == BlockType.TRAPDOOR)
         {
-            return direction.getOpposite().ordinal() - 2;
+            return direction1.getOpposite().ordinal() - 2;
         }
 
         return -1;

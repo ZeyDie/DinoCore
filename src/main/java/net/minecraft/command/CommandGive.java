@@ -23,17 +23,17 @@ public class CommandGive extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.give.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         if (par2ArrayOfStr.length >= 2)
         {
-            EntityPlayerMP entityplayermp = getPlayer(par1ICommandSender, par2ArrayOfStr[0]);
-            int i = parseIntWithMin(par1ICommandSender, par2ArrayOfStr[1], 1);
+            final EntityPlayerMP entityplayermp = getPlayer(par1ICommandSender, par2ArrayOfStr[0]);
+            final int i = parseIntWithMin(par1ICommandSender, par2ArrayOfStr[1], 1);
             int j = 1;
             int k = 0;
 
@@ -53,8 +53,8 @@ public class CommandGive extends CommandBase
                     k = parseInt(par1ICommandSender, par2ArrayOfStr[3]);
                 }
 
-                ItemStack itemstack = new ItemStack(i, j, k);
-                EntityItem entityitem = entityplayermp.dropPlayerItem(itemstack);
+                final ItemStack itemstack = new ItemStack(i, j, k);
+                final EntityItem entityitem = entityplayermp.dropPlayerItem(itemstack);
                 entityitem.delayBeforeCanPickup = 0;
                 notifyAdmins(par1ICommandSender, "commands.give.success", new Object[] {Item.itemsList[i].getItemStackDisplayName(itemstack), Integer.valueOf(i), Integer.valueOf(j), entityplayermp.getEntityName()});
             }
@@ -68,7 +68,7 @@ public class CommandGive extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public List addTabCompletionOptions(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         return par2ArrayOfStr.length == 1 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, this.getPlayers()) : null;
     }
@@ -81,7 +81,7 @@ public class CommandGive extends CommandBase
     /**
      * Return whether the specified command parameter index is a username parameter.
      */
-    public boolean isUsernameIndex(String[] par1ArrayOfStr, int par2)
+    public boolean isUsernameIndex(final String[] par1ArrayOfStr, final int par2)
     {
         return par2 == 0;
     }

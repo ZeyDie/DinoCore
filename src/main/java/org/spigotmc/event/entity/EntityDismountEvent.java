@@ -15,7 +15,7 @@ public class EntityDismountEvent extends EntityEvent
     private boolean cancelled;
     private final Entity dismounted;
 
-    public EntityDismountEvent(Entity what, Entity dismounted)
+    public EntityDismountEvent(final Entity what, final Entity dismounted)
     {
         super( what );
         this.dismounted = dismounted;

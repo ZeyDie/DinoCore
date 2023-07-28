@@ -20,7 +20,7 @@ public class SaveFormatOld implements ISaveFormat
      */
     protected final File savesDirectory;
 
-    public SaveFormatOld(File par1File)
+    public SaveFormatOld(final File par1File)
     {
         if (!par1File.exists())
         {
@@ -33,12 +33,12 @@ public class SaveFormatOld implements ISaveFormat
     @SideOnly(Side.CLIENT)
     public List getSaveList() throws AnvilConverterException
     {
-        ArrayList arraylist = new ArrayList();
+        final ArrayList arraylist = new ArrayList();
 
         for (int i = 0; i < 5; ++i)
         {
-            String s = "World" + (i + 1);
-            WorldInfo worldinfo = this.getWorldInfo(s);
+            final String s = "World" + (i + 1);
+            final WorldInfo worldinfo = this.getWorldInfo(s);
 
             if (worldinfo != null)
             {
@@ -54,9 +54,9 @@ public class SaveFormatOld implements ISaveFormat
     /**
      * gets the world info
      */
-    public WorldInfo getWorldInfo(String par1Str)
+    public WorldInfo getWorldInfo(final String par1Str)
     {
-        File file1 = new File(this.savesDirectory, par1Str);
+        final File file1 = new File(this.savesDirectory, par1Str);
 
         if (!file1.exists())
         {
@@ -76,7 +76,7 @@ public class SaveFormatOld implements ISaveFormat
                     nbttagcompound1 = nbttagcompound.getCompoundTag("Data");
                     return new WorldInfo(nbttagcompound1);
                 }
-                catch (Exception exception)
+                catch (final Exception exception)
                 {
                     exception.printStackTrace();
                 }
@@ -92,7 +92,7 @@ public class SaveFormatOld implements ISaveFormat
                     nbttagcompound1 = nbttagcompound.getCompoundTag("Data");
                     return new WorldInfo(nbttagcompound1);
                 }
-                catch (Exception exception1)
+                catch (final Exception exception1)
                 {
                     exception1.printStackTrace();
                 }
@@ -109,24 +109,24 @@ public class SaveFormatOld implements ISaveFormat
      * that world. @desc: Renames the world by storing the new name in level.dat. It does *not* rename the directory
      * containing the world data.
      */
-    public void renameWorld(String par1Str, String par2Str)
+    public void renameWorld(final String par1Str, final String par2Str)
     {
-        File file1 = new File(this.savesDirectory, par1Str);
+        final File file1 = new File(this.savesDirectory, par1Str);
 
         if (file1.exists())
         {
-            File file2 = new File(file1, "level.dat");
+            final File file2 = new File(file1, "level.dat");
 
             if (file2.exists())
             {
                 try
                 {
-                    NBTTagCompound nbttagcompound = CompressedStreamTools.readCompressed(new FileInputStream(file2));
-                    NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("Data");
+                    final NBTTagCompound nbttagcompound = CompressedStreamTools.readCompressed(new FileInputStream(file2));
+                    final NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("Data");
                     nbttagcompound1.setString("LevelName", par2Str);
                     CompressedStreamTools.writeCompressed(nbttagcompound, new FileOutputStream(file2));
                 }
-                catch (Exception exception)
+                catch (final Exception exception)
                 {
                     exception.printStackTrace();
                 }
@@ -138,9 +138,9 @@ public class SaveFormatOld implements ISaveFormat
      * @args: Takes one argument - the name of the directory of the world to delete. @desc: Delete the world by deleting
      * the associated directory recursively.
      */
-    public boolean deleteWorldDirectory(String par1Str)
+    public boolean deleteWorldDirectory(final String par1Str)
     {
-        File file1 = new File(this.savesDirectory, par1Str);
+        final File file1 = new File(this.savesDirectory, par1Str);
 
         if (!file1.exists())
         {
@@ -167,7 +167,7 @@ public class SaveFormatOld implements ISaveFormat
                     {
                         Thread.sleep(500L);
                     }
-                    catch (InterruptedException interruptedexception)
+                    catch (final InterruptedException interruptedexception)
                     {
                         ;
                     }
@@ -182,11 +182,11 @@ public class SaveFormatOld implements ISaveFormat
      * @args: Takes one argument - the list of files and directories to delete. @desc: Deletes the files and directory
      * listed in the list recursively.
      */
-    protected static boolean deleteFiles(File[] par0ArrayOfFile)
+    protected static boolean deleteFiles(final File[] par0ArrayOfFile)
     {
         for (int i = 0; i < par0ArrayOfFile.length; ++i)
         {
-            File file1 = par0ArrayOfFile[i];
+            final File file1 = par0ArrayOfFile[i];
             System.out.println("Deleting " + file1);
 
             if (file1.isDirectory() && !deleteFiles(file1.listFiles()))
@@ -208,7 +208,7 @@ public class SaveFormatOld implements ISaveFormat
     /**
      * Returns back a loader for the specified save directory
      */
-    public ISaveHandler getSaveLoader(String par1Str, boolean par2)
+    public ISaveHandler getSaveLoader(final String par1Str, final boolean par2)
     {
         return new SaveHandler(this.savesDirectory, par1Str, par2);
     }
@@ -216,7 +216,7 @@ public class SaveFormatOld implements ISaveFormat
     /**
      * Checks if the save directory uses the old map format
      */
-    public boolean isOldMapFormat(String par1Str)
+    public boolean isOldMapFormat(final String par1Str)
     {
         return false;
     }
@@ -224,7 +224,7 @@ public class SaveFormatOld implements ISaveFormat
     /**
      * Converts the specified map to the new map format. Args: worldName, loadingScreen
      */
-    public boolean convertMapFormat(String par1Str, IProgressUpdate par2IProgressUpdate)
+    public boolean convertMapFormat(final String par1Str, final IProgressUpdate par2IProgressUpdate)
     {
         return false;
     }
@@ -234,9 +234,9 @@ public class SaveFormatOld implements ISaveFormat
     /**
      * Return whether the given world can be loaded.
      */
-    public boolean canLoadWorld(String par1Str)
+    public boolean canLoadWorld(final String par1Str)
     {
-        File file1 = new File(this.savesDirectory, par1Str);
+        final File file1 = new File(this.savesDirectory, par1Str);
         return file1.isDirectory();
     }
 }

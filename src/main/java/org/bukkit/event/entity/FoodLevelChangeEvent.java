@@ -39,17 +39,18 @@ public class FoodLevelChangeEvent extends EntityEvent implements Cancellable {
      * @param level the resultant food level that the entity involved in this event should be set to
      */
     public void setFoodLevel(int level) {
-        if (level > 20) level = 20;
-        else if (level < 0) level = 0;
+        int level1 = level;
+        if (level1 > 20) level1 = 20;
+        else if (level1 < 0) level1 = 0;
 
-        this.level = level;
+        this.level = level1;
     }
 
     public boolean isCancelled() {
         return cancel;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 

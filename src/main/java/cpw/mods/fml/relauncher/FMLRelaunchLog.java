@@ -28,14 +28,14 @@ public class FMLRelaunchLog
     public static class ConsoleLogWrapper extends Handler // Cauldron private -> public
     {
         @Override
-        public void publish(LogRecord record)
+        public void publish(final LogRecord record)
         {
-            boolean currInt = Thread.interrupted();
+            final boolean currInt = Thread.interrupted();
             try
             {
                 ConsoleLogThread.recordQueue.put(record);
             }
-            catch (InterruptedException e)
+            catch (final InterruptedException e)
             {
                 e.printStackTrace(errCache);
             }
@@ -66,13 +66,13 @@ public class FMLRelaunchLog
         {
             do
             {
-                LogRecord lr;
+                final LogRecord lr;
                 try
                 {
                     lr = recordQueue.take();
                     wrappedHandler.publish(lr);
                 }
-                catch (InterruptedException e)
+                catch (final InterruptedException e)
                 {
                     e.printStackTrace(errCache);
                     Thread.interrupted();
@@ -87,7 +87,7 @@ public class FMLRelaunchLog
         private Logger log;
         private StringBuilder currentMessage;
 
-        public LoggingOutStream(Logger log)
+        public LoggingOutStream(final Logger log)
         {
             this.log = log;
             this.currentMessage = new StringBuilder();
@@ -96,7 +96,7 @@ public class FMLRelaunchLog
         @Override
         public void flush() throws IOException
         {
-            String record;
+            final String record;
             synchronized(FMLRelaunchLog.class)
             {
                 super.flush();
@@ -115,7 +115,7 @@ public class FMLRelaunchLog
                 }
                 if (lastIdx >= 0)
                 {
-                    String rem = currentMessage.substring(lastIdx+1);
+                    final String rem = currentMessage.substring(lastIdx+1);
                     currentMessage.setLength(0);
                     currentMessage.append(rem);
                 }
@@ -156,15 +156,15 @@ public class FMLRelaunchLog
         //TODO ZoomCodeEnd
 
         LogManager.getLogManager().reset();
-        Logger globalLogger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+        final Logger globalLogger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
         globalLogger.setLevel(Level.OFF);
 
         log.myLog = Logger.getLogger("ForgeModLoader");
         LogWrapper.retarget(log.myLog);
 
         // Cauldron start - FML and CraftBukkit logging compatibility - add conditional
-        Logger stdOut = Logger.getLogger("STDOUT");
-        Logger stdErr = Logger.getLogger("STDERR");
+        final Logger stdOut = Logger.getLogger("STDOUT");
+        final Logger stdErr = Logger.getLogger("STDERR");
         if (useOnlyThisLogger)
         {
             stdOut.setParent(log.myLog);
@@ -191,7 +191,7 @@ public class FMLRelaunchLog
                 }
             };
         }
-        catch (Throwable t)
+        catch (final Throwable t)
         {
             throw Throwables.propagate(t);
         }
@@ -222,7 +222,7 @@ public class FMLRelaunchLog
         log.myLog.addHandler(fileHandler);
     }
 
-    public static void loadLogConfiguration(File logConfigFile)
+    public static void loadLogConfiguration(final File logConfigFile)
     {
         if (logConfigFile!=null && logConfigFile.exists() && logConfigFile.canRead())
         {
@@ -231,19 +231,19 @@ public class FMLRelaunchLog
                 LogManager.getLogManager().readConfiguration(new FileInputStream(logConfigFile));
                 resetLoggingHandlers();
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 log(Level.SEVERE, e, "Error reading logging configuration file %s", logConfigFile.getName());
             }
         }
     }
-    public static void log(String logChannel, Level level, String format, Object... data)
+    public static void log(final String logChannel, final Level level, final String format, final Object... data)
     {
         makeLog(logChannel);
         Logger.getLogger(logChannel).log(level, String.format(format, data));
     }
 
-    public static void log(Level level, String format, Object... data)
+    public static void log(final Level level, final String format, final Object... data)
     {
         if (!configured)
         {
@@ -252,13 +252,13 @@ public class FMLRelaunchLog
         log.myLog.log(level, String.format(format, data));
     }
 
-    public static void log(String logChannel, Level level, Throwable ex, String format, Object... data)
+    public static void log(final String logChannel, final Level level, final Throwable ex, final String format, final Object... data)
     {
         makeLog(logChannel);
         Logger.getLogger(logChannel).log(level, String.format(format, data), ex);
     }
 
-    public static void log(Level level, Throwable ex, String format, Object... data)
+    public static void log(final Level level, final Throwable ex, final String format, final Object... data)
     {
         if (!configured)
         {
@@ -267,32 +267,32 @@ public class FMLRelaunchLog
         log.myLog.log(level, String.format(format, data), ex);
     }
 
-    public static void severe(String format, Object... data)
+    public static void severe(final String format, final Object... data)
     {
         log(Level.SEVERE, format, data);
     }
 
-    public static void warning(String format, Object... data)
+    public static void warning(final String format, final Object... data)
     {
         log(Level.WARNING, format, data);
     }
 
-    public static void info(String format, Object... data)
+    public static void info(final String format, final Object... data)
     {
         log(Level.INFO, format, data);
     }
 
-    public static void fine(String format, Object... data)
+    public static void fine(final String format, final Object... data)
     {
         log(Level.FINE, format, data);
     }
 
-    public static void finer(String format, Object... data)
+    public static void finer(final String format, final Object... data)
     {
         log(Level.FINER, format, data);
     }
 
-    public static void finest(String format, Object... data)
+    public static void finest(final String format, final Object... data)
     {
         log(Level.FINEST, format, data);
     }
@@ -300,9 +300,9 @@ public class FMLRelaunchLog
     {
         return myLog;
     }
-    public static void makeLog(String logChannel)
+    public static void makeLog(final String logChannel)
     {
-        Logger l = Logger.getLogger(logChannel);
+        final Logger l = Logger.getLogger(logChannel);
         l.setParent(log.myLog);
     }
 }

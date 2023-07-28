@@ -14,7 +14,7 @@ class ThreadDownloadImageDataINNER1 extends Thread
 {
     final ThreadDownloadImageData theThreadDownloadImageData;
 
-    ThreadDownloadImageDataINNER1(ThreadDownloadImageData par1ThreadDownloadImageData)
+    ThreadDownloadImageDataINNER1(final ThreadDownloadImageData par1ThreadDownloadImageData)
     {
         this.theThreadDownloadImageData = par1ThreadDownloadImageData;
     }
@@ -44,7 +44,7 @@ class ThreadDownloadImageDataINNER1 extends Thread
 
             this.theThreadDownloadImageData.getBufferedImage(bufferedimage);
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             exception.printStackTrace();
         }

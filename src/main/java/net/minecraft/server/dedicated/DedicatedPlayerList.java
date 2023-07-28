@@ -11,7 +11,7 @@ public class DedicatedPlayerList extends ServerConfigurationManager
     private File opsList;
     private File whiteList;
 
-    public DedicatedPlayerList(DedicatedServer par1DedicatedServer)
+    public DedicatedPlayerList(final DedicatedServer par1DedicatedServer)
     {
         super(par1DedicatedServer);
         this.opsList = par1DedicatedServer.getFile("ops.txt");
@@ -43,7 +43,7 @@ public class DedicatedPlayerList extends ServerConfigurationManager
         }
     }
 
-    public void setWhiteListEnabled(boolean par1)
+    public void setWhiteListEnabled(final boolean par1)
     {
         super.setWhiteListEnabled(par1);
         this.getDedicatedServerInstance().setProperty("white-list", Boolean.valueOf(par1));
@@ -53,7 +53,7 @@ public class DedicatedPlayerList extends ServerConfigurationManager
     /**
      * This adds a username to the ops list, then saves the op list
      */
-    public void addOp(String par1Str)
+    public void addOp(final String par1Str)
     {
         super.addOp(par1Str);
         this.saveOpsList();
@@ -62,7 +62,7 @@ public class DedicatedPlayerList extends ServerConfigurationManager
     /**
      * This removes a username from the ops list, then saves the op list
      */
-    public void removeOp(String par1Str)
+    public void removeOp(final String par1Str)
     {
         super.removeOp(par1Str);
         this.saveOpsList();
@@ -71,7 +71,7 @@ public class DedicatedPlayerList extends ServerConfigurationManager
     /**
      * Remove the specified player from the whitelist.
      */
-    public void removeFromWhitelist(String par1Str)
+    public void removeFromWhitelist(final String par1Str)
     {
         super.removeFromWhitelist(par1Str);
         this.saveWhiteList();
@@ -80,7 +80,7 @@ public class DedicatedPlayerList extends ServerConfigurationManager
     /**
      * Add the specified player to the white list.
      */
-    public void addToWhiteList(String par1Str)
+    public void addToWhiteList(final String par1Str)
     {
         super.addToWhiteList(par1Str);
         this.saveWhiteList();
@@ -99,7 +99,7 @@ public class DedicatedPlayerList extends ServerConfigurationManager
         try
         {
             this.getOps().clear();
-            BufferedReader bufferedreader = new BufferedReader(new FileReader(this.opsList));
+            final BufferedReader bufferedreader = new BufferedReader(new FileReader(this.opsList));
             String s = "";
 
             while ((s = bufferedreader.readLine()) != null)
@@ -109,7 +109,7 @@ public class DedicatedPlayerList extends ServerConfigurationManager
 
             bufferedreader.close();
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             this.getDedicatedServerInstance().getLogAgent().logWarning("Failed to load operators list: " + exception);
         }
@@ -119,18 +119,18 @@ public class DedicatedPlayerList extends ServerConfigurationManager
     {
         try
         {
-            PrintWriter printwriter = new PrintWriter(new FileWriter(this.opsList, false));
-            Iterator iterator = this.getOps().iterator();
+            final PrintWriter printwriter = new PrintWriter(new FileWriter(this.opsList, false));
+            final Iterator iterator = this.getOps().iterator();
 
             while (iterator.hasNext())
             {
-                String s = (String)iterator.next();
+                final String s = (String)iterator.next();
                 printwriter.println(s);
             }
 
             printwriter.close();
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             this.getDedicatedServerInstance().getLogAgent().logWarning("Failed to save operators list: " + exception);
         }
@@ -141,7 +141,7 @@ public class DedicatedPlayerList extends ServerConfigurationManager
         try
         {
             this.getWhiteListedPlayers().clear();
-            BufferedReader bufferedreader = new BufferedReader(new FileReader(this.whiteList));
+            final BufferedReader bufferedreader = new BufferedReader(new FileReader(this.whiteList));
             String s = "";
 
             while ((s = bufferedreader.readLine()) != null)
@@ -151,7 +151,7 @@ public class DedicatedPlayerList extends ServerConfigurationManager
 
             bufferedreader.close();
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             this.getDedicatedServerInstance().getLogAgent().logWarning("Failed to load white-list: " + exception);
         }
@@ -161,18 +161,18 @@ public class DedicatedPlayerList extends ServerConfigurationManager
     {
         try
         {
-            PrintWriter printwriter = new PrintWriter(new FileWriter(this.whiteList, false));
-            Iterator iterator = this.getWhiteListedPlayers().iterator();
+            final PrintWriter printwriter = new PrintWriter(new FileWriter(this.whiteList, false));
+            final Iterator iterator = this.getWhiteListedPlayers().iterator();
 
             while (iterator.hasNext())
             {
-                String s = (String)iterator.next();
+                final String s = (String)iterator.next();
                 printwriter.println(s);
             }
 
             printwriter.close();
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             this.getDedicatedServerInstance().getLogAgent().logWarning("Failed to save white-list: " + exception);
         }
@@ -183,8 +183,8 @@ public class DedicatedPlayerList extends ServerConfigurationManager
      */
     public boolean isAllowedToLogin(String par1Str)
     {
-        par1Str = par1Str.trim().toLowerCase();
-        return !this.isWhiteListEnabled() || this.isPlayerOpped(par1Str) || this.getWhiteListedPlayers().contains(par1Str);
+        String par1Str1 = par1Str.trim().toLowerCase();
+        return !this.isWhiteListEnabled() || this.isPlayerOpped(par1Str1) || this.getWhiteListedPlayers().contains(par1Str1);
     }
 
     public DedicatedServer getDedicatedServerInstance()

@@ -20,7 +20,7 @@ import java.util.Random;
 
 public class BlockVine extends Block implements IShearable
 {
-    public BlockVine(int par1)
+    public BlockVine(final int par1)
     {
         super(par1, Material.vine);
         this.setTickRandomly(true);
@@ -63,10 +63,10 @@ public class BlockVine extends Block implements IShearable
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
-        float f = 0.0625F;
-        int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
+        final float f = 0.0625F;
+        final int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
         float f1 = 1.0F;
         float f2 = 1.0F;
         float f3 = 1.0F;
@@ -136,7 +136,7 @@ public class BlockVine extends Block implements IShearable
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4)
     {
         return null;
     }
@@ -144,7 +144,7 @@ public class BlockVine extends Block implements IShearable
     /**
      * checks to see if you can place this block can be placed on that side of a block: BlockLever overrides
      */
-    public boolean canPlaceBlockOnSide(World par1World, int par2, int par3, int par4, int par5)
+    public boolean canPlaceBlockOnSide(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         switch (par5)
         {
@@ -166,7 +166,7 @@ public class BlockVine extends Block implements IShearable
     /**
      * returns true if a vine can be placed on that block (checks for render as normal block and if it is solid)
      */
-    private boolean canBePlacedOn(int par1)
+    private boolean canBePlacedOn(final int par1)
     {
         if (par1 == 0)
         {
@@ -174,7 +174,7 @@ public class BlockVine extends Block implements IShearable
         }
         else
         {
-            Block block = Block.blocksList[par1];
+            final Block block = Block.blocksList[par1];
             return block.renderAsNormalBlock() && block.blockMaterial.blocksMovement();
         }
     }
@@ -182,16 +182,16 @@ public class BlockVine extends Block implements IShearable
     /**
      * Returns if the vine can stay in the world. It also changes the metadata according to neighboring blocks.
      */
-    private boolean canVineStay(World par1World, int par2, int par3, int par4)
+    private boolean canVineStay(final World par1World, final int par2, final int par3, final int par4)
     {
-        int l = par1World.getBlockMetadata(par2, par3, par4);
+        final int l = par1World.getBlockMetadata(par2, par3, par4);
         int i1 = l;
 
         if (l > 0)
         {
             for (int j1 = 0; j1 <= 3; ++j1)
             {
-                int k1 = 1 << j1;
+                final int k1 = 1 << j1;
 
                 if ((l & k1) != 0 && !this.canBePlacedOn(par1World.getBlockId(par2 + Direction.offsetX[j1], par3, par4 + Direction.offsetZ[j1])) && (par1World.getBlockId(par2, par3 + 1, par4) != this.blockID || (par1World.getBlockMetadata(par2, par3 + 1, par4) & k1) == 0))
                 {
@@ -226,7 +226,7 @@ public class BlockVine extends Block implements IShearable
     /**
      * Returns the color this block should be rendered. Used by leaves.
      */
-    public int getRenderColor(int par1)
+    public int getRenderColor(final int par1)
     {
         return ColorizerFoliage.getFoliageColorBasic();
     }
@@ -237,7 +237,7 @@ public class BlockVine extends Block implements IShearable
      * Returns a integer with hex for 0xrrggbb with this color multiplied against the blocks color. Note only called
      * when first determining what to render.
      */
-    public int colorMultiplier(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public int colorMultiplier(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         return par1IBlockAccess.getBiomeGenForCoords(par2, par4).getBiomeFoliageColor();
     }
@@ -246,7 +246,7 @@ public class BlockVine extends Block implements IShearable
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         if (!par1World.isRemote && !this.canVineStay(par1World, par2, par3, par4))
         {
@@ -258,11 +258,11 @@ public class BlockVine extends Block implements IShearable
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (!par1World.isRemote && par1World.rand.nextInt(4) == 0)
         {
-            byte b0 = 4;
+            final byte b0 = 4;
             int l = 5;
             boolean flag = false;
             int i1;
@@ -318,8 +318,8 @@ public class BlockVine extends Block implements IShearable
                     if (l1 > 0)
                     {
                         // CraftBukkit start - Call BlockSpreadEvent
-                        org.bukkit.block.Block source = par1World.getWorld().getBlockAt(par2, par3, par4);
-                        org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2, par3 + 1, par4);
+                        final org.bukkit.block.Block source = par1World.getWorld().getBlockAt(par2, par3, par4);
+                        final org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2, par3 + 1, par4);
                         CraftEventFactory.handleBlockSpreadEvent(block, source, this.blockID, l1);
                         // CraftBukkit end
                     }
@@ -327,7 +327,7 @@ public class BlockVine extends Block implements IShearable
             }
             else
             {
-                int j2;
+                final int j2;
 
                 if (j1 >= 2 && j1 <= 5 && (i1 & 1 << k1) == 0)
                 {
@@ -350,7 +350,7 @@ public class BlockVine extends Block implements IShearable
                         i2 = k1 + 1 & 3;
                         j2 = k1 + 3 & 3;
                         // CraftBukkit start - Call BlockSpreadEvent
-                        org.bukkit.block.Block source = par1World.getWorld().getBlockAt(par2, par3, par4);
+                        final org.bukkit.block.Block source = par1World.getWorld().getBlockAt(par2, par3, par4);
                         org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2 + Direction.offsetX[k1], par3, par4 + Direction.offsetZ[k1]);
 
                         if ((i1 & 1 << i2) != 0 && this.canBePlacedOn(par1World.getBlockId(par2 + Direction.offsetX[k1] + Direction.offsetX[i2], par3, par4 + Direction.offsetZ[k1] + Direction.offsetZ[i2])))
@@ -389,8 +389,8 @@ public class BlockVine extends Block implements IShearable
                         if (i2 > 0)
                         {
                             // CraftBukkit start - Call BlockSpreadEvent
-                            org.bukkit.block.Block source = par1World.getWorld().getBlockAt(par2, par3, par4);
-                            org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2, par3 - 1, par4);
+                            final org.bukkit.block.Block source = par1World.getWorld().getBlockAt(par2, par3, par4);
+                            final org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2, par3 - 1, par4);
                             CraftEventFactory.handleBlockSpreadEvent(block, source, this.blockID, i2);
                             // CraftBukkit end
                         }
@@ -413,7 +413,7 @@ public class BlockVine extends Block implements IShearable
     /**
      * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
      */
-    public int onBlockPlaced(World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9)
+    public int onBlockPlaced(final World par1World, final int par2, final int par3, final int par4, final int par5, final float par6, final float par7, final float par8, final int par9)
     {
         byte b0 = 0;
 
@@ -438,7 +438,7 @@ public class BlockVine extends Block implements IShearable
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return 0;
     }
@@ -446,7 +446,7 @@ public class BlockVine extends Block implements IShearable
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random par1Random)
+    public int quantityDropped(final Random par1Random)
     {
         return 0;
     }
@@ -455,27 +455,27 @@ public class BlockVine extends Block implements IShearable
      * Called when the player destroys a block with an item that can harvest it. (i, j, k) are the coordinates of the
      * block and l is the block's subtype/damage.
      */
-    public void harvestBlock(World par1World, EntityPlayer par2EntityPlayer, int par3, int par4, int par5, int par6)
+    public void harvestBlock(final World par1World, final EntityPlayer par2EntityPlayer, final int par3, final int par4, final int par5, final int par6)
     {
         super.harvestBlock(par1World, par2EntityPlayer, par3, par4, par5, par6);
     }
 
     @Override
-    public boolean isShearable(ItemStack item, World world, int x, int y, int z)
+    public boolean isShearable(final ItemStack item, final World world, final int x, final int y, final int z)
     {
         return true;
     }
 
     @Override
-    public ArrayList<ItemStack> onSheared(ItemStack item, World world, int x, int y, int z, int fortune)
+    public ArrayList<ItemStack> onSheared(final ItemStack item, final World world, final int x, final int y, final int z, final int fortune)
     {
-        ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+        final ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
         ret.add(new ItemStack(this, 1, 0));
         return ret;
     }
 
     @Override
-    public boolean isLadder(World world, int x, int y, int z, EntityLivingBase entity)
+    public boolean isLadder(final World world, final int x, final int y, final int z, final EntityLivingBase entity)
     {
         return true;
     }

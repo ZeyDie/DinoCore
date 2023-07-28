@@ -67,7 +67,7 @@ public abstract class ChunkGenerator {
      * @param z The Z-coordinate of the chunk
      * @return byte[] containing the types for each block created by this generator
      */
-    public byte[] generate(World world, Random random, int x, int z) {
+    public byte[] generate(final World world, final Random random, final int x, final int z) {
         throw new UnsupportedOperationException("Custom generator is missing required methods: generate(), generateBlockSections() and generateExtBlockSections()");
     }
 
@@ -142,7 +142,7 @@ public abstract class ChunkGenerator {
      * @deprecated Magic value
      */
     @Deprecated
-    public short[][] generateExtBlockSections(World world, Random random, int x, int z, BiomeGrid biomes) {
+    public short[][] generateExtBlockSections(final World world, final Random random, final int x, final int z, final BiomeGrid biomes) {
         return null; // Default - returns null, which drives call to generateBlockSections()
     }
 
@@ -193,7 +193,7 @@ public abstract class ChunkGenerator {
      * @deprecated Magic value
      */
     @Deprecated
-    public byte[][] generateBlockSections(World world, Random random, int x, int z, BiomeGrid biomes) {
+    public byte[][] generateBlockSections(final World world, final Random random, final int x, final int z, final BiomeGrid biomes) {
         return null; // Default - returns null, which drives call to generate()
     }
 
@@ -205,8 +205,8 @@ public abstract class ChunkGenerator {
      * @param z Z-coordinate of the block to test
      * @return true if the location is valid, otherwise false
      */
-    public boolean canSpawn(World world, int x, int z) {
-        Block highest = world.getBlockAt(x, world.getHighestBlockYAt(x, z), z);
+    public boolean canSpawn(final World world, final int x, final int z) {
+        final Block highest = world.getBlockAt(x, world.getHighestBlockYAt(x, z), z);
 
         switch (world.getEnvironment()) {
         case NETHER:
@@ -225,7 +225,7 @@ public abstract class ChunkGenerator {
      * @param world World to apply to
      * @return List containing any amount of BlockPopulators
      */
-    public List<BlockPopulator> getDefaultPopulators(World world) {
+    public List<BlockPopulator> getDefaultPopulators(final World world) {
         return new ArrayList<BlockPopulator>();
     }
 
@@ -239,7 +239,7 @@ public abstract class ChunkGenerator {
      * @param random Random generator to use in the calculation
      * @return Location containing a new spawn point, otherwise null
      */
-    public Location getFixedSpawnLocation(World world, Random random) {
+    public Location getFixedSpawnLocation(final World world, final Random random) {
         return null;
     }
 }

@@ -48,7 +48,7 @@ public abstract class PlayerBucketEvent extends PlayerEvent implements Cancellab
      *
      * @param itemStack the new held itemstack after the bucket event.
      */
-    public void setItemStack(ItemStack itemStack) {
+    public void setItemStack(final ItemStack itemStack) {
         this.itemStack = itemStack;
     }
 
@@ -74,7 +74,7 @@ public abstract class PlayerBucketEvent extends PlayerEvent implements Cancellab
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancelled = cancel;
     }
 }

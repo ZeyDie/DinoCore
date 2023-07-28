@@ -17,7 +17,7 @@ public class Packet6SpawnPosition extends Packet
 
     public Packet6SpawnPosition() {}
 
-    public Packet6SpawnPosition(int par1, int par2, int par3)
+    public Packet6SpawnPosition(final int par1, final int par2, final int par3)
     {
         this.xPosition = par1;
         this.yPosition = par2;
@@ -27,7 +27,7 @@ public class Packet6SpawnPosition extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.xPosition = par1DataInput.readInt();
         this.yPosition = par1DataInput.readInt();
@@ -37,7 +37,7 @@ public class Packet6SpawnPosition extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.xPosition);
         par1DataOutput.writeInt(this.yPosition);
@@ -47,7 +47,7 @@ public class Packet6SpawnPosition extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleSpawnPosition(this);
     }
@@ -72,7 +72,7 @@ public class Packet6SpawnPosition extends Packet
      * eg return packet30entity.entityId == entityId; WARNING : will throw if you compare a packet to a different packet
      * class
      */
-    public boolean containsSameEntityIDAs(Packet par1Packet)
+    public boolean containsSameEntityIDAs(final Packet par1Packet)
     {
         return true;
     }

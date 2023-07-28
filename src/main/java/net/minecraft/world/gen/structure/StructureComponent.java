@@ -28,7 +28,7 @@ public abstract class StructureComponent
 
     public StructureComponent() {}
 
-    protected StructureComponent(int par1)
+    protected StructureComponent(final int par1)
     {
         this.componentType = par1;
         this.coordBaseMode = -1;
@@ -41,7 +41,7 @@ public abstract class StructureComponent
             throw new RuntimeException("StructureComponent \"" + this.getClass().getName() + "\" missing ID Mapping, Modder see MapGenStructureIO");
         }
 
-        NBTTagCompound nbttagcompound = new NBTTagCompound();
+        final NBTTagCompound nbttagcompound = new NBTTagCompound();
         nbttagcompound.setString("id", MapGenStructureIO.func_143036_a(this));
         nbttagcompound.setTag("BB", this.boundingBox.func_143047_a("BB"));
         nbttagcompound.setInteger("O", this.coordBaseMode);
@@ -52,7 +52,7 @@ public abstract class StructureComponent
 
     protected abstract void func_143012_a(NBTTagCompound nbttagcompound);
 
-    public void func_143009_a(World par1World, NBTTagCompound par2NBTTagCompound)
+    public void func_143009_a(final World par1World, final NBTTagCompound par2NBTTagCompound)
     {
         if (par2NBTTagCompound.hasKey("BB"))
         {
@@ -69,7 +69,7 @@ public abstract class StructureComponent
     /**
      * Initiates construction of the Structure Component picked, at the current Location of StructGen
      */
-    public void buildComponent(StructureComponent par1StructureComponent, List par2List, Random par3Random) {}
+    public void buildComponent(final StructureComponent par1StructureComponent, final List par2List, final Random par3Random) {}
 
     /**
      * second Part of Structure generating, this for example places Spiderwebs, Mob Spawners, it closes Mineshafts at
@@ -93,9 +93,9 @@ public abstract class StructureComponent
     /**
      * Discover if bounding box can fit within the current bounding box object.
      */
-    public static StructureComponent findIntersecting(List par0List, StructureBoundingBox par1StructureBoundingBox)
+    public static StructureComponent findIntersecting(final List par0List, final StructureBoundingBox par1StructureBoundingBox)
     {
-        Iterator iterator = par0List.iterator();
+        final Iterator iterator = par0List.iterator();
         StructureComponent structurecomponent;
 
         do
@@ -120,14 +120,14 @@ public abstract class StructureComponent
     /**
      * checks the entire StructureBoundingBox for Liquids
      */
-    protected boolean isLiquidInStructureBoundingBox(World par1World, StructureBoundingBox par2StructureBoundingBox)
+    protected boolean isLiquidInStructureBoundingBox(final World par1World, final StructureBoundingBox par2StructureBoundingBox)
     {
-        int i = Math.max(this.boundingBox.minX - 1, par2StructureBoundingBox.minX);
-        int j = Math.max(this.boundingBox.minY - 1, par2StructureBoundingBox.minY);
-        int k = Math.max(this.boundingBox.minZ - 1, par2StructureBoundingBox.minZ);
-        int l = Math.min(this.boundingBox.maxX + 1, par2StructureBoundingBox.maxX);
-        int i1 = Math.min(this.boundingBox.maxY + 1, par2StructureBoundingBox.maxY);
-        int j1 = Math.min(this.boundingBox.maxZ + 1, par2StructureBoundingBox.maxZ);
+        final int i = Math.max(this.boundingBox.minX - 1, par2StructureBoundingBox.minX);
+        final int j = Math.max(this.boundingBox.minY - 1, par2StructureBoundingBox.minY);
+        final int k = Math.max(this.boundingBox.minZ - 1, par2StructureBoundingBox.minZ);
+        final int l = Math.min(this.boundingBox.maxX + 1, par2StructureBoundingBox.maxX);
+        final int i1 = Math.min(this.boundingBox.maxY + 1, par2StructureBoundingBox.maxY);
+        final int j1 = Math.min(this.boundingBox.maxZ + 1, par2StructureBoundingBox.maxZ);
         int k1;
         int l1;
         int i2;
@@ -195,7 +195,7 @@ public abstract class StructureComponent
         return false;
     }
 
-    protected int getXWithOffset(int par1, int par2)
+    protected int getXWithOffset(final int par1, final int par2)
     {
         switch (this.coordBaseMode)
         {
@@ -211,12 +211,12 @@ public abstract class StructureComponent
         }
     }
 
-    protected int getYWithOffset(int par1)
+    protected int getYWithOffset(final int par1)
     {
         return this.coordBaseMode == -1 ? par1 : par1 + this.boundingBox.minY;
     }
 
-    protected int getZWithOffset(int par1, int par2)
+    protected int getZWithOffset(final int par1, final int par2)
     {
         switch (this.coordBaseMode)
         {
@@ -236,7 +236,7 @@ public abstract class StructureComponent
      * Returns the direction-shifted metadata for blocks that require orientation, e.g. doors, stairs, ladders.
      * Parameters: block ID, original metadata
      */
-    protected int getMetadataWithOffset(int par1, int par2)
+    protected int getMetadataWithOffset(final int par1, final int par2)
     {
         if (par1 == Block.rail.blockID)
         {
@@ -569,11 +569,11 @@ public abstract class StructureComponent
     /**
      * current Position depends on currently set Coordinates mode, is computed here
      */
-    protected void placeBlockAtCurrentPosition(World par1World, int par2, int par3, int par4, int par5, int par6, StructureBoundingBox par7StructureBoundingBox)
+    protected void placeBlockAtCurrentPosition(final World par1World, final int par2, final int par3, final int par4, final int par5, final int par6, final StructureBoundingBox par7StructureBoundingBox)
     {
-        int j1 = this.getXWithOffset(par4, par6);
-        int k1 = this.getYWithOffset(par5);
-        int l1 = this.getZWithOffset(par4, par6);
+        final int j1 = this.getXWithOffset(par4, par6);
+        final int k1 = this.getYWithOffset(par5);
+        final int l1 = this.getZWithOffset(par4, par6);
 
         if (par7StructureBoundingBox.isVecInside(j1, k1, l1))
         {
@@ -581,11 +581,11 @@ public abstract class StructureComponent
         }
     }
 
-    protected int getBlockIdAtCurrentPosition(World par1World, int par2, int par3, int par4, StructureBoundingBox par5StructureBoundingBox)
+    protected int getBlockIdAtCurrentPosition(final World par1World, final int par2, final int par3, final int par4, final StructureBoundingBox par5StructureBoundingBox)
     {
-        int l = this.getXWithOffset(par2, par4);
-        int i1 = this.getYWithOffset(par3);
-        int j1 = this.getZWithOffset(par2, par4);
+        final int l = this.getXWithOffset(par2, par4);
+        final int i1 = this.getYWithOffset(par3);
+        final int j1 = this.getZWithOffset(par2, par4);
         return !par5StructureBoundingBox.isVecInside(l, i1, j1) ? 0 : par1World.getBlockId(l, i1, j1);
     }
 
@@ -593,7 +593,7 @@ public abstract class StructureComponent
      * arguments: (World worldObj, StructureBoundingBox structBB, int minX, int minY, int minZ, int maxX, int maxY, int
      * maxZ)
      */
-    protected void fillWithAir(World par1World, StructureBoundingBox par2StructureBoundingBox, int par3, int par4, int par5, int par6, int par7, int par8)
+    protected void fillWithAir(final World par1World, final StructureBoundingBox par2StructureBoundingBox, final int par3, final int par4, final int par5, final int par6, final int par7, final int par8)
     {
         for (int k1 = par4; k1 <= par7; ++k1)
         {
@@ -611,7 +611,7 @@ public abstract class StructureComponent
      * arguments: (World worldObj, StructureBoundingBox structBB, int minX, int minY, int minZ, int maxX, int maxY, int
      * maxZ, int placeBlockId, int replaceBlockId, boolean alwaysreplace)
      */
-    protected void fillWithBlocks(World par1World, StructureBoundingBox par2StructureBoundingBox, int par3, int par4, int par5, int par6, int par7, int par8, int par9, int par10, boolean par11)
+    protected void fillWithBlocks(final World par1World, final StructureBoundingBox par2StructureBoundingBox, final int par3, final int par4, final int par5, final int par6, final int par7, final int par8, final int par9, final int par10, final boolean par11)
     {
         for (int i2 = par4; i2 <= par7; ++i2)
         {
@@ -640,7 +640,7 @@ public abstract class StructureComponent
      * maxZ, int placeBlockId, int placeBlockMetadata, int replaceBlockId, int replaceBlockMetadata, boolean
      * alwaysreplace)
      */
-    protected void fillWithMetadataBlocks(World par1World, StructureBoundingBox par2StructureBoundingBox, int par3, int par4, int par5, int par6, int par7, int par8, int par9, int par10, int par11, int par12, boolean par13)
+    protected void fillWithMetadataBlocks(final World par1World, final StructureBoundingBox par2StructureBoundingBox, final int par3, final int par4, final int par5, final int par6, final int par7, final int par8, final int par9, final int par10, final int par11, final int par12, final boolean par13)
     {
         for (int k2 = par4; k2 <= par7; ++k2)
         {
@@ -668,7 +668,7 @@ public abstract class StructureComponent
      * arguments: World worldObj, StructureBoundingBox structBB, int minX, int minY, int minZ, int maxX, int maxY, int
      * maxZ, boolean alwaysreplace, Random rand, StructurePieceBlockSelector blockselector
      */
-    protected void fillWithRandomizedBlocks(World par1World, StructureBoundingBox par2StructureBoundingBox, int par3, int par4, int par5, int par6, int par7, int par8, boolean par9, Random par10Random, StructurePieceBlockSelector par11StructurePieceBlockSelector)
+    protected void fillWithRandomizedBlocks(final World par1World, final StructureBoundingBox par2StructureBoundingBox, final int par3, final int par4, final int par5, final int par6, final int par7, final int par8, final boolean par9, final Random par10Random, final StructurePieceBlockSelector par11StructurePieceBlockSelector)
     {
         for (int k1 = par4; k1 <= par7; ++k1)
         {
@@ -690,7 +690,7 @@ public abstract class StructureComponent
      * arguments: World worldObj, StructureBoundingBox structBB, Random rand, float randLimit, int minX, int minY, int
      * minZ, int maxX, int maxY, int maxZ, int olaceBlockId, int replaceBlockId, boolean alwaysreplace
      */
-    protected void randomlyFillWithBlocks(World par1World, StructureBoundingBox par2StructureBoundingBox, Random par3Random, float par4, int par5, int par6, int par7, int par8, int par9, int par10, int par11, int par12, boolean par13)
+    protected void randomlyFillWithBlocks(final World par1World, final StructureBoundingBox par2StructureBoundingBox, final Random par3Random, final float par4, final int par5, final int par6, final int par7, final int par8, final int par9, final int par10, final int par11, final int par12, final boolean par13)
     {
         for (int i2 = par6; i2 <= par9; ++i2)
         {
@@ -717,7 +717,7 @@ public abstract class StructureComponent
     /**
      * Randomly decides if placing or not. Used for Decoration such as Torches and Spiderwebs
      */
-    protected void randomlyPlaceBlock(World par1World, StructureBoundingBox par2StructureBoundingBox, Random par3Random, float par4, int par5, int par6, int par7, int par8, int par9)
+    protected void randomlyPlaceBlock(final World par1World, final StructureBoundingBox par2StructureBoundingBox, final Random par3Random, final float par4, final int par5, final int par6, final int par7, final int par8, final int par9)
     {
         if (par3Random.nextFloat() < par4)
         {
@@ -729,29 +729,29 @@ public abstract class StructureComponent
      * arguments: World worldObj, StructureBoundingBox structBB, int minX, int minY, int minZ, int maxX, int maxY, int
      * maxZ, int placeBlockId, boolean alwaysreplace
      */
-    protected void randomlyRareFillWithBlocks(World par1World, StructureBoundingBox par2StructureBoundingBox, int par3, int par4, int par5, int par6, int par7, int par8, int par9, boolean par10)
+    protected void randomlyRareFillWithBlocks(final World par1World, final StructureBoundingBox par2StructureBoundingBox, final int par3, final int par4, final int par5, final int par6, final int par7, final int par8, final int par9, final boolean par10)
     {
-        float f = (float)(par6 - par3 + 1);
-        float f1 = (float)(par7 - par4 + 1);
-        float f2 = (float)(par8 - par5 + 1);
-        float f3 = (float)par3 + f / 2.0F;
-        float f4 = (float)par5 + f2 / 2.0F;
+        final float f = (float)(par6 - par3 + 1);
+        final float f1 = (float)(par7 - par4 + 1);
+        final float f2 = (float)(par8 - par5 + 1);
+        final float f3 = (float)par3 + f / 2.0F;
+        final float f4 = (float)par5 + f2 / 2.0F;
 
         for (int l1 = par4; l1 <= par7; ++l1)
         {
-            float f5 = (float)(l1 - par4) / f1;
+            final float f5 = (float)(l1 - par4) / f1;
 
             for (int i2 = par3; i2 <= par6; ++i2)
             {
-                float f6 = ((float)i2 - f3) / (f * 0.5F);
+                final float f6 = ((float)i2 - f3) / (f * 0.5F);
 
                 for (int j2 = par5; j2 <= par8; ++j2)
                 {
-                    float f7 = ((float)j2 - f4) / (f2 * 0.5F);
+                    final float f7 = ((float)j2 - f4) / (f2 * 0.5F);
 
                     if (!par10 || this.getBlockIdAtCurrentPosition(par1World, i2, l1, j2, par2StructureBoundingBox) != 0)
                     {
-                        float f8 = f6 * f6 + f5 * f5 + f7 * f7;
+                        final float f8 = f6 * f6 + f5 * f5 + f7 * f7;
 
                         if (f8 <= 1.05F)
                         {
@@ -766,11 +766,11 @@ public abstract class StructureComponent
     /**
      * Deletes all continuous blocks from selected position upwards. Stops at hitting air.
      */
-    protected void clearCurrentPositionBlocksUpwards(World par1World, int par2, int par3, int par4, StructureBoundingBox par5StructureBoundingBox)
+    protected void clearCurrentPositionBlocksUpwards(final World par1World, final int par2, final int par3, final int par4, final StructureBoundingBox par5StructureBoundingBox)
     {
-        int l = this.getXWithOffset(par2, par4);
+        final int l = this.getXWithOffset(par2, par4);
         int i1 = this.getYWithOffset(par3);
-        int j1 = this.getZWithOffset(par2, par4);
+        final int j1 = this.getZWithOffset(par2, par4);
 
         if (par5StructureBoundingBox.isVecInside(l, i1, j1))
         {
@@ -785,11 +785,11 @@ public abstract class StructureComponent
     /**
      * Overwrites air and liquids from selected position downwards, stops at hitting anything else.
      */
-    protected void fillCurrentPositionBlocksDownwards(World par1World, int par2, int par3, int par4, int par5, int par6, StructureBoundingBox par7StructureBoundingBox)
+    protected void fillCurrentPositionBlocksDownwards(final World par1World, final int par2, final int par3, final int par4, final int par5, final int par6, final StructureBoundingBox par7StructureBoundingBox)
     {
-        int j1 = this.getXWithOffset(par4, par6);
+        final int j1 = this.getXWithOffset(par4, par6);
         int k1 = this.getYWithOffset(par5);
-        int l1 = this.getZWithOffset(par4, par6);
+        final int l1 = this.getZWithOffset(par4, par6);
 
         if (par7StructureBoundingBox.isVecInside(j1, k1, l1))
         {
@@ -804,16 +804,16 @@ public abstract class StructureComponent
     /**
      * Used to generate chests with items in it. ex: Temple Chests, Village Blacksmith Chests, Mineshaft Chests.
      */
-    protected boolean generateStructureChestContents(World par1World, StructureBoundingBox par2StructureBoundingBox, Random par3Random, int par4, int par5, int par6, WeightedRandomChestContent[] par7ArrayOfWeightedRandomChestContent, int par8)
+    protected boolean generateStructureChestContents(final World par1World, final StructureBoundingBox par2StructureBoundingBox, final Random par3Random, final int par4, final int par5, final int par6, final WeightedRandomChestContent[] par7ArrayOfWeightedRandomChestContent, final int par8)
     {
-        int i1 = this.getXWithOffset(par4, par6);
-        int j1 = this.getYWithOffset(par5);
-        int k1 = this.getZWithOffset(par4, par6);
+        final int i1 = this.getXWithOffset(par4, par6);
+        final int j1 = this.getYWithOffset(par5);
+        final int k1 = this.getZWithOffset(par4, par6);
 
         if (par2StructureBoundingBox.isVecInside(i1, j1, k1) && par1World.getBlockId(i1, j1, k1) != Block.chest.blockID)
         {
             par1World.setBlock(i1, j1, k1, Block.chest.blockID, 0, 2);
-            TileEntityChest tileentitychest = (TileEntityChest)par1World.getBlockTileEntity(i1, j1, k1);
+            final TileEntityChest tileentitychest = (TileEntityChest)par1World.getBlockTileEntity(i1, j1, k1);
 
             if (tileentitychest != null)
             {
@@ -831,16 +831,16 @@ public abstract class StructureComponent
     /**
      * Used to generate dispenser contents for structures. ex: Jungle Temples.
      */
-    protected boolean generateStructureDispenserContents(World par1World, StructureBoundingBox par2StructureBoundingBox, Random par3Random, int par4, int par5, int par6, int par7, WeightedRandomChestContent[] par8ArrayOfWeightedRandomChestContent, int par9)
+    protected boolean generateStructureDispenserContents(final World par1World, final StructureBoundingBox par2StructureBoundingBox, final Random par3Random, final int par4, final int par5, final int par6, final int par7, final WeightedRandomChestContent[] par8ArrayOfWeightedRandomChestContent, final int par9)
     {
-        int j1 = this.getXWithOffset(par4, par6);
-        int k1 = this.getYWithOffset(par5);
-        int l1 = this.getZWithOffset(par4, par6);
+        final int j1 = this.getXWithOffset(par4, par6);
+        final int k1 = this.getYWithOffset(par5);
+        final int l1 = this.getZWithOffset(par4, par6);
 
         if (par2StructureBoundingBox.isVecInside(j1, k1, l1) && par1World.getBlockId(j1, k1, l1) != Block.dispenser.blockID)
         {
             par1World.setBlock(j1, k1, l1, Block.dispenser.blockID, this.getMetadataWithOffset(Block.dispenser.blockID, par7), 2);
-            TileEntityDispenser tileentitydispenser = (TileEntityDispenser)par1World.getBlockTileEntity(j1, k1, l1);
+            final TileEntityDispenser tileentitydispenser = (TileEntityDispenser)par1World.getBlockTileEntity(j1, k1, l1);
 
             if (tileentitydispenser != null)
             {
@@ -855,11 +855,11 @@ public abstract class StructureComponent
         }
     }
 
-    protected void placeDoorAtCurrentPosition(World par1World, StructureBoundingBox par2StructureBoundingBox, Random par3Random, int par4, int par5, int par6, int par7)
+    protected void placeDoorAtCurrentPosition(final World par1World, final StructureBoundingBox par2StructureBoundingBox, final Random par3Random, final int par4, final int par5, final int par6, final int par7)
     {
-        int i1 = this.getXWithOffset(par4, par6);
-        int j1 = this.getYWithOffset(par5);
-        int k1 = this.getZWithOffset(par4, par6);
+        final int i1 = this.getXWithOffset(par4, par6);
+        final int j1 = this.getYWithOffset(par5);
+        final int k1 = this.getZWithOffset(par4, par6);
 
         if (par2StructureBoundingBox.isVecInside(i1, j1, k1))
         {

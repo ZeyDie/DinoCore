@@ -8,18 +8,19 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public class ReloadCommand extends BukkitCommand {
-    public ReloadCommand(String name) {
+    public ReloadCommand(final String name) {
         super(name);
         this.description = "Reloads the server configuration and plugins";
         this.usageMessage = "/reload";
         this.setPermission("bukkit.command.reload");
-        this.setAliases(Arrays.asList("rl"));
+        this.setAliases(Collections.singletonList("rl"));
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         //TODO ZeyCodeStart
         if (CoreSettings.getInstance().getSettings().isReloadCommand()) {
             if (!testPermission(sender)) return true;

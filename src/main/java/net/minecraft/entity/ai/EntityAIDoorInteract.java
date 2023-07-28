@@ -23,7 +23,7 @@ public abstract class EntityAIDoorInteract extends EntityAIBase
     float entityPositionX;
     float entityPositionZ;
 
-    public EntityAIDoorInteract(EntityLiving par1EntityLiving)
+    public EntityAIDoorInteract(final EntityLiving par1EntityLiving)
     {
         this.theEntity = par1EntityLiving;
     }
@@ -39,14 +39,14 @@ public abstract class EntityAIDoorInteract extends EntityAIBase
         }
         else
         {
-            PathNavigate pathnavigate = this.theEntity.getNavigator();
-            PathEntity pathentity = pathnavigate.getPath();
+            final PathNavigate pathnavigate = this.theEntity.getNavigator();
+            final PathEntity pathentity = pathnavigate.getPath();
 
             if (pathentity != null && !pathentity.isFinished() && pathnavigate.getCanBreakDoors())
             {
                 for (int i = 0; i < Math.min(pathentity.getCurrentPathIndex() + 2, pathentity.getCurrentPathLength()); ++i)
                 {
-                    PathPoint pathpoint = pathentity.getPathPointFromIndex(i);
+                    final PathPoint pathpoint = pathentity.getPathPointFromIndex(i);
                     this.entityPosX = pathpoint.xCoord;
                     this.entityPosY = pathpoint.yCoord + 1;
                     this.entityPosZ = pathpoint.zCoord;
@@ -98,9 +98,9 @@ public abstract class EntityAIDoorInteract extends EntityAIBase
      */
     public void updateTask()
     {
-        float f = (float)((double)((float)this.entityPosX + 0.5F) - this.theEntity.posX);
-        float f1 = (float)((double)((float)this.entityPosZ + 0.5F) - this.theEntity.posZ);
-        float f2 = this.entityPositionX * f + this.entityPositionZ * f1;
+        final float f = (float)((double)((float)this.entityPosX + 0.5F) - this.theEntity.posX);
+        final float f1 = (float)((double)((float)this.entityPosZ + 0.5F) - this.theEntity.posZ);
+        final float f2 = this.entityPositionX * f + this.entityPositionZ * f1;
 
         if (f2 < 0.0F)
         {
@@ -111,9 +111,9 @@ public abstract class EntityAIDoorInteract extends EntityAIBase
     /**
      * Determines if a door can be broken with AI.
      */
-    private BlockDoor findUsableDoor(int par1, int par2, int par3)
+    private BlockDoor findUsableDoor(final int par1, final int par2, final int par3)
     {
-        int l = this.theEntity.worldObj.getBlockId(par1, par2, par3);
+        final int l = this.theEntity.worldObj.getBlockId(par1, par2, par3);
         return l != Block.doorWood.blockID ? null : (BlockDoor)Block.blocksList[l];
     }
 }

@@ -5,7 +5,7 @@ class TcpMonitorThread extends Thread
 {
     final TcpConnection theTcpConnection;
 
-    TcpMonitorThread(TcpConnection par1TcpConnection)
+    TcpMonitorThread(final TcpConnection par1TcpConnection)
     {
         this.theTcpConnection = par1TcpConnection;
     }
@@ -22,7 +22,7 @@ class TcpMonitorThread extends Thread
                 this.theTcpConnection.networkShutdown("disconnect.closed", new Object[0]);
             }
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             exception.printStackTrace();
         }

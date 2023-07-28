@@ -17,17 +17,17 @@ public abstract class BehaviorProjectileDispense extends BehaviorDefaultDispense
     /**
      * Dispense the specified stack, play the dispense sound and spawn particles.
      */
-    public ItemStack dispenseStack(IBlockSource par1IBlockSource, ItemStack par2ItemStack)
+    public ItemStack dispenseStack(final IBlockSource par1IBlockSource, final ItemStack par2ItemStack)
     {
-        World world = par1IBlockSource.getWorld();
-        IPosition iposition = BlockDispenser.getIPositionFromBlockSource(par1IBlockSource);
-        EnumFacing enumfacing = BlockDispenser.getFacing(par1IBlockSource.getBlockMetadata());
-        IProjectile iprojectile = this.getProjectileEntity(world, iposition);
+        final World world = par1IBlockSource.getWorld();
+        final IPosition iposition = BlockDispenser.getIPositionFromBlockSource(par1IBlockSource);
+        final EnumFacing enumfacing = BlockDispenser.getFacing(par1IBlockSource.getBlockMetadata());
+        final IProjectile iprojectile = this.getProjectileEntity(world, iposition);
         // CraftBukkit start
-        ItemStack itemstack1 = par2ItemStack.splitStack(1);
-        org.bukkit.block.Block block = world.getWorld().getBlockAt(par1IBlockSource.getXInt(), par1IBlockSource.getYInt(), par1IBlockSource.getZInt());
-        CraftItemStack craftItem = CraftItemStack.asCraftMirror(itemstack1);
-        BlockDispenseEvent event = new BlockDispenseEvent(block, craftItem.clone(), new org.bukkit.util.Vector((double) enumfacing.getFrontOffsetX(), (double)((float) enumfacing.getFrontOffsetY() + 0.1F), (double) enumfacing.getFrontOffsetZ()));
+        final ItemStack itemstack1 = par2ItemStack.splitStack(1);
+        final org.bukkit.block.Block block = world.getWorld().getBlockAt(par1IBlockSource.getXInt(), par1IBlockSource.getYInt(), par1IBlockSource.getZInt());
+        final CraftItemStack craftItem = CraftItemStack.asCraftMirror(itemstack1);
+        final BlockDispenseEvent event = new BlockDispenseEvent(block, craftItem.clone(), new org.bukkit.util.Vector((double) enumfacing.getFrontOffsetX(), (double)((float) enumfacing.getFrontOffsetY() + 0.1F), (double) enumfacing.getFrontOffsetZ()));
 
         if (!BlockDispenser.eventFired)
         {
@@ -44,8 +44,8 @@ public abstract class BehaviorProjectileDispense extends BehaviorDefaultDispense
         {
             par2ItemStack.stackSize++;
             // Chain to handler for new item
-            ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-            IBehaviorDispenseItem ibehaviordispenseitem = (IBehaviorDispenseItem) BlockDispenser.dispenseBehaviorRegistry.getObject(eventStack.getItem());
+            final ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
+            final IBehaviorDispenseItem ibehaviordispenseitem = (IBehaviorDispenseItem) BlockDispenser.dispenseBehaviorRegistry.getObject(eventStack.getItem());
 
             if (ibehaviordispenseitem != IBehaviorDispenseItem.itemDispenseBehaviorProvider && ibehaviordispenseitem != this)
             {
@@ -64,7 +64,7 @@ public abstract class BehaviorProjectileDispense extends BehaviorDefaultDispense
     /**
      * Play the dispense sound from the specified block.
      */
-    protected void playDispenseSound(IBlockSource par1IBlockSource)
+    protected void playDispenseSound(final IBlockSource par1IBlockSource)
     {
         par1IBlockSource.getWorld().playAuxSFX(1002, par1IBlockSource.getXInt(), par1IBlockSource.getYInt(), par1IBlockSource.getZInt(), 0);
     }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public final class JavaLegacy {
     public static <T> void sort(final List<T> list, final Comparator<? super T> c) {
-        T[] toSort = list.toArray((T[]) new Object[list.size()]);
+        final T[] toSort = list.toArray((T[]) new Object[list.size()]);
         Arrays.sort(toSort, c);
 
         for (int j = 0; j < toSort.length; j++)

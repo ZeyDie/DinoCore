@@ -61,12 +61,12 @@ public class EntitySpawnPacket extends FMLPacket
     }
 
     @Override
-    public byte[] generatePacket(Object... data)
+    public byte[] generatePacket(final Object... data)
     {
-        EntityRegistration er = (EntityRegistration) data[0];
-        Entity ent = (Entity) data[1];
-        NetworkModHandler handler = (NetworkModHandler) data[2];
-        ByteArrayDataOutput dat = ByteStreams.newDataOutput();
+        final EntityRegistration er = (EntityRegistration) data[0];
+        final Entity ent = (Entity) data[1];
+        final NetworkModHandler handler = (NetworkModHandler) data[2];
+        final ByteArrayDataOutput dat = ByteStreams.newDataOutput();
 
         dat.writeInt(handler.getNetworkId());
         dat.writeInt(er.getModEntityId());
@@ -74,9 +74,9 @@ public class EntitySpawnPacket extends FMLPacket
         dat.writeInt(ent.entityId);
 
         // entity pos x,y,z
-        dat.writeInt(MathHelper.floor_double(ent.posX * 32D));
-        dat.writeInt(MathHelper.floor_double(ent.posY * 32D));
-        dat.writeInt(MathHelper.floor_double(ent.posZ * 32D));
+        dat.writeInt(MathHelper.floor_double(ent.posX * 32.0D));
+        dat.writeInt(MathHelper.floor_double(ent.posY * 32.0D));
+        dat.writeInt(MathHelper.floor_double(ent.posZ * 32.0D));
 
         // yaw, pitch
         dat.writeByte((byte) (ent.rotationYaw * 256.0F / 360.0F));
@@ -91,13 +91,13 @@ public class EntitySpawnPacket extends FMLPacket
         {
             dat.writeByte(0);
         }
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        DataOutputStream dos = new DataOutputStream(bos);
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        final DataOutputStream dos = new DataOutputStream(bos);
         try
         {
             ent.getDataWatcher().writeWatchableObjects(dos);
         }
-        catch (Throwable e) // MCPC+ - change IOException to Throwable for binary compatibility
+        catch (final Throwable e) // MCPC+ - change IOException to Throwable for binary compatibility
         {
             // unpossible
         }
@@ -106,9 +106,9 @@ public class EntitySpawnPacket extends FMLPacket
 
         if (ent instanceof IThrowableEntity)
         {
-            Entity owner = ((IThrowableEntity)ent).getThrower();
+            final Entity owner = ((IThrowableEntity)ent).getThrower();
             dat.writeInt(owner == null ? ent.entityId : owner.entityId);
-            double maxVel = 3.9D;
+            final double maxVel = 3.9D;
             double mX = ent.motionX;
             double mY = ent.motionY;
             double mZ = ent.motionZ;
@@ -118,9 +118,9 @@ public class EntitySpawnPacket extends FMLPacket
             if (mX >  maxVel) mX =  maxVel;
             if (mY >  maxVel) mY =  maxVel;
             if (mZ >  maxVel) mZ =  maxVel;
-            dat.writeInt((int)(mX * 8000D));
-            dat.writeInt((int)(mY * 8000D));
-            dat.writeInt((int)(mZ * 8000D));
+            dat.writeInt((int)(mX * 8000.0D));
+            dat.writeInt((int)(mY * 8000.0D));
+            dat.writeInt((int)(mZ * 8000.0D));
         }
         else
         {
@@ -135,28 +135,28 @@ public class EntitySpawnPacket extends FMLPacket
     }
 
     @Override
-    public FMLPacket consumePacket(byte[] data)
+    public FMLPacket consumePacket(final byte[] data)
     {
-        ByteArrayDataInput dat = ByteStreams.newDataInput(data);
+        final ByteArrayDataInput dat = ByteStreams.newDataInput(data);
         networkId = dat.readInt();
         modEntityId = dat.readInt();
         entityId = dat.readInt();
         rawX = dat.readInt();
         rawY = dat.readInt();
         rawZ = dat.readInt();
-        scaledX = rawX / 32D;
-        scaledY = rawY / 32D;
-        scaledZ = rawZ / 32D;
-        scaledYaw = dat.readByte() * 360F / 256F;
-        scaledPitch = dat.readByte() * 360F / 256F;
-        scaledHeadYaw = dat.readByte() * 360F / 256F;
-        ByteArrayInputStream bis = new ByteArrayInputStream(data, 27, data.length - 27);
-        DataInputStream dis = new DataInputStream(bis);
+        scaledX = rawX / 32.0D;
+        scaledY = rawY / 32.0D;
+        scaledZ = rawZ / 32.0D;
+        scaledYaw = dat.readByte() * 360.0F / 256.0F;
+        scaledPitch = dat.readByte() * 360.0F / 256.0F;
+        scaledHeadYaw = dat.readByte() * 360.0F / 256.0F;
+        final ByteArrayInputStream bis = new ByteArrayInputStream(data, 27, data.length - 27);
+        final DataInputStream dis = new DataInputStream(bis);
         try
         {
             metadata = DataWatcher.readWatchableObjects(dis);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             // Nope
         }
@@ -164,9 +164,9 @@ public class EntitySpawnPacket extends FMLPacket
         throwerId = dat.readInt();
         if (throwerId != 0)
         {
-            speedScaledX = dat.readInt() / 8000D;
-            speedScaledY = dat.readInt() / 8000D;
-            speedScaledZ = dat.readInt() / 8000D;
+            speedScaledX = dat.readInt() / 8000.0D;
+            speedScaledY = dat.readInt() / 8000.0D;
+            speedScaledZ = dat.readInt() / 8000.0D;
         }
 
         this.dataStream = dat;
@@ -174,12 +174,12 @@ public class EntitySpawnPacket extends FMLPacket
     }
 
     @Override
-    public void execute(INetworkManager network, FMLNetworkHandler handler, NetHandler netHandler, String userName)
+    public void execute(final INetworkManager network, final FMLNetworkHandler handler, final NetHandler netHandler, final String userName)
     {
-        NetworkModHandler nmh = handler.findNetworkModHandler(networkId);
-        ModContainer mc = nmh.getContainer();
+        final NetworkModHandler nmh = handler.findNetworkModHandler(networkId);
+        final ModContainer mc = nmh.getContainer();
 
-        EntityRegistration registration = EntityRegistry.instance().lookupModSpawn(mc, modEntityId);
+        final EntityRegistration registration = EntityRegistry.instance().lookupModSpawn(mc, modEntityId);
         if (registration == null || registration.getEntityClass() == null)
         {
             FMLLog.log(Level.WARNING, "Missing mod entity information for %s : %d", mc.getModId(), modEntityId);
@@ -187,7 +187,7 @@ public class EntitySpawnPacket extends FMLPacket
         }
 
 
-        Entity entity = FMLCommonHandler.instance().spawnEntityIntoClientWorld(registration, this);
+        final Entity entity = FMLCommonHandler.instance().spawnEntityIntoClientWorld(registration, this);
     }
 
 }

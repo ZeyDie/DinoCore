@@ -31,7 +31,7 @@ public abstract class GuiScreenSelectLocation
     private boolean field_104108_s;
     private int field_104107_t;
 
-    public GuiScreenSelectLocation(Minecraft par1Minecraft, int par2, int par3, int par4, int par5, int par6)
+    public GuiScreenSelectLocation(final Minecraft par1Minecraft, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         this.field_104092_f = par1Minecraft;
         this.field_104093_g = par2;
@@ -43,7 +43,7 @@ public abstract class GuiScreenSelectLocation
         this.field_104106_i = par2;
     }
 
-    public void func_104084_a(int par1, int par2, int par3, int par4)
+    public void func_104084_a(final int par1, final int par2, final int par3, final int par4)
     {
         this.field_104093_g = par1;
         this.field_104105_h = par2;
@@ -79,11 +79,11 @@ public abstract class GuiScreenSelectLocation
 
     protected abstract void drawSlot(int i, int j, int k, int l, Tessellator tessellator);
 
-    protected void func_104088_a(int par1, int par2, Tessellator par3Tessellator) {}
+    protected void func_104088_a(final int par1, final int par2, final Tessellator par3Tessellator) {}
 
-    protected void func_104089_a(int par1, int par2) {}
+    protected void func_104089_a(final int par1, final int par2) {}
 
-    protected void func_104087_b(int par1, int par2) {}
+    protected void func_104087_b(final int par1, final int par2) {}
 
     private void func_104091_h()
     {
@@ -113,7 +113,7 @@ public abstract class GuiScreenSelectLocation
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    public void actionPerformed(GuiButton par1GuiButton)
+    public void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
@@ -135,14 +135,14 @@ public abstract class GuiScreenSelectLocation
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.field_104094_d = par1;
         this.field_104095_e = par2;
         this.func_130004_c();
-        int k = this.getSize();
-        int l = this.func_104090_g();
-        int i1 = l + 6;
+        final int k = this.getSize();
+        final int l = this.func_104090_g();
+        final int i1 = l + 6;
         int j1;
         int k1;
         int l1;
@@ -157,14 +157,14 @@ public abstract class GuiScreenSelectLocation
 
                 if (par2 >= this.field_104098_a && par2 <= this.field_104096_b)
                 {
-                    int k2 = this.field_104093_g / 2 - 110;
+                    final int k2 = this.field_104093_g / 2 - 110;
                     j1 = this.field_104093_g / 2 + 110;
                     k1 = par2 - this.field_104098_a - this.field_104107_t + (int)this.field_104100_o - 4;
                     l1 = k1 / this.field_104097_c;
 
                     if (par1 >= k2 && par1 <= j1 && l1 >= 0 && k1 >= 0 && l1 < k)
                     {
-                        boolean flag1 = l1 == this.field_104111_p && Minecraft.getSystemTime() - this.field_104110_q < 250L;
+                        final boolean flag1 = l1 == this.field_104111_p && Minecraft.getSystemTime() - this.field_104110_q < 250L;
                         this.elementClicked(l1, flag1);
                         this.field_104111_p = l1;
                         this.field_104110_q = Minecraft.getSystemTime();
@@ -251,10 +251,10 @@ public abstract class GuiScreenSelectLocation
         this.func_104091_h();
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_FOG);
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         this.field_104092_f.getTextureManager().bindTexture(Gui.optionsBackground);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        float f1 = 32.0F;
+        final float f1 = 32.0F;
         tessellator.startDrawingQuads();
         tessellator.setColorOpaque_I(2105376);
         tessellator.addVertexWithUV((double)this.field_104103_j, (double)this.field_104096_b, 0.0D, (double)((float)this.field_104103_j / f1), (double)((float)(this.field_104096_b + (int)this.field_104100_o) / f1));
@@ -323,7 +323,7 @@ public abstract class GuiScreenSelectLocation
         }
 
         GL11.glDisable(GL11.GL_DEPTH_TEST);
-        byte b0 = 4;
+        final byte b0 = 4;
         this.func_104083_b(0, this.field_104098_a, 255, 255);
         this.func_104083_b(this.field_104096_b, this.field_104105_h, 255, 255);
         GL11.glEnable(GL11.GL_BLEND);
@@ -405,12 +405,12 @@ public abstract class GuiScreenSelectLocation
         return this.field_104093_g / 2 + 124;
     }
 
-    private void func_104083_b(int par1, int par2, int par3, int par4)
+    private void func_104083_b(final int par1, final int par2, final int par3, final int par4)
     {
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         this.field_104092_f.getTextureManager().bindTexture(Gui.optionsBackground);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        float f = 32.0F;
+        final float f = 32.0F;
         tessellator.startDrawingQuads();
         tessellator.setColorRGBA_I(4210752, par4);
         tessellator.addVertexWithUV(0.0D, (double)par2, 0.0D, 0.0D, (double)((float)par2 / f));

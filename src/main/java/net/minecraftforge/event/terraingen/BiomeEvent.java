@@ -8,7 +8,7 @@ public class BiomeEvent extends Event
 {
     public final BiomeGenBase biome;
 
-    public BiomeEvent(BiomeGenBase biome)
+    public BiomeEvent(final BiomeGenBase biome)
     {
         this.biome = biome;
     }
@@ -18,7 +18,7 @@ public class BiomeEvent extends Event
         public final BiomeDecorator originalBiomeDecorator;
         public BiomeDecorator newBiomeDecorator;
         
-        public CreateDecorator(BiomeGenBase biome, BiomeDecorator original)
+        public CreateDecorator(final BiomeGenBase biome, final BiomeDecorator original)
         {
             super(biome);
             originalBiomeDecorator = original;
@@ -31,7 +31,7 @@ public class BiomeEvent extends Event
         public final int original;
         public int replacement;
 
-        public BlockReplacement(BiomeGenBase biome, int original, int replacement)
+        public BlockReplacement(final BiomeGenBase biome, final int original, final int replacement)
         {
             super(biome);
             this.original = original;
@@ -44,7 +44,7 @@ public class BiomeEvent extends Event
         public final int originalColor;
         public int newColor;
         
-        public BiomeColor(BiomeGenBase biome, int original)
+        public BiomeColor(final BiomeGenBase biome, final int original)
         {
             super(biome);
             originalColor = original;
@@ -61,7 +61,7 @@ public class BiomeEvent extends Event
     @HasResult
     public static class GetVillageBlockID extends BlockReplacement
     {
-        public GetVillageBlockID(BiomeGenBase biome, int original, int replacement)
+        public GetVillageBlockID(final BiomeGenBase biome, final int original, final int replacement)
         {
             super(biome, original, replacement);
         }
@@ -76,7 +76,7 @@ public class BiomeEvent extends Event
     @HasResult
     public static class GetVillageBlockMeta extends BlockReplacement
     {
-        public GetVillageBlockMeta(BiomeGenBase biome, int original, int replacement)
+        public GetVillageBlockMeta(final BiomeGenBase biome, final int original, final int replacement)
         {
             super(biome, original, replacement);
         }
@@ -87,7 +87,7 @@ public class BiomeEvent extends Event
      */
     public static class GetGrassColor extends BiomeColor
     {
-        public GetGrassColor(BiomeGenBase biome, int original)
+        public GetGrassColor(final BiomeGenBase biome, final int original)
         {
             super(biome, original);
         }
@@ -98,7 +98,7 @@ public class BiomeEvent extends Event
      */
     public static class GetFoliageColor extends BiomeColor
     {
-        public GetFoliageColor(BiomeGenBase biome, int original)
+        public GetFoliageColor(final BiomeGenBase biome, final int original)
         {
             super(biome, original);
         }
@@ -109,7 +109,7 @@ public class BiomeEvent extends Event
      */
     public static class GetWaterColor extends BiomeColor
     {
-        public GetWaterColor(BiomeGenBase biome, int original)
+        public GetWaterColor(final BiomeGenBase biome, final int original)
         {
             super(biome, original);
         }

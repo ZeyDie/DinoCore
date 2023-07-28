@@ -11,7 +11,7 @@ public class NetherWarts extends MaterialData {
         super(Material.NETHER_WARTS);
     }
 
-    public NetherWarts(NetherWartsState state) {
+    public NetherWarts(final NetherWartsState state) {
         this();
         setState(state);
     }
@@ -70,7 +70,7 @@ public class NetherWarts extends MaterialData {
      *
      * @param state New growth state of this nether wart
      */
-    public void setState(NetherWartsState state) {
+    public void setState(final NetherWartsState state) {
         switch (state) {
             case SEEDED:
                 setData((byte) 0x0);

@@ -43,7 +43,7 @@ public abstract class EntityCreature extends EntityLiving
     private EntityAIBase field_110178_bs = new EntityAIMoveTowardsRestriction(this, 1.0D);
     private boolean field_110180_bt;
 
-    public EntityCreature(World par1World)
+    public EntityCreature(final World par1World)
     {
         super(par1World);
     }
@@ -62,21 +62,21 @@ public abstract class EntityCreature extends EntityLiving
 
         if (this.fleeingTick > 0 && --this.fleeingTick == 0)
         {
-            AttributeInstance attributeinstance = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
+            final AttributeInstance attributeinstance = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
             attributeinstance.removeModifier(field_110181_i);
         }
 
         this.hasAttacked = this.isMovementCeased();
-        float f11 = 16.0F;
+        final float f11 = 16.0F;
 
         if (this.entityToAttack == null)
         {
             // CraftBukkit start
-            Entity target = this.findPlayerToAttack();
+            final Entity target = this.findPlayerToAttack();
 
             if (target != null)
             {
-                EntityTargetEvent event = new EntityTargetEvent(this.getBukkitEntity(), target.getBukkitEntity(), EntityTargetEvent.TargetReason.CLOSEST_PLAYER);
+                final EntityTargetEvent event = new EntityTargetEvent(this.getBukkitEntity(), target.getBukkitEntity(), EntityTargetEvent.TargetReason.CLOSEST_PLAYER);
                 this.worldObj.getServer().getPluginManager().callEvent(event);
 
                 if (!event.isCancelled())
@@ -101,7 +101,7 @@ public abstract class EntityCreature extends EntityLiving
         }
         else if (this.entityToAttack.isEntityAlive())
         {
-            float f1 = this.entityToAttack.getDistanceToEntity(this);
+            final float f1 = this.entityToAttack.getDistanceToEntity(this);
 
             if (this.canEntityBeSeen(this.entityToAttack))
             {
@@ -111,7 +111,7 @@ public abstract class EntityCreature extends EntityLiving
         else
         {
             // CraftBukkit start
-            EntityTargetEvent event = new EntityTargetEvent(this.getBukkitEntity(), null, EntityTargetEvent.TargetReason.TARGET_DIED);
+            final EntityTargetEvent event = new EntityTargetEvent(this.getBukkitEntity(), null, EntityTargetEvent.TargetReason.TARGET_DIED);
             this.worldObj.getServer().getPluginManager().callEvent(event);
 
             if (!event.isCancelled())
@@ -139,16 +139,16 @@ public abstract class EntityCreature extends EntityLiving
             this.updateWanderPath();
         }
 
-        int i = MathHelper.floor_double(this.boundingBox.minY + 0.5D);
-        boolean flag = this.isInWater();
-        boolean flag1 = this.handleLavaMovement();
+        final int i = MathHelper.floor_double(this.boundingBox.minY + 0.5D);
+        final boolean flag = this.isInWater();
+        final boolean flag1 = this.handleLavaMovement();
         this.rotationPitch = 0.0F;
 
         if (this.pathToEntity != null && this.rand.nextInt(100) != 0)
         {
             this.worldObj.theProfiler.startSection("followpath");
             Vec3 vec3 = this.pathToEntity.getPosition(this);
-            double d0 = (double)(this.width * 2.0F);
+            final double d0 = (double)(this.width * 2.0F);
 
             while (vec3 != null && vec3.squareDistanceTo(this.posX, vec3.yCoord, this.posZ) < d0 * d0)
             {
@@ -169,11 +169,11 @@ public abstract class EntityCreature extends EntityLiving
 
             if (vec3 != null)
             {
-                double d1 = vec3.xCoord - this.posX;
-                double d2 = vec3.zCoord - this.posZ;
-                double d3 = vec3.yCoord - (double)i;
+                final double d1 = vec3.xCoord - this.posX;
+                final double d2 = vec3.zCoord - this.posZ;
+                final double d3 = vec3.yCoord - (double)i;
                 // CraftBukkit - Math -> TrigMath
-                float f2 = (float)(TrigMath.atan2(d2, d1) * 180.0D / Math.PI) - 90.0F;
+                final float f2 = (float)(TrigMath.atan2(d2, d1) * 180.0D / Math.PI) - 90.0F;
                 float f3 = MathHelper.wrapAngleTo180_float(f2 - this.rotationYaw);
                 this.moveForward = (float)this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue();
 
@@ -191,9 +191,9 @@ public abstract class EntityCreature extends EntityLiving
 
                 if (this.hasAttacked && this.entityToAttack != null)
                 {
-                    double d4 = this.entityToAttack.posX - this.posX;
-                    double d5 = this.entityToAttack.posZ - this.posZ;
-                    float f4 = this.rotationYaw;
+                    final double d4 = this.entityToAttack.posX - this.posX;
+                    final double d5 = this.entityToAttack.posZ - this.posZ;
+                    final float f4 = this.rotationYaw;
                     this.rotationYaw = (float)(Math.atan2(d5, d4) * 180.0D / Math.PI) - 90.0F;
                     f3 = (f4 - this.rotationYaw + 90.0F) * (float)Math.PI / 180.0F;
                     this.moveStrafing = -MathHelper.sin(f3) * this.moveForward * 1.0F;
@@ -244,10 +244,10 @@ public abstract class EntityCreature extends EntityLiving
 
         for (int l = 0; l < 10; ++l)
         {
-            int i1 = MathHelper.floor_double(this.posX + (double)this.rand.nextInt(13) - 6.0D);
-            int j1 = MathHelper.floor_double(this.posY + (double)this.rand.nextInt(7) - 3.0D);
-            int k1 = MathHelper.floor_double(this.posZ + (double)this.rand.nextInt(13) - 6.0D);
-            float f1 = this.getBlockPathWeight(i1, j1, k1);
+            final int i1 = MathHelper.floor_double(this.posX + (double)this.rand.nextInt(13) - 6.0D);
+            final int j1 = MathHelper.floor_double(this.posY + (double)this.rand.nextInt(7) - 3.0D);
+            final int k1 = MathHelper.floor_double(this.posZ + (double)this.rand.nextInt(13) - 6.0D);
+            final float f1 = this.getBlockPathWeight(i1, j1, k1);
 
             if (f1 > f)
             {
@@ -270,13 +270,13 @@ public abstract class EntityCreature extends EntityLiving
     /**
      * Basic mob attack. Default to touch of death in EntityCreature. Overridden by each mob to define their attack.
      */
-    protected void attackEntity(Entity par1Entity, float par2) {}
+    protected void attackEntity(final Entity par1Entity, final float par2) {}
 
     /**
      * Takes a coordinate in and returns a weight to determine how likely this creature will try to path to the block.
      * Args: x, y, z
      */
-    public float getBlockPathWeight(int par1, int par2, int par3)
+    public float getBlockPathWeight(final int par1, final int par2, final int par3)
     {
         return 0.0F;
     }
@@ -295,9 +295,9 @@ public abstract class EntityCreature extends EntityLiving
      */
     public boolean getCanSpawnHere()
     {
-        int i = MathHelper.floor_double(this.posX);
-        int j = MathHelper.floor_double(this.boundingBox.minY);
-        int k = MathHelper.floor_double(this.posZ);
+        final int i = MathHelper.floor_double(this.posX);
+        final int j = MathHelper.floor_double(this.boundingBox.minY);
+        final int k = MathHelper.floor_double(this.posZ);
         return super.getCanSpawnHere() && this.getBlockPathWeight(i, j, k) >= 0.0F;
     }
 
@@ -312,7 +312,7 @@ public abstract class EntityCreature extends EntityLiving
     /**
      * sets the Entities walk path in EntityCreature
      */
-    public void setPathToEntity(PathEntity par1PathEntity)
+    public void setPathToEntity(final PathEntity par1PathEntity)
     {
         this.pathToEntity = par1PathEntity;
     }
@@ -328,7 +328,7 @@ public abstract class EntityCreature extends EntityLiving
     /**
      * Sets the entity which is to be attacked.
      */
-    public void setTarget(Entity par1Entity)
+    public void setTarget(final Entity par1Entity)
     {
         this.entityToAttack = par1Entity;
     }
@@ -338,12 +338,12 @@ public abstract class EntityCreature extends EntityLiving
         return this.func_110176_b(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ));
     }
 
-    public boolean func_110176_b(int par1, int par2, int par3)
+    public boolean func_110176_b(final int par1, final int par2, final int par3)
     {
         return this.maximumHomeDistance == -1.0F ? true : this.homePosition.getDistanceSquared(par1, par2, par3) < this.maximumHomeDistance * this.maximumHomeDistance;
     }
 
-    public void setHomeArea(int par1, int par2, int par3, int par4)
+    public void setHomeArea(final int par1, final int par2, final int par3, final int par4)
     {
         this.homePosition.set(par1, par2, par3);
         this.maximumHomeDistance = (float)par4;
@@ -381,9 +381,9 @@ public abstract class EntityCreature extends EntityLiving
 
         if (this.getLeashed() && this.getLeashedToEntity() != null && this.getLeashedToEntity().worldObj == this.worldObj)
         {
-            Entity entity = this.getLeashedToEntity();
+            final Entity entity = this.getLeashedToEntity();
             this.setHomeArea((int)entity.posX, (int)entity.posY, (int)entity.posZ, 5);
-            float f = this.getDistanceToEntity(entity);
+            final float f = this.getDistanceToEntity(entity);
 
             if (this instanceof EntityTameable && ((EntityTameable)this).isSitting())
             {
@@ -412,9 +412,9 @@ public abstract class EntityCreature extends EntityLiving
 
             if (f > 6.0F)
             {
-                double d0 = (entity.posX - this.posX) / (double)f;
-                double d1 = (entity.posY - this.posY) / (double)f;
-                double d2 = (entity.posZ - this.posZ) / (double)f;
+                final double d0 = (entity.posX - this.posX) / (double)f;
+                final double d1 = (entity.posY - this.posY) / (double)f;
+                final double d2 = (entity.posZ - this.posZ) / (double)f;
                 this.motionX += d0 * Math.abs(d0) * 0.4D;
                 this.motionY += d1 * Math.abs(d1) * 0.4D;
                 this.motionZ += d2 * Math.abs(d2) * 0.4D;
@@ -435,5 +435,5 @@ public abstract class EntityCreature extends EntityLiving
         }
     }
 
-    protected void func_142017_o(float par1) {}
+    protected void func_142017_o(final float par1) {}
 }

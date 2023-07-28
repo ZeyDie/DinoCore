@@ -85,7 +85,7 @@ public class FMLModContainer implements ModContainer
     private Map<String, String> customModProperties;
     private ModCandidate candidate;
 
-    public FMLModContainer(String className, ModCandidate container, Map<String,Object> modDescriptor)
+    public FMLModContainer(final String className, final ModCandidate container, final Map<String,Object> modDescriptor)
     {
         this.className = className;
         this.source = container.getModContainer();
@@ -131,7 +131,7 @@ public class FMLModContainer implements ModContainer
     }
 
     @Override
-    public void bindMetadata(MetadataCollection mc)
+    public void bindMetadata(final MetadataCollection mc)
     {
         modMetadata = mc.getMetadataForId(getModId(), descriptor);
 
@@ -142,9 +142,9 @@ public class FMLModContainer implements ModContainer
 
         if (overridesMetadata || !modMetadata.useDependencyInformation)
         {
-            Set<ArtifactVersion> requirements = Sets.newHashSet();
-            List<ArtifactVersion> dependencies = Lists.newArrayList();
-            List<ArtifactVersion> dependants = Lists.newArrayList();
+            final Set<ArtifactVersion> requirements = Sets.newHashSet();
+            final List<ArtifactVersion> dependencies = Lists.newArrayList();
+            final List<ArtifactVersion> dependants = Lists.newArrayList();
             annotationDependencies = (String) descriptor.get("dependencies");
             Loader.instance().computeDependencies(annotationDependencies, requirements, dependencies, dependants);
             modMetadata.requiredMods = requirements;
@@ -164,7 +164,7 @@ public class FMLModContainer implements ModContainer
         internalVersion = (String) descriptor.get("version");
         if (Strings.isNullOrEmpty(internalVersion))
         {
-            Properties versionProps = searchForVersionProperties();
+            final Properties versionProps = searchForVersionProperties();
             if (versionProps != null)
             {
                 internalVersion = versionProps.getProperty(getModId()+".version");
@@ -183,7 +183,7 @@ public class FMLModContainer implements ModContainer
             modMetadata.version = internalVersion = "1.0";
         }
 
-        String mcVersionString = (String) descriptor.get("acceptedMinecraftVersions");
+        final String mcVersionString = (String) descriptor.get("acceptedMinecraftVersions");
         if (!Strings.isNullOrEmpty(mcVersionString))
         {
             minecraftAccepted = VersionParser.parseRange(mcVersionString);
@@ -202,8 +202,8 @@ public class FMLModContainer implements ModContainer
             Properties version = null;
             if (getSource().isFile())
             {
-                ZipFile source = new ZipFile(getSource());
-                ZipEntry versionFile = source.getEntry("version.properties");
+                final ZipFile source = new ZipFile(getSource());
+                final ZipEntry versionFile = source.getEntry("version.properties");
                 if (versionFile!=null)
                 {
                     version = new Properties();
@@ -213,18 +213,18 @@ public class FMLModContainer implements ModContainer
             }
             else if (getSource().isDirectory())
             {
-                File propsFile = new File(getSource(),"version.properties");
+                final File propsFile = new File(getSource(),"version.properties");
                 if (propsFile.exists() && propsFile.isFile())
                 {
                     version = new Properties();
-                    FileInputStream fis = new FileInputStream(propsFile);
+                    final FileInputStream fis = new FileInputStream(propsFile);
                     version.load(fis);
                     fis.close();
                 }
             }
             return version;
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             Throwables.propagateIfPossible(e);
             FMLLog.log(getModId(), Level.FINEST, "Failed to find a usable version.properties file");
@@ -233,7 +233,7 @@ public class FMLModContainer implements ModContainer
     }
 
     @Override
-    public void setEnabledState(boolean enabled)
+    public void setEnabledState(final boolean enabled)
     {
         this.enabled = enabled;
     }
@@ -263,7 +263,7 @@ public class FMLModContainer implements ModContainer
     }
 
     @Override
-    public boolean matches(Object mod)
+    public boolean matches(final Object mod)
     {
         return mod == modInstance;
     }
@@ -275,7 +275,7 @@ public class FMLModContainer implements ModContainer
     }
 
     @Override
-    public boolean registerBus(EventBus bus, LoadController controller)
+    public boolean registerBus(final EventBus bus, final LoadController controller)
     {
         if (this.enabled)
         {
@@ -291,16 +291,16 @@ public class FMLModContainer implements ModContainer
         }
     }
 
-    private Method gatherAnnotations(Class<?> clazz) throws Exception
+    private Method gatherAnnotations(final Class<?> clazz) throws Exception
     {
         Method factoryMethod = null;
-        for (Method m : clazz.getDeclaredMethods())
+        for (final Method m : clazz.getDeclaredMethods())
         {
-            for (Annotation a : m.getAnnotations())
+            for (final Annotation a : m.getAnnotations())
             {
                 if (modTypeAnnotations.containsKey(a.annotationType()))
                 {
-                    Class<?>[] paramTypes = new Class[] { modTypeAnnotations.get(a.annotationType()) };
+                    final Class<?>[] paramTypes = new Class[] { modTypeAnnotations.get(a.annotationType()) };
 
                     if (Arrays.equals(m.getParameterTypes(), paramTypes))
                     {
@@ -345,33 +345,33 @@ public class FMLModContainer implements ModContainer
         return factoryMethod;
     }
 
-    private void processFieldAnnotations(ASMDataTable asmDataTable) throws Exception
+    private void processFieldAnnotations(final ASMDataTable asmDataTable) throws Exception
     {
-        SetMultimap<String, ASMData> annotations = asmDataTable.getAnnotationsFor(this);
+        final SetMultimap<String, ASMData> annotations = asmDataTable.getAnnotationsFor(this);
 
         parseSimpleFieldAnnotation(annotations, Instance.class.getName(), new Function<ModContainer, Object>()
         {
-            public Object apply(ModContainer mc)
+            public Object apply(final ModContainer mc)
             {
                 return mc.getMod();
             }
         });
         parseSimpleFieldAnnotation(annotations, Metadata.class.getName(), new Function<ModContainer, Object>()
         {
-            public Object apply(ModContainer mc)
+            public Object apply(final ModContainer mc)
             {
                 return mc.getMetadata();
             }
         });
     }
 
-    private void parseSimpleFieldAnnotation(SetMultimap<String, ASMData> annotations, String annotationClassName, Function<ModContainer, Object> retreiver) throws IllegalAccessException
+    private void parseSimpleFieldAnnotation(final SetMultimap<String, ASMData> annotations, final String annotationClassName, final Function<ModContainer, Object> retreiver) throws IllegalAccessException
     {
-        String[] annName = annotationClassName.split("\\.");
-        String annotationName = annName[annName.length - 1];
-        for (ASMData targets : annotations.get(annotationClassName))
+        final String[] annName = annotationClassName.split("\\.");
+        final String annotationName = annName[annName.length - 1];
+        for (final ASMData targets : annotations.get(annotationClassName))
         {
-            String targetMod = (String) targets.getAnnotationInfo().get("value");
+            final String targetMod = (String) targets.getAnnotationInfo().get("value");
             Field f = null;
             Object injectedMod = null;
             ModContainer mc = this;
@@ -398,7 +398,7 @@ public class FMLModContainer implements ModContainer
                     isStatic = Modifier.isStatic(f.getModifiers());
                     injectedMod = retreiver.apply(mc);
                 }
-                catch (Exception e)
+                catch (final Exception e)
                 {
                     Throwables.propagateIfPossible(e);
                     FMLLog.log(getModId(), Level.WARNING, e, "Attempting to load @%s in class %s for %s and failing", annotationName, targets.getClassName(), mc.getModId());
@@ -422,31 +422,31 @@ public class FMLModContainer implements ModContainer
     }
 
     @Subscribe
-    public void constructMod(FMLConstructionEvent event)
+    public void constructMod(final FMLConstructionEvent event)
     {
         try
         {
-            ModClassLoader modClassLoader = event.getModClassLoader();
+            final ModClassLoader modClassLoader = event.getModClassLoader();
             modClassLoader.addFile(source);
             modClassLoader.clearNegativeCacheFor(candidate.getClassList());
-            Class<?> clazz = Class.forName(className, true, modClassLoader);
+            final Class<?> clazz = Class.forName(className, true, modClassLoader);
 
-            Certificate[] certificates = clazz.getProtectionDomain().getCodeSource().getCertificates();
+            final Certificate[] certificates = clazz.getProtectionDomain().getCodeSource().getCertificates();
             int len = 0;
             if (certificates != null)
             {
                 len = certificates.length;
             }
-            Builder<String> certBuilder = ImmutableList.<String>builder();
+            final Builder<String> certBuilder = ImmutableList.<String>builder();
             for (int i = 0; i < len; i++)
             {
                 certBuilder.add(CertificateHelper.getFingerprint(certificates[i]));
             }
 
-            ImmutableList<String> certList = certBuilder.build();
+            final ImmutableList<String> certList = certBuilder.build();
             sourceFingerprints = ImmutableSet.copyOf(certList);
 
-            String expectedFingerprint = (String) descriptor.get("certificateFingerprint");
+            final String expectedFingerprint = (String) descriptor.get("certificateFingerprint");
 
             fingerprintNotPresent = true;
 
@@ -468,11 +468,11 @@ public class FMLModContainer implements ModContainer
                 }
             }
 
-            List<Map<String,Object>> props = (List<Map<String, Object>>) descriptor.get("customProperties");
+            final List<Map<String,Object>> props = (List<Map<String, Object>>) descriptor.get("customProperties");
             if (props != null)
             {
-                com.google.common.collect.ImmutableMap.Builder<String, String> builder = ImmutableMap.<String,String>builder();
-                for (Map<String, Object> p : props)
+                final com.google.common.collect.ImmutableMap.Builder<String, String> builder = ImmutableMap.<String,String>builder();
+                for (final Map<String, Object> p : props)
                 {
                     builder.put((String)p.get("k"),(String)p.get("v"));
                 }
@@ -484,7 +484,7 @@ public class FMLModContainer implements ModContainer
             }
 
 
-            Method factoryMethod = gatherAnnotations(clazz);
+            final Method factoryMethod = gatherAnnotations(clazz);
             modInstance = getLanguageAdapter().getNewInstance(this,clazz, modClassLoader, factoryMethod);
             isNetworkMod = FMLNetworkHandler.instance().registerNetworkMod(this, clazz, event.getASMHarvestedData());
             if (fingerprintNotPresent)
@@ -494,7 +494,7 @@ public class FMLModContainer implements ModContainer
             ProxyInjector.inject(this, event.getASMHarvestedData(), FMLCommonHandler.instance().getSide(), getLanguageAdapter());
             processFieldAnnotations(event.getASMHarvestedData());
         }
-        catch (Throwable e)
+        catch (final Throwable e)
         {
             controller.errorOccurred(this, e);
             Throwables.propagateIfPossible(e);
@@ -502,7 +502,7 @@ public class FMLModContainer implements ModContainer
     }
 
     @Subscribe
-    public void handleModStateEvent(FMLEvent event)
+    public void handleModStateEvent(final FMLEvent event)
     {
         if (!eventMethods.containsKey(event.getClass()))
         {
@@ -510,12 +510,12 @@ public class FMLModContainer implements ModContainer
         }
         try
         {
-            for (Method m : eventMethods.get(event.getClass()))
+            for (final Method m : eventMethods.get(event.getClass()))
             {
                 m.invoke(modInstance, event);
             }
         }
-        catch (Throwable t)
+        catch (final Throwable t)
         {
             controller.errorOccurred(this, t);
         }
@@ -579,7 +579,7 @@ public class FMLModContainer implements ModContainer
         {
             return getSource().isDirectory() ? Class.forName("cpw.mods.fml.client.FMLFolderResourcePack", true, getClass().getClassLoader()) : Class.forName("cpw.mods.fml.client.FMLFileResourcePack",true, getClass().getClassLoader());
         }
-        catch (ClassNotFoundException e)
+        catch (final ClassNotFoundException e)
         {
             return null;
         }
@@ -587,7 +587,7 @@ public class FMLModContainer implements ModContainer
     @Override
     public Map<String, String> getSharedModDescriptor()
     {
-        Map<String,String> descriptor = Maps.newHashMap();
+        final Map<String,String> descriptor = Maps.newHashMap();
         descriptor.put("modsystem", "FML");
         descriptor.put("id", getModId());
         descriptor.put("version",getDisplayVersion());

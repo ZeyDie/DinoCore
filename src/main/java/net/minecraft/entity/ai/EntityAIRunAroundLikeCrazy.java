@@ -13,7 +13,7 @@ public class EntityAIRunAroundLikeCrazy extends EntityAIBase
     private double field_111176_d;
     private double field_111177_e;
 
-    public EntityAIRunAroundLikeCrazy(EntityHorse par1EntityHorse, double par2)
+    public EntityAIRunAroundLikeCrazy(final EntityHorse par1EntityHorse, final double par2)
     {
         this.horseHost = par1EntityHorse;
         this.field_111178_b = par2;
@@ -27,7 +27,7 @@ public class EntityAIRunAroundLikeCrazy extends EntityAIBase
     {
         if (!this.horseHost.isTame() && this.horseHost.riddenByEntity != null)
         {
-            Vec3 vec3 = RandomPositionGenerator.findRandomTarget(this.horseHost, 5, 4);
+            final Vec3 vec3 = RandomPositionGenerator.findRandomTarget(this.horseHost, 5, 4);
 
             if (vec3 == null)
             {
@@ -72,8 +72,8 @@ public class EntityAIRunAroundLikeCrazy extends EntityAIBase
         {
             if (this.horseHost.riddenByEntity instanceof EntityPlayer)
             {
-                int i = this.horseHost.getTemper();
-                int j = this.horseHost.getMaxTemper();
+                final int i = this.horseHost.getTemper();
+                final int j = this.horseHost.getMaxTemper();
 
                 if (j > 0 && this.horseHost.getRNG().nextInt(j) < i)
                 {

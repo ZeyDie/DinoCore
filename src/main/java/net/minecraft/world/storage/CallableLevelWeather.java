@@ -6,7 +6,7 @@ class CallableLevelWeather implements Callable
 {
     final WorldInfo worldInfoInstance;
 
-    CallableLevelWeather(WorldInfo par1WorldInfo)
+    CallableLevelWeather(final WorldInfo par1WorldInfo)
     {
         this.worldInfoInstance = par1WorldInfo;
     }

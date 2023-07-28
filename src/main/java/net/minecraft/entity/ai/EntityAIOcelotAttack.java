@@ -11,7 +11,7 @@ public class EntityAIOcelotAttack extends EntityAIBase
     EntityLivingBase theVictim;
     int attackCountdown;
 
-    public EntityAIOcelotAttack(EntityLiving par1EntityLiving)
+    public EntityAIOcelotAttack(final EntityLiving par1EntityLiving)
     {
         this.theEntity = par1EntityLiving;
         this.theWorld = par1EntityLiving.worldObj;
@@ -23,7 +23,7 @@ public class EntityAIOcelotAttack extends EntityAIBase
      */
     public boolean shouldExecute()
     {
-        EntityLivingBase entitylivingbase = this.theEntity.getAttackTarget();
+        final EntityLivingBase entitylivingbase = this.theEntity.getAttackTarget();
 
         if (entitylivingbase == null)
         {
@@ -59,8 +59,8 @@ public class EntityAIOcelotAttack extends EntityAIBase
     public void updateTask()
     {
         this.theEntity.getLookHelper().setLookPositionWithEntity(this.theVictim, 30.0F, 30.0F);
-        double d0 = (double)(this.theEntity.width * 2.0F * this.theEntity.width * 2.0F);
-        double d1 = this.theEntity.getDistanceSq(this.theVictim.posX, this.theVictim.boundingBox.minY, this.theVictim.posZ);
+        final double d0 = (double)(this.theEntity.width * 2.0F * this.theEntity.width * 2.0F);
+        final double d1 = this.theEntity.getDistanceSq(this.theVictim.posX, this.theVictim.boundingBox.minY, this.theVictim.posZ);
         double d2 = 0.8D;
 
         if (d1 > d0 && d1 < 16.0D)

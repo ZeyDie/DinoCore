@@ -9,15 +9,15 @@ public class SpamHaus {
     private SpamHaus() {
     }
 
-    public static boolean filterIp(NetLoginHandler con) {
+    public static boolean filterIp(final NetLoginHandler con) {
         if (SpigotConfig.preventProxies) {
             try {
-                InetAddress address = con.getSocket().getInetAddress();
-                String ip = address.getHostAddress();
+                final InetAddress address = con.getSocket().getInetAddress();
+                final String ip = address.getHostAddress();
 
                 if (!address.isLoopbackAddress()) {
-                    String[] split = ip.split("\\.");
-                    StringBuilder lookup = new StringBuilder();
+                    final String[] split = ip.split("\\.");
+                    final StringBuilder lookup = new StringBuilder();
                     for (int i = split.length - 1; i >= 0; i--) {
                         lookup.append(split[i]);
                         lookup.append(".");
@@ -28,7 +28,7 @@ public class SpamHaus {
                         return true;
                     }
                 }
-            } catch (Exception ex) {
+            } catch (final Exception ex) {
             }
         }
         return false;

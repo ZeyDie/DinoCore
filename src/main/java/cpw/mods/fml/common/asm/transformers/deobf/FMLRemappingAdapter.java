@@ -16,19 +16,20 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.commons.RemappingClassAdapter;
 
 public class FMLRemappingAdapter extends RemappingClassAdapter {
-    public FMLRemappingAdapter(ClassVisitor cv)
+    public FMLRemappingAdapter(final ClassVisitor cv)
     {
         super(cv, FMLDeobfuscatingRemapper.INSTANCE);
     }
 
     @Override
-    public void visit(int version, int access, String name, String signature, String superName, String[] interfaces)
+    public void visit(final int version, final int access, final String name, final String signature, final String superName, String[] interfaces)
     {
-        if (interfaces == null)
+        String[] interfaces1 = interfaces;
+        if (interfaces1 == null)
         {
-            interfaces = new String[0];
+            interfaces1 = new String[0];
         }
-        FMLDeobfuscatingRemapper.INSTANCE.mergeSuperMaps(name, superName, interfaces);
-        super.visit(version, access, name, signature, superName, interfaces);
+        FMLDeobfuscatingRemapper.INSTANCE.mergeSuperMaps(name, superName, interfaces1);
+        super.visit(version, access, name, signature, superName, interfaces1);
     }
 }

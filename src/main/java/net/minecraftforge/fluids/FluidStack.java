@@ -22,19 +22,19 @@ public class FluidStack
     public int amount;
     public NBTTagCompound tag;
 
-    public FluidStack(Fluid fluid, int amount)
+    public FluidStack(final Fluid fluid, final int amount)
     {
         this.fluidID = fluid.getID();
         this.amount = amount;
     }
 
-    public FluidStack(int fluidID, int amount)
+    public FluidStack(final int fluidID, final int amount)
     {
         this.fluidID = fluidID;
         this.amount = amount;
     }
 
-    public FluidStack(int fluidID, int amount, NBTTagCompound nbt)
+    public FluidStack(final int fluidID, final int amount, final NBTTagCompound nbt)
     {
         this(fluidID, amount);
 
@@ -44,7 +44,7 @@ public class FluidStack
         }
     }
 
-    public FluidStack(FluidStack stack, int amount)
+    public FluidStack(final FluidStack stack, final int amount)
     {
         this(stack.fluidID, amount, stack.tag);
     }
@@ -53,7 +53,7 @@ public class FluidStack
      * This provides a safe method for retrieving a FluidStack - if the Fluid is invalid, the stack
      * will return as null.
      */
-    public static FluidStack loadFluidStackFromNBT(NBTTagCompound nbt)
+    public static FluidStack loadFluidStackFromNBT(final NBTTagCompound nbt)
     {
         if (nbt == null)
         {
@@ -70,7 +70,7 @@ public class FluidStack
         {
             return null;
         }
-        FluidStack stack = new FluidStack(FluidRegistry.getFluidID(fluidName), nbt.getInteger("Amount"));
+        final FluidStack stack = new FluidStack(FluidRegistry.getFluidID(fluidName), nbt.getInteger("Amount"));
 
         if (nbt.hasKey("Tag"))
         {
@@ -83,7 +83,7 @@ public class FluidStack
         return stack;
     }
 
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
+    public NBTTagCompound writeToNBT(final NBTTagCompound nbt)
     {
         nbt.setString("FluidName", FluidRegistry.getFluidName(fluidID));
         nbt.setInteger("Amount", amount);
@@ -115,12 +115,12 @@ public class FluidStack
      *            The FluidStack for comparison
      * @return true if the Fluids (IDs and NBT Tags) are the same
      */
-    public boolean isFluidEqual(FluidStack other)
+    public boolean isFluidEqual(final FluidStack other)
     {
         return other != null && fluidID == other.fluidID && isFluidStackTagEqual(other);
     }
 
-    private boolean isFluidStackTagEqual(FluidStack other)
+    private boolean isFluidStackTagEqual(final FluidStack other)
     {
         return tag == null ? other.tag == null : other.tag == null ? false : tag.equals(other.tag);
     }
@@ -128,7 +128,7 @@ public class FluidStack
     /**
      * Determines if the NBT Tags are equal. Useful if the FluidIDs are known to be equal.
      */
-    public static boolean areFluidStackTagsEqual(FluidStack stack1, FluidStack stack2)
+    public static boolean areFluidStackTagsEqual(final FluidStack stack1, final FluidStack stack2)
     {
         return stack1 == null && stack2 == null ? true : stack1 == null || stack2 == null ? false : stack1.isFluidStackTagEqual(stack2);
     }
@@ -139,7 +139,7 @@ public class FluidStack
      * @param other
      * @return true if this FluidStack contains the other FluidStack (same fluid and >= amount)
      */
-    public boolean containsFluid(FluidStack other)
+    public boolean containsFluid(final FluidStack other)
     {
         return isFluidEqual(other) && amount >= other.amount;
     }
@@ -151,7 +151,7 @@ public class FluidStack
      *            - the FluidStack for comparison
      * @return true if the two FluidStacks are exactly the same
      */
-    public boolean isFluidStackIdentical(FluidStack other)
+    public boolean isFluidStackIdentical(final FluidStack other)
     {
         return isFluidEqual(other) && amount == other.amount;
     }
@@ -164,7 +164,7 @@ public class FluidStack
      *            The ItemStack for comparison
      * @return true if the Fluids (IDs and NBT Tags) are the same
      */
-    public boolean isFluidEqual(ItemStack other)
+    public boolean isFluidEqual(final ItemStack other)
     {
         if (other == null)
         {
@@ -191,7 +191,7 @@ public class FluidStack
      * This is included for use in data structures.
      */
     @Override
-    public final boolean equals(Object o)
+    public final boolean equals(final Object o)
     {
         if (!(o instanceof FluidStack))
         {

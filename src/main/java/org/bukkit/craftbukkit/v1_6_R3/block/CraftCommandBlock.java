@@ -9,10 +9,10 @@ public class CraftCommandBlock extends CraftBlockState implements CommandBlock {
     private String command;
     private String name;
 
-    public CraftCommandBlock(Block block) {
+    public CraftCommandBlock(final Block block) {
         super(block);
 
-        CraftWorld world = (CraftWorld) block.getWorld();
+        final CraftWorld world = (CraftWorld) block.getWorld();
         commandBlock = (net.minecraft.tileentity.TileEntityCommandBlock) world.getTileEntityAt(getX(), getY(), getZ());
         command = commandBlock.command;
         name = commandBlock.getCommandSenderName();
@@ -22,7 +22,7 @@ public class CraftCommandBlock extends CraftBlockState implements CommandBlock {
         return command;
     }
 
-    public void setCommand(String command) {
+    public void setCommand(final String command) {
         this.command = command != null ? command : "";
     }
 
@@ -30,12 +30,12 @@ public class CraftCommandBlock extends CraftBlockState implements CommandBlock {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name != null ? name : "@";
     }
 
-    public boolean update(boolean force, boolean applyPhysics) {
-        boolean result = super.update(force, applyPhysics);
+    public boolean update(final boolean force, final boolean applyPhysics) {
+        final boolean result = super.update(force, applyPhysics);
 
         if (result) {
             commandBlock.setCommand(command);

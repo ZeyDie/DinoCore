@@ -25,13 +25,13 @@ public class ShapelessOreRecipe implements IRecipe
     private ArrayList input = new ArrayList();
     private ShapelessRecipes vanillaRecipe = null; // Cauldron - bukkit compatibility
 
-    public ShapelessOreRecipe(Block result, Object... recipe){ this(new ItemStack(result), recipe); }
-    public ShapelessOreRecipe(Item  result, Object... recipe){ this(new ItemStack(result), recipe); }
+    public ShapelessOreRecipe(final Block result, final Object... recipe){ this(new ItemStack(result), recipe); }
+    public ShapelessOreRecipe(final Item  result, final Object... recipe){ this(new ItemStack(result), recipe); }
 
-    public ShapelessOreRecipe(ItemStack result, Object... recipe)
+    public ShapelessOreRecipe(final ItemStack result, final Object... recipe)
     {
         output = result.copy();
-        for (Object in : recipe)
+        for (final Object in : recipe)
         {
             if (in instanceof ItemStack)
             {
@@ -52,7 +52,7 @@ public class ShapelessOreRecipe implements IRecipe
             else
             {
                 String ret = "Invalid shapeless ore recipe: ";
-                for (Object tmp :  recipe)
+                for (final Object tmp :  recipe)
                 {
                     ret += tmp + ", ";
                 }
@@ -62,15 +62,15 @@ public class ShapelessOreRecipe implements IRecipe
         }
     }
 
-    ShapelessOreRecipe(ShapelessRecipes recipe, Map<ItemStack, String> replacements)
+    ShapelessOreRecipe(final ShapelessRecipes recipe, final Map<ItemStack, String> replacements)
     {
         vanillaRecipe = recipe; // Cauldron - bukkit compatibility
         output = recipe.getRecipeOutput();
 
-        for(ItemStack ingred : ((List<ItemStack>)recipe.recipeItems))
+        for(final ItemStack ingred : ((List<ItemStack>)recipe.recipeItems))
         {
             Object finalObj = ingred;
-            for(Entry<ItemStack, String> replace : replacements.entrySet())
+            for(final Entry<ItemStack, String> replace : replacements.entrySet())
             {
                 if(OreDictionary.itemMatches(replace.getKey(), ingred, false))
                 {
@@ -89,27 +89,27 @@ public class ShapelessOreRecipe implements IRecipe
     public ItemStack getRecipeOutput(){ return output; }
 
     @Override
-    public ItemStack getCraftingResult(InventoryCrafting var1){ return output.copy(); }
+    public ItemStack getCraftingResult(final InventoryCrafting var1){ return output.copy(); }
 
     @Override
-    public boolean matches(InventoryCrafting var1, World world)
+    public boolean matches(final InventoryCrafting var1, final World world)
     {
-        ArrayList required = new ArrayList(input);
+        final ArrayList required = new ArrayList(input);
 
         for (int x = 0; x < var1.getSizeInventory(); x++)
         {
-            ItemStack slot = var1.getStackInSlot(x);
+            final ItemStack slot = var1.getStackInSlot(x);
 
             if (slot != null)
             {
                 boolean inRecipe = false;
-                Iterator req = required.iterator();
+                final Iterator req = required.iterator();
 
                 while (req.hasNext())
                 {
                     boolean match = false;
 
-                    Object next = req.next();
+                    final Object next = req.next();
 
                     if (next instanceof ItemStack)
                     {
@@ -117,7 +117,7 @@ public class ShapelessOreRecipe implements IRecipe
                     }
                     else if (next instanceof ArrayList)
                     {
-                        for (ItemStack item : (ArrayList<ItemStack>)next)
+                        for (final ItemStack item : (ArrayList<ItemStack>)next)
                         {
                             match = match || checkItemEquals(item, slot);
                         }
@@ -141,7 +141,7 @@ public class ShapelessOreRecipe implements IRecipe
         return required.isEmpty();
     }
 
-    private boolean checkItemEquals(ItemStack target, ItemStack input)
+    private boolean checkItemEquals(final ItemStack target, final ItemStack input)
     {
         return (target.itemID == input.itemID && (target.getItemDamage() == OreDictionary.WILDCARD_VALUE || target.getItemDamage() == input.getItemDamage()));
     }

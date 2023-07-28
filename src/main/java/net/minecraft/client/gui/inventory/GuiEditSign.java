@@ -36,7 +36,7 @@ public class GuiEditSign extends GuiScreen
     /** "Done" button for the GUI. */
     private GuiButton doneBtn;
 
-    public GuiEditSign(TileEntitySign par1TileEntitySign)
+    public GuiEditSign(final TileEntitySign par1TileEntitySign)
     {
         this.entitySign = par1TileEntitySign;
     }
@@ -58,7 +58,7 @@ public class GuiEditSign extends GuiScreen
     public void onGuiClosed()
     {
         Keyboard.enableRepeatEvents(false);
-        NetClientHandler netclienthandler = this.mc.getNetHandler();
+        final NetClientHandler netclienthandler = this.mc.getNetHandler();
 
         if (netclienthandler != null)
         {
@@ -79,7 +79,7 @@ public class GuiEditSign extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
@@ -94,7 +94,7 @@ public class GuiEditSign extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         if (par2 == 200)
         {
@@ -106,7 +106,7 @@ public class GuiEditSign extends GuiScreen
             this.editLine = this.editLine + 1 & 3;
         }
 
-        if (par2 == 14 && this.entitySign.signText[this.editLine].length() > 0)
+        if (par2 == 14 && !this.entitySign.signText[this.editLine].isEmpty())
         {
             this.entitySign.signText[this.editLine] = this.entitySign.signText[this.editLine].substring(0, this.entitySign.signText[this.editLine].length() - 1);
         }
@@ -125,26 +125,26 @@ public class GuiEditSign extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 40, 16777215);
         GL11.glPushMatrix();
         GL11.glTranslatef((float)(this.width / 2), 0.0F, 50.0F);
-        float f1 = 93.75F;
+        final float f1 = 93.75F;
         GL11.glScalef(-f1, -f1, -f1);
         GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
-        Block block = this.entitySign.getBlockType();
+        final Block block = this.entitySign.getBlockType();
 
         if (block == Block.signPost)
         {
-            float f2 = (float)(this.entitySign.getBlockMetadata() * 360) / 16.0F;
+            final float f2 = (float)(this.entitySign.getBlockMetadata() * 360) / 16.0F;
             GL11.glRotatef(f2, 0.0F, 1.0F, 0.0F);
             GL11.glTranslatef(0.0F, -1.0625F, 0.0F);
         }
         else
         {
-            int k = this.entitySign.getBlockMetadata();
+            final int k = this.entitySign.getBlockMetadata();
             float f3 = 0.0F;
 
             if (k == 2)

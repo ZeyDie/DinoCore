@@ -39,9 +39,9 @@ public class ModDiscoverer
 
     private List<File> nonModLibs = Lists.newArrayList();
 
-    public void findClasspathMods(ModClassLoader modClassLoader)
+    public void findClasspathMods(final ModClassLoader modClassLoader)
     {
-        List<String> knownLibraries = ImmutableList.<String>builder()
+        final List<String> knownLibraries = ImmutableList.<String>builder()
                 // skip default libs
                 .addAll(modClassLoader.getDefaultLibraries())
                 // skip loaded coremods
@@ -49,7 +49,7 @@ public class ModDiscoverer
                 // skip reparse coremods here
                 .addAll(CoreModManager.getReparseableCoremods())
                 .build();
-        File[] minecraftSources = modClassLoader.getParentSources();
+        final File[] minecraftSources = modClassLoader.getParentSources();
         if (minecraftSources.length == 1 && minecraftSources[0].isFile())
         {
             FMLLog.fine("Minecraft is a file at %s, loading", minecraftSources[0].getAbsolutePath());
@@ -81,19 +81,19 @@ public class ModDiscoverer
 
     }
 
-    public void findModDirMods(File modsDir)
+    public void findModDirMods(final File modsDir)
     {
-        File[] modList = modsDir.listFiles();
+        final File[] modList = modsDir.listFiles();
         // Sort the files into alphabetical order first
         Arrays.sort(modList, new Comparator<File>() {
             @Override
-            public int compare(File o1, File o2)
+            public int compare(final File o1, final File o2)
             {
                 return o1.getName().compareToIgnoreCase(o2.getName());
             }
         });
 
-        for (File modFile : modList)
+        for (final File modFile : modList)
         {
             // skip loaded coremods
             if (CoreModManager.getLoadedCoremods().contains(modFile.getName()))
@@ -107,7 +107,7 @@ public class ModDiscoverer
             }
             else
             {
-                Matcher matcher = zipJar.matcher(modFile.getName());
+                final Matcher matcher = zipJar.matcher(modFile.getName());
 
                 if (matcher.matches())
                 {
@@ -124,13 +124,13 @@ public class ModDiscoverer
 
     public List<ModContainer> identifyMods()
     {
-        List<ModContainer> modList = Lists.newArrayList();
+        final List<ModContainer> modList = Lists.newArrayList();
 
-        for (ModCandidate candidate : candidates)
+        for (final ModCandidate candidate : candidates)
         {
             try
             {
-                List<ModContainer> mods = candidate.explore(dataTable);
+                final List<ModContainer> mods = candidate.explore(dataTable);
                 if (mods.isEmpty() && !candidate.isClasspath())
                 {
                     nonModLibs.add(candidate.getModContainer());
@@ -140,11 +140,11 @@ public class ModDiscoverer
                     modList.addAll(mods);
                 }
             }
-            catch (LoaderException le)
+            catch (final LoaderException le)
             {
                 FMLLog.log(Level.WARNING, le, "Identified a problem with the mod candidate %s, ignoring this source", candidate.getModContainer());
             }
-            catch (Throwable t)
+            catch (final Throwable t)
             {
                 Throwables.propagate(t);
             }

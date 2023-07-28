@@ -10,7 +10,7 @@ import org.bukkit.entity.LivingEntity;
 public class CraftFish extends AbstractProjectile implements Fish {
     private double biteChance = -1;
 
-    public CraftFish(CraftServer server, net.minecraft.entity.projectile.EntityFishHook entity) {
+    public CraftFish(final CraftServer server, final net.minecraft.entity.projectile.EntityFishHook entity) {
         super(server, entity);
     }
 
@@ -22,7 +22,7 @@ public class CraftFish extends AbstractProjectile implements Fish {
         return null;
     }
 
-    public void setShooter(LivingEntity shooter) {
+    public void setShooter(final LivingEntity shooter) {
         if (shooter instanceof CraftHumanEntity) {
             getHandle().angler = (net.minecraft.entity.player.EntityPlayer) ((CraftHumanEntity) shooter).entity;
         }
@@ -43,7 +43,7 @@ public class CraftFish extends AbstractProjectile implements Fish {
     }
 
     public double getBiteChance() {
-        net.minecraft.entity.projectile.EntityFishHook hook = getHandle();
+        final net.minecraft.entity.projectile.EntityFishHook hook = getHandle();
 
         if (this.biteChance == -1) {
             if (hook.worldObj.canLightningStrikeAt(net.minecraft.util.MathHelper.floor_double(hook.posX), net.minecraft.util.MathHelper.floor_double(hook.posY) + 1, net.minecraft.util.MathHelper.floor_double(hook.posZ))) {
@@ -54,7 +54,7 @@ public class CraftFish extends AbstractProjectile implements Fish {
         return this.biteChance;
     }
 
-    public void setBiteChance(double chance) {
+    public void setBiteChance(final double chance) {
         Validate.isTrue(chance >= 0 && chance <= 1, "The bite chance must be between 0 and 1.");
         this.biteChance = chance;
     }

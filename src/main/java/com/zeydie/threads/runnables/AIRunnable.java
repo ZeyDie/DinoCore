@@ -16,7 +16,7 @@ public final class AIRunnable implements Runnable {
 
     @Override
     public void run() {
-        ArrayList arraylist = new ArrayList();
+        final ArrayList arraylist = new ArrayList();
         Iterator iterator;
         EntityAITaskEntry entityaitaskentry;
 
@@ -26,7 +26,7 @@ public final class AIRunnable implements Runnable {
 
                 while (iterator.hasNext()) {
                     entityaitaskentry = (EntityAITaskEntry) iterator.next();
-                    boolean flag = this.entityAITasks.executingTaskEntries.contains(entityaitaskentry);
+                    final boolean flag = this.entityAITasks.executingTaskEntries.contains(entityaitaskentry);
 
                     if (flag) {
                         if (this.entityAITasks.canUse(entityaitaskentry) && this.entityAITasks.canContinue(entityaitaskentry)) {

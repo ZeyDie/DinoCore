@@ -12,7 +12,7 @@ class TextureManagerINNER1 implements Callable
 
     final TextureManager theTextureManager;
 
-    TextureManagerINNER1(TextureManager par1TextureManager, TextureObject par2TextureObject)
+    TextureManagerINNER1(final TextureManager par1TextureManager, final TextureObject par2TextureObject)
     {
         this.theTextureManager = par1TextureManager;
         this.theTextureObject = par2TextureObject;

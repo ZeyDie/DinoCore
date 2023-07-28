@@ -24,19 +24,19 @@ public enum ContainerType
 
     private ITypeDiscoverer discoverer;
 
-    private ContainerType(Class<? extends ITypeDiscoverer> discovererClass)
+    private ContainerType(final Class<? extends ITypeDiscoverer> discovererClass)
     {
         try
         {
             this.discoverer = discovererClass.newInstance();
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             throw Throwables.propagate(e);
         }
     }
 
-    public List<ModContainer> findMods(ModCandidate candidate, ASMDataTable table)
+    public List<ModContainer> findMods(final ModCandidate candidate, final ASMDataTable table)
     {
         return discoverer.discover(candidate, table);
     }

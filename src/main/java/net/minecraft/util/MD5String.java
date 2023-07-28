@@ -13,7 +13,7 @@ public class MD5String
     /** The salt prepended to the string to be hashed */
     private String salt;
 
-    public MD5String(String par1Str)
+    public MD5String(final String par1Str)
     {
         this.salt = par1Str;
     }
@@ -21,16 +21,16 @@ public class MD5String
     /**
      * Gets the MD5 string
      */
-    public String getMD5String(String par1Str)
+    public String getMD5String(final String par1Str)
     {
         try
         {
-            String s1 = this.salt + par1Str;
-            MessageDigest messagedigest = MessageDigest.getInstance("MD5");
+            final String s1 = this.salt + par1Str;
+            final MessageDigest messagedigest = MessageDigest.getInstance("MD5");
             messagedigest.update(s1.getBytes(), 0, s1.length());
             return (new BigInteger(1, messagedigest.digest())).toString(16);
         }
-        catch (NoSuchAlgorithmException nosuchalgorithmexception)
+        catch (final NoSuchAlgorithmException nosuchalgorithmexception)
         {
             throw new RuntimeException(nosuchalgorithmexception);
         }

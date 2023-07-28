@@ -20,7 +20,7 @@ public class Bed extends MaterialData implements Directional {
      *
      * @param direction the direction the bed's head is facing
      */
-    public Bed(BlockFace direction) {
+    public Bed(final BlockFace direction) {
         this();
         setFacingDirection(direction);
     }
@@ -70,7 +70,7 @@ public class Bed extends MaterialData implements Directional {
      *
      * @param isHeadOfBed True to make it the head.
      */
-    public void setHeadOfBed(boolean isHeadOfBed) {
+    public void setHeadOfBed(final boolean isHeadOfBed) {
         setData((byte) (isHeadOfBed ? (getData() | 0x8) : (getData() & ~0x8)));
     }
 
@@ -78,7 +78,7 @@ public class Bed extends MaterialData implements Directional {
      * Set which direction the head of the bed is facing. Note that this will
      * only affect one of the two blocks the bed is made of.
      */
-    public void setFacingDirection(BlockFace face) {
+    public void setFacingDirection(final BlockFace face) {
         byte data;
 
         switch (face) {
@@ -112,7 +112,7 @@ public class Bed extends MaterialData implements Directional {
      * @return the direction the head of the bed is facing
      */
     public BlockFace getFacing() {
-        byte data = (byte) (getData() & 0x7);
+        final byte data = (byte) (getData() & 0x7);
 
         switch (data) {
         case 0x0:

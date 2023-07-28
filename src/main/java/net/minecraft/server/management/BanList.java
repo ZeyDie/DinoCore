@@ -16,7 +16,7 @@ public class BanList
     /** set to true if not singlePlayer */
     private boolean listActive = true;
 
-    public BanList(File par1File)
+    public BanList(final File par1File)
     {
         this.fileName = par1File;
     }
@@ -26,7 +26,7 @@ public class BanList
         return this.listActive;
     }
 
-    public void setListActive(boolean par1)
+    public void setListActive(final boolean par1)
     {
         this.listActive = par1;
     }
@@ -40,7 +40,7 @@ public class BanList
         return this.theBanList;
     }
 
-    public boolean isBanned(String par1Str)
+    public boolean isBanned(final String par1Str)
     {
         if (!this.isListActive())
         {
@@ -53,13 +53,13 @@ public class BanList
         }
     }
 
-    public void put(BanEntry par1BanEntry)
+    public void put(final BanEntry par1BanEntry)
     {
         this.theBanList.putLower(par1BanEntry.getBannedUsername(), par1BanEntry);
         this.saveToFileWithHeader();
     }
 
-    public void remove(String par1Str)
+    public void remove(final String par1Str)
     {
         this.theBanList.remove(par1Str);
         this.saveToFileWithHeader();
@@ -67,11 +67,11 @@ public class BanList
 
     public void removeExpiredBans()
     {
-        Iterator iterator = this.theBanList.values().iterator();
+        final Iterator iterator = this.theBanList.values().iterator();
 
         while (iterator.hasNext())
         {
-            BanEntry banentry = (BanEntry)iterator.next();
+            final BanEntry banentry = (BanEntry)iterator.next();
 
             if (banentry.hasBanExpired())
             {
@@ -87,13 +87,13 @@ public class BanList
     {
         if (this.fileName.isFile())
         {
-            BufferedReader bufferedreader;
+            final BufferedReader bufferedreader;
 
             try
             {
                 bufferedreader = new BufferedReader(new FileReader(this.fileName));
             }
-            catch (FileNotFoundException filenotfoundexception)
+            catch (final FileNotFoundException filenotfoundexception)
             {
                 throw new Error();
             }
@@ -106,7 +106,7 @@ public class BanList
                 {
                     if (!s.startsWith("#"))
                     {
-                        BanEntry banentry = BanEntry.parse(s);
+                        final BanEntry banentry = BanEntry.parse(s);
 
                         if (banentry != null)
                         {
@@ -115,7 +115,7 @@ public class BanList
                     }
                 }
             }
-            catch (IOException ioexception)
+            catch (final IOException ioexception)
             {
                 MinecraftServer.getServer().getLogAgent().logSevereException("Could not load ban list", ioexception);
             }
@@ -130,13 +130,13 @@ public class BanList
     /**
      * par1: include header
      */
-    public void saveToFile(boolean par1)
+    public void saveToFile(final boolean par1)
     {
         this.removeExpiredBans();
 
         try
         {
-            PrintWriter printwriter = new PrintWriter(new FileWriter(this.fileName, false));
+            final PrintWriter printwriter = new PrintWriter(new FileWriter(this.fileName, false));
 
             if (par1)
             {
@@ -145,17 +145,17 @@ public class BanList
                 printwriter.println();
             }
 
-            Iterator iterator = this.theBanList.values().iterator();
+            final Iterator iterator = this.theBanList.values().iterator();
 
             while (iterator.hasNext())
             {
-                BanEntry banentry = (BanEntry)iterator.next();
+                final BanEntry banentry = (BanEntry)iterator.next();
                 printwriter.println(banentry.buildBanString());
             }
 
             printwriter.close();
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             MinecraftServer.getServer().getLogAgent().logSevereException("Could not save ban list", ioexception);
         }

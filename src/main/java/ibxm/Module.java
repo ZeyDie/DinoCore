@@ -30,13 +30,14 @@ public class Module {
 	}
 	
 	public void set_num_channels( int num_channels ) {
-		if( num_channels < 1 ) {
-			num_channels = 1;
+        int num_channels1 = num_channels;
+        if( num_channels1 < 1 ) {
+			num_channels1 = 1;
 		}
-		initial_panning = new int[ num_channels ];
+		initial_panning = new int[num_channels1];
 	}
 	
-	public int get_initial_panning( int channel ) {
+	public int get_initial_panning(final int channel ) {
 		int panning;
 		panning = 128;
 		if( channel >= 0 && channel < initial_panning.length ) {
@@ -45,7 +46,7 @@ public class Module {
 		return panning;
 	}
 	
-	public void set_initial_panning( int channel, int panning ) {
+	public void set_initial_panning(final int channel, final int panning ) {
 		if( channel >= 0 && channel < initial_panning.length ) {
 			initial_panning[ channel ] = panning;
 		}
@@ -56,13 +57,14 @@ public class Module {
 	}
 	
 	public void set_sequence_length( int sequence_length ) {
-		if( sequence_length < 0 ) {
-			sequence_length = 0;
+        int sequence_length1 = sequence_length;
+        if( sequence_length1 < 0 ) {
+			sequence_length1 = 0;
 		}
-		sequence = new int[ sequence_length ];
+		sequence = new int[sequence_length1];
 	}
 	
-	public void set_sequence( int sequence_index, int pattern_index ) {
+	public void set_sequence(final int sequence_index, final int pattern_index ) {
 		if( sequence_index >= 0 && sequence_index < sequence.length ) {
 			sequence[ sequence_index ] = pattern_index;
 		}
@@ -73,13 +75,14 @@ public class Module {
 	}
 	
 	public void set_num_patterns( int num_patterns ) {
-		if( num_patterns < 0 ) {
-			num_patterns = 0;
+        int num_patterns1 = num_patterns;
+        if( num_patterns1 < 0 ) {
+			num_patterns1 = 0;
 		}
-		patterns = new Pattern[ num_patterns ];
+		patterns = new Pattern[num_patterns1];
 	}
 
-	public Pattern get_pattern_from_sequence( int sequence_index ) {
+	public Pattern get_pattern_from_sequence(final int sequence_index ) {
 		Pattern pattern;
 		pattern = default_pattern;
 		if( sequence_index >= 0 && sequence_index < sequence.length ) {
@@ -88,7 +91,7 @@ public class Module {
 		return pattern;
 	}
 
-	public Pattern get_pattern( int pattern_index ) {
+	public Pattern get_pattern(final int pattern_index ) {
 		Pattern pattern;
 		pattern = null;
 		if( pattern_index >= 0 && pattern_index < patterns.length ) {
@@ -100,7 +103,7 @@ public class Module {
 		return pattern;
 	}
 
-	public void set_pattern( int pattern_index, Pattern pattern ) {
+	public void set_pattern(final int pattern_index, final Pattern pattern ) {
 		if( pattern_index >= 0 && pattern_index < patterns.length ) {
 			patterns[ pattern_index ] = pattern;
 		}
@@ -111,13 +114,14 @@ public class Module {
 	}
 	
 	public void set_num_instruments( int num_instruments ) {
-		if( num_instruments < 0 ) {
-			num_instruments = 0;
+        int num_instruments1 = num_instruments;
+        if( num_instruments1 < 0 ) {
+			num_instruments1 = 0;
 		}
-		instruments = new Instrument[ num_instruments ];
+		instruments = new Instrument[num_instruments1];
 	}
 	
-	public Instrument get_instrument( int instrument_index ) {
+	public Instrument get_instrument(final int instrument_index ) {
 		Instrument instrument;
 		instrument = null;
 		if( instrument_index > 0 && instrument_index <= instruments.length ) {
@@ -129,7 +133,7 @@ public class Module {
 		return instrument;
 	}
 	
-	public void set_instrument( int instrument_index, Instrument instrument ) {
+	public void set_instrument(final int instrument_index, final Instrument instrument ) {
 		if( instrument_index > 0 && instrument_index <= instruments.length ) {
 			instruments[ instrument_index - 1 ] = instrument;
 		}

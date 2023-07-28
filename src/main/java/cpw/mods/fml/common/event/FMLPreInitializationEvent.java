@@ -34,7 +34,7 @@ public class FMLPreInitializationEvent extends FMLStateEvent
     private ASMDataTable asmData;
     private ModContainer modContainer;
 
-    public FMLPreInitializationEvent(Object... data)
+    public FMLPreInitializationEvent(final Object... data)
     {
         super(data);
         this.asmData = (ASMDataTable)data[0];
@@ -48,7 +48,7 @@ public class FMLPreInitializationEvent extends FMLStateEvent
     }
 
     @Override
-    public void applyModContainer(ModContainer activeContainer)
+    public void applyModContainer(final ModContainer activeContainer)
     {
         this.modContainer = activeContainer;
         this.modMetadata = activeContainer.getMetadata();
@@ -100,7 +100,7 @@ public class FMLPreInitializationEvent extends FMLStateEvent
      */
     public Logger getModLog()
     {
-        Logger log = Logger.getLogger(modContainer.getModId());
+        final Logger log = Logger.getLogger(modContainer.getModId());
         log.setParent(FMLLog.getLogger());
         return log;
     }
@@ -118,8 +118,8 @@ public class FMLPreInitializationEvent extends FMLStateEvent
     @Deprecated
     public Certificate[] getFMLSigningCertificates()
     {
-        CodeSource codeSource = getClass().getClassLoader().getParent().getClass().getProtectionDomain().getCodeSource();
-        Certificate[] certs = codeSource.getCertificates();
+        final CodeSource codeSource = getClass().getClassLoader().getParent().getClass().getProtectionDomain().getCodeSource();
+        final Certificate[] certs = codeSource.getCertificates();
         if (certs == null)
         {
             return new Certificate[0];

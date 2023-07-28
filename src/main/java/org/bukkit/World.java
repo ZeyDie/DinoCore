@@ -1080,7 +1080,7 @@ public interface World extends PluginMessageRecipient, Metadatable {
          * @throws IllegalArgumentException if the location or effect is null.
          * It also throws when the effect requires a material or a material data
          */
-        public void playEffect(Location location, Effect effect)
+        public void playEffect(final Location location, final Effect effect)
         {
             throw new UnsupportedOperationException( "Not supported yet." );
         }
@@ -1107,7 +1107,7 @@ public interface World extends PluginMessageRecipient, Metadatable {
          * @param particleCount the number of particles
          * @param radius the radius around the location
          */
-        public void playEffect(Location location, Effect effect, int id, int data, float offsetX, float offsetY, float offsetZ, float speed, int particleCount, int radius)
+        public void playEffect(final Location location, final Effect effect, final int id, final int data, final float offsetX, final float offsetY, final float offsetZ, final float speed, final int particleCount, final int radius)
         {
             throw new UnsupportedOperationException( "Not supported yet." );
         }
@@ -1136,7 +1136,7 @@ public interface World extends PluginMessageRecipient, Metadatable {
         private final int id;
         private static final Map<Integer, Environment> lookup = new HashMap<Integer, Environment>();
 
-        private Environment(int id) {
+        private Environment(final int id) {
             this.id = id;
         }
 
@@ -1159,18 +1159,18 @@ public interface World extends PluginMessageRecipient, Metadatable {
          * @deprecated Magic value
          */
         @Deprecated
-        public static Environment getEnvironment(int id) {
+        public static Environment getEnvironment(final int id) {
             return lookup.get(id);
         }
 
         // Cauldron start - allow forge to register environments
-        public static void registerEnvironment(Environment env) {
+        public static void registerEnvironment(final Environment env) {
             lookup.put(env.getId(),env);
         }
         // Cauldron end
 
         static {
-            for (Environment env : values()) {
+            for (final Environment env : values()) {
                 lookup.put(env.getId(), env);
             }
         }

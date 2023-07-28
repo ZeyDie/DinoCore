@@ -24,6 +24,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Set;
 
@@ -35,7 +36,7 @@ public class KeyBindingRegistry
      *
      * @param handler
      */
-    public static void registerKeyBinding(KeyHandler handler) {
+    public static void registerKeyBinding(final KeyHandler handler) {
         instance().keyHandlers.add(handler);
         if (!handler.isDummy)
         {
@@ -64,7 +65,7 @@ public class KeyBindingRegistry
          * @param keyBindings
          * @param repeatings
          */
-        public KeyHandler(KeyBinding[] keyBindings, boolean[] repeatings)
+        public KeyHandler(final KeyBinding[] keyBindings, final boolean[] repeatings)
         {
             assert keyBindings.length == repeatings.length : "You need to pass two arrays of identical length";
             this.keyBindings = keyBindings;
@@ -79,7 +80,7 @@ public class KeyBindingRegistry
          *
          * @param keyBindings
          */
-        public KeyHandler(KeyBinding[] keyBindings)
+        public KeyHandler(final KeyBinding[] keyBindings)
         {
             this.keyBindings = keyBindings;
             this.isDummy = true;
@@ -94,7 +95,7 @@ public class KeyBindingRegistry
          * Not to be overridden - KeyBindings are tickhandlers under the covers
          */
         @Override
-        public final void tickStart(EnumSet<TickType> type, Object... tickData)
+        public final void tickStart(final EnumSet<TickType> type, final Object... tickData)
         {
             keyTick(type, false);
         }
@@ -103,18 +104,18 @@ public class KeyBindingRegistry
          * Not to be overridden - KeyBindings are tickhandlers under the covers
          */
         @Override
-        public final void tickEnd(EnumSet<TickType> type, Object... tickData)
+        public final void tickEnd(final EnumSet<TickType> type, final Object... tickData)
         {
             keyTick(type, true);
         }
 
-        private void keyTick(EnumSet<TickType> type, boolean tickEnd)
+        private void keyTick(final EnumSet<TickType> type, final boolean tickEnd)
         {
             for (int i = 0; i < keyBindings.length; i++)
             {
-                KeyBinding keyBinding = keyBindings[i];
-                int keyCode = keyBinding.keyCode;
-                boolean state = (keyCode < 0 ? Mouse.isButtonDown(keyCode + 100) : Keyboard.isKeyDown(keyCode));
+                final KeyBinding keyBinding = keyBindings[i];
+                final int keyCode = keyBinding.keyCode;
+                final boolean state = (keyCode < 0 ? Mouse.isButtonDown(keyCode + 100) : Keyboard.isKeyDown(keyCode));
                 if (state != keyDown[i] || (state && repeatings[i]))
                 {
                     if (state)
@@ -180,18 +181,15 @@ public class KeyBindingRegistry
     }
 
 
-    public void uploadKeyBindingsToGame(GameSettings settings)
+    public void uploadKeyBindingsToGame(final GameSettings settings)
     {
-        ArrayList<KeyBinding> harvestedBindings = Lists.newArrayList();
-        for (KeyHandler key : keyHandlers)
+        final ArrayList<KeyBinding> harvestedBindings = Lists.newArrayList();
+        for (final KeyHandler key : keyHandlers)
         {
-            for (KeyBinding kb : key.keyBindings)
-            {
-                harvestedBindings.add(kb);
-            }
+            harvestedBindings.addAll(Arrays.asList(key.keyBindings));
         }
-        KeyBinding[] modKeyBindings = harvestedBindings.toArray(new KeyBinding[harvestedBindings.size()]);
-        KeyBinding[] allKeys = new KeyBinding[settings.keyBindings.length + modKeyBindings.length];
+        final KeyBinding[] modKeyBindings = harvestedBindings.toArray(new KeyBinding[0]);
+        final KeyBinding[] allKeys = new KeyBinding[settings.keyBindings.length + modKeyBindings.length];
         System.arraycopy(settings.keyBindings, 0, allKeys, 0, settings.keyBindings.length);
         System.arraycopy(modKeyBindings, 0, allKeys, settings.keyBindings.length, modKeyBindings.length);
         settings.keyBindings = allKeys;

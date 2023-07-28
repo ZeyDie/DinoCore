@@ -21,7 +21,7 @@ public class PlayerPortalEvent extends PlayerTeleportEvent {
         this.travelAgent = pta;
     }
 
-    public PlayerPortalEvent(Player player, Location from, Location to, TravelAgent pta, TeleportCause cause) {
+    public PlayerPortalEvent(final Player player, final Location from, final Location to, final TravelAgent pta, final TeleportCause cause) {
         super(player, from, to, cause);
         this.travelAgent = pta;
     }
@@ -38,7 +38,7 @@ public class PlayerPortalEvent extends PlayerTeleportEvent {
      *
      * @param useTravelAgent whether to use the Travel Agent
      */
-    public void useTravelAgent(boolean useTravelAgent) {
+    public void useTravelAgent(final boolean useTravelAgent) {
         this.useTravelAgent = useTravelAgent;
     }
 
@@ -72,7 +72,7 @@ public class PlayerPortalEvent extends PlayerTeleportEvent {
      *
      * @param travelAgent the Travel Agent used (or not) in this event
      */
-    public void setPortalTravelAgent(TravelAgent travelAgent) {
+    public void setPortalTravelAgent(final TravelAgent travelAgent) {
         this.travelAgent = travelAgent;
     }
 

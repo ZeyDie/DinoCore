@@ -21,7 +21,7 @@ public class GuiScreenOnlineServersSubscreen
     int field_104076_e;
     int field_104073_f;
 
-    public GuiScreenOnlineServersSubscreen(int par1, int par2, int par3, int par4, int par5, int par6)
+    public GuiScreenOnlineServersSubscreen(final int par1, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         this.field_104074_g = par1;
         this.field_104081_h = par2;
@@ -48,17 +48,17 @@ public class GuiScreenOnlineServersSubscreen
 
     private String func_104072_c()
     {
-        String s = I18n.getString("options.difficulty");
+        final String s = I18n.getString("options.difficulty");
         return s + ": " + this.field_104077_b[this.field_104076_e];
     }
 
     private String func_104067_d()
     {
-        String s = I18n.getString("selectWorld.gameMode");
+        final String s = I18n.getString("selectWorld.gameMode");
         return s + ": " + this.field_104078_c[this.field_104073_f];
     }
 
-    void func_104069_a(GuiButton par1GuiButton)
+    void func_104069_a(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
@@ -75,7 +75,7 @@ public class GuiScreenOnlineServersSubscreen
         }
     }
 
-    public void func_104071_a(GuiScreen par1GuiScreen, FontRenderer par2FontRenderer)
+    public void func_104071_a(final GuiScreen par1GuiScreen, final FontRenderer par2FontRenderer)
     {
         par1GuiScreen.drawString(par2FontRenderer, this.field_104075_d[this.field_104073_f][0], this.field_104082_i, this.field_104080_j + 50, 10526880);
         par1GuiScreen.drawString(par2FontRenderer, this.field_104075_d[this.field_104073_f][1], this.field_104082_i, this.field_104080_j + 60, 10526880);

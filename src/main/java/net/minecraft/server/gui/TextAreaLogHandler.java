@@ -16,7 +16,7 @@ public class TextAreaLogHandler extends Handler
     Formatter field_120029_a = new TextAreaLogHandlerINNER1(this);
     private JTextArea field_120026_d;
 
-    public TextAreaLogHandler(JTextArea par1JTextArea)
+    public TextAreaLogHandler(final JTextArea par1JTextArea)
     {
         this.setFormatter(this.field_120029_a);
         this.field_120026_d = par1JTextArea;
@@ -26,12 +26,12 @@ public class TextAreaLogHandler extends Handler
 
     public void flush() {}
 
-    public void publish(LogRecord par1LogRecord)
+    public void publish(final LogRecord par1LogRecord)
     {
-        int i = this.field_120026_d.getDocument().getLength();
+        final int i = this.field_120026_d.getDocument().getLength();
         this.field_120026_d.append(this.field_120029_a.format(par1LogRecord));
         this.field_120026_d.setCaretPosition(this.field_120026_d.getDocument().getLength());
-        int j = this.field_120026_d.getDocument().getLength() - i;
+        final int j = this.field_120026_d.getDocument().getLength() - i;
 
         if (this.field_120027_b[this.field_120028_c] != 0)
         {

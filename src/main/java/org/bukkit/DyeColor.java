@@ -83,7 +83,7 @@ public enum DyeColor {
     private final static Map<Color, DyeColor> BY_COLOR;
     private final static Map<Color, DyeColor> BY_FIREWORK;
 
-    private DyeColor(final int woolData, final int dyeData, Color color, Color firework) {
+    private DyeColor(final int woolData, final int dyeData, final Color color, final Color firework) {
         this.woolData = (byte) woolData;
         this.dyeData = (byte) dyeData;
         this.color = color;
@@ -169,7 +169,7 @@ public enum DyeColor {
      */
     @Deprecated
     public static DyeColor getByWoolData(final byte data) {
-        int i = 0xff & data;
+        final int i = 0xff & data;
         if (i >= BY_WOOL_DATA.length) {
             return null;
         }
@@ -186,7 +186,7 @@ public enum DyeColor {
      */
     @Deprecated
     public static DyeColor getByDyeData(final byte data) {
-        int i = 0xff & data;
+        final int i = 0xff & data;
         if (i >= BY_DYE_DATA.length) {
             return null;
         }
@@ -216,10 +216,10 @@ public enum DyeColor {
     static {
         BY_WOOL_DATA = values();
         BY_DYE_DATA = values();
-        ImmutableMap.Builder<Color, DyeColor> byColor = ImmutableMap.builder();
-        ImmutableMap.Builder<Color, DyeColor> byFirework = ImmutableMap.builder();
+        final ImmutableMap.Builder<Color, DyeColor> byColor = ImmutableMap.builder();
+        final ImmutableMap.Builder<Color, DyeColor> byFirework = ImmutableMap.builder();
 
-        for (DyeColor color : values()) {
+        for (final DyeColor color : values()) {
             BY_WOOL_DATA[color.woolData & 0xff] = color;
             BY_DYE_DATA[color.dyeData & 0xff] = color;
             byColor.put(color.getColor(), color);

@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class ItemNameTag extends Item
 {
-    public ItemNameTag(int par1)
+    public ItemNameTag(final int par1)
     {
         super(par1);
         this.setCreativeTab(CreativeTabs.tabTools);
@@ -16,7 +16,7 @@ public class ItemNameTag extends Item
     /**
      * Returns true if the item can be used on the given entity, e.g. shears on sheep.
      */
-    public boolean itemInteractionForEntity(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, EntityLivingBase par3EntityLivingBase)
+    public boolean itemInteractionForEntity(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final EntityLivingBase par3EntityLivingBase)
     {
         if (!par1ItemStack.hasDisplayName())
         {
@@ -24,7 +24,7 @@ public class ItemNameTag extends Item
         }
         else if (par3EntityLivingBase instanceof EntityLiving)
         {
-            EntityLiving entityliving = (EntityLiving)par3EntityLivingBase;
+            final EntityLiving entityliving = (EntityLiving)par3EntityLivingBase;
             entityliving.setCustomNameTag(par1ItemStack.getDisplayName());
             entityliving.func_110163_bv();
             --par1ItemStack.stackSize;

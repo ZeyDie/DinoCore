@@ -16,7 +16,7 @@ public class Profiler
     /**
      * Start section
      */
-    public final void startSection(String par1Str) { }
+    public final void startSection(final String par1Str) { }
 
     /**
      * End section
@@ -26,7 +26,7 @@ public class Profiler
     /**
      * Get profiling data
      */
-    public final List getProfilingData(String par1Str)
+    public final List getProfilingData(final String par1Str)
     {
         return null;
     }
@@ -34,7 +34,7 @@ public class Profiler
     /**
      * End current section and start a new section
      */
-    public final void endStartSection(String par1Str) { }
+    public final void endStartSection(final String par1Str) { }
     public final String getNameOfLastSection()
     {
         return null;

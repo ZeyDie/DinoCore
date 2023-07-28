@@ -6,7 +6,7 @@ final class CallableBlockDataValue implements Callable
 {
     final int field_85063_a;
 
-    CallableBlockDataValue(int par1)
+    CallableBlockDataValue(final int par1)
     {
         this.field_85063_a = par1;
     }
@@ -19,7 +19,7 @@ final class CallableBlockDataValue implements Callable
         }
         else
         {
-            String s = String.format("%4s", new Object[] {Integer.toBinaryString(this.field_85063_a)}).replace(" ", "0");
+            final String s = String.format("%4s", new Object[] {Integer.toBinaryString(this.field_85063_a)}).replace(" ", "0");
             return String.format("%1$d / 0x%1$X / 0b%2$s", new Object[] {Integer.valueOf(this.field_85063_a), s});
         }
     }

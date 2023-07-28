@@ -19,7 +19,7 @@ import net.minecraftforge.common.DimensionManager;
 
 public abstract class WorldProvider
 {
-    public static final float[] moonPhaseFactors = new float[] {1.0F, 0.75F, 0.5F, 0.25F, 0.0F, 0.25F, 0.5F, 0.75F};
+    public static final float[] moonPhaseFactors = {1.0F, 0.75F, 0.5F, 0.25F, 0.0F, 0.25F, 0.5F, 0.75F};
 
     /** world object being used */
     public World worldObj;
@@ -51,7 +51,7 @@ public abstract class WorldProvider
     /**
      * associate an existing world with a World provider, and setup its lightbrightness table
      */
-    public final void registerWorld(World par1World)
+    public final void registerWorld(final World par1World)
     {
         this.worldObj = par1World;
         this.terrainType = par1World.getWorldInfo().getTerrainType();
@@ -65,11 +65,11 @@ public abstract class WorldProvider
      */
     protected void generateLightBrightnessTable()
     {
-        float f = 0.0F;
+        final float f = 0.0F;
 
         for (int i = 0; i <= 15; ++i)
         {
-            float f1 = 1.0F - (float)i / 15.0F;
+            final float f1 = 1.0F - (float)i / 15.0F;
             this.lightBrightnessTable[i] = (1.0F - f1) / (f1 * 3.0F + 1.0F) * (1.0F - f) + f;
         }
     }
@@ -93,18 +93,18 @@ public abstract class WorldProvider
     /**
      * Will check if the x, z position specified is alright to be set as the map spawn point
      */
-    public boolean canCoordinateBeSpawn(int par1, int par2)
+    public boolean canCoordinateBeSpawn(final int par1, final int par2)
     {
-        int k = this.worldObj.getFirstUncoveredBlock(par1, par2);
+        final int k = this.worldObj.getFirstUncoveredBlock(par1, par2);
         return k == Block.grass.blockID;
     }
 
     /**
      * Calculates the angle of sun and moon in the sky relative to a specified time (usually worldTime)
      */
-    public float calculateCelestialAngle(long par1, float par3)
+    public float calculateCelestialAngle(final long par1, final float par3)
     {
-        int j = (int)(par1 % 24000L);
+        final int j = (int)(par1 % 24000L);
         float f1 = ((float)j + par3) / 24000.0F - 0.25F;
 
         if (f1 < 0.0F)
@@ -117,13 +117,13 @@ public abstract class WorldProvider
             --f1;
         }
 
-        float f2 = f1;
+        final float f2 = f1;
         f1 = 1.0F - (float)((Math.cos((double)f1 * Math.PI) + 1.0D) / 2.0D);
         f1 = f2 + (f1 - f2) / 3.0F;
         return f1;
     }
 
-    public int getMoonPhase(long par1)
+    public int getMoonPhase(final long par1)
     {
         return (int)(par1 / 24000L) % 8;
     }
@@ -141,15 +141,15 @@ public abstract class WorldProvider
     /**
      * Returns array with sunrise/sunset colors
      */
-    public float[] calcSunriseSunsetColors(float par1, float par2)
+    public float[] calcSunriseSunsetColors(final float par1, final float par2)
     {
-        float f2 = 0.4F;
-        float f3 = MathHelper.cos(par1 * (float)Math.PI * 2.0F) - 0.0F;
-        float f4 = -0.0F;
+        final float f2 = 0.4F;
+        final float f3 = MathHelper.cos(par1 * (float)Math.PI * 2.0F) - 0.0F;
+        final float f4 = -0.0F;
 
         if (f3 >= f4 - f2 && f3 <= f4 + f2)
         {
-            float f5 = (f3 - f4) / f2 * 0.5F + 0.5F;
+            final float f5 = (f3 - f4) / f2 * 0.5F + 0.5F;
             float f6 = 1.0F - (1.0F - MathHelper.sin(f5 * (float)Math.PI)) * 0.99F;
             f6 *= f6;
             this.colorsSunriseSunset[0] = f5 * 0.3F + 0.7F;
@@ -169,7 +169,7 @@ public abstract class WorldProvider
     /**
      * Return Vec3D with biome specific fog color
      */
-    public Vec3 getFogColor(float par1, float par2)
+    public Vec3 getFogColor(final float par1, final float par2)
     {
         float f2 = MathHelper.cos(par1 * (float)Math.PI * 2.0F) * 2.0F + 0.5F;
 
@@ -200,7 +200,7 @@ public abstract class WorldProvider
         return true;
     }
 
-    public static WorldProvider getProviderForDimension(int par0)
+    public static WorldProvider getProviderForDimension(final int par0)
     {
         return DimensionManager.createProviderFor(par0);
     }
@@ -262,7 +262,7 @@ public abstract class WorldProvider
     /**
      * Returns true if the given X,Z coordinate should show environmental fog.
      */
-    public boolean doesXZShowFog(int par1, int par2)
+    public boolean doesXZShowFog(final int par1, final int par2)
     {
         return false;
     }
@@ -282,7 +282,7 @@ public abstract class WorldProvider
      * 
      * @param dim Dimension ID
      */
-    public void setDimension(int dim)
+    public void setDimension(final int dim)
     {
         this.dimensionId = dim;
     }
@@ -355,7 +355,7 @@ public abstract class WorldProvider
     }
 
     @SideOnly(Side.CLIENT)
-    public void setSkyRenderer(IRenderHandler skyRenderer)
+    public void setSkyRenderer(final IRenderHandler skyRenderer)
     {
         this.skyRenderer = skyRenderer;
     }
@@ -367,18 +367,18 @@ public abstract class WorldProvider
     }
 
     @SideOnly(Side.CLIENT)
-    public void setCloudRenderer(IRenderHandler renderer)
+    public void setCloudRenderer(final IRenderHandler renderer)
     {
         cloudRenderer = renderer;
     }
 
     public ChunkCoordinates getRandomizedSpawnPoint()
     {
-        ChunkCoordinates chunkcoordinates = new ChunkCoordinates(this.worldObj.getSpawnPoint());
+        final ChunkCoordinates chunkcoordinates = new ChunkCoordinates(this.worldObj.getSpawnPoint());
 
-        boolean isAdventure = worldObj.getWorldInfo().getGameType() == EnumGameType.ADVENTURE;
-        int spawnFuzz = terrainType.getSpawnFuzz();
-        int spawnFuzzHalf = spawnFuzz / 2;
+        final boolean isAdventure = worldObj.getWorldInfo().getGameType() == EnumGameType.ADVENTURE;
+        final int spawnFuzz = terrainType.getSpawnFuzz();
+        final int spawnFuzzHalf = spawnFuzz / 2;
 
         if (!hasNoSky && !isAdventure)
         {
@@ -399,7 +399,7 @@ public abstract class WorldProvider
      * @param z Z Postion
      * @return True to 'spin' the cursor
      */
-    public boolean shouldMapSpin(String entity, double x, double y, double z)
+    public boolean shouldMapSpin(final String entity, final double x, final double y, final double z)
     {
         return dimensionId < 0;
     }
@@ -410,14 +410,14 @@ public abstract class WorldProvider
      * @param player The player that is respawning
      * @return The dimension to respawn the player in
      */
-    public int getRespawnDimension(EntityPlayerMP player)
+    public int getRespawnDimension(final EntityPlayerMP player)
     {
         return 0;
     }
 
     /*======================================= Start Moved From World =========================================*/
 
-    public BiomeGenBase getBiomeGenForCoords(int x, int z)
+    public BiomeGenBase getBiomeGenForCoords(final int x, final int z)
     {
         return worldObj.getBiomeGenForCoordsBody(x, z);
     }
@@ -428,24 +428,24 @@ public abstract class WorldProvider
     }
 
     @SideOnly(Side.CLIENT)
-    public Vec3 getSkyColor(Entity cameraEntity, float partialTicks)
+    public Vec3 getSkyColor(final Entity cameraEntity, final float partialTicks)
     {
         return worldObj.getSkyColorBody(cameraEntity, partialTicks);
     }
 
     @SideOnly(Side.CLIENT)
-    public Vec3 drawClouds(float partialTicks)
+    public Vec3 drawClouds(final float partialTicks)
     {
         return worldObj.drawCloudsBody(partialTicks);
     }
 
     @SideOnly(Side.CLIENT)
-    public float getStarBrightness(float par1)
+    public float getStarBrightness(final float par1)
     {
         return worldObj.getStarBrightnessBody(par1);
     }
 
-    public void setAllowedSpawnTypes(boolean allowHostile, boolean allowPeaceful)
+    public void setAllowedSpawnTypes(final boolean allowHostile, final boolean allowPeaceful)
     {
         worldObj.spawnHostileMobs = allowHostile;
         worldObj.spawnPeacefulMobs = allowPeaceful;
@@ -466,17 +466,17 @@ public abstract class WorldProvider
         worldObj.worldInfo.setRainTime(1);
     }
 
-    public boolean canBlockFreeze(int x, int y, int z, boolean byWater)
+    public boolean canBlockFreeze(final int x, final int y, final int z, final boolean byWater)
     {
         return worldObj.canBlockFreezeBody(x, y, z, byWater);
     }
 
-    public boolean canSnowAt(int x, int y, int z)
+    public boolean canSnowAt(final int x, final int y, final int z)
     {
         return worldObj.canSnowAtBody(x, y, z);
     }
 
-    public void setWorldTime(long time)
+    public void setWorldTime(final long time)
     {
         worldObj.worldInfo.setWorldTime(time);
     }
@@ -493,21 +493,21 @@ public abstract class WorldProvider
 
     public ChunkCoordinates getSpawnPoint()
     {
-        WorldInfo info = worldObj.worldInfo;
+        final WorldInfo info = worldObj.worldInfo;
         return new ChunkCoordinates(info.getSpawnX(), info.getSpawnY(), info.getSpawnZ());
     }
 
-    public void setSpawnPoint(int x, int y, int z)
+    public void setSpawnPoint(final int x, final int y, final int z)
     {
         worldObj.worldInfo.setSpawnPosition(x, y, z);
     }
 
-    public boolean canMineBlock(EntityPlayer player, int x, int y, int z)
+    public boolean canMineBlock(final EntityPlayer player, final int x, final int y, final int z)
     {
         return worldObj.canMineBlockBody(player, x, y, z);
     }
 
-    public boolean isBlockHighHumidity(int x, int y, int z)
+    public boolean isBlockHighHumidity(final int x, final int y, final int z)
     {
         return worldObj.getBiomeGenForCoords(x, z).isHighHumidity();
     }
@@ -535,12 +535,12 @@ public abstract class WorldProvider
         worldObj.worldInfo.setThundering(false);
     }
 
-    public boolean canDoLightning(Chunk chunk)
+    public boolean canDoLightning(final Chunk chunk)
     {
         return true;
     }
 
-    public boolean canDoRainSnowIce(Chunk chunk)
+    public boolean canDoRainSnowIce(final Chunk chunk)
     {
         return true;
     }

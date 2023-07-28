@@ -22,7 +22,7 @@ public class ObjModelLoader implements IModelCustomLoader {
     }
 
     @Override
-    public IModelCustom loadInstance(String resourceName, URL resource) throws ModelFormatException
+    public IModelCustom loadInstance(final String resourceName, final URL resource) throws ModelFormatException
     {
         return new WavefrontObject(resourceName, resource);
     }

@@ -10,7 +10,7 @@ class CallableTexturePack implements Callable
 {
     final Minecraft theMinecraft;
 
-    CallableTexturePack(Minecraft par1Minecraft)
+    CallableTexturePack(final Minecraft par1Minecraft)
     {
         this.theMinecraft = par1Minecraft;
     }

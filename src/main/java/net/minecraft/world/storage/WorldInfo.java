@@ -136,7 +136,7 @@ public class WorldInfo {
             final int y,
             final int z
     ) {
-        final int[] array = new int[]{x, y, z};
+        final int[] array = {x, y, z};
 
         if (this.containsBlock(array))
             this.blocksPlayers.remove(array);
@@ -172,14 +172,14 @@ public class WorldInfo {
         this.theGameRules = new GameRules();
     }
 
-    public WorldInfo(NBTTagCompound par1NBTTagCompound) {
+    public WorldInfo(final NBTTagCompound par1NBTTagCompound) {
         this.terrainType = WorldType.DEFAULT;
         this.generatorOptions = "";
         this.theGameRules = new GameRules();
         this.randomSeed = par1NBTTagCompound.getLong("RandomSeed");
 
         if (par1NBTTagCompound.hasKey("generatorName")) {
-            String s = par1NBTTagCompound.getString("generatorName");
+            final String s = par1NBTTagCompound.getString("generatorName");
             this.terrainType = WorldType.parseWorldType(s);
 
             if (this.terrainType == null) {
@@ -266,7 +266,7 @@ public class WorldInfo {
         //TODO ZeyCodeEnd
     }
 
-    public WorldInfo(WorldSettings par1WorldSettings, String par2Str) {
+    public WorldInfo(final WorldSettings par1WorldSettings, final String par2Str) {
         this.terrainType = WorldType.DEFAULT;
         this.generatorOptions = "";
         this.theGameRules = new GameRules();
@@ -281,7 +281,7 @@ public class WorldInfo {
         this.initialized = false;
     }
 
-    public WorldInfo(WorldInfo par1WorldInfo) {
+    public WorldInfo(final WorldInfo par1WorldInfo) {
         this.terrainType = WorldType.DEFAULT;
         this.generatorOptions = "";
         this.theGameRules = new GameRules();
@@ -316,7 +316,7 @@ public class WorldInfo {
      * Gets the NBTTagCompound for the worldInfo
      */
     public NBTTagCompound getNBTTagCompound() {
-        NBTTagCompound nbttagcompound = new NBTTagCompound();
+        final NBTTagCompound nbttagcompound = new NBTTagCompound();
         this.updateTagCompound(nbttagcompound, this.playerTag);
         return nbttagcompound;
     }
@@ -324,13 +324,13 @@ public class WorldInfo {
     /**
      * Creates a new NBTTagCompound for the world, with the given NBTTag as the "Player"
      */
-    public NBTTagCompound cloneNBTCompound(NBTTagCompound par1NBTTagCompound) {
-        NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+    public NBTTagCompound cloneNBTCompound(final NBTTagCompound par1NBTTagCompound) {
+        final NBTTagCompound nbttagcompound1 = new NBTTagCompound();
         this.updateTagCompound(nbttagcompound1, par1NBTTagCompound);
         return nbttagcompound1;
     }
 
-    private void updateTagCompound(NBTTagCompound par1NBTTagCompound, NBTTagCompound par2NBTTagCompound) {
+    private void updateTagCompound(final NBTTagCompound par1NBTTagCompound, final NBTTagCompound par2NBTTagCompound) {
         par1NBTTagCompound.setLong("RandomSeed", this.randomSeed);
         par1NBTTagCompound.setString("generatorName", this.terrainType.getWorldTypeName());
         par1NBTTagCompound.setInteger("generatorVersion", this.terrainType.getGeneratorVersion());
@@ -432,7 +432,7 @@ public class WorldInfo {
     /**
      * Sets the Dimension.
      */
-    public void setDimension(int dim) {
+    public void setDimension(final int dim) {
         this.dimension = dim;
     }
 
@@ -454,7 +454,7 @@ public class WorldInfo {
     /**
      * Set the x spawn position to the passed in value
      */
-    public void setSpawnX(int par1) {
+    public void setSpawnX(final int par1) {
         this.spawnX = par1;
     }
 
@@ -463,11 +463,11 @@ public class WorldInfo {
     /**
      * Sets the y spawn position
      */
-    public void setSpawnY(int par1) {
+    public void setSpawnY(final int par1) {
         this.spawnY = par1;
     }
 
-    public void incrementTotalWorldTime(long par1) {
+    public void incrementTotalWorldTime(final long par1) {
         this.totalTime = par1;
     }
 
@@ -476,21 +476,21 @@ public class WorldInfo {
     /**
      * Set the z spawn position to the passed in value
      */
-    public void setSpawnZ(int par1) {
+    public void setSpawnZ(final int par1) {
         this.spawnZ = par1;
     }
 
     /**
      * Set current world time
      */
-    public void setWorldTime(long par1) {
+    public void setWorldTime(final long par1) {
         this.worldTime = par1;
     }
 
     /**
      * Sets the spawn zone position. Args: x, y, z
      */
-    public void setSpawnPosition(int par1, int par2, int par3) {
+    public void setSpawnPosition(final int par1, final int par2, final int par3) {
         this.spawnX = par1;
         this.spawnY = par2;
         this.spawnZ = par3;
@@ -503,7 +503,7 @@ public class WorldInfo {
         return this.levelName;
     }
 
-    public void setWorldName(String par1Str) {
+    public void setWorldName(final String par1Str) {
         this.levelName = par1Str;
     }
 
@@ -517,7 +517,7 @@ public class WorldInfo {
     /**
      * Sets the save version of the world
      */
-    public void setSaveVersion(int par1) {
+    public void setSaveVersion(final int par1) {
         this.saveVersion = par1;
     }
 
@@ -540,7 +540,7 @@ public class WorldInfo {
     /**
      * Sets whether it is thundering or not.
      */
-    public void setThundering(boolean par1) {
+    public void setThundering(final boolean par1) {
         this.thundering = par1;
     }
 
@@ -554,7 +554,7 @@ public class WorldInfo {
     /**
      * Defines the number of ticks until next thunderbolt.
      */
-    public void setThunderTime(int par1) {
+    public void setThunderTime(final int par1) {
         this.thunderTime = par1;
     }
 
@@ -568,7 +568,7 @@ public class WorldInfo {
     /**
      * Sets whether it is raining or not.
      */
-    public void setRaining(boolean par1) {
+    public void setRaining(final boolean par1) {
         this.raining = par1;
     }
 
@@ -582,7 +582,7 @@ public class WorldInfo {
     /**
      * Sets the number of ticks until rain.
      */
-    public void setRainTime(int par1) {
+    public void setRainTime(final int par1) {
         this.rainTime = par1;
     }
 
@@ -603,7 +603,7 @@ public class WorldInfo {
     /**
      * Sets the GameType.
      */
-    public void setGameType(EnumGameType par1EnumGameType) {
+    public void setGameType(final EnumGameType par1EnumGameType) {
         this.theGameType = par1EnumGameType;
     }
 
@@ -618,7 +618,7 @@ public class WorldInfo {
         return this.terrainType;
     }
 
-    public void setTerrainType(WorldType par1WorldType) {
+    public void setTerrainType(final WorldType par1WorldType) {
         this.terrainType = par1WorldType;
     }
 
@@ -643,7 +643,7 @@ public class WorldInfo {
     /**
      * Sets the initialization status of the World.
      */
-    public void setServerInitialized(boolean par1) {
+    public void setServerInitialized(final boolean par1) {
         this.initialized = par1;
     }
 
@@ -657,7 +657,7 @@ public class WorldInfo {
     /**
      * Adds this WorldInfo instance to the crash report.
      */
-    public void addToCrashReport(CrashReportCategory par1CrashReportCategory) {
+    public void addToCrashReport(final CrashReportCategory par1CrashReportCategory) {
         par1CrashReportCategory.addCrashSectionCallable("Level seed", new CallableLevelSeed(this));
         par1CrashReportCategory.addCrashSectionCallable("Level generator", new CallableLevelGenerator(this));
         par1CrashReportCategory.addCrashSectionCallable("Level generator options", new CallableLevelGeneratorOptions(this));
@@ -672,80 +672,80 @@ public class WorldInfo {
     /**
      * Return the terrain type of a world
      */
-    static WorldType getTerrainTypeOfWorld(WorldInfo par0WorldInfo) {
+    static WorldType getTerrainTypeOfWorld(final WorldInfo par0WorldInfo) {
         return par0WorldInfo.terrainType;
     }
 
     /**
      * Return the map feautures enabled of a world
      */
-    static boolean getMapFeaturesEnabled(WorldInfo par0WorldInfo) {
+    static boolean getMapFeaturesEnabled(final WorldInfo par0WorldInfo) {
         return par0WorldInfo.mapFeaturesEnabled;
     }
 
-    static String getWorldGeneratorOptions(WorldInfo par0WorldInfo) {
+    static String getWorldGeneratorOptions(final WorldInfo par0WorldInfo) {
         return par0WorldInfo.generatorOptions;
     }
 
-    static int getSpawnXCoordinate(WorldInfo par0WorldInfo) {
+    static int getSpawnXCoordinate(final WorldInfo par0WorldInfo) {
         return par0WorldInfo.spawnX;
     }
 
-    static int getSpawnYCoordinate(WorldInfo par0WorldInfo) {
+    static int getSpawnYCoordinate(final WorldInfo par0WorldInfo) {
         return par0WorldInfo.spawnY;
     }
 
-    static int getSpawnZCoordinate(WorldInfo par0WorldInfo) {
+    static int getSpawnZCoordinate(final WorldInfo par0WorldInfo) {
         return par0WorldInfo.spawnZ;
     }
 
-    static long func_85126_g(WorldInfo par0WorldInfo) {
+    static long func_85126_g(final WorldInfo par0WorldInfo) {
         return par0WorldInfo.totalTime;
     }
 
-    static long getWorldTime(WorldInfo par0WorldInfo) {
+    static long getWorldTime(final WorldInfo par0WorldInfo) {
         return par0WorldInfo.worldTime;
     }
 
-    static int func_85122_i(WorldInfo par0WorldInfo) {
+    static int func_85122_i(final WorldInfo par0WorldInfo) {
         return par0WorldInfo.dimension;
     }
 
-    static int getSaveVersion(WorldInfo par0WorldInfo) {
+    static int getSaveVersion(final WorldInfo par0WorldInfo) {
         return par0WorldInfo.saveVersion;
     }
 
-    static int getRainTime(WorldInfo par0WorldInfo) {
+    static int getRainTime(final WorldInfo par0WorldInfo) {
         return par0WorldInfo.rainTime;
     }
 
     /**
      * Returns wether it's raining or not.
      */
-    static boolean getRaining(WorldInfo par0WorldInfo) {
+    static boolean getRaining(final WorldInfo par0WorldInfo) {
         return par0WorldInfo.raining;
     }
 
-    static int getThunderTime(WorldInfo par0WorldInfo) {
+    static int getThunderTime(final WorldInfo par0WorldInfo) {
         return par0WorldInfo.thunderTime;
     }
 
     /**
      * Returns wether it's thundering or not.
      */
-    static boolean getThundering(WorldInfo par0WorldInfo) {
+    static boolean getThundering(final WorldInfo par0WorldInfo) {
         return par0WorldInfo.thundering;
     }
 
-    static EnumGameType getGameType(WorldInfo par0WorldInfo) {
+    static EnumGameType getGameType(final WorldInfo par0WorldInfo) {
         return par0WorldInfo.theGameType;
     }
 
-    static boolean func_85117_p(WorldInfo par0WorldInfo) {
+    static boolean func_85117_p(final WorldInfo par0WorldInfo) {
         return par0WorldInfo.hardcore;
     }
 
-    static boolean func_85131_q(WorldInfo par0WorldInfo) {
+    static boolean func_85131_q(final WorldInfo par0WorldInfo) {
         return par0WorldInfo.allowCommands;
     }
 
@@ -756,14 +756,14 @@ public class WorldInfo {
      *
      * @param additionalProperties
      */
-    public void setAdditionalProperties(Map<String, NBTBase> additionalProperties) {
+    public void setAdditionalProperties(final Map<String, NBTBase> additionalProperties) {
         // one time set for this
         if (this.additionalProperties == null) {
             this.additionalProperties = additionalProperties;
         }
     }
 
-    public NBTBase getAdditionalProperty(String additionalProperty) {
+    public NBTBase getAdditionalProperty(final String additionalProperty) {
         return this.additionalProperties != null ? this.additionalProperties.get(additionalProperty) : null;
     }
 }

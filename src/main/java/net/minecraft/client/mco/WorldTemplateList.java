@@ -17,31 +17,31 @@ public class WorldTemplateList extends ValueObject
 {
     public List field_110736_a;
 
-    public static WorldTemplateList func_110735_a(String par0Str)
+    public static WorldTemplateList func_110735_a(final String par0Str)
     {
-        WorldTemplateList worldtemplatelist = new WorldTemplateList();
+        final WorldTemplateList worldtemplatelist = new WorldTemplateList();
         worldtemplatelist.field_110736_a = new ArrayList();
 
         try
         {
-            JsonRootNode jsonrootnode = (new JdomParser()).parse(par0Str);
+            final JsonRootNode jsonrootnode = (new JdomParser()).parse(par0Str);
 
             if (jsonrootnode.isArrayNode(new Object[] {"templates"}))
             {
-                Iterator iterator = jsonrootnode.getArrayNode(new Object[] {"templates"}).iterator();
+                final Iterator iterator = jsonrootnode.getArrayNode(new Object[] {"templates"}).iterator();
 
                 while (iterator.hasNext())
                 {
-                    JsonNode jsonnode = (JsonNode)iterator.next();
+                    final JsonNode jsonnode = (JsonNode)iterator.next();
                     worldtemplatelist.field_110736_a.add(WorldTemplate.func_110730_a(jsonnode));
                 }
             }
         }
-        catch (InvalidSyntaxException invalidsyntaxexception)
+        catch (final InvalidSyntaxException invalidsyntaxexception)
         {
             ;
         }
-        catch (IllegalArgumentException illegalargumentexception)
+        catch (final IllegalArgumentException illegalargumentexception)
         {
             ;
         }

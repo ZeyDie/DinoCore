@@ -7,7 +7,7 @@ import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
 
 public class CraftMinecart extends CraftVehicle implements Minecart { // Cauldron - concrete for modded minecarts
-    public CraftMinecart(CraftServer server, net.minecraft.entity.item.EntityMinecart entity) {
+    public CraftMinecart(final CraftServer server, final net.minecraft.entity.item.EntityMinecart entity) {
         super(server, entity);
     }
 
@@ -17,7 +17,7 @@ public class CraftMinecart extends CraftVehicle implements Minecart { // Cauldro
     }
     // Cauldron end
 
-    public void setDamage(double damage) {
+    public void setDamage(final double damage) {
         getHandle().setDamage((float) damage);
     }
 
@@ -29,8 +29,8 @@ public class CraftMinecart extends CraftVehicle implements Minecart { // Cauldro
         return getHandle().maxSpeed;
     }
 
-    public void setMaxSpeed(double speed) {
-        if (speed >= 0D) {
+    public void setMaxSpeed(final double speed) {
+        if (speed >= 0.0D) {
             getHandle().maxSpeed = speed;
         }
     }
@@ -39,7 +39,7 @@ public class CraftMinecart extends CraftVehicle implements Minecart { // Cauldro
         return getHandle().slowWhenEmpty;
     }
 
-    public void setSlowWhenEmpty(boolean slow) {
+    public void setSlowWhenEmpty(final boolean slow) {
         getHandle().slowWhenEmpty = slow;
     }
 
@@ -47,7 +47,7 @@ public class CraftMinecart extends CraftVehicle implements Minecart { // Cauldro
         return getHandle().getFlyingVelocityMod();
     }
 
-    public void setFlyingVelocityMod(Vector flying) {
+    public void setFlyingVelocityMod(final Vector flying) {
         getHandle().setFlyingVelocityMod(flying);
     }
 
@@ -55,7 +55,7 @@ public class CraftMinecart extends CraftVehicle implements Minecart { // Cauldro
         return getHandle().getDerailedVelocityMod();
     }
 
-    public void setDerailedVelocityMod(Vector derailed) {
+    public void setDerailedVelocityMod(final Vector derailed) {
         getHandle().setDerailedVelocityMod(derailed);
     }
 
@@ -65,7 +65,7 @@ public class CraftMinecart extends CraftVehicle implements Minecart { // Cauldro
     }
 
     @Deprecated
-    public void _INVALID_setDamage(int damage) {
+    public void _INVALID_setDamage(final int damage) {
         setDamage(damage);
     }
 

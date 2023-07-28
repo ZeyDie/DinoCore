@@ -59,7 +59,7 @@ public enum Difficulty {
     }
 
     static {
-        for (Difficulty diff : values()) {
+        for (final Difficulty diff : values()) {
             BY_ID.put(diff.value, diff);
         }
     }

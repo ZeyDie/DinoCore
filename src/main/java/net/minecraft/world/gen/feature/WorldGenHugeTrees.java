@@ -19,7 +19,7 @@ public class WorldGenHugeTrees extends WorldGenerator
     /** Sets the metadata for the leaves used in huge trees */
     private final int leavesMetadata;
 
-    public WorldGenHugeTrees(boolean par1, int par2, int par3, int par4)
+    public WorldGenHugeTrees(final boolean par1, final int par2, final int par3, final int par4)
     {
         super(par1);
         this.baseHeight = par2;
@@ -27,9 +27,9 @@ public class WorldGenHugeTrees extends WorldGenerator
         this.leavesMetadata = par4;
     }
 
-    public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
+    public boolean generate(final World par1World, final Random par2Random, final int par3, final int par4, final int par5)
     {
-        int l = par2Random.nextInt(3) + this.baseHeight;
+        final int l = par2Random.nextInt(3) + this.baseHeight;
         boolean flag = true;
 
         if (par4 >= 1 && par4 + l + 1 <= 256)
@@ -60,7 +60,7 @@ public class WorldGenHugeTrees extends WorldGenerator
                         if (i1 >= 0 && i1 < 256)
                         {
                             l1 = par1World.getBlockId(j1, i1, k1);
-                            Block block = Block.blocksList[l1];
+                            final Block block = Block.blocksList[l1];
 
                             if (block != null &&
                                !block.isAirBlock(par1World, j1, i1, k1) &&
@@ -89,8 +89,8 @@ public class WorldGenHugeTrees extends WorldGenerator
             {
                 i1 = par1World.getBlockId(par3, par4 - 1, par5);
 
-                Block soil = Block.blocksList[i1];
-                boolean isValidSoil = soil != null && soil.canSustainPlant(par1World, par3, par4 - 1, par5, ForgeDirection.UP, (BlockSapling)Block.sapling);
+                final Block soil = Block.blocksList[i1];
+                final boolean isValidSoil = soil != null && soil.canSustainPlant(par1World, par3, par4 - 1, par5, ForgeDirection.UP, (BlockSapling)Block.sapling);
 
                 if (isValidSoil && par4 < 256 - l - 1)
                 {
@@ -102,7 +102,7 @@ public class WorldGenHugeTrees extends WorldGenerator
 
                     for (int i2 = par4 + l - 2 - par2Random.nextInt(4); i2 > par4 + l / 2; i2 -= 2 + par2Random.nextInt(4))
                     {
-                        float f = par2Random.nextFloat() * (float)Math.PI * 2.0F;
+                        final float f = par2Random.nextFloat() * (float)Math.PI * 2.0F;
                         k1 = par3 + (int)(0.5F + MathHelper.cos(f) * 4.0F);
                         l1 = par5 + (int)(0.5F + MathHelper.sin(f) * 4.0F);
                         this.growLeaves(par1World, k1, l1, i2, 0, par2Random);
@@ -215,27 +215,27 @@ public class WorldGenHugeTrees extends WorldGenerator
         }
     }
 
-    private void growLeaves(World par1World, int par2, int par3, int par4, int par5, Random par6Random)
+    private void growLeaves(final World par1World, final int par2, final int par3, final int par4, final int par5, final Random par6Random)
     {
-        byte b0 = 2;
+        final byte b0 = 2;
 
         for (int i1 = par4 - b0; i1 <= par4; ++i1)
         {
-            int j1 = i1 - par4;
-            int k1 = par5 + 1 - j1;
+            final int j1 = i1 - par4;
+            final int k1 = par5 + 1 - j1;
 
             for (int l1 = par2 - k1; l1 <= par2 + k1 + 1; ++l1)
             {
-                int i2 = l1 - par2;
+                final int i2 = l1 - par2;
 
                 for (int j2 = par3 - k1; j2 <= par3 + k1 + 1; ++j2)
                 {
-                    int k2 = j2 - par3;
+                    final int k2 = j2 - par3;
 
                     if ((i2 >= 0 || k2 >= 0 || i2 * i2 + k2 * k2 <= k1 * k1) && (i2 <= 0 && k2 <= 0 || i2 * i2 + k2 * k2 <= (k1 + 1) * (k1 + 1)) && (par6Random.nextInt(4) != 0 || i2 * i2 + k2 * k2 <= (k1 - 1) * (k1 - 1)))
                     {
-                        int l2 = par1World.getBlockId(l1, i1, j2);
-                        Block block = Block.blocksList[l2];
+                        final int l2 = par1World.getBlockId(l1, i1, j2);
+                        final Block block = Block.blocksList[l2];
 
                         if (block == null || block.canBeReplacedByLeaves(par1World, l1, i1, j2))
                         {
@@ -247,18 +247,18 @@ public class WorldGenHugeTrees extends WorldGenerator
         }
     }
 
-    private void onPlantGrow(World world, int x, int y, int z, int sourceX, int sourceY, int sourceZ)
+    private void onPlantGrow(final World world, final int x, final int y, final int z, final int sourceX, final int sourceY, final int sourceZ)
     {
-        Block block = Block.blocksList[world.getBlockId(x, y, z)];
+        final Block block = Block.blocksList[world.getBlockId(x, y, z)];
         if (block != null)
         {
             block.onPlantGrow(world, x, y, z, sourceX, sourceY, sourceZ);
         }
     }
 
-    private boolean isReplaceable(World world, int x, int y, int z)
+    private boolean isReplaceable(final World world, final int x, final int y, final int z)
     {
-        Block block = Block.blocksList[world.getBlockId(x, y, z)];
+        final Block block = Block.blocksList[world.getBlockId(x, y, z)];
         return (block == null || block.isAirBlock(world, x, y, z) || block.isLeaves(world, x, y, z));
     }
 }

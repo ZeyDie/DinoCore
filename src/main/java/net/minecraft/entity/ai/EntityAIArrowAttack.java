@@ -37,12 +37,12 @@ public class EntityAIArrowAttack extends EntityAIBase
     private float field_96562_i;
     private float field_82642_h;
 
-    public EntityAIArrowAttack(IRangedAttackMob par1IRangedAttackMob, double par2, int par4, float par5)
+    public EntityAIArrowAttack(final IRangedAttackMob par1IRangedAttackMob, final double par2, final int par4, final float par5)
     {
         this(par1IRangedAttackMob, par2, par4, par4, par5);
     }
 
-    public EntityAIArrowAttack(IRangedAttackMob par1IRangedAttackMob, double par2, int par4, int par5, float par6)
+    public EntityAIArrowAttack(final IRangedAttackMob par1IRangedAttackMob, final double par2, final int par4, final int par5, final float par6)
     {
         this.rangedAttackTime = -1;
 
@@ -68,7 +68,7 @@ public class EntityAIArrowAttack extends EntityAIBase
      */
     public boolean shouldExecute()
     {
-        EntityLivingBase entitylivingbase = this.entityHost.getAttackTarget();
+        final EntityLivingBase entitylivingbase = this.entityHost.getAttackTarget();
 
         if (entitylivingbase == null)
         {
@@ -95,7 +95,7 @@ public class EntityAIArrowAttack extends EntityAIBase
     public void resetTask()
     {
         // CraftBukkit start
-        EntityTargetEvent.TargetReason reason = this.attackTarget.isEntityAlive() ? EntityTargetEvent.TargetReason.FORGOT_TARGET : EntityTargetEvent.TargetReason.TARGET_DIED;
+        final EntityTargetEvent.TargetReason reason = this.attackTarget.isEntityAlive() ? EntityTargetEvent.TargetReason.FORGOT_TARGET : EntityTargetEvent.TargetReason.TARGET_DIED;
         org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callEntityTargetEvent((Entity) rangedAttackEntityHost, null, reason);
         // CraftBukkit end
         this.attackTarget = null;
@@ -108,8 +108,8 @@ public class EntityAIArrowAttack extends EntityAIBase
      */
     public void updateTask()
     {
-        double d0 = this.entityHost.getDistanceSq(this.attackTarget.posX, this.attackTarget.boundingBox.minY, this.attackTarget.posZ);
-        boolean flag = this.entityHost.getEntitySenses().canSee(this.attackTarget);
+        final double d0 = this.entityHost.getDistanceSq(this.attackTarget.posX, this.attackTarget.boundingBox.minY, this.attackTarget.posZ);
+        final boolean flag = this.entityHost.getEntitySenses().canSee(this.attackTarget);
 
         if (flag)
         {
@@ -130,7 +130,7 @@ public class EntityAIArrowAttack extends EntityAIBase
         }
 
         this.entityHost.getLookHelper().setLookPositionWithEntity(this.attackTarget, 30.0F, 30.0F);
-        float f;
+        final float f;
 
         if (--this.rangedAttackTime == 0)
         {

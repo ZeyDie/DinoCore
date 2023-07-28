@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class BlockGlass extends BlockBreakable
 {
-    public BlockGlass(int par1, Material par2Material, boolean par3)
+    public BlockGlass(final int par1, final Material par2Material, final boolean par3)
     {
         super(par1, "glass", par2Material, par3);
         this.setCreativeTab(CreativeTabs.tabBlock);
@@ -18,7 +18,7 @@ public class BlockGlass extends BlockBreakable
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random par1Random)
+    public int quantityDropped(final Random par1Random)
     {
         return 0;
     }

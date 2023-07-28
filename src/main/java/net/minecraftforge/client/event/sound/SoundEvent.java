@@ -8,7 +8,7 @@ public class SoundEvent extends Event
 {
     public SoundEvent(){}
     
-    public static SoundPoolEntry getResult(SoundResultEvent event)
+    public static SoundPoolEntry getResult(final SoundResultEvent event)
     {
         MinecraftForge.EVENT_BUS.post(event);
         return event.result;

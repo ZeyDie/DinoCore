@@ -15,7 +15,7 @@ public class BlockPressurePlate extends BlockBasePressurePlate
     /** The mob type that can trigger this pressure plate. */
     private EnumMobType triggerMobType;
 
-    protected BlockPressurePlate(int par1, String par2Str, Material par3Material, EnumMobType par4EnumMobType)
+    protected BlockPressurePlate(final int par1, final String par2Str, final Material par3Material, final EnumMobType par4EnumMobType)
     {
         super(par1, par2Str, par3Material);
         this.triggerMobType = par4EnumMobType;
@@ -24,7 +24,7 @@ public class BlockPressurePlate extends BlockBasePressurePlate
     /**
      * Argument is weight (0-15). Return the metadata to be set because of it.
      */
-    protected int getMetaFromWeight(int par1)
+    protected int getMetaFromWeight(final int par1)
     {
         return par1 > 0 ? 1 : 0;
     }
@@ -32,7 +32,7 @@ public class BlockPressurePlate extends BlockBasePressurePlate
     /**
      * Argument is metadata. Returns power level (0-15)
      */
-    protected int getPowerSupply(int par1)
+    protected int getPowerSupply(final int par1)
     {
         return par1 == 1 ? 15 : 0;
     }
@@ -41,7 +41,7 @@ public class BlockPressurePlate extends BlockBasePressurePlate
      * Returns the current state of the pressure plate. Returns a value between 0 and 15 based on the number of items on
      * it.
      */
-    protected int getPlateState(World par1World, int par2, int par3, int par4)
+    protected int getPlateState(final World par1World, final int par2, final int par3, final int par4)
     {
         List list = null;
 
@@ -62,17 +62,17 @@ public class BlockPressurePlate extends BlockBasePressurePlate
 
         if (list != null && !list.isEmpty())
         {
-            Iterator iterator = list.iterator();
+            final Iterator iterator = list.iterator();
 
             while (iterator.hasNext())
             {
-                Entity entity = (Entity)iterator.next();
+                final Entity entity = (Entity)iterator.next();
                 // CraftBukkit start - Call interact event when turning on a pressure plate
                 if (this.getPowerSupply(par1World.getBlockMetadata(par2, par3, par4)) == 0)
                 {
-                    org.bukkit.World bworld = par1World.getWorld();
-                    org.bukkit.plugin.PluginManager manager = par1World.getServer().getPluginManager();
-                    org.bukkit.event.Cancellable cancellable;
+                    final org.bukkit.World bworld = par1World.getWorld();
+                    final org.bukkit.plugin.PluginManager manager = par1World.getServer().getPluginManager();
+                    final org.bukkit.event.Cancellable cancellable;
 
                     if (entity instanceof EntityPlayer)
                     {

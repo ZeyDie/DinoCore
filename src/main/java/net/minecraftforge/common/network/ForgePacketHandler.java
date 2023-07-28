@@ -9,9 +9,9 @@ import net.minecraft.network.packet.Packet250CustomPayload;
 public class ForgePacketHandler implements IPacketHandler {
 
     @Override
-    public void onPacketData(INetworkManager network, Packet250CustomPayload packet, Player player)
+    public void onPacketData(final INetworkManager network, final Packet250CustomPayload packet, final Player player)
     {
-        ForgePacket pkt = ForgePacket.readPacket(network, packet.data);
+        final ForgePacket pkt = ForgePacket.readPacket(network, packet.data);
         // Part of an incomplete multipart packet
         if (pkt == null)
         {

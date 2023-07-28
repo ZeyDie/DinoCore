@@ -36,7 +36,7 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer
 
     public TileEntityChestRenderer()
     {
-        Calendar calendar = Calendar.getInstance();
+        final Calendar calendar = Calendar.getInstance();
 
         if (calendar.get(2) + 1 == 12 && calendar.get(5) >= 24 && calendar.get(5) <= 26)
         {
@@ -47,7 +47,7 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer
     /**
      * Renders the TileEntity for the chest at a position.
      */
-    public void renderTileEntityChestAt(TileEntityChest par1TileEntityChest, double par2, double par4, double par6, float par8)
+    public void renderTileEntityChestAt(final TileEntityChest par1TileEntityChest, final double par2, final double par4, final double par6, final float par8)
     {
         int i;
 
@@ -57,7 +57,7 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer
         }
         else
         {
-            Block block = par1TileEntityChest.getBlockType();
+            final Block block = par1TileEntityChest.getBlockType();
             i = par1TileEntityChest.getBlockMetadata();
 
             if (block instanceof BlockChest && i == 0)
@@ -66,7 +66,7 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer
                 {
                     ((BlockChest)block).unifyAdjacentChests(par1TileEntityChest.getWorldObj(), par1TileEntityChest.xCoord, par1TileEntityChest.yCoord, par1TileEntityChest.zCoord);
                 }
-                catch (ClassCastException e)
+                catch (final ClassCastException e)
                 {
                     FMLLog.severe("Attempted to render a chest at %d,  %d, %d that was not a chest",
                             par1TileEntityChest.xCoord, par1TileEntityChest.yCoord, par1TileEntityChest.zCoord);
@@ -79,7 +79,7 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer
 
         if (par1TileEntityChest.adjacentChestZNeg == null && par1TileEntityChest.adjacentChestXNeg == null)
         {
-            ModelChest modelchest;
+            final ModelChest modelchest;
 
             if (par1TileEntityChest.adjacentChestXPos == null && par1TileEntityChest.adjacentChestZPosition == null)
             {
@@ -189,7 +189,7 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer
         }
     }
 
-    public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8)
+    public void renderTileEntityAt(final TileEntity par1TileEntity, final double par2, final double par4, final double par6, final float par8)
     {
         this.renderTileEntityChestAt((TileEntityChest)par1TileEntity, par2, par4, par6, par8);
     }

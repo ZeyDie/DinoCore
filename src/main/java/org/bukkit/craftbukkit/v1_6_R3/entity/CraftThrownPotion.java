@@ -13,7 +13,7 @@ import org.bukkit.potion.PotionEffect;
 import java.util.Collection;
 
 public class CraftThrownPotion extends CraftProjectile implements ThrownPotion {
-    public CraftThrownPotion(CraftServer server, net.minecraft.entity.projectile.EntityPotion entity) {
+    public CraftThrownPotion(final CraftServer server, final net.minecraft.entity.projectile.EntityPotion entity) {
         super(server, entity);
     }
 
@@ -30,7 +30,7 @@ public class CraftThrownPotion extends CraftProjectile implements ThrownPotion {
         return CraftItemStack.asBukkitCopy(getHandle().potionDamage);
     }
 
-    public void setItem(ItemStack item) {
+    public void setItem(final ItemStack item) {
         // The ItemStack must not be null.
         Validate.notNull(item, "ItemStack cannot be null.");
 

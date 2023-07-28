@@ -12,13 +12,13 @@ class McoServerListUpdateTaskComparator implements Comparator
 
     final McoServerListUpdateTask field_140070_a;
 
-    private McoServerListUpdateTaskComparator(McoServerListUpdateTask par1McoServerListUpdateTask, String par2Str)
+    private McoServerListUpdateTaskComparator(final McoServerListUpdateTask par1McoServerListUpdateTask, final String par2Str)
     {
         this.field_140070_a = par1McoServerListUpdateTask;
         this.field_140069_b = par2Str;
     }
 
-    public int func_140068_a(McoServer par1McoServer, McoServer par2McoServer)
+    public int func_140068_a(final McoServer par1McoServer, final McoServer par2McoServer)
     {
         if (par1McoServer.field_96405_e.equals(par2McoServer.field_96405_e))
         {
@@ -51,12 +51,12 @@ class McoServerListUpdateTaskComparator implements Comparator
         }
     }
 
-    public int compare(Object par1Obj, Object par2Obj)
+    public int compare(final Object par1Obj, final Object par2Obj)
     {
         return this.func_140068_a((McoServer)par1Obj, (McoServer)par2Obj);
     }
 
-    McoServerListUpdateTaskComparator(McoServerListUpdateTask par1McoServerListUpdateTask, String par2Str, McoServerListEmptyAnon par3McoServerListEmptyAnon)
+    McoServerListUpdateTaskComparator(final McoServerListUpdateTask par1McoServerListUpdateTask, final String par2Str, final McoServerListEmptyAnon par3McoServerListEmptyAnon)
     {
         this(par1McoServerListUpdateTask, par2Str);
     }

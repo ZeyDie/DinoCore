@@ -24,12 +24,12 @@ public class SlotEnchantmentTable extends InventoryBasic   // CraftBukkit -> pub
         return this.inventoryContents;
     }
 
-    public void onOpen(CraftHumanEntity who)
+    public void onOpen(final CraftHumanEntity who)
     {
         transaction.add(who);
     }
 
-    public void onClose(CraftHumanEntity who)
+    public void onClose(final CraftHumanEntity who)
     {
         transaction.remove(who);
     }
@@ -44,13 +44,13 @@ public class SlotEnchantmentTable extends InventoryBasic   // CraftBukkit -> pub
         return this.player;
     }
 
-    public void setMaxStackSize(int size)
+    public void setMaxStackSize(final int size)
     {
         maxStack = size;
     }
     // CraftBukkit end
 
-    SlotEnchantmentTable(ContainerEnchantment par1ContainerEnchantment, String par2Str, boolean par3, int par4)
+    SlotEnchantmentTable(final ContainerEnchantment par1ContainerEnchantment, final String par2Str, final boolean par3, final int par4)
     {
         super(par2Str, par3, par4);
         this.container = par1ContainerEnchantment;
@@ -78,7 +78,7 @@ public class SlotEnchantmentTable extends InventoryBasic   // CraftBukkit -> pub
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack)
+    public boolean isItemValidForSlot(final int par1, final ItemStack par2ItemStack)
     {
         return true;
     }

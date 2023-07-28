@@ -15,17 +15,17 @@ class MinecraftServerGuiINNER2 implements ActionListener
 
     final MinecraftServerGui field_120024_b;
 
-    MinecraftServerGuiINNER2(MinecraftServerGui par1MinecraftServerGui, JTextField par2JTextField)
+    MinecraftServerGuiINNER2(final MinecraftServerGui par1MinecraftServerGui, final JTextField par2JTextField)
     {
         this.field_120024_b = par1MinecraftServerGui;
         this.field_120025_a = par2JTextField;
     }
 
-    public void actionPerformed(ActionEvent par1ActionEvent)
+    public void actionPerformed(final ActionEvent par1ActionEvent)
     {
-        String s = this.field_120025_a.getText().trim();
+        final String s = this.field_120025_a.getText().trim();
 
-        if (s.length() > 0)
+        if (!s.isEmpty())
         {
             MinecraftServerGui.func_120017_a(this.field_120024_b).addPendingCommand(s, MinecraftServer.getServer());
         }

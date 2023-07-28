@@ -6,7 +6,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class AnvilConverterException extends Exception
 {
-    public AnvilConverterException(String par1Str)
+    public AnvilConverterException(final String par1Str)
     {
         super(par1Str);
     }

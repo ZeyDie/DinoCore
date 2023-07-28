@@ -24,18 +24,18 @@ public class ContainerHopper extends Container
             return bukkitEntity;
         }
 
-        CraftInventory inventory = new CraftInventory(this.field_94538_a);
+        final CraftInventory inventory = new CraftInventory(this.field_94538_a);
         bukkitEntity = new CraftInventoryView(this.player.player.getBukkitEntity(), inventory, this);
         return bukkitEntity;
     }
     // CraftBukkit end
 
-    public ContainerHopper(InventoryPlayer par1InventoryPlayer, IInventory par2IInventory)
+    public ContainerHopper(final InventoryPlayer par1InventoryPlayer, final IInventory par2IInventory)
     {
         this.field_94538_a = par2IInventory;
         this.player = par1InventoryPlayer; // CraftBukkit - save player
         par2IInventory.openChest();
-        byte b0 = 51;
+        final byte b0 = 51;
         int i;
 
         for (i = 0; i < par2IInventory.getSizeInventory(); ++i)
@@ -57,7 +57,7 @@ public class ContainerHopper extends Container
         }
     }
 
-    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
+    public boolean canInteractWith(final EntityPlayer par1EntityPlayer)
     {
         if (!this.checkReachable)
         {
@@ -70,14 +70,14 @@ public class ContainerHopper extends Container
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+    public ItemStack transferStackInSlot(final EntityPlayer par1EntityPlayer, final int par2)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(par2);
+        final Slot slot = (Slot)this.inventorySlots.get(par2);
 
         if (slot != null && slot.getHasStack())
         {
-            ItemStack itemstack1 = slot.getStack();
+            final ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
             if (par2 < this.field_94538_a.getSizeInventory())
@@ -108,7 +108,7 @@ public class ContainerHopper extends Container
     /**
      * Called when the container is closed.
      */
-    public void onContainerClosed(EntityPlayer par1EntityPlayer)
+    public void onContainerClosed(final EntityPlayer par1EntityPlayer)
     {
         super.onContainerClosed(par1EntityPlayer);
         this.field_94538_a.closeChest();

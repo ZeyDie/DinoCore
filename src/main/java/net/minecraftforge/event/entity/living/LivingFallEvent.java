@@ -7,7 +7,7 @@ import net.minecraftforge.event.Cancelable;
 public class LivingFallEvent extends LivingEvent
 {
     public float distance;
-    public LivingFallEvent(EntityLivingBase entity, float distance)
+    public LivingFallEvent(final EntityLivingBase entity, final float distance)
     {
         super(entity);
         this.distance = distance;

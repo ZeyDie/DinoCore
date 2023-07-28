@@ -40,7 +40,7 @@ public class EntityEnderman extends EntityMob
     private Entity lastEntityToAttack;
     private boolean isAggressive;
 
-    public EntityEnderman(World par1World)
+    public EntityEnderman(final World par1World)
     {
         super(par1World);
         this.setSize(0.6F, 2.9F);
@@ -66,7 +66,7 @@ public class EntityEnderman extends EntityMob
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setShort("carried", (short)this.getCarried());
@@ -76,7 +76,7 @@ public class EntityEnderman extends EntityMob
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.setCarried(par1NBTTagCompound.getShort("carried"));
@@ -89,7 +89,7 @@ public class EntityEnderman extends EntityMob
      */
     protected Entity findPlayerToAttack()
     {
-        EntityPlayer entityplayer = this.worldObj.getClosestVulnerablePlayerToEntity(this, 64.0D);
+        final EntityPlayer entityplayer = this.worldObj.getClosestVulnerablePlayerToEntity(this, 64.0D);
 
         if (entityplayer != null)
         {
@@ -121,9 +121,9 @@ public class EntityEnderman extends EntityMob
     /**
      * Checks to see if this enderman should be attacking this player
      */
-    private boolean shouldAttackPlayer(EntityPlayer par1EntityPlayer)
+    private boolean shouldAttackPlayer(final EntityPlayer par1EntityPlayer)
     {
-        ItemStack itemstack = par1EntityPlayer.inventory.armorInventory[3];
+        final ItemStack itemstack = par1EntityPlayer.inventory.armorInventory[3];
 
         if (itemstack != null && itemstack.itemID == Block.pumpkin.blockID)
         {
@@ -131,11 +131,11 @@ public class EntityEnderman extends EntityMob
         }
         else
         {
-            Vec3 vec3 = par1EntityPlayer.getLook(1.0F).normalize();
+            final Vec3 vec3 = par1EntityPlayer.getLook(1.0F).normalize();
             Vec3 vec31 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX - par1EntityPlayer.posX, this.boundingBox.minY + (double)(this.height / 2.0F) - (par1EntityPlayer.posY + (double)par1EntityPlayer.getEyeHeight()), this.posZ - par1EntityPlayer.posZ);
-            double d0 = vec31.lengthVector();
+            final double d0 = vec31.lengthVector();
             vec31 = vec31.normalize();
-            double d1 = vec3.dotProduct(vec31);
+            final double d1 = vec3.dotProduct(vec31);
             return d1 > 1.0D - 0.025D / d0 ? par1EntityPlayer.canEntityBeSeen(this) : false;
         }
     }
@@ -153,7 +153,7 @@ public class EntityEnderman extends EntityMob
 
         if (this.lastEntityToAttack != this.entityToAttack)
         {
-            AttributeInstance attributeinstance = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
+            final AttributeInstance attributeinstance = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
             attributeinstance.removeModifier(attackingSpeedBoostModifier);
 
             if (this.entityToAttack != null)
@@ -167,9 +167,9 @@ public class EntityEnderman extends EntityMob
 
         if (!this.worldObj.isRemote && this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing"))
         {
-            int j;
-            int k;
-            int l;
+            final int j;
+            final int k;
+            final int l;
 
             if (this.getCarried() == 0)
             {
@@ -200,7 +200,7 @@ public class EntityEnderman extends EntityMob
                 j = MathHelper.floor_double(this.posY + this.rand.nextDouble() * 2.0D);
                 k = MathHelper.floor_double(this.posZ - 1.0D + this.rand.nextDouble() * 2.0D);
                 l = this.worldObj.getBlockId(i, j, k);
-                int i1 = this.worldObj.getBlockId(i, j - 1, k);
+                final int i1 = this.worldObj.getBlockId(i, j - 1, k);
 
                 if (l == 0 && i1 > 0 && Block.blocksList[i1].renderAsNormalBlock())
                 {
@@ -223,7 +223,7 @@ public class EntityEnderman extends EntityMob
 
         if (this.worldObj.isDaytime() && !this.worldObj.isRemote)
         {
-            float f = this.getBrightness(1.0F);
+            final float f = this.getBrightness(1.0F);
 
             if (f > 0.5F && this.worldObj.canBlockSeeTheSky(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ)) && this.rand.nextFloat() * 30.0F < (f - 0.4F) * 2.0F)
             {
@@ -287,46 +287,46 @@ public class EntityEnderman extends EntityMob
      */
     protected boolean teleportRandomly()
     {
-        double d0 = this.posX + (this.rand.nextDouble() - 0.5D) * 64.0D;
-        double d1 = this.posY + (double)(this.rand.nextInt(64) - 32);
-        double d2 = this.posZ + (this.rand.nextDouble() - 0.5D) * 64.0D;
+        final double d0 = this.posX + (this.rand.nextDouble() - 0.5D) * 64.0D;
+        final double d1 = this.posY + (double)(this.rand.nextInt(64) - 32);
+        final double d2 = this.posZ + (this.rand.nextDouble() - 0.5D) * 64.0D;
         return this.teleportTo(d0, d1, d2);
     }
 
     /**
      * Teleport the enderman to another entity
      */
-    protected boolean teleportToEntity(Entity par1Entity)
+    protected boolean teleportToEntity(final Entity par1Entity)
     {
         Vec3 vec3 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX - par1Entity.posX, this.boundingBox.minY + (double)(this.height / 2.0F) - par1Entity.posY + (double)par1Entity.getEyeHeight(), this.posZ - par1Entity.posZ);
         vec3 = vec3.normalize();
-        double d0 = 16.0D;
-        double d1 = this.posX + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3.xCoord * d0;
-        double d2 = this.posY + (double)(this.rand.nextInt(16) - 8) - vec3.yCoord * d0;
-        double d3 = this.posZ + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3.zCoord * d0;
+        final double d0 = 16.0D;
+        final double d1 = this.posX + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3.xCoord * d0;
+        final double d2 = this.posY + (double)(this.rand.nextInt(16) - 8) - vec3.yCoord * d0;
+        final double d3 = this.posZ + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3.zCoord * d0;
         return this.teleportTo(d1, d2, d3);
     }
 
     /**
      * Teleport the enderman
      */
-    protected boolean teleportTo(double par1, double par3, double par5)
+    protected boolean teleportTo(final double par1, final double par3, final double par5)
     {
-        EnderTeleportEvent event = new EnderTeleportEvent(this, par1, par3, par5, 0);
+        final EnderTeleportEvent event = new EnderTeleportEvent(this, par1, par3, par5, 0);
         if (MinecraftForge.EVENT_BUS.post(event)){
             return false;
         }
 
-        double d3 = this.posX;
-        double d4 = this.posY;
-        double d5 = this.posZ;
+        final double d3 = this.posX;
+        final double d4 = this.posY;
+        final double d5 = this.posZ;
         this.posX = event.targetX;
         this.posY = event.targetY;
         this.posZ = event.targetZ;
         boolean flag = false;
-        int i = MathHelper.floor_double(this.posX);
+        final int i = MathHelper.floor_double(this.posX);
         int j = MathHelper.floor_double(this.posY);
-        int k = MathHelper.floor_double(this.posZ);
+        final int k = MathHelper.floor_double(this.posZ);
         int l;
 
         if (this.worldObj.blockExists(i, j, k))
@@ -351,7 +351,7 @@ public class EntityEnderman extends EntityMob
             if (flag1)
             {
                 // CraftBukkit start - Teleport event
-                EntityTeleportEvent teleport = new EntityTeleportEvent(this.getBukkitEntity(), new Location(this.worldObj.getWorld(), d3, d4, d5), new Location(this.worldObj.getWorld(), this.posX, this.posY, this.posZ));
+                final EntityTeleportEvent teleport = new EntityTeleportEvent(this.getBukkitEntity(), new Location(this.worldObj.getWorld(), d3, d4, d5), new Location(this.worldObj.getWorld(), this.posX, this.posY, this.posZ));
                 this.worldObj.getServer().getPluginManager().callEvent(teleport);
 
                 if (teleport.isCancelled())
@@ -359,7 +359,7 @@ public class EntityEnderman extends EntityMob
                     return false;
                 }
 
-                Location to = teleport.getTo();
+                final Location to = teleport.getTo();
                 this.setPosition(to.getX(), to.getY(), to.getZ());
                 // CraftBukkit end
 
@@ -377,17 +377,17 @@ public class EntityEnderman extends EntityMob
         }
         else
         {
-            short short1 = 128;
+            final short short1 = 128;
 
             for (l = 0; l < short1; ++l)
             {
-                double d6 = (double)l / ((double)short1 - 1.0D);
-                float f = (this.rand.nextFloat() - 0.5F) * 0.2F;
-                float f1 = (this.rand.nextFloat() - 0.5F) * 0.2F;
-                float f2 = (this.rand.nextFloat() - 0.5F) * 0.2F;
-                double d7 = d3 + (this.posX - d3) * d6 + (this.rand.nextDouble() - 0.5D) * (double)this.width * 2.0D;
-                double d8 = d4 + (this.posY - d4) * d6 + this.rand.nextDouble() * (double)this.height;
-                double d9 = d5 + (this.posZ - d5) * d6 + (this.rand.nextDouble() - 0.5D) * (double)this.width * 2.0D;
+                final double d6 = (double)l / ((double)short1 - 1.0D);
+                final float f = (this.rand.nextFloat() - 0.5F) * 0.2F;
+                final float f1 = (this.rand.nextFloat() - 0.5F) * 0.2F;
+                final float f2 = (this.rand.nextFloat() - 0.5F) * 0.2F;
+                final double d7 = d3 + (this.posX - d3) * d6 + (this.rand.nextDouble() - 0.5D) * (double)this.width * 2.0D;
+                final double d8 = d4 + (this.posY - d4) * d6 + this.rand.nextDouble() * (double)this.height;
+                final double d9 = d5 + (this.posZ - d5) * d6 + (this.rand.nextDouble() - 0.5D) * (double)this.width * 2.0D;
                 this.worldObj.spawnParticle("portal", d7, d8, d9, (double)f, (double)f1, (double)f2);
             }
 
@@ -433,13 +433,13 @@ public class EntityEnderman extends EntityMob
      * Drop 0-2 items of this living's type. @param par1 - Whether this entity has recently been hit by a player. @param
      * par2 - Level of Looting used to kill this mob.
      */
-    protected void dropFewItems(boolean par1, int par2)
+    protected void dropFewItems(final boolean par1, final int par2)
     {
-        int j = this.getDropItemId();
+        final int j = this.getDropItemId();
 
         if (j > 0)
         {
-            int k = this.rand.nextInt(2 + par2);
+            final int k = this.rand.nextInt(2 + par2);
 
             for (int l = 0; l < k; ++l)
             {
@@ -451,7 +451,7 @@ public class EntityEnderman extends EntityMob
     /**
      * Set the id of the block an enderman carries
      */
-    public void setCarried(int par1)
+    public void setCarried(final int par1)
     {
         this.dataWatcher.updateObject(16, Byte.valueOf((byte)(par1 & 255)));
     }
@@ -467,7 +467,7 @@ public class EntityEnderman extends EntityMob
     /**
      * Set the metadata of the block an enderman carries
      */
-    public void setCarryingData(int par1)
+    public void setCarryingData(final int par1)
     {
         this.dataWatcher.updateObject(17, Byte.valueOf((byte)(par1 & 255)));
     }
@@ -483,7 +483,7 @@ public class EntityEnderman extends EntityMob
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2)
     {
         if (this.isEntityInvulnerable())
         {
@@ -524,7 +524,7 @@ public class EntityEnderman extends EntityMob
         return this.dataWatcher.getWatchableObjectByte(18) > 0;
     }
 
-    public void setScreaming(boolean par1)
+    public void setScreaming(final boolean par1)
     {
         this.dataWatcher.updateObject(18, Byte.valueOf((byte)(par1 ? 1 : 0)));
     }

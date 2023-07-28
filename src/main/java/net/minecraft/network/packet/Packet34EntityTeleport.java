@@ -29,7 +29,7 @@ public class Packet34EntityTeleport extends Packet
 
     public Packet34EntityTeleport() {}
 
-    public Packet34EntityTeleport(Entity par1Entity)
+    public Packet34EntityTeleport(final Entity par1Entity)
     {
         this.entityId = par1Entity.entityId;
         this.xPosition = MathHelper.floor_double(par1Entity.posX * 32.0D);
@@ -39,7 +39,7 @@ public class Packet34EntityTeleport extends Packet
         this.pitch = (byte)((int)(par1Entity.rotationPitch * 256.0F / 360.0F));
     }
 
-    public Packet34EntityTeleport(int par1, int par2, int par3, int par4, byte par5, byte par6)
+    public Packet34EntityTeleport(final int par1, final int par2, final int par3, final int par4, final byte par5, final byte par6)
     {
         this.entityId = par1;
         this.xPosition = par2;
@@ -52,7 +52,7 @@ public class Packet34EntityTeleport extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.entityId = par1DataInput.readInt();
         this.xPosition = par1DataInput.readInt();
@@ -65,7 +65,7 @@ public class Packet34EntityTeleport extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.entityId);
         par1DataOutput.writeInt(this.xPosition);
@@ -78,7 +78,7 @@ public class Packet34EntityTeleport extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleEntityTeleport(this);
     }
@@ -103,9 +103,9 @@ public class Packet34EntityTeleport extends Packet
      * eg return packet30entity.entityId == entityId; WARNING : will throw if you compare a packet to a different packet
      * class
      */
-    public boolean containsSameEntityIDAs(Packet par1Packet)
+    public boolean containsSameEntityIDAs(final Packet par1Packet)
     {
-        Packet34EntityTeleport packet34entityteleport = (Packet34EntityTeleport)par1Packet;
+        final Packet34EntityTeleport packet34entityteleport = (Packet34EntityTeleport)par1Packet;
         return packet34entityteleport.entityId == this.entityId;
     }
 }

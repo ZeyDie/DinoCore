@@ -13,21 +13,21 @@ class RunnableTitleScreen extends Thread
 {
     final GuiMainMenu theMainMenu;
 
-    RunnableTitleScreen(GuiMainMenu par1GuiMainMenu)
+    RunnableTitleScreen(final GuiMainMenu par1GuiMainMenu)
     {
         this.theMainMenu = par1GuiMainMenu;
     }
 
     public void run()
     {
-        McoClient mcoclient = new McoClient(GuiMainMenu.func_110348_a(this.theMainMenu).getSession());
+        final McoClient mcoclient = new McoClient(GuiMainMenu.func_110348_a(this.theMainMenu).getSession());
         boolean flag = false;
 
         for (int i = 0; i < 3; ++i)
         {
             try
             {
-                Boolean obool = mcoclient.func_96375_b();
+                final Boolean obool = mcoclient.func_96375_b();
 
                 if (obool.booleanValue())
                 {
@@ -36,15 +36,15 @@ class RunnableTitleScreen extends Thread
 
                 GuiMainMenu.func_110349_a(obool.booleanValue());
             }
-            catch (ExceptionRetryCall exceptionretrycall)
+            catch (final ExceptionRetryCall exceptionretrycall)
             {
                 flag = true;
             }
-            catch (ExceptionMcoService exceptionmcoservice)
+            catch (final ExceptionMcoService exceptionmcoservice)
             {
                 GuiMainMenu.func_130018_c(this.theMainMenu).getLogAgent().logSevere(exceptionmcoservice.toString());
             }
-            catch (IOException ioexception)
+            catch (final IOException ioexception)
             {
                 GuiMainMenu.func_130019_d(this.theMainMenu).getLogAgent().logWarning("Realms: could not parse response");
             }
@@ -58,7 +58,7 @@ class RunnableTitleScreen extends Thread
             {
                 Thread.sleep(10000L);
             }
-            catch (InterruptedException interruptedexception)
+            catch (final InterruptedException interruptedexception)
             {
                 Thread.currentThread().interrupt();
             }

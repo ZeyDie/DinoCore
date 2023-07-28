@@ -10,7 +10,7 @@ public class ComponentStrongholdPrison extends ComponentStronghold
 {
     public ComponentStrongholdPrison() {}
 
-    public ComponentStrongholdPrison(int par1, Random par2Random, StructureBoundingBox par3StructureBoundingBox, int par4)
+    public ComponentStrongholdPrison(final int par1, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox, final int par4)
     {
         super(par1);
         this.coordBaseMode = par4;
@@ -21,14 +21,14 @@ public class ComponentStrongholdPrison extends ComponentStronghold
     /**
      * Initiates construction of the Structure Component picked, at the current Location of StructGen
      */
-    public void buildComponent(StructureComponent par1StructureComponent, List par2List, Random par3Random)
+    public void buildComponent(final StructureComponent par1StructureComponent, final List par2List, final Random par3Random)
     {
         this.getNextComponentNormal((ComponentStrongholdStairs2)par1StructureComponent, par2List, par3Random, 1, 1);
     }
 
-    public static ComponentStrongholdPrison findValidPlacement(List par0List, Random par1Random, int par2, int par3, int par4, int par5, int par6)
+    public static ComponentStrongholdPrison findValidPlacement(final List par0List, final Random par1Random, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
-        StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(par2, par3, par4, -1, -1, 0, 9, 5, 11, par5);
+        final StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(par2, par3, par4, -1, -1, 0, 9, 5, 11, par5);
         return canStrongholdGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(par0List, structureboundingbox) == null ? new ComponentStrongholdPrison(par6, par1Random, structureboundingbox, par5) : null;
     }
 
@@ -36,7 +36,7 @@ public class ComponentStrongholdPrison extends ComponentStronghold
      * second Part of Structure generating, this for example places Spiderwebs, Mob Spawners, it closes Mineshafts at
      * the end, it adds Fences...
      */
-    public boolean addComponentParts(World par1World, Random par2Random, StructureBoundingBox par3StructureBoundingBox)
+    public boolean addComponentParts(final World par1World, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox)
     {
         if (this.isLiquidInStructureBoundingBox(par1World, par3StructureBoundingBox))
         {

@@ -27,7 +27,7 @@ public abstract class Event {
      * @param isAsync true indicates the event will fire asynchronously, false
      *     by default from default constructor
      */
-    public Event(boolean isAsync) {
+    public Event(final boolean isAsync) {
         this.async = isAsync;
     }
 

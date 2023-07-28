@@ -19,14 +19,14 @@ public class VersionInfo {
 
     public VersionInfo()
     {
-        InputStream installProfile = getClass().getResourceAsStream("/install_profile.json");
-        JdomParser parser = new JdomParser();
+        final InputStream installProfile = getClass().getResourceAsStream("/install_profile.json");
+        final JdomParser parser = new JdomParser();
 
         try
         {
             versionData = parser.parse(new InputStreamReader(installProfile, Charsets.UTF_8));
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             throw Throwables.propagate(e);
         }
@@ -41,18 +41,18 @@ public class VersionInfo {
     {
         return INSTANCE.versionData.getStringValue("install","target");
     }
-    public static File getLibraryPath(File root)
+    public static File getLibraryPath(final File root)
     {
-        String path = INSTANCE.versionData.getStringValue("install","path");
-        String[] split = Iterables.toArray(Splitter.on(':').omitEmptyStrings().split(path), String.class);
+        final String path = INSTANCE.versionData.getStringValue("install","path");
+        final String[] split = Iterables.toArray(Splitter.on(':').omitEmptyStrings().split(path), String.class);
         File dest = root;
-        Iterable<String> subSplit = Splitter.on('.').omitEmptyStrings().split(split[0]);
-        for (String part : subSplit)
+        final Iterable<String> subSplit = Splitter.on('.').omitEmptyStrings().split(split[0]);
+        for (final String part : subSplit)
         {
             dest = new File(dest, part);
         }
         dest = new File(new File(dest, split[1]), split[2]);
-        String fileName = split[1]+"-"+split[2]+".jar";
+        final String fileName = split[1]+"-"+split[2]+".jar";
         return new File(dest,fileName);
     }
 
@@ -76,7 +76,7 @@ public class VersionInfo {
         return INSTANCE.versionData.getNode("versionInfo");
     }
 
-    public static File getMinecraftFile(File path)
+    public static File getMinecraftFile(final File path)
     {
         return new File(new File(path, getMinecraftVersion()),getMinecraftVersion()+".jar");
     }
@@ -84,15 +84,15 @@ public class VersionInfo {
     {
         return INSTANCE.versionData.getStringValue("install","filePath");
     }
-    public static void extractFile(File path) throws IOException
+    public static void extractFile(final File path) throws IOException
     {
         INSTANCE.doFileExtract(path);
     }
 
-    private void doFileExtract(File path) throws IOException
+    private void doFileExtract(final File path) throws IOException
     {
-        InputStream inputStream = getClass().getResourceAsStream("/"+getContainedFile());
-        OutputSupplier<FileOutputStream> outputSupplier = Files.newOutputStreamSupplier(path);
+        final InputStream inputStream = getClass().getResourceAsStream("/"+getContainedFile());
+        final OutputSupplier<FileOutputStream> outputSupplier = Files.newOutputStreamSupplier(path);
         System.out.println("doFileExtract path = " + path.getAbsolutePath() + ", inputStream = " + inputStream + ", outputSupplier = " + outputSupplier);
         ByteStreams.copy(inputStream, outputSupplier);
     }

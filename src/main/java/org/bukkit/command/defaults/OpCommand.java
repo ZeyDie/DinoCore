@@ -25,9 +25,9 @@ public class OpCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
-        if (args.length != 1 || args[0].length() == 0) {
+        if (args.length != 1 || args[0].isEmpty()) {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
@@ -40,7 +40,7 @@ public class OpCommand extends VanillaCommand {
         }
         //TODO ZoomCodeEnd
 
-        OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
+        final OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
         player.setOp(true);
 
         Command.broadcastCommandMessage(sender, "Opped " + args[0]);
@@ -48,7 +48,7 @@ public class OpCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) throws IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");
@@ -58,16 +58,16 @@ public class OpCommand extends VanillaCommand {
                 return ImmutableList.of();
             }
 
-            String lastWord = args[0];
-            if (lastWord.length() == 0) {
+            final String lastWord = args[0];
+            if (lastWord.isEmpty()) {
                 return ImmutableList.of();
             }
 
-            Player senderPlayer = (Player) sender;
+            final Player senderPlayer = (Player) sender;
 
-            ArrayList<String> matchedPlayers = new ArrayList<String>();
-            for (Player player : sender.getServer().getOnlinePlayers()) {
-                String name = player.getName();
+            final ArrayList<String> matchedPlayers = new ArrayList<String>();
+            for (final Player player : sender.getServer().getOnlinePlayers()) {
+                final String name = player.getName();
                 if (!senderPlayer.canSee(player) || player.isOp()) {
                     continue;
                 }

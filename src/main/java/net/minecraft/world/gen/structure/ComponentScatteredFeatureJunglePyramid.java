@@ -21,24 +21,24 @@ public class ComponentScatteredFeatureJunglePyramid extends ComponentScatteredFe
     private boolean field_74946_k;
 
     /** List of Chest contents to be generated in the Jungle Pyramid chests. */
-    public static final WeightedRandomChestContent[] junglePyramidsChestContents = new WeightedRandomChestContent[] {new WeightedRandomChestContent(Item.diamond.itemID, 0, 1, 3, 3), new WeightedRandomChestContent(Item.ingotIron.itemID, 0, 1, 5, 10), new WeightedRandomChestContent(Item.ingotGold.itemID, 0, 2, 7, 15), new WeightedRandomChestContent(Item.emerald.itemID, 0, 1, 3, 2), new WeightedRandomChestContent(Item.bone.itemID, 0, 4, 6, 20), new WeightedRandomChestContent(Item.rottenFlesh.itemID, 0, 3, 7, 16), new WeightedRandomChestContent(Item.saddle.itemID, 0, 1, 1, 3), new WeightedRandomChestContent(Item.horseArmorIron.itemID, 0, 1, 1, 1), new WeightedRandomChestContent(Item.horseArmorGold.itemID, 0, 1, 1, 1), new WeightedRandomChestContent(Item.horseArmorDiamond.itemID, 0, 1, 1, 1)};
+    public static final WeightedRandomChestContent[] junglePyramidsChestContents = {new WeightedRandomChestContent(Item.diamond.itemID, 0, 1, 3, 3), new WeightedRandomChestContent(Item.ingotIron.itemID, 0, 1, 5, 10), new WeightedRandomChestContent(Item.ingotGold.itemID, 0, 2, 7, 15), new WeightedRandomChestContent(Item.emerald.itemID, 0, 1, 3, 2), new WeightedRandomChestContent(Item.bone.itemID, 0, 4, 6, 20), new WeightedRandomChestContent(Item.rottenFlesh.itemID, 0, 3, 7, 16), new WeightedRandomChestContent(Item.saddle.itemID, 0, 1, 1, 3), new WeightedRandomChestContent(Item.horseArmorIron.itemID, 0, 1, 1, 1), new WeightedRandomChestContent(Item.horseArmorGold.itemID, 0, 1, 1, 1), new WeightedRandomChestContent(Item.horseArmorDiamond.itemID, 0, 1, 1, 1)};
 
     /**
      * List of Dispenser contents to be generated in the Jungle Pyramid dispensers.
      */
-    public static final WeightedRandomChestContent[] junglePyramidsDispenserContents = new WeightedRandomChestContent[] {new WeightedRandomChestContent(Item.arrow.itemID, 0, 2, 7, 30)};
+    public static final WeightedRandomChestContent[] junglePyramidsDispenserContents = {new WeightedRandomChestContent(Item.arrow.itemID, 0, 2, 7, 30)};
 
     /** List of random stones to be generated in the Jungle Pyramid. */
     private static StructureScatteredFeatureStones junglePyramidsRandomScatteredStones = new StructureScatteredFeatureStones((ComponentScatteredFeaturePieces2)null);
 
     public ComponentScatteredFeatureJunglePyramid() {}
 
-    public ComponentScatteredFeatureJunglePyramid(Random par1Random, int par2, int par3)
+    public ComponentScatteredFeatureJunglePyramid(final Random par1Random, final int par2, final int par3)
     {
         super(par1Random, par2, 64, par3, 12, 10, 15);
     }
 
-    protected void func_143012_a(NBTTagCompound par1NBTTagCompound)
+    protected void func_143012_a(final NBTTagCompound par1NBTTagCompound)
     {
         super.func_143012_a(par1NBTTagCompound);
         par1NBTTagCompound.setBoolean("placedMainChest", this.field_74947_h);
@@ -47,7 +47,7 @@ public class ComponentScatteredFeatureJunglePyramid extends ComponentScatteredFe
         par1NBTTagCompound.setBoolean("placedTrap2", this.field_74946_k);
     }
 
-    protected void func_143011_b(NBTTagCompound par1NBTTagCompound)
+    protected void func_143011_b(final NBTTagCompound par1NBTTagCompound)
     {
         super.func_143011_b(par1NBTTagCompound);
         this.field_74947_h = par1NBTTagCompound.getBoolean("placedMainChest");
@@ -60,7 +60,7 @@ public class ComponentScatteredFeatureJunglePyramid extends ComponentScatteredFe
      * second Part of Structure generating, this for example places Spiderwebs, Mob Spawners, it closes Mineshafts at
      * the end, it adds Fences...
      */
-    public boolean addComponentParts(World par1World, Random par2Random, StructureBoundingBox par3StructureBoundingBox)
+    public boolean addComponentParts(final World par1World, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox)
     {
         if (!this.func_74935_a(par1World, par3StructureBoundingBox, 0))
         {
@@ -68,10 +68,10 @@ public class ComponentScatteredFeatureJunglePyramid extends ComponentScatteredFe
         }
         else
         {
-            int i = this.getMetadataWithOffset(Block.stairsCobblestone.blockID, 3);
-            int j = this.getMetadataWithOffset(Block.stairsCobblestone.blockID, 2);
-            int k = this.getMetadataWithOffset(Block.stairsCobblestone.blockID, 0);
-            int l = this.getMetadataWithOffset(Block.stairsCobblestone.blockID, 1);
+            final int i = this.getMetadataWithOffset(Block.stairsCobblestone.blockID, 3);
+            final int j = this.getMetadataWithOffset(Block.stairsCobblestone.blockID, 2);
+            final int k = this.getMetadataWithOffset(Block.stairsCobblestone.blockID, 0);
+            final int l = this.getMetadataWithOffset(Block.stairsCobblestone.blockID, 1);
             this.fillWithRandomizedBlocks(par1World, par3StructureBoundingBox, 0, -4, 0, this.scatteredFeatureSizeX - 1, 0, this.scatteredFeatureSizeZ - 1, false, par2Random, junglePyramidsRandomScatteredStones);
             this.fillWithRandomizedBlocks(par1World, par3StructureBoundingBox, 2, 1, 2, 9, 2, 2, false, par2Random, junglePyramidsRandomScatteredStones);
             this.fillWithRandomizedBlocks(par1World, par3StructureBoundingBox, 2, 1, 12, 9, 2, 12, false, par2Random, junglePyramidsRandomScatteredStones);
@@ -190,8 +190,8 @@ public class ComponentScatteredFeatureJunglePyramid extends ComponentScatteredFe
             this.placeBlockAtCurrentPosition(par1World, Block.redstoneWire.blockID, 0, 4, -3, 1, par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(par1World, Block.cobblestoneMossy.blockID, 0, 3, -3, 1, par3StructureBoundingBox);
 
-            ChestGenHooks dispenser = ChestGenHooks.getInfo(PYRAMID_JUNGLE_DISPENSER);
-            ChestGenHooks chest = ChestGenHooks.getInfo(PYRAMID_JUNGLE_CHEST);
+            final ChestGenHooks dispenser = ChestGenHooks.getInfo(PYRAMID_JUNGLE_DISPENSER);
+            final ChestGenHooks chest = ChestGenHooks.getInfo(PYRAMID_JUNGLE_CHEST);
 
             if (!this.field_74945_j)
             {

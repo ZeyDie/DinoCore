@@ -13,17 +13,17 @@ public class WorldGenSpikes extends WorldGenerator
      */
     private int replaceID;
 
-    public WorldGenSpikes(int par1)
+    public WorldGenSpikes(final int par1)
     {
         this.replaceID = par1;
     }
 
-    public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
+    public boolean generate(final World par1World, final Random par2Random, final int par3, final int par4, final int par5)
     {
         if (par1World.isAirBlock(par3, par4, par5) && par1World.getBlockId(par3, par4 - 1, par5) == this.replaceID)
         {
-            int l = par2Random.nextInt(32) + 6;
-            int i1 = par2Random.nextInt(4) + 1;
+            final int l = par2Random.nextInt(32) + 6;
+            final int i1 = par2Random.nextInt(4) + 1;
             int j1;
             int k1;
             int l1;
@@ -50,7 +50,7 @@ public class WorldGenSpikes extends WorldGenerator
                     for (l1 = par5 - i1; l1 <= par5 + i1; ++l1)
                     {
                         i2 = k1 - par3;
-                        int j2 = l1 - par5;
+                        final int j2 = l1 - par5;
 
                         if (i2 * i2 + j2 * j2 <= i1 * i1 + 1)
                         {
@@ -60,7 +60,7 @@ public class WorldGenSpikes extends WorldGenerator
                 }
             }
 
-            EntityEnderCrystal entityendercrystal = new EntityEnderCrystal(par1World);
+            final EntityEnderCrystal entityendercrystal = new EntityEnderCrystal(par1World);
             entityendercrystal.setLocationAndAngles((double)((float)par3 + 0.5F), (double)(par4 + l), (double)((float)par5 + 0.5F), par2Random.nextFloat() * 360.0F, 0.0F);
             par1World.spawnEntityInWorld(entityendercrystal);
             par1World.setBlock(par3, par4 + l, par5, Block.bedrock.blockID, 0, 2);

@@ -12,7 +12,7 @@ class CallableChunkPosHash implements Callable
 
     final MapGenStructure theMapStructureGenerator;
 
-    CallableChunkPosHash(MapGenStructure par1MapGenStructure, int par2, int par3)
+    CallableChunkPosHash(final MapGenStructure par1MapGenStructure, final int par2, final int par3)
     {
         this.theMapStructureGenerator = par1MapGenStructure;
         this.field_85165_a = par2;

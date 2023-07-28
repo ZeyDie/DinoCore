@@ -17,11 +17,11 @@ public class PacketCount
     /** Used to make threads queue to add packets */
     private static final Object lock = new Object();
 
-    public static void countPacket(int par0, long par1)
+    public static void countPacket(final int par0, final long par1)
     {
         if (allowCounting)
         {
-            Object object = lock;
+            final Object object = lock;
 
             synchronized (lock)
             {

@@ -27,7 +27,7 @@ public final class NettyEncryptingEncoder extends MessageToByteEncoder<ByteBuf> 
         if (this.firstSkipped)
             try {
                 this.translator.writeBytes(paramByteBuf1, paramByteBuf2);
-            } catch (ShortBufferException e) {
+            } catch (final ShortBufferException e) {
                 throw new RuntimeException(e);
             }
         else {

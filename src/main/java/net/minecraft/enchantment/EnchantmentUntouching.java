@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 
 public class EnchantmentUntouching extends Enchantment
 {
-    protected EnchantmentUntouching(int par1, int par2)
+    protected EnchantmentUntouching(final int par1, final int par2)
     {
         super(par1, par2, EnumEnchantmentType.digger);
         this.setName("untouching");
@@ -14,7 +14,7 @@ public class EnchantmentUntouching extends Enchantment
     /**
      * Returns the minimal value of enchantability needed on the enchantment level passed.
      */
-    public int getMinEnchantability(int par1)
+    public int getMinEnchantability(final int par1)
     {
         return 15;
     }
@@ -22,7 +22,7 @@ public class EnchantmentUntouching extends Enchantment
     /**
      * Returns the maximum value of enchantability nedded on the enchantment level passed.
      */
-    public int getMaxEnchantability(int par1)
+    public int getMaxEnchantability(final int par1)
     {
         return super.getMinEnchantability(par1) + 50;
     }
@@ -38,12 +38,12 @@ public class EnchantmentUntouching extends Enchantment
     /**
      * Determines if the enchantment passed can be applyied together with this enchantment.
      */
-    public boolean canApplyTogether(Enchantment par1Enchantment)
+    public boolean canApplyTogether(final Enchantment par1Enchantment)
     {
         return super.canApplyTogether(par1Enchantment) && par1Enchantment.effectId != fortune.effectId;
     }
 
-    public boolean canApply(ItemStack par1ItemStack)
+    public boolean canApply(final ItemStack par1ItemStack)
     {
         return par1ItemStack.getItem().itemID == Item.shears.itemID ? true : super.canApply(par1ItemStack);
     }

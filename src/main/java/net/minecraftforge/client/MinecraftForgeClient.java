@@ -23,14 +23,14 @@ public class MinecraftForgeClient
      * @param renderer The IItemRenderer interface that handles rendering for
      * this item.
      */
-    public static void registerItemRenderer(int itemID, IItemRenderer renderer)
+    public static void registerItemRenderer(final int itemID, final IItemRenderer renderer)
     {
         customItemRenderers[itemID] = renderer;
     }
 
-    public static IItemRenderer getItemRenderer(ItemStack item, ItemRenderType type)
+    public static IItemRenderer getItemRenderer(final ItemStack item, final ItemRenderType type)
     {
-        IItemRenderer renderer = customItemRenderers[item.itemID];
+        final IItemRenderer renderer = customItemRenderers[item.itemID];
         if (renderer != null && renderer.handleRenderType(item, type))
         {
             return customItemRenderers[item.itemID];
@@ -62,7 +62,7 @@ public class MinecraftForgeClient
      */
     public static int reserveStencilBit()
     {
-        int bit = stencilBits.nextSetBit(0);
+        final int bit = stencilBits.nextSetBit(0);
         if (bit >= 0)
         {
             stencilBits.clear(bit);
@@ -75,7 +75,7 @@ public class MinecraftForgeClient
      *
      * @param bit The bit from {@link #reserveStencilBit()}
      */
-    public static void releaseStencilBit(int bit)
+    public static void releaseStencilBit(final int bit)
     {
         if (bit >= 0 && bit < getStencilBits())
         {

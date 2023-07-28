@@ -13,7 +13,7 @@ public class LanServer
     /** Last time this LanServer was seen. */
     private long timeLastSeen;
 
-    public LanServer(String par1Str, String par2Str)
+    public LanServer(final String par1Str, final String par2Str)
     {
         this.lanServerMotd = par1Str;
         this.lanServerIpPort = par2Str;

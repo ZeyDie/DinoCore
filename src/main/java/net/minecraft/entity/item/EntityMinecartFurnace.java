@@ -17,12 +17,12 @@ public class EntityMinecartFurnace extends EntityMinecart
     public double pushX;
     public double pushZ;
 
-    public EntityMinecartFurnace(World par1World)
+    public EntityMinecartFurnace(final World par1World)
     {
         super(par1World);
     }
 
-    public EntityMinecartFurnace(World par1World, double par2, double par4, double par6)
+    public EntityMinecartFurnace(final World par1World, final double par2, final double par4, final double par6)
     {
         super(par1World, par2, par4, par6);
     }
@@ -63,7 +63,7 @@ public class EntityMinecartFurnace extends EntityMinecart
         }
     }
 
-    public void killMinecart(DamageSource par1DamageSource)
+    public void killMinecart(final DamageSource par1DamageSource)
     {
         super.killMinecart(par1DamageSource);
 
@@ -73,7 +73,7 @@ public class EntityMinecartFurnace extends EntityMinecart
         }
     }
 
-    protected void updateOnTrack(int par1, int par2, int par3, double par4, double par6, int par8, int par9)
+    protected void updateOnTrack(final int par1, final int par2, final int par3, final double par4, final double par6, final int par8, final int par9)
     {
         super.updateOnTrack(par1, par2, par3, par4, par6, par8, par9);
         double d2 = this.pushX * this.pushX + this.pushZ * this.pushZ;
@@ -106,7 +106,7 @@ public class EntityMinecartFurnace extends EntityMinecart
             d0 = (double)MathHelper.sqrt_double(d0);
             this.pushX /= d0;
             this.pushZ /= d0;
-            double d1 = 0.05D;
+            final double d1 = 0.05D;
             this.motionX *= 0.800000011920929D;
             this.motionY *= 0.0D;
             this.motionZ *= 0.800000011920929D;
@@ -126,13 +126,13 @@ public class EntityMinecartFurnace extends EntityMinecart
     /**
      * First layer of player interaction
      */
-    public boolean interactFirst(EntityPlayer par1EntityPlayer)
+    public boolean interactFirst(final EntityPlayer par1EntityPlayer)
     {
         if(MinecraftForge.EVENT_BUS.post(new MinecartInteractEvent(this, par1EntityPlayer))) 
         {
             return true;
         }
-        ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
+        final ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
 
         if (itemstack != null && itemstack.itemID == Item.coal.itemID)
         {
@@ -152,7 +152,7 @@ public class EntityMinecartFurnace extends EntityMinecart
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    protected void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    protected void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setDouble("PushX", this.pushX);
@@ -163,7 +163,7 @@ public class EntityMinecartFurnace extends EntityMinecart
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    protected void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    protected void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.pushX = par1NBTTagCompound.getDouble("PushX");
@@ -176,7 +176,7 @@ public class EntityMinecartFurnace extends EntityMinecart
         return (this.dataWatcher.getWatchableObjectByte(16) & 1) != 0;
     }
 
-    protected void setMinecartPowered(boolean par1)
+    protected void setMinecartPowered(final boolean par1)
     {
         if (par1)
         {

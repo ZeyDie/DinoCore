@@ -16,9 +16,9 @@ class ChunkIOProvider implements AsynchronousExecutor.CallBackProvider<QueuedChu
     private final AtomicInteger threadNumber = new AtomicInteger(1);
 
     // async stuff
-    public net.minecraft.world.chunk.Chunk callStage1(QueuedChunk queuedChunk) throws RuntimeException {
-        net.minecraft.world.chunk.storage.AnvilChunkLoader loader = queuedChunk.loader;
-        Object[] data = loader.loadChunk__Async_CB(queuedChunk.world, queuedChunk.x, queuedChunk.z); // Cauldron
+    public net.minecraft.world.chunk.Chunk callStage1(final QueuedChunk queuedChunk) throws RuntimeException {
+        final net.minecraft.world.chunk.storage.AnvilChunkLoader loader = queuedChunk.loader;
+        final Object[] data = loader.loadChunk__Async_CB(queuedChunk.world, queuedChunk.x, queuedChunk.z); // Cauldron
 
         if (data != null) {
             queuedChunk.compound = (net.minecraft.nbt.NBTTagCompound) data[1];
@@ -29,7 +29,7 @@ class ChunkIOProvider implements AsynchronousExecutor.CallBackProvider<QueuedChu
     }
 
     // sync stuff
-    public void callStage2(QueuedChunk queuedChunk, net.minecraft.world.chunk.Chunk chunk) throws RuntimeException {
+    public void callStage2(final QueuedChunk queuedChunk, final net.minecraft.world.chunk.Chunk chunk) throws RuntimeException {
         if(chunk == null) {
             // If the chunk loading failed just do it synchronously (may generate)
             queuedChunk.provider.originalGetChunkAt(queuedChunk.x, queuedChunk.z);
@@ -49,7 +49,7 @@ class ChunkIOProvider implements AsynchronousExecutor.CallBackProvider<QueuedChu
             queuedChunk.provider.worldObj.timings.syncChunkLoadStructuresTimer.stopTiming(); // Spigot
         }
 
-        Server server = queuedChunk.provider.worldObj.getServer();
+        final Server server = queuedChunk.provider.worldObj.getServer();
         if (server != null) {
             server.getPluginManager().callEvent(new org.bukkit.event.world.ChunkLoadEvent(chunk.bukkitChunk, false));
         }
@@ -57,12 +57,12 @@ class ChunkIOProvider implements AsynchronousExecutor.CallBackProvider<QueuedChu
         chunk.populateChunk(queuedChunk.provider, queuedChunk.provider, queuedChunk.x, queuedChunk.z);
     }
 
-    public void callStage3(QueuedChunk queuedChunk, net.minecraft.world.chunk.Chunk chunk, Runnable runnable) throws RuntimeException {
+    public void callStage3(final QueuedChunk queuedChunk, final net.minecraft.world.chunk.Chunk chunk, final Runnable runnable) throws RuntimeException {
         runnable.run();
     }
 
-    public Thread newThread(Runnable runnable) {
-        Thread thread = new Thread(runnable, "Chunk I/O Executor Thread-" + threadNumber.getAndIncrement());
+    public Thread newThread(final Runnable runnable) {
+        final Thread thread = new Thread(runnable, "Chunk I/O Executor Thread-" + threadNumber.getAndIncrement());
         thread.setDaemon(true);
         return thread;
     }

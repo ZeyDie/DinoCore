@@ -29,10 +29,10 @@ public class EntitySlime extends EntityLiving implements IMob
     private int slimeJumpDelay;
     private Entity lastTarget; // CraftBukkit
 
-    public EntitySlime(World par1World)
+    public EntitySlime(final World par1World)
     {
         super(par1World);
-        int i = 1 << this.rand.nextInt(3);
+        final int i = 1 << this.rand.nextInt(3);
         this.yOffset = 0.0F;
         this.slimeJumpDelay = this.rand.nextInt(20) + 10;
         this.setSlimeSize(i);
@@ -45,7 +45,7 @@ public class EntitySlime extends EntityLiving implements IMob
     }
 
     // CraftBukkit - protected -> public
-    public void setSlimeSize(int par1)
+    public void setSlimeSize(final int par1)
     {
         this.dataWatcher.updateObject(16, new Byte((byte)par1));
         this.setSize(0.6F * (float)par1, 0.6F * (float)par1);
@@ -66,7 +66,7 @@ public class EntitySlime extends EntityLiving implements IMob
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setInteger("Size", this.getSlimeSize() - 1);
@@ -75,7 +75,7 @@ public class EntitySlime extends EntityLiving implements IMob
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.setSlimeSize(par1NBTTagCompound.getInteger("Size") + 1);
@@ -109,7 +109,7 @@ public class EntitySlime extends EntityLiving implements IMob
 
         this.squishFactor += (this.squishAmount - this.squishFactor) * 0.5F;
         this.prevSquishFactor = this.squishFactor;
-        boolean flag = this.onGround;
+        final boolean flag = this.onGround;
         super.onUpdate();
         int i;
 
@@ -119,10 +119,10 @@ public class EntitySlime extends EntityLiving implements IMob
 
             for (int j = 0; j < i * 8; ++j)
             {
-                float f = this.rand.nextFloat() * (float)Math.PI * 2.0F;
-                float f1 = this.rand.nextFloat() * 0.5F + 0.5F;
-                float f2 = MathHelper.sin(f) * (float)i * 0.5F * f1;
-                float f3 = MathHelper.cos(f) * (float)i * 0.5F * f1;
+                final float f = this.rand.nextFloat() * (float)Math.PI * 2.0F;
+                final float f1 = this.rand.nextFloat() * 0.5F + 0.5F;
+                final float f2 = MathHelper.sin(f) * (float)i * 0.5F * f1;
+                final float f3 = MathHelper.cos(f) * (float)i * 0.5F * f1;
                 this.worldObj.spawnParticle(this.getSlimeParticle(), this.posX + (double)f2, this.boundingBox.minY, this.posZ + (double)f3, 0.0D, 0.0D, 0.0D);
             }
 
@@ -229,13 +229,13 @@ public class EntitySlime extends EntityLiving implements IMob
      */
     public void setDead()
     {
-        int i = this.getSlimeSize();
+        final int i = this.getSlimeSize();
 
         if (!this.worldObj.isRemote && i > 1 && this.getHealth() <= 0.0F)
         {
             int j = 2 + this.rand.nextInt(3);
             // CraftBukkit start
-            SlimeSplitEvent event = new SlimeSplitEvent((org.bukkit.entity.Slime) this.getBukkitEntity(), j);
+            final SlimeSplitEvent event = new SlimeSplitEvent((org.bukkit.entity.Slime) this.getBukkitEntity(), j);
             this.worldObj.getServer().getPluginManager().callEvent(event);
 
             if (!event.isCancelled() && event.getCount() > 0)
@@ -251,9 +251,9 @@ public class EntitySlime extends EntityLiving implements IMob
 
             for (int k = 0; k < j; ++k)
             {
-                float f = ((float)(k % 2) - 0.5F) * (float)i / 4.0F;
-                float f1 = ((float)(k / 2) - 0.5F) * (float)i / 4.0F;
-                EntitySlime entityslime = this.createInstance();
+                final float f = ((float)(k % 2) - 0.5F) * (float)i / 4.0F;
+                final float f1 = ((float)(k / 2) - 0.5F) * (float)i / 4.0F;
+                final EntitySlime entityslime = this.createInstance();
                 entityslime.setSlimeSize(i / 2);
                 entityslime.setLocationAndAngles(this.posX + (double)f, this.posY + 0.5D, this.posZ + (double)f1, this.rand.nextFloat() * 360.0F, 0.0F);
                 this.worldObj.addEntity(entityslime, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SLIME_SPLIT); // CraftBukkit - SpawnReason
@@ -266,11 +266,11 @@ public class EntitySlime extends EntityLiving implements IMob
     /**
      * Called by a player entity when they collide with an entity
      */
-    public void onCollideWithPlayer(EntityPlayer par1EntityPlayer)
+    public void onCollideWithPlayer(final EntityPlayer par1EntityPlayer)
     {
         if (this.canDamagePlayer())
         {
-            int i = this.getSlimeSize();
+            final int i = this.getSlimeSize();
 
             if (this.canEntityBeSeen(par1EntityPlayer) && this.getDistanceSqToEntity(par1EntityPlayer) < 0.6D * (double)i * 0.6D * (double)i && par1EntityPlayer.attackEntityFrom(DamageSource.causeMobDamage(this), (float)this.getAttackStrength()))
             {
@@ -324,7 +324,7 @@ public class EntitySlime extends EntityLiving implements IMob
      */
     public boolean getCanSpawnHere()
     {
-        Chunk chunk = this.worldObj.getChunkFromBlockCoords(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posZ));
+        final Chunk chunk = this.worldObj.getChunkFromBlockCoords(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posZ));
 
         if (this.worldObj.getWorldInfo().getTerrainType().handleSlimeSpawnReduction(rand, worldObj))
         {
@@ -334,7 +334,7 @@ public class EntitySlime extends EntityLiving implements IMob
         {
             if (this.getSlimeSize() == 1 || this.worldObj.difficultySetting > 0)
             {
-                BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posZ));
+                final BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posZ));
 
                 if (biomegenbase == BiomeGenBase.swampland && this.posY > 50.0D && this.posY < 70.0D && this.rand.nextFloat() < 0.5F && this.rand.nextFloat() < this.worldObj.getCurrentMoonPhaseFactor() && this.worldObj.getBlockLightValue(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ)) <= this.rand.nextInt(8))
                 {

@@ -14,7 +14,7 @@ public class BrewEvent extends BlockEvent implements Cancellable {
     private BrewerInventory contents;
     private boolean cancelled;
 
-    public BrewEvent(Block brewer, BrewerInventory contents) {
+    public BrewEvent(final Block brewer, final BrewerInventory contents) {
         super(brewer);
         this.contents = contents;
     }
@@ -32,7 +32,7 @@ public class BrewEvent extends BlockEvent implements Cancellable {
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         cancelled = cancel;
     }
 

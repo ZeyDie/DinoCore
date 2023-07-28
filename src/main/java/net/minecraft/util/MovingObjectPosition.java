@@ -34,7 +34,7 @@ public class MovingObjectPosition
     /** Used to add extra hit info */
     public Object hitInfo = null;
     
-    public MovingObjectPosition(int par1, int par2, int par3, int par4, Vec3 par5Vec3)
+    public MovingObjectPosition(final int par1, final int par2, final int par3, final int par4, final Vec3 par5Vec3)
     {
         this.typeOfHit = EnumMovingObjectType.TILE;
         this.blockX = par1;
@@ -44,7 +44,7 @@ public class MovingObjectPosition
         this.hitVec = par5Vec3.myVec3LocalPool.getVecFromPool(par5Vec3.xCoord, par5Vec3.yCoord, par5Vec3.zCoord);
     }
 
-    public MovingObjectPosition(Entity par1Entity)
+    public MovingObjectPosition(final Entity par1Entity)
     {
         this.typeOfHit = EnumMovingObjectType.ENTITY;
         this.entityHit = par1Entity;

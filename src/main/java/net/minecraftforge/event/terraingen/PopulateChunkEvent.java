@@ -13,7 +13,7 @@ public class PopulateChunkEvent extends ChunkProviderEvent
     public final int chunkZ;
     public final boolean hasVillageGenerated;
     
-    public PopulateChunkEvent(IChunkProvider chunkProvider, World world, Random rand, int chunkX, int chunkZ, boolean hasVillageGenerated)
+    public PopulateChunkEvent(final IChunkProvider chunkProvider, final World world, final Random rand, final int chunkX, final int chunkZ, final boolean hasVillageGenerated)
     {
         super(chunkProvider);
         this.world = world;
@@ -25,7 +25,7 @@ public class PopulateChunkEvent extends ChunkProviderEvent
     
     public static class Pre extends PopulateChunkEvent
     {
-        public Pre(IChunkProvider chunkProvider, World world, Random rand, int chunkX, int chunkZ, boolean hasVillageGenerated)
+        public Pre(final IChunkProvider chunkProvider, final World world, final Random rand, final int chunkX, final int chunkZ, final boolean hasVillageGenerated)
         {
             super(chunkProvider, world, rand, chunkX, chunkZ, hasVillageGenerated);
         }
@@ -33,7 +33,7 @@ public class PopulateChunkEvent extends ChunkProviderEvent
     
     public static class Post extends PopulateChunkEvent
     {
-        public Post(IChunkProvider chunkProvider, World world, Random rand, int chunkX, int chunkZ, boolean hasVillageGenerated)
+        public Post(final IChunkProvider chunkProvider, final World world, final Random rand, final int chunkX, final int chunkZ, final boolean hasVillageGenerated)
         {
             super(chunkProvider, world, rand, chunkX, chunkZ, hasVillageGenerated);
         }
@@ -54,7 +54,7 @@ public class PopulateChunkEvent extends ChunkProviderEvent
         
         public final EventType type;
 
-        public Populate(IChunkProvider chunkProvider, World world, Random rand, int chunkX, int chunkZ, boolean hasVillageGenerated, EventType type)
+        public Populate(final IChunkProvider chunkProvider, final World world, final Random rand, final int chunkX, final int chunkZ, final boolean hasVillageGenerated, final EventType type)
         {
             super(chunkProvider, world, rand, chunkX, chunkZ, hasVillageGenerated);
             this.type = type;

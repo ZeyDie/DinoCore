@@ -7,7 +7,7 @@ public class EntityJumpHelper
     private EntityLiving entity;
     private boolean isJumping;
 
-    public EntityJumpHelper(EntityLiving par1EntityLiving)
+    public EntityJumpHelper(final EntityLiving par1EntityLiving)
     {
         this.entity = par1EntityLiving;
     }

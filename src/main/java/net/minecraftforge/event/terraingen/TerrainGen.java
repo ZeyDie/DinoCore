@@ -15,44 +15,44 @@ import java.util.Random;
 
 public abstract class TerrainGen
 {
-    public static NoiseGeneratorOctaves[] getModdedNoiseGenerators(World world, Random rand, NoiseGeneratorOctaves[] original)
+    public static NoiseGeneratorOctaves[] getModdedNoiseGenerators(final World world, final Random rand, final NoiseGeneratorOctaves[] original)
     {
-        InitNoiseGensEvent event = new InitNoiseGensEvent(world, rand, original);
+        final InitNoiseGensEvent event = new InitNoiseGensEvent(world, rand, original);
         MinecraftForge.TERRAIN_GEN_BUS.post(event);
         return event.newNoiseGens;
     }
 
-    public static MapGenBase getModdedMapGen(MapGenBase original, InitMapGenEvent.EventType type)
+    public static MapGenBase getModdedMapGen(final MapGenBase original, final InitMapGenEvent.EventType type)
     {
-        InitMapGenEvent event = new InitMapGenEvent(type, original);
+        final InitMapGenEvent event = new InitMapGenEvent(type, original);
         MinecraftForge.TERRAIN_GEN_BUS.post(event);
         return event.newGen;
     }
     
-    public static boolean populate(IChunkProvider chunkProvider, World world, Random rand, int chunkX, int chunkZ, boolean hasVillageGenerated, Populate.EventType type)
+    public static boolean populate(final IChunkProvider chunkProvider, final World world, final Random rand, final int chunkX, final int chunkZ, final boolean hasVillageGenerated, final Populate.EventType type)
     {
-        PopulateChunkEvent.Populate event = new PopulateChunkEvent.Populate(chunkProvider, world, rand, chunkX, chunkZ, hasVillageGenerated, type);
+        final PopulateChunkEvent.Populate event = new PopulateChunkEvent.Populate(chunkProvider, world, rand, chunkX, chunkZ, hasVillageGenerated, type);
         MinecraftForge.TERRAIN_GEN_BUS.post(event);
         return event.getResult() != Result.DENY;
     }
     
-    public static boolean decorate(World world, Random rand, int chunkX, int chunkZ, Decorate.EventType type)
+    public static boolean decorate(final World world, final Random rand, final int chunkX, final int chunkZ, final Decorate.EventType type)
     {
-        Decorate event = new Decorate(world, rand, chunkX, chunkZ, type);
+        final Decorate event = new Decorate(world, rand, chunkX, chunkZ, type);
         MinecraftForge.TERRAIN_GEN_BUS.post(event);
         return event.getResult() != Result.DENY;
     }
     
-    public static boolean generateOre(World world, Random rand, WorldGenerator generator, int worldX, int worldZ, GenerateMinable.EventType type)
+    public static boolean generateOre(final World world, final Random rand, final WorldGenerator generator, final int worldX, final int worldZ, final GenerateMinable.EventType type)
     {
-        GenerateMinable event = new GenerateMinable(world, rand, generator, worldX, worldZ, type);
+        final GenerateMinable event = new GenerateMinable(world, rand, generator, worldX, worldZ, type);
         MinecraftForge.ORE_GEN_BUS.post(event);
         return event.getResult() != Result.DENY;
     }
     
-    public static boolean saplingGrowTree(World world, Random rand, int x, int y, int z)
+    public static boolean saplingGrowTree(final World world, final Random rand, final int x, final int y, final int z)
     {
-        SaplingGrowTreeEvent event = new SaplingGrowTreeEvent(world, rand, x, y, z);
+        final SaplingGrowTreeEvent event = new SaplingGrowTreeEvent(world, rand, x, y, z);
         MinecraftForge.TERRAIN_GEN_BUS.post(event);
         return event.getResult() != Result.DENY;
     }

@@ -31,11 +31,11 @@ public final class SpawnerAnimals {
     /**
      * Given a chunk, find a random position in it.
      */
-    protected static ChunkPosition getRandomSpawningPointInChunk(World par0World, int par1, int par2) {
-        Chunk chunk = par0World.getChunkFromChunkCoords(par1, par2);
-        int k = par1 * 16 + par0World.rand.nextInt(16);
-        int l = par2 * 16 + par0World.rand.nextInt(16);
-        int i1 = par0World.rand.nextInt(chunk == null ? par0World.getActualHeight() : chunk.getTopFilledSegment() + 16 - 1);
+    protected static ChunkPosition getRandomSpawningPointInChunk(final World par0World, final int par1, final int par2) {
+        final Chunk chunk = par0World.getChunkFromChunkCoords(par1, par2);
+        final int k = par1 * 16 + par0World.rand.nextInt(16);
+        final int l = par2 * 16 + par0World.rand.nextInt(16);
+        final int i1 = par0World.rand.nextInt(chunk == null ? par0World.getActualHeight() : chunk.getTopFilledSegment() + 16 - 1);
         return new ChunkPosition(k, i1, l);
     }
 
@@ -43,7 +43,7 @@ public final class SpawnerAnimals {
      * adds all chunks within the spawn radius of the players to eligibleChunksForSpawning. pars: the world,
      * hostileCreatures, passiveCreatures. returns number of eligible chunks.
      */
-    public int findChunksForSpawning(WorldServer par1WorldServer, boolean par2, boolean par3, boolean par4) {
+    public int findChunksForSpawning(final WorldServer par1WorldServer, final boolean par2, final boolean par3, final boolean par4) {
         if (!par2 && !par3) {
             return 0;
         } else {
@@ -52,8 +52,8 @@ public final class SpawnerAnimals {
             int j;
 
             for (i = 0; i < par1WorldServer.playerEntities.size(); ++i) {
-                EntityPlayer entityplayer = (EntityPlayer) par1WorldServer.playerEntities.get(i);
-                int k = MathHelper.floor_double(entityplayer.posX / 16.0D);
+                final EntityPlayer entityplayer = (EntityPlayer) par1WorldServer.playerEntities.get(i);
+                final int k = MathHelper.floor_double(entityplayer.posX / 16.0D);
                 j = MathHelper.floor_double(entityplayer.posZ / 16.0D);
                 byte b0 = 8;
                 // Spigot Start
@@ -64,9 +64,9 @@ public final class SpawnerAnimals {
 
                 for (int l = -b0; l <= b0; ++l) {
                     for (int i1 = -b0; i1 <= b0; ++i1) {
-                        boolean flag3 = l == -b0 || l == b0 || i1 == -b0 || i1 == b0;
+                        final boolean flag3 = l == -b0 || l == b0 || i1 == -b0 || i1 == b0;
                         // CraftBukkit start
-                        long chunkCoords = LongHash.toLong(l + k, i1 + j);
+                        final long chunkCoords = LongHash.toLong(l + k, i1 + j);
 
                         if (!flag3) {
                             eligibleChunksForSpawning.put(chunkCoords, false);
@@ -80,12 +80,12 @@ public final class SpawnerAnimals {
             }
 
             i = 0;
-            ChunkCoordinates chunkcoordinates = par1WorldServer.getSpawnPoint();
-            EnumCreatureType[] aenumcreaturetype = EnumCreatureType.values();
+            final ChunkCoordinates chunkcoordinates = par1WorldServer.getSpawnPoint();
+            final EnumCreatureType[] aenumcreaturetype = EnumCreatureType.values();
             j = aenumcreaturetype.length;
 
             for (int j1 = 0; j1 < j; ++j1) {
-                EnumCreatureType enumcreaturetype = aenumcreaturetype[j1];
+                final EnumCreatureType enumcreaturetype = aenumcreaturetype[j1];
                 // CraftBukkit start - Use per-world spawn limits
                 int limit = enumcreaturetype.getMaxNumberOfCreature();
 
@@ -124,19 +124,19 @@ public final class SpawnerAnimals {
 
                 if ((!enumcreaturetype.getPeacefulCreature() || par3) && (enumcreaturetype.getPeacefulCreature() || par2) && (!enumcreaturetype.getAnimal() || par4) && par1WorldServer.countEntities(enumcreaturetype.getCreatureClass()) <= limit * eligibleChunksForSpawning.size() / 256)   // CraftBukkit - use per-world limits
                 {
-                    Iterator iterator = this.eligibleChunksForSpawning.keySet().iterator();
+                    final Iterator iterator = this.eligibleChunksForSpawning.keySet().iterator();
                     label110:
 
                     while (iterator.hasNext()) {
                         // CraftBukkit start
-                        long key = ((Long) iterator.next()).longValue();
+                        final long key = ((Long) iterator.next()).longValue();
 
                         if (!eligibleChunksForSpawning.get(key)) {
-                            ChunkPosition chunkposition = getRandomSpawningPointInChunk(par1WorldServer, LongHash.msw(key), LongHash.lsw(key));
+                            final ChunkPosition chunkposition = getRandomSpawningPointInChunk(par1WorldServer, LongHash.msw(key), LongHash.lsw(key));
                             // CraftBukkit end
-                            int k1 = chunkposition.x;
-                            int l1 = chunkposition.y;
-                            int i2 = chunkposition.z;
+                            final int k1 = chunkposition.x;
+                            final int l1 = chunkposition.y;
+                            final int i2 = chunkposition.z;
 
                             if (!par1WorldServer.isBlockNormalCube(k1, l1, i2) && par1WorldServer.getBlockMaterial(k1, l1, i2) == enumcreaturetype.getCreatureMaterial()) {
                                 int j2 = 0;
@@ -146,7 +146,7 @@ public final class SpawnerAnimals {
                                     int l2 = k1;
                                     int i3 = l1;
                                     int j3 = i2;
-                                    byte b1 = 6;
+                                    final byte b1 = 6;
                                     SpawnListEntry spawnlistentry = null;
                                     EntityLivingData entitylivingdata = null;
                                     int k3 = 0;
@@ -160,15 +160,15 @@ public final class SpawnerAnimals {
                                                 j3 += par1WorldServer.rand.nextInt(b1) - par1WorldServer.rand.nextInt(b1);
 
                                                 if (canCreatureTypeSpawnAtLocation(enumcreaturetype, par1WorldServer, l2, i3, j3)) {
-                                                    float f = (float) l2 + 0.5F;
-                                                    float f1 = (float) i3;
-                                                    float f2 = (float) j3 + 0.5F;
+                                                    final float f = (float) l2 + 0.5F;
+                                                    final float f1 = (float) i3;
+                                                    final float f2 = (float) j3 + 0.5F;
 
                                                     if (par1WorldServer.getClosestPlayer((double) f, (double) f1, (double) f2, 24.0D) == null) {
-                                                        float f3 = f - (float) chunkcoordinates.posX;
-                                                        float f4 = f1 - (float) chunkcoordinates.posY;
-                                                        float f5 = f2 - (float) chunkcoordinates.posZ;
-                                                        float f6 = f3 * f3 + f4 * f4 + f5 * f5;
+                                                        final float f3 = f - (float) chunkcoordinates.posX;
+                                                        final float f4 = f1 - (float) chunkcoordinates.posY;
+                                                        final float f5 = f2 - (float) chunkcoordinates.posZ;
+                                                        final float f6 = f3 * f3 + f4 * f4 + f5 * f5;
 
                                                         if (f6 >= 576.0F) {
                                                             if (spawnlistentry == null) {
@@ -179,18 +179,18 @@ public final class SpawnerAnimals {
                                                                 }
                                                             }
 
-                                                            EntityLiving entityliving;
+                                                            final EntityLiving entityliving;
 
                                                             try {
                                                                 entityliving = (EntityLiving) spawnlistentry.entityClass.getConstructor(new Class[]{World.class}).newInstance(new Object[]{par1WorldServer});
-                                                            } catch (Exception exception) {
+                                                            } catch (final Exception exception) {
                                                                 exception.printStackTrace();
                                                                 return i;
                                                             }
 
                                                             entityliving.setLocationAndAngles((double) f, (double) f1, (double) f2, par1WorldServer.rand.nextFloat() * 360.0F, 0.0F);
 
-                                                            Result canSpawn = ForgeEventFactory.canEntitySpawn(entityliving, par1WorldServer, f, f1, f2);
+                                                            final Result canSpawn = ForgeEventFactory.canEntitySpawn(entityliving, par1WorldServer, f, f1, f2);
                                                             if (canSpawn == Result.ALLOW || (canSpawn == Result.DEFAULT && entityliving.getCanSpawnHere())) {
                                                                 ++j2;
                                                                 par1WorldServer.addEntity(entityliving, SpawnReason.NATURAL); // CraftBukkit - Added a reason for spawning this creature, moved entityliving.a(entitylivingdata) up
@@ -230,14 +230,14 @@ public final class SpawnerAnimals {
     /**
      * Returns whether or not the specified creature type can spawn at the specified location.
      */
-    public static boolean canCreatureTypeSpawnAtLocation(EnumCreatureType par0EnumCreatureType, World par1World, int par2, int par3, int par4) {
+    public static boolean canCreatureTypeSpawnAtLocation(final EnumCreatureType par0EnumCreatureType, final World par1World, final int par2, final int par3, final int par4) {
         if (par0EnumCreatureType.getCreatureMaterial() == Material.water) {
             return par1World.getBlockMaterial(par2, par3, par4).isLiquid() && par1World.getBlockMaterial(par2, par3 - 1, par4).isLiquid() && !par1World.isBlockNormalCube(par2, par3 + 1, par4);
         } else if (!par1World.doesBlockHaveSolidTopSurface(par2, par3 - 1, par4)) {
             return false;
         } else {
-            int l = par1World.getBlockId(par2, par3 - 1, par4);
-            boolean spawnBlock = (Block.blocksList[l] != null && Block.blocksList[l].canCreatureSpawn(par0EnumCreatureType, par1World, par2, par3 - 1, par4));
+            final int l = par1World.getBlockId(par2, par3 - 1, par4);
+            final boolean spawnBlock = (Block.blocksList[l] != null && Block.blocksList[l].canCreatureSpawn(par0EnumCreatureType, par1World, par2, par3 - 1, par4));
             return spawnBlock && l != Block.bedrock.blockID && !par1World.isBlockNormalCube(par2, par3, par4) && !par1World.getBlockMaterial(par2, par3, par4).isLiquid() && !par1World.isBlockNormalCube(par2, par3 + 1, par4);
         }
     }
@@ -245,34 +245,34 @@ public final class SpawnerAnimals {
     /**
      * Called during chunk generation to spawn initial creatures.
      */
-    public static void performWorldGenSpawning(World par0World, BiomeGenBase par1BiomeGenBase, int par2, int par3, int par4, int par5, Random par6Random) {
-        List list = par1BiomeGenBase.getSpawnableList(EnumCreatureType.creature);
+    public static void performWorldGenSpawning(final World par0World, final BiomeGenBase par1BiomeGenBase, final int par2, final int par3, final int par4, final int par5, final Random par6Random) {
+        final List list = par1BiomeGenBase.getSpawnableList(EnumCreatureType.creature);
 
         if (!list.isEmpty()) {
             while (par6Random.nextFloat() < par1BiomeGenBase.getSpawningChance()) {
-                SpawnListEntry spawnlistentry = (SpawnListEntry) WeightedRandom.getRandomItem(par0World.rand, list);
+                final SpawnListEntry spawnlistentry = (SpawnListEntry) WeightedRandom.getRandomItem(par0World.rand, list);
                 EntityLivingData entitylivingdata = null;
-                int i1 = spawnlistentry.minGroupCount + par6Random.nextInt(1 + spawnlistentry.maxGroupCount - spawnlistentry.minGroupCount);
+                final int i1 = spawnlistentry.minGroupCount + par6Random.nextInt(1 + spawnlistentry.maxGroupCount - spawnlistentry.minGroupCount);
                 int j1 = par2 + par6Random.nextInt(par4);
                 int k1 = par3 + par6Random.nextInt(par5);
-                int l1 = j1;
-                int i2 = k1;
+                final int l1 = j1;
+                final int i2 = k1;
 
                 for (int j2 = 0; j2 < i1; ++j2) {
                     boolean flag = false;
 
                     for (int k2 = 0; !flag && k2 < 4; ++k2) {
-                        int l2 = par0World.getTopSolidOrLiquidBlock(j1, k1);
+                        final int l2 = par0World.getTopSolidOrLiquidBlock(j1, k1);
 
                         if (canCreatureTypeSpawnAtLocation(EnumCreatureType.creature, par0World, j1, l2, k1)) {
-                            float f = (float) j1 + 0.5F;
-                            float f1 = (float) l2;
-                            float f2 = (float) k1 + 0.5F;
-                            EntityLiving entityliving;
+                            final float f = (float) j1 + 0.5F;
+                            final float f1 = (float) l2;
+                            final float f2 = (float) k1 + 0.5F;
+                            final EntityLiving entityliving;
 
                             try {
                                 entityliving = (EntityLiving) spawnlistentry.entityClass.getConstructor(new Class[]{World.class}).newInstance(new Object[]{par0World});
-                            } catch (Exception exception) {
+                            } catch (final Exception exception) {
                                 exception.printStackTrace();
                                 continue;
                             }

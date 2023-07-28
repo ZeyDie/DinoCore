@@ -19,18 +19,18 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class EntityEnderPearl extends EntityThrowable
 {
-    public EntityEnderPearl(World par1World)
+    public EntityEnderPearl(final World par1World)
     {
         super(par1World);
     }
 
-    public EntityEnderPearl(World par1World, EntityLivingBase par2EntityLivingBase)
+    public EntityEnderPearl(final World par1World, final EntityLivingBase par2EntityLivingBase)
     {
         super(par1World, par2EntityLivingBase);
     }
 
     @SideOnly(Side.CLIENT)
-    public EntityEnderPearl(World par1World, double par2, double par4, double par6)
+    public EntityEnderPearl(final World par1World, final double par2, final double par4, final double par6)
     {
         super(par1World, par2, par4, par6);
     }
@@ -38,7 +38,7 @@ public class EntityEnderPearl extends EntityThrowable
     /**
      * Called when this EntityThrowable hits a block or entity.
      */
-    protected void onImpact(MovingObjectPosition par1MovingObjectPosition)
+    protected void onImpact(final MovingObjectPosition par1MovingObjectPosition)
     {
         if (par1MovingObjectPosition.entityHit != null)
         {
@@ -54,11 +54,11 @@ public class EntityEnderPearl extends EntityThrowable
         {
             if (this.getThrower() != null && this.getThrower() instanceof EntityPlayerMP)
             {
-                EntityPlayerMP entityplayermp = (EntityPlayerMP)this.getThrower();
+                final EntityPlayerMP entityplayermp = (EntityPlayerMP)this.getThrower();
 
                 if (!entityplayermp.playerNetServerHandler.connectionClosed && entityplayermp.worldObj == this.worldObj)
                 {
-                    EnderTeleportEvent event = new EnderTeleportEvent(entityplayermp, this.posX, this.posY, this.posZ, 5);
+                    final EnderTeleportEvent event = new EnderTeleportEvent(entityplayermp, this.posX, this.posY, this.posZ, 5);
                     // Cauldron start - invert condition; return if cancelled otherwise fall through to CB event
                     if (MinecraftForge.EVENT_BUS.post(event)){
                         this.setDead();
@@ -67,18 +67,18 @@ public class EntityEnderPearl extends EntityThrowable
                     // Cauldron end
                                     
                     // CraftBukkit start
-                    org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer player = entityplayermp.getBukkitEntity();
-                    org.bukkit.Location location = getBukkitEntity().getLocation();
+                    final org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer player = entityplayermp.getBukkitEntity();
+                    final org.bukkit.Location location = getBukkitEntity().getLocation();
                     location.setPitch(player.getLocation().getPitch());
                     location.setYaw(player.getLocation().getYaw());
-                    PlayerTeleportEvent teleEvent = new PlayerTeleportEvent(player, player.getLocation(), location, PlayerTeleportEvent.TeleportCause.ENDER_PEARL);
+                    final PlayerTeleportEvent teleEvent = new PlayerTeleportEvent(player, player.getLocation(), location, PlayerTeleportEvent.TeleportCause.ENDER_PEARL);
                     Bukkit.getPluginManager().callEvent(teleEvent);
 
                     if (!teleEvent.isCancelled() && !entityplayermp.playerNetServerHandler.connectionClosed)
                     {
                         entityplayermp.playerNetServerHandler.teleport(teleEvent.getTo());
                         this.getThrower().fallDistance = 0.0F;
-                        EntityDamageByEntityEvent damageEvent = new EntityDamageByEntityEvent(this.getBukkitEntity(), player, EntityDamageByEntityEvent.DamageCause.FALL, 5.0D);
+                        final EntityDamageByEntityEvent damageEvent = new EntityDamageByEntityEvent(this.getBukkitEntity(), player, EntityDamageByEntityEvent.DamageCause.FALL, 5.0D);
                         Bukkit.getPluginManager().callEvent(damageEvent);
 
                         if (!damageEvent.isCancelled() && !entityplayermp.playerNetServerHandler.connectionClosed)

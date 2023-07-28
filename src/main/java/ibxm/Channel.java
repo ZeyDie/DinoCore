@@ -23,12 +23,12 @@ public class Channel {
 	private static final int LOG_2_8363 = LogTable.log_2( 8363 );
 	private static final int LOG_2_1712 = LogTable.log_2( 1712 );
 
-	private static final int[] sine_table = new int[] {
+	private static final int[] sine_table = {
 		  0, 24 ,  49,  74,  97, 120, 141, 161, 180, 197, 212, 224, 235, 244, 250, 253,
 		255, 253, 250, 244, 235, 224, 212, 197, 180, 161, 141, 120,  97,  74,  49,  24
 	};
 
-	public Channel( Module mod, int sampling_rate, int[] global_vol ) {
+	public Channel(final Module mod, final int sampling_rate, final int[] global_vol ) {
 		module = mod;
 		global_volume = global_vol;
 		linear_periods = module.linear_periods;
@@ -52,7 +52,7 @@ public class Channel {
 		row( 48, 256, 0, 0, 0 );
 	}
 	
-	public void resample( int[] mixing_buffer, int frame_offset, int frames, int quality ) {
+	public void resample(final int[] mixing_buffer, final int frame_offset, final int frames, final int quality ) {
 		if( !silent ) {
 			switch( quality ) {
 				default:
@@ -68,66 +68,70 @@ public class Channel {
 		}
 	}
 
-	public void update_sample_idx( int samples ) {
+	public void update_sample_idx(final int samples ) {
 		sample_frac += step * samples;
 		sample_idx += sample_frac >> IBXM.FP_SHIFT;
 		sample_frac &= IBXM.FP_MASK;
 	}
 	
 	public void set_volume( int vol ) {
-		if( vol < 0 ) {
-			vol = 0;
+        int vol1 = vol;
+        if( vol1 < 0 ) {
+			vol1 = 0;
 		}
-		if( vol > 64 ) {
-			vol = 64;
+		if( vol1 > 64 ) {
+			vol1 = 64;
 		}
-		volume = vol;
+		volume = vol1;
 	}
 	
 	public void set_panning( int pan ) {
-		if( pan < 0 ) {
-			pan = 0;
+        int pan1 = pan;
+        if( pan1 < 0 ) {
+			pan1 = 0;
 		}
-		if( pan > 255 ) {
-			pan = 255;
+		if( pan1 > 255 ) {
+			pan1 = 255;
 		}
-		panning = pan;
+		panning = pan1;
 	}
 	
-	public void row( int key, int inst_idx, int volume_column, int effect, int effect_param ) {
-		effect = effect & 0xFF;
-		if( effect >= 0x30 ) {
+	public void row(final int key, final int inst_idx, final int volume_column, int effect, int effect_param ) {
+        int effect1 = effect;
+        int effect_param1 = effect_param;
+        effect1 = effect1 & 0xFF;
+		if( effect1 >= 0x30 ) {
 			/* Effects above 0x30 are internal.*/
-			effect = 0;
+			effect1 = 0;
 		}
-		if( effect == 0x00 && effect_param != 0 ) {
+		if( effect1 == 0x00 && effect_param1 != 0 ) {
 			/* Arpeggio.*/
-			effect = 0x40;
+			effect1 = 0x40;
 		}
-		if( effect == 0x0E ) {
+		if( effect1 == 0x0E ) {
 			/* Renumber 0x0Ex effect command.*/
-			effect = 0x30 + ( ( effect_param & 0xF0 ) >> 4 );
-			effect_param = effect_param & 0x0F;
+			effect1 = 0x30 + ( ( effect_param1 & 0xF0 ) >> 4 );
+			effect_param1 = effect_param1 & 0x0F;
 		}
-		if( effect == 0x21 ) {
+		if( effect1 == 0x21 ) {
 			/* Renumber 0x21x effect command.*/
-			effect = 0x40 + ( ( effect_param & 0xF0 ) >> 4 );
-			effect_param = effect_param & 0x0F;
+			effect1 = 0x40 + ( ( effect_param1 & 0xF0 ) >> 4 );
+			effect_param1 = effect_param1 & 0x0F;
 		}
 		current_note[ 0 ] = key;
 		current_note[ 1 ] = inst_idx;
 		current_note[ 2 ] = volume_column;
-		current_note[ 3 ] = effect;
-		current_note[ 4 ] = effect_param;
+		current_note[ 3 ] = effect1;
+		current_note[ 4 ] = effect_param1;
 		effect_tick = 0;		
 		trigger_tick += 1;
 		update_envelopes();
 		key_add = 0;
 		vibrato_add = 0;
 		tremolo_add = 0;
-		if( ! ( effect == 0x3D && effect_param > 0 ) ) {
+		if( ! ( effect1 == 0x3D && effect_param1 > 0 ) ) {
 			/* Not note delay.*/
-			trigger( key, inst_idx, volume_column, effect );
+			trigger( key, inst_idx, volume_column, effect1);
 			/* Handle volume column.*/
 			switch( volume_column & 0xF0 ) {
 				case 0x00:
@@ -179,55 +183,55 @@ public class Channel {
 		if( instrument.vibrato_depth > 0 ) {
 			auto_vibrato();
 		}
-		switch( effect ) {
+		switch(effect1) {
 			case 0x01:
 				/* Portmento Up.*/
-				set_portamento_param( effect_param );
+				set_portamento_param(effect_param1);
 				portamento_up();
 				break;
 			case 0x02:
 				/* Portamento Down.*/
-				set_portamento_param( effect_param );
+				set_portamento_param(effect_param1);
 				portamento_down();
 				break;
 			case 0x03:
 				/* Tone Portamento.*/
-				set_portamento_param( effect_param );
+				set_portamento_param(effect_param1);
 				break;
 			case 0x04:
 				/* Vibrato.*/
-				set_vibrato_speed( ( effect_param & 0xF0 ) >> 4 );
-				set_vibrato_depth( effect_param & 0x0F );
+				set_vibrato_speed( ( effect_param1 & 0xF0 ) >> 4 );
+				set_vibrato_depth( effect_param1 & 0x0F );
 				vibrato();
 				break;
 			case 0x05:
 				/* Tone Portamento + Volume Slide.*/
-				set_volume_slide_param( effect_param );
+				set_volume_slide_param(effect_param1);
 				volume_slide();
 				break;
 			case 0x06:
 				/* Vibrato + Volume Slide.*/
-				set_volume_slide_param( effect_param );
+				set_volume_slide_param(effect_param1);
 				vibrato();
 				volume_slide();
 				break;
 			case 0x07:
 				/* Tremolo.*/
-				set_tremolo_speed( ( effect_param & 0xF0 ) >> 4 );
-				set_tremolo_depth( effect_param & 0x0F );
+				set_tremolo_speed( ( effect_param1 & 0xF0 ) >> 4 );
+				set_tremolo_depth( effect_param1 & 0x0F );
 				tremolo();
 				break;
 			case 0x08:
 				/* Set Panning.*/
-				set_panning( effect_param );
+				set_panning(effect_param1);
 				break;
 			case 0x09:
 				/* Set Sample Index.*/
-				set_sample_index( effect_param << 8 );
+				set_sample_index( effect_param1 << 8 );
 				break;
 			case 0x0A:
 				/* Volume Slide.*/
-				set_volume_slide_param( effect_param );
+				set_volume_slide_param(effect_param1);
 				volume_slide();
 				break;
 			case 0x0B:
@@ -235,7 +239,7 @@ public class Channel {
 				break;
 			case 0x0C:
 				/* Set volume.*/
-				set_volume( effect_param );
+				set_volume(effect_param1);
 				break;
 			case 0x0D:
 				/* Pattern Break.*/
@@ -248,40 +252,40 @@ public class Channel {
 				break;
 			case 0x10:
 				/* Set Global Volume.*/
-				set_global_volume( effect_param );
+				set_global_volume(effect_param1);
 				break;
 			case 0x11:
 				/* global Volume Slide.*/
-				set_volume_slide_param( effect_param );
+				set_volume_slide_param(effect_param1);
 				break;
 			case 0x14:
 				/* Key Off*/
-				if( effect_param == 0 ) {
+				if( effect_param1 == 0 ) {
 					key_on = false;
 				}
 				break;
 			case 0x15:
 				/* Set Envelope Tick.*/
-				set_envelope_tick( effect_param );
+				set_envelope_tick(effect_param1);
 				break;
 			case 0x19:
 				/* Panning Slide.*/
-				set_volume_slide_param( effect_param );
+				set_volume_slide_param(effect_param1);
 				break;
 			case 0x1B:
 				/* Retrig + Volume Slide.*/
-				set_retrig_param( effect_param );
+				set_retrig_param(effect_param1);
 				retrig_volume_slide();
 				break;
 			case 0x1D:
 				/* Tremor.*/
-				set_retrig_param( effect_param );
+				set_retrig_param(effect_param1);
 				tremor();
 				break;
 			case 0x24:
 				/* S3M Fine Vibrato.*/
-				set_vibrato_speed( ( effect_param & 0xF0 ) >> 4 );
-				set_vibrato_depth( effect_param & 0x0F );
+				set_vibrato_speed( ( effect_param1 & 0xF0 ) >> 4 );
+				set_vibrato_depth( effect_param1 & 0x0F );
 				fine_vibrato();
 				break;
 			case 0x25:
@@ -292,12 +296,12 @@ public class Channel {
 				break;
 			case 0x31:
 				/* Fine Portamento Up.*/
-				set_portamento_param( 0xF0 | effect_param );
+				set_portamento_param( 0xF0 | effect_param1);
 				portamento_up();
 				break;
 			case 0x32:
 				/* Fine Portamento Down.*/
-				set_portamento_param( 0xF0 | effect_param );
+				set_portamento_param( 0xF0 | effect_param1);
 				portamento_down();
 				break;
 			case 0x33:
@@ -305,7 +309,7 @@ public class Channel {
 				break;
 			case 0x34:
 				/* Set Vibrato Waveform.*/
-				set_vibrato_wave( effect_param );
+				set_vibrato_wave(effect_param1);
 				break;
 			case 0x35:
 				/* Set Fine Tune.*/
@@ -315,28 +319,28 @@ public class Channel {
 				break;
 			case 0x37:
 				/* Set Tremolo Waveform.*/
-				set_tremolo_wave( effect_param );
+				set_tremolo_wave(effect_param1);
 				break;
 			case 0x38:
 				/* Set Panning(Obsolete).*/
 				break;
 			case 0x39:
 				/* Retrig.*/
-				set_retrig_param( effect_param );
+				set_retrig_param(effect_param1);
 				break;
 			case 0x3A:
 				/* Fine Volume Slide Up.*/
-				set_volume_slide_param( ( effect_param << 4 ) | 0x0F );
+				set_volume_slide_param( ( effect_param1 << 4 ) | 0x0F );
 				volume_slide();
 				break;
 			case 0x3B:
 				/* Fine Volume Slide Down.*/
-				set_volume_slide_param( 0xF0 | effect_param );
+				set_volume_slide_param( 0xF0 | effect_param1);
 				volume_slide();
 				break;
 			case 0x3C:
 				/* Note Cut.*/
-				if( effect_param == 0 ) {
+				if( effect_param1 == 0 ) {
 					set_volume( 0 );
 				}
 				break;
@@ -354,12 +358,12 @@ public class Channel {
 				break;
 			case 0x41:
 				/* Extra Fine Porta Up.*/
-				set_portamento_param( 0xE0 | effect_param );
+				set_portamento_param( 0xE0 | effect_param1);
 				portamento_up();
 				break;
 			case 0x42:
 				/* Extra Fine Porta Down.*/
-				set_portamento_param( 0xE0 | effect_param );
+				set_portamento_param( 0xE0 | effect_param1);
 				portamento_down();
 				break;
 		}
@@ -368,8 +372,10 @@ public class Channel {
 	}
 
 	public void tick() {
-		int volume_column, effect, effect_param;
-		volume_column = current_note[ 2 ];
+		final int volume_column;
+        int effect;
+        final int effect_param;
+        volume_column = current_note[ 2 ];
 		effect = current_note[ 3 ];
 		effect_param = current_note[ 4 ];
 		effect_tick += 1;
@@ -501,63 +507,65 @@ public class Channel {
 		calculate_frequency();
 	}
 
-	private void set_vibrato_speed( int speed ) {
+	private void set_vibrato_speed(final int speed ) {
 		if( speed > 0 ) {
 			vibrato_speed = speed;
 		}
 	}
 
-	private void set_vibrato_depth( int depth ) {
+	private void set_vibrato_depth(final int depth ) {
 		if( depth > 0 ) {
 			vibrato_depth = depth;
 		}
 	}
 	
 	private void set_vibrato_wave( int wave ) {
-		if( wave < 0 || wave > 7 ) {
-			wave = 0;
+        int wave1 = wave;
+        if( wave1 < 0 || wave1 > 7 ) {
+			wave1 = 0;
 		}
-		vibrato_wave = wave;
+		vibrato_wave = wave1;
 	}
 
-	private void set_tremolo_speed( int speed ) {
+	private void set_tremolo_speed(final int speed ) {
 		if( speed > 0 ) {
 			tremolo_speed = speed;
 		}
 	}
 
-	private void set_tremolo_depth( int depth ) {
+	private void set_tremolo_depth(final int depth ) {
 		if( depth > 0 ) {
 			tremolo_depth = depth;
 		}
 	}
 
 	private void set_tremolo_wave( int wave ) {
-		if( wave < 0 || wave > 7 ) {
-			wave = 0;
+        int wave1 = wave;
+        if( wave1 < 0 || wave1 > 7 ) {
+			wave1 = 0;
 		}
-		tremolo_wave = wave;
+		tremolo_wave = wave1;
 	}
 
 	private void vibrato() {
-		int vibrato_phase;
+		final int vibrato_phase;
 		vibrato_phase = vibrato_tick * vibrato_speed;
 		vibrato_add += waveform( vibrato_phase, vibrato_wave ) * vibrato_depth >> 5;
 	}
 
 	private void fine_vibrato() {
-		int vibrato_phase;
+		final int vibrato_phase;
 		vibrato_phase = vibrato_tick * vibrato_speed;
 		vibrato_add += waveform( vibrato_phase, vibrato_wave ) * vibrato_depth >> 7;
 	}
 
 	private void tremolo() {
-		int tremolo_phase;
+		final int tremolo_phase;
 		tremolo_phase = tremolo_tick * tremolo_speed;
 		tremolo_add += waveform( tremolo_phase, tremolo_wave ) * tremolo_depth >> 6;
 	}
 
-	private void set_portamento_param( int param ) {
+	private void set_portamento_param(final int param ) {
 		if( param != 0 ) {
 			portamento_param = param;
 		}
@@ -620,41 +628,45 @@ public class Channel {
 	}
 
 	private void set_period( int p ) {
-		if( p < 32 ) {
-			p = 32;
+        int p1 = p;
+        if( p1 < 32 ) {
+			p1 = 32;
 		}
-		if( p > 32768 ) {
-			p = 32768;
+		if( p1 > 32768 ) {
+			p1 = 32768;
 		}
-		period = p;
+		period = p1;
 	}
 
 	private void set_global_volume( int vol ) {
-		if( vol < 0 ) {
-			vol = 0;
+        int vol1 = vol;
+        if( vol1 < 0 ) {
+			vol1 = 0;
 		}
-		if( vol > 64 ) {
-			vol = 64;
+		if( vol1 > 64 ) {
+			vol1 = 64;
 		}
-		global_volume[ 0 ] = vol;
+		global_volume[ 0 ] = vol1;
 	}
 
-	private void set_volume_slide_param( int param ) {
+	private void set_volume_slide_param(final int param ) {
 		if( param != 0 ) {
 			volume_slide_param = param;
 		}
 	}
 
 	private void global_volume_slide() {
-		int up, down;
-		up = ( volume_slide_param & 0xF0 ) >> 4;
+		final int up;
+        final int down;
+        up = ( volume_slide_param & 0xF0 ) >> 4;
 		down = volume_slide_param & 0x0F;
 		set_global_volume( global_volume[ 0 ] + up - down );
 	}
 
 	private void volume_slide() {
-		int up, down;
-		up = ( volume_slide_param & 0xF0 ) >> 4;
+		final int up;
+        final int down;
+        up = ( volume_slide_param & 0xF0 ) >> 4;
 		down = volume_slide_param & 0x0F;
 		if( down == 0x0F && up > 0 ) {
 			/* Fine slide up.*/
@@ -675,21 +687,24 @@ public class Channel {
 	}
 
 	private void panning_slide() {
-		int left, right;
-		left = ( volume_slide_param & 0xF0 ) >> 4;
+		final int left;
+        final int right;
+        left = ( volume_slide_param & 0xF0 ) >> 4;
 		right = volume_slide_param & 0x0F;
 		set_panning( panning - left + right );
 	}
 
-	private void set_retrig_param( int param ) {
+	private void set_retrig_param(final int param ) {
 		if( param != 0 ) {
 			retrig_param = param;
 		}
 	}
 
 	private void tremor() {
-		int on_ticks, cycle_length, cycle_index;
-		on_ticks = ( ( retrig_param & 0xF0 ) >> 4 ) + 1;
+		final int on_ticks;
+        int cycle_length;
+        final int cycle_index;
+        on_ticks = ( ( retrig_param & 0xF0 ) >> 4 ) + 1;
 		cycle_length = on_ticks + ( retrig_param & 0x0F ) + 1;
 		cycle_index = trigger_tick % cycle_length;
 		if( cycle_index >= on_ticks ) {
@@ -698,8 +713,9 @@ public class Channel {
 	}
 
 	private void retrig_volume_slide() {
-		int retrig_volume, retrig_tick;
-		retrig_volume = ( retrig_param & 0xF0 ) >> 4;
+		final int retrig_volume;
+        final int retrig_tick;
+        retrig_volume = ( retrig_param & 0xF0 ) >> 4;
 		retrig_tick = retrig_param & 0x0F;
 		if( retrig_tick > 0 && ( trigger_tick % retrig_tick ) == 0 ) {
 			set_sample_index( 0 );
@@ -751,19 +767,20 @@ public class Channel {
 	}
 
 	private void set_sample_index( int index ) {
-		if( index < 0 ) {
-			index = 0;
+        int index1 = index;
+        if( index1 < 0 ) {
+			index1 = 0;
 		}
-		sample_idx = index;
+		sample_idx = index1;
 		sample_frac = 0;
 	}
 
-	private void set_envelope_tick( int tick ) {
+	private void set_envelope_tick(final int tick ) {
 		volume_envelope_tick = tick;
 		panning_envelope_tick = tick;
 	}
 
-	private void trigger( int key, int instrument_idx, int volume_column, int effect ) {
+	private void trigger(final int key, final int instrument_idx, final int volume_column, final int effect ) {
 		if( instrument_idx > 0 ) {
 			instrument = module.get_instrument( instrument_idx );
 			sample = instrument.get_sample_from_key( key );
@@ -818,8 +835,10 @@ public class Channel {
 	}
 
 	private void auto_vibrato() {
-		int sweep, depth, rate;
-		sweep = instrument.vibrato_sweep & 0xFF;
+		final int sweep;
+        int depth;
+        final int rate;
+        sweep = instrument.vibrato_sweep & 0xFF;
 		depth = instrument.vibrato_depth & 0x0F;
 		rate = instrument.vibrato_rate & 0x3F;
 		if( trigger_tick < sweep ) {
@@ -828,7 +847,7 @@ public class Channel {
 		vibrato_add += waveform( trigger_tick * rate, 0 ) * depth >> 9;
 	}
 
-	private int waveform( int phase, int wform ) {
+	private int waveform(final int phase, final int wform ) {
 		int amplitude;
 		amplitude = 0;
 		switch( wform & 0x3 ) {
@@ -865,9 +884,11 @@ public class Channel {
 		return amplitude;
 	}
 
-	private int key_to_period( int key ) {
-		int octave, log_2_period, period_out;
-		octave = ( key << IBXM.FP_SHIFT ) / 12 + sample.transpose;
+	private int key_to_period(final int key ) {
+		final int octave;
+        final int log_2_period;
+        int period_out;
+        octave = ( key << IBXM.FP_SHIFT ) / 12 + sample.transpose;
 		if( linear_periods ) {
 			period_out = 7744 - ( octave * 768 >> IBXM.FP_SHIFT );
 		} else {

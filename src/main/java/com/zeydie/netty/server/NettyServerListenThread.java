@@ -61,7 +61,7 @@ public final class NettyServerListenThread extends Thread {
 
                 try {
                     netLoginHandler.tryLogin();
-                } catch (Exception exception) {
+                } catch (final Exception exception) {
                     netLoginHandler.raiseErrorAndDisconnect("Internal server error");
                     FMLLog.log(Level.SEVERE, exception, "Error handling login related packet - connection from %s refused", netLoginHandler.getUsernameAndAddress());
                     this.networkListenThread.getServer().getLogAgent().logWarningException("Failed to handle packet for " + netLoginHandler.getUsernameAndAddress() + ": " + exception, exception);

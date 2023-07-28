@@ -36,7 +36,7 @@ public abstract class ForgePacket
         private Class<? extends ForgePacket> packetType;
         private ConcurrentMap<INetworkManager, ForgePacket> partTracker;
 
-        private Type(Class<? extends ForgePacket> clazz)
+        private Type(final Class<? extends ForgePacket> clazz)
         {
             this.packetType = clazz;
         }
@@ -47,7 +47,7 @@ public abstract class ForgePacket
             {
                 return this.packetType.newInstance();
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 Throwables.propagateIfPossible(e);
                 FMLLog.log(Level.SEVERE, e, "A bizarre critical error occured during packet encoding");
@@ -55,7 +55,7 @@ public abstract class ForgePacket
             }
         }
 
-        private ForgePacket consumePart(INetworkManager network, byte[] data)
+        private ForgePacket consumePart(final INetworkManager network, final byte[] data)
         {
             if (partTracker == null)
             {
@@ -66,12 +66,12 @@ public abstract class ForgePacket
                 partTracker.put(network, make());
             }
 
-            ForgePacket pkt = partTracker.get(network);
+            final ForgePacket pkt = partTracker.get(network);
 
-            ByteArrayDataInput bdi = ByteStreams.newDataInput(data);
-            int chunkIdx = UnsignedBytes.toInt(bdi.readByte());
-            int chunkTotal = UnsignedBytes.toInt(bdi.readByte());
-            int chunkLength = bdi.readInt();
+            final ByteArrayDataInput bdi = ByteStreams.newDataInput(data);
+            final int chunkIdx = UnsignedBytes.toInt(bdi.readByte());
+            final int chunkTotal = UnsignedBytes.toInt(bdi.readByte());
+            final int chunkLength = bdi.readInt();
 
             if (pkt.partials == null)
             {
@@ -95,9 +95,9 @@ public abstract class ForgePacket
     private Type type;
     private byte[][] partials;
 
-    public static Packet250CustomPayload[] makePacketSet(ForgePacket packet)
+    public static Packet250CustomPayload[] makePacketSet(final ForgePacket packet)
     {
-        byte[] packetData = packet.generatePacket();
+        final byte[] packetData = packet.generatePacket();
 
         if (packetData.length < 32000)
         {
@@ -114,10 +114,10 @@ public abstract class ForgePacket
         }
         else
         {
-            byte[][] chunks = new byte[packetData.length / 32000 + 1][];
+            final byte[][] chunks = new byte[packetData.length / 32000 + 1][];
             for (int i = 0; i < packetData.length / 32000 + 1; i++)
             {
-                int len = Math.min(32000, packetData.length - i* 32000);
+                final int len = Math.min(32000, packetData.length - i* 32000);
                 chunks[i] = Bytes.concat(new byte[]
                     {
                         UnsignedBytes.checkedCast(1),              //IsMultipart: True
@@ -129,7 +129,7 @@ public abstract class ForgePacket
                     Arrays.copyOfRange(packetData, i * 32000, len + i * 32000));
             }
 
-            Packet250CustomPayload[] ret = new Packet250CustomPayload[chunks.length];
+            final Packet250CustomPayload[] ret = new Packet250CustomPayload[chunks.length];
             for (int i = 0; i < chunks.length; i++)
             {
                 ret[i] = new Packet250CustomPayload(CHANNEL_ID, chunks[i]);
@@ -138,16 +138,16 @@ public abstract class ForgePacket
         }
     }
 
-    public static ForgePacket readPacket(INetworkManager network, byte[] payload)
+    public static ForgePacket readPacket(final INetworkManager network, final byte[] payload)
     {
-        boolean multipart = UnsignedBytes.toInt(payload[0]) == 1;
-        int type = UnsignedBytes.toInt(payload[1]);
-        Type eType = Type.values()[type];
-        byte[] data = Arrays.copyOfRange(payload, 2, payload.length);
+        final boolean multipart = UnsignedBytes.toInt(payload[0]) == 1;
+        final int type = UnsignedBytes.toInt(payload[1]);
+        final Type eType = Type.values()[type];
+        final byte[] data = Arrays.copyOfRange(payload, 2, payload.length);
 
         if (multipart)
         {
-            ForgePacket pkt = eType.consumePart(network, data);
+            final ForgePacket pkt = eType.consumePart(network, data);
             if (pkt != null)
             {
                 return pkt.consumePacket(Bytes.concat(pkt.partials));
@@ -162,7 +162,7 @@ public abstract class ForgePacket
 
     public ForgePacket()
     {
-        for (Type t : Type.values())
+        for (final Type t : Type.values())
         {
             if (t.packetType == getClass())
             {

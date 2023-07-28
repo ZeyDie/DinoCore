@@ -10,7 +10,7 @@ public class PlaySoundAtEntityEvent extends EntityEvent
     public final float volume;
     public final float pitch;
     
-    public PlaySoundAtEntityEvent(Entity entity, String name, float volume, float pitch)
+    public PlaySoundAtEntityEvent(final Entity entity, final String name, final float volume, final float pitch)
     {
         super(entity);
         this.name = name;

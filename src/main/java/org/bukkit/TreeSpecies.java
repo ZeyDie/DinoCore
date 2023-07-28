@@ -58,7 +58,7 @@ public enum TreeSpecies {
     }
 
     static {
-        for (TreeSpecies species : values()) {
+        for (final TreeSpecies species : values()) {
             BY_DATA.put(species.data, species);
         }
     }

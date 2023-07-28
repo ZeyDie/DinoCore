@@ -20,12 +20,12 @@ final class EnchantmentModifierDamage implements IEnchantmentModifier
     /**
      * Generic method use to calculate modifiers of offensive or defensive enchantment values.
      */
-    public void calculateModifier(Enchantment par1Enchantment, int par2)
+    public void calculateModifier(final Enchantment par1Enchantment, final int par2)
     {
         this.damageModifier += par1Enchantment.calcModifierDamage(par2, this.source);
     }
 
-    EnchantmentModifierDamage(Empty3 par1Empty3)
+    EnchantmentModifierDamage(final Empty3 par1Empty3)
     {
         this();
     }

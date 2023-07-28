@@ -29,7 +29,7 @@ public class Packet30Entity extends Packet
 
     public Packet30Entity() {}
 
-    public Packet30Entity(int par1)
+    public Packet30Entity(final int par1)
     {
         this.entityId = par1;
     }
@@ -37,7 +37,7 @@ public class Packet30Entity extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.entityId = par1DataInput.readInt();
     }
@@ -45,7 +45,7 @@ public class Packet30Entity extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.entityId);
     }
@@ -53,7 +53,7 @@ public class Packet30Entity extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleEntity(this);
     }
@@ -83,9 +83,9 @@ public class Packet30Entity extends Packet
      * eg return packet30entity.entityId == entityId; WARNING : will throw if you compare a packet to a different packet
      * class
      */
-    public boolean containsSameEntityIDAs(Packet par1Packet)
+    public boolean containsSameEntityIDAs(final Packet par1Packet)
     {
-        Packet30Entity packet30entity = (Packet30Entity)par1Packet;
+        final Packet30Entity packet30entity = (Packet30Entity)par1Packet;
         return packet30entity.entityId == this.entityId;
     }
 }

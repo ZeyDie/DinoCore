@@ -97,19 +97,19 @@ public class Fluid
      */
     protected int blockID = -1;
 
-    public Fluid(String fluidName)
+    public Fluid(final String fluidName)
     {
         this.fluidName = fluidName.toLowerCase(Locale.ENGLISH);
         this.unlocalizedName = fluidName;
     }
 
-    public Fluid setUnlocalizedName(String unlocalizedName)
+    public Fluid setUnlocalizedName(final String unlocalizedName)
     {
         this.unlocalizedName = unlocalizedName;
         return this;
     }
 
-    public Fluid setBlockID(int blockID)
+    public Fluid setBlockID(final int blockID)
     {
         if (this.blockID == -1 || this.blockID == blockID)
         {
@@ -130,42 +130,42 @@ public class Fluid
         return this;
     }
 
-    public Fluid setBlockID(Block block)
+    public Fluid setBlockID(final Block block)
     {
         return setBlockID(block.blockID);
     }
 
-    public Fluid setLuminosity(int luminosity)
+    public Fluid setLuminosity(final int luminosity)
     {
         this.luminosity = luminosity;
         return this;
     }
 
-    public Fluid setDensity(int density)
+    public Fluid setDensity(final int density)
     {
         this.density = density;
         return this;
     }
 
-    public Fluid setTemperature(int temperature)
+    public Fluid setTemperature(final int temperature)
     {
         this.temperature = temperature;
         return this;
     }
 
-    public Fluid setViscosity(int viscosity)
+    public Fluid setViscosity(final int viscosity)
     {
         this.viscosity = viscosity;
         return this;
     }
 
-    public Fluid setGaseous(boolean isGaseous)
+    public Fluid setGaseous(final boolean isGaseous)
     {
         this.isGaseous = isGaseous;
         return this;
     }
 
-    public Fluid setRarity(EnumRarity rarity)
+    public Fluid setRarity(final EnumRarity rarity)
     {
         this.rarity = rarity;
         return this;
@@ -196,7 +196,7 @@ public class Fluid
      */
     public String getLocalizedName()
     {
-        String s = this.getUnlocalizedName();
+        final String s = this.getUnlocalizedName();
         return s == null ? "" : StatCollector.translateToLocal(s);
     }
 
@@ -252,24 +252,24 @@ public class Fluid
         return 0xFFFFFF;
     }
 
-    public final Fluid setStillIcon(Icon stillIcon)
+    public final Fluid setStillIcon(final Icon stillIcon)
     {
         this.stillIcon = stillIcon;
         return this;
     }
 
-    public final Fluid setFlowingIcon(Icon flowingIcon)
+    public final Fluid setFlowingIcon(final Icon flowingIcon)
     {
         this.flowingIcon = flowingIcon;
         return this;
     }
 
-    public final Fluid setIcons(Icon stillIcon, Icon flowingIcon)
+    public final Fluid setIcons(final Icon stillIcon, final Icon flowingIcon)
     {
         return this.setStillIcon(stillIcon).setFlowingIcon(flowingIcon);
     }
 
-    public final Fluid setIcons(Icon commonIcon)
+    public final Fluid setIcons(final Icon commonIcon)
     {
         return this.setStillIcon(commonIcon).setFlowingIcon(commonIcon);
     }
@@ -287,26 +287,26 @@ public class Fluid
     }
 
     /* Stack-based Accessors */
-    public int getLuminosity(FluidStack stack){ return getLuminosity(); }
-    public int getDensity(FluidStack stack){ return getDensity(); }
-    public int getTemperature(FluidStack stack){ return getTemperature(); }
-    public int getViscosity(FluidStack stack){ return getViscosity(); }
-    public boolean isGaseous(FluidStack stack){ return isGaseous(); }
-    public EnumRarity getRarity(FluidStack stack){ return getRarity(); }
-    public int getColor(FluidStack stack){ return getColor(); }
-    public Icon getIcon(FluidStack stack){ return getIcon(); }
+    public int getLuminosity(final FluidStack stack){ return getLuminosity(); }
+    public int getDensity(final FluidStack stack){ return getDensity(); }
+    public int getTemperature(final FluidStack stack){ return getTemperature(); }
+    public int getViscosity(final FluidStack stack){ return getViscosity(); }
+    public boolean isGaseous(final FluidStack stack){ return isGaseous(); }
+    public EnumRarity getRarity(final FluidStack stack){ return getRarity(); }
+    public int getColor(final FluidStack stack){ return getColor(); }
+    public Icon getIcon(final FluidStack stack){ return getIcon(); }
     /* World-based Accessors */
-    public int getLuminosity(World world, int x, int y, int z){ return getLuminosity(); }
-    public int getDensity(World world, int x, int y, int z){ return getDensity(); }
-    public int getTemperature(World world, int x, int y, int z){ return getTemperature(); }
-    public int getViscosity(World world, int x, int y, int z){ return getViscosity(); }
-    public boolean isGaseous(World world, int x, int y, int z){ return isGaseous(); }
-    public EnumRarity getRarity(World world, int x, int y, int z){ return getRarity(); }
-    public int getColor(World world, int x, int y, int z){ return getColor(); }
-    public Icon getIcon(World world, int x, int y, int z){ return getIcon(); }
+    public int getLuminosity(final World world, final int x, final int y, final int z){ return getLuminosity(); }
+    public int getDensity(final World world, final int x, final int y, final int z){ return getDensity(); }
+    public int getTemperature(final World world, final int x, final int y, final int z){ return getTemperature(); }
+    public int getViscosity(final World world, final int x, final int y, final int z){ return getViscosity(); }
+    public boolean isGaseous(final World world, final int x, final int y, final int z){ return isGaseous(); }
+    public EnumRarity getRarity(final World world, final int x, final int y, final int z){ return getRarity(); }
+    public int getColor(final World world, final int x, final int y, final int z){ return getColor(); }
+    public Icon getIcon(final World world, final int x, final int y, final int z){ return getIcon(); }
 
     private static Map<String, String> legacyNames = Maps.newHashMap();
-    static String convertLegacyName(String fluidName)
+    static String convertLegacyName(final String fluidName)
     {
         return fluidName != null && legacyNames.containsKey(fluidName) ? legacyNames.get(fluidName) : fluidName;
     }
@@ -316,7 +316,7 @@ public class Fluid
      * @param legacyName The legacy name to recognize
      * @param canonicalName The canonical fluid name it will become
      */
-    public static void registerLegacyName(String legacyName, String canonicalName)
+    public static void registerLegacyName(final String legacyName, final String canonicalName)
     {
         legacyNames.put(legacyName.toLowerCase(Locale.ENGLISH), canonicalName);
     }

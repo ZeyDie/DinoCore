@@ -18,7 +18,7 @@ public class FileUtil {
      * @param outFile the target filename
      * @return true on success
      */
-    public static boolean copy(File inFile, File outFile) {
+    public static boolean copy(final File inFile, final File outFile) {
         if (!inFile.exists()) {
             return false;
         }
@@ -31,12 +31,12 @@ public class FileUtil {
             out = new FileOutputStream(outFile).getChannel();
 
             long pos = 0;
-            long size = in.size();
+            final long size = in.size();
 
             while (pos < size) {
                 pos += in.transferTo(pos, 10 * 1024 * 1024, out);
             }
-        } catch (IOException ioe) {
+        } catch (final IOException ioe) {
             return false;
         } finally {
             try {
@@ -46,7 +46,7 @@ public class FileUtil {
                 if (out != null) {
                     out.close();
                 }
-            } catch (IOException ioe) {
+            } catch (final IOException ioe) {
                 return false;
             }
         }

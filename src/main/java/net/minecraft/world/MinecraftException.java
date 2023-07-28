@@ -2,7 +2,7 @@ package net.minecraft.world;
 
 public class MinecraftException extends Exception
 {
-    public MinecraftException(String par1Str)
+    public MinecraftException(final String par1Str)
     {
         super(par1Str);
     }

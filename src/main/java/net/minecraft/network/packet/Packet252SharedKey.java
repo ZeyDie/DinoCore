@@ -24,7 +24,7 @@ public class Packet252SharedKey extends Packet
     public Packet252SharedKey() {}
 
     @SideOnly(Side.CLIENT)
-    public Packet252SharedKey(SecretKey par1SecretKey, PublicKey par2PublicKey, byte[] par3ArrayOfByte)
+    public Packet252SharedKey(final SecretKey par1SecretKey, final PublicKey par2PublicKey, final byte[] par3ArrayOfByte)
     {
         this.sharedKey = par1SecretKey;
         this.sharedSecret = CryptManager.encryptData(par2PublicKey, par1SecretKey.getEncoded());
@@ -34,7 +34,7 @@ public class Packet252SharedKey extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.sharedSecret = readBytesFromStream(par1DataInput);
         this.verifyToken = readBytesFromStream(par1DataInput);
@@ -43,7 +43,7 @@ public class Packet252SharedKey extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         writeByteArray(par1DataOutput, this.sharedSecret);
         writeByteArray(par1DataOutput, this.verifyToken);
@@ -52,7 +52,7 @@ public class Packet252SharedKey extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleSharedKey(this);
     }
@@ -68,7 +68,7 @@ public class Packet252SharedKey extends Packet
     /**
      * Return secretKey, decrypting it from the sharedSecret byte array if needed
      */
-    public SecretKey getSharedKey(PrivateKey par1PrivateKey)
+    public SecretKey getSharedKey(final PrivateKey par1PrivateKey)
     {
         return par1PrivateKey == null ? this.sharedKey : (this.sharedKey = CryptManager.decryptSharedKey(par1PrivateKey, this.sharedSecret));
     }
@@ -84,7 +84,7 @@ public class Packet252SharedKey extends Packet
     /**
      * Return verifyToken
      */
-    public byte[] getVerifyToken(PrivateKey par1PrivateKey)
+    public byte[] getVerifyToken(final PrivateKey par1PrivateKey)
     {
         return par1PrivateKey == null ? this.verifyToken : CryptManager.decryptData(par1PrivateKey, this.verifyToken);
     }

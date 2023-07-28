@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public abstract class NBTBase
 {
-    public static final String[] NBTTypes = new String[] {"END", "BYTE", "SHORT", "INT", "LONG", "FLOAT", "DOUBLE", "BYTE[]", "STRING", "LIST", "COMPOUND", "INT[]"};
+    public static final String[] NBTTypes = {"END", "BYTE", "SHORT", "INT", "LONG", "FLOAT", "DOUBLE", "BYTE[]", "STRING", "LIST", "COMPOUND", "INT[]"};
 
     /** The UTF string key used to lookup values. */
     private String name;
@@ -30,7 +30,7 @@ public abstract class NBTBase
      */
     public abstract byte getId();
 
-    protected NBTBase(String par1Str)
+    protected NBTBase(final String par1Str)
     {
         if (par1Str == null)
         {
@@ -45,7 +45,7 @@ public abstract class NBTBase
     /**
      * Sets the name for this tag and returns this for convenience.
      */
-    public NBTBase setName(String par1Str)
+    public NBTBase setName(final String par1Str)
     {
         if (par1Str == null)
         {
@@ -70,14 +70,14 @@ public abstract class NBTBase
     /**
      * Reads and returns a tag from the given DataInput, or the End tag if no tag could be read.
      */
-    public static NBTBase readNamedTag(DataInput par0DataInput) throws IOException
+    public static NBTBase readNamedTag(final DataInput par0DataInput) throws IOException
     {
         return func_130104_b(par0DataInput, 0);
     }
 
-    public static NBTBase func_130104_b(DataInput par0DataInput, int par1) throws IOException
+    public static NBTBase func_130104_b(final DataInput par0DataInput, final int par1) throws IOException
     {
-        byte b0 = par0DataInput.readByte();
+        final byte b0 = par0DataInput.readByte();
 
         if (b0 == 0)
         {
@@ -85,18 +85,18 @@ public abstract class NBTBase
         }
         else
         {
-            String s = par0DataInput.readUTF();
-            NBTBase nbtbase = newTag(b0, s);
+            final String s = par0DataInput.readUTF();
+            final NBTBase nbtbase = newTag(b0, s);
 
             try
             {
                 nbtbase.load(par0DataInput, par1);
                 return nbtbase;
             }
-            catch (IOException ioexception)
+            catch (final IOException ioexception)
             {
-                CrashReport crashreport = CrashReport.makeCrashReport(ioexception, "Loading NBT data");
-                CrashReportCategory crashreportcategory = crashreport.makeCategory("NBT Tag");
+                final CrashReport crashreport = CrashReport.makeCrashReport(ioexception, "Loading NBT data");
+                final CrashReportCategory crashreportcategory = crashreport.makeCategory("NBT Tag");
                 crashreportcategory.addCrashSection("Tag name", s);
                 crashreportcategory.addCrashSection("Tag type", Byte.valueOf(b0));
                 throw new ReportedException(crashreport);
@@ -108,7 +108,7 @@ public abstract class NBTBase
      * Writes the specified tag to the given DataOutput, writing the type byte, the UTF string key and then calling the
      * tag to write its data.
      */
-    public static void writeNamedTag(NBTBase par0NBTBase, DataOutput par1DataOutput) throws IOException
+    public static void writeNamedTag(final NBTBase par0NBTBase, final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeByte(par0NBTBase.getId());
 
@@ -122,7 +122,7 @@ public abstract class NBTBase
     /**
      * Creates and returns a new tag of the specified type, or null if invalid.
      */
-    public static NBTBase newTag(byte par0, String par1Str)
+    public static NBTBase newTag(final byte par0, final String par1Str)
     {
         switch (par0)
         {
@@ -158,7 +158,7 @@ public abstract class NBTBase
     /**
      * Returns the string name of a tag with the specified type, or 'UNKNOWN' if invalid.
      */
-    public static String getTagName(byte par0)
+    public static String getTagName(final byte par0)
     {
         switch (par0)
         {
@@ -196,7 +196,7 @@ public abstract class NBTBase
      */
     public abstract NBTBase copy();
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         if (!(par1Obj instanceof NBTBase))
         {
@@ -204,7 +204,7 @@ public abstract class NBTBase
         }
         else
         {
-            NBTBase nbtbase = (NBTBase)par1Obj;
+            final NBTBase nbtbase = (NBTBase)par1Obj;
             return this.getId() != nbtbase.getId() ? false : ((this.name != null || nbtbase.name == null) && (this.name == null || nbtbase.name != null) ? this.name == null || this.name.equals(nbtbase.name) : false);
         }
     }

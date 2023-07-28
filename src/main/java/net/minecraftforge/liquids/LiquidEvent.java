@@ -11,7 +11,7 @@ public class LiquidEvent extends Event {
     public final int z;
     public final World world;
 
-    public LiquidEvent(LiquidStack liquid, World world, int x, int y, int z)
+    public LiquidEvent(final LiquidStack liquid, final World world, final int x, final int y, final int z)
     {
         this.liquid = liquid;
         this.world = world;
@@ -28,7 +28,7 @@ public class LiquidEvent extends Event {
      */
     public static class LiquidMotionEvent extends LiquidEvent
     {
-        public LiquidMotionEvent(LiquidStack liquid, World world, int x, int y, int z)
+        public LiquidMotionEvent(final LiquidStack liquid, final World world, final int x, final int y, final int z)
         {
             super(liquid, world, x, y, z);
         }
@@ -45,7 +45,7 @@ public class LiquidEvent extends Event {
     {
         public final ILiquidTank tank;
 
-        public LiquidFillingEvent(LiquidStack liquid, World world, int x, int y, int z, ILiquidTank tank)
+        public LiquidFillingEvent(final LiquidStack liquid, final World world, final int x, final int y, final int z, final ILiquidTank tank)
         {
             super(liquid, world, x, y, z);
             this.tank = tank;
@@ -61,7 +61,7 @@ public class LiquidEvent extends Event {
     {
         public final ILiquidTank tank;
 
-        public LiquidDrainingEvent(LiquidStack liquid, World world, int x, int y, int z, ILiquidTank tank)
+        public LiquidDrainingEvent(final LiquidStack liquid, final World world, final int x, final int y, final int z, final ILiquidTank tank)
         {
             super(liquid, world, x, y, z);
             this.tank = tank;
@@ -77,7 +77,7 @@ public class LiquidEvent extends Event {
      */
     public static class LiquidSpilledEvent extends LiquidEvent
     {
-        public LiquidSpilledEvent(LiquidStack liquid, World world, int x, int y, int z)
+        public LiquidSpilledEvent(final LiquidStack liquid, final World world, final int x, final int y, final int z)
         {
             super(liquid, world, x, y, z);
         }
@@ -88,7 +88,7 @@ public class LiquidEvent extends Event {
      *
      * @param event
      */
-    public static final void fireEvent(LiquidEvent event)
+    public static final void fireEvent(final LiquidEvent event)
     {
         MinecraftForge.EVENT_BUS.post(event);
     }

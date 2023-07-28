@@ -13,7 +13,7 @@ public class ServerAddress
     private final String ipAddress;
     private final int serverPort;
 
-    private ServerAddress(String par1Str, int par2)
+    private ServerAddress(final String par1Str, final int par2)
     {
         this.ipAddress = par1Str;
         this.serverPort = par2;
@@ -29,7 +29,7 @@ public class ServerAddress
         return this.serverPort;
     }
 
-    public static ServerAddress func_78860_a(String par0Str)
+    public static ServerAddress func_78860_a(final String par0Str)
     {
         if (par0Str == null)
         {
@@ -41,14 +41,14 @@ public class ServerAddress
 
             if (par0Str.startsWith("["))
             {
-                int i = par0Str.indexOf("]");
+                final int i = par0Str.indexOf("]");
 
                 if (i > 0)
                 {
-                    String s1 = par0Str.substring(1, i);
+                    final String s1 = par0Str.substring(1, i);
                     String s2 = par0Str.substring(i + 1).trim();
 
-                    if (s2.startsWith(":") && s2.length() > 0)
+                    if (s2.startsWith(":") && !s2.isEmpty())
                     {
                         s2 = s2.substring(1);
                         astring = new String[] {s1, s2};
@@ -70,7 +70,7 @@ public class ServerAddress
 
             if (j == 25565)
             {
-                String[] astring1 = getServerAddress(s3);
+                final String[] astring1 = getServerAddress(s3);
                 s3 = astring1[0];
                 j = parseIntWithDefault(astring1[1], 25565);
             }
@@ -82,34 +82,34 @@ public class ServerAddress
     /**
      * Returns a server's address and port for the specified hostname, looking up the SRV record if possible
      */
-    private static String[] getServerAddress(String par0Str)
+    private static String[] getServerAddress(final String par0Str)
     {
         try
         {
-            String s1 = "com.sun.jndi.dns.DnsContextFactory";
+            final String s1 = "com.sun.jndi.dns.DnsContextFactory";
             Class.forName("com.sun.jndi.dns.DnsContextFactory");
-            Hashtable hashtable = new Hashtable();
+            final Hashtable hashtable = new Hashtable();
             hashtable.put("java.naming.factory.initial", "com.sun.jndi.dns.DnsContextFactory");
             hashtable.put("java.naming.provider.url", "dns:");
             hashtable.put("com.sun.jndi.dns.timeout.retries", "1");
-            InitialDirContext initialdircontext = new InitialDirContext(hashtable);
-            Attributes attributes = initialdircontext.getAttributes("_minecraft._tcp." + par0Str, new String[] {"SRV"});
-            String[] astring = attributes.get("srv").get().toString().split(" ", 4);
+            final InitialDirContext initialdircontext = new InitialDirContext(hashtable);
+            final Attributes attributes = initialdircontext.getAttributes("_minecraft._tcp." + par0Str, new String[] {"SRV"});
+            final String[] astring = attributes.get("srv").get().toString().split(" ", 4);
             return new String[] {astring[3], astring[2]};
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
             return new String[] {par0Str, Integer.toString(25565)};
         }
     }
 
-    private static int parseIntWithDefault(String par0Str, int par1)
+    private static int parseIntWithDefault(final String par0Str, final int par1)
     {
         try
         {
             return Integer.parseInt(par0Str.trim());
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             return par1;
         }

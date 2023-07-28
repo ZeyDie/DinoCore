@@ -9,33 +9,33 @@ public class CraftShapelessRecipe extends ShapelessRecipe implements CraftRecipe
     // TODO: Could eventually use this to add a matches() method or some such
     private net.minecraft.item.crafting.ShapelessRecipes recipe;
 
-    public CraftShapelessRecipe(ItemStack result) {
+    public CraftShapelessRecipe(final ItemStack result) {
         super(result);
     }
 
-    public CraftShapelessRecipe(ItemStack result, net.minecraft.item.crafting.ShapelessRecipes recipe) {
+    public CraftShapelessRecipe(final ItemStack result, final net.minecraft.item.crafting.ShapelessRecipes recipe) {
         this(result);
         this.recipe = recipe;
     }
 
-    public static CraftShapelessRecipe fromBukkitRecipe(ShapelessRecipe recipe) {
+    public static CraftShapelessRecipe fromBukkitRecipe(final ShapelessRecipe recipe) {
         if (recipe instanceof CraftShapelessRecipe) {
             return (CraftShapelessRecipe) recipe;
         }
-        CraftShapelessRecipe ret = new CraftShapelessRecipe(recipe.getResult());
-        for (ItemStack ingred : recipe.getIngredientList()) {
+        final CraftShapelessRecipe ret = new CraftShapelessRecipe(recipe.getResult());
+        for (final ItemStack ingred : recipe.getIngredientList()) {
             ret.addIngredient(ingred.getType(), ingred.getDurability());
         }
         return ret;
     }
 
     public void addToCraftingManager() {
-        List<ItemStack> ingred = this.getIngredientList();
-        Object[] data = new Object[ingred.size()];
+        final List<ItemStack> ingred = this.getIngredientList();
+        final Object[] data = new Object[ingred.size()];
         int i = 0;
-        for (ItemStack mdata : ingred) {
-            int id = mdata.getTypeId();
-            short dmg = mdata.getDurability();
+        for (final ItemStack mdata : ingred) {
+            final int id = mdata.getTypeId();
+            final short dmg = mdata.getDurability();
             data[i] = new net.minecraft.item.ItemStack(id, 1, dmg);
             i++;
         }

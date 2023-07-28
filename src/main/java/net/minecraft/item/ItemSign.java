@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 public class ItemSign extends Item
 {
-    public ItemSign(int par1)
+    public ItemSign(final int par1)
     {
         super(par1);
         this.maxStackSize = 16;
@@ -20,13 +20,16 @@ public class ItemSign extends Item
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final World par3World, int par4, int par5, int par6, final int par7, final float par8, final float par9, final float par10)
     {
+        int par51 = par5;
+        int par61 = par6;
+        int par41 = par4;
         if (par7 == 0)
         {
             return false;
         }
-        else if (!par3World.getBlockMaterial(par4, par5, par6).isSolid())
+        else if (!par3World.getBlockMaterial(par41, par51, par61).isSolid())
         {
             return false;
         }
@@ -34,34 +37,34 @@ public class ItemSign extends Item
         {
             if (par7 == 1)
             {
-                ++par5;
+                ++par51;
             }
 
             if (par7 == 2)
             {
-                --par6;
+                --par61;
             }
 
             if (par7 == 3)
             {
-                ++par6;
+                ++par61;
             }
 
             if (par7 == 4)
             {
-                --par4;
+                --par41;
             }
 
             if (par7 == 5)
             {
-                ++par4;
+                ++par41;
             }
 
-            if (!par2EntityPlayer.canPlayerEdit(par4, par5, par6, par7, par1ItemStack))
+            if (!par2EntityPlayer.canPlayerEdit(par41, par51, par61, par7, par1ItemStack))
             {
                 return false;
             }
-            else if (!Block.signPost.canPlaceBlockAt(par3World, par4, par5, par6))
+            else if (!Block.signPost.canPlaceBlockAt(par3World, par41, par51, par61))
             {
                 return false;
             }
@@ -73,16 +76,16 @@ public class ItemSign extends Item
             {
                 if (par7 == 1)
                 {
-                    int i1 = MathHelper.floor_double((double)((par2EntityPlayer.rotationYaw + 180.0F) * 16.0F / 360.0F) + 0.5D) & 15;
-                    par3World.setBlock(par4, par5, par6, Block.signPost.blockID, i1, 3);
+                    final int i1 = MathHelper.floor_double((double)((par2EntityPlayer.rotationYaw + 180.0F) * 16.0F / 360.0F) + 0.5D) & 15;
+                    par3World.setBlock(par41, par51, par61, Block.signPost.blockID, i1, 3);
                 }
                 else
                 {
-                    par3World.setBlock(par4, par5, par6, Block.signWall.blockID, par7, 3);
+                    par3World.setBlock(par41, par51, par61, Block.signWall.blockID, par7, 3);
                 }
 
                 --par1ItemStack.stackSize;
-                TileEntitySign tileentitysign = (TileEntitySign)par3World.getBlockTileEntity(par4, par5, par6);
+                final TileEntitySign tileentitysign = (TileEntitySign)par3World.getBlockTileEntity(par41, par51, par61);
 
                 if (tileentitysign != null)
                 {

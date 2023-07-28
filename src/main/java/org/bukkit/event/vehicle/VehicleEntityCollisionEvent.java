@@ -28,7 +28,7 @@ public class VehicleEntityCollisionEvent extends VehicleCollisionEvent implement
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancelled = cancel;
     }
 
@@ -36,7 +36,7 @@ public class VehicleEntityCollisionEvent extends VehicleCollisionEvent implement
         return cancelledPickup;
     }
 
-    public void setPickupCancelled(boolean cancel) {
+    public void setPickupCancelled(final boolean cancel) {
         cancelledPickup = cancel;
     }
 
@@ -44,7 +44,7 @@ public class VehicleEntityCollisionEvent extends VehicleCollisionEvent implement
         return cancelledCollision;
     }
 
-    public void setCollisionCancelled(boolean cancel) {
+    public void setCollisionCancelled(final boolean cancel) {
         cancelledCollision = cancel;
     }
 

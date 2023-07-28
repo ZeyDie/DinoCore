@@ -10,7 +10,7 @@ class WorldClientINNER4 implements Callable
 {
     final WorldClient theWorldClient;
 
-    WorldClientINNER4(WorldClient par1WorldClient)
+    WorldClientINNER4(final WorldClient par1WorldClient)
     {
         this.theWorldClient = par1WorldClient;
     }

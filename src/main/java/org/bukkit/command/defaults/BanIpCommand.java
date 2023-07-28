@@ -22,7 +22,7 @@ public class BanIpCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length < 1)  {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
@@ -33,7 +33,7 @@ public class BanIpCommand extends VanillaCommand {
         if (ipValidity.matcher(args[0]).matches()) {
             processIPBan(args[0], sender);
         } else {
-            Player player = Bukkit.getPlayer(args[0]);
+            final Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
                 sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
@@ -46,7 +46,7 @@ public class BanIpCommand extends VanillaCommand {
         return true;
     }
 
-    private void processIPBan(String ip, CommandSender sender) {
+    private void processIPBan(final String ip, final CommandSender sender) {
         // TODO: Kick on ban
         Bukkit.banIP(ip);
 
@@ -54,7 +54,7 @@ public class BanIpCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) throws IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");

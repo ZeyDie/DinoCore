@@ -10,7 +10,7 @@ class CallableType2 implements Callable
 {
     final Minecraft mc;
 
-    CallableType2(Minecraft par1Minecraft)
+    CallableType2(final Minecraft par1Minecraft)
     {
         this.mc = par1Minecraft;
     }

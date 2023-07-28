@@ -25,7 +25,7 @@ public class CommandHelp extends CommandBase
         return 0;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.help.usage";
     }
@@ -35,22 +35,22 @@ public class CommandHelp extends CommandBase
         return Arrays.asList(new String[] {"?"});
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
-        List list = this.getSortedPossibleCommands(par1ICommandSender);
-        byte b0 = 7;
-        int i = (list.size() - 1) / b0;
-        boolean flag = false;
+        final List list = this.getSortedPossibleCommands(par1ICommandSender);
+        final byte b0 = 7;
+        final int i = (list.size() - 1) / b0;
+        final boolean flag = false;
         ICommand icommand;
-        int j;
+        final int j;
 
         try
         {
             j = par2ArrayOfStr.length == 0 ? 0 : parseIntBounded(par1ICommandSender, par2ArrayOfStr[0], 1, i + 1) - 1;
         }
-        catch (NumberInvalidException numberinvalidexception)
+        catch (final NumberInvalidException numberinvalidexception)
         {
-            Map map = this.getCommands();
+            final Map map = this.getCommands();
             icommand = (ICommand)map.get(par2ArrayOfStr[0]);
 
             if (icommand != null)
@@ -61,7 +61,7 @@ public class CommandHelp extends CommandBase
             throw new CommandNotFoundException();
         }
 
-        int k = Math.min((j + 1) * b0, list.size());
+        final int k = Math.min((j + 1) * b0, list.size());
         par1ICommandSender.sendChatToPlayer(ChatMessageComponent.createFromTranslationWithSubstitutions("commands.help.header", new Object[] {Integer.valueOf(j + 1), Integer.valueOf(i + 1)}).setColor(EnumChatFormatting.DARK_GREEN));
 
         for (int l = j * b0; l < k; ++l)
@@ -79,9 +79,9 @@ public class CommandHelp extends CommandBase
     /**
      * Returns a sorted list of all possible commands for the given ICommandSender.
      */
-    protected List getSortedPossibleCommands(ICommandSender par1ICommandSender)
+    protected List getSortedPossibleCommands(final ICommandSender par1ICommandSender)
     {
-        List list = MinecraftServer.getServer().getCommandManager().getPossibleCommands(par1ICommandSender);
+        final List list = MinecraftServer.getServer().getCommandManager().getPossibleCommands(par1ICommandSender);
         Collections.sort(list);
         return list;
     }

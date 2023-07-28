@@ -28,7 +28,7 @@ public class Packet202PlayerAbilities extends Packet
 
     public Packet202PlayerAbilities() {}
 
-    public Packet202PlayerAbilities(PlayerCapabilities par1PlayerCapabilities)
+    public Packet202PlayerAbilities(final PlayerCapabilities par1PlayerCapabilities)
     {
         this.setDisableDamage(par1PlayerCapabilities.disableDamage);
         this.setFlying(par1PlayerCapabilities.isFlying);
@@ -41,9 +41,9 @@ public class Packet202PlayerAbilities extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
-        byte b0 = par1DataInput.readByte();
+        final byte b0 = par1DataInput.readByte();
         this.setDisableDamage((b0 & 1) > 0);
         this.setFlying((b0 & 2) > 0);
         this.setAllowFlying((b0 & 4) > 0);
@@ -55,7 +55,7 @@ public class Packet202PlayerAbilities extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         byte b0 = 0;
 
@@ -87,7 +87,7 @@ public class Packet202PlayerAbilities extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handlePlayerAbilities(this);
     }
@@ -108,7 +108,7 @@ public class Packet202PlayerAbilities extends Packet
     /**
      * Sets whether damage is disabled or not.
      */
-    public void setDisableDamage(boolean par1)
+    public void setDisableDamage(final boolean par1)
     {
         this.disableDamage = par1;
     }
@@ -121,7 +121,7 @@ public class Packet202PlayerAbilities extends Packet
     /**
      * Sets whether we're currently flying or not.
      */
-    public void setFlying(boolean par1)
+    public void setFlying(final boolean par1)
     {
         this.isFlying = par1;
     }
@@ -131,7 +131,7 @@ public class Packet202PlayerAbilities extends Packet
         return this.allowFlying;
     }
 
-    public void setAllowFlying(boolean par1)
+    public void setAllowFlying(final boolean par1)
     {
         this.allowFlying = par1;
     }
@@ -141,7 +141,7 @@ public class Packet202PlayerAbilities extends Packet
         return this.isCreativeMode;
     }
 
-    public void setCreativeMode(boolean par1)
+    public void setCreativeMode(final boolean par1)
     {
         this.isCreativeMode = par1;
     }
@@ -155,7 +155,7 @@ public class Packet202PlayerAbilities extends Packet
     /**
      * Sets the flying speed.
      */
-    public void setFlySpeed(float par1)
+    public void setFlySpeed(final float par1)
     {
         this.flySpeed = par1;
     }
@@ -169,7 +169,7 @@ public class Packet202PlayerAbilities extends Packet
     /**
      * Sets the walking speed.
      */
-    public void setWalkSpeed(float par1)
+    public void setWalkSpeed(final float par1)
     {
         this.walkSpeed = par1;
     }
@@ -186,7 +186,7 @@ public class Packet202PlayerAbilities extends Packet
      * eg return packet30entity.entityId == entityId; WARNING : will throw if you compare a packet to a different packet
      * class
      */
-    public boolean containsSameEntityIDAs(Packet par1Packet)
+    public boolean containsSameEntityIDAs(final Packet par1Packet)
     {
         return true;
     }

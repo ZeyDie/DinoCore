@@ -25,7 +25,7 @@ public class GuiScreenEditOnlineWorld extends GuiScreen
     private int field_104052_r;
     private GuiScreenOnlineServersSubscreen field_104051_s;
 
-    public GuiScreenEditOnlineWorld(GuiScreen par1GuiScreen, GuiScreen par2GuiScreen, McoServer par3McoServer)
+    public GuiScreenEditOnlineWorld(final GuiScreen par1GuiScreen, final GuiScreen par2GuiScreen, final McoServer par3McoServer)
     {
         this.field_96204_a = par1GuiScreen;
         this.field_96202_b = par2GuiScreen;
@@ -75,7 +75,7 @@ public class GuiScreenEditOnlineWorld extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
@@ -100,11 +100,11 @@ public class GuiScreenEditOnlineWorld extends GuiScreen
 
     private void func_96200_g()
     {
-        McoClient mcoclient = new McoClient(this.mc.getSession());
+        final McoClient mcoclient = new McoClient(this.mc.getSession());
 
         try
         {
-            String s = this.field_96203_c.getText() != null && !this.field_96203_c.getText().trim().equals("") ? this.field_96203_c.getText() : null;
+            final String s = this.field_96203_c.getText() != null && !this.field_96203_c.getText().trim().isEmpty() ? this.field_96203_c.getText() : null;
             mcoclient.func_96384_a(this.field_96205_n.field_96408_a, this.field_96201_d.getText(), s, this.field_104051_s.field_104076_e, this.field_104051_s.field_104073_f);
             this.field_96205_n.func_96399_a(this.field_96201_d.getText());
             this.field_96205_n.func_96400_b(this.field_96203_c.getText());
@@ -112,11 +112,11 @@ public class GuiScreenEditOnlineWorld extends GuiScreen
             this.field_96205_n.field_110728_j = this.field_104051_s.field_104073_f;
             this.mc.displayGuiScreen(new GuiScreenConfigureWorld(this.field_96202_b, this.field_96205_n));
         }
-        catch (ExceptionMcoService exceptionmcoservice)
+        catch (final ExceptionMcoService exceptionmcoservice)
         {
             this.mc.getLogAgent().logSevere(exceptionmcoservice.toString());
         }
-        catch (UnsupportedEncodingException unsupportedencodingexception)
+        catch (final UnsupportedEncodingException unsupportedencodingexception)
         {
             this.mc.getLogAgent().logWarning("Realms: " + unsupportedencodingexception.getLocalizedMessage());
         }
@@ -125,7 +125,7 @@ public class GuiScreenEditOnlineWorld extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         this.field_96201_d.textboxKeyTyped(par1, par2);
         this.field_96203_c.textboxKeyTyped(par1, par2);
@@ -141,13 +141,13 @@ public class GuiScreenEditOnlineWorld extends GuiScreen
             this.func_96200_g();
         }
 
-        this.field_96206_o.enabled = this.field_96201_d.getText() != null && !this.field_96201_d.getText().trim().equals("");
+        this.field_96206_o.enabled = this.field_96201_d.getText() != null && !this.field_96201_d.getText().trim().isEmpty();
     }
 
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int par1, int par2, int par3)
+    protected void mouseClicked(final int par1, final int par2, final int par3)
     {
         super.mouseClicked(par1, par2, par3);
         this.field_96203_c.mouseClicked(par1, par2, par3);
@@ -157,7 +157,7 @@ public class GuiScreenEditOnlineWorld extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRenderer, I18n.getString("mco.configure.world.edit.title"), this.width / 2, 17, 16777215);

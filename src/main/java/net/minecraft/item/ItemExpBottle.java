@@ -9,14 +9,14 @@ import net.minecraft.world.World;
 
 public class ItemExpBottle extends Item
 {
-    public ItemExpBottle(int par1)
+    public ItemExpBottle(final int par1)
     {
         super(par1);
         this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
     @SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack par1ItemStack)
+    public boolean hasEffect(final ItemStack par1ItemStack)
     {
         return true;
     }
@@ -24,7 +24,7 @@ public class ItemExpBottle extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         if (!par3EntityPlayer.capabilities.isCreativeMode)
         {

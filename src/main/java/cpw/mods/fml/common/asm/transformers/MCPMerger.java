@@ -43,7 +43,7 @@ public class MCPMerger
     private static HashSet<String> dontProcess  = new HashSet<String>();
     private static final boolean DEBUG = false;
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         if (args.length != 3)
         {
@@ -51,11 +51,11 @@ public class MCPMerger
             System.exit(1);
         }
 
-        File map_file = new File(args[0]);
-        File client_jar = new File(args[1]);
-        File server_jar = new File(args[2]);
-        File client_jar_tmp = new File(args[1] + ".backup_merge");
-        File server_jar_tmp = new File(args[2] + ".backup_merge");
+        final File map_file = new File(args[0]);
+        final File client_jar = new File(args[1]);
+        final File server_jar = new File(args[2]);
+        final File client_jar_tmp = new File(args[1] + ".backup_merge");
+        final File server_jar_tmp = new File(args[2] + ".backup_merge");
 
         if (client_jar_tmp.exists() && !client_jar_tmp.delete())
         {
@@ -101,7 +101,7 @@ public class MCPMerger
         {
             processJar(client_jar_tmp, server_jar_tmp, client_jar, server_jar);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             e.printStackTrace();
             System.exit(1);
@@ -118,19 +118,19 @@ public class MCPMerger
         }
     }
 
-    private static boolean readMapFile(File mapFile)
+    private static boolean readMapFile(final File mapFile)
     {
         try
         {
-            FileInputStream fstream = new FileInputStream(mapFile);
-            DataInputStream in = new DataInputStream(fstream);
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            final FileInputStream fstream = new FileInputStream(mapFile);
+            final DataInputStream in = new DataInputStream(fstream);
+            final BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
             String line;
             while ((line = br.readLine()) != null)
             {
                 line = line.split("#")[0];
-                char cmd = line.charAt(0);
+                final char cmd = line.charAt(0);
                 line = line.substring(1).trim();
 
                 switch (cmd)
@@ -145,14 +145,14 @@ public class MCPMerger
             in.close();
             return true;
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             System.err.println("Error: " + e.getMessage());
             return false;
         }
     }
 
-    public static void processJar(File clientInFile, File serverInFile, File clientOutFile, File serverOutFile) throws IOException
+    public static void processJar(final File clientInFile, final File serverInFile, final File clientOutFile, final File serverOutFile) throws IOException
     {
         ZipFile cInJar = null;
         ZipFile sInJar = null;
@@ -166,7 +166,7 @@ public class MCPMerger
                 cInJar = new ZipFile(clientInFile);
                 sInJar = new ZipFile(serverInFile);
             }
-            catch (FileNotFoundException e)
+            catch (final FileNotFoundException e)
             {
                 throw new FileNotFoundException("Could not open input file: " + e.getMessage());
             }
@@ -175,20 +175,20 @@ public class MCPMerger
                 cOutJar = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(clientOutFile)));
                 sOutJar = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(serverOutFile)));
             }
-            catch (FileNotFoundException e)
+            catch (final FileNotFoundException e)
             {
                 throw new FileNotFoundException("Could not open output file: " + e.getMessage());
             }
-            Hashtable<String, ZipEntry> cClasses = getClassEntries(cInJar, cOutJar);
-            Hashtable<String, ZipEntry> sClasses = getClassEntries(sInJar, sOutJar);
-            HashSet<String> cAdded = new HashSet<String>();
-            HashSet<String> sAdded = new HashSet<String>();
+            final Hashtable<String, ZipEntry> cClasses = getClassEntries(cInJar, cOutJar);
+            final Hashtable<String, ZipEntry> sClasses = getClassEntries(sInJar, sOutJar);
+            final HashSet<String> cAdded = new HashSet<String>();
+            final HashSet<String> sAdded = new HashSet<String>();
 
-            for (Entry<String, ZipEntry> entry : cClasses.entrySet())
+            for (final Entry<String, ZipEntry> entry : cClasses.entrySet())
             {
-                String name = entry.getKey();
-                ZipEntry cEntry = entry.getValue();
-                ZipEntry sEntry = sClasses.get(name);
+                final String name = entry.getKey();
+                final ZipEntry cEntry = entry.getValue();
+                final ZipEntry sEntry = sClasses.get(name);
 
                 if (sEntry == null)
                 {
@@ -211,14 +211,14 @@ public class MCPMerger
                 }
 
                 sClasses.remove(name);
-                ClassInfo info = new ClassInfo(name);
+                final ClassInfo info = new ClassInfo(name);
                 shared.put(name, info);
 
-                byte[] cData = readEntry(cInJar, entry.getValue());
-                byte[] sData = readEntry(sInJar, sEntry);
-                byte[] data = processClass(cData, sData, info);
+                final byte[] cData = readEntry(cInJar, entry.getValue());
+                final byte[] sData = readEntry(sInJar, sEntry);
+                final byte[] data = processClass(cData, sData, info);
 
-                ZipEntry newEntry = new ZipEntry(cEntry.getName());
+                final ZipEntry newEntry = new ZipEntry(cEntry.getName());
                 cOutJar.putNextEntry(newEntry);
                 cOutJar.write(data);
                 sOutJar.putNextEntry(newEntry);
@@ -227,7 +227,7 @@ public class MCPMerger
                 sAdded.add(name);
             }
 
-            for (Entry<String, ZipEntry> entry : sClasses.entrySet())
+            for (final Entry<String, ZipEntry> entry : sClasses.entrySet())
             {
                 if (DEBUG)
                 {
@@ -236,11 +236,11 @@ public class MCPMerger
                 copyClass(sInJar, entry.getValue(), cOutJar, sOutJar, false);
             }
 
-            for (String name : new String[]{SideOnly.class.getName(), Side.class.getName()})
+            for (final String name : new String[]{SideOnly.class.getName(), Side.class.getName()})
             {
-                String eName = name.replace(".", "/");
-                byte[] data = getClassBytes(name);
-                ZipEntry newEntry = new ZipEntry(name.replace(".", "/").concat(".class"));
+                final String eName = name.replace(".", "/");
+                final byte[] data = getClassBytes(name);
+                final ZipEntry newEntry = new ZipEntry(name.replace(".", "/").concat(".class"));
                 if (!cAdded.contains(eName))
                 {
                     cOutJar.putNextEntry(newEntry);
@@ -258,29 +258,29 @@ public class MCPMerger
         {
             if (cInJar != null)
             {
-                try { cInJar.close(); } catch (IOException e){}
+                try { cInJar.close(); } catch (final IOException e){}
             }
 
             if (sInJar != null)
             {
-                try { sInJar.close(); } catch (IOException e) {}
+                try { sInJar.close(); } catch (final IOException e) {}
             }
             if (cOutJar != null)
             {
-                try { cOutJar.close(); } catch (IOException e){}
+                try { cOutJar.close(); } catch (final IOException e){}
             }
 
             if (sOutJar != null)
             {
-                try { sOutJar.close(); } catch (IOException e) {}
+                try { sOutJar.close(); } catch (final IOException e) {}
             }
         }
     }
 
-    private static void copyClass(ZipFile inJar, ZipEntry entry, ZipOutputStream outJar, ZipOutputStream outJar2, boolean isClientOnly) throws IOException
+    private static void copyClass(final ZipFile inJar, final ZipEntry entry, final ZipOutputStream outJar, final ZipOutputStream outJar2, final boolean isClientOnly) throws IOException
     {
-        ClassReader reader = new ClassReader(readEntry(inJar, entry));
-        ClassNode classNode = new ClassNode();
+        final ClassReader reader = new ClassReader(readEntry(inJar, entry));
+        final ClassNode classNode = new ClassNode();
 
         reader.accept(classNode, 0);
 
@@ -290,11 +290,11 @@ public class MCPMerger
             classNode.visibleAnnotations.add(getSideAnn(isClientOnly));
         }
 
-        ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        final ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         classNode.accept(writer);
-        byte[] data = writer.toByteArray();
+        final byte[] data = writer.toByteArray();
 
-        ZipEntry newEntry = new ZipEntry(entry.getName());
+        final ZipEntry newEntry = new ZipEntry(entry.getName());
         if (outJar != null)
         {
             outJar.putNextEntry(newEntry);
@@ -307,19 +307,19 @@ public class MCPMerger
         }
     }
 
-    private static AnnotationNode getSideAnn(boolean isClientOnly)
+    private static AnnotationNode getSideAnn(final boolean isClientOnly)
     {
-        AnnotationNode ann = new AnnotationNode(Type.getDescriptor(SideOnly.class));
+        final AnnotationNode ann = new AnnotationNode(Type.getDescriptor(SideOnly.class));
         ann.values = new ArrayList<Object>();
         ann.values.add("value");
         ann.values.add(new String[]{ Type.getDescriptor(Side.class), (isClientOnly ? "CLIENT" : "SERVER")});
         return ann;
     }
 
-    private static Hashtable<String, ZipEntry> getClassEntries(ZipFile inFile, ZipOutputStream outFile) throws IOException
+    private static Hashtable<String, ZipEntry> getClassEntries(final ZipFile inFile, final ZipOutputStream outFile) throws IOException
     {
-        Hashtable<String, ZipEntry> ret = new Hashtable<String, ZipEntry>();
-        for (ZipEntry entry : Collections.list(inFile.entries()))
+        final Hashtable<String, ZipEntry> ret = new Hashtable<String, ZipEntry>();
+        for (final ZipEntry entry : Collections.list(inFile.entries()))
         {
             if (entry.isDirectory())
             {
@@ -327,10 +327,10 @@ public class MCPMerger
                 continue;
             }
 
-            String entryName = entry.getName();
+            final String entryName = entry.getName();
 
             boolean filtered = false;
-            for (String filter : dontProcess)
+            for (final String filter : dontProcess)
             {
                 if (entryName.startsWith(filter))
                 {
@@ -341,7 +341,7 @@ public class MCPMerger
 
             if (filtered || !entryName.endsWith(".class") || entryName.startsWith("."))
             {
-                ZipEntry newEntry = new ZipEntry(entry.getName());
+                final ZipEntry newEntry = new ZipEntry(entry.getName());
                 outFile.putNextEntry(newEntry);
                 outFile.write(readEntry(inFile, entry));
             }
@@ -352,14 +352,14 @@ public class MCPMerger
         }
         return ret;
     }
-    private static byte[] readEntry(ZipFile inFile, ZipEntry entry) throws IOException
+    private static byte[] readEntry(final ZipFile inFile, final ZipEntry entry) throws IOException
     {
         return readFully(inFile.getInputStream(entry));
     }
-    private static byte[] readFully(InputStream stream) throws IOException
+    private static byte[] readFully(final InputStream stream) throws IOException
     {
-        byte[] data = new byte[4096];
-        ByteArrayOutputStream entryBuffer = new ByteArrayOutputStream();
+        final byte[] data = new byte[4096];
+        final ByteArrayOutputStream entryBuffer = new ByteArrayOutputStream();
         int len;
         do
         {
@@ -379,40 +379,40 @@ public class MCPMerger
         public ArrayList<FieldNode> sField = new ArrayList<FieldNode>();
         public ArrayList<MethodNode> cMethods = new ArrayList<MethodNode>();
         public ArrayList<MethodNode> sMethods = new ArrayList<MethodNode>();
-        public ClassInfo(String name){ this.name = name; }
-        public boolean isSame() { return (cField.size() == 0 && sField.size() == 0 && cMethods.size() == 0 && sMethods.size() == 0); }
+        public ClassInfo(final String name){ this.name = name; }
+        public boolean isSame() { return (cField.isEmpty() && sField.isEmpty() && cMethods.isEmpty() && sMethods.isEmpty()); }
     }
 
-    public static byte[] processClass(byte[] cIn, byte[] sIn, ClassInfo info)
+    public static byte[] processClass(final byte[] cIn, final byte[] sIn, final ClassInfo info)
     {
-        ClassNode cClassNode = getClassNode(cIn);
-        ClassNode sClassNode = getClassNode(sIn);
+        final ClassNode cClassNode = getClassNode(cIn);
+        final ClassNode sClassNode = getClassNode(sIn);
 
         processFields(cClassNode, sClassNode, info);
         processMethods(cClassNode, sClassNode, info);
 
-        ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        final ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         cClassNode.accept(writer);
         return writer.toByteArray();
     }
 
-    private static ClassNode getClassNode(byte[] data)
+    private static ClassNode getClassNode(final byte[] data)
     {
-        ClassReader reader = new ClassReader(data);
-        ClassNode classNode = new ClassNode();
+        final ClassReader reader = new ClassReader(data);
+        final ClassNode classNode = new ClassNode();
         reader.accept(classNode, 0);
         return classNode;
     }
 
-    private static void processFields(ClassNode cClass, ClassNode sClass, ClassInfo info)
+    private static void processFields(final ClassNode cClass, final ClassNode sClass, final ClassInfo info)
     {
-        List<FieldNode> cFields = cClass.fields;
-        List<FieldNode> sFields = sClass.fields;
+        final List<FieldNode> cFields = cClass.fields;
+        final List<FieldNode> sFields = sClass.fields;
 
         int sI = 0;
         for (int x = 0; x < cFields.size(); x++)
         {
-            FieldNode cF = cFields.get(x);
+            final FieldNode cF = cFields.get(x);
             if (sI < sFields.size())
             {
                 if (!cF.name.equals(sFields.get(sI).name))
@@ -429,7 +429,7 @@ public class MCPMerger
                     if (serverHas)
                     {
                         boolean clientHas = false;
-                        FieldNode sF = sFields.get(sI);
+                        final FieldNode sF = sFields.get(sI);
                         for (int y = x + 1; y < cFields.size(); y++)
                         {
                             if (sF.name.equals(cFields.get(y).name))
@@ -468,7 +468,7 @@ public class MCPMerger
         {
             for (int x = cFields.size(); x < sFields.size(); x++)
             {
-                FieldNode sF = sFields.get(x);
+                final FieldNode sF = sFields.get(x);
                 if  (sF.visibleAnnotations == null) sF.visibleAnnotations = new ArrayList<AnnotationNode>();
                 sF.visibleAnnotations.add(getSideAnn(true));
                 cFields.add(x++, sF);
@@ -482,16 +482,16 @@ public class MCPMerger
         private MethodNode node;
         public boolean client;
         public boolean server;
-        public MethodWrapper(MethodNode node)
+        public MethodWrapper(final MethodNode node)
         {
             this.node = node;
         }
         @Override
-        public boolean equals(Object obj)
+        public boolean equals(final Object obj)
         {
             if (obj == null || !(obj instanceof MethodWrapper)) return false;
-            MethodWrapper mw = (MethodWrapper) obj;
-            boolean eq = Objects.equal(node.name, mw.node.name) && Objects.equal(node.desc, mw.node.desc);
+            final MethodWrapper mw = (MethodWrapper) obj;
+            final boolean eq = Objects.equal(node.name, mw.node.name) && Objects.equal(node.desc, mw.node.desc);
             if (eq)
             {
                 mw.client = this.client | mw.client;
@@ -517,16 +517,16 @@ public class MCPMerger
             return Objects.toStringHelper(this).add("name", node.name).add("desc",node.desc).add("server",server).add("client",client).toString();
         }
     }
-    private static void processMethods(ClassNode cClass, ClassNode sClass, ClassInfo info)
+    private static void processMethods(final ClassNode cClass, final ClassNode sClass, final ClassInfo info)
     {
-        List<MethodNode> cMethods = (List<MethodNode>)cClass.methods;
-        List<MethodNode> sMethods = (List<MethodNode>)sClass.methods;
-        LinkedHashSet<MethodWrapper> allMethods = Sets.newLinkedHashSet();
+        final List<MethodNode> cMethods = (List<MethodNode>)cClass.methods;
+        final List<MethodNode> sMethods = (List<MethodNode>)sClass.methods;
+        final LinkedHashSet<MethodWrapper> allMethods = Sets.newLinkedHashSet();
 
         int cPos = 0;
         int sPos = 0;
-        int cLen = cMethods.size();
-        int sLen = sMethods.size();
+        final int cLen = cMethods.size();
+        final int sLen = sMethods.size();
         String clientName = "";
         String lastName = clientName;
         String serverName = "";
@@ -538,7 +538,7 @@ public class MCPMerger
                 {
                     break;
                 }
-                MethodNode sM = sMethods.get(sPos);
+                final MethodNode sM = sMethods.get(sPos);
                 serverName = sM.name;
                 if (!serverName.equals(lastName) && cPos != cLen)
                 {
@@ -548,7 +548,7 @@ public class MCPMerger
                     }
                     break;
                 }
-                MethodWrapper mw = new MethodWrapper(sM);
+                final MethodWrapper mw = new MethodWrapper(sM);
                 mw.server = true;
                 allMethods.add(mw);
                 if (DEBUG)
@@ -564,7 +564,7 @@ public class MCPMerger
                 {
                     break;
                 }
-                MethodNode cM = cMethods.get(cPos);
+                final MethodNode cM = cMethods.get(cPos);
                 lastName = clientName;
                 clientName = cM.name;
                 if (!clientName.equals(lastName) && sPos != sLen)
@@ -575,7 +575,7 @@ public class MCPMerger
                     }
                     break;
                 }
-                MethodWrapper mw = new MethodWrapper(cM);
+                final MethodWrapper mw = new MethodWrapper(cM);
                 mw.client = true;
                 allMethods.add(mw);
                 if (DEBUG)
@@ -590,7 +590,7 @@ public class MCPMerger
         cMethods.clear();
         sMethods.clear();
 
-        for (MethodWrapper mw : allMethods)
+        for (final MethodWrapper mw : allMethods)
         {
             if (DEBUG)
             {
@@ -618,7 +618,7 @@ public class MCPMerger
         }
     }
 
-    public static byte[] getClassBytes(String name) throws IOException
+    public static byte[] getClassBytes(final String name) throws IOException
     {
         InputStream classStream = null;
         try
@@ -634,7 +634,7 @@ public class MCPMerger
                 {
                     classStream.close();
                 }
-                catch (IOException e){}
+                catch (final IOException e){}
             }
         }
     }

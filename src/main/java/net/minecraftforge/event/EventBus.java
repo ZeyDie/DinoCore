@@ -20,24 +20,24 @@ public class EventBus
         ListenerList.resize(busID + 1);
     }
     
-    public void register(Object target)
+    public void register(final Object target)
     {
         if (listeners.containsKey(target))
         {
             return;
         }
 
-        Set<? extends Class<?>> supers = TypeToken.of(target.getClass()).getTypes().rawTypes();
-        for (Method method : target.getClass().getMethods())
+        final Set<? extends Class<?>> supers = TypeToken.of(target.getClass()).getTypes().rawTypes();
+        for (final Method method : target.getClass().getMethods())
         {
-            for (Class<?> cls : supers)
+            for (final Class<?> cls : supers)
             {
                 try
                 {
-                    Method real = cls.getDeclaredMethod(method.getName(), method.getParameterTypes());
+                    final Method real = cls.getDeclaredMethod(method.getName(), method.getParameterTypes());
                     if (real.isAnnotationPresent(ForgeSubscribe.class))
                     {
-                        Class<?>[] parameterTypes = method.getParameterTypes();
+                        final Class<?>[] parameterTypes = method.getParameterTypes();
                         if (parameterTypes.length != 1)
                         {
                             throw new IllegalArgumentException(
@@ -46,7 +46,7 @@ public class EventBus
                             );
                         }
                         
-                        Class<?> eventType = parameterTypes[0];
+                        final Class<?> eventType = parameterTypes[0];
                         
                         if (!Event.class.isAssignableFrom(eventType))
                         {
@@ -57,7 +57,7 @@ public class EventBus
                         break;
                     }
                 }
-                catch (NoSuchMethodException e)
+                catch (final NoSuchMethodException e)
                 {
                     ;
                 }
@@ -65,14 +65,14 @@ public class EventBus
         }
     }
 
-    private void register(Class<?> eventType, Object target, Method method)
+    private void register(final Class<?> eventType, final Object target, final Method method)
     {
         try
         {
-            Constructor<?> ctr = eventType.getConstructor();
+            final Constructor<?> ctr = eventType.getConstructor();
             ctr.setAccessible(true);
-            Event event = (Event)ctr.newInstance();
-            ASMEventHandler listener = new ASMEventHandler(target, method);
+            final Event event = (Event)ctr.newInstance();
+            final ASMEventHandler listener = new ASMEventHandler(target, method);
             event.getListenerList().register(busID, listener.getPriority(), listener);
 
             ArrayList<IEventListener> others = listeners.get(target); 
@@ -83,25 +83,25 @@ public class EventBus
             }
             others.add(listener);
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             e.printStackTrace();
         }
     }
 
-    public void unregister(Object object)
+    public void unregister(final Object object)
     {
-        ArrayList<IEventListener> list = listeners.remove(object);
-        for (IEventListener listener : list)
+        final ArrayList<IEventListener> list = listeners.remove(object);
+        for (final IEventListener listener : list)
         {
             ListenerList.unregiterAll(busID, listener);
         }
     }
     
-    public boolean post(Event event)
+    public boolean post(final Event event)
     {
-        IEventListener[] listeners = event.getListenerList().getListeners(busID);
-        for (IEventListener listener : listeners)
+        final IEventListener[] listeners = event.getListenerList().getListeners(busID);
+        for (final IEventListener listener : listeners)
         {
             listener.invoke(event);
         }

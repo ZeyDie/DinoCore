@@ -22,14 +22,14 @@ public class ModAnnotationVisitor extends AnnotationVisitor
     private String name;
     private boolean isSubAnnotation;
 
-    public ModAnnotationVisitor(ASMModParser discoverer)
+    public ModAnnotationVisitor(final ASMModParser discoverer)
     {
         //TODO ZeyCodeReplace ASM4 on ASM5
         super(Opcodes.ASM5);
         this.discoverer = discoverer;
     }
     
-    public ModAnnotationVisitor(ASMModParser discoverer, String name)
+    public ModAnnotationVisitor(final ASMModParser discoverer, final String name)
     {
         this(discoverer);
         this.array = true;
@@ -37,31 +37,31 @@ public class ModAnnotationVisitor extends AnnotationVisitor
         discoverer.addAnnotationArray(name);
     }
 
-    public ModAnnotationVisitor(ASMModParser discoverer, boolean isSubAnnotation)
+    public ModAnnotationVisitor(final ASMModParser discoverer, final boolean isSubAnnotation)
     {
         this(discoverer);
         this.isSubAnnotation = true;
     }
 
     @Override
-    public void visit(String key, Object value)
+    public void visit(final String key, final Object value)
     {
         discoverer.addAnnotationProperty(key, value);
     }
     
     @Override
-    public void visitEnum(String name, String desc, String value)
+    public void visitEnum(final String name, final String desc, final String value)
     {
         discoverer.addAnnotationEnumProperty(name, desc, value);
     }
     
     @Override
-    public AnnotationVisitor visitArray(String name)
+    public AnnotationVisitor visitArray(final String name)
     {
         return new ModAnnotationVisitor(discoverer, name);
     }
     @Override
-    public AnnotationVisitor visitAnnotation(String name, String desc)
+    public AnnotationVisitor visitAnnotation(final String name, final String desc)
     {
         discoverer.addSubAnnotation(name, desc);
         return new ModAnnotationVisitor(discoverer, true);

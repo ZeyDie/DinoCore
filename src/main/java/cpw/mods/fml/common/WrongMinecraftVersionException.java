@@ -17,7 +17,7 @@ public class WrongMinecraftVersionException extends RuntimeException
 
     public ModContainer mod;
 
-    public WrongMinecraftVersionException(ModContainer mod)
+    public WrongMinecraftVersionException(final ModContainer mod)
     {
         this.mod = mod;
     }

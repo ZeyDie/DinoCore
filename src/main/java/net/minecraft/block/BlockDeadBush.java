@@ -11,10 +11,10 @@ import java.util.Random;
 
 public class BlockDeadBush extends BlockFlower
 {
-    protected BlockDeadBush(int par1)
+    protected BlockDeadBush(final int par1)
     {
         super(par1, Material.vine);
-        float f = 0.4F;
+        final float f = 0.4F;
         this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 0.8F, 0.5F + f);
     }
 
@@ -22,7 +22,7 @@ public class BlockDeadBush extends BlockFlower
      * Gets passed in the blockID of the block below and supposed to return true if its allowed to grow on the type of
      * blockID passed in. Args: blockID
      */
-    protected boolean canThisPlantGrowOnThisBlockID(int par1)
+    protected boolean canThisPlantGrowOnThisBlockID(final int par1)
     {
         return par1 == Block.sand.blockID;
     }
@@ -30,7 +30,7 @@ public class BlockDeadBush extends BlockFlower
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return -1;
     }
@@ -39,7 +39,7 @@ public class BlockDeadBush extends BlockFlower
      * Called when the player destroys a block with an item that can harvest it. (i, j, k) are the coordinates of the
      * block and l is the block's subtype/damage.
      */
-    public void harvestBlock(World par1World, EntityPlayer par2EntityPlayer, int par3, int par4, int par5, int par6)
+    public void harvestBlock(final World par1World, final EntityPlayer par2EntityPlayer, final int par3, final int par4, final int par5, final int par6)
     {
         if (!par1World.isRemote && par2EntityPlayer.getCurrentEquippedItem() != null && par2EntityPlayer.getCurrentEquippedItem().itemID == Item.shears.itemID)
         {

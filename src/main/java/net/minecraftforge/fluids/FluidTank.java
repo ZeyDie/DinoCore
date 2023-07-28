@@ -16,27 +16,27 @@ public class FluidTank implements IFluidTank
     protected int capacity;
     protected TileEntity tile;
 
-    public FluidTank(int capacity)
+    public FluidTank(final int capacity)
     {
         this(null, capacity);
     }
 
-    public FluidTank(FluidStack stack, int capacity)
+    public FluidTank(final FluidStack stack, final int capacity)
     {
         this.fluid = stack;
         this.capacity = capacity;
     }
 
-    public FluidTank(Fluid fluid, int amount, int capacity)
+    public FluidTank(final Fluid fluid, final int amount, final int capacity)
     {
         this(new FluidStack(fluid, amount), capacity);
     }
 
-    public FluidTank readFromNBT(NBTTagCompound nbt)
+    public FluidTank readFromNBT(final NBTTagCompound nbt)
     {
         if (!nbt.hasKey("Empty"))
         {
-            FluidStack fluid = FluidStack.loadFluidStackFromNBT(nbt);
+            final FluidStack fluid = FluidStack.loadFluidStackFromNBT(nbt);
 
             if (fluid != null)
             {
@@ -46,7 +46,7 @@ public class FluidTank implements IFluidTank
         return this;
     }
 
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
+    public NBTTagCompound writeToNBT(final NBTTagCompound nbt)
     {
         if (fluid != null)
         {
@@ -59,12 +59,12 @@ public class FluidTank implements IFluidTank
         return nbt;
     }
 
-    public void setFluid(FluidStack fluid)
+    public void setFluid(final FluidStack fluid)
     {
         this.fluid = fluid;
     }
 
-    public void setCapacity(int capacity)
+    public void setCapacity(final int capacity)
     {
         this.capacity = capacity;
     }
@@ -99,7 +99,7 @@ public class FluidTank implements IFluidTank
     }
 
     @Override
-    public int fill(FluidStack resource, boolean doFill)
+    public int fill(final FluidStack resource, final boolean doFill)
     {
         if (resource == null)
         {
@@ -156,7 +156,7 @@ public class FluidTank implements IFluidTank
     }
 
     @Override
-    public FluidStack drain(int maxDrain, boolean doDrain)
+    public FluidStack drain(final int maxDrain, final boolean doDrain)
     {
         if (fluid == null)
         {
@@ -169,7 +169,7 @@ public class FluidTank implements IFluidTank
             drained = fluid.amount;
         }
 
-        FluidStack stack = new FluidStack(fluid, drained);
+        final FluidStack stack = new FluidStack(fluid, drained);
         if (doDrain)
         {
             fluid.amount -= drained;

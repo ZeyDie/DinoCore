@@ -12,7 +12,7 @@ public class ProjectileLaunchEvent extends EntityEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
 
-    public ProjectileLaunchEvent(Entity what) {
+    public ProjectileLaunchEvent(final Entity what) {
         super(what);
     }
 
@@ -20,7 +20,7 @@ public class ProjectileLaunchEvent extends EntityEvent implements Cancellable {
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         cancelled = cancel;
     }
 

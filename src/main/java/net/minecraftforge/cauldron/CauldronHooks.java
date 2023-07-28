@@ -36,7 +36,7 @@ public class CauldronHooks
 
     private static TObjectLongHashMap<CollisionWarning> recentWarnings = new TObjectLongHashMap<CollisionWarning>();
 
-    public static void logInfo(String msg, Object... args)
+    public static void logInfo(final String msg, final Object... args)
     {
         if (MinecraftServer.getServer().getLogAgent() != null)
         {
@@ -44,7 +44,7 @@ public class CauldronHooks
         }
     }
 
-    public static void logWarning(String msg, Object... args)
+    public static void logWarning(final String msg, final Object... args)
     {
         if (MinecraftServer.getServer().getLogAgent() != null)
         {
@@ -52,7 +52,7 @@ public class CauldronHooks
         }
     }
 
-    public static void logSevere(String msg, Object... args)
+    public static void logSevere(final String msg, final Object... args)
     {
         if (MinecraftServer.getServer().getLogAgent() != null)
         {
@@ -60,7 +60,7 @@ public class CauldronHooks
         }
     }
 
-    public static void logSevereException(Throwable throwable, String msg, Object... args)
+    public static void logSevereException(final Throwable throwable, final String msg, final Object... args)
     {
         if (MinecraftServer.getServer().getLogAgent() != null)
         {
@@ -72,13 +72,13 @@ public class CauldronHooks
     {
         if (MinecraftServer.getServer().cauldronConfig.logWithStackTraces.getValue())
         {
-            Throwable ex = new Throwable();
+            final Throwable ex = new Throwable();
             ex.fillInStackTrace();
             ex.printStackTrace();
         }
     }
 
-    public static void logEntityDeath(Entity entity)
+    public static void logEntityDeath(final Entity entity)
     {
         if (MinecraftServer.getServer().cauldronConfig.entityDeathLogging.getValue())
         {
@@ -87,7 +87,7 @@ public class CauldronHooks
         }
     }
 
-    public static void logEntityDespawn(Entity entity, String reason)
+    public static void logEntityDespawn(final Entity entity, final String reason)
     {
         if (MinecraftServer.getServer().cauldronConfig.entityDespawnLogging.getValue())
         {
@@ -97,7 +97,7 @@ public class CauldronHooks
         }
     }
 
-    public static void logEntitySpawn(World world, Entity entity, SpawnReason spawnReason)
+    public static void logEntitySpawn(final World world, final Entity entity, final SpawnReason spawnReason)
     {
         if (MinecraftServer.getServer().cauldronConfig.entitySpawnLogging.getValue())
         {
@@ -109,7 +109,7 @@ public class CauldronHooks
         }
     }
 
-    public static void logChunkLoad(ChunkProviderServer provider, String msg, int x, int z, boolean logLoadOnRequest)
+    public static void logChunkLoad(final ChunkProviderServer provider, final String msg, final int x, final int z, final boolean logLoadOnRequest)
     {
         if (MinecraftServer.getServer().cauldronConfig.chunkLoadLogging.getValue())
         {
@@ -122,47 +122,47 @@ public class CauldronHooks
         }
     }
 
-    public static void logChunkUnload(ChunkProviderServer provider, int x, int z, String msg)
+    public static void logChunkUnload(final ChunkProviderServer provider, final int x, final int z, final String msg)
     {
         if (MinecraftServer.getServer().cauldronConfig.chunkUnloadLogging.getValue())
         {
             logInfo("{0} [{1}] ({2}, {3})", msg, provider.worldObj.provider.dimensionId, x, z);
-            long currentTick = MinecraftServer.getServer().getTickCounter();
-            long lastAccessed = provider.lastAccessed(x, z);
-            long diff = currentTick - lastAccessed;
+            final long currentTick = MinecraftServer.getServer().getTickCounter();
+            final long lastAccessed = provider.lastAccessed(x, z);
+            final long diff = currentTick - lastAccessed;
             logInfo(" Last accessed: {0, number} Current Tick: {1, number} [{2, number}]", lastAccessed, currentTick, diff);
         }
     }
 
-    private static void logLoadOnRequest(ChunkProviderServer provider, int x, int z)
+    private static void logLoadOnRequest(final ChunkProviderServer provider, final int x, final int z)
     {
-        long currentTick = MinecraftServer.getServer().getTickCounter();
-        long lastAccessed = provider.lastAccessed(x, z);
-        long diff = currentTick - lastAccessed;
+        final long currentTick = MinecraftServer.getServer().getTickCounter();
+        final long lastAccessed = provider.lastAccessed(x, z);
+        final long diff = currentTick - lastAccessed;
         logInfo(" Last accessed: {0, number} Current Tick: {1, number} [{2, number}]", lastAccessed, currentTick, diff);
         logInfo(" Finding Spawn Point: {0}", provider.worldObj.findingSpawnPoint);
         logInfo(" Load chunk on request: {0}", provider.loadChunkOnProvideRequest);
         logInfo(" Calling Forge Tick: {0}", MinecraftServer.callingForgeTick);
         logInfo(" Load chunk on forge tick: {0}", MinecraftServer.getServer().cauldronConfig.loadChunkOnForgeTick.getValue());
-        long providerTickDiff = currentTick - provider.initialTick;
+        final long providerTickDiff = currentTick - provider.initialTick;
         if (providerTickDiff <= 100)
         {
             logInfo(" Current Tick - Initial Tick: {0, number}", providerTickDiff);
         }
     }
 
-    public static boolean checkBoundingBoxSize(Entity entity, AxisAlignedBB aabb)
+    public static boolean checkBoundingBoxSize(final Entity entity, final AxisAlignedBB aabb)
     {
-        int logSize = MinecraftServer.getServer().cauldronConfig.largeBoundingBoxLogSize.getValue();
+        final int logSize = MinecraftServer.getServer().cauldronConfig.largeBoundingBoxLogSize.getValue();
         if (logSize <= 0 || !MinecraftServer.getServer().cauldronConfig.checkEntityBoundingBoxes.getValue()) return false;
-        int x = MathHelper.floor_double(aabb.minX);
-        int x1 = MathHelper.floor_double(aabb.maxX + 1.0D);
-        int y = MathHelper.floor_double(aabb.minY);
-        int y1 = MathHelper.floor_double(aabb.maxY + 1.0D);
-        int z = MathHelper.floor_double(aabb.minZ);
-        int z1 = MathHelper.floor_double(aabb.maxZ + 1.0D);
+        final int x = MathHelper.floor_double(aabb.minX);
+        final int x1 = MathHelper.floor_double(aabb.maxX + 1.0D);
+        final int y = MathHelper.floor_double(aabb.minY);
+        final int y1 = MathHelper.floor_double(aabb.maxY + 1.0D);
+        final int z = MathHelper.floor_double(aabb.minZ);
+        final int z1 = MathHelper.floor_double(aabb.maxZ + 1.0D);
         
-        int size = Math.abs(x1-x) * Math.abs(y1-y) * Math.abs(z1-z);
+        final int size = Math.abs(x1-x) * Math.abs(y1-y) * Math.abs(z1-z);
         if (size > MinecraftServer.getServer().cauldronConfig.largeBoundingBoxLogSize.getValue())
         {
             logWarning("Entity being removed for bounding box restrictions");
@@ -171,7 +171,7 @@ public class CauldronHooks
             logWarning("Calculated bounding box: {0}", aabb);
             logWarning("Entity bounding box: {0}", entity.getBoundingBox());
             logWarning("Entity: {0}", entity);
-            NBTTagCompound tag = new NBTTagCompound();
+            final NBTTagCompound tag = new NBTTagCompound();
             entity.writeToNBT(tag);
             logWarning("Entity NBT: {0}", tag);
             logStack();
@@ -181,12 +181,12 @@ public class CauldronHooks
         return false;
     }
     
-    public static boolean checkEntitySpeed(Entity entity, double x, double y, double z)
+    public static boolean checkEntitySpeed(final Entity entity, final double x, final double y, final double z)
     {
-        int maxSpeed = MinecraftServer.getServer().cauldronConfig.entityMaxSpeed.getValue();
+        final int maxSpeed = MinecraftServer.getServer().cauldronConfig.entityMaxSpeed.getValue();
         if (maxSpeed > 0 && MinecraftServer.getServer().cauldronConfig.checkEntityMaxSpeeds.getValue())
         {
-            double distance = x * x + z * z;
+            final double distance = x * x + z * z;
             if (distance > maxSpeed)
             {
                 if (MinecraftServer.getServer().cauldronConfig.logEntitySpeedRemoval.getValue())
@@ -194,7 +194,7 @@ public class CauldronHooks
                     logInfo("Speed violation: {0} was over {1} - Removing Entity: {2}", distance, maxSpeed, entity);
                     if (entity instanceof EntityLivingBase)
                     {
-                        EntityLivingBase livingBase = (EntityLivingBase)entity;
+                        final EntityLivingBase livingBase = (EntityLivingBase)entity;
                         logInfo("Entity Motion: ({0}, {1}, {2}) Move Strafing: {3} Move Forward: {4}", entity.motionX, entity.motionY, entity.motionZ, livingBase.moveStrafing, livingBase.moveForward);
                     }
 
@@ -203,7 +203,7 @@ public class CauldronHooks
                         logInfo("Move offset: ({0}, {1}, {2})", x, y, z);
                         logInfo("Motion: ({0}, {1}, {2})", entity.motionX, entity.motionY, entity.motionZ);
                         logInfo("Entity: {0}", entity);
-                        NBTTagCompound tag = new NBTTagCompound();
+                        final NBTTagCompound tag = new NBTTagCompound();
                         entity.writeToNBT(tag);
                         logInfo("Entity NBT: {0}", tag);
                         logStack();
@@ -224,24 +224,24 @@ public class CauldronHooks
         return true;
     }
     
-    public static void logEntitySize(World world, Entity entity, List list)
+    public static void logEntitySize(final World world, final Entity entity, final List list)
     {
         if (!MinecraftServer.getServer().cauldronConfig.logEntityCollisionChecks.getValue()) return;
-        long largeCountLogSize = MinecraftServer.getServer().cauldronConfig.largeCollisionLogSize.getValue();
+        final long largeCountLogSize = MinecraftServer.getServer().cauldronConfig.largeCollisionLogSize.getValue();
         if (largeCountLogSize > 0 && world.entitiesTicked > largeCountLogSize)
         {
             logWarning("Entity size > {0, number} at: {1}", largeCountLogSize, entity);
         }
         if (list == null) return;
-        long largeCollisionLogSize = MinecraftServer.getServer().cauldronConfig.largeCollisionLogSize.getValue();
+        final long largeCollisionLogSize = MinecraftServer.getServer().cauldronConfig.largeCollisionLogSize.getValue();
         if (largeCollisionLogSize > 0 &&
                 (MinecraftServer.getServer().getTickCounter() % 10) == 0 &&
                 list.size() >= largeCollisionLogSize)
         {
-            CauldronHooks.CollisionWarning warning = new CauldronHooks.CollisionWarning(world, entity);
+            final CauldronHooks.CollisionWarning warning = new CauldronHooks.CollisionWarning(world, entity);
             if (recentWarnings.contains(warning))
             {
-                long lastWarned = recentWarnings.get(warning);
+                final long lastWarned = recentWarnings.get(warning);
                 if ((MinecraftServer.getSystemTimeMillis() - lastWarned) < 30000) return;
             }
             recentWarnings.put(warning, System.currentTimeMillis());
@@ -254,17 +254,17 @@ public class CauldronHooks
         public ChunkCoordinates chunkCoords;
         public int dimensionId;
 
-        public CollisionWarning(World world, Entity entity)
+        public CollisionWarning(final World world, final Entity entity)
         {
             this.dimensionId = world.provider.dimensionId;
             this.chunkCoords = new ChunkCoordinates(entity.chunkCoordX, entity.chunkCoordY, entity.chunkCoordZ);
         }
 
         @Override
-        public boolean equals(Object otherObj)
+        public boolean equals(final Object otherObj)
         {
             if (!(otherObj instanceof CollisionWarning) || (otherObj == null)) return false;
-            CollisionWarning other = (CollisionWarning) otherObj;
+            final CollisionWarning other = (CollisionWarning) otherObj;
             return (other.dimensionId == this.dimensionId) && other.chunkCoords.equals(this.chunkCoords);
         }
 
@@ -275,7 +275,7 @@ public class CauldronHooks
         }
     }
 
-    public static boolean canTileEntityTick(TileEntity tileEntity, World world)
+    public static boolean canTileEntityTick(final TileEntity tileEntity, final World world)
     {
         if (tileEntity == null || world.tileentityConfig == null) return false;
         if (MinecraftServer.getServer().tileEntityConfig.skipTileEntityTicks.getValue())
@@ -305,13 +305,13 @@ public class CauldronHooks
         return true;
     }
 
-    public static boolean canUpdate(TileEntity tileEntity)
+    public static boolean canUpdate(final TileEntity tileEntity)
     {
         if (tileEntity == null || !tileEntity.canUpdate() || MinecraftServer.bannedTileEntityUpdates.contains(tileEntity.getClass())) return false; // quick exit
         return true;
     }
 
-    public static void writeChunks(File file, boolean logAll)
+    public static void writeChunks(final File file, final boolean logAll)
     {
         try
         {
@@ -320,12 +320,12 @@ public class CauldronHooks
                 file.getParentFile().mkdirs();
             }
 
-            FileWriter fileWriter = new FileWriter(file);
-            JsonWriter writer = new JsonWriter(fileWriter);
+            final FileWriter fileWriter = new FileWriter(file);
+            final JsonWriter writer = new JsonWriter(fileWriter);
             writer.setIndent("  ");
             writer.beginArray();
 
-            for (net.minecraft.world.WorldServer world : MinecraftServer.getServer().worlds)
+            for (final net.minecraft.world.WorldServer world : MinecraftServer.getServer().worlds)
             {
                 writer.beginObject();
                 writer.name("name").value(world.getWorld().getName());
@@ -336,23 +336,23 @@ public class CauldronHooks
                 writer.name("entities").value(world.loadedEntityList.size());
                 writer.name("tiles").value(world.loadedTileEntityList.size());
 
-                TObjectIntHashMap<ChunkCoordIntPair> chunkEntityCounts = new TObjectIntHashMap<ChunkCoordIntPair>();
-                TObjectIntHashMap<Class> classEntityCounts = new TObjectIntHashMap<Class>();
-                TObjectIntHashMap<Entity> entityCollisionCounts = new TObjectIntHashMap<Entity>();
-                Set<ChunkCoordinates> collidingCoords = new HashSet<ChunkCoordinates>();
+                final TObjectIntHashMap<ChunkCoordIntPair> chunkEntityCounts = new TObjectIntHashMap<ChunkCoordIntPair>();
+                final TObjectIntHashMap<Class> classEntityCounts = new TObjectIntHashMap<Class>();
+                final TObjectIntHashMap<Entity> entityCollisionCounts = new TObjectIntHashMap<Entity>();
+                final Set<ChunkCoordinates> collidingCoords = new HashSet<ChunkCoordinates>();
                 for (int i = 0; i < world.loadedEntityList.size(); i++)
                 {
-                    Entity entity = (Entity) world.loadedEntityList.get(i);
-                    ChunkCoordIntPair chunkCoords = new ChunkCoordIntPair((int) entity.posX >> 4, (int) entity.posZ >> 4);
+                    final Entity entity = (Entity) world.loadedEntityList.get(i);
+                    final ChunkCoordIntPair chunkCoords = new ChunkCoordIntPair((int) entity.posX >> 4, (int) entity.posZ >> 4);
                     chunkEntityCounts.adjustOrPutValue(chunkCoords, 1, 1);
                     classEntityCounts.adjustOrPutValue(entity.getClass(), 1, 1);
                     if ((entity.boundingBox != null) && logAll)
                     {
-                        ChunkCoordinates coords = new ChunkCoordinates((int)Math.floor(entity.posX), (int)Math.floor(entity.posY), (int)Math.floor(entity.posZ));
+                        final ChunkCoordinates coords = new ChunkCoordinates((int)Math.floor(entity.posX), (int)Math.floor(entity.posY), (int)Math.floor(entity.posZ));
                         if (!collidingCoords.contains(coords))
                         {
                             collidingCoords.add(coords);
-                            int size = entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity, entity.boundingBox.expand(1, 1, 1)).size();
+                            final int size = entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity, entity.boundingBox.expand(1, 1, 1)).size();
                             if (size < 5)
                             {
                                 continue;
@@ -362,12 +362,12 @@ public class CauldronHooks
                     }
                 }
 
-                TObjectIntHashMap<ChunkCoordIntPair> chunkTileCounts = new TObjectIntHashMap<ChunkCoordIntPair>();
-                TObjectIntHashMap<Class> classTileCounts = new TObjectIntHashMap<Class>();
+                final TObjectIntHashMap<ChunkCoordIntPair> chunkTileCounts = new TObjectIntHashMap<ChunkCoordIntPair>();
+                final TObjectIntHashMap<Class> classTileCounts = new TObjectIntHashMap<Class>();
                 writer.name("tiles").beginArray();
                 for (int i = 0; i < world.loadedTileEntityList.size(); i++)
                 {
-                    TileEntity tile = (TileEntity) world.loadedTileEntityList.get(i);
+                    final TileEntity tile = (TileEntity) world.loadedTileEntityList.get(i);
                     if (logAll)
                     {
                         writer.beginObject();
@@ -380,7 +380,7 @@ public class CauldronHooks
                         writer.name("blockId").value("" + tile.getBlockType());
                         writer.endObject();
                     }
-                    ChunkCoordIntPair chunkCoords = new ChunkCoordIntPair(tile.xCoord >> 4, tile.zCoord >> 4);
+                    final ChunkCoordIntPair chunkCoords = new ChunkCoordIntPair(tile.xCoord >> 4, tile.zCoord >> 4);
                     chunkTileCounts.adjustOrPutValue(chunkCoords, 1, 1);
                     classTileCounts.adjustOrPutValue(tile.getClass(), 1, 1);
                 }
@@ -402,24 +402,24 @@ public class CauldronHooks
             writer.close();
             fileWriter.close();
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
             MinecraftServer.getServer().getLogAgent().logSevereException("Could not save chunk info report to " + file, throwable);
         }
     }
 
-    private static <T> void writeChunkCounts(JsonWriter writer, String name, final TObjectIntHashMap<T> map) throws IOException
+    private static <T> void writeChunkCounts(final JsonWriter writer, final String name, final TObjectIntHashMap<T> map) throws IOException
     {
         writeChunkCounts(writer, name, map, 0);
     }
 
-    private static <T> void writeChunkCounts(JsonWriter writer, String name, final TObjectIntHashMap<T> map, int max) throws IOException
+    private static <T> void writeChunkCounts(final JsonWriter writer, final String name, final TObjectIntHashMap<T> map, final int max) throws IOException
     {
-        List<T> sortedCoords = new ArrayList<T>(map.keySet());
+        final List<T> sortedCoords = new ArrayList<T>(map.keySet());
         Collections.sort(sortedCoords, new Comparator<T>()
         {
             @Override
-            public int compare(T s1, T s2)
+            public int compare(final T s1, final T s2)
             {
                 return map.get(s2) - map.get(s1);
             }
@@ -427,7 +427,7 @@ public class CauldronHooks
 
         int i = 0;
         writer.name(name).beginArray();
-        for (T key : sortedCoords)
+        for (final T key : sortedCoords)
         {
             if ((max > 0) && (i++ > max))
             {
@@ -445,7 +445,7 @@ public class CauldronHooks
         writer.endArray();
     }
 
-    public static void dumpHeap(File file, boolean live)
+    public static void dumpHeap(final File file, final boolean live)
     {
         try
         {
@@ -453,13 +453,13 @@ public class CauldronHooks
             {
                 file.getParentFile().mkdirs();
             }
-            Class clazz = Class.forName("com.sun.management.HotSpotDiagnosticMXBean");
-            MBeanServer server = ManagementFactory.getPlatformMBeanServer();
-            Object hotspotMBean = ManagementFactory.newPlatformMXBeanProxy(server, "com.sun.management:type=HotSpotDiagnostic", clazz);
-            Method m = clazz.getMethod("dumpHeap", String.class, boolean.class);
+            final Class clazz = Class.forName("com.sun.management.HotSpotDiagnosticMXBean");
+            final MBeanServer server = ManagementFactory.getPlatformMBeanServer();
+            final Object hotspotMBean = ManagementFactory.newPlatformMXBeanProxy(server, "com.sun.management:type=HotSpotDiagnostic", clazz);
+            final Method m = clazz.getMethod("dumpHeap", String.class, boolean.class);
             m.invoke(hotspotMBean, file.getPath(), live);
         }
-        catch (Throwable t)
+        catch (final Throwable t)
         {
             logSevereException(t, "Could not write heap to {0}", file);
         }
@@ -468,7 +468,7 @@ public class CauldronHooks
     public static void enableThreadContentionMonitoring()
     {
         if (!MinecraftServer.getServer().cauldronConfig.enableThreadContentionMonitoring.getValue()) return;
-        java.lang.management.ThreadMXBean mbean = java.lang.management.ManagementFactory.getThreadMXBean();
+        final java.lang.management.ThreadMXBean mbean = java.lang.management.ManagementFactory.getThreadMXBean();
         mbean.setThreadContentionMonitoringEnabled(true);
     }
 }

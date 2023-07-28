@@ -11,7 +11,7 @@ public class CraftSign extends CraftBlockState implements Sign {
     public CraftSign(final Block block) {
         super(block);
 
-        CraftWorld world = (CraftWorld) block.getWorld();
+        final CraftWorld world = (CraftWorld) block.getWorld();
         sign = (net.minecraft.tileentity.TileEntitySign) world.getTileEntityAt(getX(), getY(), getZ());
         // Spigot start
         if (sign == null) {
@@ -27,17 +27,17 @@ public class CraftSign extends CraftBlockState implements Sign {
         return lines;
     }
 
-    public String getLine(int index) throws IndexOutOfBoundsException {
+    public String getLine(final int index) throws IndexOutOfBoundsException {
         return lines[index];
     }
 
-    public void setLine(int index, String line) throws IndexOutOfBoundsException {
+    public void setLine(final int index, final String line) throws IndexOutOfBoundsException {
         lines[index] = line;
     }
 
     @Override
-    public boolean update(boolean force, boolean applyPhysics) {
-        boolean result = super.update(force, applyPhysics);
+    public boolean update(final boolean force, final boolean applyPhysics) {
+        final boolean result = super.update(force, applyPhysics);
 
         if (result && sign != null) { // Spigot, add null check
             for(int i = 0; i < 4; i++) {

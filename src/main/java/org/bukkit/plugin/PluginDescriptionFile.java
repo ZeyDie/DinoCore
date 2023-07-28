@@ -775,7 +775,7 @@ public final class PluginDescriptionFile {
         return classLoaderOf;
     }
 
-    public void setDatabaseEnabled(boolean database) {
+    public void setDatabaseEnabled(final boolean database) {
         this.database = database;
     }
 
@@ -784,28 +784,28 @@ public final class PluginDescriptionFile {
      *
      * @param writer Writer to output this file to
      */
-    public void save(Writer writer) {
+    public void save(final Writer writer) {
         yaml.dump(saveMap(), writer);
     }
 
-    private void loadMap(Map<?, ?> map) throws InvalidDescriptionException {
+    private void loadMap(final Map<?, ?> map) throws InvalidDescriptionException {
         try {
             name = map.get("name").toString();
 
             if (!name.matches("^[A-Za-z0-9 _.-]+$")) {
                 throw new InvalidDescriptionException("name '" + name + "' contains invalid characters.");
             }
-        } catch (NullPointerException ex) {
+        } catch (final NullPointerException ex) {
             throw new InvalidDescriptionException(ex, "name is not defined");
-        } catch (ClassCastException ex) {
+        } catch (final ClassCastException ex) {
             throw new InvalidDescriptionException(ex, "name is of wrong type");
         }
 
         try {
             version = map.get("version").toString();
-        } catch (NullPointerException ex) {
+        } catch (final NullPointerException ex) {
             throw new InvalidDescriptionException(ex, "version is not defined");
-        } catch (ClassCastException ex) {
+        } catch (final ClassCastException ex) {
             throw new InvalidDescriptionException(ex, "version is of wrong type");
         }
 
@@ -814,23 +814,23 @@ public final class PluginDescriptionFile {
             if (main.startsWith("org.bukkit.")) {
                 throw new InvalidDescriptionException("main may not be within the org.bukkit namespace");
             }
-        } catch (NullPointerException ex) {
+        } catch (final NullPointerException ex) {
             throw new InvalidDescriptionException(ex, "main is not defined");
-        } catch (ClassCastException ex) {
+        } catch (final ClassCastException ex) {
             throw new InvalidDescriptionException(ex, "main is of wrong type");
         }
 
         if (map.get("commands") != null) {
-            ImmutableMap.Builder<String, Map<String, Object>> commandsBuilder = ImmutableMap.<String, Map<String, Object>>builder();
+            final ImmutableMap.Builder<String, Map<String, Object>> commandsBuilder = ImmutableMap.<String, Map<String, Object>>builder();
             try {
-                for (Map.Entry<?, ?> command : ((Map<?, ?>) map.get("commands")).entrySet()) {
-                    ImmutableMap.Builder<String, Object> commandBuilder = ImmutableMap.<String, Object>builder();
+                for (final Map.Entry<?, ?> command : ((Map<?, ?>) map.get("commands")).entrySet()) {
+                    final ImmutableMap.Builder<String, Object> commandBuilder = ImmutableMap.<String, Object>builder();
                     if (command.getValue() != null) {
-                        for (Map.Entry<?, ?> commandEntry : ((Map<?, ?>) command.getValue()).entrySet()) {
+                        for (final Map.Entry<?, ?> commandEntry : ((Map<?, ?>) command.getValue()).entrySet()) {
                             if (commandEntry.getValue() instanceof Iterable) {
                                 // This prevents internal alias list changes
-                                ImmutableList.Builder<Object> commandSubList = ImmutableList.<Object>builder();
-                                for (Object commandSubListItem : (Iterable<?>) commandEntry.getValue()) {
+                                final ImmutableList.Builder<Object> commandSubList = ImmutableList.<Object>builder();
+                                for (final Object commandSubListItem : (Iterable<?>) commandEntry.getValue()) {
                                     if (commandSubListItem != null) {
                                         commandSubList.add(commandSubListItem);
                                     }
@@ -843,7 +843,7 @@ public final class PluginDescriptionFile {
                     }
                     commandsBuilder.put(command.getKey().toString(), commandBuilder.build());
                 }
-            } catch (ClassCastException ex) {
+            } catch (final ClassCastException ex) {
                 throw new InvalidDescriptionException(ex, "commands are of wrong type");
             }
             commands = commandsBuilder.build();
@@ -854,42 +854,42 @@ public final class PluginDescriptionFile {
         }
 
         if (map.get("depend") != null) {
-            ImmutableList.Builder<String> dependBuilder = ImmutableList.<String>builder();
+            final ImmutableList.Builder<String> dependBuilder = ImmutableList.<String>builder();
             try {
-                for (Object dependency : (Iterable<?>) map.get("depend")) {
+                for (final Object dependency : (Iterable<?>) map.get("depend")) {
                     dependBuilder.add(dependency.toString());
                 }
-            } catch (ClassCastException ex) {
+            } catch (final ClassCastException ex) {
                 throw new InvalidDescriptionException(ex, "depend is of wrong type");
-            } catch (NullPointerException e) {
+            } catch (final NullPointerException e) {
                 throw new InvalidDescriptionException(e, "invalid dependency format");
             }
             depend = dependBuilder.build();
         }
 
         if (map.get("softdepend") != null) {
-            ImmutableList.Builder<String> softDependBuilder = ImmutableList.<String>builder();
+            final ImmutableList.Builder<String> softDependBuilder = ImmutableList.<String>builder();
             try {
-                for (Object dependency : (Iterable<?>) map.get("softdepend")) {
+                for (final Object dependency : (Iterable<?>) map.get("softdepend")) {
                     softDependBuilder.add(dependency.toString());
                 }
-            } catch (ClassCastException ex) {
+            } catch (final ClassCastException ex) {
                 throw new InvalidDescriptionException(ex, "softdepend is of wrong type");
-            } catch (NullPointerException ex) {
+            } catch (final NullPointerException ex) {
                 throw new InvalidDescriptionException(ex, "invalid soft-dependency format");
             }
             softDepend = softDependBuilder.build();
         }
 
         if (map.get("loadbefore") != null) {
-            ImmutableList.Builder<String> loadBeforeBuilder = ImmutableList.<String>builder();
+            final ImmutableList.Builder<String> loadBeforeBuilder = ImmutableList.<String>builder();
             try {
-                for (Object predependency : (Iterable<?>) map.get("loadbefore")) {
+                for (final Object predependency : (Iterable<?>) map.get("loadbefore")) {
                     loadBeforeBuilder.add(predependency.toString());
                 }
-            } catch (ClassCastException ex) {
+            } catch (final ClassCastException ex) {
                 throw new InvalidDescriptionException(ex, "loadbefore is of wrong type");
-            } catch (NullPointerException ex) {
+            } catch (final NullPointerException ex) {
                 throw new InvalidDescriptionException(ex, "invalid load-before format");
             }
             loadBefore = loadBeforeBuilder.build();
@@ -898,7 +898,7 @@ public final class PluginDescriptionFile {
         if (map.get("database") != null) {
             try {
                 database = (Boolean) map.get("database");
-            } catch (ClassCastException ex) {
+            } catch (final ClassCastException ex) {
                 throw new InvalidDescriptionException(ex, "database is of wrong type");
             }
         }
@@ -914,25 +914,25 @@ public final class PluginDescriptionFile {
         if (map.get("load") != null) {
             try {
                 order = PluginLoadOrder.valueOf(((String) map.get("load")).toUpperCase().replaceAll("\\W", ""));
-            } catch (ClassCastException ex) {
+            } catch (final ClassCastException ex) {
                 throw new InvalidDescriptionException(ex, "load is of wrong type");
-            } catch (IllegalArgumentException ex) {
+            } catch (final IllegalArgumentException ex) {
                 throw new InvalidDescriptionException(ex, "load is not a valid choice");
             }
         }
 
         if (map.get("authors") != null) {
-            ImmutableList.Builder<String> authorsBuilder = ImmutableList.<String>builder();
+            final ImmutableList.Builder<String> authorsBuilder = ImmutableList.<String>builder();
             if (map.get("author") != null) {
                 authorsBuilder.add(map.get("author").toString());
             }
             try {
-                for (Object o : (Iterable<?>) map.get("authors")) {
+                for (final Object o : (Iterable<?>) map.get("authors")) {
                     authorsBuilder.add(o.toString());
                 }
-            } catch (ClassCastException ex) {
+            } catch (final ClassCastException ex) {
                 throw new InvalidDescriptionException(ex, "authors are of wrong type");
-            } catch (NullPointerException ex) {
+            } catch (final NullPointerException ex) {
                 throw new InvalidDescriptionException(ex, "authors are improperly defined");
             }
             authors = authorsBuilder.build();
@@ -945,16 +945,16 @@ public final class PluginDescriptionFile {
         if (map.get("default-permission") != null) {
             try {
                 defaultPerm = PermissionDefault.getByName(map.get("default-permission").toString());
-            } catch (ClassCastException ex) {
+            } catch (final ClassCastException ex) {
                 throw new InvalidDescriptionException(ex, "default-permission is of wrong type");
-            } catch (IllegalArgumentException ex) {
+            } catch (final IllegalArgumentException ex) {
                 throw new InvalidDescriptionException(ex, "default-permission is not a valid choice");
             }
         }
 
         try {
             lazyPermissions = (Map<?, ?>) map.get("permissions");
-        } catch (ClassCastException ex) {
+        } catch (final ClassCastException ex) {
             throw new InvalidDescriptionException(ex, "permissions are of the wrong type");
         }
 
@@ -964,7 +964,7 @@ public final class PluginDescriptionFile {
     }
 
     private Map<String, Object> saveMap() {
-        Map<String, Object> map = new HashMap<String, Object>();
+        final Map<String, Object> map = new HashMap<String, Object>();
 
         map.put("name", name);
         map.put("main", main);
@@ -1006,7 +1006,7 @@ public final class PluginDescriptionFile {
         return map;
     }
 
-    private Map<?,?> asMap(Object object) throws InvalidDescriptionException {
+    private Map<?,?> asMap(final Object object) throws InvalidDescriptionException {
         if (object instanceof Map) {
             return (Map<?,?>) object;
         }

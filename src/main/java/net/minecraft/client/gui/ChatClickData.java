@@ -23,7 +23,7 @@ public class ChatClickData
     /** The URL which was clicked on. */
     private final String clickedUrl;
 
-    public ChatClickData(FontRenderer par1FontRenderer, ChatLine par2ChatLine, int par3, int par4)
+    public ChatClickData(final FontRenderer par1FontRenderer, final ChatLine par2ChatLine, final int par3, final int par4)
     {
         this.fontR = par1FontRenderer;
         this.line = par2ChatLine;
@@ -46,7 +46,7 @@ public class ChatClickData
      */
     public URI getURI()
     {
-        String s = this.getClickedUrl();
+        final String s = this.getClickedUrl();
 
         if (s == null)
         {
@@ -54,7 +54,7 @@ public class ChatClickData
         }
         else
         {
-            Matcher matcher = pattern.matcher(s);
+            final Matcher matcher = pattern.matcher(s);
 
             if (matcher.matches())
             {
@@ -69,7 +69,7 @@ public class ChatClickData
 
                     return new URI(s1);
                 }
-                catch (URISyntaxException urisyntaxexception)
+                catch (final URISyntaxException urisyntaxexception)
                 {
                     Minecraft.getMinecraft().getLogAgent().logSevereException("Couldn\'t create URI from chat", urisyntaxexception);
                 }

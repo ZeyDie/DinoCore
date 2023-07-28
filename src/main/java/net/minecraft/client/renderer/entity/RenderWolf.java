@@ -18,20 +18,20 @@ public class RenderWolf extends RenderLiving
     private static final ResourceLocation anrgyWolfTextures = new ResourceLocation("textures/entity/wolf/wolf_angry.png");
     private static final ResourceLocation wolfCollarTextures = new ResourceLocation("textures/entity/wolf/wolf_collar.png");
 
-    public RenderWolf(ModelBase par1ModelBase, ModelBase par2ModelBase, float par3)
+    public RenderWolf(final ModelBase par1ModelBase, final ModelBase par2ModelBase, final float par3)
     {
         super(par1ModelBase, par3);
         this.setRenderPassModel(par2ModelBase);
     }
 
-    protected float getTailRotation(EntityWolf par1EntityWolf, float par2)
+    protected float getTailRotation(final EntityWolf par1EntityWolf, final float par2)
     {
         return par1EntityWolf.getTailRotation();
     }
 
-    protected int func_82447_a(EntityWolf par1EntityWolf, int par2, float par3)
+    protected int func_82447_a(final EntityWolf par1EntityWolf, final int par2, final float par3)
     {
-        float f1;
+        final float f1;
 
         if (par2 == 0 && par1EntityWolf.getWolfShaking())
         {
@@ -44,7 +44,7 @@ public class RenderWolf extends RenderLiving
         {
             this.bindTexture(wolfCollarTextures);
             f1 = 1.0F;
-            int j = par1EntityWolf.getCollarColor();
+            final int j = par1EntityWolf.getCollarColor();
             GL11.glColor3f(f1 * EntitySheep.fleeceColorTable[j][0], f1 * EntitySheep.fleeceColorTable[j][1], f1 * EntitySheep.fleeceColorTable[j][2]);
             return 1;
         }
@@ -54,7 +54,7 @@ public class RenderWolf extends RenderLiving
         }
     }
 
-    protected ResourceLocation func_110914_a(EntityWolf par1EntityWolf)
+    protected ResourceLocation func_110914_a(final EntityWolf par1EntityWolf)
     {
         return par1EntityWolf.isTamed() ? tamedWolfTextures : (par1EntityWolf.isAngry() ? anrgyWolfTextures : wolfTextures);
     }
@@ -62,7 +62,7 @@ public class RenderWolf extends RenderLiving
     /**
      * Queries whether should render the specified pass or not.
      */
-    protected int shouldRenderPass(EntityLivingBase par1EntityLivingBase, int par2, float par3)
+    protected int shouldRenderPass(final EntityLivingBase par1EntityLivingBase, final int par2, final float par3)
     {
         return this.func_82447_a((EntityWolf)par1EntityLivingBase, par2, par3);
     }
@@ -70,7 +70,7 @@ public class RenderWolf extends RenderLiving
     /**
      * Defines what float the third param in setRotationAngles of ModelBase is
      */
-    protected float handleRotationFloat(EntityLivingBase par1EntityLivingBase, float par2)
+    protected float handleRotationFloat(final EntityLivingBase par1EntityLivingBase, final float par2)
     {
         return this.getTailRotation((EntityWolf)par1EntityLivingBase, par2);
     }
@@ -78,7 +78,7 @@ public class RenderWolf extends RenderLiving
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.func_110914_a((EntityWolf)par1Entity);
     }

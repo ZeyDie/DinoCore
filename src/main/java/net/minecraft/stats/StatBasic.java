@@ -2,12 +2,12 @@ package net.minecraft.stats;
 
 public class StatBasic extends StatBase
 {
-    public StatBasic(int par1, String par2Str, IStatType par3IStatType)
+    public StatBasic(final int par1, final String par2Str, final IStatType par3IStatType)
     {
         super(par1, par2Str, par3IStatType);
     }
 
-    public StatBasic(int par1, String par2Str)
+    public StatBasic(final int par1, final String par2Str)
     {
         super(par1, par2Str);
     }

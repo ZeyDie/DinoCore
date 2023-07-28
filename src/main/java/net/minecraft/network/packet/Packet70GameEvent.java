@@ -9,7 +9,7 @@ public class Packet70GameEvent extends Packet
     /**
      * The client prints clientMessage[eventType] to chat when this packet is received.
      */
-    public static final String[] clientMessage = new String[] {"tile.bed.notValid", null, null, "gameMode.changed"};
+    public static final String[] clientMessage = {"tile.bed.notValid", null, null, "gameMode.changed"};
 
     /** 0: Invalid bed, 1: Rain starts, 2: Rain stops, 3: Game mode changed. */
     public int eventType;
@@ -21,7 +21,7 @@ public class Packet70GameEvent extends Packet
 
     public Packet70GameEvent() {}
 
-    public Packet70GameEvent(int par1, int par2)
+    public Packet70GameEvent(final int par1, final int par2)
     {
         this.eventType = par1;
         this.gameMode = par2;
@@ -30,7 +30,7 @@ public class Packet70GameEvent extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.eventType = par1DataInput.readByte();
         this.gameMode = par1DataInput.readByte();
@@ -39,7 +39,7 @@ public class Packet70GameEvent extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeByte(this.eventType);
         par1DataOutput.writeByte(this.gameMode);
@@ -48,7 +48,7 @@ public class Packet70GameEvent extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleGameEvent(this);
     }

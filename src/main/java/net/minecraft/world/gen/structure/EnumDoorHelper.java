@@ -10,7 +10,7 @@ class EnumDoorHelper
         {
             doorEnum[EnumDoor.OPENING.ordinal()] = 1;
         }
-        catch (NoSuchFieldError nosuchfielderror)
+        catch (final NoSuchFieldError nosuchfielderror)
         {
             ;
         }
@@ -19,7 +19,7 @@ class EnumDoorHelper
         {
             doorEnum[EnumDoor.WOOD_DOOR.ordinal()] = 2;
         }
-        catch (NoSuchFieldError nosuchfielderror1)
+        catch (final NoSuchFieldError nosuchfielderror1)
         {
             ;
         }
@@ -28,7 +28,7 @@ class EnumDoorHelper
         {
             doorEnum[EnumDoor.GRATES.ordinal()] = 3;
         }
-        catch (NoSuchFieldError nosuchfielderror2)
+        catch (final NoSuchFieldError nosuchfielderror2)
         {
             ;
         }
@@ -37,7 +37,7 @@ class EnumDoorHelper
         {
             doorEnum[EnumDoor.IRON_DOOR.ordinal()] = 4;
         }
-        catch (NoSuchFieldError nosuchfielderror3)
+        catch (final NoSuchFieldError nosuchfielderror3)
         {
             ;
         }

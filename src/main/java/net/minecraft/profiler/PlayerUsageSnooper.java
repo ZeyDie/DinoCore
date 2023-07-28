@@ -29,13 +29,13 @@ public class PlayerUsageSnooper
     /** incremented on every getSelfCounterFor */
     private int selfCounter;
 
-    public PlayerUsageSnooper(String par1Str, IPlayerUsage par2IPlayerUsage, long par3)
+    public PlayerUsageSnooper(final String par1Str, final IPlayerUsage par2IPlayerUsage, final long par3)
     {
         try
         {
             this.serverUrl = new URL("http://snoop.minecraft.net/" + par1Str + "?version=" + 1);
         }
-        catch (MalformedURLException malformedurlexception)
+        catch (final MalformedURLException malformedurlexception)
         {
             throw new IllegalArgumentException();
         }
@@ -71,14 +71,14 @@ public class PlayerUsageSnooper
 
     private void addJvmArgsToSnooper()
     {
-        RuntimeMXBean runtimemxbean = ManagementFactory.getRuntimeMXBean();
-        List list = runtimemxbean.getInputArguments();
+        final RuntimeMXBean runtimemxbean = ManagementFactory.getRuntimeMXBean();
+        final List list = runtimemxbean.getInputArguments();
         int i = 0;
-        Iterator iterator = list.iterator();
+        final Iterator iterator = list.iterator();
 
         while (iterator.hasNext())
         {
-            String s = (String)iterator.next();
+            final String s = (String)iterator.next();
 
             if (s.startsWith("-X"))
             {
@@ -101,9 +101,9 @@ public class PlayerUsageSnooper
     /**
      * Adds information to the report
      */
-    public void addData(String par1Str, Object par2Obj)
+    public void addData(final String par1Str, final Object par2Obj)
     {
-        Object object1 = this.syncLock;
+        final Object object1 = this.syncLock;
 
         synchronized (this.syncLock)
         {
@@ -114,17 +114,17 @@ public class PlayerUsageSnooper
     @SideOnly(Side.CLIENT)
     public Map getCurrentStats()
     {
-        LinkedHashMap linkedhashmap = new LinkedHashMap();
-        Object object = this.syncLock;
+        final LinkedHashMap linkedhashmap = new LinkedHashMap();
+        final Object object = this.syncLock;
 
         synchronized (this.syncLock)
         {
             this.addMemoryStatsToSnooper();
-            Iterator iterator = this.dataMap.entrySet().iterator();
+            final Iterator iterator = this.dataMap.entrySet().iterator();
 
             while (iterator.hasNext())
             {
-                Entry entry = (Entry)iterator.next();
+                final Entry entry = (Entry)iterator.next();
                 linkedhashmap.put(entry.getKey(), entry.getValue().toString());
             }
 
@@ -153,17 +153,17 @@ public class PlayerUsageSnooper
         return this.field_98224_g;
     }
 
-    static IPlayerUsage getStatsCollectorFor(PlayerUsageSnooper par0PlayerUsageSnooper)
+    static IPlayerUsage getStatsCollectorFor(final PlayerUsageSnooper par0PlayerUsageSnooper)
     {
         return par0PlayerUsageSnooper.playerStatsCollector;
     }
 
-    static Object getSyncLockFor(PlayerUsageSnooper par0PlayerUsageSnooper)
+    static Object getSyncLockFor(final PlayerUsageSnooper par0PlayerUsageSnooper)
     {
         return par0PlayerUsageSnooper.syncLock;
     }
 
-    static Map getDataMapFor(PlayerUsageSnooper par0PlayerUsageSnooper)
+    static Map getDataMapFor(final PlayerUsageSnooper par0PlayerUsageSnooper)
     {
         return par0PlayerUsageSnooper.dataMap;
     }
@@ -171,12 +171,12 @@ public class PlayerUsageSnooper
     /**
      * returns a value indicating how many times this function has been run on the snooper
      */
-    static int getSelfCounterFor(PlayerUsageSnooper par0PlayerUsageSnooper)
+    static int getSelfCounterFor(final PlayerUsageSnooper par0PlayerUsageSnooper)
     {
         return par0PlayerUsageSnooper.selfCounter++;
     }
 
-    static URL getServerUrlFor(PlayerUsageSnooper par0PlayerUsageSnooper)
+    static URL getServerUrlFor(final PlayerUsageSnooper par0PlayerUsageSnooper)
     {
         return par0PlayerUsageSnooper.serverUrl;
     }

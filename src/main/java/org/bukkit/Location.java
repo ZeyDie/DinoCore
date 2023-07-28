@@ -51,7 +51,7 @@ public class Location implements Cloneable {
      *
      * @param world New world that this location resides in
      */
-    public void setWorld(World world) {
+    public void setWorld(final World world) {
         this.world = world;
     }
 
@@ -87,7 +87,7 @@ public class Location implements Cloneable {
      *
      * @param x X-coordinate
      */
-    public void setX(double x) {
+    public void setX(final double x) {
         this.x = x;
     }
 
@@ -115,7 +115,7 @@ public class Location implements Cloneable {
      *
      * @param y y-coordinate
      */
-    public void setY(double y) {
+    public void setY(final double y) {
         this.y = y;
     }
 
@@ -143,7 +143,7 @@ public class Location implements Cloneable {
      *
      * @param z z-coordinate
      */
-    public void setZ(double z) {
+    public void setZ(final double z) {
         this.z = z;
     }
 
@@ -171,7 +171,7 @@ public class Location implements Cloneable {
      *
      * @param yaw New yaw
      */
-    public void setYaw(float yaw) {
+    public void setYaw(final float yaw) {
         this.yaw = yaw;
     }
 
@@ -189,7 +189,7 @@ public class Location implements Cloneable {
      *
      * @param pitch New pitch
      */
-    public void setPitch(float pitch) {
+    public void setPitch(final float pitch) {
         this.pitch = pitch;
     }
 
@@ -208,14 +208,14 @@ public class Location implements Cloneable {
      * @return Vector
      */
     public Vector getDirection() {
-        Vector vector = new Vector();
+        final Vector vector = new Vector();
 
-        double rotX = this.getYaw();
-        double rotY = this.getPitch();
+        final double rotX = this.getYaw();
+        final double rotY = this.getPitch();
 
         vector.setY(-Math.sin(Math.toRadians(rotY)));
 
-        double h = Math.cos(Math.toRadians(rotY));
+        final double h = Math.cos(Math.toRadians(rotY));
 
         vector.setX(-h * Math.sin(Math.toRadians(rotX)));
         vector.setZ(h * Math.cos(Math.toRadians(rotX)));
@@ -231,7 +231,7 @@ public class Location implements Cloneable {
      * @return the same location
      * @throws IllegalArgumentException for differing worlds
      */
-    public Location add(Location vec) {
+    public Location add(final Location vec) {
         if (vec == null || vec.getWorld() != getWorld()) {
             throw new IllegalArgumentException("Cannot add Locations of differing worlds");
         }
@@ -249,7 +249,7 @@ public class Location implements Cloneable {
      * @param vec Vector to use
      * @return the same location
      */
-    public Location add(Vector vec) {
+    public Location add(final Vector vec) {
         this.x += vec.getX();
         this.y += vec.getY();
         this.z += vec.getZ();
@@ -265,7 +265,7 @@ public class Location implements Cloneable {
      * @param z Z coordinate
      * @return the same location
      */
-    public Location add(double x, double y, double z) {
+    public Location add(final double x, final double y, final double z) {
         this.x += x;
         this.y += y;
         this.z += z;
@@ -280,7 +280,7 @@ public class Location implements Cloneable {
      * @return the same location
      * @throws IllegalArgumentException for differing worlds
      */
-    public Location subtract(Location vec) {
+    public Location subtract(final Location vec) {
         if (vec == null || vec.getWorld() != getWorld()) {
             throw new IllegalArgumentException("Cannot add Locations of differing worlds");
         }
@@ -298,7 +298,7 @@ public class Location implements Cloneable {
      * @param vec The vector to use
      * @return the same location
      */
-    public Location subtract(Vector vec) {
+    public Location subtract(final Vector vec) {
         this.x -= vec.getX();
         this.y -= vec.getY();
         this.z -= vec.getZ();
@@ -315,7 +315,7 @@ public class Location implements Cloneable {
      * @param z Z coordinate
      * @return the same location
      */
-    public Location subtract(double x, double y, double z) {
+    public Location subtract(final double x, final double y, final double z) {
         this.x -= x;
         this.y -= y;
         this.z -= z;
@@ -360,7 +360,7 @@ public class Location implements Cloneable {
      * @return the distance
      * @throws IllegalArgumentException for differing worlds
      */
-    public double distance(Location o) {
+    public double distance(final Location o) {
         return Math.sqrt(distanceSquared(o));
     }
 
@@ -372,7 +372,7 @@ public class Location implements Cloneable {
      * @return the distance
      * @throws IllegalArgumentException for differing worlds
      */
-    public double distanceSquared(Location o) {
+    public double distanceSquared(final Location o) {
         if (o == null) {
             throw new IllegalArgumentException("Cannot measure distance to a null location");
         } else if (o.getWorld() == null || getWorld() == null) {
@@ -392,7 +392,7 @@ public class Location implements Cloneable {
      * @see Vector
      * @return the same location
      */
-    public Location multiply(double m) {
+    public Location multiply(final double m) {
         x *= m;
         y *= m;
         z *= m;
@@ -413,7 +413,7 @@ public class Location implements Cloneable {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
@@ -474,7 +474,7 @@ public class Location implements Cloneable {
     public Location clone() {
         try {
             return (Location) super.clone();
-        } catch (CloneNotSupportedException e) {
+        } catch (final CloneNotSupportedException e) {
             throw new Error(e);
         }
     }
@@ -485,7 +485,7 @@ public class Location implements Cloneable {
      * @param loc Precise coordinate
      * @return Block coordinate
      */
-    public static int locToBlock(double loc) {
+    public static int locToBlock(final double loc) {
         return NumberConversions.floor(loc);
     }
 }

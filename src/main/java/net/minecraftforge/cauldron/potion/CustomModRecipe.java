@@ -11,7 +11,7 @@ import org.bukkit.inventory.Recipe;
 public class CustomModRecipe implements Recipe {
     private IRecipe iRecipe;
 
-    public CustomModRecipe(IRecipe iRecipe) {
+    public CustomModRecipe(final IRecipe iRecipe) {
         this.iRecipe = iRecipe;
     }
 

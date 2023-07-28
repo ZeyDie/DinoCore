@@ -12,11 +12,11 @@ public class Cake extends MaterialData {
      * @deprecated Magic value
      */
     @Deprecated
-    public Cake(int type) {
+    public Cake(final int type) {
         super(type);
     }
 
-    public Cake(Material type) {
+    public Cake(final Material type) {
         super(type);
     }
 
@@ -25,7 +25,7 @@ public class Cake extends MaterialData {
      * @deprecated Magic value
      */
     @Deprecated
-    public Cake(int type, byte data) {
+    public Cake(final int type, final byte data) {
         super(type, data);
     }
 
@@ -34,7 +34,7 @@ public class Cake extends MaterialData {
      * @deprecated Magic value
      */
     @Deprecated
-    public Cake(Material type, byte data) {
+    public Cake(final Material type, final byte data) {
         super(type, data);
     }
 
@@ -61,7 +61,7 @@ public class Cake extends MaterialData {
      *
      * @param n The number of slices eaten
      */
-    public void setSlicesEaten(int n) {
+    public void setSlicesEaten(final int n) {
         if (n < 6) {
             setData((byte) n);
         } // TODO: else destroy the block? Probably not possible though
@@ -73,10 +73,11 @@ public class Cake extends MaterialData {
      * @param n The number of slices remaining
      */
     public void setSlicesRemaining(int n) {
-        if (n > 6) {
-            n = 6;
+        int n1 = n;
+        if (n1 > 6) {
+            n1 = 6;
         }
-        setData((byte) (6 - n));
+        setData((byte) (6 - n1));
     }
 
     @Override

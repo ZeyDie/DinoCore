@@ -6,14 +6,14 @@ import net.minecraft.world.World;
 
 public class ItemBucketMilk extends Item
 {
-    public ItemBucketMilk(int par1)
+    public ItemBucketMilk(final int par1)
     {
         super(par1);
         this.setMaxStackSize(1);
         this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
-    public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onEaten(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         if (!par3EntityPlayer.capabilities.isCreativeMode)
         {
@@ -31,7 +31,7 @@ public class ItemBucketMilk extends Item
     /**
      * How long it takes to use or consume an item
      */
-    public int getMaxItemUseDuration(ItemStack par1ItemStack)
+    public int getMaxItemUseDuration(final ItemStack par1ItemStack)
     {
         return 32;
     }
@@ -39,7 +39,7 @@ public class ItemBucketMilk extends Item
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    public EnumAction getItemUseAction(ItemStack par1ItemStack)
+    public EnumAction getItemUseAction(final ItemStack par1ItemStack)
     {
         return EnumAction.drink;
     }
@@ -47,7 +47,7 @@ public class ItemBucketMilk extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
         return par1ItemStack;

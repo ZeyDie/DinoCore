@@ -53,10 +53,7 @@ import net.minecraft.network.packet.Packet131MapData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -126,7 +123,7 @@ public class FMLClientHandler implements IFMLSidedHandler
      * @param resourcePackList The resource pack list we will populate with mods
      * @param resourceManager The resource manager
      */
-    public void beginMinecraftLoading(Minecraft minecraft, List resourcePackList, ReloadableResourceManager resourceManager)
+    public void beginMinecraftLoading(final Minecraft minecraft, final List resourcePackList, final ReloadableResourceManager resourceManager)
     {
         client = minecraft;
         this.resourcePackList = resourcePackList;
@@ -144,14 +141,14 @@ public class FMLClientHandler implements IFMLSidedHandler
         new ModLoaderClientHelper(client);
         try
         {
-            Class<?> optifineConfig = Class.forName("Config", false, Loader.instance().getModClassLoader());
-            String optifineVersion = (String) optifineConfig.getField("VERSION").get(null);
-            Map<String,Object> dummyOptifineMeta = ImmutableMap.<String,Object>builder().put("name", "Optifine").put("version", optifineVersion).build();
-            ModMetadata optifineMetadata = MetadataCollection.from(getClass().getResourceAsStream("optifinemod.info"),"optifine").getMetadataForId("optifine", dummyOptifineMeta);
+            final Class<?> optifineConfig = Class.forName("Config", false, Loader.instance().getModClassLoader());
+            final String optifineVersion = (String) optifineConfig.getField("VERSION").get(null);
+            final Map<String,Object> dummyOptifineMeta = ImmutableMap.<String,Object>builder().put("name", "Optifine").put("version", optifineVersion).build();
+            final ModMetadata optifineMetadata = MetadataCollection.from(getClass().getResourceAsStream("optifinemod.info"),"optifine").getMetadataForId("optifine", dummyOptifineMeta);
             optifineContainer = new DummyModContainer(optifineMetadata);
             FMLLog.info("Forge Mod Loader has detected optifine %s, enabling compatibility features",optifineContainer.getVersion());
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             optifineContainer = null;
         }
@@ -159,28 +156,28 @@ public class FMLClientHandler implements IFMLSidedHandler
         {
             Loader.instance().loadMods();
         }
-        catch (WrongMinecraftVersionException wrong)
+        catch (final WrongMinecraftVersionException wrong)
         {
             wrongMC = wrong;
         }
-        catch (DuplicateModsFoundException dupes)
+        catch (final DuplicateModsFoundException dupes)
         {
         	dupesFound = dupes;
         }
-        catch (MissingModsException missing)
+        catch (final MissingModsException missing)
         {
             modsMissing = missing;
         }
-        catch (ModSortingException sorting)
+        catch (final ModSortingException sorting)
         {
             modSorting = sorting;
         }
-        catch (CustomModLoadingErrorDisplayException custom)
+        catch (final CustomModLoadingErrorDisplayException custom)
         {
             FMLLog.log(Level.SEVERE, custom, "A custom exception was thrown by a mod, the game will now halt");
             customError = custom;
         }
-        catch (LoaderException le)
+        catch (final LoaderException le)
         {
             haltGame("There was a severe problem during mod loading that has caused the game to fail", le);
             return;
@@ -192,19 +189,19 @@ public class FMLClientHandler implements IFMLSidedHandler
             sharedModList = Maps.newHashMap();
             Launch.blackboard.put("modList", sharedModList);
         }
-        for (ModContainer mc : Loader.instance().getActiveModList())
+        for (final ModContainer mc : Loader.instance().getActiveModList())
         {
-            Map<String,String> sharedModDescriptor = mc.getSharedModDescriptor();
+            final Map<String,String> sharedModDescriptor = mc.getSharedModDescriptor();
             if (sharedModDescriptor != null)
             {
-                String sharedModId = "fml:"+mc.getModId();
+                final String sharedModId = "fml:"+mc.getModId();
                 sharedModList.put(sharedModId, sharedModDescriptor);
             }
         }
     }
 
     @Override
-    public void haltGame(String message, Throwable t)
+    public void haltGame(final String message, final Throwable t)
     {
         client.displayCrashReport(new CrashReport(message, t));
         throw Throwables.propagate(t);
@@ -225,13 +222,13 @@ public class FMLClientHandler implements IFMLSidedHandler
         {
             Loader.instance().initializeMods();
         }
-        catch (CustomModLoadingErrorDisplayException custom)
+        catch (final CustomModLoadingErrorDisplayException custom)
         {
             FMLLog.log(Level.SEVERE, custom, "A custom exception was thrown by a mod, the game will now halt");
             customError = custom;
             return;
         }
-        catch (LoaderException le)
+        catch (final LoaderException le)
         {
             haltGame("There was a severe problem during mod loading that has caused the game to fail", le);
             return;
@@ -248,25 +245,25 @@ public class FMLClientHandler implements IFMLSidedHandler
 
     public void extendModList()
     {
-        Map<String,Map<String,String>> modList = (Map<String, Map<String, String>>) Launch.blackboard.get("modList");
+        final Map<String,Map<String,String>> modList = (Map<String, Map<String, String>>) Launch.blackboard.get("modList");
         if (modList != null)
         {
-            for (Entry<String, Map<String, String>> modEntry : modList.entrySet())
+            for (final Entry<String, Map<String, String>> modEntry : modList.entrySet())
             {
-                String sharedModId = modEntry.getKey();
-                String system = sharedModId.split(":")[0];
+                final String sharedModId = modEntry.getKey();
+                final String system = sharedModId.split(":")[0];
                 if ("fml".equals(system))
                 {
                     continue;
                 }
-                Map<String, String> mod = modEntry.getValue();
-                String modSystem = mod.get("modsystem"); // the modsystem (FML uses FML or ModLoader)
-                String modId = mod.get("id"); // unique ID
-                String modVersion = mod.get("version"); // version
-                String modName = mod.get("name"); // a human readable name
-                String modURL = mod.get("url"); // a URL for the mod (can be empty string)
-                String modAuthors = mod.get("authors"); // a csv of authors (can be empty string)
-                String modDescription = mod.get("description"); // a (potentially) multiline description (can be empty string)
+                final Map<String, String> mod = modEntry.getValue();
+                final String modSystem = mod.get("modsystem"); // the modsystem (FML uses FML or ModLoader)
+                final String modId = mod.get("id"); // unique ID
+                final String modVersion = mod.get("version"); // version
+                final String modName = mod.get("name"); // a human readable name
+                final String modURL = mod.get("url"); // a URL for the mod (can be empty string)
+                final String modAuthors = mod.get("authors"); // a csv of authors (can be empty string)
+                final String modDescription = mod.get("description"); // a (potentially) multiline description (can be empty string)
             }
         }
 
@@ -329,7 +326,7 @@ public class FMLClientHandler implements IFMLSidedHandler
      * @param player
      * @param gui
      */
-    public void displayGuiScreen(EntityPlayer player, GuiScreen gui)
+    public void displayGuiScreen(final EntityPlayer player, final GuiScreen gui)
     {
         if (client.thePlayer==player && gui != null) {
             client.displayGuiScreen(gui);
@@ -339,7 +336,7 @@ public class FMLClientHandler implements IFMLSidedHandler
     /**
      * @param mods
      */
-    public void addSpecialModEntries(ArrayList<ModContainer> mods)
+    public void addSpecialModEntries(final ArrayList<ModContainer> mods)
     {
         if (optifineContainer!=null) {
             mods.add(optifineContainer);
@@ -351,7 +348,7 @@ public class FMLClientHandler implements IFMLSidedHandler
     {
         if (optifineContainer!=null)
         {
-            return Arrays.asList(String.format("Optifine %s",optifineContainer.getVersion()));
+            return Collections.singletonList(String.format("Optifine %s", optifineContainer.getVersion()));
         } else {
             return ImmutableList.<String>of();
         }
@@ -369,22 +366,22 @@ public class FMLClientHandler implements IFMLSidedHandler
     }
 
     @Override
-    public void showGuiScreen(Object clientGuiElement)
+    public void showGuiScreen(final Object clientGuiElement)
     {
-        GuiScreen gui = (GuiScreen) clientGuiElement;
+        final GuiScreen gui = (GuiScreen) clientGuiElement;
         client.displayGuiScreen(gui);
     }
 
     @Override
-    public Entity spawnEntityIntoClientWorld(EntityRegistration er, EntitySpawnPacket packet)
+    public Entity spawnEntityIntoClientWorld(final EntityRegistration er, final EntitySpawnPacket packet)
     {
-        WorldClient wc = client.theWorld;
+        final WorldClient wc = client.theWorld;
 
-        Class<? extends Entity> cls = er.getEntityClass();
+        final Class<? extends Entity> cls = er.getEntityClass();
 
         try
         {
-            Entity entity;
+            final Entity entity;
             if (er.hasCustomSpawning())
             {
                 entity = er.doCustomSpawning(packet);
@@ -392,7 +389,7 @@ public class FMLClientHandler implements IFMLSidedHandler
             else
             {
                 entity = (Entity)(cls.getConstructor(World.class).newInstance(wc));
-                int offset = packet.entityId - entity.entityId;
+                final int offset = packet.entityId - entity.entityId;
                 entity.entityId = packet.entityId;
                 entity.setLocationAndAngles(packet.scaledX, packet.scaledY, packet.scaledZ, packet.scaledYaw, packet.scaledPitch);
                 if (entity instanceof EntityLiving)
@@ -400,7 +397,7 @@ public class FMLClientHandler implements IFMLSidedHandler
                     ((EntityLiving)entity).rotationYawHead = packet.scaledHeadYaw;
                 }
 
-                Entity parts[] = entity.getParts();
+                final Entity[] parts = entity.getParts();
                 if (parts != null)
                 {
                     for (int j = 0; j < parts.length; j++)
@@ -416,7 +413,7 @@ public class FMLClientHandler implements IFMLSidedHandler
 
             if (entity instanceof IThrowableEntity)
             {
-                Entity thrower = client.thePlayer.entityId == packet.throwerId ? client.thePlayer : wc.getEntityByID(packet.throwerId);
+                final Entity thrower = client.thePlayer.entityId == packet.throwerId ? client.thePlayer : wc.getEntityByID(packet.throwerId);
                 ((IThrowableEntity)entity).setThrower(thrower);
             }
 
@@ -438,7 +435,7 @@ public class FMLClientHandler implements IFMLSidedHandler
             wc.addEntityToWorld(packet.entityId, entity);
             return entity;
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             FMLLog.log(Level.SEVERE, e, "A severe problem occurred during the spawning of an entity");
             throw Throwables.propagate(e);
@@ -446,9 +443,9 @@ public class FMLClientHandler implements IFMLSidedHandler
     }
 
     @Override
-    public void adjustEntityLocationOnClient(EntitySpawnAdjustmentPacket packet)
+    public void adjustEntityLocationOnClient(final EntitySpawnAdjustmentPacket packet)
     {
-        Entity ent = client.theWorld.getEntityByID(packet.entityId);
+        final Entity ent = client.theWorld.getEntityByID(packet.entityId);
         if (ent != null)
         {
             ent.serverPosX = packet.serverX;
@@ -462,7 +459,7 @@ public class FMLClientHandler implements IFMLSidedHandler
     }
 
     @Override
-    public void beginServerLoading(MinecraftServer server)
+    public void beginServerLoading(final MinecraftServer server)
     {
         serverShouldBeKilledQuietly = false;
         // NOOP
@@ -481,7 +478,7 @@ public class FMLClientHandler implements IFMLSidedHandler
     }
 
     @Override
-    public void sendPacket(Packet packet)
+    public void sendPacket(final Packet packet)
     {
         if(client.thePlayer != null)
         {
@@ -490,7 +487,7 @@ public class FMLClientHandler implements IFMLSidedHandler
     }
 
     @Override
-    public void displayMissingMods(ModMissingPacket modMissingPacket)
+    public void displayMissingMods(final ModMissingPacket modMissingPacket)
     {
         client.displayGuiScreen(new GuiModsMissingForServer(modMissingPacket));
     }
@@ -504,13 +501,13 @@ public class FMLClientHandler implements IFMLSidedHandler
     }
 
     @Override
-    public void handleTinyPacket(NetHandler handler, Packet131MapData mapData)
+    public void handleTinyPacket(final NetHandler handler, final Packet131MapData mapData)
     {
         ((NetClientHandler)handler).fmlPacket131Callback(mapData);
     }
 
     @Override
-    public void setClientCompatibilityLevel(byte compatibilityLevel)
+    public void setClientCompatibilityLevel(final byte compatibilityLevel)
     {
         NetClientHandler.setConnectionCompatibilityLevel(compatibilityLevel);
     }
@@ -521,13 +518,13 @@ public class FMLClientHandler implements IFMLSidedHandler
         return NetClientHandler.getConnectionCompatibilityLevel();
     }
 
-    public void warnIDMismatch(MapDifference<Integer, ItemData> idDifferences, boolean mayContinue)
+    public void warnIDMismatch(final MapDifference<Integer, ItemData> idDifferences, final boolean mayContinue)
     {
-        GuiIdMismatchScreen mismatch = new GuiIdMismatchScreen(idDifferences, mayContinue);
+        final GuiIdMismatchScreen mismatch = new GuiIdMismatchScreen(idDifferences, mayContinue);
         client.displayGuiScreen(mismatch);
     }
 
-    public void callbackIdDifferenceResponse(boolean response)
+    public void callbackIdDifferenceResponse(final boolean response)
     {
         if (response)
         {
@@ -552,12 +549,12 @@ public class FMLClientHandler implements IFMLSidedHandler
     }
 
     @Override
-    public void disconnectIDMismatch(MapDifference<Integer, ItemData> s, NetHandler toKill, INetworkManager mgr)
+    public void disconnectIDMismatch(final MapDifference<Integer, ItemData> s, final NetHandler toKill, final INetworkManager mgr)
     {
         boolean criticalMismatch = !s.entriesOnlyOnLeft().isEmpty();
-        for (Entry<Integer, ValueDifference<ItemData>> mismatch : s.entriesDiffering().entrySet())
+        for (final Entry<Integer, ValueDifference<ItemData>> mismatch : s.entriesDiffering().entrySet())
         {
-            ValueDifference<ItemData> vd = mismatch.getValue();
+            final ValueDifference<ItemData> vd = mismatch.getValue();
             if (!vd.leftValue().mayDifferByOrdinal(vd.rightValue()))
             {
                 criticalMismatch = true;
@@ -587,30 +584,30 @@ public class FMLClientHandler implements IFMLSidedHandler
      * @param gui The type of GUI to test for
      * @return if a GUI of this type is open
      */
-    public boolean isGUIOpen(Class<? extends GuiScreen> gui)
+    public boolean isGUIOpen(final Class<? extends GuiScreen> gui)
     {
         return client.currentScreen != null && client.currentScreen.getClass().equals(gui);
     }
 
 
     @Override
-    public void addModAsResource(ModContainer container)
+    public void addModAsResource(final ModContainer container)
     {
-        Class<?> resourcePackType = container.getCustomResourcePackClass();
+        final Class<?> resourcePackType = container.getCustomResourcePackClass();
         if (resourcePackType != null)
         {
             try
             {
-                ResourcePack pack = (ResourcePack) resourcePackType.getConstructor(ModContainer.class).newInstance(container);
+                final ResourcePack pack = (ResourcePack) resourcePackType.getConstructor(ModContainer.class).newInstance(container);
                 resourcePackList.add(pack);
                 resourcePackMap.put(container.getModId(), pack);
             }
-            catch (NoSuchMethodException e)
+            catch (final NoSuchMethodException e)
             {
                 FMLLog.log(Level.SEVERE, "The container %s (type %s) returned an invalid class for it's resource pack.", container.getName(), container.getClass().getName());
                 return;
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 FMLLog.log(Level.SEVERE, e, "An unexpected exception occurred constructing the custom resource pack for %s", container.getName());
                 throw Throwables.propagate(e);
@@ -624,7 +621,7 @@ public class FMLClientHandler implements IFMLSidedHandler
         client.refreshResources();
     }
 
-    public ResourcePack getResourcePackFor(String modId)
+    public ResourcePack getResourcePackFor(final String modId)
     {
         return resourcePackMap.get(modId);
     }
@@ -639,7 +636,7 @@ public class FMLClientHandler implements IFMLSidedHandler
     public void serverStopped()
     {
         // If the server crashes during startup, it might hang the client- reset the client so it can abend properly.
-        MinecraftServer server = getServer();
+        final MinecraftServer server = getServer();
 
         if (server != null && !server.serverIsInRunLoop())
         {

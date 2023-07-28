@@ -24,7 +24,7 @@ abstract class GuiSlotStats extends GuiSlot
 
     final GuiStats statsGui;
 
-    protected GuiSlotStats(GuiStats par1GuiStats)
+    protected GuiSlotStats(final GuiStats par1GuiStats)
     {
         super(GuiStats.getMinecraft1(par1GuiStats), par1GuiStats.width, par1GuiStats.height, 32, par1GuiStats.height - 64, 20);
         this.statsGui = par1GuiStats;
@@ -37,12 +37,12 @@ abstract class GuiSlotStats extends GuiSlot
     /**
      * the element in the slot that was clicked, boolean for wether it was double clicked or not
      */
-    protected void elementClicked(int par1, boolean par2) {}
+    protected void elementClicked(final int par1, final boolean par2) {}
 
     /**
      * returns true if the element passed in is currently selected
      */
-    protected boolean isSelected(int par1)
+    protected boolean isSelected(final int par1)
     {
         return false;
     }
@@ -52,7 +52,7 @@ abstract class GuiSlotStats extends GuiSlot
         this.statsGui.drawDefaultBackground();
     }
 
-    protected void func_77222_a(int par1, int par2, Tessellator par3Tessellator)
+    protected void func_77222_a(final int par1, final int par2, final Tessellator par3Tessellator)
     {
         if (!Mouse.isButtonDown(0))
         {
@@ -109,7 +109,7 @@ abstract class GuiSlotStats extends GuiSlot
         }
     }
 
-    protected void func_77224_a(int par1, int par2)
+    protected void func_77224_a(final int par1, final int par2)
     {
         this.field_77262_g = -1;
 
@@ -141,16 +141,16 @@ abstract class GuiSlotStats extends GuiSlot
         return this.field_77266_h.size();
     }
 
-    protected final StatCrafting func_77257_d(int par1)
+    protected final StatCrafting func_77257_d(final int par1)
     {
         return (StatCrafting)this.field_77266_h.get(par1);
     }
 
     protected abstract String func_77258_c(int i);
 
-    protected void func_77260_a(StatCrafting par1StatCrafting, int par2, int par3, boolean par4)
+    protected void func_77260_a(final StatCrafting par1StatCrafting, final int par2, final int par3, final boolean par4)
     {
-        String s;
+        final String s;
 
         if (par1StatCrafting != null)
         {
@@ -164,12 +164,12 @@ abstract class GuiSlotStats extends GuiSlot
         }
     }
 
-    protected void func_77215_b(int par1, int par2)
+    protected void func_77215_b(final int par1, final int par2)
     {
         if (par2 >= this.top && par2 <= this.bottom)
         {
-            int k = this.func_77210_c(par1, par2);
-            int l = this.statsGui.width / 2 - 92 - 16;
+            final int k = this.func_77210_c(par1, par2);
+            final int l = this.statsGui.width / 2 - 92 - 16;
 
             if (k >= 0)
             {
@@ -178,7 +178,7 @@ abstract class GuiSlotStats extends GuiSlot
                     return;
                 }
 
-                StatCrafting statcrafting = this.func_77257_d(k);
+                final StatCrafting statcrafting = this.func_77257_d(k);
                 this.func_77259_a(statcrafting, par1, par2);
             }
             else
@@ -205,11 +205,11 @@ abstract class GuiSlotStats extends GuiSlot
 
                 s = ("" + I18n.getString(s)).trim();
 
-                if (s.length() > 0)
+                if (!s.isEmpty())
                 {
-                    int i1 = par1 + 12;
-                    int j1 = par2 - 12;
-                    int k1 = GuiStats.getFontRenderer8(this.statsGui).getStringWidth(s);
+                    final int i1 = par1 + 12;
+                    final int j1 = par2 - 12;
+                    final int k1 = GuiStats.getFontRenderer8(this.statsGui).getStringWidth(s);
                     GuiStats.drawGradientRect(this.statsGui, i1 - 3, j1 - 3, i1 + k1 + 3, j1 + 8 + 3, -1073741824, -1073741824);
                     GuiStats.getFontRenderer9(this.statsGui).drawStringWithShadow(s, i1, j1, -1);
                 }
@@ -217,25 +217,25 @@ abstract class GuiSlotStats extends GuiSlot
         }
     }
 
-    protected void func_77259_a(StatCrafting par1StatCrafting, int par2, int par3)
+    protected void func_77259_a(final StatCrafting par1StatCrafting, final int par2, final int par3)
     {
         if (par1StatCrafting != null)
         {
-            Item item = Item.itemsList[par1StatCrafting.getItemID()];
-            String s = ("" + I18n.getString(item.getUnlocalizedName() + ".name")).trim();
+            final Item item = Item.itemsList[par1StatCrafting.getItemID()];
+            final String s = ("" + I18n.getString(item.getUnlocalizedName() + ".name")).trim();
 
-            if (s.length() > 0)
+            if (!s.isEmpty())
             {
-                int k = par2 + 12;
-                int l = par3 - 12;
-                int i1 = GuiStats.getFontRenderer10(this.statsGui).getStringWidth(s);
+                final int k = par2 + 12;
+                final int l = par3 - 12;
+                final int i1 = GuiStats.getFontRenderer10(this.statsGui).getStringWidth(s);
                 GuiStats.drawGradientRect1(this.statsGui, k - 3, l - 3, k + i1 + 3, l + 8 + 3, -1073741824, -1073741824);
                 GuiStats.getFontRenderer11(this.statsGui).drawStringWithShadow(s, k, l, -1);
             }
         }
     }
 
-    protected void func_77261_e(int par1)
+    protected void func_77261_e(final int par1)
     {
         if (par1 != this.field_77264_j)
         {

@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class BlockComparator extends BlockRedstoneLogic implements ITileEntityProvider
 {
-    public BlockComparator(int par1, boolean par2)
+    public BlockComparator(final int par1, final boolean par2)
     {
         super(par1, par2);
         this.isBlockContainer = true;
@@ -24,7 +24,7 @@ public class BlockComparator extends BlockRedstoneLogic implements ITileEntityPr
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return Item.comparator.itemID;
     }
@@ -34,12 +34,12 @@ public class BlockComparator extends BlockRedstoneLogic implements ITileEntityPr
     /**
      * only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
      */
-    public int idPicked(World par1World, int par2, int par3, int par4)
+    public int idPicked(final World par1World, final int par2, final int par3, final int par4)
     {
         return Item.comparator.itemID;
     }
 
-    protected int func_94481_j_(int par1)
+    protected int func_94481_j_(final int par1)
     {
         return 2;
     }
@@ -67,35 +67,35 @@ public class BlockComparator extends BlockRedstoneLogic implements ITileEntityPr
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
-        boolean flag = this.isRepeaterPowered || (par2 & 8) != 0;
+        final boolean flag = this.isRepeaterPowered || (par2 & 8) != 0;
         return par1 == 0 ? (flag ? Block.torchRedstoneActive.getBlockTextureFromSide(par1) : Block.torchRedstoneIdle.getBlockTextureFromSide(par1)) : (par1 == 1 ? (flag ? Block.redstoneComparatorActive.blockIcon : this.blockIcon) : Block.stoneDoubleSlab.getBlockTextureFromSide(1));
     }
 
-    protected boolean func_96470_c(int par1)
+    protected boolean func_96470_c(final int par1)
     {
         return this.isRepeaterPowered || (par1 & 8) != 0;
     }
 
-    protected int func_94480_d(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    protected int func_94480_d(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
         return this.getTileEntityComparator(par1IBlockAccess, par2, par3, par4).getOutputSignal();
     }
 
-    private int getOutputStrength(World par1World, int par2, int par3, int par4, int par5)
+    private int getOutputStrength(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         return !this.func_94490_c(par5) ? this.getInputStrength(par1World, par2, par3, par4, par5) : Math.max(this.getInputStrength(par1World, par2, par3, par4, par5) - this.func_94482_f(par1World, par2, par3, par4, par5), 0);
     }
 
-    public boolean func_94490_c(int par1)
+    public boolean func_94490_c(final int par1)
     {
         return (par1 & 4) == 4;
     }
 
-    protected boolean isGettingInput(World par1World, int par2, int par3, int par4, int par5)
+    protected boolean isGettingInput(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
-        int i1 = this.getInputStrength(par1World, par2, par3, par4, par5);
+        final int i1 = this.getInputStrength(par1World, par2, par3, par4, par5);
 
         if (i1 >= 15)
         {
@@ -107,7 +107,7 @@ public class BlockComparator extends BlockRedstoneLogic implements ITileEntityPr
         }
         else
         {
-            int j1 = this.func_94482_f(par1World, par2, par3, par4, par5);
+            final int j1 = this.func_94482_f(par1World, par2, par3, par4, par5);
             return j1 == 0 ? true : i1 >= j1;
         }
     }
@@ -115,10 +115,10 @@ public class BlockComparator extends BlockRedstoneLogic implements ITileEntityPr
     /**
      * Returns the signal strength at one input of the block. Args: world, X, Y, Z, side
      */
-    protected int getInputStrength(World par1World, int par2, int par3, int par4, int par5)
+    protected int getInputStrength(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         int i1 = super.getInputStrength(par1World, par2, par3, par4, par5);
-        int j1 = getDirection(par5);
+        final int j1 = getDirection(par5);
         int k1 = par2 + Direction.offsetX[j1];
         int l1 = par4 + Direction.offsetZ[j1];
         int i2 = par1World.getBlockId(k1, par3, l1);
@@ -148,7 +148,7 @@ public class BlockComparator extends BlockRedstoneLogic implements ITileEntityPr
     /**
      * Returns the blockTileEntity at given coordinates.
      */
-    public TileEntityComparator getTileEntityComparator(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public TileEntityComparator getTileEntityComparator(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         return (TileEntityComparator)par1IBlockAccess.getBlockTileEntity(par2, par3, par4);
     }
@@ -156,11 +156,11 @@ public class BlockComparator extends BlockRedstoneLogic implements ITileEntityPr
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9)
     {
-        int i1 = par1World.getBlockMetadata(par2, par3, par4);
-        boolean flag = this.isRepeaterPowered | (i1 & 8) != 0;
-        boolean flag1 = !this.func_94490_c(i1);
+        final int i1 = par1World.getBlockMetadata(par2, par3, par4);
+        final boolean flag = this.isRepeaterPowered | (i1 & 8) != 0;
+        final boolean flag1 = !this.func_94490_c(i1);
         int j1 = flag1 ? 4 : 0;
         j1 |= flag ? 8 : 0;
         par1World.playSoundEffect((double)par2 + 0.5D, (double)par3 + 0.5D, (double)par4 + 0.5D, "random.click", 0.3F, flag1 ? 0.55F : 0.5F);
@@ -169,13 +169,13 @@ public class BlockComparator extends BlockRedstoneLogic implements ITileEntityPr
         return true;
     }
 
-    protected void func_94479_f(World par1World, int par2, int par3, int par4, int par5)
+    protected void func_94479_f(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         if (!par1World.isBlockTickScheduledThisTick(par2, par3, par4, this.blockID))
         {
-            int i1 = par1World.getBlockMetadata(par2, par3, par4);
-            int j1 = this.getOutputStrength(par1World, par2, par3, par4, i1);
-            int k1 = this.getTileEntityComparator(par1World, par2, par3, par4).getOutputSignal();
+            final int i1 = par1World.getBlockMetadata(par2, par3, par4);
+            final int j1 = this.getOutputStrength(par1World, par2, par3, par4, i1);
+            final int k1 = this.getTileEntityComparator(par1World, par2, par3, par4).getOutputSignal();
 
             if (j1 != k1 || this.func_96470_c(i1) != this.isGettingInput(par1World, par2, par3, par4, i1))
             {
@@ -191,17 +191,17 @@ public class BlockComparator extends BlockRedstoneLogic implements ITileEntityPr
         }
     }
 
-    private void func_96476_c(World par1World, int par2, int par3, int par4, Random par5Random)
+    private void func_96476_c(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
-        int l = par1World.getBlockMetadata(par2, par3, par4);
-        int i1 = this.getOutputStrength(par1World, par2, par3, par4, l);
-        int j1 = this.getTileEntityComparator(par1World, par2, par3, par4).getOutputSignal();
+        final int l = par1World.getBlockMetadata(par2, par3, par4);
+        final int i1 = this.getOutputStrength(par1World, par2, par3, par4, l);
+        final int j1 = this.getTileEntityComparator(par1World, par2, par3, par4).getOutputSignal();
         this.getTileEntityComparator(par1World, par2, par3, par4).setOutputSignal(i1);
 
         if (j1 != i1 || !this.func_94490_c(l))
         {
-            boolean flag = this.isGettingInput(par1World, par2, par3, par4, l);
-            boolean flag1 = this.isRepeaterPowered || (l & 8) != 0;
+            final boolean flag = this.isGettingInput(par1World, par2, par3, par4, l);
+            final boolean flag1 = this.isRepeaterPowered || (l & 8) != 0;
 
             if (flag1 && !flag)
             {
@@ -219,11 +219,11 @@ public class BlockComparator extends BlockRedstoneLogic implements ITileEntityPr
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (this.isRepeaterPowered)
         {
-            int l = par1World.getBlockMetadata(par2, par3, par4);
+            final int l = par1World.getBlockMetadata(par2, par3, par4);
             par1World.setBlock(par2, par3, par4, this.func_94484_i().blockID, l | 8, 4);
         }
 
@@ -233,7 +233,7 @@ public class BlockComparator extends BlockRedstoneLogic implements ITileEntityPr
     /**
      * Called whenever the block is added into the world. Args: world, x, y, z
      */
-    public void onBlockAdded(World par1World, int par2, int par3, int par4)
+    public void onBlockAdded(final World par1World, final int par2, final int par3, final int par4)
     {
         super.onBlockAdded(par1World, par2, par3, par4);
         par1World.setBlockTileEntity(par2, par3, par4, this.createNewTileEntity(par1World));
@@ -242,7 +242,7 @@ public class BlockComparator extends BlockRedstoneLogic implements ITileEntityPr
     /**
      * ejects contained items into the world, and notifies neighbours of an update, as appropriate
      */
-    public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    public void breakBlock(final World par1World, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         super.breakBlock(par1World, par2, par3, par4, par5, par6);
         par1World.removeBlockTileEntity(par2, par3, par4);
@@ -253,23 +253,23 @@ public class BlockComparator extends BlockRedstoneLogic implements ITileEntityPr
      * Called when the block receives a BlockEvent - see World.addBlockEvent. By default, passes it on to the tile
      * entity at this location. Args: world, x, y, z, blockID, EventID, event parameter
      */
-    public boolean onBlockEventReceived(World par1World, int par2, int par3, int par4, int par5, int par6)
+    public boolean onBlockEventReceived(final World par1World, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         super.onBlockEventReceived(par1World, par2, par3, par4, par5, par6);
-        TileEntity tileentity = par1World.getBlockTileEntity(par2, par3, par4);
+        final TileEntity tileentity = par1World.getBlockTileEntity(par2, par3, par4);
         return tileentity != null ? tileentity.receiveClientEvent(par5, par6) : false;
     }
 
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World par1World)
+    public TileEntity createNewTileEntity(final World par1World)
     {
         return new TileEntityComparator();
     }
     
     @Override
-    public void onNeighborTileChange(World world, int x, int y, int z, int tileX, int tileY, int tileZ)
+    public void onNeighborTileChange(final World world, final int x, final int y, final int z, final int tileX, final int tileY, final int tileZ)
     {
         if(y == tileY)
             onNeighborBlockChange(world, x, y, z, world.getBlockId(tileX, tileY, tileZ));

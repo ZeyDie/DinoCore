@@ -15,7 +15,7 @@ public class ItemFishingRod extends Item
     @SideOnly(Side.CLIENT)
     private Icon theIcon;
 
-    public ItemFishingRod(int par1)
+    public ItemFishingRod(final int par1)
     {
         super(par1);
         this.setMaxDamage(64);
@@ -47,19 +47,19 @@ public class ItemFishingRod extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         if (par3EntityPlayer.fishEntity != null)
         {
-            int i = par3EntityPlayer.fishEntity.catchFish();
+            final int i = par3EntityPlayer.fishEntity.catchFish();
             par1ItemStack.damageItem(i, par3EntityPlayer);
             par3EntityPlayer.swingItem();
         }
         else
         {
             // CraftBukkit start
-            EntityFishHook hook = new EntityFishHook(par2World, par3EntityPlayer);
-            PlayerFishEvent playerFishEvent = new PlayerFishEvent((org.bukkit.entity.Player) par3EntityPlayer.getBukkitEntity(), null, (org.bukkit.entity.Fish) hook.getBukkitEntity(), PlayerFishEvent.State.FISHING);
+            final EntityFishHook hook = new EntityFishHook(par2World, par3EntityPlayer);
+            final PlayerFishEvent playerFishEvent = new PlayerFishEvent((org.bukkit.entity.Player) par3EntityPlayer.getBukkitEntity(), null, (org.bukkit.entity.Fish) hook.getBukkitEntity(), PlayerFishEvent.State.FISHING);
             par2World.getServer().getPluginManager().callEvent(playerFishEvent);
 
             if (playerFishEvent.isCancelled())
@@ -82,7 +82,7 @@ public class ItemFishingRod extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.itemIcon = par1IconRegister.registerIcon(this.getIconString() + "_uncast");
         this.theIcon = par1IconRegister.registerIcon(this.getIconString() + "_cast");

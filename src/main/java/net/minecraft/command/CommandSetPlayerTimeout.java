@@ -17,16 +17,16 @@ public class CommandSetPlayerTimeout extends CommandBase
         return 3;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.setidletimeout.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         if (par2ArrayOfStr.length == 1)
         {
-            int i = parseIntWithMin(par1ICommandSender, par2ArrayOfStr[0], 0);
+            final int i = parseIntWithMin(par1ICommandSender, par2ArrayOfStr[0], 0);
             MinecraftServer.getServer().func_143006_e(i);
             notifyAdmins(par1ICommandSender, "commands.setidletimeout.success", new Object[] {Integer.valueOf(i)});
         }

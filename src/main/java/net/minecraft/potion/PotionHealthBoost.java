@@ -5,12 +5,12 @@ import net.minecraft.entity.ai.attributes.BaseAttributeMap;
 
 public class PotionHealthBoost extends Potion
 {
-    public PotionHealthBoost(int par1, boolean par2, int par3)
+    public PotionHealthBoost(final int par1, final boolean par2, final int par3)
     {
         super(par1, par2, par3);
     }
 
-    public void removeAttributesModifiersFromEntity(EntityLivingBase par1EntityLivingBase, BaseAttributeMap par2BaseAttributeMap, int par3)
+    public void removeAttributesModifiersFromEntity(final EntityLivingBase par1EntityLivingBase, final BaseAttributeMap par2BaseAttributeMap, final int par3)
     {
         super.removeAttributesModifiersFromEntity(par1EntityLivingBase, par2BaseAttributeMap, par3);
 

@@ -15,14 +15,14 @@ class GuiFlatPresetsListSlot extends GuiSlot
 
     final GuiFlatPresets flatPresetsGui;
 
-    public GuiFlatPresetsListSlot(GuiFlatPresets par1GuiFlatPresets)
+    public GuiFlatPresetsListSlot(final GuiFlatPresets par1GuiFlatPresets)
     {
         super(par1GuiFlatPresets.mc, par1GuiFlatPresets.width, par1GuiFlatPresets.height, 80, par1GuiFlatPresets.height - 37, 24);
         this.flatPresetsGui = par1GuiFlatPresets;
         this.field_82459_a = -1;
     }
 
-    private void func_82457_a(int par1, int par2, int par3)
+    private void func_82457_a(final int par1, final int par2, final int par3)
     {
         this.func_82456_d(par1 + 1, par2 + 1);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
@@ -32,20 +32,20 @@ class GuiFlatPresetsListSlot extends GuiSlot
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
     }
 
-    private void func_82456_d(int par1, int par2)
+    private void func_82456_d(final int par1, final int par2)
     {
         this.func_82455_b(par1, par2, 0, 0);
     }
 
-    private void func_82455_b(int par1, int par2, int par3, int par4)
+    private void func_82455_b(final int par1, final int par2, final int par3, final int par4)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.flatPresetsGui.mc.getTextureManager().bindTexture(Gui.statIcons);
-        float f = 0.0078125F;
-        float f1 = 0.0078125F;
-        boolean flag = true;
-        boolean flag1 = true;
-        Tessellator tessellator = Tessellator.instance;
+        final float f = 0.0078125F;
+        final float f1 = 0.0078125F;
+        final boolean flag = true;
+        final boolean flag1 = true;
+        final Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
         tessellator.addVertexWithUV((double)(par1 + 0), (double)(par2 + 18), (double)this.flatPresetsGui.zLevel, (double)((float)(par3 + 0) * 0.0078125F), (double)((float)(par4 + 18) * 0.0078125F));
         tessellator.addVertexWithUV((double)(par1 + 18), (double)(par2 + 18), (double)this.flatPresetsGui.zLevel, (double)((float)(par3 + 18) * 0.0078125F), (double)((float)(par4 + 18) * 0.0078125F));
@@ -65,7 +65,7 @@ class GuiFlatPresetsListSlot extends GuiSlot
     /**
      * the element in the slot that was clicked, boolean for wether it was double clicked or not
      */
-    protected void elementClicked(int par1, boolean par2)
+    protected void elementClicked(final int par1, final boolean par2)
     {
         this.field_82459_a = par1;
         this.flatPresetsGui.func_82296_g();
@@ -75,16 +75,16 @@ class GuiFlatPresetsListSlot extends GuiSlot
     /**
      * returns true if the element passed in is currently selected
      */
-    protected boolean isSelected(int par1)
+    protected boolean isSelected(final int par1)
     {
         return par1 == this.field_82459_a;
     }
 
     protected void drawBackground() {}
 
-    protected void drawSlot(int par1, int par2, int par3, int par4, Tessellator par5Tessellator)
+    protected void drawSlot(final int par1, final int par2, final int par3, final int par4, final Tessellator par5Tessellator)
     {
-        GuiFlatPresetsItem guiflatpresetsitem = (GuiFlatPresetsItem)GuiFlatPresets.getPresets().get(par1);
+        final GuiFlatPresetsItem guiflatpresetsitem = (GuiFlatPresetsItem)GuiFlatPresets.getPresets().get(par1);
         this.func_82457_a(par2, par3, guiflatpresetsitem.iconId);
         this.flatPresetsGui.fontRenderer.drawString(guiflatpresetsitem.presetName, par2 + 18 + 5, par3 + 6, 16777215);
     }

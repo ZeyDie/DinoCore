@@ -11,12 +11,12 @@ class StructureStrongholdStones extends StructurePieceBlockSelector
     /**
      * picks Block Ids and Metadata (Silverfish)
      */
-    public void selectBlocks(Random par1Random, int par2, int par3, int par4, boolean par5)
+    public void selectBlocks(final Random par1Random, final int par2, final int par3, final int par4, final boolean par5)
     {
         if (par5)
         {
             this.selectedBlockId = Block.stoneBrick.blockID;
-            float f = par1Random.nextFloat();
+            final float f = par1Random.nextFloat();
 
             if (f < 0.2F)
             {
@@ -43,7 +43,7 @@ class StructureStrongholdStones extends StructurePieceBlockSelector
         }
     }
 
-    StructureStrongholdStones(StructureStrongholdPieceWeight2 par1StructureStrongholdPieceWeight2)
+    StructureStrongholdStones(final StructureStrongholdPieceWeight2 par1StructureStrongholdPieceWeight2)
     {
         this();
     }

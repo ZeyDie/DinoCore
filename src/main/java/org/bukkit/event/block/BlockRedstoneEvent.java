@@ -40,7 +40,7 @@ public class BlockRedstoneEvent extends BlockEvent {
      *
      * @param newCurrent The new current to set
      */
-    public void setNewCurrent(int newCurrent) {
+    public void setNewCurrent(final int newCurrent) {
         this.newCurrent = newCurrent;
     }
 

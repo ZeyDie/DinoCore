@@ -28,7 +28,7 @@ public class ModLoaderPropertiesMethodVisitor extends MethodVisitor
     private String foundProperties;
     private boolean validProperties;
 
-    public ModLoaderPropertiesMethodVisitor(String name, ASMModParser discoverer)
+    public ModLoaderPropertiesMethodVisitor(final String name, final ASMModParser discoverer)
     {
         //TODO ZeyCodeReplace ASM4 on ASM5
         super(Opcodes.ASM5);
@@ -41,7 +41,7 @@ public class ModLoaderPropertiesMethodVisitor extends MethodVisitor
     }
     
     @Override
-    public void visitLdcInsn(Object cst)
+    public void visitLdcInsn(final Object cst)
     {
         if (cst instanceof String && labels.size() == 1)
         {
@@ -49,7 +49,7 @@ public class ModLoaderPropertiesMethodVisitor extends MethodVisitor
         }
     }
     @Override
-    public void visitInsn(int opcode)
+    public void visitInsn(final int opcode)
     {
         if (Opcodes.ARETURN == opcode && labels.size() == 1 && foundProperties != null)
         {
@@ -57,7 +57,7 @@ public class ModLoaderPropertiesMethodVisitor extends MethodVisitor
         }
     }
     @Override
-    public void visitLabel(Label label)
+    public void visitLabel(final Label label)
     {
         labels.push(label);
     }

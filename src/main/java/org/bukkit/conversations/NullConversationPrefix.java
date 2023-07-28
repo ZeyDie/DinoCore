@@ -12,7 +12,7 @@ public class NullConversationPrefix implements ConversationPrefix{
      * @param context Context information about the conversation.
      * @return An empty string.
      */
-    public String getPrefix(ConversationContext context) {
+    public String getPrefix(final ConversationContext context) {
         return "";
     }
 }

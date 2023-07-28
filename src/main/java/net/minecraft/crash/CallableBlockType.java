@@ -8,7 +8,7 @@ final class CallableBlockType implements Callable
 {
     final int blockID;
 
-    CallableBlockType(int par1)
+    CallableBlockType(final int par1)
     {
         this.blockID = par1;
     }
@@ -19,7 +19,7 @@ final class CallableBlockType implements Callable
         {
             return String.format("ID #%d (%s // %s)", new Object[] {Integer.valueOf(this.blockID), Block.blocksList[this.blockID].getUnlocalizedName(), Block.blocksList[this.blockID].getClass().getCanonicalName()});
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
             return "ID #" + this.blockID;
         }

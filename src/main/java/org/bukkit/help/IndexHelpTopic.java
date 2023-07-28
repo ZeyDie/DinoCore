@@ -21,11 +21,11 @@ public class IndexHelpTopic extends HelpTopic {
     protected String preamble;
     protected Collection<HelpTopic> allTopics;
 
-    public IndexHelpTopic(String name, String shortText, String permission, Collection<HelpTopic> topics) {
+    public IndexHelpTopic(final String name, final String shortText, final String permission, final Collection<HelpTopic> topics) {
         this(name, shortText, permission, topics, null);
     }
 
-    public IndexHelpTopic(String name, String shortText, String permission, Collection<HelpTopic> topics, String preamble) {
+    public IndexHelpTopic(final String name, final String shortText, final String permission, final Collection<HelpTopic> topics, final String preamble) {
         this.name = name;
         this.shortText = shortText;
         this.permission = permission;
@@ -38,11 +38,11 @@ public class IndexHelpTopic extends HelpTopic {
      *
      * @param topics The topics to set.
      */
-    protected void setTopicsCollection(Collection<HelpTopic> topics) {
+    protected void setTopicsCollection(final Collection<HelpTopic> topics) {
         this.allTopics = topics;
     }
 
-    public boolean canSee(CommandSender sender) {
+    public boolean canSee(final CommandSender sender) {
         if (sender instanceof ConsoleCommandSender) {
             return true;
         }
@@ -53,21 +53,21 @@ public class IndexHelpTopic extends HelpTopic {
     }
 
     @Override
-    public void amendCanSee(String amendedPermission) {
+    public void amendCanSee(final String amendedPermission) {
         permission = amendedPermission;
     }
 
-    public String getFullText(CommandSender sender) {
-        StringBuilder sb = new StringBuilder();
+    public String getFullText(final CommandSender sender) {
+        final StringBuilder sb = new StringBuilder();
 
         if (preamble != null) {
             sb.append(buildPreamble(sender));
             sb.append("\n");
         }
 
-        for (HelpTopic topic : allTopics) {
+        for (final HelpTopic topic : allTopics) {
             if (topic.canSee(sender)) {
-                String lineStr = buildIndexLine(sender, topic).replace("\n", ". ");
+                final String lineStr = buildIndexLine(sender, topic).replace("\n", ". ");
                 if (sender instanceof Player && lineStr.length() > ChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
                     sb.append(lineStr.substring(0, ChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH - 3));
                     sb.append("...");
@@ -86,7 +86,7 @@ public class IndexHelpTopic extends HelpTopic {
      * @param sender The command sender requesting the preamble.
      * @return The topic preamble.
      */
-    protected String buildPreamble(CommandSender sender) {
+    protected String buildPreamble(final CommandSender sender) {
         return ChatColor.GRAY + preamble;
     }
 
@@ -97,8 +97,8 @@ public class IndexHelpTopic extends HelpTopic {
      * @param topic  The topic to render into an index line.
      * @return The rendered index line.
      */
-    protected String buildIndexLine(CommandSender sender, HelpTopic topic) {
-        StringBuilder line = new StringBuilder();
+    protected String buildIndexLine(final CommandSender sender, final HelpTopic topic) {
+        final StringBuilder line = new StringBuilder();
         line.append(ChatColor.GOLD);
         line.append(topic.getName());
         line.append(": ");

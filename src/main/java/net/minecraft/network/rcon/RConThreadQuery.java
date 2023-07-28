@@ -60,7 +60,7 @@ public class RConThreadQuery extends RConThreadBase
     /** The time of the last query response sent */
     private long lastQueryResponseTime;
 
-    public RConThreadQuery(IServer par1IServer)
+    public RConThreadQuery(final IServer par1IServer)
     {
         super(par1IServer);
         this.queryPort = par1IServer.getIntProperty("query.port", 0);
@@ -72,7 +72,7 @@ public class RConThreadQuery extends RConThreadBase
         this.lastQueryResponseTime = 0L;
         this.queryHostname = "0.0.0.0";
 
-        if (0 != this.serverHostname.length() && !this.queryHostname.equals(this.serverHostname))
+        if (!this.serverHostname.isEmpty() && !this.queryHostname.equals(this.serverHostname))
         {
             this.queryHostname = this.serverHostname;
         }
@@ -82,10 +82,10 @@ public class RConThreadQuery extends RConThreadBase
 
             try
             {
-                InetAddress inetaddress = InetAddress.getLocalHost();
+                final InetAddress inetaddress = InetAddress.getLocalHost();
                 this.queryHostname = inetaddress.getHostAddress();
             }
-            catch (UnknownHostException unknownhostexception)
+            catch (final UnknownHostException unknownhostexception)
             {
                 this.logWarning("Unable to determine local host IP, please set server-ip in \'" + par1IServer.getSettingsFilename() + "\' : " + unknownhostexception.getMessage());
             }
@@ -109,7 +109,7 @@ public class RConThreadQuery extends RConThreadBase
     /**
      * Sends a byte array as a DatagramPacket response to the client who sent the given DatagramPacket
      */
-    private void sendResponsePacket(byte[] par1ArrayOfByte, DatagramPacket par2DatagramPacket) throws IOException
+    private void sendResponsePacket(final byte[] par1ArrayOfByte, final DatagramPacket par2DatagramPacket) throws IOException
     {
         this.querySocket.send(new DatagramPacket(par1ArrayOfByte, par1ArrayOfByte.length, par2DatagramPacket.getSocketAddress()));
     }
@@ -117,11 +117,11 @@ public class RConThreadQuery extends RConThreadBase
     /**
      * Parses an incoming DatagramPacket, returning true if the packet was valid
      */
-    private boolean parseIncomingPacket(DatagramPacket par1DatagramPacket) throws IOException
+    private boolean parseIncomingPacket(final DatagramPacket par1DatagramPacket) throws IOException
     {
-        byte[] abyte = par1DatagramPacket.getData();
-        int i = par1DatagramPacket.getLength();
-        SocketAddress socketaddress = par1DatagramPacket.getSocketAddress();
+        final byte[] abyte = par1DatagramPacket.getData();
+        final int i = par1DatagramPacket.getLength();
+        final SocketAddress socketaddress = par1DatagramPacket.getSocketAddress();
         this.logDebug("Packet len " + i + " [" + socketaddress + "]");
 
         if (3 <= i && -2 == abyte[0] && -3 == abyte[1])
@@ -143,7 +143,7 @@ public class RConThreadQuery extends RConThreadBase
                     }
                     else
                     {
-                        RConOutputStream rconoutputstream = new RConOutputStream(1460);
+                        final RConOutputStream rconoutputstream = new RConOutputStream(1460);
                         rconoutputstream.writeInt(0);
                         rconoutputstream.writeByteArray(this.getRequestID(par1DatagramPacket.getSocketAddress()));
                         rconoutputstream.writeString(this.serverMotd);
@@ -174,14 +174,14 @@ public class RConThreadQuery extends RConThreadBase
     /**
      * Creates a query response as a byte array for the specified query DatagramPacket
      */
-    private byte[] createQueryResponse(DatagramPacket par1DatagramPacket) throws IOException
+    private byte[] createQueryResponse(final DatagramPacket par1DatagramPacket) throws IOException
     {
-        long i = MinecraftServer.getSystemTimeMillis();
+        final long i = MinecraftServer.getSystemTimeMillis();
 
         if (i < this.lastQueryResponseTime + 5000L)
         {
-            byte[] abyte = this.output.toByteArray();
-            byte[] abyte1 = this.getRequestID(par1DatagramPacket.getSocketAddress());
+            final byte[] abyte = this.output.toByteArray();
+            final byte[] abyte1 = this.getRequestID(par1DatagramPacket.getSocketAddress());
             abyte[1] = abyte1[0];
             abyte[2] = abyte1[1];
             abyte[3] = abyte1[2];
@@ -221,8 +221,8 @@ public class RConThreadQuery extends RConThreadBase
             this.output.writeInt(1);
             this.output.writeString("player_");
             this.output.writeInt(0);
-            String[] astring = this.server.getAllUsernames();
-            byte b0 = (byte)astring.length;
+            final String[] astring = this.server.getAllUsernames();
+            final byte b0 = (byte)astring.length;
 
             for (byte b1 = (byte)(b0 - 1); b1 >= 0; --b1)
             {
@@ -237,7 +237,7 @@ public class RConThreadQuery extends RConThreadBase
     /**
      * Returns the request ID provided by the authorized client
      */
-    private byte[] getRequestID(SocketAddress par1SocketAddress)
+    private byte[] getRequestID(final SocketAddress par1SocketAddress)
     {
         return ((RConThreadQueryAuth)this.queryClients.get(par1SocketAddress)).getRequestId();
     }
@@ -245,9 +245,9 @@ public class RConThreadQuery extends RConThreadBase
     /**
      * Returns true if the client has a valid auth, otherwise false
      */
-    private Boolean verifyClientAuth(DatagramPacket par1DatagramPacket)
+    private Boolean verifyClientAuth(final DatagramPacket par1DatagramPacket)
     {
-        SocketAddress socketaddress = par1DatagramPacket.getSocketAddress();
+        final SocketAddress socketaddress = par1DatagramPacket.getSocketAddress();
 
         if (!this.queryClients.containsKey(socketaddress))
         {
@@ -255,7 +255,7 @@ public class RConThreadQuery extends RConThreadBase
         }
         else
         {
-            byte[] abyte = par1DatagramPacket.getData();
+            final byte[] abyte = par1DatagramPacket.getData();
             return ((RConThreadQueryAuth)this.queryClients.get(socketaddress)).getRandomChallenge() != RConUtils.getBytesAsBEint(abyte, 7, par1DatagramPacket.getLength()) ? Boolean.valueOf(false) : Boolean.valueOf(true);
         }
     }
@@ -263,9 +263,9 @@ public class RConThreadQuery extends RConThreadBase
     /**
      * Sends an auth challenge DatagramPacket to the client and adds the client to the queryClients map
      */
-    private void sendAuthChallenge(DatagramPacket par1DatagramPacket) throws IOException
+    private void sendAuthChallenge(final DatagramPacket par1DatagramPacket) throws IOException
     {
-        RConThreadQueryAuth rconthreadqueryauth = new RConThreadQueryAuth(this, par1DatagramPacket);
+        final RConThreadQueryAuth rconthreadqueryauth = new RConThreadQueryAuth(this, par1DatagramPacket);
         this.queryClients.put(par1DatagramPacket.getSocketAddress(), rconthreadqueryauth);
         this.sendResponsePacket(rconthreadqueryauth.getChallengeValue(), par1DatagramPacket);
     }
@@ -277,16 +277,16 @@ public class RConThreadQuery extends RConThreadBase
     {
         if (this.running)
         {
-            long i = MinecraftServer.getSystemTimeMillis();
+            final long i = MinecraftServer.getSystemTimeMillis();
 
             if (i >= this.lastAuthCheckTime + 30000L)
             {
                 this.lastAuthCheckTime = i;
-                Iterator iterator = this.queryClients.entrySet().iterator();
+                final Iterator iterator = this.queryClients.entrySet().iterator();
 
                 while (iterator.hasNext())
                 {
-                    Entry entry = (Entry)iterator.next();
+                    final Entry entry = (Entry)iterator.next();
 
                     if (((RConThreadQueryAuth)entry.getValue()).hasExpired(i).booleanValue())
                     {
@@ -313,15 +313,15 @@ public class RConThreadQuery extends RConThreadBase
                     this.cleanQueryClientsMap();
                     this.parseIncomingPacket(this.incomingPacket);
                 }
-                catch (SocketTimeoutException sockettimeoutexception)
+                catch (final SocketTimeoutException sockettimeoutexception)
                 {
                     this.cleanQueryClientsMap();
                 }
-                catch (PortUnreachableException portunreachableexception)
+                catch (final PortUnreachableException portunreachableexception)
                 {
                     ;
                 }
-                catch (IOException ioexception)
+                catch (final IOException ioexception)
                 {
                     this.stopWithException(ioexception);
                 }
@@ -357,7 +357,7 @@ public class RConThreadQuery extends RConThreadBase
     /**
      * Stops the query server and reports the given Exception
      */
-    private void stopWithException(Exception par1Exception)
+    private void stopWithException(final Exception par1Exception)
     {
         if (this.running)
         {
@@ -383,15 +383,15 @@ public class RConThreadQuery extends RConThreadBase
             this.querySocket.setSoTimeout(500);
             return true;
         }
-        catch (SocketException socketexception)
+        catch (final SocketException socketexception)
         {
             this.logWarning("Unable to initialise query system on " + this.serverHostname + ":" + this.queryPort + " (Socket): " + socketexception.getMessage());
         }
-        catch (UnknownHostException unknownhostexception)
+        catch (final UnknownHostException unknownhostexception)
         {
             this.logWarning("Unable to initialise query system on " + this.serverHostname + ":" + this.queryPort + " (Unknown Host): " + unknownhostexception.getMessage());
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             this.logWarning("Unable to initialise query system on " + this.serverHostname + ":" + this.queryPort + " (E): " + exception.getMessage());
         }

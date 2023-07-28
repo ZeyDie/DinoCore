@@ -19,7 +19,7 @@ public class ItemMonsterPlacer extends Item
     @SideOnly(Side.CLIENT)
     private Icon theIcon;
 
-    public ItemMonsterPlacer(int par1)
+    public ItemMonsterPlacer(final int par1)
     {
         super(par1);
         this.setHasSubtypes(true);
@@ -29,10 +29,10 @@ public class ItemMonsterPlacer extends Item
     /**
      * Gets the localized name of the given item stack.
      */
-    public String getItemDisplayName(ItemStack par1ItemStack)
+    public String getItemDisplayName(final ItemStack par1ItemStack)
     {
         String s = ("" + StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
-        String s1 = EntityList.getStringFromID(par1ItemStack.getItemDamage());
+        final String s1 = EntityList.getStringFromID(par1ItemStack.getItemDamage());
 
         if (s1 != null)
         {
@@ -43,9 +43,9 @@ public class ItemMonsterPlacer extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack par1ItemStack, int par2)
+    public int getColorFromItemStack(final ItemStack par1ItemStack, final int par2)
     {
-        EntityEggInfo entityegginfo = (EntityEggInfo)EntityList.entityEggs.get(Integer.valueOf(par1ItemStack.getItemDamage()));
+        final EntityEggInfo entityegginfo = (EntityEggInfo)EntityList.entityEggs.get(Integer.valueOf(par1ItemStack.getItemDamage()));
         return entityegginfo != null ? (par2 == 0 ? entityegginfo.primaryColor : entityegginfo.secondaryColor) : 16777215;
     }
 
@@ -53,18 +53,21 @@ public class ItemMonsterPlacer extends Item
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final World par3World, int par4, int par5, int par6, final int par7, final float par8, final float par9, final float par10)
     {
+        int par41 = par4;
+        int par51 = par5;
+        int par61 = par6;
         if (par3World.isRemote || par1ItemStack.getItemDamage() == 48 || par1ItemStack.getItemDamage() == 49 || par1ItemStack.getItemDamage() == 63 || par1ItemStack.getItemDamage() == 64)   // CraftBukkit
         {
             return true;
         }
         else
         {
-            int i1 = par3World.getBlockId(par4, par5, par6);
-            par4 += Facing.offsetsXForSide[par7];
-            par5 += Facing.offsetsYForSide[par7];
-            par6 += Facing.offsetsZForSide[par7];
+            final int i1 = par3World.getBlockId(par41, par51, par61);
+            par41 += Facing.offsetsXForSide[par7];
+            par51 += Facing.offsetsYForSide[par7];
+            par61 += Facing.offsetsZForSide[par7];
             double d0 = 0.0D;
 
             if (par7 == 1 && Block.blocksList[i1] != null && Block.blocksList[i1].getRenderType() == 11)
@@ -72,7 +75,7 @@ public class ItemMonsterPlacer extends Item
                 d0 = 0.5D;
             }
 
-            Entity entity = spawnCreature(par3World, par1ItemStack.getItemDamage(), (double)par4 + 0.5D, (double)par5 + d0, (double)par6 + 0.5D);
+            final Entity entity = spawnCreature(par3World, par1ItemStack.getItemDamage(), (double) par41 + 0.5D, (double) par51 + d0, (double) par61 + 0.5D);
 
             if (entity != null)
             {
@@ -94,7 +97,7 @@ public class ItemMonsterPlacer extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         if (par2World.isRemote)
         {
@@ -102,7 +105,7 @@ public class ItemMonsterPlacer extends Item
         }
         else
         {
-            MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, true);
+            final MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, true);
 
             if (movingobjectposition == null)
             {
@@ -112,9 +115,9 @@ public class ItemMonsterPlacer extends Item
             {
                 if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE)
                 {
-                    int i = movingobjectposition.blockX;
-                    int j = movingobjectposition.blockY;
-                    int k = movingobjectposition.blockZ;
+                    final int i = movingobjectposition.blockX;
+                    final int j = movingobjectposition.blockY;
+                    final int k = movingobjectposition.blockZ;
 
                     if (!par2World.canMineBlock(par3EntityPlayer, i, j, k))
                     {
@@ -128,7 +131,7 @@ public class ItemMonsterPlacer extends Item
 
                     if (par2World.getBlockMaterial(i, j, k) == Material.water)
                     {
-                        Entity entity = spawnCreature(par2World, par1ItemStack.getItemDamage(), (double)i, (double)j, (double)k);
+                        final Entity entity = spawnCreature(par2World, par1ItemStack.getItemDamage(), (double)i, (double)j, (double)k);
 
                         if (entity != null)
                         {
@@ -154,7 +157,7 @@ public class ItemMonsterPlacer extends Item
      * Spawns the creature specified by the egg's type in the location specified by the last three parameters.
      * Parameters: world, entityID, x, y, z.
      */
-    public static Entity spawnCreature(World par0World, int par1, double par2, double par4, double par6)
+    public static Entity spawnCreature(final World par0World, final int par1, final double par2, final double par4, final double par6)
     {
         if (!EntityList.entityEggs.containsKey(Integer.valueOf(par1)))
         {
@@ -170,7 +173,7 @@ public class ItemMonsterPlacer extends Item
 
                 if (entity != null && entity instanceof EntityLivingBase)
                 {
-                    EntityLiving entityliving = (EntityLiving)entity;
+                    final EntityLiving entityliving = (EntityLiving)entity;
                     entity.setLocationAndAngles(par2, par4, par6, MathHelper.wrapAngleTo180_float(par0World.rand.nextFloat() * 360.0F), 0.0F);
                     entityliving.rotationYawHead = entityliving.rotationYaw;
                     entityliving.renderYawOffset = entityliving.rotationYaw;
@@ -195,7 +198,7 @@ public class ItemMonsterPlacer extends Item
     /**
      * Gets an icon index based on an item's damage value and the given render pass
      */
-    public Icon getIconFromDamageForRenderPass(int par1, int par2)
+    public Icon getIconFromDamageForRenderPass(final int par1, final int par2)
     {
         return par2 > 0 ? this.theIcon : super.getIconFromDamageForRenderPass(par1, par2);
     }
@@ -205,19 +208,19 @@ public class ItemMonsterPlacer extends Item
     /**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */
-    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubItems(final int par1, final CreativeTabs par2CreativeTabs, final List par3List)
     {
-        Iterator iterator = EntityList.entityEggs.values().iterator();
+        final Iterator iterator = EntityList.entityEggs.values().iterator();
 
         while (iterator.hasNext())
         {
-            EntityEggInfo entityegginfo = (EntityEggInfo)iterator.next();
+            final EntityEggInfo entityegginfo = (EntityEggInfo)iterator.next();
             par3List.add(new ItemStack(par1, 1, entityegginfo.spawnedID));
         }
     }
 
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         super.registerIcons(par1IconRegister);
         this.theIcon = par1IconRegister.registerIcon(this.getIconString() + "_overlay");

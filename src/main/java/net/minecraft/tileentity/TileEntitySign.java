@@ -10,7 +10,7 @@ import net.minecraft.network.packet.Packet130UpdateSign;
 public class TileEntitySign extends TileEntity
 {
     /** An array of four strings storing the lines of text on the sign. */
-    public String[] signText = new String[] {"", "", "", ""};
+    public String[] signText = {"", "", "", ""};
 
     /**
      * The index of the line currently being edited. Only used on client side, but defined on both. Note this is only
@@ -25,7 +25,7 @@ public class TileEntitySign extends TileEntity
     /**
      * Writes a tile entity to NBT.
      */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setString("Text1", this.signText[0]);
@@ -37,7 +37,7 @@ public class TileEntitySign extends TileEntity
     /**
      * Reads a tile entity from NBT.
      */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         this.isEditable = false;
         super.readFromNBT(par1NBTTagCompound);
@@ -58,7 +58,7 @@ public class TileEntitySign extends TileEntity
      */
     public Packet getDescriptionPacket()
     {
-        String[] astring = new String[4];
+        final String[] astring = new String[4];
 
         // CraftBukkit start - Limit sign text to 15 chars per line
         for (int i = 0; i < 4; ++i)
@@ -85,7 +85,7 @@ public class TileEntitySign extends TileEntity
     /**
      * Sets the sign's isEditable flag to the specified parameter.
      */
-    public void setEditable(boolean par1)
+    public void setEditable(final boolean par1)
     {
         this.isEditable = par1;
 
@@ -95,7 +95,7 @@ public class TileEntitySign extends TileEntity
         }
     }
 
-    public void func_142010_a(EntityPlayer par1EntityPlayer)
+    public void func_142010_a(final EntityPlayer par1EntityPlayer)
     {
         this.field_142011_d = par1EntityPlayer;
     }

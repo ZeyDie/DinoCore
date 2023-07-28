@@ -62,7 +62,7 @@ public abstract class Entity
 {
     // CraftBukkit start
     private static final int CURRENT_LEVEL = 2;
-    static boolean isLevelAtLeast(NBTTagCompound tag, int level)
+    static boolean isLevelAtLeast(final NBTTagCompound tag, final int level)
     {
         return tag.hasKey("Bukkit.updateLevel") && tag.getInteger("Bukkit.updateLevel") >= level;
     }
@@ -270,7 +270,7 @@ public abstract class Entity
     private HashMap<String, IExtendedEntityProperties> extendedProperties;
     public String spawnReason; // Cauldron - used to handle CraftBukkit's SpawnReason with CustomSpawners
 
-    public Entity(World par1World)
+    public Entity(final World par1World)
     {
         this.entityId = nextEntityID++;
         this.renderDistanceWeight = 1.0D;
@@ -308,7 +308,7 @@ public abstract class Entity
 
         MinecraftForge.EVENT_BUS.post(new EntityEvent.EntityConstructing(this));
 
-        for (IExtendedEntityProperties props : this.extendedProperties.values())
+        for (final IExtendedEntityProperties props : this.extendedProperties.values())
         {
             props.init(this, par1World);
         }
@@ -321,7 +321,7 @@ public abstract class Entity
         return this.dataWatcher;
     }
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         return par1Obj instanceof Entity ? ((Entity)par1Obj).entityId == this.entityId : false;
     }
@@ -375,7 +375,7 @@ public abstract class Entity
     /**
      * Sets the width and height of the entity. Args: width, height
      */
-    protected void setSize(float par1, float par2)
+    protected void setSize(final float par1, final float par2)
     {
         float f2;
 
@@ -428,12 +428,14 @@ public abstract class Entity
     protected void setRotation(float par1, float par2)
     {
         // CraftBukkit start - yaw was sometimes set to NaN, so we need to set it back to 0
-        if (Float.isNaN(par1))
+        float par11 = par1;
+        float par21 = par2;
+        if (Float.isNaN(par11))
         {
-            par1 = 0;
+            par11 = 0;
         }
 
-        if ((par1 == Float.POSITIVE_INFINITY) || (par1 == Float.NEGATIVE_INFINITY))
+        if ((par11 == Float.POSITIVE_INFINITY) || (par11 == Float.NEGATIVE_INFINITY))
         {
             if (this instanceof EntityPlayerMP)
             {
@@ -441,16 +443,16 @@ public abstract class Entity
                 ((CraftPlayer) this.getBukkitEntity()).kickPlayer("Nope");
             }
 
-            par1 = 0;
+            par11 = 0;
         }
 
         // pitch was sometimes set to NaN, so we need to set it back to 0.
-        if (Float.isNaN(par2))
+        if (Float.isNaN(par21))
         {
-            par2 = 0;
+            par21 = 0;
         }
 
-        if ((par2 == Float.POSITIVE_INFINITY) || (par2 == Float.NEGATIVE_INFINITY))
+        if ((par21 == Float.POSITIVE_INFINITY) || (par21 == Float.NEGATIVE_INFINITY))
         {
             if (this instanceof EntityPlayerMP)
             {
@@ -458,24 +460,24 @@ public abstract class Entity
                 ((CraftPlayer) this.getBukkitEntity()).kickPlayer("Nope");
             }
 
-            par2 = 0;
+            par21 = 0;
         }
 
         // CraftBukkit end
-        this.rotationYaw = par1 % 360.0F;
-        this.rotationPitch = par2 % 360.0F;
+        this.rotationYaw = par11 % 360.0F;
+        this.rotationPitch = par21 % 360.0F;
     }
 
     /**
      * Sets the x,y,z of the entity from the given parameters. Also seems to set up a bounding box.
      */
-    public void setPosition(double par1, double par3, double par5)
+    public void setPosition(final double par1, final double par3, final double par5)
     {
         this.posX = par1;
         this.posY = par3;
         this.posZ = par5;
-        float f = this.width / 2.0F;
-        float f1 = this.height;
+        final float f = this.width / 2.0F;
+        final float f1 = this.height;
         this.boundingBox.setBounds(par1 - (double)f, par3 - (double)this.yOffset + (double)this.ySize, par5 - (double)f, par1 + (double)f, par3 - (double)this.yOffset + (double)this.ySize + (double)f1, par5 + (double)f);
     }
 
@@ -485,10 +487,10 @@ public abstract class Entity
      * Adds par1*0.15 to the entity's yaw, and *subtracts* par2*0.15 from the pitch. Clamps pitch from -90 to 90. Both
      * arguments in degrees.
      */
-    public void setAngles(float par1, float par2)
+    public void setAngles(final float par1, final float par2)
     {
-        float f2 = this.rotationPitch;
-        float f3 = this.rotationYaw;
+        final float f2 = this.rotationPitch;
+        final float f3 = this.rotationYaw;
         this.rotationYaw = (float)((double)this.rotationYaw + (double)par1 * 0.15D);
         this.rotationPitch = (float)((double)this.rotationPitch - (double)par2 * 0.15D);
 
@@ -537,7 +539,7 @@ public abstract class Entity
         if (!this.worldObj.isRemote && this.worldObj instanceof WorldServer)
         {
             this.worldObj.theProfiler.startSection("portal");
-            MinecraftServer minecraftserver = ((WorldServer)this.worldObj).getMinecraftServer();
+            final MinecraftServer minecraftserver = ((WorldServer)this.worldObj).getMinecraftServer();
             i = this.getMaxInPortalTime();
 
             if (this.inPortal)
@@ -548,7 +550,7 @@ public abstract class Entity
                     {
                         this.portalCounter = i;
                         this.timeUntilPortal = this.getPortalCooldown();
-                        byte b0;
+                        final byte b0;
 
                         if (this.worldObj.provider.dimensionId == -1)
                         {
@@ -588,10 +590,10 @@ public abstract class Entity
 
         if (this.isSprinting() && !this.isInWater())
         {
-            int j = MathHelper.floor_double(this.posX);
+            final int j = MathHelper.floor_double(this.posX);
             i = MathHelper.floor_double(this.posY - 0.20000000298023224D - (double)this.yOffset);
-            int k = MathHelper.floor_double(this.posZ);
-            int l = this.worldObj.getBlockId(j, i, k);
+            final int k = MathHelper.floor_double(this.posZ);
+            final int l = this.worldObj.getBlockId(j, i, k);
 
             if (l > 0)
             {
@@ -665,11 +667,11 @@ public abstract class Entity
             // CraftBukkit start - Fallen in lava TODO: this event spams!
             if (this instanceof EntityLivingBase)
             {
-                Server server = this.worldObj.getServer();
+                final Server server = this.worldObj.getServer();
                 // TODO: shouldn't be sending null for the block.
-                org.bukkit.block.Block damager = null; // ((WorldServer) this.l).getWorld().getBlockAt(i, j, k);
-                org.bukkit.entity.Entity damagee = this.getBukkitEntity();
-                EntityDamageByBlockEvent event = new EntityDamageByBlockEvent(damager, damagee, EntityDamageEvent.DamageCause.LAVA, 4D);
+                final org.bukkit.block.Block damager = null; // ((WorldServer) this.l).getWorld().getBlockAt(i, j, k);
+                final org.bukkit.entity.Entity damagee = this.getBukkitEntity();
+                final EntityDamageByBlockEvent event = new EntityDamageByBlockEvent(damager, damagee, EntityDamageEvent.DamageCause.LAVA, 4.0D);
                 server.getPluginManager().callEvent(event);
 
                 if (!event.isCancelled())
@@ -681,7 +683,7 @@ public abstract class Entity
                 if (this.fire <= 0)
                 {
                     // not on fire yet
-                    EntityCombustEvent combustEvent = new org.bukkit.event.entity.EntityCombustByBlockEvent(damager, damagee, 15);
+                    final EntityCombustEvent combustEvent = new org.bukkit.event.entity.EntityCombustByBlockEvent(damager, damagee, 15);
                     server.getPluginManager().callEvent(combustEvent);
 
                     if (!combustEvent.isCancelled())
@@ -707,7 +709,7 @@ public abstract class Entity
     /**
      * Sets entity to burn for x amount of seconds, cannot lower amount of existing fire.
      */
-    public void setFire(int par1)
+    public void setFire(final int par1)
     {
         int j = par1 * 20;
         j = EnchantmentProtection.getFireTimeForEntity(this, j);
@@ -737,10 +739,10 @@ public abstract class Entity
     /**
      * Checks if the offset position from the entity's current position is inside of liquid. Args: x, y, z
      */
-    public boolean isOffsetPositionInLiquid(double par1, double par3, double par5)
+    public boolean isOffsetPositionInLiquid(final double par1, final double par3, final double par5)
     {
-        AxisAlignedBB axisalignedbb = this.boundingBox.getOffsetBoundingBox(par1, par3, par5);
-        List list = this.worldObj.getCollidingBoundingBoxes(this, axisalignedbb);
+        final AxisAlignedBB axisalignedbb = this.boundingBox.getOffsetBoundingBox(par1, par3, par5);
+        final List list = this.worldObj.getCollidingBoundingBoxes(this, axisalignedbb);
         return !list.isEmpty() ? false : !this.worldObj.isAnyLiquid(axisalignedbb);
     }
 
@@ -750,16 +752,19 @@ public abstract class Entity
     public void moveEntity(double par1, double par3, double par5)
     {
         // CraftBukkit start - Don't do anything if we aren't moving
-        if (par1 == 0 && par3 == 0 && par5 == 0 &&
+        double par11 = par1;
+        double par31 = par3;
+        double par51 = par5;
+        if (par11 == 0 && par31 == 0 && par51 == 0 &&
                 this.ridingEntity == null && this.riddenByEntity == null)
             return;
-        if (!CauldronHooks.checkEntitySpeed(this, par1, par3, par5)) return; // Check for entities violating the speed limit
+        if (!CauldronHooks.checkEntitySpeed(this, par11, par31, par51)) return; // Check for entities violating the speed limit
 
         // CraftBukkit end
         SpigotTimings.entityMoveTimer.startTiming(); // Spigot
 
         if (this.noClip) {
-            this.boundingBox.offset(par1, par3, par5);
+            this.boundingBox.offset(par11, par31, par51);
             this.posX = (this.boundingBox.minX + this.boundingBox.maxX) / 2.0D;
             this.posY = this.boundingBox.minY + (double)this.yOffset - (double)this.ySize;
             this.posZ = (this.boundingBox.minZ + this.boundingBox.maxZ) / 2.0D;
@@ -767,219 +772,219 @@ public abstract class Entity
         else {
             this.worldObj.theProfiler.startSection("move");
             this.ySize *= 0.4F;
-            double d3 = this.posX;
-            double d4 = this.posY;
-            double d5 = this.posZ;
+            final double d3 = this.posX;
+            final double d4 = this.posY;
+            final double d5 = this.posZ;
 
             if (this.isInWeb) {
                 this.isInWeb = false;
-                par1 *= 0.25D;
-                par3 *= 0.05000000074505806D;
-                par5 *= 0.25D;
+                par11 *= 0.25D;
+                par31 *= 0.05000000074505806D;
+                par51 *= 0.25D;
                 this.motionX = 0.0D;
                 this.motionY = 0.0D;
                 this.motionZ = 0.0D;
             }
 
-            double d6 = par1;
-            double d7 = par3;
-            double d8 = par5;
-            AxisAlignedBB axisalignedbb = this.boundingBox.copy();
-            boolean flag = this.onGround && this.isSneaking() && this instanceof EntityPlayer;
+            double d6 = par11;
+            final double d7 = par31;
+            double d8 = par51;
+            final AxisAlignedBB axisalignedbb = this.boundingBox.copy();
+            final boolean flag = this.onGround && this.isSneaking() && this instanceof EntityPlayer;
 
             if (flag) {
-                double d9;
+                final double d9;
 
-                for (d9 = 0.05D; par1 != 0.0D && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.getOffsetBoundingBox(par1, -1.0D, 0.0D)).isEmpty(); d6 = par1)
+                for (d9 = 0.05D; par11 != 0.0D && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.getOffsetBoundingBox(par11, -1.0D, 0.0D)).isEmpty(); d6 = par11)
                 {
-                    if (par1 < d9 && par1 >= -d9)
+                    if (par11 < d9 && par11 >= -d9)
                     {
-                        par1 = 0.0D;
+                        par11 = 0.0D;
                     }
-                    else if (par1 > 0.0D)
+                    else if (par11 > 0.0D)
                     {
-                        par1 -= d9;
+                        par11 -= d9;
                     }
                     else
                     {
-                        par1 += d9;
+                        par11 += d9;
                     }
                 }
 
-                for (; par5 != 0.0D && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.getOffsetBoundingBox(0.0D, -1.0D, par5)).isEmpty(); d8 = par5)
+                for (; par51 != 0.0D && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.getOffsetBoundingBox(0.0D, -1.0D, par51)).isEmpty(); d8 = par51)
                 {
-                    if (par5 < d9 && par5 >= -d9)
+                    if (par51 < d9 && par51 >= -d9)
                     {
-                        par5 = 0.0D;
+                        par51 = 0.0D;
                     }
-                    else if (par5 > 0.0D)
+                    else if (par51 > 0.0D)
                     {
-                        par5 -= d9;
+                        par51 -= d9;
                     }
                     else
                     {
-                        par5 += d9;
+                        par51 += d9;
                     }
                 }
 
-                while (par1 != 0.0D && par5 != 0.0D && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.getOffsetBoundingBox(par1, -1.0D, par5)).isEmpty()) {
-                    if (par1 < d9 && par1 >= -d9) {
-                        par1 = 0.0D;
+                while (par11 != 0.0D && par51 != 0.0D && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.getOffsetBoundingBox(par11, -1.0D, par51)).isEmpty()) {
+                    if (par11 < d9 && par11 >= -d9) {
+                        par11 = 0.0D;
                     }
-                    else if (par1 > 0.0D) {
-                        par1 -= d9;
+                    else if (par11 > 0.0D) {
+                        par11 -= d9;
                     }
                     else {
-                        par1 += d9;
+                        par11 += d9;
                     }
 
-                    if (par5 < d9 && par5 >= -d9)
+                    if (par51 < d9 && par51 >= -d9)
                     {
-                        par5 = 0.0D;
+                        par51 = 0.0D;
                     }
-                    else if (par5 > 0.0D)
+                    else if (par51 > 0.0D)
                     {
-                        par5 -= d9;
+                        par51 -= d9;
                     }
                     else
                     {
-                        par5 += d9;
+                        par51 += d9;
                     }
 
-                    d6 = par1;
-                    d8 = par5;
+                    d6 = par11;
+                    d8 = par51;
                 }
             }
 
-            List list = this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.addCoord(par1, par3, par5));
+            List list = this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.addCoord(par11, par31, par51));
 
             try {
                 for (int i = 0; i < list.size(); ++i) {
-                    par3 = ((AxisAlignedBB) list.get(i)).calculateYOffset(this.boundingBox, par3);
+                    par31 = ((AxisAlignedBB) list.get(i)).calculateYOffset(this.boundingBox, par31);
                 }
-            } catch (Throwable throwable) { }
+            } catch (final Throwable throwable) { }
 
-            this.boundingBox.offset(0.0D, par3, 0.0D);
+            this.boundingBox.offset(0.0D, par31, 0.0D);
 
-            if (!this.field_70135_K && d7 != par3) {
-                par5 = 0.0D;
-                par3 = 0.0D;
-                par1 = 0.0D;
+            if (!this.field_70135_K && d7 != par31) {
+                par51 = 0.0D;
+                par31 = 0.0D;
+                par11 = 0.0D;
             }
 
-            boolean flag1 = !(!this.onGround && (d7 == par3 || d7 >= 0.0D));
+            final boolean flag1 = !(!this.onGround && (d7 == par31 || d7 >= 0.0D));
             int j;
 
             try {
                 for (j = 0; j < list.size(); ++j) {
-                    par1 = ((AxisAlignedBB)list.get(j)).calculateXOffset(this.boundingBox, par1);
+                    par11 = ((AxisAlignedBB)list.get(j)).calculateXOffset(this.boundingBox, par11);
                 }
 
-            this.boundingBox.offset(par1, 0.0D, 0.0D);
+            this.boundingBox.offset(par11, 0.0D, 0.0D);
 
-                if (!this.field_70135_K && d6 != par1) {
-                    par5 = 0.0D;
-                    par3 = 0.0D;
-                    par1 = 0.0D;
+                if (!this.field_70135_K && d6 != par11) {
+                    par51 = 0.0D;
+                    par31 = 0.0D;
+                    par11 = 0.0D;
                 }
 
                 for (j = 0; j < list.size(); ++j) {
-                    par5 = ((AxisAlignedBB) list.get(j)).calculateZOffset(this.boundingBox, par5);
+                    par51 = ((AxisAlignedBB) list.get(j)).calculateZOffset(this.boundingBox, par51);
                 }
 
 
-                this.boundingBox.offset(0.0D, 0.0D, par5);
+                this.boundingBox.offset(0.0D, 0.0D, par51);
 
-                if (!this.field_70135_K && d8 != par5) {
-                    par5 = 0.0D;
-                    par3 = 0.0D;
-                    par1 = 0.0D;
+                if (!this.field_70135_K && d8 != par51) {
+                    par51 = 0.0D;
+                    par31 = 0.0D;
+                    par11 = 0.0D;
                 }
 
-            } catch (Throwable t) { }
+            } catch (final Throwable t) { }
 
             double d10;
             double d11;
             int k;
             double d12;
 
-            if (this.stepHeight > 0.0F && flag1 && (flag || this.ySize < 0.05F) && (d6 != par1 || d8 != par5)) {
-                d12 = par1;
-                d10 = par3;
-                d11 = par5;
-                par1 = d6;
-                par3 = this.stepHeight;
-                par5 = d8;
-                AxisAlignedBB axisalignedbb1 = this.boundingBox.copy();
+            if (this.stepHeight > 0.0F && flag1 && (flag || this.ySize < 0.05F) && (d6 != par11 || d8 != par51)) {
+                d12 = par11;
+                d10 = par31;
+                d11 = par51;
+                par11 = d6;
+                par31 = this.stepHeight;
+                par51 = d8;
+                final AxisAlignedBB axisalignedbb1 = this.boundingBox.copy();
                 this.boundingBox.setBB(axisalignedbb);
-                list = this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.addCoord(d6, par3, d8));
+                list = this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.addCoord(d6, par31, d8));
 
                 try {
                     for (k = 0; k < list.size(); ++k) {
-                        par3 = ((AxisAlignedBB)list.get(k)).calculateYOffset(this.boundingBox, par3);
+                        par31 = ((AxisAlignedBB)list.get(k)).calculateYOffset(this.boundingBox, par31);
                     }
-                } catch (Throwable t) {}
+                } catch (final Throwable t) {}
 
-                this.boundingBox.offset(0.0D, par3, 0.0D);
+                this.boundingBox.offset(0.0D, par31, 0.0D);
 
-                if (!this.field_70135_K && d7 != par3) {
-                    par5 = 0.0D;
-                    par3 = 0.0D;
-                    par1 = 0.0D;
+                if (!this.field_70135_K && d7 != par31) {
+                    par51 = 0.0D;
+                    par31 = 0.0D;
+                    par11 = 0.0D;
                 }
 
                 try {
                     for (k = 0; k < list.size(); ++k) {
-                        par1 = ((AxisAlignedBB)list.get(k)).calculateXOffset(this.boundingBox, par1);
+                        par11 = ((AxisAlignedBB)list.get(k)).calculateXOffset(this.boundingBox, par11);
                     }
-                } catch (Throwable t) {}
+                } catch (final Throwable t) {}
 
-                this.boundingBox.offset(par1, 0.0D, 0.0D);
+                this.boundingBox.offset(par11, 0.0D, 0.0D);
 
-                if (!this.field_70135_K && d6 != par1)
+                if (!this.field_70135_K && d6 != par11)
                 {
-                    par5 = 0.0D;
-                    par3 = 0.0D;
-                    par1 = 0.0D;
+                    par51 = 0.0D;
+                    par31 = 0.0D;
+                    par11 = 0.0D;
                 }
 
                 try {
                     for (k = 0; k < list.size(); ++k) {
-                        par5 = ((AxisAlignedBB)list.get(k)).calculateZOffset(this.boundingBox, par5);
+                        par51 = ((AxisAlignedBB)list.get(k)).calculateZOffset(this.boundingBox, par51);
                     }
 
-                    this.boundingBox.offset(0.0D, 0.0D, par5);
-                } catch (Throwable t) {}
+                    this.boundingBox.offset(0.0D, 0.0D, par51);
+                } catch (final Throwable t) {}
 
-                if (!this.field_70135_K && d8 != par5) {
-                    par5 = 0.0D;
-                    par3 = 0.0D;
-                    par1 = 0.0D;
+                if (!this.field_70135_K && d8 != par51) {
+                    par51 = 0.0D;
+                    par31 = 0.0D;
+                    par11 = 0.0D;
                 }
 
-                if (!this.field_70135_K && d7 != par3)
+                if (!this.field_70135_K && d7 != par31)
                 {
-                    par5 = 0.0D;
-                    par3 = 0.0D;
-                    par1 = 0.0D;
+                    par51 = 0.0D;
+                    par31 = 0.0D;
+                    par11 = 0.0D;
                 }
                 else
                 {
-                    par3 = (double)(-this.stepHeight);
+                    par31 = (double)(-this.stepHeight);
 
                     try {
                         for (k = 0; k < list.size(); ++k) {
-                            par3 = ((AxisAlignedBB) list.get(k)).calculateYOffset(this.boundingBox, par3);
+                            par31 = ((AxisAlignedBB) list.get(k)).calculateYOffset(this.boundingBox, par31);
                         }
 
-                        this.boundingBox.offset(0.0D, par3, 0.0D);
-                    } catch (Throwable t) {}
+                        this.boundingBox.offset(0.0D, par31, 0.0D);
+                    } catch (final Throwable t) {}
                 }
 
-                if (d12 * d12 + d11 * d11 >= par1 * par1 + par5 * par5) {
-                    par1 = d12;
-                    par3 = d10;
-                    par5 = d11;
+                if (d12 * d12 + d11 * d11 >= par11 * par11 + par51 * par51) {
+                    par11 = d12;
+                    par31 = d10;
+                    par51 = d11;
                     this.boundingBox.setBB(axisalignedbb1);
                 }
             }
@@ -989,21 +994,21 @@ public abstract class Entity
             this.posX = (this.boundingBox.minX + this.boundingBox.maxX) / 2.0D;
             this.posY = this.boundingBox.minY + (double)this.yOffset - (double)this.ySize;
             this.posZ = (this.boundingBox.minZ + this.boundingBox.maxZ) / 2.0D;
-            this.isCollidedHorizontally = d6 != par1 || d8 != par5;
-            this.isCollidedVertically = d7 != par3;
-            this.onGround = d7 != par3 && d7 < 0.0D;
+            this.isCollidedHorizontally = d6 != par11 || d8 != par51;
+            this.isCollidedVertically = d7 != par31;
+            this.onGround = d7 != par31 && d7 < 0.0D;
             this.isCollided = this.isCollidedHorizontally || this.isCollidedVertically;
-            this.updateFallState(par3, this.onGround);
+            this.updateFallState(par31, this.onGround);
 
-            if (d6 != par1) {
+            if (d6 != par11) {
                 this.motionX = 0.0D;
             }
 
-            if (d7 != par3) {
+            if (d7 != par31) {
                 this.motionY = 0.0D;
             }
 
-            if (d8 != par5) {
+            if (d8 != par51) {
                 this.motionZ = 0.0D;
             }
 
@@ -1014,40 +1019,40 @@ public abstract class Entity
             // CraftBukkit start
             if ((this.isCollidedHorizontally) && (this.getBukkitEntity() instanceof Vehicle) && this.worldObj.getWorld() != null) // Cauldron - fixes MFR NPE with grinder/slaughterhouse
             {
-                Vehicle vehicle = (Vehicle) this.getBukkitEntity();
+                final Vehicle vehicle = (Vehicle) this.getBukkitEntity();
                 org.bukkit.block.Block block = this.worldObj.getWorld().getBlockAt(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY - (double) this.yOffset), MathHelper.floor_double(this.posZ));
 
-                if (d6 > par1)
+                if (d6 > par11)
                 {
                     block = block.getRelative(BlockFace.EAST);
                 }
-                else if (d6 < par1)
+                else if (d6 < par11)
                 {
                     block = block.getRelative(BlockFace.WEST);
                 }
-                else if (d8 > par5)
+                else if (d8 > par51)
                 {
                     block = block.getRelative(BlockFace.SOUTH);
                 }
-                else if (d8 < par5)
+                else if (d8 < par51)
                 {
                     block = block.getRelative(BlockFace.NORTH);
                 }
 
-                VehicleBlockCollisionEvent event = new VehicleBlockCollisionEvent(vehicle, block);
+                final VehicleBlockCollisionEvent event = new VehicleBlockCollisionEvent(vehicle, block);
                 this.worldObj.getServer().getPluginManager().callEvent(event);
             }
             // CraftBukkit end
             if (this.canTriggerWalking() && !flag && this.ridingEntity == null)
             {
-                int l = MathHelper.floor_double(this.posX);
+                final int l = MathHelper.floor_double(this.posX);
                 k = MathHelper.floor_double(this.posY - 0.20000000298023224D - (double)this.yOffset);
-                int i1 = MathHelper.floor_double(this.posZ);
+                final int i1 = MathHelper.floor_double(this.posZ);
                 int j1 = this.worldObj.getBlockId(l, k, i1);
 
                 if (j1 == 0)
                 {
-                    int k1 = this.worldObj.blockGetRenderType(l, k - 1, i1);
+                    final int k1 = this.worldObj.blockGetRenderType(l, k - 1, i1);
 
                     if (k1 == 11 || k1 == 32 || k1 == 21)
                     {
@@ -1088,15 +1093,15 @@ public abstract class Entity
             {
                 this.doBlockCollisions();
             }
-            catch (Throwable throwable)
+            catch (final Throwable throwable)
             {
-                CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Checking entity tile collision");
-                CrashReportCategory crashreportcategory = crashreport.makeCategory("Entity being checked for collision");
+                final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Checking entity tile collision");
+                final CrashReportCategory crashreportcategory = crashreport.makeCategory("Entity being checked for collision");
                 this.addEntityCrashInfo(crashreportcategory);
                 throw new ReportedException(crashreport);
             }
 
-            boolean flag2 = this.isWet();
+            final boolean flag2 = this.isWet();
 
             if (this.worldObj.isBoundingBoxBurning(this.boundingBox.contract(0.001D, 0.001D, 0.001D)))
             {
@@ -1109,7 +1114,7 @@ public abstract class Entity
                     // CraftBukkit start - Not on fire yet
                     if (this.fire <= 0)   // Only throw events on the first combust, otherwise it spams
                     {
-                        EntityCombustEvent event = new EntityCombustEvent(this.getBukkitEntity(), 8);
+                        final EntityCombustEvent event = new EntityCombustEvent(this.getBukkitEntity(), 8);
                         this.worldObj.getServer().getPluginManager().callEvent(event);
 
                         if (!event.isCancelled())
@@ -1146,12 +1151,12 @@ public abstract class Entity
      */
     protected void doBlockCollisions()
     {
-        int i = MathHelper.floor_double(this.boundingBox.minX + 0.001D);
-        int j = MathHelper.floor_double(this.boundingBox.minY + 0.001D);
-        int k = MathHelper.floor_double(this.boundingBox.minZ + 0.001D);
-        int l = MathHelper.floor_double(this.boundingBox.maxX - 0.001D);
-        int i1 = MathHelper.floor_double(this.boundingBox.maxY - 0.001D);
-        int j1 = MathHelper.floor_double(this.boundingBox.maxZ - 0.001D);
+        final int i = MathHelper.floor_double(this.boundingBox.minX + 0.001D);
+        final int j = MathHelper.floor_double(this.boundingBox.minY + 0.001D);
+        final int k = MathHelper.floor_double(this.boundingBox.minZ + 0.001D);
+        final int l = MathHelper.floor_double(this.boundingBox.maxX - 0.001D);
+        final int i1 = MathHelper.floor_double(this.boundingBox.maxY - 0.001D);
+        final int j1 = MathHelper.floor_double(this.boundingBox.maxZ - 0.001D);
 
         if (this.worldObj.checkChunksExist(i, j, k, l, i1, j1))
         {
@@ -1161,7 +1166,7 @@ public abstract class Entity
                 {
                     for (int i2 = k; i2 <= j1; ++i2)
                     {
-                        int j2 = this.worldObj.getBlockId(k1, l1, i2);
+                        final int j2 = this.worldObj.getBlockId(k1, l1, i2);
 
                         if (j2 > 0)
                         {
@@ -1169,10 +1174,10 @@ public abstract class Entity
                             {
                                 Block.blocksList[j2].onEntityCollidedWithBlock(this.worldObj, k1, l1, i2, this);
                             }
-                            catch (Throwable throwable)
+                            catch (final Throwable throwable)
                             {
-                                CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Colliding entity with tile");
-                                CrashReportCategory crashreportcategory = crashreport.makeCategory("Tile being collided with");
+                                final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Colliding entity with tile");
+                                final CrashReportCategory crashreportcategory = crashreport.makeCategory("Tile being collided with");
                                 CrashReportCategory.addBlockCrashInfo(crashreportcategory, k1, l1, i2, j2, this.worldObj.getBlockMetadata(k1, l1, i2));
                                 throw new ReportedException(crashreport);
                             }
@@ -1186,7 +1191,7 @@ public abstract class Entity
     /**
      * Plays step sound at given x, y, z for the entity
      */
-    protected void playStepSound(int par1, int par2, int par3, int par4)
+    protected void playStepSound(final int par1, final int par2, final int par3, final int par4)
     {
         StepSound stepsound = Block.blocksList[par4].stepSound;
 
@@ -1201,7 +1206,7 @@ public abstract class Entity
         }
     }
 
-    public void playSound(String par1Str, float par2, float par3)
+    public void playSound(final String par1Str, final float par2, final float par3)
     {
         this.worldObj.playSoundAtEntity(this, par1Str, par2, par3);
     }
@@ -1219,7 +1224,7 @@ public abstract class Entity
      * Takes in the distance the entity has fallen this tick and whether its on the ground to update the fall distance
      * and deal fall damage if landing on the ground.  Args: distanceFallenThisTick, onGround
      */
-    protected void updateFallState(double par1, boolean par3)
+    protected void updateFallState(final double par1, final boolean par3)
     {
         if (par3)
         {
@@ -1248,13 +1253,13 @@ public abstract class Entity
      * Will deal the specified amount of damage to the entity if the entity isn't immune to fire damage. Args:
      * amountDamage
      */
-    protected void dealFireDamage(int par1)
+    protected void dealFireDamage(final int par1)
     {
         this.burn((float)par1);
     }
     // Cauldron end
 
-    protected void burn(float i)   // CraftBukkit - int -> float
+    protected void burn(final float i)   // CraftBukkit - int -> float
     {
         if (!this.isImmuneToFire)
         {
@@ -1270,7 +1275,7 @@ public abstract class Entity
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float par1)
+    protected void fall(final float par1)
     {
         if (this.riddenByEntity != null)
         {
@@ -1312,7 +1317,7 @@ public abstract class Entity
                 }
 
                 this.playSound("liquid.splash", f, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
-                float f1 = (float)MathHelper.floor_double(this.boundingBox.minY);
+                final float f1 = (float)MathHelper.floor_double(this.boundingBox.minY);
                 int i;
                 float f2;
                 float f3;
@@ -1347,15 +1352,15 @@ public abstract class Entity
     /**
      * Checks if the current block the entity is within of the specified material type
      */
-    public boolean isInsideOfMaterial(Material par1Material)
+    public boolean isInsideOfMaterial(final Material par1Material)
     {
-        double d0 = this.posY + (double)this.getEyeHeight();
-        int i = MathHelper.floor_double(this.posX);
-        int j = MathHelper.floor_float((float)MathHelper.floor_double(d0));
-        int k = MathHelper.floor_double(this.posZ);
-        int l = this.worldObj.getBlockId(i, j, k);
+        final double d0 = this.posY + (double)this.getEyeHeight();
+        final int i = MathHelper.floor_double(this.posX);
+        final int j = MathHelper.floor_float((float)MathHelper.floor_double(d0));
+        final int k = MathHelper.floor_double(this.posZ);
+        final int l = this.worldObj.getBlockId(i, j, k);
 
-        Block block = Block.blocksList[l];
+        final Block block = Block.blocksList[l];
         if (block != null && block.blockMaterial == par1Material)
         {
             double filled = block.getFilledPercentage(worldObj, i, j, k);
@@ -1392,9 +1397,11 @@ public abstract class Entity
     /**
      * Used in both water and by flying objects
      */
-    public void moveFlying(float par1, float par2, float par3)
+    public void moveFlying(float par1, float par2, final float par3)
     {
-        float f3 = par1 * par1 + par2 * par2;
+        float par11 = par1;
+        float par21 = par2;
+        float f3 = par11 * par11 + par21 * par21;
 
         if (f3 >= 1.0E-4F)
         {
@@ -1406,25 +1413,25 @@ public abstract class Entity
             }
 
             f3 = par3 / f3;
-            par1 *= f3;
-            par2 *= f3;
-            float f4 = MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F);
-            float f5 = MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F);
-            this.motionX += (double)(par1 * f5 - par2 * f4);
-            this.motionZ += (double)(par2 * f5 + par1 * f4);
+            par11 *= f3;
+            par21 *= f3;
+            final float f4 = MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F);
+            final float f5 = MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F);
+            this.motionX += (double)(par11 * f5 - par21 * f4);
+            this.motionZ += (double)(par21 * f5 + par11 * f4);
         }
     }
 
     @SideOnly(Side.CLIENT)
-    public int getBrightnessForRender(float par1)
+    public int getBrightnessForRender(final float par1)
     {
-        int i = MathHelper.floor_double(this.posX);
-        int j = MathHelper.floor_double(this.posZ);
+        final int i = MathHelper.floor_double(this.posX);
+        final int j = MathHelper.floor_double(this.posZ);
 
         if (this.worldObj.blockExists(i, 0, j))
         {
-            double d0 = (this.boundingBox.maxY - this.boundingBox.minY) * 0.66D;
-            int k = MathHelper.floor_double(this.posY - (double)this.yOffset + d0);
+            final double d0 = (this.boundingBox.maxY - this.boundingBox.minY) * 0.66D;
+            final int k = MathHelper.floor_double(this.posY - (double)this.yOffset + d0);
             return this.worldObj.getLightBrightnessForSkyBlocks(i, k, j, 0);
         }
         else
@@ -1436,15 +1443,15 @@ public abstract class Entity
     /**
      * Gets how bright this entity is.
      */
-    public float getBrightness(float par1)
+    public float getBrightness(final float par1)
     {
-        int i = MathHelper.floor_double(this.posX);
-        int j = MathHelper.floor_double(this.posZ);
+        final int i = MathHelper.floor_double(this.posX);
+        final int j = MathHelper.floor_double(this.posZ);
 
         if (this.worldObj.blockExists(i, 0, j))
         {
-            double d0 = (this.boundingBox.maxY - this.boundingBox.minY) * 0.66D;
-            int k = MathHelper.floor_double(this.posY - (double)this.yOffset + d0);
+            final double d0 = (this.boundingBox.maxY - this.boundingBox.minY) * 0.66D;
+            final int k = MathHelper.floor_double(this.posY - (double)this.yOffset + d0);
             return this.worldObj.getLightBrightness(i, k, j);
         }
         else
@@ -1456,7 +1463,7 @@ public abstract class Entity
     /**
      * Sets the reference to the World object.
      */
-    public void setWorld(World par1World)
+    public void setWorld(final World par1World)
     {
         this.worldObj = par1World;
     }
@@ -1464,7 +1471,7 @@ public abstract class Entity
     /**
      * Sets the entity's position and rotation. Args: posX, posY, posZ, yaw, pitch
      */
-    public void setPositionAndRotation(double par1, double par3, double par5, float par7, float par8)
+    public void setPositionAndRotation(final double par1, final double par3, final double par5, final float par7, final float par8)
     {
         this.prevPosX = this.posX = par1;
         this.prevPosY = this.posY = par3;
@@ -1472,7 +1479,7 @@ public abstract class Entity
         this.prevRotationYaw = this.rotationYaw = par7;
         this.prevRotationPitch = this.rotationPitch = par8;
         this.ySize = 0.0F;
-        double d3 = (double)(this.prevRotationYaw - par7);
+        final double d3 = (double)(this.prevRotationYaw - par7);
 
         if (d3 < -180.0D)
         {
@@ -1491,7 +1498,7 @@ public abstract class Entity
     /**
      * Sets the location and Yaw/Pitch of an entity in the world
      */
-    public void setLocationAndAngles(double par1, double par3, double par5, float par7, float par8)
+    public void setLocationAndAngles(final double par1, final double par3, final double par5, final float par7, final float par8)
     {
         this.lastTickPosX = this.prevPosX = this.posX = par1;
         this.lastTickPosY = this.prevPosY = this.posY = par3 + (double)this.yOffset;
@@ -1504,56 +1511,56 @@ public abstract class Entity
     /**
      * Returns the distance to the entity. Args: entity
      */
-    public float getDistanceToEntity(Entity par1Entity)
+    public float getDistanceToEntity(final Entity par1Entity)
     {
-        float f = (float)(this.posX - par1Entity.posX);
-        float f1 = (float)(this.posY - par1Entity.posY);
-        float f2 = (float)(this.posZ - par1Entity.posZ);
+        final float f = (float)(this.posX - par1Entity.posX);
+        final float f1 = (float)(this.posY - par1Entity.posY);
+        final float f2 = (float)(this.posZ - par1Entity.posZ);
         return MathHelper.sqrt_float(f * f + f1 * f1 + f2 * f2);
     }
 
     /**
      * Gets the squared distance to the position. Args: x, y, z
      */
-    public double getDistanceSq(double par1, double par3, double par5)
+    public double getDistanceSq(final double par1, final double par3, final double par5)
     {
-        double d3 = this.posX - par1;
-        double d4 = this.posY - par3;
-        double d5 = this.posZ - par5;
+        final double d3 = this.posX - par1;
+        final double d4 = this.posY - par3;
+        final double d5 = this.posZ - par5;
         return d3 * d3 + d4 * d4 + d5 * d5;
     }
 
     /**
      * Gets the distance to the position. Args: x, y, z
      */
-    public double getDistance(double par1, double par3, double par5)
+    public double getDistance(final double par1, final double par3, final double par5)
     {
-        double d3 = this.posX - par1;
-        double d4 = this.posY - par3;
-        double d5 = this.posZ - par5;
+        final double d3 = this.posX - par1;
+        final double d4 = this.posY - par3;
+        final double d5 = this.posZ - par5;
         return (double)MathHelper.sqrt_double(d3 * d3 + d4 * d4 + d5 * d5);
     }
 
     /**
      * Returns the squared distance to the entity. Args: entity
      */
-    public double getDistanceSqToEntity(Entity par1Entity)
+    public double getDistanceSqToEntity(final Entity par1Entity)
     {
-        double d0 = this.posX - par1Entity.posX;
-        double d1 = this.posY - par1Entity.posY;
-        double d2 = this.posZ - par1Entity.posZ;
+        final double d0 = this.posX - par1Entity.posX;
+        final double d1 = this.posY - par1Entity.posY;
+        final double d2 = this.posZ - par1Entity.posZ;
         return d0 * d0 + d1 * d1 + d2 * d2;
     }
 
     /**
      * Called by a player entity when they collide with an entity
      */
-    public void onCollideWithPlayer(EntityPlayer par1EntityPlayer) {}
+    public void onCollideWithPlayer(final EntityPlayer par1EntityPlayer) {}
 
     /**
      * Applies a velocity to each of the entities pushing them away from each other. Args: entity
      */
-    public void applyEntityCollision(Entity par1Entity)
+    public void applyEntityCollision(final Entity par1Entity)
     {
         if (par1Entity.riddenByEntity != this && par1Entity.ridingEntity != this)
         {
@@ -1588,7 +1595,7 @@ public abstract class Entity
     /**
      * Adds to the current velocity of the entity. Args: x, y, z
      */
-    public void addVelocity(double par1, double par3, double par5)
+    public void addVelocity(final double par1, final double par3, final double par5)
     {
         this.motionX += par1;
         this.motionY += par3;
@@ -1607,7 +1614,7 @@ public abstract class Entity
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2)
     {
         if (this.isEntityInvulnerable())
         {
@@ -1640,19 +1647,19 @@ public abstract class Entity
      * Adds a value to the player score. Currently not actually used and the entity passed in does nothing. Args:
      * entity, scoreToAdd
      */
-    public void addToPlayerScore(Entity par1Entity, int par2) {}
+    public void addToPlayerScore(final Entity par1Entity, final int par2) {}
 
     @SideOnly(Side.CLIENT)
 
     /**
      * Checks using a Vec3d to determine if this entity is within range of that vector to be rendered. Args: vec3D
      */
-    public boolean isInRangeToRenderVec3D(Vec3 par1Vec3)
+    public boolean isInRangeToRenderVec3D(final Vec3 par1Vec3)
     {
-        double d0 = this.posX - par1Vec3.xCoord;
-        double d1 = this.posY - par1Vec3.yCoord;
-        double d2 = this.posZ - par1Vec3.zCoord;
-        double d3 = d0 * d0 + d1 * d1 + d2 * d2;
+        final double d0 = this.posX - par1Vec3.xCoord;
+        final double d1 = this.posY - par1Vec3.yCoord;
+        final double d2 = this.posZ - par1Vec3.zCoord;
+        final double d3 = d0 * d0 + d1 * d1 + d2 * d2;
         return this.isInRangeToRenderDist(d3);
     }
 
@@ -1662,7 +1669,7 @@ public abstract class Entity
      * Checks if the entity is in range to render by using the past in distance and comparing it to its average edge
      * length * 64 * renderDistanceWeight Args: distance
      */
-    public boolean isInRangeToRenderDist(double par1)
+    public boolean isInRangeToRenderDist(final double par1)
     {
         double d1 = this.boundingBox.getAverageEdgeLength();
         d1 *= 64.0D * this.renderDistanceWeight;
@@ -1673,9 +1680,9 @@ public abstract class Entity
      * Like writeToNBTOptional but does not check if the entity is ridden. Used for saving ridden entities with their
      * riders.
      */
-    public boolean writeMountToNBT(NBTTagCompound par1NBTTagCompound)
+    public boolean writeMountToNBT(final NBTTagCompound par1NBTTagCompound)
     {
-        String s = this.getEntityString();
+        final String s = this.getEntityString();
 
         if (!this.isDead && s != null)
         {
@@ -1694,9 +1701,9 @@ public abstract class Entity
      * returns false the entity is not saved on disk. Ridden entities return false here as they are saved with their
      * rider.
      */
-    public boolean writeToNBTOptional(NBTTagCompound par1NBTTagCompound)
+    public boolean writeToNBTOptional(final NBTTagCompound par1NBTTagCompound)
     {
-        String s = this.getEntityString();
+        final String s = this.getEntityString();
 
         if (!this.isDead && s != null && this.riddenByEntity == null)
         {
@@ -1713,7 +1720,7 @@ public abstract class Entity
     /**
      * Save the entity to NBT (calls an abstract helper method to write extra data)
      */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         try
         {
@@ -1753,11 +1760,11 @@ public abstract class Entity
                 par1NBTTagCompound.setCompoundTag("ForgeData", customEntityData);
             }
 
-            for (String identifier : this.extendedProperties.keySet()){
+            for (final String identifier : this.extendedProperties.keySet()){
                 try{
-                    IExtendedEntityProperties props = this.extendedProperties.get(identifier);
+                    final IExtendedEntityProperties props = this.extendedProperties.get(identifier);
                     props.saveNBTData(par1NBTTagCompound);
-                }catch (Throwable t){
+                }catch (final Throwable t){
                     FMLLog.severe("Failed to save extended properties for %s.  This is a mod issue.", identifier);
                     t.printStackTrace();
                 }
@@ -1767,7 +1774,7 @@ public abstract class Entity
 
             if (this.ridingEntity != null)
             {
-                NBTTagCompound nbttagcompound1 = new NBTTagCompound("Riding");
+                final NBTTagCompound nbttagcompound1 = new NBTTagCompound("Riding");
 
                 if (this.ridingEntity.writeMountToNBT(nbttagcompound1))
                 {
@@ -1775,10 +1782,10 @@ public abstract class Entity
                 }
             }
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
-            CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Saving entity NBT");
-            CrashReportCategory crashreportcategory = crashreport.makeCategory("Entity being saved");
+            final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Saving entity NBT");
+            final CrashReportCategory crashreportcategory = crashreport.makeCategory("Entity being saved");
             this.addEntityCrashInfo(crashreportcategory);
             throw new ReportedException(crashreport);
         }
@@ -1787,13 +1794,13 @@ public abstract class Entity
     /**
      * Reads the entity from NBT (calls an abstract helper method to read specialized data)
      */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         try
         {
-            NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Pos");
-            NBTTagList nbttaglist1 = par1NBTTagCompound.getTagList("Motion");
-            NBTTagList nbttaglist2 = par1NBTTagCompound.getTagList("Rotation");
+            final NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Pos");
+            final NBTTagList nbttaglist1 = par1NBTTagCompound.getTagList("Motion");
+            final NBTTagList nbttaglist2 = par1NBTTagCompound.getTagList("Rotation");
             this.motionX = ((NBTTagDouble)nbttaglist1.tagAt(0)).data;
             this.motionY = ((NBTTagDouble)nbttaglist1.tagAt(1)).data;
             this.motionZ = ((NBTTagDouble)nbttaglist1.tagAt(2)).data;
@@ -1838,11 +1845,11 @@ public abstract class Entity
                 customEntityData = par1NBTTagCompound.getCompoundTag("ForgeData");
             }
 
-            for (String identifier : this.extendedProperties.keySet()){
+            for (final String identifier : this.extendedProperties.keySet()){
                 try{
-                    IExtendedEntityProperties props = this.extendedProperties.get(identifier);
+                    final IExtendedEntityProperties props = this.extendedProperties.get(identifier);
                     props.loadNBTData(par1NBTTagCompound);
-                }catch (Throwable t){
+                }catch (final Throwable t){
                     FMLLog.severe("Failed to load extended properties for %s.  This is a mod issue.", identifier);
                     t.printStackTrace();
                 }
@@ -1858,12 +1865,12 @@ public abstract class Entity
             // CraftBukkit start
             if (this instanceof EntityLivingBase)
             {
-                EntityLivingBase entity = (EntityLivingBase) this;
+                final EntityLivingBase entity = (EntityLivingBase) this;
 
                 // Reset the persistence for tamed animals
                 if (entity instanceof EntityTameable && !isLevelAtLeast(par1NBTTagCompound, 2) && !par1NBTTagCompound.getBoolean("PersistenceRequired"))
                 {
-                    EntityLiving entityliving = (EntityLiving) entity;
+                    final EntityLiving entityliving = (EntityLiving) entity;
                     entityliving.persistenceRequired = !entityliving.canDespawn();
                 }
             }
@@ -1894,14 +1901,14 @@ public abstract class Entity
             // CraftBukkit start - Reset world
             if (this instanceof EntityPlayerMP)
             {
-                Server server = Bukkit.getServer();
+                final Server server = Bukkit.getServer();
                 org.bukkit.World bworld = null;
                 // TODO: Remove World related checks, replaced with WorldUID.
-                String worldName = par1NBTTagCompound.getString("World");
+                final String worldName = par1NBTTagCompound.getString("World");
 
                 if (par1NBTTagCompound.hasKey("WorldUUIDMost") && par1NBTTagCompound.hasKey("WorldUUIDLeast"))
                 {
-                    UUID uid = new UUID(par1NBTTagCompound.getLong("WorldUUIDMost"), par1NBTTagCompound.getLong("WorldUUIDLeast"));
+                    final UUID uid = new UUID(par1NBTTagCompound.getLong("WorldUUIDMost"), par1NBTTagCompound.getLong("WorldUUIDLeast"));
                     bworld = server.getWorld(uid);
                 }
                 else
@@ -1911,7 +1918,7 @@ public abstract class Entity
 
                 if (bworld == null)
                 {
-                    EntityPlayerMP entityPlayer = (EntityPlayerMP) this;
+                    final EntityPlayerMP entityPlayer = (EntityPlayerMP) this;
                     // Cauldron start - use CraftBukkit's fallback world code if no valid world is found.
                     entityPlayer.setWorld(MinecraftServer.getServer().worldServerForDimension(entityPlayer.dimension));
                 }
@@ -1924,10 +1931,10 @@ public abstract class Entity
 
             // CraftBukkit end
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
-            CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Loading entity NBT");
-            CrashReportCategory crashreportcategory = crashreport.makeCategory("Entity being loaded");
+            final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Loading entity NBT");
+            final CrashReportCategory crashreportcategory = crashreport.makeCategory("Entity being loaded");
             this.addEntityCrashInfo(crashreportcategory);
             throw new ReportedException(crashreport);
         }
@@ -1961,15 +1968,15 @@ public abstract class Entity
     /**
      * creates a NBT list from the array of doubles passed to this function
      */
-    protected NBTTagList newDoubleNBTList(double ... par1ArrayOfDouble)
+    protected NBTTagList newDoubleNBTList(final double ... par1ArrayOfDouble)
     {
-        NBTTagList nbttaglist = new NBTTagList();
-        double[] adouble = par1ArrayOfDouble;
-        int i = par1ArrayOfDouble.length;
+        final NBTTagList nbttaglist = new NBTTagList();
+        final double[] adouble = par1ArrayOfDouble;
+        final int i = par1ArrayOfDouble.length;
 
         for (int j = 0; j < i; ++j)
         {
-            double d1 = adouble[j];
+            final double d1 = adouble[j];
             nbttaglist.appendTag(new NBTTagDouble((String)null, d1));
         }
 
@@ -1979,15 +1986,15 @@ public abstract class Entity
     /**
      * Returns a new NBTTagList filled with the specified floats
      */
-    protected NBTTagList newFloatNBTList(float ... par1ArrayOfFloat)
+    protected NBTTagList newFloatNBTList(final float ... par1ArrayOfFloat)
     {
-        NBTTagList nbttaglist = new NBTTagList();
-        float[] afloat = par1ArrayOfFloat;
-        int i = par1ArrayOfFloat.length;
+        final NBTTagList nbttaglist = new NBTTagList();
+        final float[] afloat = par1ArrayOfFloat;
+        final int i = par1ArrayOfFloat.length;
 
         for (int j = 0; j < i; ++j)
         {
-            float f1 = afloat[j];
+            final float f1 = afloat[j];
             nbttaglist.appendTag(new NBTTagFloat((String)null, f1));
         }
 
@@ -2003,7 +2010,7 @@ public abstract class Entity
     /**
      * Drops an item stack at the entity's position. Args: itemID, count
      */
-    public EntityItem dropItem(int par1, int par2)
+    public EntityItem dropItem(final int par1, final int par2)
     {
         return this.dropItemWithOffset(par1, par2, 0.0F);
     }
@@ -2011,7 +2018,7 @@ public abstract class Entity
     /**
      * Drops an item stack with a specified y offset. Args: itemID, count, yOffset
      */
-    public EntityItem dropItemWithOffset(int par1, int par2, float par3)
+    public EntityItem dropItemWithOffset(final int par1, final int par2, final float par3)
     {
         return this.entityDropItem(new ItemStack(par1, par2, 0), par3);
     }
@@ -2019,7 +2026,7 @@ public abstract class Entity
     /**
      * Drops an item at the position of the entity.
      */
-    public EntityItem entityDropItem(ItemStack par1ItemStack, float par2)
+    public EntityItem entityDropItem(final ItemStack par1ItemStack, final float par2)
     {
         if (par1ItemStack.stackSize == 0)
         {
@@ -2027,7 +2034,7 @@ public abstract class Entity
         }
         else
         {
-            EntityItem entityitem = new EntityItem(this.worldObj, this.posX, this.posY + (double)par2, this.posZ, par1ItemStack);
+            final EntityItem entityitem = new EntityItem(this.worldObj, this.posX, this.posY + (double)par2, this.posZ, par1ItemStack);
             entityitem.delayBeforeCanPickup = 10;
             if (captureDrops)
             {
@@ -2056,12 +2063,12 @@ public abstract class Entity
     {
         for (int i = 0; i < 8; ++i)
         {
-            float f = ((float)((i >> 0) % 2) - 0.5F) * this.width * 0.8F;
-            float f1 = ((float)((i >> 1) % 2) - 0.5F) * 0.1F;
-            float f2 = ((float)((i >> 2) % 2) - 0.5F) * this.width * 0.8F;
-            int j = MathHelper.floor_double(this.posX + (double)f);
-            int k = MathHelper.floor_double(this.posY + (double)this.getEyeHeight() + (double)f1);
-            int l = MathHelper.floor_double(this.posZ + (double)f2);
+            final float f = ((float)((i >> 0) % 2) - 0.5F) * this.width * 0.8F;
+            final float f1 = ((float)((i >> 1) % 2) - 0.5F) * 0.1F;
+            final float f2 = ((float)((i >> 2) % 2) - 0.5F) * this.width * 0.8F;
+            final int j = MathHelper.floor_double(this.posX + (double)f);
+            final int k = MathHelper.floor_double(this.posY + (double)this.getEyeHeight() + (double)f1);
+            final int l = MathHelper.floor_double(this.posZ + (double)f2);
 
             if (this.worldObj.isBlockNormalCube(j, k, l))
             {
@@ -2075,7 +2082,7 @@ public abstract class Entity
     /**
      * First layer of player interaction
      */
-    public boolean interactFirst(EntityPlayer par1EntityPlayer)
+    public boolean interactFirst(final EntityPlayer par1EntityPlayer)
     {
         return false;
     }
@@ -2084,7 +2091,7 @@ public abstract class Entity
      * Returns a boundingBox used to collide the entity with other entities and blocks. This enables the entity to be
      * pushable on contact, like boats or minecarts.
      */
-    public AxisAlignedBB getCollisionBox(Entity par1Entity)
+    public AxisAlignedBB getCollisionBox(final Entity par1Entity)
     {
         return null;
     }
@@ -2132,7 +2139,7 @@ public abstract class Entity
 
                 double d0 = this.entityRiderYawDelta * 0.5D;
                 double d1 = this.entityRiderPitchDelta * 0.5D;
-                float f = 10.0F;
+                final float f = 10.0F;
 
                 if (d0 > (double)f)
                 {
@@ -2187,7 +2194,7 @@ public abstract class Entity
     /**
      * Called when a player mounts an entity. e.g. mounts a pig, mounts a boat.
      */
-    public void mountEntity(Entity par1Entity)
+    public void mountEntity(final Entity par1Entity)
     {
         // CraftBukkit start
         this.setPassengerOf(par1Entity);
@@ -2205,13 +2212,13 @@ public abstract class Entity
         return this.bukkitEntity;
     }
 
-    public void setPassengerOf(Entity entity)
+    public void setPassengerOf(final Entity entity)
     {
         // mountEntity(null) doesn't really fly for overloaded methods,
         // so this method is needed
-        Entity originalVehicle = this.ridingEntity;
-        Entity originalPassenger = this.ridingEntity == null ? null : this.ridingEntity.riddenByEntity;
-        PluginManager pluginManager = Bukkit.getPluginManager();
+        final Entity originalVehicle = this.ridingEntity;
+        final Entity originalPassenger = this.ridingEntity == null ? null : this.ridingEntity.riddenByEntity;
+        final PluginManager pluginManager = Bukkit.getPluginManager();
         this.getBukkitEntity(); // make sure bukkitEntity is initialised
         // CraftBukkit end
         this.entityRiderPitchDelta = 0.0D;
@@ -2224,7 +2231,7 @@ public abstract class Entity
                 // CraftBukkit start
                 if ((this.bukkitEntity instanceof LivingEntity) && (this.ridingEntity.getBukkitEntity() instanceof Vehicle))
                 {
-                    VehicleExitEvent event = new VehicleExitEvent((Vehicle) this.ridingEntity.getBukkitEntity(), (LivingEntity) this.bukkitEntity);
+                    final VehicleExitEvent event = new VehicleExitEvent((Vehicle) this.ridingEntity.getBukkitEntity(), (LivingEntity) this.bukkitEntity);
                     pluginManager.callEvent(event);
 
                     if (event.isCancelled() || this.ridingEntity != originalVehicle)
@@ -2259,7 +2266,7 @@ public abstract class Entity
                     }
                 }
 
-                VehicleEnterEvent event = new VehicleEnterEvent((Vehicle) entity.getBukkitEntity(), this.bukkitEntity);
+                final VehicleEnterEvent event = new VehicleEnterEvent((Vehicle) entity.getBukkitEntity(), this.bukkitEntity);
                 pluginManager.callEvent(event);
 
                 // If a plugin messes with the vehicle or the vehicle's passenger
@@ -2280,7 +2287,7 @@ public abstract class Entity
             // Spigot Start
             if ( entity.worldObj.chunkExists( (int) entity.posX >> 4, (int) entity.posZ >> 4 ) )
             {
-                org.spigotmc.event.entity.EntityMountEvent event = new org.spigotmc.event.entity.EntityMountEvent( this.getBukkitEntity(), entity.getBukkitEntity() );
+                final org.spigotmc.event.entity.EntityMountEvent event = new org.spigotmc.event.entity.EntityMountEvent( this.getBukkitEntity(), entity.getBukkitEntity() );
                 pluginManager.callEvent( event );
                 if ( event.isCancelled() )
                 {
@@ -2304,11 +2311,12 @@ public abstract class Entity
      * Sets the position and rotation. Only difference from the other one is no bounding on the rotation. Args: posX,
      * posY, posZ, yaw, pitch
      */
-    public void setPositionAndRotation2(double par1, double par3, double par5, float par7, float par8, int par9)
+    public void setPositionAndRotation2(final double par1, double par3, final double par5, final float par7, final float par8, final int par9)
     {
-        this.setPosition(par1, par3, par5);
+        double par31 = par3;
+        this.setPosition(par1, par31, par5);
         this.setRotation(par7, par8);
-        List list = this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.contract(0.03125D, 0.0D, 0.03125D));
+        final List list = this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.contract(0.03125D, 0.0D, 0.03125D));
 
         if (!list.isEmpty())
         {
@@ -2316,7 +2324,7 @@ public abstract class Entity
 
             for (int j = 0; j < list.size(); ++j)
             {
-                AxisAlignedBB axisalignedbb = (AxisAlignedBB)list.get(j);
+                final AxisAlignedBB axisalignedbb = (AxisAlignedBB)list.get(j);
 
                 if (axisalignedbb.maxY > d3)
                 {
@@ -2324,8 +2332,8 @@ public abstract class Entity
                 }
             }
 
-            par3 += d3 - this.boundingBox.minY;
-            this.setPosition(par1, par3, par5);
+            par31 += d3 - this.boundingBox.minY;
+            this.setPosition(par1, par31, par5);
         }
     }
 
@@ -2353,8 +2361,8 @@ public abstract class Entity
         }
         else
         {
-            double d0 = this.prevPosX - this.posX;
-            double d1 = this.prevPosZ - this.posZ;
+            final double d0 = this.prevPosX - this.posX;
+            final double d1 = this.prevPosZ - this.posZ;
 
             if (!this.worldObj.isRemote && !this.inPortal)
             {
@@ -2378,7 +2386,7 @@ public abstract class Entity
     /**
      * Sets the velocity to the args. Args: x, y, z
      */
-    public void setVelocity(double par1, double par3, double par5)
+    public void setVelocity(final double par1, final double par3, final double par5)
     {
         this.motionX = par1;
         this.motionY = par3;
@@ -2386,7 +2394,7 @@ public abstract class Entity
     }
 
     @SideOnly(Side.CLIENT)
-    public void handleHealthUpdate(byte par1) {}
+    public void handleHealthUpdate(final byte par1) {}
 
     @SideOnly(Side.CLIENT)
 
@@ -2403,7 +2411,7 @@ public abstract class Entity
     /**
      * Sets the held item, or an armor slot. Slot 0 is held item. Slot 1-4 is armor. Params: Item, slot
      */
-    public void setCurrentItemOrArmor(int par1, ItemStack par2ItemStack) {}
+    public void setCurrentItemOrArmor(final int par1, final ItemStack par2ItemStack) {}
 
     /**
      * Returns true if the entity is on fire. Used by render to add the fire effect on rendering.
@@ -2433,7 +2441,7 @@ public abstract class Entity
     /**
      * Sets the sneaking flag.
      */
-    public void setSneaking(boolean par1)
+    public void setSneaking(final boolean par1)
     {
         this.setFlag(1, par1);
     }
@@ -2449,7 +2457,7 @@ public abstract class Entity
     /**
      * Set sprinting switch for Entity.
      */
-    public void setSprinting(boolean par1)
+    public void setSprinting(final boolean par1)
     {
         this.setFlag(3, par1);
     }
@@ -2466,12 +2474,12 @@ public abstract class Entity
      * player, if the entity is normally invisible.\nFor EntityLivingBase subclasses, returning false when invisible
      * will render the entity semitransparent.
      */
-    public boolean isInvisibleToPlayer(EntityPlayer par1EntityPlayer)
+    public boolean isInvisibleToPlayer(final EntityPlayer par1EntityPlayer)
     {
         return this.isInvisible();
     }
 
-    public void setInvisible(boolean par1)
+    public void setInvisible(final boolean par1)
     {
         this.setFlag(5, par1);
     }
@@ -2482,7 +2490,7 @@ public abstract class Entity
         return this.getFlag(4);
     }
 
-    public void setEating(boolean par1)
+    public void setEating(final boolean par1)
     {
         this.setFlag(4, par1);
     }
@@ -2491,7 +2499,7 @@ public abstract class Entity
      * Returns true if the flag is active for the entity. Known flags: 0) is burning; 1) is sneaking; 2) is riding
      * something; 3) is sprinting; 4) is eating
      */
-    protected boolean getFlag(int par1)
+    protected boolean getFlag(final int par1)
     {
         return (this.dataWatcher.getWatchableObjectByte(0) & 1 << par1) != 0;
     }
@@ -2499,9 +2507,9 @@ public abstract class Entity
     /**
      * Enable or disable a entity flag, see getEntityFlag to read the know flags.
      */
-    protected void setFlag(int par1, boolean par2)
+    protected void setFlag(final int par1, final boolean par2)
     {
-        byte b0 = this.dataWatcher.getWatchableObjectByte(0);
+        final byte b0 = this.dataWatcher.getWatchableObjectByte(0);
 
         if (par2)
         {
@@ -2518,7 +2526,7 @@ public abstract class Entity
         return this.dataWatcher.getWatchableObjectShort(1);
     }
 
-    public void setAir(int par1)
+    public void setAir(final int par1)
     {
         this.dataWatcher.updateObject(1, Short.valueOf((short)par1));
     }
@@ -2526,7 +2534,7 @@ public abstract class Entity
     /**
      * Called when a lightning bolt hits the entity.
      */
-    public void onStruckByLightning(EntityLightningBolt par1EntityLightningBolt)
+    public void onStruckByLightning(final EntityLightningBolt par1EntityLightningBolt)
     {
         // CraftBukkit start
         final org.bukkit.entity.Entity thisBukkitEntity = this.getBukkitEntity();
@@ -2538,7 +2546,7 @@ public abstract class Entity
 
         if (thisBukkitEntity instanceof Painting)
         {
-            PaintingBreakByEntityEvent event = new PaintingBreakByEntityEvent((Painting) thisBukkitEntity, stormBukkitEntity);
+            final PaintingBreakByEntityEvent event = new PaintingBreakByEntityEvent((Painting) thisBukkitEntity, stormBukkitEntity);
             pluginManager.callEvent(event);
 
             if (event.isCancelled())
@@ -2547,7 +2555,7 @@ public abstract class Entity
             }
         }
 
-        EntityDamageEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callEntityDamageEvent(par1EntityLightningBolt, this, EntityDamageEvent.DamageCause.LIGHTNING, 5D);
+        final EntityDamageEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callEntityDamageEvent(par1EntityLightningBolt, this, EntityDamageEvent.DamageCause.LIGHTNING, 5.0D);
 
         if (event.isCancelled())
         {
@@ -2561,7 +2569,7 @@ public abstract class Entity
         if (this.fire == 0)
         {
             // CraftBukkit start - Call a combust event when lightning strikes
-            EntityCombustByEntityEvent entityCombustEvent = new EntityCombustByEntityEvent(stormBukkitEntity, thisBukkitEntity, 8);
+            final EntityCombustByEntityEvent entityCombustEvent = new EntityCombustByEntityEvent(stormBukkitEntity, thisBukkitEntity, 8);
             pluginManager.callEvent(entityCombustEvent);
 
             if (!entityCombustEvent.isCancelled())
@@ -2576,20 +2584,20 @@ public abstract class Entity
     /**
      * This method gets called when the entity kills another one.
      */
-    public void onKillEntity(EntityLivingBase par1EntityLivingBase) {}
+    public void onKillEntity(final EntityLivingBase par1EntityLivingBase) {}
 
     /**
      * Adds velocity to push the entity out of blocks at the specified x, y, z position Args: x, y, z
      */
-    protected boolean pushOutOfBlocks(double par1, double par3, double par5)
+    protected boolean pushOutOfBlocks(final double par1, final double par3, final double par5)
     {
-        int i = MathHelper.floor_double(par1);
-        int j = MathHelper.floor_double(par3);
-        int k = MathHelper.floor_double(par5);
-        double d3 = par1 - (double)i;
-        double d4 = par3 - (double)j;
-        double d5 = par5 - (double)k;
-        List list = this.worldObj.getCollidingBlockBounds(this.boundingBox);
+        final int i = MathHelper.floor_double(par1);
+        final int j = MathHelper.floor_double(par3);
+        final int k = MathHelper.floor_double(par5);
+        final double d3 = par1 - (double)i;
+        final double d4 = par3 - (double)j;
+        final double d5 = par5 - (double)k;
+        final List list = this.worldObj.getCollidingBlockBounds(this.boundingBox);
 
         if (list.isEmpty() && !this.worldObj.isBlockFullCube(i, j, k))
         {
@@ -2597,12 +2605,12 @@ public abstract class Entity
         }
         else
         {
-            boolean flag = !this.worldObj.isBlockFullCube(i - 1, j, k);
-            boolean flag1 = !this.worldObj.isBlockFullCube(i + 1, j, k);
-            boolean flag2 = !this.worldObj.isBlockFullCube(i, j - 1, k);
-            boolean flag3 = !this.worldObj.isBlockFullCube(i, j + 1, k);
-            boolean flag4 = !this.worldObj.isBlockFullCube(i, j, k - 1);
-            boolean flag5 = !this.worldObj.isBlockFullCube(i, j, k + 1);
+            final boolean flag = !this.worldObj.isBlockFullCube(i - 1, j, k);
+            final boolean flag1 = !this.worldObj.isBlockFullCube(i + 1, j, k);
+            final boolean flag2 = !this.worldObj.isBlockFullCube(i, j - 1, k);
+            final boolean flag3 = !this.worldObj.isBlockFullCube(i, j + 1, k);
+            final boolean flag4 = !this.worldObj.isBlockFullCube(i, j, k - 1);
+            final boolean flag5 = !this.worldObj.isBlockFullCube(i, j, k + 1);
             byte b0 = 3;
             double d6 = 9999.0D;
 
@@ -2636,7 +2644,7 @@ public abstract class Entity
                 b0 = 5;
             }
 
-            float f = this.rand.nextFloat() * 0.2F + 0.1F;
+            final float f = this.rand.nextFloat() * 0.2F + 0.1F;
 
             if (b0 == 0)
             {
@@ -2707,7 +2715,7 @@ public abstract class Entity
     /**
      * Returns true if Entity argument is equal to this Entity
      */
-    public boolean isEntityEqual(Entity par1Entity)
+    public boolean isEntityEqual(final Entity par1Entity)
     {
         return this == par1Entity;
     }
@@ -2722,7 +2730,7 @@ public abstract class Entity
     /**
      * Sets the head's yaw rotation of the entity.
      */
-    public void setRotationYawHead(float par1) {}
+    public void setRotationYawHead(final float par1) {}
 
     /**
      * If returns false, the item will not inflict any damage against entities.
@@ -2735,7 +2743,7 @@ public abstract class Entity
     /**
      * Called when a player attacks an entity. If this returns true the attack will not happen.
      */
-    public boolean hitByEntity(Entity par1Entity)
+    public boolean hitByEntity(final Entity par1Entity)
     {
         return false;
     }
@@ -2756,7 +2764,7 @@ public abstract class Entity
     /**
      * Sets this entity's location and angles to the location and angles of the passed in entity.
      */
-    public void copyLocationAndAnglesFrom(Entity par1Entity)
+    public void copyLocationAndAnglesFrom(final Entity par1Entity)
     {
         this.setLocationAndAngles(par1Entity.posX, par1Entity.posY, par1Entity.posZ, par1Entity.rotationYaw, par1Entity.rotationPitch);
     }
@@ -2766,9 +2774,9 @@ public abstract class Entity
      * actually deletes the teleporting entity and re-creates it on the other side. Params: Entity to copy from, unused
      * (always true)
      */
-    public void copyDataFrom(Entity par1Entity, boolean par2)
+    public void copyDataFrom(final Entity par1Entity, final boolean par2)
     {
-        NBTTagCompound nbttagcompound = new NBTTagCompound();
+        final NBTTagCompound nbttagcompound = new NBTTagCompound();
         par1Entity.writeToNBT(nbttagcompound);
         this.readFromNBT(nbttagcompound);
         this.timeUntilPortal = par1Entity.timeUntilPortal;
@@ -2778,25 +2786,25 @@ public abstract class Entity
     /**
      * Teleports the entity to another dimension. Params: Dimension number to teleport to
      */
-    public void travelToDimension(int par1)
+    public void travelToDimension(final int par1)
     {
         if (!this.worldObj.isRemote && !this.isDead)
         {
             this.worldObj.theProfiler.startSection("changeDimension");
-            MinecraftServer minecraftserver = MinecraftServer.getServer();
+            final MinecraftServer minecraftserver = MinecraftServer.getServer();
             // CraftBukkit start - Move logic into new function "teleportToLocation"
             // int j = this.dimension;
             // Cauldron start - Allow Forge hotloading on teleport
-            WorldServer exitWorld = minecraftserver.worldServerForDimension(par1);
+            final WorldServer exitWorld = minecraftserver.worldServerForDimension(par1);
 
-            Location enter = this.getBukkitEntity().getLocation();
+            final Location enter = this.getBukkitEntity().getLocation();
             Location exit = exitWorld != null ? minecraftserver.getConfigurationManager().calculateTarget(enter, minecraftserver.worldServerForDimension(par1)) : null;
-            boolean useTravelAgent = exitWorld != null && !(this.dimension == 1 && exitWorld.dimension == 1); // don't use agent for custom worlds or return from THE_END
+            final boolean useTravelAgent = exitWorld != null && !(this.dimension == 1 && exitWorld.dimension == 1); // don't use agent for custom worlds or return from THE_END
             // Cauldron start - check if teleporter is instance of TravelAgent before attempting to cast to it
-            Teleporter teleporter = exit != null ? ((CraftWorld) exit.getWorld()).getHandle().getDefaultTeleporter() : null;
-            TravelAgent agent = (teleporter != null && teleporter instanceof TravelAgent) ? (TravelAgent)teleporter : CraftTravelAgent.DEFAULT;  // return arbitrary TA to compensate for implementation dependent plugins
+            final Teleporter teleporter = exit != null ? ((CraftWorld) exit.getWorld()).getHandle().getDefaultTeleporter() : null;
+            final TravelAgent agent = (teleporter != null && teleporter instanceof TravelAgent) ? (TravelAgent)teleporter : CraftTravelAgent.DEFAULT;  // return arbitrary TA to compensate for implementation dependent plugins
             // Cauldron end
-            EntityPortalEvent event = new EntityPortalEvent(this.getBukkitEntity(), enter, exit, agent);
+            final EntityPortalEvent event = new EntityPortalEvent(this.getBukkitEntity(), enter, exit, agent);
             event.useTravelAgent(useTravelAgent);
             event.getEntity().getServer().getPluginManager().callEvent(event);
 
@@ -2810,10 +2818,10 @@ public abstract class Entity
         }
     }
 
-    public void teleportTo(Location exit, boolean portal) {
-        WorldServer worldserver = ((CraftWorld) this.getBukkitEntity().getLocation().getWorld()).getHandle();
-        WorldServer worldserver1 = ((CraftWorld) exit.getWorld()).getHandle();
-        int i = worldserver1.dimension;
+    public void teleportTo(final Location exit, final boolean portal) {
+        final WorldServer worldserver = ((CraftWorld) this.getBukkitEntity().getLocation().getWorld()).getHandle();
+        final WorldServer worldserver1 = ((CraftWorld) exit.getWorld()).getHandle();
+        final int i = worldserver1.dimension;
         // CraftBukkit end
         this.dimension = i;
         this.worldObj.removeEntity(this);
@@ -2821,13 +2829,13 @@ public abstract class Entity
         this.worldObj.theProfiler.startSection("reposition");
         // CraftBukkit start - Ensure chunks are loaded in case TravelAgent is not used which would initially cause chunks to load during find/create
         // minecraftserver.getPlayerList().a(this, j, worldserver, worldserver1);
-        boolean before = worldserver1.theChunkProviderServer.loadChunkOnProvideRequest;  // Cauldron start - load chunks on provide request
+        final boolean before = worldserver1.theChunkProviderServer.loadChunkOnProvideRequest;  // Cauldron start - load chunks on provide request
         worldserver1.theChunkProviderServer.loadChunkOnProvideRequest = true;
         worldserver1.getMinecraftServer().getConfigurationManager().repositionEntity(this, exit, portal);
         worldserver1.theChunkProviderServer.loadChunkOnProvideRequest = before; // Cauldron end
         // CraftBukkit end
         this.worldObj.theProfiler.endStartSection("reloading");
-        Entity entity = EntityList.createEntityByName(EntityList.getEntityString(this), worldserver1);
+        final Entity entity = EntityList.createEntityByName(EntityList.getEntityString(this), worldserver1);
 
         if (entity != null)
         {
@@ -2850,12 +2858,12 @@ public abstract class Entity
      * Gets a block's resistance to this entity's explosion. Used to make rails immune to TNT minecarts' explosions and
      * Wither skulls more destructive.
      */
-    public float getBlockExplosionResistance(Explosion par1Explosion, World par2World, int par3, int par4, int par5, Block par6Block)
+    public float getBlockExplosionResistance(final Explosion par1Explosion, final World par2World, final int par3, final int par4, final int par5, final Block par6Block)
     {
         return par6Block.getExplosionResistance(this, par2World, par3, par4, par5, posX, posY + (double)getEyeHeight(), posZ);
     }
 
-    public boolean shouldExplodeBlock(Explosion par1Explosion, World par2World, int par3, int par4, int par5, int par6, float par7)
+    public boolean shouldExplodeBlock(final Explosion par1Explosion, final World par2World, final int par3, final int par4, final int par5, final int par6, final float par7)
     {
         return true;
     }
@@ -2881,7 +2889,7 @@ public abstract class Entity
         return false;
     }
 
-    public void addEntityCrashInfo(CrashReportCategory par1CrashReportCategory)
+    public void addEntityCrashInfo(final CrashReportCategory par1CrashReportCategory)
     {
         par1CrashReportCategory.addCrashSectionCallable("Entity Type", new CallableEntityType(this));
         par1CrashReportCategory.addCrashSection("Entity ID", Integer.valueOf(this.entityId));
@@ -2949,7 +2957,7 @@ public abstract class Entity
      * @param target The full target the player is looking at
      * @return A ItemStack to add to the player's inventory, Null if nothing should be added.
      */
-    public ItemStack getPickedResult(MovingObjectPosition target)
+    public ItemStack getPickedResult(final MovingObjectPosition target)
     {
         if (this instanceof EntityPainting)
         {
@@ -2965,7 +2973,7 @@ public abstract class Entity
         }
         else if (this instanceof EntityItemFrame)
         {
-            ItemStack held = ((EntityItemFrame)this).getDisplayedItem();
+            final ItemStack held = ((EntityItemFrame)this).getDisplayedItem();
             if (held == null)
             {
                 return new ItemStack(Item.itemFrame);
@@ -2981,7 +2989,7 @@ public abstract class Entity
         }
         else
         {
-            int id = EntityList.getEntityID(this);
+            final int id = EntityList.getEntityID(this);
             if (id > 0 && EntityList.entityEggs.containsKey(id))
             {
                 return new ItemStack(Item.monsterPlacer, 1, id);
@@ -3003,7 +3011,7 @@ public abstract class Entity
         this.entityId = nextEntityID++;
     }
 
-    public boolean shouldRenderInPass(int pass)
+    public boolean shouldRenderInPass(final int pass)
     {
         return pass == 0;
     }
@@ -3014,7 +3022,7 @@ public abstract class Entity
      * @param forSpawnCount If this is being invoked to check spawn count caps.
      * @return If the creature is of the type provided
      */
-    public boolean isCreatureType(EnumCreatureType type, boolean forSpawnCount)
+    public boolean isCreatureType(final EnumCreatureType type, final boolean forSpawnCount)
     {
         return type.getCreatureClass().isAssignableFrom(this.getClass());
     }
@@ -3025,9 +3033,10 @@ public abstract class Entity
      * @param properties The instanceof IExtendedProperties to register
      * @return The identifier that was used to register the extended properties.  Empty String indicates an error.  If your requested key already existed, this will return a modified one that is unique.
      */
-    public String registerExtendedProperties(String identifier, IExtendedEntityProperties properties)
+    public String registerExtendedProperties(String identifier, final IExtendedEntityProperties properties)
     {
-        if (identifier == null)
+        String identifier1 = identifier;
+        if (identifier1 == null)
         {
             FMLLog.warning("Someone is attempting to register extended properties using a null identifier.  This is not allowed.  Aborting.  This may have caused instability.");
             return "";
@@ -3038,20 +3047,20 @@ public abstract class Entity
             return "";
         }
 
-        String baseIdentifier = identifier;
+        final String baseIdentifier = identifier1;
         int identifierModCount = 1;
-        while (this.extendedProperties.containsKey(identifier))
+        while (this.extendedProperties.containsKey(identifier1))
         {
-            identifier = String.format("%s%d", baseIdentifier, identifierModCount++);
+            identifier1 = String.format("%s%d", baseIdentifier, identifierModCount++);
         }
 
-        if (baseIdentifier != identifier)
+        if (baseIdentifier != identifier1)
         {
-            FMLLog.info("An attempt was made to register exended properties using an existing key.  The duplicate identifier (%s) has been remapped to %s.", baseIdentifier, identifier);
+            FMLLog.info("An attempt was made to register exended properties using an existing key.  The duplicate identifier (%s) has been remapped to %s.", baseIdentifier, identifier1);
         }
 
-        this.extendedProperties.put(identifier, properties);
-        return identifier;
+        this.extendedProperties.put(identifier1, properties);
+        return identifier1;
     }
 
     /**
@@ -3059,7 +3068,7 @@ public abstract class Entity
      * @param identifier The key that identifies the extended properties.
      * @return The instance of IExtendedProperties that was found, or null.
      */
-    public IExtendedEntityProperties getExtendedProperties(String identifier)
+    public IExtendedEntityProperties getExtendedProperties(final String identifier)
     {
         return this.extendedProperties.get(identifier);
     }
@@ -3081,7 +3090,7 @@ public abstract class Entity
      * @param rider The entity that is riding
      * @return if the entity should be dismounted when under water
      */
-    public boolean shouldDismountInWater(Entity rider){
+    public boolean shouldDismountInWater(final Entity rider){
         return this instanceof EntityLivingBase;
     }
 }

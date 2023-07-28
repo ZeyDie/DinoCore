@@ -6,7 +6,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager;
 
 public class CraftVillager extends CraftAgeable implements Villager {
-    public CraftVillager(CraftServer server, net.minecraft.entity.passive.EntityVillager entity) {
+    public CraftVillager(final CraftServer server, final net.minecraft.entity.passive.EntityVillager entity) {
         super(server, entity);
     }
 
@@ -28,7 +28,7 @@ public class CraftVillager extends CraftAgeable implements Villager {
         return Profession.getProfession(getHandle().getProfession());
     }
 
-    public void setProfession(Profession profession) {
+    public void setProfession(final Profession profession) {
         Validate.notNull(profession);
         getHandle().setProfession(profession.getId());
     }

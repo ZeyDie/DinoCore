@@ -15,12 +15,12 @@ import static net.minecraftforge.common.ChestGenHooks.STRONGHOLD_LIBRARY;
 public class ComponentStrongholdLibrary extends ComponentStronghold
 {
     /** List of items that Stronghold Library chests can contain. */
-    public static final WeightedRandomChestContent[] strongholdLibraryChestContents = new WeightedRandomChestContent[] {new WeightedRandomChestContent(Item.book.itemID, 0, 1, 3, 20), new WeightedRandomChestContent(Item.paper.itemID, 0, 2, 7, 20), new WeightedRandomChestContent(Item.emptyMap.itemID, 0, 1, 1, 1), new WeightedRandomChestContent(Item.compass.itemID, 0, 1, 1, 1)};
+    public static final WeightedRandomChestContent[] strongholdLibraryChestContents = {new WeightedRandomChestContent(Item.book.itemID, 0, 1, 3, 20), new WeightedRandomChestContent(Item.paper.itemID, 0, 2, 7, 20), new WeightedRandomChestContent(Item.emptyMap.itemID, 0, 1, 1, 1), new WeightedRandomChestContent(Item.compass.itemID, 0, 1, 1, 1)};
     private boolean isLargeRoom;
 
     public ComponentStrongholdLibrary() {}
 
-    public ComponentStrongholdLibrary(int par1, Random par2Random, StructureBoundingBox par3StructureBoundingBox, int par4)
+    public ComponentStrongholdLibrary(final int par1, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox, final int par4)
     {
         super(par1);
         this.coordBaseMode = par4;
@@ -29,19 +29,19 @@ public class ComponentStrongholdLibrary extends ComponentStronghold
         this.isLargeRoom = par3StructureBoundingBox.getYSize() > 6;
     }
 
-    protected void func_143012_a(NBTTagCompound par1NBTTagCompound)
+    protected void func_143012_a(final NBTTagCompound par1NBTTagCompound)
     {
         super.func_143012_a(par1NBTTagCompound);
         par1NBTTagCompound.setBoolean("Tall", this.isLargeRoom);
     }
 
-    protected void func_143011_b(NBTTagCompound par1NBTTagCompound)
+    protected void func_143011_b(final NBTTagCompound par1NBTTagCompound)
     {
         super.func_143011_b(par1NBTTagCompound);
         this.isLargeRoom = par1NBTTagCompound.getBoolean("Tall");
     }
 
-    public static ComponentStrongholdLibrary findValidPlacement(List par0List, Random par1Random, int par2, int par3, int par4, int par5, int par6)
+    public static ComponentStrongholdLibrary findValidPlacement(final List par0List, final Random par1Random, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(par2, par3, par4, -4, -1, 0, 14, 11, 15, par5);
 
@@ -62,7 +62,7 @@ public class ComponentStrongholdLibrary extends ComponentStronghold
      * second Part of Structure generating, this for example places Spiderwebs, Mob Spawners, it closes Mineshafts at
      * the end, it adds Fences...
      */
-    public boolean addComponentParts(World par1World, Random par2Random, StructureBoundingBox par3StructureBoundingBox)
+    public boolean addComponentParts(final World par1World, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox)
     {
         if (this.isLiquidInStructureBoundingBox(par1World, par3StructureBoundingBox))
         {
@@ -80,8 +80,8 @@ public class ComponentStrongholdLibrary extends ComponentStronghold
             this.fillWithRandomizedBlocks(par1World, par3StructureBoundingBox, 0, 0, 0, 13, b0 - 1, 14, true, par2Random, StructureStrongholdPieces.getStrongholdStones());
             this.placeDoor(par1World, par2Random, par3StructureBoundingBox, this.field_143013_d, 4, 1, 0);
             this.randomlyFillWithBlocks(par1World, par3StructureBoundingBox, par2Random, 0.07F, 2, 1, 1, 11, 4, 13, Block.web.blockID, Block.web.blockID, false);
-            boolean flag = true;
-            boolean flag1 = true;
+            final boolean flag = true;
+            final boolean flag1 = true;
             int i;
 
             for (i = 1; i <= 13; ++i)
@@ -143,8 +143,8 @@ public class ComponentStrongholdLibrary extends ComponentStronghold
                 this.placeBlockAtCurrentPosition(par1World, Block.ladder.blockID, i, 10, 5, 13, par3StructureBoundingBox);
                 this.placeBlockAtCurrentPosition(par1World, Block.ladder.blockID, i, 10, 6, 13, par3StructureBoundingBox);
                 this.placeBlockAtCurrentPosition(par1World, Block.ladder.blockID, i, 10, 7, 13, par3StructureBoundingBox);
-                byte b1 = 7;
-                byte b2 = 7;
+                final byte b1 = 7;
+                final byte b2 = 7;
                 this.placeBlockAtCurrentPosition(par1World, Block.fence.blockID, 0, b1 - 1, 9, b2, par3StructureBoundingBox);
                 this.placeBlockAtCurrentPosition(par1World, Block.fence.blockID, 0, b1, 9, b2, par3StructureBoundingBox);
                 this.placeBlockAtCurrentPosition(par1World, Block.fence.blockID, 0, b1 - 1, 8, b2, par3StructureBoundingBox);
@@ -165,7 +165,7 @@ public class ComponentStrongholdLibrary extends ComponentStronghold
                 this.placeBlockAtCurrentPosition(par1World, Block.torchWood.blockID, 0, b1, 8, b2 + 1, par3StructureBoundingBox);
             }
 
-            ChestGenHooks info = ChestGenHooks.getInfo(STRONGHOLD_LIBRARY);
+            final ChestGenHooks info = ChestGenHooks.getInfo(STRONGHOLD_LIBRARY);
 
             this.generateStructureChestContents(par1World, par3StructureBoundingBox, par2Random, 3, 3, 5, info.getItems(par2Random), info.getCount(par2Random));
 

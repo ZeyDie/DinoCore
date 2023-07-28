@@ -7,7 +7,7 @@ public class CallableMinecraftVersion implements Callable
     /** Reference to the CrashReport object. */
     final CrashReport theCrashReport;
 
-    public CallableMinecraftVersion(CrashReport par1CrashReport)
+    public CallableMinecraftVersion(final CrashReport par1CrashReport)
     {
         this.theCrashReport = par1CrashReport;
     }

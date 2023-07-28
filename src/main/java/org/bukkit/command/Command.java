@@ -31,11 +31,11 @@ public abstract class Command {
     private String permissionMessage;
     public org.spigotmc.CustomTimingsHandler timings; // Spigot
 
-    protected Command(String name) {
+    protected Command(final String name) {
         this(name, "", "/" + name, new ArrayList<String>());
     }
 
-    protected Command(String name, String description, String usageMessage, List<String> aliases) {
+    protected Command(final String name, final String description, final String usageMessage, final List<String> aliases) {
         this.name = name;
         this.nextLabel = name;
         this.label = name;
@@ -60,7 +60,7 @@ public abstract class Command {
      * @deprecated This method is not supported and returns null
      */
     @Deprecated
-    public List<String> tabComplete(CommandSender sender, String[] args) {
+    public List<String> tabComplete(final CommandSender sender, final String[] args) {
         return null;
     }
 
@@ -74,7 +74,7 @@ public abstract class Command {
      * @return a list of tab-completions for the specified arguments. This will never be null. List may be immutable.
      * @throws IllegalArgumentException if sender, alias, or args is null
      */
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) throws IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");
@@ -83,13 +83,13 @@ public abstract class Command {
             return ImmutableList.of();
         }
 
-        String lastWord = args[args.length - 1];
+        final String lastWord = args[args.length - 1];
 
-        Player senderPlayer = sender instanceof Player ? (Player) sender : null;
+        final Player senderPlayer = sender instanceof Player ? (Player) sender : null;
 
-        ArrayList<String> matchedPlayers = new ArrayList<String>();
-        for (Player player : sender.getServer().getOnlinePlayers()) {
-            String name = player.getName();
+        final ArrayList<String> matchedPlayers = new ArrayList<String>();
+        for (final Player player : sender.getServer().getOnlinePlayers()) {
+            final String name = player.getName();
             if ((senderPlayer == null || senderPlayer.canSee(player)) && StringUtil.startsWithIgnoreCase(name, lastWord)) {
                 matchedPlayers.add(name);
             }
@@ -122,7 +122,7 @@ public abstract class Command {
      *
      * @param permission Permission name or null
      */
-    public void setPermission(String permission) {
+    public void setPermission(final String permission) {
         this.permission = permission;
     }
 
@@ -134,15 +134,15 @@ public abstract class Command {
      * @param target User to test
      * @return true if they can use it, otherwise false
      */
-    public boolean testPermission(CommandSender target) {
+    public boolean testPermission(final CommandSender target) {
         if (testPermissionSilent(target)) {
             return true;
         }
 
         if (permissionMessage == null) {
             target.sendMessage(ChatColor.RED + "I'm sorry, but you do not have permission to perform this command. Please contact the server administrators if you believe that this is in error.");
-        } else if (permissionMessage.length() != 0) {
-            for (String line : permissionMessage.replace("<permission>", permission).split("\n")) {
+        } else if (!permissionMessage.isEmpty()) {
+            for (final String line : permissionMessage.replace("<permission>", permission).split("\n")) {
                 target.sendMessage(line);
             }
         }
@@ -158,12 +158,12 @@ public abstract class Command {
      * @param target User to test
      * @return true if they can use it, otherwise false
      */
-    public boolean testPermissionSilent(CommandSender target) {
-        if ((permission == null) || (permission.length() == 0)) {
+    public boolean testPermissionSilent(final CommandSender target) {
+        if ((permission == null) || (permission.isEmpty())) {
             return true;
         }
 
-        for (String p : permission.split(";")) {
+        for (final String p : permission.split(";")) {
             if (target.hasPermission(p)) {
                 return true;
             }
@@ -189,7 +189,7 @@ public abstract class Command {
      * @param name The command's name
      * @return returns true if the name change happened instantly or false if it was scheduled for reregistration
      */
-    public boolean setLabel(String name) {
+    public boolean setLabel(final String name) {
         this.nextLabel = name;
         if (!isRegistered()) {
             this.timings = new org.spigotmc.CustomTimingsHandler("** Command: " + name); // Spigot
@@ -206,7 +206,7 @@ public abstract class Command {
      * @param commandMap the CommandMap to register this command to
      * @return true if the registration was successful (the current registered CommandMap was the passed CommandMap or null) false otherwise
      */
-    public boolean register(CommandMap commandMap) {
+    public boolean register(final CommandMap commandMap) {
         if (allowChangesFrom(commandMap)) {
             this.commandMap = commandMap;
             return true;
@@ -221,7 +221,7 @@ public abstract class Command {
      * @param commandMap the CommandMap to unregister
      * @return true if the unregistration was successfull (the current registered CommandMap was the passed CommandMap or null) false otherwise
      */
-    public boolean unregister(CommandMap commandMap) {
+    public boolean unregister(final CommandMap commandMap) {
         if (allowChangesFrom(commandMap)) {
             this.commandMap = null;
             this.activeAliases = new ArrayList<String>(this.aliases);
@@ -232,7 +232,7 @@ public abstract class Command {
         return false;
     }
 
-    private boolean allowChangesFrom(CommandMap commandMap) {
+    private boolean allowChangesFrom(final CommandMap commandMap) {
         return (null == this.commandMap || this.commandMap == commandMap);
     }
 
@@ -290,7 +290,7 @@ public abstract class Command {
      * @param aliases aliases to register to this command
      * @return this command object, for chaining
      */
-    public Command setAliases(List<String> aliases) {
+    public Command setAliases(final List<String> aliases) {
         this.aliases = aliases;
         if (!isRegistered()) {
             this.activeAliases = new ArrayList<String>(aliases);
@@ -306,7 +306,7 @@ public abstract class Command {
      * @param description new command description
      * @return this command object, for chaining
      */
-    public Command setDescription(String description) {
+    public Command setDescription(final String description) {
         this.description = description;
         return this;
     }
@@ -318,7 +318,7 @@ public abstract class Command {
      *     default message, or an empty string to indicate no message
      * @return this command object, for chaining
      */
-    public Command setPermissionMessage(String permissionMessage) {
+    public Command setPermissionMessage(final String permissionMessage) {
         this.permissionMessage = permissionMessage;
         return this;
     }
@@ -329,33 +329,33 @@ public abstract class Command {
      * @param usage new example usage
      * @return this command object, for chaining
      */
-    public Command setUsage(String usage) {
+    public Command setUsage(final String usage) {
         this.usageMessage = usage;
         return this;
     }
 
-    public static void broadcastCommandMessage(CommandSender source, String message) {
+    public static void broadcastCommandMessage(final CommandSender source, final String message) {
         broadcastCommandMessage(source, message, true);
     }
 
-    public static void broadcastCommandMessage(CommandSender source, String message, boolean sendToSource) {
-        String result = source.getName() + ": " + message;
+    public static void broadcastCommandMessage(final CommandSender source, final String message, final boolean sendToSource) {
+        final String result = source.getName() + ": " + message;
 
         if (source instanceof BlockCommandSender && ((BlockCommandSender) source).getBlock().getWorld().getGameRuleValue("commandBlockOutput").equalsIgnoreCase("false")) {
             Bukkit.getConsoleSender().sendMessage(result);
             return;
         }
 
-        Set<Permissible> users = Bukkit.getPluginManager().getPermissionSubscriptions(Server.BROADCAST_CHANNEL_ADMINISTRATIVE);
-        String colored = ChatColor.GRAY + "" + ChatColor.ITALIC + "[" + result + ChatColor.GRAY + ChatColor.ITALIC + "]";
+        final Set<Permissible> users = Bukkit.getPluginManager().getPermissionSubscriptions(Server.BROADCAST_CHANNEL_ADMINISTRATIVE);
+        final String colored = ChatColor.GRAY + "" + ChatColor.ITALIC + "[" + result + ChatColor.GRAY + ChatColor.ITALIC + "]";
 
         if (sendToSource && !(source instanceof ConsoleCommandSender)) {
             source.sendMessage(message);
         }
 
-        for (Permissible user : users) {
+        for (final Permissible user : users) {
             if (user instanceof CommandSender) {
-                CommandSender target = (CommandSender) user;
+                final CommandSender target = (CommandSender) user;
 
                 if (target instanceof ConsoleCommandSender) {
                     target.sendMessage(result);

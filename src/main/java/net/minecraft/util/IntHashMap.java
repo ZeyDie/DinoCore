@@ -25,14 +25,15 @@ public class IntHashMap
      */
     private static int computeHash(int par0)
     {
-        par0 ^= par0 >>> 20 ^ par0 >>> 12;
-        return par0 ^ par0 >>> 7 ^ par0 >>> 4;
+        int par01 = par0;
+        par01 ^= par01 >>> 20 ^ par01 >>> 12;
+        return par01 ^ par01 >>> 7 ^ par01 >>> 4;
     }
 
     /**
      * Computes the index of the slot for the hash and slot count passed in.
      */
-    private static int getSlotIndex(int par0, int par1)
+    private static int getSlotIndex(final int par0, final int par1)
     {
         return par0 & par1 - 1;
     }
@@ -40,9 +41,9 @@ public class IntHashMap
     /**
      * Returns the object associated to a key
      */
-    public Object lookup(int par1)
+    public Object lookup(final int par1)
     {
-        int j = computeHash(par1);
+        final int j = computeHash(par1);
 
         for (IntHashMapEntry inthashmapentry = this.slots[getSlotIndex(j, this.slots.length)]; inthashmapentry != null; inthashmapentry = inthashmapentry.nextEntry)
         {
@@ -58,7 +59,7 @@ public class IntHashMap
     /**
      * Return true if an object is associated with the given key
      */
-    public boolean containsItem(int par1)
+    public boolean containsItem(final int par1)
     {
         return this.lookupEntry(par1) != null;
     }
@@ -66,9 +67,9 @@ public class IntHashMap
     /**
      * Returns the key/object mapping for a given key as a MCHashEntry
      */
-    final IntHashMapEntry lookupEntry(int par1)
+    final IntHashMapEntry lookupEntry(final int par1)
     {
-        int j = computeHash(par1);
+        final int j = computeHash(par1);
 
         for (IntHashMapEntry inthashmapentry = this.slots[getSlotIndex(j, this.slots.length)]; inthashmapentry != null; inthashmapentry = inthashmapentry.nextEntry)
         {
@@ -84,11 +85,11 @@ public class IntHashMap
     /**
      * Adds a key and associated value to this map
      */
-    public void addKey(int par1, Object par2Obj)
+    public void addKey(final int par1, final Object par2Obj)
     {
         // this.keySet.add(Integer.valueOf(par1)); // CraftBukkit
-        int j = computeHash(par1);
-        int k = getSlotIndex(j, this.slots.length);
+        final int j = computeHash(par1);
+        final int k = getSlotIndex(j, this.slots.length);
 
         for (IntHashMapEntry inthashmapentry = this.slots[k]; inthashmapentry != null; inthashmapentry = inthashmapentry.nextEntry)
         {
@@ -106,10 +107,10 @@ public class IntHashMap
     /**
      * Increases the number of hash slots
      */
-    private void grow(int par1)
+    private void grow(final int par1)
     {
-        IntHashMapEntry[] ainthashmapentry = this.slots;
-        int j = ainthashmapentry.length;
+        final IntHashMapEntry[] ainthashmapentry = this.slots;
+        final int j = ainthashmapentry.length;
 
         if (j == 1073741824)
         {
@@ -117,7 +118,7 @@ public class IntHashMap
         }
         else
         {
-            IntHashMapEntry[] ainthashmapentry1 = new IntHashMapEntry[par1];
+            final IntHashMapEntry[] ainthashmapentry1 = new IntHashMapEntry[par1];
             this.copyTo(ainthashmapentry1);
             this.slots = ainthashmapentry1;
             this.threshold = (int)((float)par1 * this.growFactor);
@@ -127,10 +128,10 @@ public class IntHashMap
     /**
      * Copies the hash slots to a new array
      */
-    private void copyTo(IntHashMapEntry[] par1ArrayOfIntHashMapEntry)
+    private void copyTo(final IntHashMapEntry[] par1ArrayOfIntHashMapEntry)
     {
-        IntHashMapEntry[] ainthashmapentry1 = this.slots;
-        int i = par1ArrayOfIntHashMapEntry.length;
+        final IntHashMapEntry[] ainthashmapentry1 = this.slots;
+        final int i = par1ArrayOfIntHashMapEntry.length;
 
         for (int j = 0; j < ainthashmapentry1.length; ++j)
         {
@@ -144,7 +145,7 @@ public class IntHashMap
                 do
                 {
                     inthashmapentry1 = inthashmapentry.nextEntry;
-                    int k = getSlotIndex(inthashmapentry.slotHash, i);
+                    final int k = getSlotIndex(inthashmapentry.slotHash, i);
                     inthashmapentry.nextEntry = par1ArrayOfIntHashMapEntry[k];
                     par1ArrayOfIntHashMapEntry[k] = inthashmapentry;
                     inthashmapentry = inthashmapentry1;
@@ -157,20 +158,20 @@ public class IntHashMap
     /**
      * Removes the specified object from the map and returns it
      */
-    public Object removeObject(int par1)
+    public Object removeObject(final int par1)
     {
         // this.keySet.remove(Integer.valueOf(par1)); // CraftBukkit
-        IntHashMapEntry inthashmapentry = this.removeEntry(par1);
+        final IntHashMapEntry inthashmapentry = this.removeEntry(par1);
         return inthashmapentry == null ? null : inthashmapentry.valueEntry;
     }
 
     /**
      * Removes the specified entry from the map and returns it
      */
-    final IntHashMapEntry removeEntry(int par1)
+    final IntHashMapEntry removeEntry(final int par1)
     {
-        int j = computeHash(par1);
-        int k = getSlotIndex(j, this.slots.length);
+        final int j = computeHash(par1);
+        final int k = getSlotIndex(j, this.slots.length);
         IntHashMapEntry inthashmapentry = this.slots[k];
         IntHashMapEntry inthashmapentry1;
         IntHashMapEntry inthashmapentry2;
@@ -208,7 +209,7 @@ public class IntHashMap
     public void clearMap()
     {
         ++this.versionStamp;
-        IntHashMapEntry[] ainthashmapentry = this.slots;
+        final IntHashMapEntry[] ainthashmapentry = this.slots;
 
         for (int i = 0; i < ainthashmapentry.length; ++i)
         {
@@ -221,9 +222,9 @@ public class IntHashMap
     /**
      * Adds an object to a slot
      */
-    private void insert(int par1, int par2, Object par3Obj, int par4)
+    private void insert(final int par1, final int par2, final Object par3Obj, final int par4)
     {
-        IntHashMapEntry inthashmapentry = this.slots[par4];
+        final IntHashMapEntry inthashmapentry = this.slots[par4];
         this.slots[par4] = new IntHashMapEntry(par1, par2, par3Obj, inthashmapentry);
 
         if (this.count++ >= this.threshold)
@@ -235,7 +236,7 @@ public class IntHashMap
     /**
      * Returns the hash code for a key
      */
-    static int getHash(int par0)
+    static int getHash(final int par0)
     {
         return computeHash(par0);
     }

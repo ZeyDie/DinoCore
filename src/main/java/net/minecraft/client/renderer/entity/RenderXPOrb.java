@@ -25,35 +25,35 @@ public class RenderXPOrb extends Render
     /**
      * Renders the XP Orb.
      */
-    public void renderTheXPOrb(EntityXPOrb par1EntityXPOrb, double par2, double par4, double par6, float par8, float par9)
+    public void renderTheXPOrb(final EntityXPOrb par1EntityXPOrb, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         GL11.glPushMatrix();
         GL11.glTranslatef((float)par2, (float)par4, (float)par6);
         this.bindEntityTexture(par1EntityXPOrb);
-        int i = par1EntityXPOrb.getTextureByXP();
-        float f2 = (float)(i % 4 * 16 + 0) / 64.0F;
-        float f3 = (float)(i % 4 * 16 + 16) / 64.0F;
-        float f4 = (float)(i / 4 * 16 + 0) / 64.0F;
-        float f5 = (float)(i / 4 * 16 + 16) / 64.0F;
-        float f6 = 1.0F;
-        float f7 = 0.5F;
-        float f8 = 0.25F;
-        int j = par1EntityXPOrb.getBrightnessForRender(par9);
-        int k = j % 65536;
+        final int i = par1EntityXPOrb.getTextureByXP();
+        final float f2 = (float)(i % 4 * 16 + 0) / 64.0F;
+        final float f3 = (float)(i % 4 * 16 + 16) / 64.0F;
+        final float f4 = (float)(i / 4 * 16 + 0) / 64.0F;
+        final float f5 = (float)(i / 4 * 16 + 16) / 64.0F;
+        final float f6 = 1.0F;
+        final float f7 = 0.5F;
+        final float f8 = 0.25F;
+        final int j = par1EntityXPOrb.getBrightnessForRender(par9);
+        final int k = j % 65536;
         int l = j / 65536;
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)k / 1.0F, (float)l / 1.0F);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        float f9 = 255.0F;
-        float f10 = ((float)par1EntityXPOrb.xpColor + par9) / 2.0F;
+        final float f9 = 255.0F;
+        final float f10 = ((float)par1EntityXPOrb.xpColor + par9) / 2.0F;
         l = (int)((MathHelper.sin(f10 + 0.0F) + 1.0F) * 0.5F * f9);
-        int i1 = (int)f9;
-        int j1 = (int)((MathHelper.sin(f10 + 4.1887903F) + 1.0F) * 0.1F * f9);
-        int k1 = l << 16 | i1 << 8 | j1;
+        final int i1 = (int)f9;
+        final int j1 = (int)((MathHelper.sin(f10 + 4.1887903F) + 1.0F) * 0.1F * f9);
+        final int k1 = l << 16 | i1 << 8 | j1;
         GL11.glRotatef(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
         GL11.glRotatef(-this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-        float f11 = 0.3F;
+        final float f11 = 0.3F;
         GL11.glScalef(f11, f11, f11);
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
         tessellator.setColorRGBA_I(k1, 128);
         tessellator.setNormal(0.0F, 1.0F, 0.0F);
@@ -67,7 +67,7 @@ public class RenderXPOrb extends Render
         GL11.glPopMatrix();
     }
 
-    protected ResourceLocation getExperienceOrbTextures(EntityXPOrb par1EntityXPOrb)
+    protected ResourceLocation getExperienceOrbTextures(final EntityXPOrb par1EntityXPOrb)
     {
         return experienceOrbTextures;
     }
@@ -75,7 +75,7 @@ public class RenderXPOrb extends Render
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.getExperienceOrbTextures((EntityXPOrb)par1Entity);
     }
@@ -86,7 +86,7 @@ public class RenderXPOrb extends Render
      * (Render<T extends Entity) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.renderTheXPOrb((EntityXPOrb)par1Entity, par2, par4, par6, par8, par9);
     }

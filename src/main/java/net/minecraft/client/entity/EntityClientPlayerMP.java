@@ -38,7 +38,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP
     private boolean hasSetHealth;
     private String field_142022_ce;
 
-    public EntityClientPlayerMP(Minecraft par1Minecraft, World par2World, Session par3Session, NetClientHandler par4NetClientHandler)
+    public EntityClientPlayerMP(final Minecraft par1Minecraft, final World par2World, final Session par3Session, final NetClientHandler par4NetClientHandler)
     {
         super(par1Minecraft, par2World, par3Session, 0);
         this.sendQueue = par4NetClientHandler;
@@ -47,7 +47,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2)
     {
         return false;
     }
@@ -55,7 +55,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP
     /**
      * Heal living entity (param: amount of half-hearts)
      */
-    public void heal(float par1) {}
+    public void heal(final float par1) {}
 
     /**
      * Called to update the entity's position/logic.
@@ -83,7 +83,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP
      */
     public void sendMotionUpdates()
     {
-        boolean flag = this.isSprinting();
+        final boolean flag = this.isSprinting();
 
         if (flag != this.wasSneaking)
         {
@@ -99,7 +99,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP
             this.wasSneaking = flag;
         }
 
-        boolean flag1 = this.isSneaking();
+        final boolean flag1 = this.isSneaking();
 
         if (flag1 != this.shouldStopSneaking)
         {
@@ -115,13 +115,13 @@ public class EntityClientPlayerMP extends EntityPlayerSP
             this.shouldStopSneaking = flag1;
         }
 
-        double d0 = this.posX - this.oldPosX;
-        double d1 = this.boundingBox.minY - this.oldMinY;
-        double d2 = this.posZ - this.oldPosZ;
-        double d3 = (double)(this.rotationYaw - this.oldRotationYaw);
-        double d4 = (double)(this.rotationPitch - this.oldRotationPitch);
+        final double d0 = this.posX - this.oldPosX;
+        final double d1 = this.boundingBox.minY - this.oldMinY;
+        final double d2 = this.posZ - this.oldPosZ;
+        final double d3 = (double)(this.rotationYaw - this.oldRotationYaw);
+        final double d4 = (double)(this.rotationPitch - this.oldRotationPitch);
         boolean flag2 = d0 * d0 + d1 * d1 + d2 * d2 > 9.0E-4D || this.field_71168_co >= 20;
-        boolean flag3 = d3 != 0.0D || d4 != 0.0D;
+        final boolean flag3 = d3 != 0.0D || d4 != 0.0D;
 
         if (this.ridingEntity != null)
         {
@@ -167,9 +167,9 @@ public class EntityClientPlayerMP extends EntityPlayerSP
     /**
      * Called when player presses the drop item key
      */
-    public EntityItem dropOneItem(boolean par1)
+    public EntityItem dropOneItem(final boolean par1)
     {
-        int i = par1 ? 3 : 4;
+        final int i = par1 ? 3 : 4;
         this.sendQueue.addToSendQueue(new Packet14BlockDig(i, 0, 0, 0, 0));
         return null;
     }
@@ -177,12 +177,12 @@ public class EntityClientPlayerMP extends EntityPlayerSP
     /**
      * Joins the passed in entity item with the world. Args: entityItem
      */
-    public void joinEntityItemWithWorld(EntityItem par1EntityItem) {}
+    public void joinEntityItemWithWorld(final EntityItem par1EntityItem) {}
 
     /**
      * Sends a chat message from the player. Args: chatMessage
      */
-    public void sendChatMessage(String par1Str)
+    public void sendChatMessage(final String par1Str)
     {
         this.sendQueue.addToSendQueue(new Packet3Chat(par1Str));
     }
@@ -205,7 +205,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP
      * Deals damage to the entity. If its a EntityPlayer then will take damage from the armor first and then health
      * second with the reduced value. Args: damageAmount
      */
-    protected void damageEntity(DamageSource par1DamageSource, float par2)
+    protected void damageEntity(final DamageSource par1DamageSource, final float par2)
     {
         if (!this.isEntityInvulnerable())
         {
@@ -231,7 +231,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP
     /**
      * Updates health locally.
      */
-    public void setPlayerSPHealth(float par1)
+    public void setPlayerSPHealth(final float par1)
     {
         if (this.hasSetHealth)
         {
@@ -247,7 +247,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP
     /**
      * Adds a value to a statistic field.
      */
-    public void addStat(StatBase par1StatBase, int par2)
+    public void addStat(final StatBase par1StatBase, final int par2)
     {
         if (par1StatBase != null)
         {
@@ -261,7 +261,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP
     /**
      * Used by NetClientHandler.handleStatistic
      */
-    public void incrementStat(StatBase par1StatBase, int par2)
+    public void incrementStat(final StatBase par1StatBase, final int par2)
     {
         if (par1StatBase != null)
         {
@@ -290,7 +290,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP
         this.sendQueue.addToSendQueue(new Packet19EntityAction(this, 7));
     }
 
-    public void func_142020_c(String par1Str)
+    public void func_142020_c(final String par1Str)
     {
         this.field_142022_ce = par1Str;
     }

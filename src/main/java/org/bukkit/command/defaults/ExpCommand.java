@@ -19,20 +19,20 @@ public class ExpCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
 
         if (args.length > 0) {
             String inputAmount = args[0];
             Player player = null;
 
-            boolean isLevel = inputAmount.endsWith("l") || inputAmount.endsWith("L");
+            final boolean isLevel = inputAmount.endsWith("l") || inputAmount.endsWith("L");
             if (isLevel && inputAmount.length() > 1) {
                 inputAmount = inputAmount.substring(0, inputAmount.length() - 1);
             }
 
             int amount = getInteger(sender, inputAmount, Integer.MIN_VALUE, Integer.MAX_VALUE);
-            boolean isTaking = amount < 0;
+            final boolean isTaking = amount < 0;
 
             if (isTaking) {
                 amount *= -1;
@@ -75,7 +75,7 @@ public class ExpCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) throws IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");

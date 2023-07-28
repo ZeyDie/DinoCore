@@ -17,14 +17,14 @@ public class CauldronUtils {
 
     private static boolean deobfuscated = false;
 
-    public static boolean isOverridingUpdateEntity(Class<? extends TileEntity> c) 
+    public static boolean isOverridingUpdateEntity(final Class<? extends TileEntity> c)
     {
         Class clazz = null;
         try
         {
             clazz = c.getMethod("func_70316_g").getDeclaringClass();  // updateEntity
         }
-        catch (Throwable e)
+        catch (final Throwable e)
         {
             //e.printStackTrace(); no need for spam
         }
@@ -32,26 +32,26 @@ public class CauldronUtils {
         return clazz != TileEntity.class;
     }
 
-    public static boolean canTileEntityUpdate(Class<? extends TileEntity> c)
+    public static boolean canTileEntityUpdate(final Class<? extends TileEntity> c)
     {
         boolean canUpdate = false;
         try 
         {
-            Constructor<? extends TileEntity> ctor = c.getConstructor();
-            TileEntity te = ctor.newInstance();
+            final Constructor<? extends TileEntity> ctor = c.getConstructor();
+            final TileEntity te = ctor.newInstance();
             canUpdate = te.canUpdate();
         } 
-        catch (Throwable e) 
+        catch (final Throwable e)
         {
             // ignore
         }
         return canUpdate;
     }
 
-    public static <T> void dumpAndSortClassList(List<Class<? extends T>> classList)
+    public static <T> void dumpAndSortClassList(final List<Class<? extends T>> classList)
     {
-        List<String> sortedClassList = new ArrayList();
-        for (Class clazz : classList)
+        final List<String> sortedClassList = new ArrayList();
+        for (final Class clazz : classList)
         {
             sortedClassList.add(clazz.getName());
         }
@@ -65,11 +65,11 @@ public class CauldronUtils {
         }
     }
 
-    public static boolean migrateWorlds(String worldType, String oldWorldContainer, String newWorldContainer, String worldName)
+    public static boolean migrateWorlds(final String worldType, final String oldWorldContainer, final String newWorldContainer, final String worldName)
     {
         boolean result = true;
-        File newWorld = new File(new File(newWorldContainer), worldName);
-        File oldWorld = new File(new File(oldWorldContainer), worldName);
+        final File newWorld = new File(new File(newWorldContainer), worldName);
+        final File oldWorld = new File(new File(oldWorldContainer), worldName);
 
         if ((!newWorld.isDirectory()) && (oldWorld.isDirectory()))
         {
@@ -94,7 +94,7 @@ public class CauldronUtils {
                 {
                     com.google.common.io.Files.move(oldWorld, newWorld);
                 }
-                catch (IOException exception)
+                catch (final IOException exception)
                 {
                     log.logSevere("Unable to move world data.");
                     exception.printStackTrace();
@@ -104,7 +104,7 @@ public class CauldronUtils {
                 {
                     com.google.common.io.Files.copy(new File(oldWorld.getParent(), "level.dat"), new File(newWorld, "level.dat"));
                 }
-                catch (IOException exception)
+                catch (final IOException exception)
                 {
                     log.logSevere("Unable to migrate world level.dat.");
                 }
@@ -116,9 +116,9 @@ public class CauldronUtils {
         return result;
     }
 
-    public static InventoryHolder getOwner(TileEntity tileentity)
+    public static InventoryHolder getOwner(final TileEntity tileentity)
     {
-        org.bukkit.block.BlockState state = tileentity.worldObj.getWorld().getBlockAt(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord).getState();
+        final org.bukkit.block.BlockState state = tileentity.worldObj.getWorld().getBlockAt(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord).getState();
 
         if (state instanceof InventoryHolder)
         {
@@ -133,14 +133,14 @@ public class CauldronUtils {
         try
         {
             // Are we in a 'decompiled' environment?
-            byte[] bs = ((net.minecraft.launchwrapper.LaunchClassLoader)CauldronUtils.class.getClassLoader()).getClassBytes("net.minecraft.world.World");
+            final byte[] bs = ((net.minecraft.launchwrapper.LaunchClassLoader)CauldronUtils.class.getClassLoader()).getClassBytes("net.minecraft.world.World");
             if (bs != null)
             {
                 FMLRelaunchLog.info("Managed to load a deobfuscated Minecraft name- we are in a deobfuscated environment. Skipping runtime deobfuscation");
                 deobfuscated = true;
             }
         }
-        catch (IOException e1)
+        catch (final IOException e1)
         {
         }
         return deobfuscated;

@@ -28,18 +28,18 @@ import java.util.logging.Level;
  */
 public class ProxyInjector
 {
-    public static void inject(ModContainer mod, ASMDataTable data, Side side, ILanguageAdapter languageAdapter)
+    public static void inject(final ModContainer mod, final ASMDataTable data, final Side side, final ILanguageAdapter languageAdapter)
     {
         FMLLog.fine("Attempting to inject @SidedProxy classes into %s", mod.getModId());
-        Set<ASMData> targets = data.getAnnotationsFor(mod).get(SidedProxy.class.getName());
-        ClassLoader mcl = Loader.instance().getModClassLoader();
+        final Set<ASMData> targets = data.getAnnotationsFor(mod).get(SidedProxy.class.getName());
+        final ClassLoader mcl = Loader.instance().getModClassLoader();
 
-        for (ASMData targ : targets)
+        for (final ASMData targ : targets)
         {
             try
             {
-                Class<?> proxyTarget = Class.forName(targ.getClassName(), true, mcl);
-                Field target = proxyTarget.getDeclaredField(targ.getObjectName());
+                final Class<?> proxyTarget = Class.forName(targ.getClassName(), true, mcl);
+                final Field target = proxyTarget.getDeclaredField(targ.getObjectName());
                 if (target == null)
                 {
                     // Impossible?
@@ -47,14 +47,14 @@ public class ProxyInjector
                     throw new LoaderException();
                 }
 
-                SidedProxy annotation = target.getAnnotation(SidedProxy.class);
+                final SidedProxy annotation = target.getAnnotation(SidedProxy.class);
                 if (!Strings.isNullOrEmpty(annotation.modId()) && !annotation.modId().equals(mod.getModId()))
                 {
                     FMLLog.fine("Skipping proxy injection for %s.%s since it is not for mod %s", targ.getClassName(), targ.getObjectName(), mod.getModId());
                     continue;
                 }
-                String targetType = side.isClient() ? annotation.clientSide() : annotation.serverSide();
-                Object proxy=Class.forName(targetType, true, mcl).newInstance();
+                final String targetType = side.isClient() ? annotation.clientSide() : annotation.serverSide();
+                final Object proxy=Class.forName(targetType, true, mcl).newInstance();
 
                 if (languageAdapter.supportsStatics() && (target.getModifiers() & Modifier.STATIC) == 0 )
                 {
@@ -68,7 +68,7 @@ public class ProxyInjector
                 }
                 languageAdapter.setProxy(target, proxyTarget, proxy);
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 FMLLog.log(Level.SEVERE, e, "An error occured trying to load a proxy into %s.%s", targ.getAnnotationInfo(), targ.getClassName(), targ.getObjectName());
                 throw new LoaderException(e);

@@ -30,14 +30,14 @@ public class MapGenScatteredFeature extends MapGenStructure
         this.scatteredFeatureSpawnList.add(new SpawnListEntry(EntityWitch.class, 1, 1, 1));
     }
 
-    public MapGenScatteredFeature(Map par1Map)
+    public MapGenScatteredFeature(final Map par1Map)
     {
         this();
-        Iterator iterator = par1Map.entrySet().iterator();
+        final Iterator iterator = par1Map.entrySet().iterator();
 
         while (iterator.hasNext())
         {
-            Entry entry = (Entry)iterator.next();
+            final Entry entry = (Entry)iterator.next();
 
             if (((String)entry.getKey()).equals("distance"))
             {
@@ -53,22 +53,24 @@ public class MapGenScatteredFeature extends MapGenStructure
 
     protected boolean canSpawnStructureAtCoords(int par1, int par2)
     {
-        int k = par1;
-        int l = par2;
+        int par11 = par1;
+        int par21 = par2;
+        final int k = par11;
+        final int l = par21;
 
-        if (par1 < 0)
+        if (par11 < 0)
         {
-            par1 -= this.maxDistanceBetweenScatteredFeatures - 1;
+            par11 -= this.maxDistanceBetweenScatteredFeatures - 1;
         }
 
-        if (par2 < 0)
+        if (par21 < 0)
         {
-            par2 -= this.maxDistanceBetweenScatteredFeatures - 1;
+            par21 -= this.maxDistanceBetweenScatteredFeatures - 1;
         }
 
-        int i1 = par1 / this.maxDistanceBetweenScatteredFeatures;
-        int j1 = par2 / this.maxDistanceBetweenScatteredFeatures;
-        Random random = this.worldObj.setRandomSeed(i1, j1, 14357617);
+        int i1 = par11 / this.maxDistanceBetweenScatteredFeatures;
+        int j1 = par21 / this.maxDistanceBetweenScatteredFeatures;
+        final Random random = this.worldObj.setRandomSeed(i1, j1, 14357617);
         i1 *= this.maxDistanceBetweenScatteredFeatures;
         j1 *= this.maxDistanceBetweenScatteredFeatures;
         i1 += random.nextInt(this.maxDistanceBetweenScatteredFeatures - this.minDistanceBetweenScatteredFeatures);
@@ -76,12 +78,12 @@ public class MapGenScatteredFeature extends MapGenStructure
 
         if (k == i1 && l == j1)
         {
-            BiomeGenBase biomegenbase = this.worldObj.getWorldChunkManager().getBiomeGenAt(k * 16 + 8, l * 16 + 8);
-            Iterator iterator = biomelist.iterator();
+            final BiomeGenBase biomegenbase = this.worldObj.getWorldChunkManager().getBiomeGenAt(k * 16 + 8, l * 16 + 8);
+            final Iterator iterator = biomelist.iterator();
 
             while (iterator.hasNext())
             {
-                BiomeGenBase biomegenbase1 = (BiomeGenBase)iterator.next();
+                final BiomeGenBase biomegenbase1 = (BiomeGenBase)iterator.next();
 
                 if (biomegenbase == biomegenbase1)
                 {
@@ -93,18 +95,18 @@ public class MapGenScatteredFeature extends MapGenStructure
         return false;
     }
 
-    protected StructureStart getStructureStart(int par1, int par2)
+    protected StructureStart getStructureStart(final int par1, final int par2)
     {
         return new StructureScatteredFeatureStart(this.worldObj, this.rand, par1, par2);
     }
 
-    public boolean func_143030_a(int par1, int par2, int par3)
+    public boolean func_143030_a(final int par1, final int par2, final int par3)
     {
-        StructureStart structurestart = this.func_143028_c(par1, par2, par3);
+        final StructureStart structurestart = this.func_143028_c(par1, par2, par3);
 
         if (structurestart != null && structurestart instanceof StructureScatteredFeatureStart && !structurestart.components.isEmpty())
         {
-            StructureComponent structurecomponent = (StructureComponent)structurestart.components.getFirst();
+            final StructureComponent structurecomponent = (StructureComponent)structurestart.components.getFirst();
             return structurecomponent instanceof ComponentScatteredFeatureSwampHut;
         }
         else

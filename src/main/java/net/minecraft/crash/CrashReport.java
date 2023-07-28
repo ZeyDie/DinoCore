@@ -31,7 +31,7 @@ public class CrashReport
     private boolean field_85059_f = true;
     private StackTraceElement[] field_85060_g = new StackTraceElement[0];
 
-    public CrashReport(String par1Str, Throwable par2Throwable)
+    public CrashReport(final String par1Str, final Throwable par2Throwable)
     {
         this.description = par1Str;
         this.cause = par2Throwable;
@@ -76,18 +76,18 @@ public class CrashReport
     /**
      * Gets the various sections of the crash report into the given StringBuilder
      */
-    public void getSectionsInStringBuilder(StringBuilder par1StringBuilder)
+    public void getSectionsInStringBuilder(final StringBuilder par1StringBuilder)
     {
         if (this.field_85060_g != null && this.field_85060_g.length > 0)
         {
             par1StringBuilder.append("-- Head --\n");
             par1StringBuilder.append("Stacktrace:\n");
-            StackTraceElement[] astacktraceelement = this.field_85060_g;
-            int i = astacktraceelement.length;
+            final StackTraceElement[] astacktraceelement = this.field_85060_g;
+            final int i = astacktraceelement.length;
 
             for (int j = 0; j < i; ++j)
             {
-                StackTraceElement stacktraceelement = astacktraceelement[j];
+                final StackTraceElement stacktraceelement = astacktraceelement[j];
                 par1StringBuilder.append("\t").append("at ").append(stacktraceelement.toString());
                 par1StringBuilder.append("\n");
             }
@@ -95,11 +95,11 @@ public class CrashReport
             par1StringBuilder.append("\n");
         }
 
-        Iterator iterator = this.crashReportSections.iterator();
+        final Iterator iterator = this.crashReportSections.iterator();
 
         while (iterator.hasNext())
         {
-            CrashReportCategory crashreportcategory = (CrashReportCategory)iterator.next();
+            final CrashReportCategory crashreportcategory = (CrashReportCategory)iterator.next();
             crashreportcategory.func_85072_a(par1StringBuilder);
             par1StringBuilder.append("\n\n");
         }
@@ -137,7 +137,7 @@ public class CrashReport
                     printwriter.close();
                 }
             }
-            catch (IOException ioexception)
+            catch (final IOException ioexception)
             {
                 ;
             }
@@ -151,7 +151,7 @@ public class CrashReport
      */
     public String getCompleteReport()
     {
-        StringBuilder stringbuilder = new StringBuilder();
+        final StringBuilder stringbuilder = new StringBuilder();
         stringbuilder.append("---- Minecraft Crash Report ----\n");
         stringbuilder.append("// ");
         stringbuilder.append(getWittyComment());
@@ -188,7 +188,7 @@ public class CrashReport
     /**
      * Saves the complete crash report to the given File.
      */
-    public boolean saveToFile(File par1File, ILogAgent par2ILogAgent)
+    public boolean saveToFile(final File par1File, final ILogAgent par2ILogAgent)
     {
         if (this.crashReportFile != null)
         {
@@ -203,13 +203,13 @@ public class CrashReport
 
             try
             {
-                FileWriter filewriter = new FileWriter(par1File);
+                final FileWriter filewriter = new FileWriter(par1File);
                 filewriter.write(this.getCompleteReport());
                 filewriter.close();
                 this.crashReportFile = par1File;
                 return true;
             }
-            catch (Throwable throwable)
+            catch (final Throwable throwable)
             {
                 par2ILogAgent.logSevereException("Could not save crash report to " + par1File, throwable);
                 return false;
@@ -225,7 +225,7 @@ public class CrashReport
     /**
      * Creates a CrashReportCategory
      */
-    public CrashReportCategory makeCategory(String par1Str)
+    public CrashReportCategory makeCategory(final String par1Str)
     {
         return this.makeCategoryDepth(par1Str, 1);
     }
@@ -233,18 +233,18 @@ public class CrashReport
     /**
      * Creates a CrashReportCategory for the given stack trace depth
      */
-    public CrashReportCategory makeCategoryDepth(String par1Str, int par2)
+    public CrashReportCategory makeCategoryDepth(final String par1Str, final int par2)
     {
-        CrashReportCategory crashreportcategory = new CrashReportCategory(this, par1Str);
+        final CrashReportCategory crashreportcategory = new CrashReportCategory(this, par1Str);
 
         if (this.field_85059_f)
         {
-            int j = crashreportcategory.func_85073_a(par2);
-            StackTraceElement[] astacktraceelement = this.cause.getStackTrace();
+            final int j = crashreportcategory.func_85073_a(par2);
+            final StackTraceElement[] astacktraceelement = this.cause.getStackTrace();
             StackTraceElement stacktraceelement = null;
             StackTraceElement stacktraceelement1 = null;
 
-            int idx = astacktraceelement.length - j; //Forge fix AIOOB exception.
+            final int idx = astacktraceelement.length - j; //Forge fix AIOOB exception.
             if (astacktraceelement != null && idx < astacktraceelement.length && idx >= 0)
             {
                 stacktraceelement = astacktraceelement[astacktraceelement.length - j];
@@ -259,7 +259,7 @@ public class CrashReport
 
             if (j > 0 && !this.crashReportSections.isEmpty())
             {
-                CrashReportCategory crashreportcategory1 = (CrashReportCategory)this.crashReportSections.get(this.crashReportSections.size() - 1);
+                final CrashReportCategory crashreportcategory1 = (CrashReportCategory)this.crashReportSections.get(this.crashReportSections.size() - 1);
                 crashreportcategory1.func_85070_b(j);
             }
             else if (astacktraceelement != null && astacktraceelement.length >= j)
@@ -282,13 +282,13 @@ public class CrashReport
      */
     private static String getWittyComment()
     {
-        String[] astring = new String[] {"Who set us up the TNT?", "Everything\'s going to plan. No, really, that was supposed to happen.", "Uh... Did I do that?", "Oops.", "Why did you do that?", "I feel sad now :(", "My bad.", "I\'m sorry, Dave.", "I let you down. Sorry :(", "On the bright side, I bought you a teddy bear!", "Daisy, daisy...", "Oh - I know what I did wrong!", "Hey, that tickles! Hehehe!", "I blame Dinnerbone.", "You should try our sister game, Minceraft!", "Don\'t be sad. I\'ll do better next time, I promise!", "Don\'t be sad, have a hug! <3", "I just don\'t know what went wrong :(", "Shall we play a game?", "Quite honestly, I wouldn\'t worry myself about that.", "I bet Cylons wouldn\'t have this problem.", "Sorry :(", "Surprise! Haha. Well, this is awkward.", "Would you like a cupcake?", "Hi. I\'m Minecraft, and I\'m a crashaholic.", "Ooh. Shiny.", "This doesn\'t make any sense!", "Why is it breaking :(", "Don\'t do that.", "Ouch. That hurt :(", "You\'re mean.", "This is a token for 1 free hug. Redeem at your nearest Mojangsta: [~~HUG~~]", "There are four lights!"};
+        final String[] astring = {"Who set us up the TNT?", "Everything\'s going to plan. No, really, that was supposed to happen.", "Uh... Did I do that?", "Oops.", "Why did you do that?", "I feel sad now :(", "My bad.", "I\'m sorry, Dave.", "I let you down. Sorry :(", "On the bright side, I bought you a teddy bear!", "Daisy, daisy...", "Oh - I know what I did wrong!", "Hey, that tickles! Hehehe!", "I blame Dinnerbone.", "You should try our sister game, Minceraft!", "Don\'t be sad. I\'ll do better next time, I promise!", "Don\'t be sad, have a hug! <3", "I just don\'t know what went wrong :(", "Shall we play a game?", "Quite honestly, I wouldn\'t worry myself about that.", "I bet Cylons wouldn\'t have this problem.", "Sorry :(", "Surprise! Haha. Well, this is awkward.", "Would you like a cupcake?", "Hi. I\'m Minecraft, and I\'m a crashaholic.", "Ooh. Shiny.", "This doesn\'t make any sense!", "Why is it breaking :(", "Don\'t do that.", "Ouch. That hurt :(", "You\'re mean.", "This is a token for 1 free hug. Redeem at your nearest Mojangsta: [~~HUG~~]", "There are four lights!"};
 
         try
         {
             return astring[(int)(System.nanoTime() % (long)astring.length)];
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
             return "Witty comment unavailable :(";
         }
@@ -297,9 +297,9 @@ public class CrashReport
     /**
      * Creates a crash report for the exception
      */
-    public static CrashReport makeCrashReport(Throwable par0Throwable, String par1Str)
+    public static CrashReport makeCrashReport(final Throwable par0Throwable, final String par1Str)
     {
-        CrashReport crashreport;
+        final CrashReport crashreport;
 
         if (par0Throwable instanceof ReportedException)
         {

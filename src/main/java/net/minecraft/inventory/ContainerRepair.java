@@ -45,7 +45,7 @@ public class ContainerRepair extends Container
     private InventoryPlayer player;
     // CraftBukkit end
 
-    public ContainerRepair(InventoryPlayer par1InventoryPlayer, World par2World, int par3, int par4, int par5, EntityPlayer par6EntityPlayer)
+    public ContainerRepair(final InventoryPlayer par1InventoryPlayer, final World par2World, final int par3, final int par4, final int par5, final EntityPlayer par6EntityPlayer)
     {
         this.player = par1InventoryPlayer; // CraftBukkit
         this.theWorld = par2World;
@@ -75,7 +75,7 @@ public class ContainerRepair extends Container
     /**
      * Callback for when the crafting matrix is changed.
      */
-    public void onCraftMatrixChanged(IInventory par1IInventory)
+    public void onCraftMatrixChanged(final IInventory par1IInventory)
     {
         super.onCraftMatrixChanged(par1IInventory);
 
@@ -90,10 +90,10 @@ public class ContainerRepair extends Container
      */
     public void updateRepairOutput()
     {
-        ItemStack itemstack = this.inputSlots.getStackInSlot(0);
+        final ItemStack itemstack = this.inputSlots.getStackInSlot(0);
         this.maximumCost = 0;
         int i = 0;
-        byte b0 = 0;
+        final byte b0 = 0;
         int j = 0;
 
         if (itemstack == null)
@@ -104,8 +104,8 @@ public class ContainerRepair extends Container
         else
         {
             ItemStack itemstack1 = itemstack.copy();
-            ItemStack itemstack2 = this.inputSlots.getStackInSlot(1);
-            Map map = EnchantmentHelper.getEnchantments(itemstack1);
+            final ItemStack itemstack2 = this.inputSlots.getStackInSlot(1);
+            final Map map = EnchantmentHelper.getEnchantments(itemstack1);
             boolean flag = false;
             int k = b0 + itemstack.getRepairCost() + (itemstack2 == null ? 0 : itemstack2.getRepairCost());
             this.stackSizeToBeUsedInRepair = 0;
@@ -156,7 +156,7 @@ public class ContainerRepair extends Container
                         l = itemstack.getMaxDamage() - itemstack.getItemDamageForDisplay();
                         i1 = itemstack2.getMaxDamage() - itemstack2.getItemDamageForDisplay();
                         j1 = i1 + itemstack1.getMaxDamage() * 12 / 100;
-                        int i2 = l + j1;
+                        final int i2 = l + j1;
                         k1 = itemstack1.getMaxDamage() - i2;
 
                         if (k1 < 0)
@@ -171,7 +171,7 @@ public class ContainerRepair extends Container
                         }
                     }
 
-                    Map map1 = EnchantmentHelper.getEnchantments(itemstack2);
+                    final Map map1 = EnchantmentHelper.getEnchantments(itemstack2);
                     iterator = map1.keySet().iterator();
 
                     while (iterator.hasNext())
@@ -180,7 +180,7 @@ public class ContainerRepair extends Container
                         enchantment = Enchantment.enchantmentsList[j1];
                         k1 = map.containsKey(Integer.valueOf(j1)) ? ((Integer)map.get(Integer.valueOf(j1))).intValue() : 0;
                         l1 = ((Integer)map1.get(Integer.valueOf(j1))).intValue();
-                        int j2;
+                        final int j2;
 
                         if (k1 == l1)
                         {
@@ -193,7 +193,7 @@ public class ContainerRepair extends Container
                         }
 
                         l1 = j2;
-                        int k2 = l1 - k1;
+                        final int k2 = l1 - k1;
                         boolean flag1 = enchantment.canApply(itemstack);
 
                         if (this.thePlayer.capabilities.isCreativeMode || itemstack.itemID == ItemEnchantedBook.enchantedBook.itemID)
@@ -201,11 +201,11 @@ public class ContainerRepair extends Container
                             flag1 = true;
                         }
 
-                        Iterator iterator1 = map.keySet().iterator();
+                        final Iterator iterator1 = map.keySet().iterator();
 
                         while (iterator1.hasNext())
                         {
-                            int l2 = ((Integer)iterator1.next()).intValue();
+                            final int l2 = ((Integer)iterator1.next()).intValue();
 
                             if (l2 != j1 && !enchantment.canApplyTogether(Enchantment.enchantmentsList[l2]))
                             {
@@ -374,14 +374,14 @@ public class ContainerRepair extends Container
         }
     }
 
-    public void addCraftingToCrafters(ICrafting par1ICrafting)
+    public void addCraftingToCrafters(final ICrafting par1ICrafting)
     {
         super.addCraftingToCrafters(par1ICrafting);
         par1ICrafting.sendProgressBarUpdate(this, 0, this.maximumCost);
     }
 
     @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2)
+    public void updateProgressBar(final int par1, final int par2)
     {
         if (par1 == 0)
         {
@@ -392,7 +392,7 @@ public class ContainerRepair extends Container
     /**
      * Called when the container is closed.
      */
-    public void onContainerClosed(EntityPlayer par1EntityPlayer)
+    public void onContainerClosed(final EntityPlayer par1EntityPlayer)
     {
         super.onContainerClosed(par1EntityPlayer);
 
@@ -400,7 +400,7 @@ public class ContainerRepair extends Container
         {
             for (int i = 0; i < this.inputSlots.getSizeInventory(); ++i)
             {
-                ItemStack itemstack = this.inputSlots.getStackInSlotOnClosing(i);
+                final ItemStack itemstack = this.inputSlots.getStackInSlotOnClosing(i);
 
                 if (itemstack != null)
                 {
@@ -410,7 +410,7 @@ public class ContainerRepair extends Container
         }
     }
 
-    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
+    public boolean canInteractWith(final EntityPlayer par1EntityPlayer)
     {
         if (!this.checkReachable)
         {
@@ -423,14 +423,14 @@ public class ContainerRepair extends Container
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+    public ItemStack transferStackInSlot(final EntityPlayer par1EntityPlayer, final int par2)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(par2);
+        final Slot slot = (Slot)this.inventorySlots.get(par2);
 
         if (slot != null && slot.getHasStack())
         {
-            ItemStack itemstack1 = slot.getStack();
+            final ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
             if (par2 == 2)
@@ -477,13 +477,13 @@ public class ContainerRepair extends Container
     /**
      * used by the Anvil GUI to update the Item Name being typed by the player
      */
-    public void updateItemName(String par1Str)
+    public void updateItemName(final String par1Str)
     {
         this.repairedItemName = par1Str;
 
         if (this.getSlot(2).getHasStack())
         {
-            ItemStack itemstack = this.getSlot(2).getStack();
+            final ItemStack itemstack = this.getSlot(2).getStack();
 
             if (StringUtils.isBlank(par1Str))
             {
@@ -498,12 +498,12 @@ public class ContainerRepair extends Container
         this.updateRepairOutput();
     }
 
-    static IInventory getRepairInputInventory(ContainerRepair par0ContainerRepair)
+    static IInventory getRepairInputInventory(final ContainerRepair par0ContainerRepair)
     {
         return par0ContainerRepair.inputSlots;
     }
 
-    static int getStackSizeUsedInRepair(ContainerRepair par0ContainerRepair)
+    static int getStackSizeUsedInRepair(final ContainerRepair par0ContainerRepair)
     {
         return par0ContainerRepair.stackSizeToBeUsedInRepair;
     }
@@ -516,7 +516,7 @@ public class ContainerRepair extends Container
             return bukkitEntity;
         }
 
-        org.bukkit.craftbukkit.v1_6_R3.inventory.CraftInventory inventory = new org.bukkit.craftbukkit.v1_6_R3.inventory.CraftInventoryAnvil(this.inputSlots, this.outputSlot);
+        final org.bukkit.craftbukkit.v1_6_R3.inventory.CraftInventory inventory = new org.bukkit.craftbukkit.v1_6_R3.inventory.CraftInventoryAnvil(this.inputSlots, this.outputSlot);
         bukkitEntity = new CraftInventoryView(this.player.player.getBukkitEntity(), inventory, this);
         return bukkitEntity;
     }

@@ -27,17 +27,17 @@ public class FMLLaunchHandler
     private FMLTweaker tweaker;
     private File minecraftHome;
 
-    public static void configureForClientLaunch(LaunchClassLoader loader, FMLTweaker tweaker)
+    public static void configureForClientLaunch(final LaunchClassLoader loader, final FMLTweaker tweaker)
     {
         instance(loader, tweaker).setupClient();
     }
 
-    public static void configureForServerLaunch(LaunchClassLoader loader, FMLTweaker tweaker)
+    public static void configureForServerLaunch(final LaunchClassLoader loader, final FMLTweaker tweaker)
     {
         instance(loader, tweaker).setupServer();
     }
 
-    private static FMLLaunchHandler instance(LaunchClassLoader launchLoader, FMLTweaker tweaker)
+    private static FMLLaunchHandler instance(final LaunchClassLoader launchLoader, final FMLTweaker tweaker)
     {
         if (INSTANCE == null)
         {
@@ -47,7 +47,7 @@ public class FMLLaunchHandler
 
     }
 
-    private FMLLaunchHandler(LaunchClassLoader launchLoader, FMLTweaker tweaker)
+    private FMLLaunchHandler(final LaunchClassLoader launchLoader, final FMLTweaker tweaker)
     {
         this.classLoader = launchLoader;
         this.tweaker = tweaker;
@@ -87,7 +87,7 @@ public class FMLLaunchHandler
         {
             CoreModManager.handleLaunch(minecraftHome, classLoader, tweaker);
         }
-        catch (Throwable t)
+        catch (final Throwable t)
         {
             t.printStackTrace();
             FMLRelaunchLog.log(Level.SEVERE, t, "An error occurred trying to configure the minecraft home at %s for Forge Mod Loader", minecraftHome.getAbsolutePath());

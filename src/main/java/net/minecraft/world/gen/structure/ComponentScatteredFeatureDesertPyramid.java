@@ -17,16 +17,16 @@ public class ComponentScatteredFeatureDesertPyramid extends ComponentScatteredFe
     private boolean[] field_74940_h = new boolean[4];
 
     /** List of items to generate in chests of Temples. */
-    public static final WeightedRandomChestContent[] itemsToGenerateInTemple = new WeightedRandomChestContent[] {new WeightedRandomChestContent(Item.diamond.itemID, 0, 1, 3, 3), new WeightedRandomChestContent(Item.ingotIron.itemID, 0, 1, 5, 10), new WeightedRandomChestContent(Item.ingotGold.itemID, 0, 2, 7, 15), new WeightedRandomChestContent(Item.emerald.itemID, 0, 1, 3, 2), new WeightedRandomChestContent(Item.bone.itemID, 0, 4, 6, 20), new WeightedRandomChestContent(Item.rottenFlesh.itemID, 0, 3, 7, 16), new WeightedRandomChestContent(Item.saddle.itemID, 0, 1, 1, 3), new WeightedRandomChestContent(Item.horseArmorIron.itemID, 0, 1, 1, 1), new WeightedRandomChestContent(Item.horseArmorGold.itemID, 0, 1, 1, 1), new WeightedRandomChestContent(Item.horseArmorDiamond.itemID, 0, 1, 1, 1)};
+    public static final WeightedRandomChestContent[] itemsToGenerateInTemple = {new WeightedRandomChestContent(Item.diamond.itemID, 0, 1, 3, 3), new WeightedRandomChestContent(Item.ingotIron.itemID, 0, 1, 5, 10), new WeightedRandomChestContent(Item.ingotGold.itemID, 0, 2, 7, 15), new WeightedRandomChestContent(Item.emerald.itemID, 0, 1, 3, 2), new WeightedRandomChestContent(Item.bone.itemID, 0, 4, 6, 20), new WeightedRandomChestContent(Item.rottenFlesh.itemID, 0, 3, 7, 16), new WeightedRandomChestContent(Item.saddle.itemID, 0, 1, 1, 3), new WeightedRandomChestContent(Item.horseArmorIron.itemID, 0, 1, 1, 1), new WeightedRandomChestContent(Item.horseArmorGold.itemID, 0, 1, 1, 1), new WeightedRandomChestContent(Item.horseArmorDiamond.itemID, 0, 1, 1, 1)};
 
     public ComponentScatteredFeatureDesertPyramid() {}
 
-    public ComponentScatteredFeatureDesertPyramid(Random par1Random, int par2, int par3)
+    public ComponentScatteredFeatureDesertPyramid(final Random par1Random, final int par2, final int par3)
     {
         super(par1Random, par2, 64, par3, 21, 15, 21);
     }
 
-    protected void func_143012_a(NBTTagCompound par1NBTTagCompound)
+    protected void func_143012_a(final NBTTagCompound par1NBTTagCompound)
     {
         super.func_143012_a(par1NBTTagCompound);
         par1NBTTagCompound.setBoolean("hasPlacedChest0", this.field_74940_h[0]);
@@ -35,7 +35,7 @@ public class ComponentScatteredFeatureDesertPyramid extends ComponentScatteredFe
         par1NBTTagCompound.setBoolean("hasPlacedChest3", this.field_74940_h[3]);
     }
 
-    protected void func_143011_b(NBTTagCompound par1NBTTagCompound)
+    protected void func_143011_b(final NBTTagCompound par1NBTTagCompound)
     {
         super.func_143011_b(par1NBTTagCompound);
         this.field_74940_h[0] = par1NBTTagCompound.getBoolean("hasPlacedChest0");
@@ -48,7 +48,7 @@ public class ComponentScatteredFeatureDesertPyramid extends ComponentScatteredFe
      * second Part of Structure generating, this for example places Spiderwebs, Mob Spawners, it closes Mineshafts at
      * the end, it adds Fences...
      */
-    public boolean addComponentParts(World par1World, Random par2Random, StructureBoundingBox par3StructureBoundingBox)
+    public boolean addComponentParts(final World par1World, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox)
     {
         this.fillWithBlocks(par1World, par3StructureBoundingBox, 0, -4, 0, this.scatteredFeatureSizeX - 1, 0, this.scatteredFeatureSizeZ - 1, Block.sandStone.blockID, Block.sandStone.blockID, false);
         int i;
@@ -71,10 +71,10 @@ public class ComponentScatteredFeatureDesertPyramid extends ComponentScatteredFe
 
         i = this.getMetadataWithOffset(Block.stairsSandStone.blockID, 3);
         j = this.getMetadataWithOffset(Block.stairsSandStone.blockID, 2);
-        int k = this.getMetadataWithOffset(Block.stairsSandStone.blockID, 0);
-        int l = this.getMetadataWithOffset(Block.stairsSandStone.blockID, 1);
-        byte b0 = 1;
-        byte b1 = 11;
+        final int k = this.getMetadataWithOffset(Block.stairsSandStone.blockID, 0);
+        final int l = this.getMetadataWithOffset(Block.stairsSandStone.blockID, 1);
+        final byte b0 = 1;
+        final byte b1 = 11;
         this.fillWithBlocks(par1World, par3StructureBoundingBox, 0, 0, 0, 4, 9, 4, Block.sandStone.blockID, 0, false);
         this.fillWithBlocks(par1World, par3StructureBoundingBox, 1, 10, 1, 3, 10, 3, Block.sandStone.blockID, Block.sandStone.blockID, false);
         this.placeBlockAtCurrentPosition(par1World, Block.stairsSandStone.blockID, i, 2, 10, 0, par3StructureBoundingBox);
@@ -240,13 +240,13 @@ public class ComponentScatteredFeatureDesertPyramid extends ComponentScatteredFe
         this.placeBlockAtCurrentPosition(par1World, Block.sandStone.blockID, 1, 10, -10, 13, par3StructureBoundingBox);
         this.placeBlockAtCurrentPosition(par1World, Block.sandStone.blockID, 2, 10, -11, 13, par3StructureBoundingBox);
 
-        ChestGenHooks info = ChestGenHooks.getInfo(PYRAMID_DESERT_CHEST);
+        final ChestGenHooks info = ChestGenHooks.getInfo(PYRAMID_DESERT_CHEST);
         for (i1 = 0; i1 < 4; ++i1)
         {
             if (!this.field_74940_h[i1])
             {
-                int j1 = Direction.offsetX[i1] * 2;
-                int k1 = Direction.offsetZ[i1] * 2;
+                final int j1 = Direction.offsetX[i1] * 2;
+                final int k1 = Direction.offsetZ[i1] * 2;
                 this.field_74940_h[i1] = this.generateStructureChestContents(par1World, par3StructureBoundingBox, par2Random, 10 + j1, -11, 10 + k1, info.getItems(par2Random), info.getCount(par2Random));
             }
         }

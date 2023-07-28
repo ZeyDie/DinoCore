@@ -42,12 +42,12 @@ public abstract class EntityAITarget extends EntityAIBase
     private int targetSearchDelay;
     private int field_75298_g;
 
-    public EntityAITarget(EntityCreature par1EntityCreature, boolean par2)
+    public EntityAITarget(final EntityCreature par1EntityCreature, final boolean par2)
     {
         this(par1EntityCreature, par2, false);
     }
 
-    public EntityAITarget(EntityCreature par1EntityCreature, boolean par2, boolean par3)
+    public EntityAITarget(final EntityCreature par1EntityCreature, final boolean par2, final boolean par3)
     {
         this.taskOwner = par1EntityCreature;
         this.shouldCheckSight = par2;
@@ -59,7 +59,7 @@ public abstract class EntityAITarget extends EntityAIBase
      */
     public boolean continueExecuting()
     {
-        EntityLivingBase entitylivingbase = this.taskOwner.getAttackTarget();
+        final EntityLivingBase entitylivingbase = this.taskOwner.getAttackTarget();
 
         if (entitylivingbase == null)
         {
@@ -71,7 +71,7 @@ public abstract class EntityAITarget extends EntityAIBase
         }
         else
         {
-            double d0 = this.getTargetDistance();
+            final double d0 = this.getTargetDistance();
 
             if (this.taskOwner.getDistanceSqToEntity(entitylivingbase) > d0 * d0)
             {
@@ -98,7 +98,7 @@ public abstract class EntityAITarget extends EntityAIBase
 
     protected double getTargetDistance()
     {
-        AttributeInstance attributeinstance = this.taskOwner.getEntityAttribute(SharedMonsterAttributes.followRange);
+        final AttributeInstance attributeinstance = this.taskOwner.getEntityAttribute(SharedMonsterAttributes.followRange);
         return attributeinstance == null ? 16.0D : attributeinstance.getAttributeValue();
     }
 
@@ -123,7 +123,7 @@ public abstract class EntityAITarget extends EntityAIBase
     /**
      * A method used to see if an entity is a suitable target through a number of checks.
      */
-    protected boolean isSuitableTarget(EntityLivingBase par1EntityLivingBase, boolean par2)
+    protected boolean isSuitableTarget(final EntityLivingBase par1EntityLivingBase, final boolean par2)
     {
         if (par1EntityLivingBase == null)
         {
@@ -215,7 +215,7 @@ public abstract class EntityAITarget extends EntityAIBase
                     reason = EntityTargetEvent.TargetReason.OWNER_ATTACKED_TARGET;
                 }
 
-                org.bukkit.event.entity.EntityTargetLivingEntityEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callEntityTargetLivingEvent(this.taskOwner, par1EntityLivingBase, reason);
+                final org.bukkit.event.entity.EntityTargetLivingEntityEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callEntityTargetLivingEvent(this.taskOwner, par1EntityLivingBase, reason);
 
                 if (event.isCancelled() || event.getTarget() == null)
                 {
@@ -240,10 +240,10 @@ public abstract class EntityAITarget extends EntityAIBase
     /**
      * Checks to see if this entity can find a short path to the given target.
      */
-    private boolean canEasilyReach(EntityLivingBase par1EntityLivingBase)
+    private boolean canEasilyReach(final EntityLivingBase par1EntityLivingBase)
     {
         this.targetSearchDelay = 10 + this.taskOwner.getRNG().nextInt(5);
-        PathEntity pathentity = this.taskOwner.getNavigator().getPathToEntityLiving(par1EntityLivingBase);
+        final PathEntity pathentity = this.taskOwner.getNavigator().getPathToEntityLiving(par1EntityLivingBase);
 
         if (pathentity == null)
         {
@@ -251,7 +251,7 @@ public abstract class EntityAITarget extends EntityAIBase
         }
         else
         {
-            PathPoint pathpoint = pathentity.getFinalPathPoint();
+            final PathPoint pathpoint = pathentity.getFinalPathPoint();
 
             if (pathpoint == null)
             {
@@ -259,8 +259,8 @@ public abstract class EntityAITarget extends EntityAIBase
             }
             else
             {
-                int i = pathpoint.xCoord - MathHelper.floor_double(par1EntityLivingBase.posX);
-                int j = pathpoint.zCoord - MathHelper.floor_double(par1EntityLivingBase.posZ);
+                final int i = pathpoint.xCoord - MathHelper.floor_double(par1EntityLivingBase.posX);
+                final int j = pathpoint.zCoord - MathHelper.floor_double(par1EntityLivingBase.posZ);
                 return (double)(i * i + j * j) <= 2.25D;
             }
         }

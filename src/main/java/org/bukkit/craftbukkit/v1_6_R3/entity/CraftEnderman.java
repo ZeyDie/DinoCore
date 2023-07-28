@@ -8,7 +8,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.material.MaterialData;
 
 public class CraftEnderman extends CraftMonster implements Enderman {
-    public CraftEnderman(CraftServer server, net.minecraft.entity.monster.EntityEnderman entity) {
+    public CraftEnderman(final CraftServer server, final net.minecraft.entity.monster.EntityEnderman entity) {
         super(server, entity);
     }
 
@@ -16,7 +16,7 @@ public class CraftEnderman extends CraftMonster implements Enderman {
         return Material.getMaterial(getHandle().getCarried()).getNewData((byte) getHandle().getCarryingData());
     }
 
-    public void setCarriedMaterial(MaterialData data) {
+    public void setCarriedMaterial(final MaterialData data) {
         getHandle().setCarried(data.getItemTypeId());
         getHandle().setCarryingData(data.getData());
     }

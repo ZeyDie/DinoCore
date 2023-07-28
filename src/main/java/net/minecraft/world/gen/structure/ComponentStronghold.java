@@ -16,18 +16,18 @@ abstract class ComponentStronghold extends StructureComponent
         this.field_143013_d = EnumDoor.OPENING;
     }
 
-    protected ComponentStronghold(int par1)
+    protected ComponentStronghold(final int par1)
     {
         super(par1);
         this.field_143013_d = EnumDoor.OPENING;
     }
 
-    protected void func_143012_a(NBTTagCompound par1NBTTagCompound)
+    protected void func_143012_a(final NBTTagCompound par1NBTTagCompound)
     {
         par1NBTTagCompound.setString("EntryDoor", this.field_143013_d.name());
     }
 
-    protected void func_143011_b(NBTTagCompound par1NBTTagCompound)
+    protected void func_143011_b(final NBTTagCompound par1NBTTagCompound)
     {
         this.field_143013_d = EnumDoor.valueOf(par1NBTTagCompound.getString("EntryDoor"));
     }
@@ -35,7 +35,7 @@ abstract class ComponentStronghold extends StructureComponent
     /**
      * builds a door of the enumerated types (empty opening is a door)
      */
-    protected void placeDoor(World par1World, Random par2Random, StructureBoundingBox par3StructureBoundingBox, EnumDoor par4EnumDoor, int par5, int par6, int par7)
+    protected void placeDoor(final World par1World, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox, final EnumDoor par4EnumDoor, final int par5, final int par6, final int par7)
     {
         switch (EnumDoorHelper.doorEnum[par4EnumDoor.ordinal()])
         {
@@ -80,9 +80,9 @@ abstract class ComponentStronghold extends StructureComponent
         }
     }
 
-    protected EnumDoor getRandomDoor(Random par1Random)
+    protected EnumDoor getRandomDoor(final Random par1Random)
     {
-        int i = par1Random.nextInt(5);
+        final int i = par1Random.nextInt(5);
 
         switch (i)
         {
@@ -102,7 +102,7 @@ abstract class ComponentStronghold extends StructureComponent
     /**
      * Gets the next component in any cardinal direction
      */
-    protected StructureComponent getNextComponentNormal(ComponentStrongholdStairs2 par1ComponentStrongholdStairs2, List par2List, Random par3Random, int par4, int par5)
+    protected StructureComponent getNextComponentNormal(final ComponentStrongholdStairs2 par1ComponentStrongholdStairs2, final List par2List, final Random par3Random, final int par4, final int par5)
     {
         switch (this.coordBaseMode)
         {
@@ -122,7 +122,7 @@ abstract class ComponentStronghold extends StructureComponent
     /**
      * Gets the next component in the +/- X direction
      */
-    protected StructureComponent getNextComponentX(ComponentStrongholdStairs2 par1ComponentStrongholdStairs2, List par2List, Random par3Random, int par4, int par5)
+    protected StructureComponent getNextComponentX(final ComponentStrongholdStairs2 par1ComponentStrongholdStairs2, final List par2List, final Random par3Random, final int par4, final int par5)
     {
         switch (this.coordBaseMode)
         {
@@ -142,7 +142,7 @@ abstract class ComponentStronghold extends StructureComponent
     /**
      * Gets the next component in the +/- Z direction
      */
-    protected StructureComponent getNextComponentZ(ComponentStrongholdStairs2 par1ComponentStrongholdStairs2, List par2List, Random par3Random, int par4, int par5)
+    protected StructureComponent getNextComponentZ(final ComponentStrongholdStairs2 par1ComponentStrongholdStairs2, final List par2List, final Random par3Random, final int par4, final int par5)
     {
         switch (this.coordBaseMode)
         {
@@ -162,7 +162,7 @@ abstract class ComponentStronghold extends StructureComponent
     /**
      * returns false if the Structure Bounding Box goes below 10
      */
-    protected static boolean canStrongholdGoDeeper(StructureBoundingBox par0StructureBoundingBox)
+    protected static boolean canStrongholdGoDeeper(final StructureBoundingBox par0StructureBoundingBox)
     {
         return par0StructureBoundingBox != null && par0StructureBoundingBox.minY > 10;
     }

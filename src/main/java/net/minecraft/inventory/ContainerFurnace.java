@@ -31,13 +31,13 @@ public class ContainerFurnace extends Container
             return bukkitEntity;
         }
 
-        CraftInventoryFurnace inventory = new CraftInventoryFurnace(this.furnace);
+        final CraftInventoryFurnace inventory = new CraftInventoryFurnace(this.furnace);
         bukkitEntity = new CraftInventoryView(this.player.player.getBukkitEntity(), inventory, this);
         return bukkitEntity;
     }
     // CraftBukkit end
 
-    public ContainerFurnace(InventoryPlayer par1InventoryPlayer, TileEntityFurnace par2TileEntityFurnace)
+    public ContainerFurnace(final InventoryPlayer par1InventoryPlayer, final TileEntityFurnace par2TileEntityFurnace)
     {
         this.furnace = par2TileEntityFurnace;
         this.addSlotToContainer(new Slot(par2TileEntityFurnace, 0, 56, 17));
@@ -60,7 +60,7 @@ public class ContainerFurnace extends Container
         }
     }
 
-    public void addCraftingToCrafters(ICrafting par1ICrafting)
+    public void addCraftingToCrafters(final ICrafting par1ICrafting)
     {
         super.addCraftingToCrafters(par1ICrafting);
         par1ICrafting.sendProgressBarUpdate(this, 0, this.furnace.furnaceCookTime);
@@ -77,7 +77,7 @@ public class ContainerFurnace extends Container
 
         for (int i = 0; i < this.crafters.size(); ++i)
         {
-            ICrafting icrafting = (ICrafting)this.crafters.get(i);
+            final ICrafting icrafting = (ICrafting)this.crafters.get(i);
 
             if (this.lastCookTime != this.furnace.furnaceCookTime)
             {
@@ -101,7 +101,7 @@ public class ContainerFurnace extends Container
     }
 
     @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2)
+    public void updateProgressBar(final int par1, final int par2)
     {
         if (par1 == 0)
         {
@@ -119,7 +119,7 @@ public class ContainerFurnace extends Container
         }
     }
 
-    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
+    public boolean canInteractWith(final EntityPlayer par1EntityPlayer)
     {
         if (!this.checkReachable)
         {
@@ -132,14 +132,14 @@ public class ContainerFurnace extends Container
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+    public ItemStack transferStackInSlot(final EntityPlayer par1EntityPlayer, final int par2)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(par2);
+        final Slot slot = (Slot)this.inventorySlots.get(par2);
 
         if (slot != null && slot.getHasStack())
         {
-            ItemStack itemstack1 = slot.getStack();
+            final ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
             if (par2 == 2)

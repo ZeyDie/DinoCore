@@ -24,12 +24,12 @@ public class CraftChest extends CraftBlockState implements Chest {
     }
 
     public Inventory getInventory() {
-        int x = getX();
-        int y = getY();
-        int z = getZ();
+        final int x = getX();
+        final int y = getY();
+        final int z = getZ();
         // The logic here is basically identical to the logic in BlockChest.interact
         CraftInventory inventory = new CraftInventory(chest);
-        int id;
+        final int id;
         if (world.getBlockTypeIdAt(x, y, z) == Material.CHEST.getId()) {
             id = Material.CHEST.getId();
         } else if (world.getBlockTypeIdAt(x, y, z) == Material.TRAPPED_CHEST.getId()) {
@@ -39,27 +39,27 @@ public class CraftChest extends CraftBlockState implements Chest {
         }
 
         if (world.getBlockTypeIdAt(x - 1, y, z) == id) {
-            CraftInventory left = new CraftInventory((net.minecraft.tileentity.TileEntityChest)world.getHandle().getBlockTileEntity(x - 1, y, z));
+            final CraftInventory left = new CraftInventory((net.minecraft.tileentity.TileEntityChest)world.getHandle().getBlockTileEntity(x - 1, y, z));
             inventory = new CraftInventoryDoubleChest(left, inventory);
         }
         if (world.getBlockTypeIdAt(x + 1, y, z) == id) {
-            CraftInventory right = new CraftInventory((net.minecraft.tileentity.TileEntityChest) world.getHandle().getBlockTileEntity(x + 1, y, z));
+            final CraftInventory right = new CraftInventory((net.minecraft.tileentity.TileEntityChest) world.getHandle().getBlockTileEntity(x + 1, y, z));
             inventory = new CraftInventoryDoubleChest(inventory, right);
         }
         if (world.getBlockTypeIdAt(x, y, z - 1) == id) {
-            CraftInventory left = new CraftInventory((net.minecraft.tileentity.TileEntityChest) world.getHandle().getBlockTileEntity(x, y, z - 1));
+            final CraftInventory left = new CraftInventory((net.minecraft.tileentity.TileEntityChest) world.getHandle().getBlockTileEntity(x, y, z - 1));
             inventory = new CraftInventoryDoubleChest(left, inventory);
         }
         if (world.getBlockTypeIdAt(x, y, z + 1) == id) {
-            CraftInventory right = new CraftInventory((net.minecraft.tileentity.TileEntityChest) world.getHandle().getBlockTileEntity(x, y, z + 1));
+            final CraftInventory right = new CraftInventory((net.minecraft.tileentity.TileEntityChest) world.getHandle().getBlockTileEntity(x, y, z + 1));
             inventory = new CraftInventoryDoubleChest(inventory, right);
         }
         return inventory;
     }
 
     @Override
-    public boolean update(boolean force, boolean applyPhysics) {
-        boolean result = super.update(force, applyPhysics);
+    public boolean update(final boolean force, final boolean applyPhysics) {
+        final boolean result = super.update(force, applyPhysics);
 
         if (result) {
             chest.onInventoryChanged();

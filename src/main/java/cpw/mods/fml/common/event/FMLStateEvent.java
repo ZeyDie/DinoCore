@@ -18,7 +18,7 @@ import cpw.mods.fml.relauncher.Side;
 
 public abstract class FMLStateEvent extends FMLEvent
 {
-    public FMLStateEvent(Object... data)
+    public FMLStateEvent(final Object... data)
     {
 
     }

@@ -34,7 +34,7 @@ public class BlockDispenser extends BlockContainer
     protected Icon field_96473_e;
     public static boolean eventFired = false; // CraftBukkit
 
-    protected BlockDispenser(int par1)
+    protected BlockDispenser(final int par1)
     {
         super(par1, Material.rock);
         this.setCreativeTab(CreativeTabs.tabRedstone);
@@ -43,7 +43,7 @@ public class BlockDispenser extends BlockContainer
     /**
      * How many world ticks before ticking
      */
-    public int tickRate(World par1World)
+    public int tickRate(final World par1World)
     {
         return 4;
     }
@@ -51,7 +51,7 @@ public class BlockDispenser extends BlockContainer
     /**
      * Called whenever the block is added into the world. Args: world, x, y, z
      */
-    public void onBlockAdded(World par1World, int par2, int par3, int par4)
+    public void onBlockAdded(final World par1World, final int par2, final int par3, final int par4)
     {
         super.onBlockAdded(par1World, par2, par3, par4);
         this.setDispenserDefaultDirection(par1World, par2, par3, par4);
@@ -61,14 +61,14 @@ public class BlockDispenser extends BlockContainer
      * sets Dispenser block direction so that the front faces an non-opaque block; chooses west to be direction if all
      * surrounding blocks are opaque.
      */
-    private void setDispenserDefaultDirection(World par1World, int par2, int par3, int par4)
+    private void setDispenserDefaultDirection(final World par1World, final int par2, final int par3, final int par4)
     {
         if (!par1World.isRemote)
         {
-            int l = par1World.getBlockId(par2, par3, par4 - 1);
-            int i1 = par1World.getBlockId(par2, par3, par4 + 1);
-            int j1 = par1World.getBlockId(par2 - 1, par3, par4);
-            int k1 = par1World.getBlockId(par2 + 1, par3, par4);
+            final int l = par1World.getBlockId(par2, par3, par4 - 1);
+            final int i1 = par1World.getBlockId(par2, par3, par4 + 1);
+            final int j1 = par1World.getBlockId(par2 - 1, par3, par4);
+            final int k1 = par1World.getBlockId(par2 + 1, par3, par4);
             byte b0 = 3;
 
             if (Block.opaqueCubeLookup[l] && !Block.opaqueCubeLookup[i1])
@@ -100,9 +100,9 @@ public class BlockDispenser extends BlockContainer
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
-        int k = par2 & 7;
+        final int k = par2 & 7;
         return par1 == k ? (k != 1 && k != 0 ? this.furnaceFrontIcon : this.field_96473_e) : (k != 1 && k != 0 ? (par1 != 1 && par1 != 0 ? this.blockIcon : this.furnaceTopIcon) : this.furnaceTopIcon);
     }
 
@@ -112,7 +112,7 @@ public class BlockDispenser extends BlockContainer
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.blockIcon = par1IconRegister.registerIcon("furnace_side");
         this.furnaceTopIcon = par1IconRegister.registerIcon("furnace_top");
@@ -123,7 +123,7 @@ public class BlockDispenser extends BlockContainer
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9)
     {
         if (par1World.isRemote)
         {
@@ -131,7 +131,7 @@ public class BlockDispenser extends BlockContainer
         }
         else
         {
-            TileEntityDispenser tileentitydispenser = (TileEntityDispenser)par1World.getBlockTileEntity(par2, par3, par4);
+            final TileEntityDispenser tileentitydispenser = (TileEntityDispenser)par1World.getBlockTileEntity(par2, par3, par4);
 
             if (tileentitydispenser != null)
             {
@@ -143,14 +143,14 @@ public class BlockDispenser extends BlockContainer
     }
 
     // CraftBukkit - private -> public
-    public void dispense(World par1World, int par2, int par3, int par4)
+    public void dispense(final World par1World, final int par2, final int par3, final int par4)
     {
-        BlockSourceImpl blocksourceimpl = new BlockSourceImpl(par1World, par2, par3, par4);
-        TileEntityDispenser tileentitydispenser = (TileEntityDispenser)blocksourceimpl.getBlockTileEntity();
+        final BlockSourceImpl blocksourceimpl = new BlockSourceImpl(par1World, par2, par3, par4);
+        final TileEntityDispenser tileentitydispenser = (TileEntityDispenser)blocksourceimpl.getBlockTileEntity();
 
         if (tileentitydispenser != null)
         {
-            int l = tileentitydispenser.getRandomStackFromInventory();
+            final int l = tileentitydispenser.getRandomStackFromInventory();
 
             if (l < 0)
             {
@@ -158,12 +158,12 @@ public class BlockDispenser extends BlockContainer
             }
             else
             {
-                ItemStack itemstack = tileentitydispenser.getStackInSlot(l);
-                IBehaviorDispenseItem ibehaviordispenseitem = this.getBehaviorForItemStack(itemstack);
+                final ItemStack itemstack = tileentitydispenser.getStackInSlot(l);
+                final IBehaviorDispenseItem ibehaviordispenseitem = this.getBehaviorForItemStack(itemstack);
 
                 if (ibehaviordispenseitem != IBehaviorDispenseItem.itemDispenseBehaviorProvider)
                 {
-                    ItemStack itemstack1 = ibehaviordispenseitem.dispense(blocksourceimpl, itemstack);
+                    final ItemStack itemstack1 = ibehaviordispenseitem.dispense(blocksourceimpl, itemstack);
                     eventFired = false; // CraftBukkit - reset event status
                     tileentitydispenser.setInventorySlotContents(l, itemstack1.stackSize == 0 ? null : itemstack1);
                 }
@@ -174,7 +174,7 @@ public class BlockDispenser extends BlockContainer
     /**
      * Returns the behavior for the given ItemStack.
      */
-    protected IBehaviorDispenseItem getBehaviorForItemStack(ItemStack par1ItemStack)
+    protected IBehaviorDispenseItem getBehaviorForItemStack(final ItemStack par1ItemStack)
     {
         return (IBehaviorDispenseItem)dispenseBehaviorRegistry.getObject(par1ItemStack.getItem());
     }
@@ -183,11 +183,11 @@ public class BlockDispenser extends BlockContainer
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
-        boolean flag = par1World.isBlockIndirectlyGettingPowered(par2, par3, par4) || par1World.isBlockIndirectlyGettingPowered(par2, par3 + 1, par4);
-        int i1 = par1World.getBlockMetadata(par2, par3, par4);
-        boolean flag1 = (i1 & 8) != 0;
+        final boolean flag = par1World.isBlockIndirectlyGettingPowered(par2, par3, par4) || par1World.isBlockIndirectlyGettingPowered(par2, par3 + 1, par4);
+        final int i1 = par1World.getBlockMetadata(par2, par3, par4);
+        final boolean flag1 = (i1 & 8) != 0;
 
         if (flag && !flag1)
         {
@@ -203,7 +203,7 @@ public class BlockDispenser extends BlockContainer
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (!par1World.isRemote)
         {
@@ -214,7 +214,7 @@ public class BlockDispenser extends BlockContainer
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World par1World)
+    public TileEntity createNewTileEntity(final World par1World)
     {
         return new TileEntityDispenser();
     }
@@ -222,9 +222,9 @@ public class BlockDispenser extends BlockContainer
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
+    public void onBlockPlacedBy(final World par1World, final int par2, final int par3, final int par4, final EntityLivingBase par5EntityLivingBase, final ItemStack par6ItemStack)
     {
-        int l = BlockPistonBase.determineOrientation(par1World, par2, par3, par4, par5EntityLivingBase);
+        final int l = BlockPistonBase.determineOrientation(par1World, par2, par3, par4, par5EntityLivingBase);
         par1World.setBlockMetadataWithNotify(par2, par3, par4, l, 2);
 
         if (par6ItemStack.hasDisplayName())
@@ -238,21 +238,21 @@ public class BlockDispenser extends BlockContainer
      * different metadata value, but before the new metadata value is set. Args: World, x, y, z, old block ID, old
      * metadata
      */
-    public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    public void breakBlock(final World par1World, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
-        TileEntityDispenser tileentitydispenser = (TileEntityDispenser)par1World.getBlockTileEntity(par2, par3, par4);
+        final TileEntityDispenser tileentitydispenser = (TileEntityDispenser)par1World.getBlockTileEntity(par2, par3, par4);
 
         if (tileentitydispenser != null)
         {
             for (int j1 = 0; j1 < tileentitydispenser.getSizeInventory(); ++j1)
             {
-                ItemStack itemstack = tileentitydispenser.getStackInSlot(j1);
+                final ItemStack itemstack = tileentitydispenser.getStackInSlot(j1);
 
                 if (itemstack != null)
                 {
-                    float f = this.random.nextFloat() * 0.8F + 0.1F;
-                    float f1 = this.random.nextFloat() * 0.8F + 0.1F;
-                    float f2 = this.random.nextFloat() * 0.8F + 0.1F;
+                    final float f = this.random.nextFloat() * 0.8F + 0.1F;
+                    final float f1 = this.random.nextFloat() * 0.8F + 0.1F;
+                    final float f2 = this.random.nextFloat() * 0.8F + 0.1F;
 
                     while (itemstack.stackSize > 0)
                     {
@@ -264,14 +264,14 @@ public class BlockDispenser extends BlockContainer
                         }
 
                         itemstack.stackSize -= k1;
-                        EntityItem entityitem = new EntityItem(par1World, (double)((float)par2 + f), (double)((float)par3 + f1), (double)((float)par4 + f2), new ItemStack(itemstack.itemID, k1, itemstack.getItemDamage()));
+                        final EntityItem entityitem = new EntityItem(par1World, (double)((float)par2 + f), (double)((float)par3 + f1), (double)((float)par4 + f2), new ItemStack(itemstack.itemID, k1, itemstack.getItemDamage()));
 
                         if (itemstack.hasTagCompound())
                         {
                             entityitem.getEntityItem().setTagCompound((NBTTagCompound)itemstack.getTagCompound().copy());
                         }
 
-                        float f3 = 0.05F;
+                        final float f3 = 0.05F;
                         entityitem.motionX = (double)((float)this.random.nextGaussian() * f3);
                         entityitem.motionY = (double)((float)this.random.nextGaussian() * f3 + 0.2F);
                         entityitem.motionZ = (double)((float)this.random.nextGaussian() * f3);
@@ -286,16 +286,16 @@ public class BlockDispenser extends BlockContainer
         super.breakBlock(par1World, par2, par3, par4, par5, par6);
     }
 
-    public static IPosition getIPositionFromBlockSource(IBlockSource par0IBlockSource)
+    public static IPosition getIPositionFromBlockSource(final IBlockSource par0IBlockSource)
     {
-        EnumFacing enumfacing = getFacing(par0IBlockSource.getBlockMetadata());
-        double d0 = par0IBlockSource.getX() + 0.7D * (double)enumfacing.getFrontOffsetX();
-        double d1 = par0IBlockSource.getY() + 0.7D * (double)enumfacing.getFrontOffsetY();
-        double d2 = par0IBlockSource.getZ() + 0.7D * (double)enumfacing.getFrontOffsetZ();
+        final EnumFacing enumfacing = getFacing(par0IBlockSource.getBlockMetadata());
+        final double d0 = par0IBlockSource.getX() + 0.7D * (double)enumfacing.getFrontOffsetX();
+        final double d1 = par0IBlockSource.getY() + 0.7D * (double)enumfacing.getFrontOffsetY();
+        final double d2 = par0IBlockSource.getZ() + 0.7D * (double)enumfacing.getFrontOffsetZ();
         return new PositionImpl(d0, d1, d2);
     }
 
-    public static EnumFacing getFacing(int par0)
+    public static EnumFacing getFacing(final int par0)
     {
         return EnumFacing.getFront(par0 & 7);
     }
@@ -313,7 +313,7 @@ public class BlockDispenser extends BlockContainer
      * If hasComparatorInputOverride returns true, the return value from this is used instead of the redstone signal
      * strength when this block inputs to a comparator.
      */
-    public int getComparatorInputOverride(World par1World, int par2, int par3, int par4, int par5)
+    public int getComparatorInputOverride(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         return Container.calcRedstoneFromInventory((IInventory)par1World.getBlockTileEntity(par2, par3, par4));
     }

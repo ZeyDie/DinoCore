@@ -40,13 +40,13 @@ public enum LoaderState
     private Class<? extends FMLStateEvent> eventClass;
     private String name;
 
-    private LoaderState(String name, Class<? extends FMLStateEvent> event)
+    private LoaderState(final String name, final Class<? extends FMLStateEvent> event)
     {
         this.name = name;
         this.eventClass = event;
     }
 
-    public LoaderState transition(boolean errored)
+    public LoaderState transition(final boolean errored)
     {
         if (errored)
         {
@@ -65,13 +65,13 @@ public enum LoaderState
         return eventClass != null;
     }
 
-    public FMLStateEvent getEvent(Object... eventData)
+    public FMLStateEvent getEvent(final Object... eventData)
     {
         try
         {
             return eventClass.getConstructor(Object[].class).newInstance((Object)eventData);
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             throw Throwables.propagate(e);
         }
@@ -95,7 +95,7 @@ public enum LoaderState
 
         private String label;
 
-        private ModState(String label)
+        private ModState(final String label)
         {
             this.label = label;
         }

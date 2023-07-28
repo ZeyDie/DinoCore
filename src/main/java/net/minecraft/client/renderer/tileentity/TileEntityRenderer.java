@@ -70,11 +70,11 @@ public class TileEntityRenderer
         this.specialRendererMap.put(TileEntityEndPortal.class, new RenderEndPortal());
         this.specialRendererMap.put(TileEntityBeacon.class, new TileEntityBeaconRenderer());
         this.specialRendererMap.put(TileEntitySkull.class, new TileEntitySkullRenderer());
-        Iterator iterator = this.specialRendererMap.values().iterator();
+        final Iterator iterator = this.specialRendererMap.values().iterator();
 
         while (iterator.hasNext())
         {
-            TileEntitySpecialRenderer tileentityspecialrenderer = (TileEntitySpecialRenderer)iterator.next();
+            final TileEntitySpecialRenderer tileentityspecialrenderer = (TileEntitySpecialRenderer)iterator.next();
             tileentityspecialrenderer.setTileEntityRenderer(this);
         }
     }
@@ -82,7 +82,7 @@ public class TileEntityRenderer
     /**
      * Returns the TileEntitySpecialRenderer used to render this TileEntity class, or null if it has no special renderer
      */
-    public TileEntitySpecialRenderer getSpecialRendererForClass(Class par1Class)
+    public TileEntitySpecialRenderer getSpecialRendererForClass(final Class par1Class)
     {
         TileEntitySpecialRenderer tileentityspecialrenderer = (TileEntitySpecialRenderer)this.specialRendererMap.get(par1Class);
 
@@ -98,7 +98,7 @@ public class TileEntityRenderer
     /**
      * Returns true if this TileEntity instance has a TileEntitySpecialRenderer associated with it, false otherwise.
      */
-    public boolean hasSpecialRenderer(TileEntity par1TileEntity)
+    public boolean hasSpecialRenderer(final TileEntity par1TileEntity)
     {
         return this.getSpecialRendererForEntity(par1TileEntity) != null;
     }
@@ -107,7 +107,7 @@ public class TileEntityRenderer
      * Returns the TileEntitySpecialRenderer used to render this TileEntity instance, or null if it has no special
      * renderer
      */
-    public TileEntitySpecialRenderer getSpecialRendererForEntity(TileEntity par1TileEntity)
+    public TileEntitySpecialRenderer getSpecialRendererForEntity(final TileEntity par1TileEntity)
     {
         return par1TileEntity == null ? null : this.getSpecialRendererForClass(par1TileEntity.getClass());
     }
@@ -117,7 +117,7 @@ public class TileEntityRenderer
      * bound EntityLiving's interpolated pitch, yaw and position. Args: world, renderengine, fontrenderer, entityliving,
      * partialTickTime
      */
-    public void cacheActiveRenderInfo(World par1World, TextureManager par2TextureManager, FontRenderer par3FontRenderer, EntityLivingBase par4EntityLivingBase, float par5)
+    public void cacheActiveRenderInfo(final World par1World, final TextureManager par2TextureManager, final FontRenderer par3FontRenderer, final EntityLivingBase par4EntityLivingBase, final float par5)
     {
         if (this.worldObj != par1World)
         {
@@ -137,13 +137,13 @@ public class TileEntityRenderer
     /**
      * Render this TileEntity at its current position from the player
      */
-    public void renderTileEntity(TileEntity par1TileEntity, float par2)
+    public void renderTileEntity(final TileEntity par1TileEntity, final float par2)
     {
         if (par1TileEntity.getDistanceFrom(this.playerX, this.playerY, this.playerZ) < par1TileEntity.getMaxRenderDistanceSquared())
         {
-            int i = this.worldObj.getLightBrightnessForSkyBlocks(par1TileEntity.xCoord, par1TileEntity.yCoord, par1TileEntity.zCoord, 0);
-            int j = i % 65536;
-            int k = i / 65536;
+            final int i = this.worldObj.getLightBrightnessForSkyBlocks(par1TileEntity.xCoord, par1TileEntity.yCoord, par1TileEntity.zCoord, 0);
+            final int j = i % 65536;
+            final int k = i / 65536;
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j / 1.0F, (float)k / 1.0F);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.renderTileEntityAt(par1TileEntity, (double)par1TileEntity.xCoord - staticPlayerX, (double)par1TileEntity.yCoord - staticPlayerY, (double)par1TileEntity.zCoord - staticPlayerZ, par2);
@@ -153,9 +153,9 @@ public class TileEntityRenderer
     /**
      * Render this TileEntity at a given set of coordinates
      */
-    public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8)
+    public void renderTileEntityAt(final TileEntity par1TileEntity, final double par2, final double par4, final double par6, final float par8)
     {
-        TileEntitySpecialRenderer tileentityspecialrenderer = this.getSpecialRendererForEntity(par1TileEntity);
+        final TileEntitySpecialRenderer tileentityspecialrenderer = this.getSpecialRendererForEntity(par1TileEntity);
 
         if (tileentityspecialrenderer != null)
         {
@@ -163,10 +163,10 @@ public class TileEntityRenderer
             {
                 tileentityspecialrenderer.renderTileEntityAt(par1TileEntity, par2, par4, par6, par8);
             }
-            catch (Throwable throwable)
+            catch (final Throwable throwable)
             {
-                CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Rendering Tile Entity");
-                CrashReportCategory crashreportcategory = crashreport.makeCategory("Tile Entity Details");
+                final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Rendering Tile Entity");
+                final CrashReportCategory crashreportcategory = crashreport.makeCategory("Tile Entity Details");
                 par1TileEntity.func_85027_a(crashreportcategory);
                 throw new ReportedException(crashreport);
             }
@@ -176,14 +176,14 @@ public class TileEntityRenderer
     /**
      * Sets the world used by all TileEntitySpecialRender instances and notifies them of this change.
      */
-    public void setWorld(World par1World)
+    public void setWorld(final World par1World)
     {
         this.worldObj = par1World;
-        Iterator iterator = this.specialRendererMap.values().iterator();
+        final Iterator iterator = this.specialRendererMap.values().iterator();
 
         while (iterator.hasNext())
         {
-            TileEntitySpecialRenderer tileentityspecialrenderer = (TileEntitySpecialRenderer)iterator.next();
+            final TileEntitySpecialRenderer tileentityspecialrenderer = (TileEntitySpecialRenderer)iterator.next();
 
             if (tileentityspecialrenderer != null)
             {

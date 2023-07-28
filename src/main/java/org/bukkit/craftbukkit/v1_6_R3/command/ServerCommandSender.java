@@ -17,39 +17,39 @@ public abstract class ServerCommandSender implements CommandSender {
     public ServerCommandSender() {
     }
 
-    public boolean isPermissionSet(String name) {
+    public boolean isPermissionSet(final String name) {
         return perm.isPermissionSet(name);
     }
 
-    public boolean isPermissionSet(Permission perm) {
+    public boolean isPermissionSet(final Permission perm) {
         return this.perm.isPermissionSet(perm);
     }
 
-    public boolean hasPermission(String name) {
+    public boolean hasPermission(final String name) {
         return perm.hasPermission(name);
     }
 
-    public boolean hasPermission(Permission perm) {
+    public boolean hasPermission(final Permission perm) {
         return this.perm.hasPermission(perm);
     }
 
-    public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value) {
+    public PermissionAttachment addAttachment(final Plugin plugin, final String name, final boolean value) {
         return perm.addAttachment(plugin, name, value);
     }
 
-    public PermissionAttachment addAttachment(Plugin plugin) {
+    public PermissionAttachment addAttachment(final Plugin plugin) {
         return perm.addAttachment(plugin);
     }
 
-    public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks) {
+    public PermissionAttachment addAttachment(final Plugin plugin, final String name, final boolean value, final int ticks) {
         return perm.addAttachment(plugin, name, value, ticks);
     }
 
-    public PermissionAttachment addAttachment(Plugin plugin, int ticks) {
+    public PermissionAttachment addAttachment(final Plugin plugin, final int ticks) {
         return perm.addAttachment(plugin, ticks);
     }
 
-    public void removeAttachment(PermissionAttachment attachment) {
+    public void removeAttachment(final PermissionAttachment attachment) {
         perm.removeAttachment(attachment);
     }
 

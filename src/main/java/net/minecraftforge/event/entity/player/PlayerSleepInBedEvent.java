@@ -10,7 +10,7 @@ public class PlayerSleepInBedEvent extends PlayerEvent
     public final int y;
     public final int z;
 
-    public PlayerSleepInBedEvent(EntityPlayer player, int x, int y, int z)
+    public PlayerSleepInBedEvent(final EntityPlayer player, final int x, final int y, final int z)
     {
         super(player);
         this.x = x;

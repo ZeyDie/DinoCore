@@ -7,17 +7,17 @@ import net.minecraft.world.World;
 
 public class EntityExpBottle extends EntityThrowable
 {
-    public EntityExpBottle(World par1World)
+    public EntityExpBottle(final World par1World)
     {
         super(par1World);
     }
 
-    public EntityExpBottle(World par1World, EntityLivingBase par2EntityLivingBase)
+    public EntityExpBottle(final World par1World, final EntityLivingBase par2EntityLivingBase)
     {
         super(par1World, par2EntityLivingBase);
     }
 
-    public EntityExpBottle(World par1World, double par2, double par4, double par6)
+    public EntityExpBottle(final World par1World, final double par2, final double par4, final double par6)
     {
         super(par1World, par2, par4, par6);
     }
@@ -43,7 +43,7 @@ public class EntityExpBottle extends EntityThrowable
     /**
      * Called when this EntityThrowable hits a block or entity.
      */
-    protected void onImpact(MovingObjectPosition par1MovingObjectPosition)
+    protected void onImpact(final MovingObjectPosition par1MovingObjectPosition)
     {
         if (!this.worldObj.isRemote)
         {
@@ -51,7 +51,7 @@ public class EntityExpBottle extends EntityThrowable
             // this.world.triggerEffect(2002, (int) Math.round(this.locX), (int) Math.round(this.locY), (int) Math.round(this.locZ), 0);
             int i = 3 + this.worldObj.rand.nextInt(5) + this.worldObj.rand.nextInt(5);
             // CraftBukkit start
-            org.bukkit.event.entity.ExpBottleEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callExpBottleEvent(this, i);
+            final org.bukkit.event.entity.ExpBottleEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callExpBottleEvent(this, i);
             i = event.getExperience();
 
             if (event.getShowEffect())
@@ -62,7 +62,7 @@ public class EntityExpBottle extends EntityThrowable
 
             while (i > 0)
             {
-                int j = EntityXPOrb.getXPSplit(i);
+                final int j = EntityXPOrb.getXPSplit(i);
                 i -= j;
                 this.worldObj.spawnEntityInWorld(new EntityXPOrb(this.worldObj, this.posX, this.posY, this.posZ, j));
             }

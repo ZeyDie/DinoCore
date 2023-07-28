@@ -12,7 +12,7 @@ public class DerivedWorldInfo extends WorldInfo
     /** Instance of WorldInfo. */
     private final WorldInfo theWorldInfo;
 
-    public DerivedWorldInfo(WorldInfo par1WorldInfo)
+    public DerivedWorldInfo(final WorldInfo par1WorldInfo)
     {
         this.theWorldInfo = par1WorldInfo;
     }
@@ -28,7 +28,7 @@ public class DerivedWorldInfo extends WorldInfo
     /**
      * Creates a new NBTTagCompound for the world, with the given NBTTag as the "Player"
      */
-    public NBTTagCompound cloneNBTCompound(NBTTagCompound par1NBTTagCompound)
+    public NBTTagCompound cloneNBTCompound(final NBTTagCompound par1NBTTagCompound)
     {
         return this.theWorldInfo.cloneNBTCompound(par1NBTTagCompound);
     }
@@ -172,60 +172,60 @@ public class DerivedWorldInfo extends WorldInfo
     /**
      * Set the x spawn position to the passed in value
      */
-    public void setSpawnX(int par1) {}
+    public void setSpawnX(final int par1) {}
 
     @SideOnly(Side.CLIENT)
 
     /**
      * Sets the y spawn position
      */
-    public void setSpawnY(int par1) {}
+    public void setSpawnY(final int par1) {}
 
-    public void incrementTotalWorldTime(long par1) {}
+    public void incrementTotalWorldTime(final long par1) {}
 
     @SideOnly(Side.CLIENT)
 
     /**
      * Set the z spawn position to the passed in value
      */
-    public void setSpawnZ(int par1) {}
+    public void setSpawnZ(final int par1) {}
 
     /**
      * Set current world time
      */
-    public void setWorldTime(long par1) {}
+    public void setWorldTime(final long par1) {}
 
     /**
      * Sets the spawn zone position. Args: x, y, z
      */
-    public void setSpawnPosition(int par1, int par2, int par3) {}
+    public void setSpawnPosition(final int par1, final int par2, final int par3) {}
 
-    public void setWorldName(String par1Str) {}
+    public void setWorldName(final String par1Str) {}
 
     /**
      * Sets the save version of the world
      */
-    public void setSaveVersion(int par1) {}
+    public void setSaveVersion(final int par1) {}
 
     /**
      * Sets whether it is thundering or not.
      */
-    public void setThundering(boolean par1) {}
+    public void setThundering(final boolean par1) {}
 
     /**
      * Defines the number of ticks until next thunderbolt.
      */
-    public void setThunderTime(int par1) {}
+    public void setThunderTime(final int par1) {}
 
     /**
      * Sets whether it is raining or not.
      */
-    public void setRaining(boolean par1) {}
+    public void setRaining(final boolean par1) {}
 
     /**
      * Sets the number of ticks until rain.
      */
-    public void setRainTime(int par1) {}
+    public void setRainTime(final int par1) {}
 
     /**
      * Get whether the map features (e.g. strongholds) generation is enabled or disabled.
@@ -248,7 +248,7 @@ public class DerivedWorldInfo extends WorldInfo
         return this.theWorldInfo.getTerrainType();
     }
 
-    public void setTerrainType(WorldType par1WorldType) {}
+    public void setTerrainType(final WorldType par1WorldType) {}
 
     /**
      * Returns true if commands are allowed on this World.
@@ -269,7 +269,7 @@ public class DerivedWorldInfo extends WorldInfo
     /**
      * Sets the initialization status of the World.
      */
-    public void setServerInitialized(boolean par1) {}
+    public void setServerInitialized(final boolean par1) {}
 
     /**
      * Gets the GameRules class Instance.

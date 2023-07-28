@@ -238,11 +238,11 @@ public class TcpConnection
     //TODO ZeyCodeEnd
 
     @SideOnly(Side.CLIENT)
-    public TcpConnection(ILogAgent par1ILogAgent, Socket par2Socket, String par3Str, NetHandler par4NetHandler) throws IOException {
+    public TcpConnection(final ILogAgent par1ILogAgent, final Socket par2Socket, final String par3Str, final NetHandler par4NetHandler) throws IOException {
         this(par1ILogAgent, par2Socket, par3Str, par4NetHandler, (PrivateKey) null);
     }
 
-    public TcpConnection(ILogAgent par1ILogAgent, Socket par2Socket, String par3Str, NetHandler par4NetHandler, PrivateKey par5PrivateKey) throws IOException {
+    public TcpConnection(final ILogAgent par1ILogAgent, final Socket par2Socket, final String par3Str, final NetHandler par4NetHandler, final PrivateKey par5PrivateKey) throws IOException {
         this.sendQueueLock = new Object();
         this.isRunning = true;
         this.readPackets = new ConcurrentLinkedQueue();
@@ -266,7 +266,7 @@ public class TcpConnection
         try {
             par2Socket.setSoTimeout(30000);
             par2Socket.setTrafficClass(24);
-        } catch (SocketException socketexception) {
+        } catch (final SocketException socketexception) {
             System.err.println(socketexception.getMessage());
         }
 
@@ -312,14 +312,14 @@ public class TcpConnection
     /**
      * Sets the NetHandler for this NetworkManager. Server-only.
      */
-    public void setNetHandler(NetHandler par1NetHandler) {
+    public void setNetHandler(final NetHandler par1NetHandler) {
         this.theNetHandler = par1NetHandler;
     }
 
     /**
      * Adds the packet to the correct send queue (chunk data packets go to a separate queue).
      */
-    public void addToSendQueue(Packet par1Packet) {
+    public void addToSendQueue(final Packet par1Packet) {
         //TODO ZoomCodeStart
         if (this.nettySettingsData.isEnable()) {
             this.socketChannel.writeAndFlush(par1Packet);
@@ -328,7 +328,7 @@ public class TcpConnection
         //TODO ZoomCodeEnd
 
         if (!this.isServerTerminating) {
-            Object object = this.sendQueueLock;
+            final Object object = this.sendQueueLock;
 
             synchronized (this.sendQueueLock) {
                 this.sendQueueByteLength += par1Packet.getPacketSize() + 1;
@@ -415,7 +415,7 @@ public class TcpConnection
             }
 
             return flag;
-        } catch (Exception exception) {
+        } catch (final Exception exception) {
             if (!this.isTerminating) {
                 this.onNetworkError(exception);
             }
@@ -424,10 +424,10 @@ public class TcpConnection
         }
     }
 
-    private Packet func_74460_a(boolean par1) {
+    private Packet func_74460_a(final boolean par1) {
         Packet packet = null;
-        List list = par1 ? this.chunkDataPackets : this.dataPackets;
-        Object object = this.sendQueueLock;
+        final List list = par1 ? this.chunkDataPackets : this.dataPackets;
+        final Object object = this.sendQueueLock;
 
         synchronized (this.sendQueueLock) {
             while (!list.isEmpty() && packet == null) {
@@ -470,8 +470,8 @@ public class TcpConnection
         if (!packet.isRealPacket()) {
             return false;
         } else {
-            List list = this.fastDataPackets;
-            Iterator iterator = list.iterator();
+            final List list = this.fastDataPackets;
+            final Iterator iterator = list.iterator();
             Packet packet1;
 
             do {
@@ -488,12 +488,12 @@ public class TcpConnection
     }
     //TODO ZoomCodeEnd
 
-    private boolean func_74454_a(Packet par1Packet, boolean par2) {
+    private boolean func_74454_a(final Packet par1Packet, final boolean par2) {
         if (!par1Packet.isRealPacket()) {
             return false;
         } else {
-            List list = par2 ? this.chunkDataPackets : this.dataPackets;
-            Iterator iterator = list.iterator();
+            final List list = par2 ? this.chunkDataPackets : this.dataPackets;
+            final Iterator iterator = list.iterator();
             Packet packet1;
 
             do {
@@ -538,7 +538,7 @@ public class TcpConnection
         boolean flag = false;
 
         try {
-            Packet packet = Packet.readPacket(this.tcpConLogAgent, this.socketInputStream, this.theNetHandler.isServerHandler(), this.networkSocket);
+            final Packet packet = Packet.readPacket(this.tcpConLogAgent, this.socketInputStream, this.theNetHandler.isServerHandler(), this.networkSocket);
             ProfilerSection.PACKET_INBOUND.start(packet); // Cauldron - mobius hook
             if (packet != null) {
                 if (packet instanceof Packet252SharedKey && !this.isInputBeingDecrypted) {
@@ -549,8 +549,8 @@ public class TcpConnection
                     this.decryptInputStream();
                 }
 
-                int[] aint = field_74470_c;
-                int i = packet.getPacketId();
+                final int[] aint = field_74470_c;
+                final int i = packet.getPacketId();
                 aint[i] += packet.getPacketSize() + 1;
 
                 if (!this.isServerTerminating) {
@@ -569,7 +569,7 @@ public class TcpConnection
             }
 
             return flag;
-        } catch (Exception exception) {
+        } catch (final Exception exception) {
             if (!this.isTerminating) {
                 this.onNetworkError(exception);
             }
@@ -582,7 +582,7 @@ public class TcpConnection
      * Used to report network errors and causes a network shutdown.
      */
     //TODO ZoomCodeReplace private on public
-    public void onNetworkError(Exception par1Exception) {
+    public void onNetworkError(final Exception par1Exception) {
         par1Exception.printStackTrace(); // CraftBukkit - Remove console spam
         this.networkShutdown("disconnect.genericReason", "Internal exception: " + par1Exception.toString());
     }
@@ -591,7 +591,7 @@ public class TcpConnection
      * Shuts down the network with the specified reason. Closes all streams and sockets, spawns NetworkMasterThread to
      * stop reading and writing threads.
      */
-    public void networkShutdown(String par1Str, Object... par2ArrayOfObj) {
+    public void networkShutdown(final String par1Str, final Object... par2ArrayOfObj) {
         //TODO ZeyCodeStart
         if (this.nettySettingsData.isEnable()) {
             this.terminationReason = par1Str;
@@ -614,19 +614,19 @@ public class TcpConnection
 
                 try {
                     this.socketInputStream.close();
-                } catch (Throwable throwable) {
+                } catch (final Throwable throwable) {
                     ;
                 }
 
                 try {
                     this.socketOutputStream.close();
-                } catch (Throwable throwable1) {
+                } catch (final Throwable throwable1) {
                     ;
                 }
 
                 try {
                     this.networkSocket.close();
-                } catch (Throwable throwable2) {
+                } catch (final Throwable throwable2) {
                     ;
                 }
 
@@ -649,9 +649,9 @@ public class TcpConnection
                 // Cauldron start - better debug
                 MinecraftServer.getServer().logInfo("Send queue byte length exceeded 2097152 bytes. " + this.sendQueueByteLength + " bytes were queued.");
                 MinecraftServer.getServer().logInfo("Dumping current data packets in queue...");
-                for (Object dataPacket : this.dataPackets) {
+                for (final Object dataPacket : this.dataPackets) {
                     if (dataPacket instanceof Packet250CustomPayload) {
-                        Packet250CustomPayload packet = (Packet250CustomPayload) dataPacket;
+                        final Packet250CustomPayload packet = (Packet250CustomPayload) dataPacket;
                         MinecraftServer.getServer().logInfo("[Packet: " + packet + "][Channel: " + packet.channel + "][size: " + packet.getPacketSize() + "]");
                     }
                 }
@@ -749,7 +749,7 @@ public class TcpConnection
         //TODO ZoomCodeEnd
 
         this.isInputBeingDecrypted = true;
-        InputStream inputstream = this.networkSocket.getInputStream();
+        final InputStream inputstream = this.networkSocket.getInputStream();
         this.socketInputStream = new DataInputStream(CryptManager.decryptInputStream(this.sharedKeyForEncryption, inputstream));
     }
 
@@ -777,7 +777,7 @@ public class TcpConnection
         this.socketOutputStream.flush();
         this.isOutputEncrypted = true;
 
-        BufferedOutputStream bufferedoutputstream = new BufferedOutputStream(CryptManager.encryptOuputStream(this.sharedKeyForEncryption, this.networkSocket.getOutputStream()), 5120);
+        final BufferedOutputStream bufferedoutputstream = new BufferedOutputStream(CryptManager.encryptOuputStream(this.sharedKeyForEncryption, this.networkSocket.getOutputStream()), 5120);
         this.socketOutputStream = new DataOutputStream(bufferedoutputstream);
     }
 
@@ -795,64 +795,64 @@ public class TcpConnection
     /**
      * Whether the network is operational.
      */
-    static boolean isRunning(TcpConnection par0TcpConnection) {
+    static boolean isRunning(final TcpConnection par0TcpConnection) {
         return par0TcpConnection.isRunning;
     }
 
     /**
      * Is the server terminating? Client side aways returns false.
      */
-    static boolean isServerTerminating(TcpConnection par0TcpConnection) {
+    static boolean isServerTerminating(final TcpConnection par0TcpConnection) {
         return par0TcpConnection.isServerTerminating;
     }
 
     /**
      * Static accessor to readPacket.
      */
-    static boolean readNetworkPacket(TcpConnection par0TcpConnection) {
+    static boolean readNetworkPacket(final TcpConnection par0TcpConnection) {
         return par0TcpConnection.readPacket();
     }
 
     /**
      * Static accessor to sendPacket.
      */
-    static boolean sendNetworkPacket(TcpConnection par0TcpConnection) {
+    static boolean sendNetworkPacket(final TcpConnection par0TcpConnection) {
         return par0TcpConnection.sendPacket();
     }
 
-    static DataOutputStream getOutputStream(TcpConnection par0TcpConnection) {
+    static DataOutputStream getOutputStream(final TcpConnection par0TcpConnection) {
         return par0TcpConnection.socketOutputStream;
     }
 
     /**
      * Gets whether the Network manager is terminating.
      */
-    static boolean isTerminating(TcpConnection par0TcpConnection) {
+    static boolean isTerminating(final TcpConnection par0TcpConnection) {
         return par0TcpConnection.isTerminating;
     }
 
     /**
      * Sends the network manager an error
      */
-    static void sendError(TcpConnection par0TcpConnection, Exception par1Exception) {
+    static void sendError(final TcpConnection par0TcpConnection, final Exception par1Exception) {
         par0TcpConnection.onNetworkError(par1Exception);
     }
 
     /**
      * Returns the read thread.
      */
-    static Thread getReadThread(TcpConnection par0TcpConnection) {
+    static Thread getReadThread(final TcpConnection par0TcpConnection) {
         return par0TcpConnection.readThread;
     }
 
     /**
      * Returns the write thread.
      */
-    static Thread getWriteThread(TcpConnection par0TcpConnection) {
+    static Thread getWriteThread(final TcpConnection par0TcpConnection) {
         return par0TcpConnection.writeThread;
     }
 
-    public void setSocketAddress(SocketAddress address) {
+    public void setSocketAddress(final SocketAddress address) {
         remoteSocketAddress = address;    // Spigot
     }
 
@@ -865,7 +865,7 @@ public class TcpConnection
             cipher.init(paramInt, paramKey, new IvParameterSpec(paramKey.getEncoded()));
 
             return cipher;
-        } catch (GeneralSecurityException generalSecurityException) {
+        } catch (final GeneralSecurityException generalSecurityException) {
             throw new RuntimeException(generalSecurityException);
         }
     }

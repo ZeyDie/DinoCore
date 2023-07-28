@@ -27,7 +27,7 @@ public class SpreadPlayersCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String commandLabel, String[] args) {
+    public boolean execute(final CommandSender sender, final String commandLabel, final String[] args) {
         if (!testPermission(sender)) {
             return true;
         }
@@ -62,11 +62,11 @@ public class SpreadPlayersCommand extends VanillaCommand {
             return false;
         }
 
-        List<Player> players = Lists.newArrayList();
+        final List<Player> players = Lists.newArrayList();
         World world = null;
 
         for (int i = 5; i < args.length; i++) {
-            Player player = Bukkit.getPlayerExact(args[i]);
+            final Player player = Bukkit.getPlayerExact(args[i]);
             if (player == null) {
                 continue;
             }
@@ -105,7 +105,7 @@ public class SpreadPlayersCommand extends VanillaCommand {
         return true;
     }
 
-    private int range(World world, double distance, double xRangeMin, double zRangeMin, double xRangeMax, double zRangeMax, Location[] locations) {
+    private int range(final World world, final double distance, final double xRangeMin, final double zRangeMin, final double xRangeMax, final double zRangeMax, final Location[] locations) {
         boolean flag = true;
         double max;
 
@@ -119,15 +119,15 @@ public class SpreadPlayersCommand extends VanillaCommand {
             int j;
 
             for (int k = 0; k < locations.length; ++k) {
-                Location loc2 = locations[k];
+                final Location loc2 = locations[k];
 
                 j = 0;
                 loc1 = new Location(world, 0, 0, 0);
 
                 for (int l = 0; l < locations.length; ++l) {
                     if (k != l) {
-                        Location loc3 = locations[l];
-                        double dis = loc2.distanceSquared(loc3);
+                        final Location loc3 = locations[l];
+                        final double dis = loc2.distanceSquared(loc3);
 
                         max = Math.min(dis, max);
                         if (dis < distance) {
@@ -141,14 +141,14 @@ public class SpreadPlayersCommand extends VanillaCommand {
                 if (j > 0) {
                     loc2.setX(loc2.getX() / j);
                     loc2.setZ(loc2.getZ() / j);
-                    double d7 = Math.sqrt(loc1.getX() * loc1.getX() + loc1.getZ() * loc1.getZ());
+                    final double d7 = Math.sqrt(loc1.getX() * loc1.getX() + loc1.getZ() * loc1.getZ());
 
                     if (d7 > 0.0D) {
                         loc1.setX(loc1.getX() / d7);
                         loc2.add(-loc1.getX(), 0, -loc1.getZ());
                     } else {
-                        double x = xRangeMin >= xRangeMax ? xRangeMin : random.nextDouble() * (xRangeMax - xRangeMin) + xRangeMin;
-                        double z = zRangeMin >= zRangeMax ? zRangeMin : random.nextDouble() * (zRangeMax - zRangeMin) + zRangeMin;
+                        final double x = xRangeMin >= xRangeMax ? xRangeMin : random.nextDouble() * (xRangeMax - xRangeMin) + xRangeMin;
+                        final double z = zRangeMin >= zRangeMax ? zRangeMin : random.nextDouble() * (zRangeMax - zRangeMin) + zRangeMin;
                         loc2.setX(x);
                         loc2.setZ(z);
                     }
@@ -179,14 +179,14 @@ public class SpreadPlayersCommand extends VanillaCommand {
             }
 
             if (!flag) {
-                Location[] locs = locations;
-                int i1 = locations.length;
+                final Location[] locs = locations;
+                final int i1 = locations.length;
 
                 for (j = 0; j < i1; ++j) {
                     loc1 = locs[j];
                     if (world.getHighestBlockYAt(loc1) == 0) {
-                        double x = xRangeMin >= xRangeMax ? xRangeMin : random.nextDouble() * (xRangeMax - xRangeMin) + xRangeMin;
-                        double z = zRangeMin >= zRangeMax ? zRangeMin : random.nextDouble() * (zRangeMax - zRangeMin) + zRangeMin;
+                        final double x = xRangeMin >= xRangeMax ? xRangeMin : random.nextDouble() * (xRangeMax - xRangeMin) + xRangeMin;
+                        final double z = zRangeMin >= zRangeMax ? zRangeMin : random.nextDouble() * (zRangeMax - zRangeMin) + zRangeMin;
                         locations[i] = (new Location(world, x, 0, z));
                         loc1.setX(x);
                         loc1.setZ(z);
@@ -203,17 +203,17 @@ public class SpreadPlayersCommand extends VanillaCommand {
         }
     }
 
-    private double spread(World world, List<Player> list, Location[] locations, boolean teams) {
+    private double spread(final World world, final List<Player> list, final Location[] locations, final boolean teams) {
         double distance = 0.0D;
         int i = 0;
-        Map<Team, Location> hashmap = Maps.newHashMap();
+        final Map<Team, Location> hashmap = Maps.newHashMap();
 
         for (int j = 0; j < list.size(); ++j) {
-            Player player = list.get(j);
-            Location location;
+            final Player player = list.get(j);
+            final Location location;
 
             if (teams) {
-                Team team = player.getScoreboard().getPlayerTeam(player);
+                final Team team = player.getScoreboard().getPlayerTeam(player);
 
                 if (!hashmap.containsKey(team)) {
                     hashmap.put(team, locations[i++]);
@@ -229,7 +229,7 @@ public class SpreadPlayersCommand extends VanillaCommand {
 
             for (int k = 0; k < locations.length; ++k) {
                 if (location != locations[k]) {
-                    double d = location.distanceSquared(locations[k]);
+                    final double d = location.distanceSquared(locations[k]);
                     value = Math.min(d, value);
                 }
             }
@@ -241,22 +241,22 @@ public class SpreadPlayersCommand extends VanillaCommand {
         return distance;
     }
 
-    private int getTeams(List<Player> players) {
-        Set<Team> teams = Sets.newHashSet();
+    private int getTeams(final List<Player> players) {
+        final Set<Team> teams = Sets.newHashSet();
 
-        for (Player player : players) {
+        for (final Player player : players) {
             teams.add(player.getScoreboard().getPlayerTeam(player));
         }
 
         return teams.size();
     }
 
-    private Location[] getSpreadLocations(World world, int size, double xRangeMin, double zRangeMin, double xRangeMax, double zRangeMax) {
-        Location[] locations = new Location[size];
+    private Location[] getSpreadLocations(final World world, final int size, final double xRangeMin, final double zRangeMin, final double xRangeMax, final double zRangeMax) {
+        final Location[] locations = new Location[size];
 
         for (int i = 0; i < size; ++i) {
-            double x = xRangeMin >= xRangeMax ? xRangeMin : random.nextDouble() * (xRangeMax - xRangeMin) + xRangeMin;
-            double z = zRangeMin >= zRangeMax ? zRangeMin : random.nextDouble() * (zRangeMax - zRangeMin) + zRangeMin;
+            final double x = xRangeMin >= xRangeMax ? xRangeMin : random.nextDouble() * (xRangeMax - xRangeMin) + xRangeMin;
+            final double z = zRangeMin >= zRangeMax ? zRangeMin : random.nextDouble() * (zRangeMax - zRangeMin) + zRangeMin;
             locations[i] = (new Location(world, x, 0, z));
         }
 

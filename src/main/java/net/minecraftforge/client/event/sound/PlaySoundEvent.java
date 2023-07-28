@@ -15,7 +15,7 @@ public class PlaySoundEvent extends SoundResultEvent
     public final float x;
     public final float y;
     public final float z;
-    public PlaySoundEvent(SoundManager manager, SoundPoolEntry source, String name, float x, float y, float z, float volume, float pitch)
+    public PlaySoundEvent(final SoundManager manager, final SoundPoolEntry source, final String name, final float x, final float y, final float z, final float volume, final float pitch)
     { 
         super(manager, source, name, volume, pitch);
         this.x = x;

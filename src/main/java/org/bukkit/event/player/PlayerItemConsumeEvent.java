@@ -47,7 +47,7 @@ public class PlayerItemConsumeEvent extends PlayerEvent implements Cancellable {
      *
      * @param item the item being consumed
      */
-    public void setItem(ItemStack item) {
+    public void setItem(final ItemStack item) {
         if (item == null) {
             this.item = new ItemStack(Material.AIR);
         } else {
@@ -59,7 +59,7 @@ public class PlayerItemConsumeEvent extends PlayerEvent implements Cancellable {
         return this.isCancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.isCancelled = cancel;
     }
 

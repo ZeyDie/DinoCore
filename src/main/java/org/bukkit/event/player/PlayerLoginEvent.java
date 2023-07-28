@@ -69,7 +69,7 @@ public class PlayerLoginEvent extends PlayerEvent {
      * @param result The result status for this event
      * @param message The message to be displayed if result denies login
      */
-    public PlayerLoginEvent(final Player player, String hostname, final InetAddress address, final Result result, final String message, final InetAddress realAddress) { // Spigot
+    public PlayerLoginEvent(final Player player, final String hostname, final InetAddress address, final Result result, final String message, final InetAddress realAddress) { // Spigot
         this(player, hostname, address, realAddress); // Spigot
         this.result = result;
         this.message = message;

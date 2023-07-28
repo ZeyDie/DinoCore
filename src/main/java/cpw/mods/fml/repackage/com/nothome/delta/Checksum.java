@@ -40,7 +40,7 @@ public class Checksum {
 
     private Map<Long,Integer> checksums = Maps.newHashMap();
 
-    private static final char single_hash[] = {
+    private static final char[] single_hash = {
         /* Random numbers generated using SLIB's pseudo-random number generator. */
         0xbcd1, 0xbb65, 0x42c2, 0xdffe, 0x9666, 0x431b, 0x8504, 0xeb46,
         0x6379, 0xd460, 0xcf14, 0x53cf, 0xdb51, 0xdb08, 0x12c8, 0xf602,
@@ -80,8 +80,8 @@ public class Checksum {
      * Initialize checksums for source. The checksum for the <code>chunkSize</code> bytes at offset
      * <code>chunkSize</code> * i is inserted into a hash map.
      */
-    public Checksum(SeekableSource source, int chunkSize) throws IOException {
-        ByteBuffer bb = ByteBuffer.allocate(chunkSize * 2);
+    public Checksum(final SeekableSource source, final int chunkSize) throws IOException {
+        final ByteBuffer bb = ByteBuffer.allocate(chunkSize * 2);
         int count = 0;
         while (true) {
             source.read(bb);
@@ -89,7 +89,7 @@ public class Checksum {
             if (bb.remaining() < chunkSize)
                 break;
             while (bb.remaining() >= chunkSize) {
-                long queryChecksum = queryChecksum0(bb, chunkSize);
+                final long queryChecksum = queryChecksum0(bb, chunkSize);
                 checksums.put(queryChecksum, count++);
             }
             bb.compact();
@@ -100,14 +100,14 @@ public class Checksum {
      * Finds the checksum computed from the buffer.
      * Marks, gets, then resets the buffer.
      */
-    public static long queryChecksum(ByteBuffer bb, int len) {
+    public static long queryChecksum(final ByteBuffer bb, final int len) {
         bb.mark();
-        long sum = queryChecksum0(bb, len);
+        final long sum = queryChecksum0(bb, len);
         bb.reset();
         return sum;
     }
 
-    private static long queryChecksum0(ByteBuffer bb, int len) {
+    private static long queryChecksum0(final ByteBuffer bb, final int len) {
         int high = 0; int low = 0;
         for (int i = 0; i < len; i++) {
             low += single_hash[bb.get()+128];
@@ -124,11 +124,11 @@ public class Checksum {
      * @param chunkSize size of chunks
      * @return new checksum
      */
-    public static long incrementChecksum(long checksum, byte out, byte in, int chunkSize) {
-        char old_c = single_hash[out+128];
-        char new_c = single_hash[in+128];
-        int low   = ((int)((checksum) & 0xffff) - old_c + new_c) & 0xffff;
-        int high  = ((int)((checksum) >> 16) - (old_c * chunkSize) + low) & 0xffff;
+    public static long incrementChecksum(final long checksum, final byte out, final byte in, final int chunkSize) {
+        final char old_c = single_hash[out+128];
+        final char new_c = single_hash[in+128];
+        final int low   = ((int)((checksum) & 0xffff) - old_c + new_c) & 0xffff;
+        final int high  = ((int)((checksum) >> 16) - (old_c * chunkSize) + low) & 0xffff;
         return (high << 16) | (low & 0xffff);
     }
 
@@ -142,7 +142,7 @@ public class Checksum {
     /**
      * Finds the index of a checksum.
      */
-    public int findChecksumIndex(long hashf) {
+    public int findChecksumIndex(final long hashf) {
         if (!checksums.containsKey(hashf))
             return -1;
         return checksums.get(hashf);

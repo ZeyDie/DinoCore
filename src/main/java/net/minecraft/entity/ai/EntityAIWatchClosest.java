@@ -17,7 +17,7 @@ public class EntityAIWatchClosest extends EntityAIBase
     private float field_75331_e;
     private Class watchedClass;
 
-    public EntityAIWatchClosest(EntityLiving par1EntityLiving, Class par2Class, float par3)
+    public EntityAIWatchClosest(final EntityLiving par1EntityLiving, final Class par2Class, final float par3)
     {
         this.theWatcher = par1EntityLiving;
         this.watchedClass = par2Class;
@@ -26,7 +26,7 @@ public class EntityAIWatchClosest extends EntityAIBase
         this.setMutexBits(2);
     }
 
-    public EntityAIWatchClosest(EntityLiving par1EntityLiving, Class par2Class, float par3, float par4)
+    public EntityAIWatchClosest(final EntityLiving par1EntityLiving, final Class par2Class, final float par3, final float par4)
     {
         this.theWatcher = par1EntityLiving;
         this.watchedClass = par2Class;

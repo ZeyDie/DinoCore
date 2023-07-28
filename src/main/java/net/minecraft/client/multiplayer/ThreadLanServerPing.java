@@ -19,7 +19,7 @@ public class ThreadLanServerPing extends Thread
     private boolean isStopping = true;
     private final String address;
 
-    public ThreadLanServerPing(String par1Str, String par2Str) throws IOException
+    public ThreadLanServerPing(final String par1Str, final String par2Str) throws IOException
     {
         super("LanServerPinger");
         this.motd = par1Str;
@@ -30,18 +30,18 @@ public class ThreadLanServerPing extends Thread
 
     public void run()
     {
-        String s = getPingResponse(this.motd, this.address);
-        byte[] abyte = s.getBytes();
+        final String s = getPingResponse(this.motd, this.address);
+        final byte[] abyte = s.getBytes();
 
         while (!this.isInterrupted() && this.isStopping)
         {
             try
             {
-                InetAddress inetaddress = InetAddress.getByName("224.0.2.60");
-                DatagramPacket datagrampacket = new DatagramPacket(abyte, abyte.length, inetaddress, 4445);
+                final InetAddress inetaddress = InetAddress.getByName("224.0.2.60");
+                final DatagramPacket datagrampacket = new DatagramPacket(abyte, abyte.length, inetaddress, 4445);
                 this.socket.send(datagrampacket);
             }
-            catch (IOException ioexception)
+            catch (final IOException ioexception)
             {
                 Minecraft.getMinecraft().getLogAgent().logWarning("LanServerPinger: " + ioexception.getMessage());
                 break;
@@ -51,7 +51,7 @@ public class ThreadLanServerPing extends Thread
             {
                 sleep(1500L);
             }
-            catch (InterruptedException interruptedexception)
+            catch (final InterruptedException interruptedexception)
             {
                 ;
             }
@@ -64,14 +64,14 @@ public class ThreadLanServerPing extends Thread
         this.isStopping = false;
     }
 
-    public static String getPingResponse(String par0Str, String par1Str)
+    public static String getPingResponse(final String par0Str, final String par1Str)
     {
         return "[MOTD]" + par0Str + "[/MOTD][AD]" + par1Str + "[/AD]";
     }
 
-    public static String getMotdFromPingResponse(String par0Str)
+    public static String getMotdFromPingResponse(final String par0Str)
     {
-        int i = par0Str.indexOf("[MOTD]");
+        final int i = par0Str.indexOf("[MOTD]");
 
         if (i < 0)
         {
@@ -79,14 +79,14 @@ public class ThreadLanServerPing extends Thread
         }
         else
         {
-            int j = par0Str.indexOf("[/MOTD]", i + "[MOTD]".length());
+            final int j = par0Str.indexOf("[/MOTD]", i + "[MOTD]".length());
             return j < i ? "missing no" : par0Str.substring(i + "[MOTD]".length(), j);
         }
     }
 
-    public static String getAdFromPingResponse(String par0Str)
+    public static String getAdFromPingResponse(final String par0Str)
     {
-        int i = par0Str.indexOf("[/MOTD]");
+        final int i = par0Str.indexOf("[/MOTD]");
 
         if (i < 0)
         {
@@ -94,7 +94,7 @@ public class ThreadLanServerPing extends Thread
         }
         else
         {
-            int j = par0Str.indexOf("[/MOTD]", i + "[/MOTD]".length());
+            final int j = par0Str.indexOf("[/MOTD]", i + "[/MOTD]".length());
 
             if (j >= 0)
             {
@@ -102,7 +102,7 @@ public class ThreadLanServerPing extends Thread
             }
             else
             {
-                int k = par0Str.indexOf("[AD]", i + "[/MOTD]".length());
+                final int k = par0Str.indexOf("[AD]", i + "[/MOTD]".length());
 
                 if (k < 0)
                 {
@@ -110,7 +110,7 @@ public class ThreadLanServerPing extends Thread
                 }
                 else
                 {
-                    int l = par0Str.indexOf("[/AD]", k + "[AD]".length());
+                    final int l = par0Str.indexOf("[/AD]", k + "[AD]".length());
                     return l < k ? null : par0Str.substring(k + "[AD]".length(), l);
                 }
             }

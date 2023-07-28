@@ -17,13 +17,13 @@ public class MapGenMineshaft extends MapGenStructure
         return "Mineshaft";
     }
 
-    public MapGenMineshaft(Map par1Map)
+    public MapGenMineshaft(final Map par1Map)
     {
-        Iterator iterator = par1Map.entrySet().iterator();
+        final Iterator iterator = par1Map.entrySet().iterator();
 
         while (iterator.hasNext())
         {
-            Entry entry = (Entry)iterator.next();
+            final Entry entry = (Entry)iterator.next();
 
             if (((String)entry.getKey()).equals("chance"))
             {
@@ -32,12 +32,12 @@ public class MapGenMineshaft extends MapGenStructure
         }
     }
 
-    protected boolean canSpawnStructureAtCoords(int par1, int par2)
+    protected boolean canSpawnStructureAtCoords(final int par1, final int par2)
     {
         return this.rand.nextDouble() < this.field_82673_e && this.rand.nextInt(80) < Math.max(Math.abs(par1), Math.abs(par2));
     }
 
-    protected StructureStart getStructureStart(int par1, int par2)
+    protected StructureStart getStructureStart(final int par1, final int par2)
     {
         return new StructureMineshaftStart(this.worldObj, this.rand, par1, par2);
     }

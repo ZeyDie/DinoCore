@@ -13,11 +13,11 @@ public class Diode extends MaterialData implements Directional {
      * @deprecated Magic value
      */
     @Deprecated
-    public Diode(int type) {
+    public Diode(final int type) {
         super(type);
     }
 
-    public Diode(Material type) {
+    public Diode(final Material type) {
         super(type);
     }
 
@@ -26,7 +26,7 @@ public class Diode extends MaterialData implements Directional {
      * @deprecated Magic value
      */
     @Deprecated
-    public Diode(int type, byte data) {
+    public Diode(final int type, final byte data) {
         super(type, data);
     }
 
@@ -35,7 +35,7 @@ public class Diode extends MaterialData implements Directional {
      * @deprecated Magic value
      */
     @Deprecated
-    public Diode(Material type, byte data) {
+    public Diode(final Material type, final byte data) {
         super(type, data);
     }
 
@@ -46,15 +46,16 @@ public class Diode extends MaterialData implements Directional {
      *            The new delay (1-4)
      */
     public void setDelay(int delay) {
-        if (delay > 4) {
-            delay = 4;
+        int delay1 = delay;
+        if (delay1 > 4) {
+            delay1 = 4;
         }
-        if (delay < 1) {
-            delay = 1;
+        if (delay1 < 1) {
+            delay1 = 1;
         }
-        byte newData = (byte) (getData() & 0x3);
+        final byte newData = (byte) (getData() & 0x3);
 
-        setData((byte) (newData | ((delay - 1) << 2)));
+        setData((byte) (newData | ((delay1 - 1) << 2)));
     }
 
     /**
@@ -66,9 +67,9 @@ public class Diode extends MaterialData implements Directional {
         return (getData() >> 2) + 1;
     }
 
-    public void setFacingDirection(BlockFace face) {
-        int delay = getDelay();
-        byte data;
+    public void setFacingDirection(final BlockFace face) {
+        final int delay = getDelay();
+        final byte data;
 
         switch (face) {
         case EAST:
@@ -93,7 +94,7 @@ public class Diode extends MaterialData implements Directional {
     }
 
     public BlockFace getFacing() {
-        byte data = (byte) (getData() & 0x3);
+        final byte data = (byte) (getData() & 0x3);
 
         switch (data) {
         case 0x0:

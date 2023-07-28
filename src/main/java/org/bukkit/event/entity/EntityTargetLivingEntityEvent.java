@@ -24,7 +24,7 @@ public class EntityTargetLivingEntityEvent extends EntityTargetEvent{
      *
      * @param target The entity to target
      */
-    public void setTarget(Entity target) {
+    public void setTarget(final Entity target) {
         if (target == null || target instanceof LivingEntity) {
             super.setTarget(target);
         }

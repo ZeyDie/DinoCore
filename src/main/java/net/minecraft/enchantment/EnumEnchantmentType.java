@@ -17,7 +17,7 @@ public enum EnumEnchantmentType
     /**
      * Return true if the item passed can be enchanted by a enchantment of this type.
      */
-    public boolean canEnchantItem(Item par1Item)
+    public boolean canEnchantItem(final Item par1Item)
     {
         if (this == all)
         {
@@ -31,7 +31,7 @@ public enum EnumEnchantmentType
             }
             else
             {
-                ItemArmor itemarmor = (ItemArmor)par1Item;
+                final ItemArmor itemarmor = (ItemArmor)par1Item;
                 return itemarmor.armorType == 0 ? this == armor_head : (itemarmor.armorType == 2 ? this == armor_legs : (itemarmor.armorType == 1 ? this == armor_torso : (itemarmor.armorType == 3 ? this == armor_feet : false)));
             }
         }

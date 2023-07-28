@@ -19,7 +19,7 @@ public class ItemBlock extends Item
     @SideOnly(Side.CLIENT)
     private Icon field_94588_b;
 
-    public ItemBlock(int par1)
+    public ItemBlock(final int par1)
     {
         super(par1);
         this.blockID = par1 + 256;
@@ -48,7 +48,7 @@ public class ItemBlock extends Item
     /**
      * Gets an icon index based on an item's damage value
      */
-    public Icon getIconFromDamage(int par1)
+    public Icon getIconFromDamage(final int par1)
     {
         return this.field_94588_b != null ? this.field_94588_b : Block.blocksList[this.blockID].getBlockTextureFromSide(1);
     }
@@ -57,45 +57,49 @@ public class ItemBlock extends Item
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final World par3World, int par4, int par5, int par6, int par7, final float par8, final float par9, final float par10)
     {
-        int i1 = par3World.getBlockId(par4, par5, par6);
+        int par71 = par7;
+        int par51 = par5;
+        int par61 = par6;
+        int par41 = par4;
+        final int i1 = par3World.getBlockId(par41, par51, par61);
 
-        if (i1 == Block.snow.blockID && (par3World.getBlockMetadata(par4, par5, par6) & 7) < 1)
+        if (i1 == Block.snow.blockID && (par3World.getBlockMetadata(par41, par51, par61) & 7) < 1)
         {
-            par7 = 1;
+            par71 = 1;
         }
         else if (i1 != Block.vine.blockID && i1 != Block.tallGrass.blockID && i1 != Block.deadBush.blockID
-                && (Block.blocksList[i1] == null || !Block.blocksList[i1].isBlockReplaceable(par3World, par4, par5, par6)))
+                && (Block.blocksList[i1] == null || !Block.blocksList[i1].isBlockReplaceable(par3World, par41, par51, par61)))
         {
-            if (par7 == 0)
+            if (par71 == 0)
             {
-                --par5;
+                --par51;
             }
 
-            if (par7 == 1)
+            if (par71 == 1)
             {
-                ++par5;
+                ++par51;
             }
 
-            if (par7 == 2)
+            if (par71 == 2)
             {
-                --par6;
+                --par61;
             }
 
-            if (par7 == 3)
+            if (par71 == 3)
             {
-                ++par6;
+                ++par61;
             }
 
-            if (par7 == 4)
+            if (par71 == 4)
             {
-                --par4;
+                --par41;
             }
 
-            if (par7 == 5)
+            if (par71 == 5)
             {
-                ++par4;
+                ++par41;
             }
         }
 
@@ -103,23 +107,23 @@ public class ItemBlock extends Item
         {
             return false;
         }
-        else if (!par2EntityPlayer.canPlayerEdit(par4, par5, par6, par7, par1ItemStack))
+        else if (!par2EntityPlayer.canPlayerEdit(par41, par51, par61, par71, par1ItemStack))
         {
             return false;
         }
-        else if (par5 == 255 && Block.blocksList[this.blockID].blockMaterial.isSolid())
+        else if (par51 == 255 && Block.blocksList[this.blockID].blockMaterial.isSolid())
         {
             return false;
         }
-        else if (par3World.canPlaceEntityOnSide(this.blockID, par4, par5, par6, false, par7, par2EntityPlayer, par1ItemStack))
+        else if (par3World.canPlaceEntityOnSide(this.blockID, par41, par51, par61, false, par71, par2EntityPlayer, par1ItemStack))
         {
-            Block block = Block.blocksList[this.blockID];
-            int j1 = this.getMetadata(par1ItemStack.getItemDamage());
-            int k1 = Block.blocksList[this.blockID].onBlockPlaced(par3World, par4, par5, par6, par7, par8, par9, par10, j1);
+            final Block block = Block.blocksList[this.blockID];
+            final int j1 = this.getMetadata(par1ItemStack.getItemDamage());
+            final int k1 = Block.blocksList[this.blockID].onBlockPlaced(par3World, par41, par51, par61, par71, par8, par9, par10, j1);
 
-            if (placeBlockAt(par1ItemStack, par2EntityPlayer, par3World, par4, par5, par6, par7, par8, par9, par10, k1))
+            if (placeBlockAt(par1ItemStack, par2EntityPlayer, par3World, par41, par51, par61, par71, par8, par9, par10, k1))
             {
-                par3World.playSoundEffect((double)((float)par4 + 0.5F), (double)((float)par5 + 0.5F), (double)((float)par6 + 0.5F), block.stepSound.getPlaceSound(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
+                par3World.playSoundEffect((double)((float) par41 + 0.5F), (double)((float) par51 + 0.5F), (double)((float) par61 + 0.5F), block.stepSound.getPlaceSound(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
                 --par1ItemStack.stackSize;
             }
 
@@ -136,56 +140,60 @@ public class ItemBlock extends Item
     /**
      * Returns true if the given ItemBlock can be placed on the given side of the given block position.
      */
-    public boolean canPlaceItemBlockOnSide(World par1World, int par2, int par3, int par4, int par5, EntityPlayer par6EntityPlayer, ItemStack par7ItemStack)
+    public boolean canPlaceItemBlockOnSide(final World par1World, int par2, int par3, int par4, int par5, final EntityPlayer par6EntityPlayer, final ItemStack par7ItemStack)
     {
-        int i1 = par1World.getBlockId(par2, par3, par4);
+        int par51 = par5;
+        int par31 = par3;
+        int par41 = par4;
+        int par21 = par2;
+        final int i1 = par1World.getBlockId(par21, par31, par41);
 
         if (i1 == Block.snow.blockID)
         {
-            par5 = 1;
+            par51 = 1;
         }
         else if (i1 != Block.vine.blockID && i1 != Block.tallGrass.blockID && i1 != Block.deadBush.blockID
-                && (Block.blocksList[i1] == null || !Block.blocksList[i1].isBlockReplaceable(par1World, par2, par3, par4)))
+                && (Block.blocksList[i1] == null || !Block.blocksList[i1].isBlockReplaceable(par1World, par21, par31, par41)))
         {
-            if (par5 == 0)
+            if (par51 == 0)
             {
-                --par3;
+                --par31;
             }
 
-            if (par5 == 1)
+            if (par51 == 1)
             {
-                ++par3;
+                ++par31;
             }
 
-            if (par5 == 2)
+            if (par51 == 2)
             {
-                --par4;
+                --par41;
             }
 
-            if (par5 == 3)
+            if (par51 == 3)
             {
-                ++par4;
+                ++par41;
             }
 
-            if (par5 == 4)
+            if (par51 == 4)
             {
-                --par2;
+                --par21;
             }
 
-            if (par5 == 5)
+            if (par51 == 5)
             {
-                ++par2;
+                ++par21;
             }
         }
 
-        return par1World.canPlaceEntityOnSide(this.getBlockID(), par2, par3, par4, false, par5, (Entity)null, par7ItemStack);
+        return par1World.canPlaceEntityOnSide(this.getBlockID(), par21, par31, par41, false, par51, (Entity)null, par7ItemStack);
     }
 
     /**
      * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
      * different names based on their damage or NBT.
      */
-    public String getUnlocalizedName(ItemStack par1ItemStack)
+    public String getUnlocalizedName(final ItemStack par1ItemStack)
     {
         return Block.blocksList[this.blockID].getUnlocalizedName();
     }
@@ -213,15 +221,15 @@ public class ItemBlock extends Item
     /**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */
-    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubItems(final int par1, final CreativeTabs par2CreativeTabs, final List par3List)
     {
         Block.blocksList[this.blockID].getSubBlocks(par1, par2CreativeTabs, par3List);
     }
 
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
-        String s = Block.blocksList[this.blockID].getItemIconName();
+        final String s = Block.blocksList[this.blockID].getItemIconName();
 
         if (s != null)
         {
@@ -237,7 +245,7 @@ public class ItemBlock extends Item
      * @param player The player who is placing the block. Can be null if the block is not being placed by a player.
      * @param side The side the player (or machine) right-clicked on.
      */
-    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata)
+    public boolean placeBlockAt(final ItemStack stack, final EntityPlayer player, final World world, final int x, final int y, final int z, final int side, final float hitX, final float hitY, final float hitZ, final int metadata)
     {
        if (!world.setBlock(x, y, z, this.blockID, metadata, 3))
        {

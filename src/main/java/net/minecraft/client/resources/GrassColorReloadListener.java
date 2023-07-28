@@ -13,13 +13,13 @@ public class GrassColorReloadListener implements ResourceManagerReloadListener
 {
     private static final ResourceLocation field_130078_a = new ResourceLocation("textures/colormap/grass.png");
 
-    public void onResourceManagerReload(ResourceManager par1ResourceManager)
+    public void onResourceManagerReload(final ResourceManager par1ResourceManager)
     {
         try
         {
             ColorizerGrass.setGrassBiomeColorizer(TextureUtil.readImageData(par1ResourceManager, field_130078_a));
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             ;
         }

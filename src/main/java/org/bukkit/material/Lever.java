@@ -57,7 +57,7 @@ public class Lever extends SimpleAttachableMaterialData implements Redstone {
      *
      * @param isPowered whether the lever should be powered or not
      */
-    public void setPowered(boolean isPowered) {
+    public void setPowered(final boolean isPowered) {
         setData((byte) (isPowered ? (getData() | 0x8) : (getData() & ~0x8)));
     }
 
@@ -67,7 +67,7 @@ public class Lever extends SimpleAttachableMaterialData implements Redstone {
      * @return BlockFace attached to
      */
     public BlockFace getAttachedFace() {
-        byte data = (byte) (getData() & 0x7);
+        final byte data = (byte) (getData() & 0x7);
 
         switch (data) {
         case 0x1:
@@ -98,9 +98,9 @@ public class Lever extends SimpleAttachableMaterialData implements Redstone {
     /**
      * Sets the direction this lever is pointing in
      */
-    public void setFacingDirection(BlockFace face) {
+    public void setFacingDirection(final BlockFace face) {
         byte data = (byte) (getData() & 0x8);
-        BlockFace attach = getAttachedFace();
+        final BlockFace attach = getAttachedFace();
 
         if (attach == BlockFace.DOWN) {
             switch (face) {

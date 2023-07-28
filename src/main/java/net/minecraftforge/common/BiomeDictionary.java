@@ -5,6 +5,8 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.event.terraingen.DeferredBiomeDecorator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.EnumSet;
 
 import static net.minecraft.world.biome.BiomeGenBase.*;
@@ -36,11 +38,9 @@ public class BiomeDictionary {
     private static class BiomeInfo {
         public EnumSet<Type> typeList;
 
-        public BiomeInfo(Type[] types) {
+        public BiomeInfo(final Type[] types) {
             typeList = EnumSet.noneOf(Type.class);
-            for (Type t : types) {
-                typeList.add(t);
-            }
+            typeList.addAll(Arrays.asList(types));
         }
     }
 
@@ -55,9 +55,9 @@ public class BiomeDictionary {
      * @param type  the type to register the biome as
      * @return returns true if the biome was registered successfully
      */
-    public static boolean registerBiomeType(BiomeGenBase biome, Type... types) {
+    public static boolean registerBiomeType(final BiomeGenBase biome, final Type... types) {
         if (BiomeGenBase.biomeList[biome.biomeID] != null) {
-            for (Type type : types) {
+            for (final Type type : types) {
                 if (typeInfoList[type.ordinal()] == null) {
                     typeInfoList[type.ordinal()] = new ArrayList<BiomeGenBase>();
                 }
@@ -68,9 +68,7 @@ public class BiomeDictionary {
             if (biomeList[biome.biomeID] == null) {
                 biomeList[biome.biomeID] = new BiomeInfo(types);
             } else {
-                for (Type type : types) {
-                    biomeList[biome.biomeID].typeList.add(type);
-                }
+                Collections.addAll(biomeList[biome.biomeID].typeList, types);
             }
 
             return true;
@@ -85,7 +83,7 @@ public class BiomeDictionary {
      * @param type the Type to look for
      * @return a list of biomes of the specified type, null if there are none
      */
-    public static BiomeGenBase[] getBiomesForType(Type type) {
+    public static BiomeGenBase[] getBiomesForType(final Type type) {
         if (typeInfoList[type.ordinal()] != null) {
             return (BiomeGenBase[]) typeInfoList[type.ordinal()].toArray(new BiomeGenBase[0]);
         }
@@ -99,7 +97,7 @@ public class BiomeDictionary {
      * @param biome the biome to check
      * @return the list of types, null if there are none
      */
-    public static Type[] getTypesForBiome(BiomeGenBase biome) {
+    public static Type[] getTypesForBiome(final BiomeGenBase biome) {
         checkRegistration(biome);
 
         if (biomeList[biome.biomeID] != null) {
@@ -116,15 +114,15 @@ public class BiomeDictionary {
      * @param biomeB
      * @return returns true if a common type is found, false otherwise
      */
-    public static boolean areBiomesEquivalent(BiomeGenBase biomeA, BiomeGenBase biomeB) {
-        int a = biomeA.biomeID;
-        int b = biomeB.biomeID;
+    public static boolean areBiomesEquivalent(final BiomeGenBase biomeA, final BiomeGenBase biomeB) {
+        final int a = biomeA.biomeID;
+        final int b = biomeB.biomeID;
 
         checkRegistration(biomeA);
         checkRegistration(biomeB);
 
         if (biomeList[a] != null && biomeList[b] != null) {
-            for (Type type : biomeList[a].typeList) {
+            for (final Type type : biomeList[a].typeList) {
                 if (containsType(biomeList[b], type)) {
                     return true;
                 }
@@ -141,7 +139,7 @@ public class BiomeDictionary {
      * @param type  the type to check for
      * @return returns true if the biome is registered as being of type type, false otherwise
      */
-    public static boolean isBiomeOfType(BiomeGenBase biome, Type type) {
+    public static boolean isBiomeOfType(final BiomeGenBase biome, final Type type) {
         checkRegistration(biome);
 
         if (biomeList[biome.biomeID] != null) {
@@ -157,11 +155,11 @@ public class BiomeDictionary {
      * @param biome the biome to consider
      * @return returns true if the biome has been registered, false otherwise
      */
-    public static boolean isBiomeRegistered(BiomeGenBase biome) {
+    public static boolean isBiomeRegistered(final BiomeGenBase biome) {
         return biomeList[biome.biomeID] != null;
     }
 
-    public static boolean isBiomeRegistered(int biomeID) {
+    public static boolean isBiomeRegistered(final int biomeID) {
         return biomeList[biomeID] != null;
     }
 
@@ -178,14 +176,14 @@ public class BiomeDictionary {
      */
     public static void registerAllBiomesAndGenerateEvents() {
         for (int i = 0; i < BiomeGenBase.biomeList.length; i++) {
-            BiomeGenBase biome = BiomeGenBase.biomeList[i];
+            final BiomeGenBase biome = BiomeGenBase.biomeList[i];
 
             if (biome == null) {
                 continue;
             }
 
             if (biome.theBiomeDecorator instanceof DeferredBiomeDecorator) {
-                DeferredBiomeDecorator decorator = (DeferredBiomeDecorator) biome.theBiomeDecorator;
+                final DeferredBiomeDecorator decorator = (DeferredBiomeDecorator) biome.theBiomeDecorator;
                 decorator.fireCreateEventAndReplace();
             }
 
@@ -202,7 +200,7 @@ public class BiomeDictionary {
      *
      * @param biome the biome to be considered
      */
-    public static void makeBestGuess(BiomeGenBase biome) {
+    public static void makeBestGuess(final BiomeGenBase biome) {
         if (biome.theBiomeDecorator.treesPerChunk >= 3) {
             if (biome.isHighHumidity() && biome.temperature >= 1.0F) {
                 BiomeDictionary.registerBiomeType(biome, JUNGLE);
@@ -237,13 +235,13 @@ public class BiomeDictionary {
     }
 
     //Internal implementation    
-    private static void checkRegistration(BiomeGenBase biome) {
+    private static void checkRegistration(final BiomeGenBase biome) {
         if (!isBiomeRegistered(biome)) {
             makeBestGuess(biome);
         }
     }
 
-    private static boolean containsType(BiomeInfo info, Type type) {
+    private static boolean containsType(final BiomeInfo info, final Type type) {
         return info.typeList.contains(type);
     }
 

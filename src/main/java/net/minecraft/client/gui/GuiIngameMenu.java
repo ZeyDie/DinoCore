@@ -24,8 +24,8 @@ public class GuiIngameMenu extends GuiScreen
     {
         this.updateCounter2 = 0;
         this.buttonList.clear();
-        byte b0 = -16;
-        boolean flag = true;
+        final byte b0 = -16;
+        final boolean flag = true;
         this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 120 + b0, I18n.getString("menu.returnToMenu")));
 
         if (!this.mc.isIntegratedServerRunning())
@@ -35,7 +35,7 @@ public class GuiIngameMenu extends GuiScreen
 
         this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 24 + b0, I18n.getString("menu.returnToGame")));
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + b0, 98, 20, I18n.getString("menu.options")));
-        GuiButton guibutton;
+        final GuiButton guibutton;
         this.buttonList.add(guibutton = new GuiButton(7, this.width / 2 + 2, this.height / 4 + 96 + b0, 98, 20, I18n.getString("menu.shareToLan")));
         this.buttonList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 48 + b0, 98, 20, I18n.getString("gui.achievements")));
         this.buttonList.add(new GuiButton(6, this.width / 2 + 2, this.height / 4 + 48 + b0, 98, 20, I18n.getString("gui.stats")));
@@ -45,7 +45,7 @@ public class GuiIngameMenu extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         switch (par1GuiButton.id)
         {
@@ -90,7 +90,7 @@ public class GuiIngameMenu extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRenderer, "Game menu", this.width / 2, 40, 16777215);

@@ -20,12 +20,12 @@ public class IntegratedServerListenThread extends NetworkListenThread {
     private boolean field_71756_f;
     private ServerListenThread myServerListenThread;
 
-    public IntegratedServerListenThread(IntegratedServer par1IntegratedServer) throws IOException {
+    public IntegratedServerListenThread(final IntegratedServer par1IntegratedServer) throws IOException {
         super(par1IntegratedServer);
         this.netMemoryConnection = new MemoryConnection(par1IntegratedServer.getLogAgent(), (NetHandler) null);
     }
 
-    public void func_71754_a(MemoryConnection par1MemoryConnection, String par2Str) {
+    public void func_71754_a(final MemoryConnection par1MemoryConnection, final String par2Str) {
         this.theMemoryConnection = par1MemoryConnection;
         this.field_71759_e = par2Str;
     }
@@ -36,7 +36,7 @@ public class IntegratedServerListenThread extends NetworkListenThread {
 
             try {
                 i = HttpUtil.func_76181_a();
-            } catch (IOException ioexception) {
+            } catch (final IOException ioexception) {
                 ;
             }
 
@@ -47,7 +47,7 @@ public class IntegratedServerListenThread extends NetworkListenThread {
             try {
                 this.myServerListenThread = new ServerListenThread(this, null, i);
                 this.myServerListenThread.start();
-            } catch (IOException ioexception1) {
+            } catch (final IOException ioexception1) {
                 throw ioexception1;
             }
         }
@@ -71,7 +71,7 @@ public class IntegratedServerListenThread extends NetworkListenThread {
      */
     public void networkTick() {
         if (this.theMemoryConnection != null) {
-            EntityPlayerMP entityplayermp = this.getIntegratedServer().getConfigurationManager().createPlayerForUser(this.field_71759_e);
+            final EntityPlayerMP entityplayermp = this.getIntegratedServer().getConfigurationManager().createPlayerForUser(this.field_71759_e);
 
             if (entityplayermp != null) {
                 this.netMemoryConnection.pairWith(this.theMemoryConnection);

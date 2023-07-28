@@ -20,8 +20,8 @@ public class CraftHopper extends CraftBlockState implements Hopper {
     }
 
     @Override
-    public boolean update(boolean force, boolean applyPhysics) {
-        boolean result = super.update(force, applyPhysics);
+    public boolean update(final boolean force, final boolean applyPhysics) {
+        final boolean result = super.update(force, applyPhysics);
 
         if (result) {
             hopper.onInventoryChanged();

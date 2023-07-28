@@ -14,7 +14,7 @@ public class PerlinOctaveGenerator extends OctaveGenerator {
      * @param world World to construct this generator for
      * @param octaves Amount of octaves to create
      */
-    public PerlinOctaveGenerator(World world, int octaves) {
+    public PerlinOctaveGenerator(final World world, final int octaves) {
         this(new Random(world.getSeed()), octaves);
     }
 
@@ -24,7 +24,7 @@ public class PerlinOctaveGenerator extends OctaveGenerator {
      * @param seed Seed to construct this generator for
      * @param octaves Amount of octaves to create
      */
-    public PerlinOctaveGenerator(long seed, int octaves) {
+    public PerlinOctaveGenerator(final long seed, final int octaves) {
         this(new Random(seed), octaves);
     }
 
@@ -34,12 +34,12 @@ public class PerlinOctaveGenerator extends OctaveGenerator {
      * @param rand Random object to construct this generator for
      * @param octaves Amount of octaves to create
      */
-    public PerlinOctaveGenerator(Random rand, int octaves) {
+    public PerlinOctaveGenerator(final Random rand, final int octaves) {
         super(createOctaves(rand, octaves));
     }
 
-    private static NoiseGenerator[] createOctaves(Random rand, int octaves) {
-        NoiseGenerator[] result = new NoiseGenerator[octaves];
+    private static NoiseGenerator[] createOctaves(final Random rand, final int octaves) {
+        final NoiseGenerator[] result = new NoiseGenerator[octaves];
 
         for (int i = 0; i < octaves; i++) {
             result[i] = new PerlinNoiseGenerator(rand);

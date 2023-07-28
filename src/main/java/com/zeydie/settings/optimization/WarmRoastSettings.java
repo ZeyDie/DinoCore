@@ -32,6 +32,6 @@ public final class WarmRoastSettings extends AbstractSettings {
     public static final class WarmRoastSettingsData {
         private boolean enableWarmRoast = false;
         @NotNull
-        private String[] warmRoastParams = new String[]{"--port", "25565"};
+        private String[] warmRoastParams = {"--port", "25565"};
     }
 }

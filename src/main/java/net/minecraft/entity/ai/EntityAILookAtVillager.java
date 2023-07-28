@@ -9,7 +9,7 @@ public class EntityAILookAtVillager extends EntityAIBase
     private EntityVillager theVillager;
     private int lookTime;
 
-    public EntityAILookAtVillager(EntityIronGolem par1EntityIronGolem)
+    public EntityAILookAtVillager(final EntityIronGolem par1EntityIronGolem)
     {
         this.theGolem = par1EntityIronGolem;
         this.setMutexBits(3);

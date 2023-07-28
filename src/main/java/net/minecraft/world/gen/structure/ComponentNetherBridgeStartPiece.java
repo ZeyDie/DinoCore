@@ -24,7 +24,7 @@ public class ComponentNetherBridgeStartPiece extends ComponentNetherBridgeCrossi
 
     public ComponentNetherBridgeStartPiece() {}
 
-    public ComponentNetherBridgeStartPiece(Random par1Random, int par2, int par3)
+    public ComponentNetherBridgeStartPiece(final Random par1Random, final int par2, final int par3)
     {
         super(par1Random, par2, par3);
         this.primaryWeights = new ArrayList();
@@ -52,12 +52,12 @@ public class ComponentNetherBridgeStartPiece extends ComponentNetherBridgeCrossi
         }
     }
 
-    protected void func_143011_b(NBTTagCompound par1NBTTagCompound)
+    protected void func_143011_b(final NBTTagCompound par1NBTTagCompound)
     {
         super.func_143011_b(par1NBTTagCompound);
     }
 
-    protected void func_143012_a(NBTTagCompound par1NBTTagCompound)
+    protected void func_143012_a(final NBTTagCompound par1NBTTagCompound)
     {
         super.func_143012_a(par1NBTTagCompound);
     }

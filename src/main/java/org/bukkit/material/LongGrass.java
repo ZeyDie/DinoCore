@@ -11,7 +11,7 @@ public class LongGrass extends MaterialData {
         super(Material.LONG_GRASS);
     }
 
-    public LongGrass(GrassSpecies species) {
+    public LongGrass(final GrassSpecies species) {
         this();
         setSpecies(species);
     }
@@ -61,7 +61,7 @@ public class LongGrass extends MaterialData {
      *
      * @param species New species of this grass
      */
-    public void setSpecies(GrassSpecies species) {
+    public void setSpecies(final GrassSpecies species) {
         setData(species.getData());
     }
 

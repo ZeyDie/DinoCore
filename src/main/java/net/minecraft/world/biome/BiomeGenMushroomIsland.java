@@ -5,7 +5,7 @@ import net.minecraft.entity.passive.EntityMooshroom;
 
 public class BiomeGenMushroomIsland extends BiomeGenBase
 {
-    public BiomeGenMushroomIsland(int par1)
+    public BiomeGenMushroomIsland(final int par1)
     {
         super(par1);
         this.theBiomeDecorator.treesPerChunk = -100;

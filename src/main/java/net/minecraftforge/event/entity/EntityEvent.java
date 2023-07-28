@@ -7,14 +7,14 @@ public class EntityEvent extends Event
 {
     public final Entity entity;
 
-    public EntityEvent(Entity entity)
+    public EntityEvent(final Entity entity)
     {
         this.entity = entity;
     }
 
     public static class EntityConstructing extends EntityEvent
     {
-        public EntityConstructing(Entity entity)
+        public EntityConstructing(final Entity entity)
         {
             super(entity);
         }
@@ -23,7 +23,7 @@ public class EntityEvent extends Event
     public static class CanUpdate extends EntityEvent
     {
         public boolean canUpdate = false;
-        public CanUpdate(Entity entity)
+        public CanUpdate(final Entity entity)
         {
             super(entity);
         }
@@ -36,7 +36,7 @@ public class EntityEvent extends Event
         public int oldChunkX;
         public int oldChunkZ;
 
-        public EnteringChunk(Entity entity, int newChunkX, int newChunkZ, int oldChunkX, int oldChunkZ)
+        public EnteringChunk(final Entity entity, final int newChunkX, final int newChunkZ, final int oldChunkX, final int oldChunkZ)
         {
             super(entity);
             this.newChunkX = newChunkX;

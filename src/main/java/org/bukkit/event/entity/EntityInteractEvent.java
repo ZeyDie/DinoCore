@@ -22,7 +22,7 @@ public class EntityInteractEvent extends EntityEvent implements Cancellable {
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         cancelled = cancel;
     }
 

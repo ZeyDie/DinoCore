@@ -39,7 +39,7 @@ public class BlockFurnace extends BlockContainer
     @SideOnly(Side.CLIENT)
     private Icon furnaceIconFront;
 
-    protected BlockFurnace(int par1, boolean par2)
+    protected BlockFurnace(final int par1, final boolean par2)
     {
         super(par1, Material.rock);
         this.isActive = par2;
@@ -48,7 +48,7 @@ public class BlockFurnace extends BlockContainer
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return Block.furnaceIdle.blockID;
     }
@@ -56,7 +56,7 @@ public class BlockFurnace extends BlockContainer
     /**
      * Called whenever the block is added into the world. Args: world, x, y, z
      */
-    public void onBlockAdded(World par1World, int par2, int par3, int par4)
+    public void onBlockAdded(final World par1World, final int par2, final int par3, final int par4)
     {
         super.onBlockAdded(par1World, par2, par3, par4);
         this.setDefaultDirection(par1World, par2, par3, par4);
@@ -65,14 +65,14 @@ public class BlockFurnace extends BlockContainer
     /**
      * set a blocks direction
      */
-    private void setDefaultDirection(World par1World, int par2, int par3, int par4)
+    private void setDefaultDirection(final World par1World, final int par2, final int par3, final int par4)
     {
         if (!par1World.isRemote)
         {
-            int l = par1World.getBlockId(par2, par3, par4 - 1);
-            int i1 = par1World.getBlockId(par2, par3, par4 + 1);
-            int j1 = par1World.getBlockId(par2 - 1, par3, par4);
-            int k1 = par1World.getBlockId(par2 + 1, par3, par4);
+            final int l = par1World.getBlockId(par2, par3, par4 - 1);
+            final int i1 = par1World.getBlockId(par2, par3, par4 + 1);
+            final int j1 = par1World.getBlockId(par2 - 1, par3, par4);
+            final int k1 = par1World.getBlockId(par2 + 1, par3, par4);
             byte b0 = 3;
 
             if (Block.opaqueCubeLookup[l] && !Block.opaqueCubeLookup[i1])
@@ -104,7 +104,7 @@ public class BlockFurnace extends BlockContainer
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
         return par1 == 1 ? this.furnaceIconTop : (par1 == 0 ? this.furnaceIconTop : (par1 != par2 ? this.blockIcon : this.furnaceIconFront));
     }
@@ -115,7 +115,7 @@ public class BlockFurnace extends BlockContainer
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.blockIcon = par1IconRegister.registerIcon("furnace_side");
         this.furnaceIconFront = par1IconRegister.registerIcon(this.isActive ? "furnace_front_on" : "furnace_front_off");
@@ -125,7 +125,7 @@ public class BlockFurnace extends BlockContainer
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9)
     {
         if (par1World.isRemote)
         {
@@ -133,7 +133,7 @@ public class BlockFurnace extends BlockContainer
         }
         else
         {
-            TileEntityFurnace tileentityfurnace = (TileEntityFurnace)par1World.getBlockTileEntity(par2, par3, par4);
+            final TileEntityFurnace tileentityfurnace = (TileEntityFurnace)par1World.getBlockTileEntity(par2, par3, par4);
 
             if (tileentityfurnace != null)
             {
@@ -147,10 +147,10 @@ public class BlockFurnace extends BlockContainer
     /**
      * Update which block ID the furnace is using depending on whether or not it is burning
      */
-    public static void updateFurnaceBlockState(boolean par0, World par1World, int par2, int par3, int par4)
+    public static void updateFurnaceBlockState(final boolean par0, final World par1World, final int par2, final int par3, final int par4)
     {
-        int l = par1World.getBlockMetadata(par2, par3, par4);
-        TileEntity tileentity = par1World.getBlockTileEntity(par2, par3, par4);
+        final int l = par1World.getBlockMetadata(par2, par3, par4);
+        final TileEntity tileentity = par1World.getBlockTileEntity(par2, par3, par4);
         keepFurnaceInventory = true;
 
         if (par0)
@@ -177,16 +177,16 @@ public class BlockFurnace extends BlockContainer
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void randomDisplayTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (this.isActive)
         {
-            int l = par1World.getBlockMetadata(par2, par3, par4);
-            float f = (float)par2 + 0.5F;
-            float f1 = (float)par3 + 0.0F + par5Random.nextFloat() * 6.0F / 16.0F;
-            float f2 = (float)par4 + 0.5F;
-            float f3 = 0.52F;
-            float f4 = par5Random.nextFloat() * 0.6F - 0.3F;
+            final int l = par1World.getBlockMetadata(par2, par3, par4);
+            final float f = (float)par2 + 0.5F;
+            final float f1 = (float)par3 + 0.0F + par5Random.nextFloat() * 6.0F / 16.0F;
+            final float f2 = (float)par4 + 0.5F;
+            final float f3 = 0.52F;
+            final float f4 = par5Random.nextFloat() * 0.6F - 0.3F;
 
             if (l == 4)
             {
@@ -214,7 +214,7 @@ public class BlockFurnace extends BlockContainer
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World par1World)
+    public TileEntity createNewTileEntity(final World par1World)
     {
         return new TileEntityFurnace();
     }
@@ -222,9 +222,9 @@ public class BlockFurnace extends BlockContainer
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
+    public void onBlockPlacedBy(final World par1World, final int par2, final int par3, final int par4, final EntityLivingBase par5EntityLivingBase, final ItemStack par6ItemStack)
     {
-        int l = MathHelper.floor_double((double)(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        final int l = MathHelper.floor_double((double)(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
         if (l == 0)
         {
@@ -257,23 +257,23 @@ public class BlockFurnace extends BlockContainer
      * different metadata value, but before the new metadata value is set. Args: World, x, y, z, old block ID, old
      * metadata
      */
-    public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    public void breakBlock(final World par1World, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         if (!keepFurnaceInventory)
         {
-            TileEntityFurnace tileentityfurnace = (TileEntityFurnace)par1World.getBlockTileEntity(par2, par3, par4);
+            final TileEntityFurnace tileentityfurnace = (TileEntityFurnace)par1World.getBlockTileEntity(par2, par3, par4);
 
             if (tileentityfurnace != null)
             {
                 for (int j1 = 0; j1 < tileentityfurnace.getSizeInventory(); ++j1)
                 {
-                    ItemStack itemstack = tileentityfurnace.getStackInSlot(j1);
+                    final ItemStack itemstack = tileentityfurnace.getStackInSlot(j1);
 
                     if (itemstack != null)
                     {
-                        float f = this.furnaceRand.nextFloat() * 0.8F + 0.1F;
-                        float f1 = this.furnaceRand.nextFloat() * 0.8F + 0.1F;
-                        float f2 = this.furnaceRand.nextFloat() * 0.8F + 0.1F;
+                        final float f = this.furnaceRand.nextFloat() * 0.8F + 0.1F;
+                        final float f1 = this.furnaceRand.nextFloat() * 0.8F + 0.1F;
+                        final float f2 = this.furnaceRand.nextFloat() * 0.8F + 0.1F;
 
                         while (itemstack.stackSize > 0)
                         {
@@ -285,14 +285,14 @@ public class BlockFurnace extends BlockContainer
                             }
 
                             itemstack.stackSize -= k1;
-                            EntityItem entityitem = new EntityItem(par1World, (double)((float)par2 + f), (double)((float)par3 + f1), (double)((float)par4 + f2), new ItemStack(itemstack.itemID, k1, itemstack.getItemDamage()));
+                            final EntityItem entityitem = new EntityItem(par1World, (double)((float)par2 + f), (double)((float)par3 + f1), (double)((float)par4 + f2), new ItemStack(itemstack.itemID, k1, itemstack.getItemDamage()));
 
                             if (itemstack.hasTagCompound())
                             {
                                 entityitem.getEntityItem().setTagCompound((NBTTagCompound)itemstack.getTagCompound().copy());
                             }
 
-                            float f3 = 0.05F;
+                            final float f3 = 0.05F;
                             entityitem.motionX = (double)((float)this.furnaceRand.nextGaussian() * f3);
                             entityitem.motionY = (double)((float)this.furnaceRand.nextGaussian() * f3 + 0.2F);
                             entityitem.motionZ = (double)((float)this.furnaceRand.nextGaussian() * f3);
@@ -321,7 +321,7 @@ public class BlockFurnace extends BlockContainer
      * If hasComparatorInputOverride returns true, the return value from this is used instead of the redstone signal
      * strength when this block inputs to a comparator.
      */
-    public int getComparatorInputOverride(World par1World, int par2, int par3, int par4, int par5)
+    public int getComparatorInputOverride(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         return Container.calcRedstoneFromInventory((IInventory)par1World.getBlockTileEntity(par2, par3, par4));
     }
@@ -331,7 +331,7 @@ public class BlockFurnace extends BlockContainer
     /**
      * only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
      */
-    public int idPicked(World par1World, int par2, int par3, int par4)
+    public int idPicked(final World par1World, final int par2, final int par3, final int par4)
     {
         return Block.furnaceIdle.blockID;
     }

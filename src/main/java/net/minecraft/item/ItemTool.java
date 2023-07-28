@@ -23,7 +23,7 @@ public class ItemTool extends Item
     /** The material this tool is made from. */
     protected EnumToolMaterial toolMaterial;
 
-    protected ItemTool(int par1, float par2, EnumToolMaterial par3EnumToolMaterial, Block[] par4ArrayOfBlock)
+    protected ItemTool(final int par1, final float par2, final EnumToolMaterial par3EnumToolMaterial, final Block[] par4ArrayOfBlock)
     {
         super(par1);
         this.toolMaterial = par3EnumToolMaterial;
@@ -39,7 +39,7 @@ public class ItemTool extends Item
      * Returns the strength of the stack against a given block. 1.0F base, (Quality+1)*2 if correct blocktype, 1.5F if
      * sword
      */
-    public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block)
+    public float getStrVsBlock(final ItemStack par1ItemStack, final Block par2Block)
     {
         for (int i = 0; i < this.blocksEffectiveAgainst.length; ++i)
         {
@@ -56,13 +56,13 @@ public class ItemTool extends Item
      * Current implementations of this method in child classes do not use the entry argument beside ev. They just raise
      * the damage on the stack.
      */
-    public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase)
+    public boolean hitEntity(final ItemStack par1ItemStack, final EntityLivingBase par2EntityLivingBase, final EntityLivingBase par3EntityLivingBase)
     {
         par1ItemStack.damageItem(2, par3EntityLivingBase);
         return true;
     }
 
-    public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, int par3, int par4, int par5, int par6, EntityLivingBase par7EntityLivingBase)
+    public boolean onBlockDestroyed(final ItemStack par1ItemStack, final World par2World, final int par3, final int par4, final int par5, final int par6, final EntityLivingBase par7EntityLivingBase)
     {
         if ((double)Block.blocksList[par3].getBlockHardness(par2World, par4, par5, par6) != 0.0D)
         {
@@ -101,7 +101,7 @@ public class ItemTool extends Item
     /**
      * Return whether this item is repairable in an anvil.
      */
-    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
+    public boolean getIsRepairable(final ItemStack par1ItemStack, final ItemStack par2ItemStack)
     {
         return this.toolMaterial.getToolCraftingMaterial() == par2ItemStack.itemID ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
     }
@@ -111,14 +111,14 @@ public class ItemTool extends Item
      */
     public Multimap getItemAttributeModifiers()
     {
-        Multimap multimap = super.getItemAttributeModifiers();
+        final Multimap multimap = super.getItemAttributeModifiers();
         multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Tool modifier", (double)this.damageVsEntity, 0));
         return multimap;
     }
 
     /** FORGE: Overridden to allow custom tool effectiveness */
     @Override
-    public float getStrVsBlock(ItemStack stack, Block block, int meta) 
+    public float getStrVsBlock(final ItemStack stack, final Block block, final int meta)
     {
         if (ForgeHooks.isToolEffective(stack, block, meta))
         {

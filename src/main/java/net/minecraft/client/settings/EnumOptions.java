@@ -42,14 +42,14 @@ public enum EnumOptions
     private final boolean enumBoolean;
     private final String enumString;
 
-    public static EnumOptions getEnumOptions(int par0)
+    public static EnumOptions getEnumOptions(final int par0)
     {
-        EnumOptions[] aenumoptions = values();
-        int j = aenumoptions.length;
+        final EnumOptions[] aenumoptions = values();
+        final int j = aenumoptions.length;
 
         for (int k = 0; k < j; ++k)
         {
-            EnumOptions enumoptions = aenumoptions[k];
+            final EnumOptions enumoptions = aenumoptions[k];
 
             if (enumoptions.returnEnumOrdinal() == par0)
             {
@@ -60,7 +60,7 @@ public enum EnumOptions
         return null;
     }
 
-    private EnumOptions(String par3Str, boolean par4, boolean par5)
+    private EnumOptions(final String par3Str, final boolean par4, final boolean par5)
     {
         this.enumString = par3Str;
         this.enumFloat = par4;

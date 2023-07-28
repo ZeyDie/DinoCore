@@ -7,7 +7,7 @@ public class ClassPatch {
     public final boolean existsAtTarget;
     public final byte[] patch;
     public final int inputChecksum;
-    public ClassPatch(String name, String sourceClassName, String targetClassName, boolean existsAtTarget, int inputChecksum, byte[] patch)
+    public ClassPatch(final String name, final String sourceClassName, final String targetClassName, final boolean existsAtTarget, final int inputChecksum, final byte[] patch)
     {
         this.name = name;
         this.sourceClassName = sourceClassName;

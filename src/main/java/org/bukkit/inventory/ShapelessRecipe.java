@@ -28,7 +28,7 @@ public class ShapelessRecipe implements Recipe {
      * @see ShapelessRecipe#addIngredient(int,MaterialData)
      * @see ShapelessRecipe#addIngredient(int,Material,int)
      */
-    public ShapelessRecipe(ItemStack result) {
+    public ShapelessRecipe(final ItemStack result) {
         this.output = new ItemStack(result);
     }
 
@@ -38,7 +38,7 @@ public class ShapelessRecipe implements Recipe {
      * @param ingredient The ingredient to add.
      * @return The changed recipe, so you can chain calls.
      */
-    public ShapelessRecipe addIngredient(MaterialData ingredient) {
+    public ShapelessRecipe addIngredient(final MaterialData ingredient) {
         return addIngredient(1, ingredient);
     }
 
@@ -48,7 +48,7 @@ public class ShapelessRecipe implements Recipe {
      * @param ingredient The ingredient to add.
      * @return The changed recipe, so you can chain calls.
      */
-    public ShapelessRecipe addIngredient(Material ingredient) {
+    public ShapelessRecipe addIngredient(final Material ingredient) {
         return addIngredient(1, ingredient, 0);
     }
 
@@ -61,7 +61,7 @@ public class ShapelessRecipe implements Recipe {
      * @deprecated Magic value
      */
     @Deprecated
-    public ShapelessRecipe addIngredient(Material ingredient, int rawdata) {
+    public ShapelessRecipe addIngredient(final Material ingredient, final int rawdata) {
         return addIngredient(1, ingredient, rawdata);
     }
 
@@ -72,7 +72,7 @@ public class ShapelessRecipe implements Recipe {
      * @param ingredient The ingredient to add.
      * @return The changed recipe, so you can chain calls.
      */
-    public ShapelessRecipe addIngredient(int count, MaterialData ingredient) {
+    public ShapelessRecipe addIngredient(final int count, final MaterialData ingredient) {
         return addIngredient(count, ingredient.getItemType(), ingredient.getData());
     }
 
@@ -83,7 +83,7 @@ public class ShapelessRecipe implements Recipe {
      * @param ingredient The ingredient to add.
      * @return The changed recipe, so you can chain calls.
      */
-    public ShapelessRecipe addIngredient(int count, Material ingredient) {
+    public ShapelessRecipe addIngredient(final int count, final Material ingredient) {
         return addIngredient(count, ingredient, 0);
     }
 
@@ -97,16 +97,18 @@ public class ShapelessRecipe implements Recipe {
      * @deprecated Magic value
      */
     @Deprecated
-    public ShapelessRecipe addIngredient(int count, Material ingredient, int rawdata) {
-        Validate.isTrue(ingredients.size() + count <= 9, "Shapeless recipes cannot have more than 9 ingredients");
+    public ShapelessRecipe addIngredient(int count, final Material ingredient, int rawdata) {
+        int rawdata1 = rawdata;
+        int count1 = count;
+        Validate.isTrue(ingredients.size() + count1 <= 9, "Shapeless recipes cannot have more than 9 ingredients");
 
         // -1 is the old wildcard, map to Short.MAX_VALUE as the new one
-        if (rawdata == -1) {
-            rawdata = Short.MAX_VALUE;
+        if (rawdata1 == -1) {
+            rawdata1 = Short.MAX_VALUE;
         }
 
-        while (count-- > 0) {
-            ingredients.add(new ItemStack(ingredient, 1, (short) rawdata));
+        while (count1-- > 0) {
+            ingredients.add(new ItemStack(ingredient, 1, (short) rawdata1));
         }
         return this;
     }
@@ -119,7 +121,7 @@ public class ShapelessRecipe implements Recipe {
      * @param ingredient The ingredient to remove
      * @return The changed recipe.
      */
-    public ShapelessRecipe removeIngredient(Material ingredient) {
+    public ShapelessRecipe removeIngredient(final Material ingredient) {
         return removeIngredient(ingredient, 0);
     }
 
@@ -131,7 +133,7 @@ public class ShapelessRecipe implements Recipe {
      * @param ingredient The ingredient to remove
      * @return The changed recipe.
      */
-    public ShapelessRecipe removeIngredient(MaterialData ingredient) {
+    public ShapelessRecipe removeIngredient(final MaterialData ingredient) {
         return removeIngredient(ingredient.getItemType(), ingredient.getData());
     }
 
@@ -144,7 +146,7 @@ public class ShapelessRecipe implements Recipe {
      * @param ingredient The ingredient to remove
      * @return The changed recipe.
      */
-    public ShapelessRecipe removeIngredient(int count, Material ingredient) {
+    public ShapelessRecipe removeIngredient(final int count, final Material ingredient) {
         return removeIngredient(count, ingredient, 0);
     }
 
@@ -157,7 +159,7 @@ public class ShapelessRecipe implements Recipe {
      * @param ingredient The ingredient to remove.
      * @return The changed recipe.
      */
-    public ShapelessRecipe removeIngredient(int count, MaterialData ingredient) {
+    public ShapelessRecipe removeIngredient(final int count, final MaterialData ingredient) {
         return removeIngredient(count, ingredient.getItemType(), ingredient.getData());
     }
 
@@ -172,7 +174,7 @@ public class ShapelessRecipe implements Recipe {
      * @deprecated Magic value
      */
     @Deprecated
-    public ShapelessRecipe removeIngredient(Material ingredient, int rawdata) {
+    public ShapelessRecipe removeIngredient(final Material ingredient, final int rawdata) {
         return removeIngredient(1, ingredient, rawdata);
     }
 
@@ -188,13 +190,14 @@ public class ShapelessRecipe implements Recipe {
      * @deprecated Magic value
      */
     @Deprecated
-    public ShapelessRecipe removeIngredient(int count, Material ingredient, int rawdata) {
-        Iterator<ItemStack> iterator = ingredients.iterator();
-        while (count > 0 && iterator.hasNext()) {
-            ItemStack stack = iterator.next();
+    public ShapelessRecipe removeIngredient(int count, final Material ingredient, final int rawdata) {
+        int count1 = count;
+        final Iterator<ItemStack> iterator = ingredients.iterator();
+        while (count1 > 0 && iterator.hasNext()) {
+            final ItemStack stack = iterator.next();
             if (stack.getType() == ingredient && stack.getDurability() == rawdata) {
                 iterator.remove();
-                count--;
+                count1--;
             }
         }
         return this;
@@ -215,8 +218,8 @@ public class ShapelessRecipe implements Recipe {
      * @return The input list
      */
     public List<ItemStack> getIngredientList() {
-        ArrayList<ItemStack> result = new ArrayList<ItemStack>(ingredients.size());
-        for (ItemStack ingredient : ingredients) {
+        final ArrayList<ItemStack> result = new ArrayList<ItemStack>(ingredients.size());
+        for (final ItemStack ingredient : ingredients) {
             result.add(ingredient.clone());
         }
         return result;

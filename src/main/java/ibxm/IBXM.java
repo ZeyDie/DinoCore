@@ -26,10 +26,11 @@ public class IBXM {
 //		System.out.println( VERSION );
 /***************************************/
 
-		if( sample_rate < 8000 ) {
-			sample_rate = 8000;
+        int sample_rate1 = sample_rate;
+        if( sample_rate1 < 8000 ) {
+			sample_rate1 = 8000;
 		}
-		sampling_rate = sample_rate;
+		sampling_rate = sample_rate1;
 		volume_ramp_length = sampling_rate >> 10;
 		volume_ramp_buffer = new int[ volume_ramp_length * 2 ];
 		mixing_buffer = new int[ sampling_rate / 6 ];
@@ -39,7 +40,7 @@ public class IBXM {
 		set_resampling_quality( 1 );
 	}
 	
-	public void set_module( Module m ) {
+	public void set_module(final Module m ) {
 		int channel_idx;
 		module = m;
 		channels = new Channel[ module.get_num_channels() ];
@@ -49,7 +50,7 @@ public class IBXM {
 		set_sequence_index( 0, 0 );
 	}
 
-	public void set_resampling_quality( int quality ) {
+	public void set_resampling_quality(final int quality ) {
 		resampling_quality = quality;
 	}
 	
@@ -65,7 +66,7 @@ public class IBXM {
 		return song_duration;
 	}
 	
-	public void set_sequence_index( int sequence_index, int row ) {
+	public void set_sequence_index(final int sequence_index, final int row ) {
 		int channel_idx;
 		global_volume[ 0 ] = 64;
 		for( channel_idx = 0; channel_idx < channels.length; channel_idx++ ) {
@@ -86,24 +87,26 @@ public class IBXM {
 	}
 
 	public void seek( int sample_position ) {
-		int idx;
+        int sample_position1 = sample_position;
+        int idx;
 		set_sequence_index( 0, 0 );
 		next_tick();
-		while( sample_position > tick_length_samples ) {
-			sample_position -= tick_length_samples;
+		while( sample_position1 > tick_length_samples ) {
+			sample_position1 -= tick_length_samples;
 			next_tick();
 		}
 		mix_tick();
-		current_tick_samples = sample_position;
+		current_tick_samples = sample_position1;
 	}
 
-	public void get_audio( byte[] output_buffer, int frames ) {
-		int output_idx, mix_idx, mix_end, count, amplitude;
+	public void get_audio(final byte[] output_buffer, int frames ) {
+        int frames1 = frames;
+        int output_idx, mix_idx, mix_end, count, amplitude;
 		output_idx = 0;
-		while( frames > 0 ) {
+		while( frames1 > 0 ) {
 			count = tick_length_samples - current_tick_samples;
-			if( count > frames ) {
-				count = frames;
+			if( count > frames1) {
+				count = frames1;
 			}
 			mix_idx = current_tick_samples << 1;
 			mix_end = mix_idx + ( count << 1 ) - 1;
@@ -121,8 +124,8 @@ public class IBXM {
 				mix_idx += 1;
 			}
 			current_tick_samples = mix_idx >> 1;
-			frames -= count;
-			if( frames > 0 ) {
+			frames1 -= count;
+			if( frames1 > 0 ) {
 				next_tick();
 				mix_tick();
 				current_tick_samples = 0;
@@ -147,7 +150,7 @@ public class IBXM {
 
 	private boolean next_tick() {
 		int channel_idx;
-		boolean song_end;
+		final boolean song_end;
 		for( channel_idx = 0; channel_idx < channels.length; channel_idx++ ) {
 			channels[ channel_idx ].update_sample_idx( tick_length_samples );
 		}
@@ -167,7 +170,7 @@ public class IBXM {
 	private boolean next_row() {
 		int channel_idx, effect, effect_param;
 		boolean song_end;
-		Pattern pattern;
+		final Pattern pattern;
 		song_end = false;
 		if( next_sequence_index < 0 ) {
 			/* Bad next sequence index.*/
@@ -288,31 +291,36 @@ public class IBXM {
 	}
 
 	private void set_global_volume( int volume ) {
-		if( volume < 0 ) {
-			volume = 0;
+        int volume1 = volume;
+        if( volume1 < 0 ) {
+			volume1 = 0;
 		}
-		if( volume > 64 ) {
-			volume = 64;
+		if( volume1 > 64 ) {
+			volume1 = 64;
 		}
-		global_volume[ 0 ] = volume;
+		global_volume[ 0 ] = volume1;
 	}
 
-	private void set_speed( int speed ) {
+	private void set_speed(final int speed ) {
 		if( speed > 0 && speed < 256 ) {
 			ticks_per_row = speed;
 		}
 	}
 
-	private void set_tempo( int bpm ) {
+	private void set_tempo(final int bpm ) {
 		if( bpm > 31 && bpm < 256 ) {
 			tick_length_samples = ( sampling_rate * 5 ) / ( bpm * 2 );
 		}
 	}	
 
 	private void volume_ramp() {
-		int ramp_idx, next_idx, ramp_end;
-		int volume_ramp_delta, volume, sample;
-		sample = 0;
+		int ramp_idx;
+        int next_idx;
+        final int ramp_end;
+        final int volume_ramp_delta;
+        int volume;
+        int sample;
+        sample = 0;
 		volume_ramp_delta = FP_ONE / volume_ramp_length;
 		volume = 0;
 		ramp_idx = 0;
@@ -331,8 +339,9 @@ public class IBXM {
 	}
 	
 	private void clear_vol_ramp_buffer() {
-		int ramp_idx, ramp_end;
-		ramp_idx = 0;
+		int ramp_idx;
+        final int ramp_end;
+        ramp_idx = 0;
 		ramp_end = volume_ramp_length * 2 - 1;
 		while( ramp_idx <= ramp_end ) {
 			volume_ramp_buffer[ ramp_idx ] = 0;

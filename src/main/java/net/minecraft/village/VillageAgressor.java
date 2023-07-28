@@ -9,7 +9,7 @@ class VillageAgressor
 
     final Village villageObj;
 
-    VillageAgressor(Village par1Village, EntityLivingBase par2EntityLivingBase, int par3)
+    VillageAgressor(final Village par1Village, final EntityLivingBase par2EntityLivingBase, final int par3)
     {
         this.villageObj = par1Village;
         this.agressor = par2EntityLivingBase;

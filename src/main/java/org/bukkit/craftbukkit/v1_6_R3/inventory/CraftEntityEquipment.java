@@ -16,7 +16,7 @@ public class CraftEntityEquipment implements EntityEquipment {
 
     private final CraftLivingEntity entity;
 
-    public CraftEntityEquipment(CraftLivingEntity entity) {
+    public CraftEntityEquipment(final CraftLivingEntity entity) {
         this.entity = entity;
     }
 
@@ -24,7 +24,7 @@ public class CraftEntityEquipment implements EntityEquipment {
         return getEquipment(WEAPON_SLOT);
     }
 
-    public void setItemInHand(ItemStack stack) {
+    public void setItemInHand(final ItemStack stack) {
         setEquipment(WEAPON_SLOT, stack);
     }
 
@@ -32,7 +32,7 @@ public class CraftEntityEquipment implements EntityEquipment {
         return getEquipment(HELMET_SLOT);
     }
 
-    public void setHelmet(ItemStack helmet) {
+    public void setHelmet(final ItemStack helmet) {
         setEquipment(HELMET_SLOT, helmet);
     }
 
@@ -40,7 +40,7 @@ public class CraftEntityEquipment implements EntityEquipment {
         return getEquipment(CHEST_SLOT);
     }
 
-    public void setChestplate(ItemStack chestplate) {
+    public void setChestplate(final ItemStack chestplate) {
         setEquipment(CHEST_SLOT, chestplate);
     }
 
@@ -48,7 +48,7 @@ public class CraftEntityEquipment implements EntityEquipment {
         return getEquipment(LEG_SLOT);
     }
 
-    public void setLeggings(ItemStack leggings) {
+    public void setLeggings(final ItemStack leggings) {
         setEquipment(LEG_SLOT, leggings);
     }
 
@@ -56,30 +56,30 @@ public class CraftEntityEquipment implements EntityEquipment {
         return getEquipment(BOOT_SLOT);
     }
 
-    public void setBoots(ItemStack boots) {
+    public void setBoots(final ItemStack boots) {
         setEquipment(BOOT_SLOT, boots);
     }
 
     public ItemStack[] getArmorContents() {
-        ItemStack[] armor = new ItemStack[INVENTORY_SLOTS - 1];
+        final ItemStack[] armor = new ItemStack[INVENTORY_SLOTS - 1];
         for(int slot = WEAPON_SLOT + 1; slot < INVENTORY_SLOTS; slot++) {
             armor[slot - 1] = getEquipment(slot);
         }
         return armor;
     }
 
-    public void setArmorContents(ItemStack[] items) {
+    public void setArmorContents(final ItemStack[] items) {
         for(int slot = WEAPON_SLOT + 1; slot < INVENTORY_SLOTS; slot++) {
-            ItemStack equipment = items != null && slot <= items.length ? items[slot - 1] : null;
+            final ItemStack equipment = items != null && slot <= items.length ? items[slot - 1] : null;
             setEquipment(slot, equipment);
         }
     }
 
-    private ItemStack getEquipment(int slot) {
+    private ItemStack getEquipment(final int slot) {
         return CraftItemStack.asBukkitCopy(entity.getHandle().getCurrentItemOrArmor(slot));
     }
 
-    private void setEquipment(int slot, ItemStack stack) {
+    private void setEquipment(final int slot, final ItemStack stack) {
         entity.getHandle().setCurrentItemOrArmor(slot, CraftItemStack.asNMSCopy(stack));
     }
 
@@ -97,7 +97,7 @@ public class CraftEntityEquipment implements EntityEquipment {
        return getDropChance(WEAPON_SLOT);
     }
 
-    public void setItemInHandDropChance(float chance) {
+    public void setItemInHandDropChance(final float chance) {
         setDropChance(WEAPON_SLOT, chance);
     }
 
@@ -105,7 +105,7 @@ public class CraftEntityEquipment implements EntityEquipment {
         return getDropChance(HELMET_SLOT);
     }
 
-    public void setHelmetDropChance(float chance) {
+    public void setHelmetDropChance(final float chance) {
         setDropChance(HELMET_SLOT, chance);
     }
 
@@ -113,7 +113,7 @@ public class CraftEntityEquipment implements EntityEquipment {
         return getDropChance(CHEST_SLOT);
     }
 
-    public void setChestplateDropChance(float chance) {
+    public void setChestplateDropChance(final float chance) {
         setDropChance(CHEST_SLOT, chance);
     }
 
@@ -121,7 +121,7 @@ public class CraftEntityEquipment implements EntityEquipment {
         return getDropChance(LEG_SLOT);
     }
 
-    public void setLeggingsDropChance(float chance) {
+    public void setLeggingsDropChance(final float chance) {
         setDropChance(LEG_SLOT, chance);
     }
 
@@ -129,15 +129,15 @@ public class CraftEntityEquipment implements EntityEquipment {
         return getDropChance(BOOT_SLOT);
     }
 
-    public void setBootsDropChance(float chance) {
+    public void setBootsDropChance(final float chance) {
         setDropChance(BOOT_SLOT, chance);
     }
 
-    private void setDropChance(int slot, float chance) {
+    private void setDropChance(final int slot, final float chance) {
         ((net.minecraft.entity.EntityLiving) entity.getHandle()).equipmentDropChances[slot] = chance - 0.1F;
     }
 
-    private float getDropChance(int slot) {
+    private float getDropChance(final int slot) {
         return ((net.minecraft.entity.EntityLiving) entity.getHandle()).equipmentDropChances[slot] + 0.1F;
     }
 }

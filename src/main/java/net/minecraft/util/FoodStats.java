@@ -32,7 +32,7 @@ public class FoodStats
     /**
      * Args: int foodLevel, float foodSaturationModifier
      */
-    public void addStats(int par1, float par2)
+    public void addStats(final int par1, final float par2)
     {
         this.foodLevel = Math.min(par1 + this.foodLevel, 20);
         this.foodSaturationLevel = Math.min(this.foodSaturationLevel + (float)par1 * par2 * 2.0F, (float)this.foodLevel);
@@ -41,7 +41,7 @@ public class FoodStats
     /**
      * Eat some food.
      */
-    public void addStats(ItemFood par1ItemFood)
+    public void addStats(final ItemFood par1ItemFood)
     {
         this.addStats(par1ItemFood.getHealAmount(), par1ItemFood.getSaturationModifier());
     }
@@ -49,9 +49,9 @@ public class FoodStats
     /**
      * Handles the food game logic.
      */
-    public void onUpdate(EntityPlayer par1EntityPlayer)
+    public void onUpdate(final EntityPlayer par1EntityPlayer)
     {
-        int i = par1EntityPlayer.worldObj.difficultySetting;
+        final int i = par1EntityPlayer.worldObj.difficultySetting;
         this.prevFoodLevel = this.foodLevel;
 
         if (this.foodExhaustionLevel > 4.0F)
@@ -65,7 +65,7 @@ public class FoodStats
             else if (i > 0)
             {
                 // CraftBukkit start
-                org.bukkit.event.entity.FoodLevelChangeEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callFoodLevelChangeEvent(par1EntityPlayer, Math.max(this.foodLevel - 1, 0));
+                final org.bukkit.event.entity.FoodLevelChangeEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callFoodLevelChangeEvent(par1EntityPlayer, Math.max(this.foodLevel - 1, 0));
 
                 if (!event.isCancelled())
                 {
@@ -112,7 +112,7 @@ public class FoodStats
     /**
      * Reads food stats from an NBT object.
      */
-    public void readNBT(NBTTagCompound par1NBTTagCompound)
+    public void readNBT(final NBTTagCompound par1NBTTagCompound)
     {
         if (par1NBTTagCompound.hasKey("foodLevel"))
         {
@@ -126,7 +126,7 @@ public class FoodStats
     /**
      * Writes food stats to an NBT object.
      */
-    public void writeNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeNBT(final NBTTagCompound par1NBTTagCompound)
     {
         par1NBTTagCompound.setInteger("foodLevel", this.foodLevel);
         par1NBTTagCompound.setInteger("foodTickTimer", this.foodTimer);
@@ -159,7 +159,7 @@ public class FoodStats
     /**
      * adds input to foodExhaustionLevel to a max of 40
      */
-    public void addExhaustion(float par1)
+    public void addExhaustion(final float par1)
     {
         this.foodExhaustionLevel = Math.min(this.foodExhaustionLevel + par1, 40.0F);
     }
@@ -173,13 +173,13 @@ public class FoodStats
     }
 
     @SideOnly(Side.CLIENT)
-    public void setFoodLevel(int par1)
+    public void setFoodLevel(final int par1)
     {
         this.foodLevel = par1;
     }
 
     @SideOnly(Side.CLIENT)
-    public void setFoodSaturationLevel(float par1)
+    public void setFoodSaturationLevel(final float par1)
     {
         this.foodSaturationLevel = par1;
     }

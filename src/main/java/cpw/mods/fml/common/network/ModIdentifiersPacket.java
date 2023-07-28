@@ -36,13 +36,13 @@ public class ModIdentifiersPacket extends FMLPacket
     }
 
     @Override
-    public byte[] generatePacket(Object... data)
+    public byte[] generatePacket(final Object... data)
     {
-        ByteArrayDataOutput dat = ByteStreams.newDataOutput();
-        Collection<NetworkModHandler >networkMods = FMLNetworkHandler.instance().getNetworkIdMap().values();
+        final ByteArrayDataOutput dat = ByteStreams.newDataOutput();
+        final Collection<NetworkModHandler >networkMods = FMLNetworkHandler.instance().getNetworkIdMap().values();
 
         dat.writeInt(networkMods.size());
-        for (NetworkModHandler handler : networkMods)
+        for (final NetworkModHandler handler : networkMods)
         {
             dat.writeUTF(handler.getContainer().getModId());
             dat.writeInt(handler.getNetworkId());
@@ -53,23 +53,23 @@ public class ModIdentifiersPacket extends FMLPacket
     }
 
     @Override
-    public FMLPacket consumePacket(byte[] data)
+    public FMLPacket consumePacket(final byte[] data)
     {
-        ByteArrayDataInput dat = ByteStreams.newDataInput(data);
-        int listSize = dat.readInt();
+        final ByteArrayDataInput dat = ByteStreams.newDataInput(data);
+        final int listSize = dat.readInt();
         for (int i = 0; i < listSize; i++)
         {
-            String modId = dat.readUTF();
-            int networkId = dat.readInt();
+            final String modId = dat.readUTF();
+            final int networkId = dat.readInt();
             modIds.put(modId, networkId);
         }
         return this;
     }
 
     @Override
-    public void execute(INetworkManager network, FMLNetworkHandler handler, NetHandler netHandler, String userName)
+    public void execute(final INetworkManager network, final FMLNetworkHandler handler, final NetHandler netHandler, final String userName)
     {
-        for (Entry<String,Integer> idEntry : modIds.entrySet())
+        for (final Entry<String,Integer> idEntry : modIds.entrySet())
         {
             handler.bindNetworkId(idEntry.getKey(), idEntry.getValue());
         }

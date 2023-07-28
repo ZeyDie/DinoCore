@@ -10,7 +10,7 @@ public abstract class RenderLivingEvent extends Event
     public final EntityLivingBase entity;
     public final RendererLivingEntity renderer;
 
-    public RenderLivingEvent(EntityLivingBase entity, RendererLivingEntity renderer)
+    public RenderLivingEvent(final EntityLivingBase entity, final RendererLivingEntity renderer)
     {
         this.entity = entity;
         this.renderer = renderer;
@@ -19,25 +19,25 @@ public abstract class RenderLivingEvent extends Event
     @Cancelable
     public static class Pre extends RenderLivingEvent
     {
-        public Pre(EntityLivingBase entity, RendererLivingEntity renderer){ super(entity, renderer); }
+        public Pre(final EntityLivingBase entity, final RendererLivingEntity renderer){ super(entity, renderer); }
     }
     public static class Post extends RenderLivingEvent
     {
-        public Post(EntityLivingBase entity, RendererLivingEntity renderer){ super(entity, renderer); }
+        public Post(final EntityLivingBase entity, final RendererLivingEntity renderer){ super(entity, renderer); }
     }
 
     public abstract static class Specials extends RenderLivingEvent
     {
-        public Specials(EntityLivingBase entity, RendererLivingEntity renderer){ super(entity, renderer); }
+        public Specials(final EntityLivingBase entity, final RendererLivingEntity renderer){ super(entity, renderer); }
 
         @Cancelable
         public static class Pre extends Specials
         {
-            public Pre(EntityLivingBase entity, RendererLivingEntity renderer){ super(entity, renderer); }
+            public Pre(final EntityLivingBase entity, final RendererLivingEntity renderer){ super(entity, renderer); }
         }
         public static class Post extends Specials
         {
-            public Post(EntityLivingBase entity, RendererLivingEntity renderer){ super(entity, renderer); }
+            public Post(final EntityLivingBase entity, final RendererLivingEntity renderer){ super(entity, renderer); }
         }
     }
 }

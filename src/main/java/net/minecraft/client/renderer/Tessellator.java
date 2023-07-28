@@ -131,7 +131,7 @@ public class Tessellator
     /** The size of the buffers used (in integers). */
     private int bufferSize;
 
-    private Tessellator(int par1)
+    private Tessellator(final int par1)
     {
     }
     
@@ -304,7 +304,7 @@ public class Tessellator
                 rawBuffer = null;
             }
 
-            int i = this.rawBufferIndex * 4;
+            final int i = this.rawBufferIndex * 4;
             this.reset();
             return i;
         }
@@ -332,7 +332,7 @@ public class Tessellator
     /**
      * Resets tessellator state and prepares for drawing (with the specified draw mode).
      */
-    public void startDrawing(int par1)
+    public void startDrawing(final int par1)
     {
         if (this.isDrawing)
         {
@@ -354,14 +354,14 @@ public class Tessellator
     /**
      * Sets the texture coordinates.
      */
-    public void setTextureUV(double par1, double par3)
+    public void setTextureUV(final double par1, final double par3)
     {
         this.hasTexture = true;
         this.textureU = par1;
         this.textureV = par3;
     }
 
-    public void setBrightness(int par1)
+    public void setBrightness(final int par1)
     {
         this.hasBrightness = true;
         this.brightness = par1;
@@ -370,7 +370,7 @@ public class Tessellator
     /**
      * Sets the RGB values as specified, converting from floats between 0 and 1 to integers from 0-255.
      */
-    public void setColorOpaque_F(float par1, float par2, float par3)
+    public void setColorOpaque_F(final float par1, final float par2, final float par3)
     {
         this.setColorOpaque((int)(par1 * 255.0F), (int)(par2 * 255.0F), (int)(par3 * 255.0F));
     }
@@ -378,7 +378,7 @@ public class Tessellator
     /**
      * Sets the RGBA values for the color, converting from floats between 0 and 1 to integers from 0-255.
      */
-    public void setColorRGBA_F(float par1, float par2, float par3, float par4)
+    public void setColorRGBA_F(final float par1, final float par2, final float par3, final float par4)
     {
         this.setColorRGBA((int)(par1 * 255.0F), (int)(par2 * 255.0F), (int)(par3 * 255.0F), (int)(par4 * 255.0F));
     }
@@ -386,7 +386,7 @@ public class Tessellator
     /**
      * Sets the RGB values as specified, and sets alpha to opaque.
      */
-    public void setColorOpaque(int par1, int par2, int par3)
+    public void setColorOpaque(final int par1, final int par2, final int par3)
     {
         this.setColorRGBA(par1, par2, par3, 255);
     }
@@ -396,57 +396,61 @@ public class Tessellator
      */
     public void setColorRGBA(int par1, int par2, int par3, int par4)
     {
+        int par11 = par1;
+        int par21 = par2;
+        int par31 = par3;
+        int par41 = par4;
         if (!this.isColorDisabled)
         {
-            if (par1 > 255)
+            if (par11 > 255)
             {
-                par1 = 255;
+                par11 = 255;
             }
 
-            if (par2 > 255)
+            if (par21 > 255)
             {
-                par2 = 255;
+                par21 = 255;
             }
 
-            if (par3 > 255)
+            if (par31 > 255)
             {
-                par3 = 255;
+                par31 = 255;
             }
 
-            if (par4 > 255)
+            if (par41 > 255)
             {
-                par4 = 255;
+                par41 = 255;
             }
 
-            if (par1 < 0)
+            if (par11 < 0)
             {
-                par1 = 0;
+                par11 = 0;
             }
 
-            if (par2 < 0)
+            if (par21 < 0)
             {
-                par2 = 0;
+                par21 = 0;
             }
 
-            if (par3 < 0)
+            if (par31 < 0)
             {
-                par3 = 0;
+                par31 = 0;
             }
 
-            if (par4 < 0)
+            if (par41 < 0)
             {
-                par4 = 0;
+                par41 = 0;
             }
 
             this.hasColor = true;
 
             if (ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN)
             {
-                this.color = par4 << 24 | par3 << 16 | par2 << 8 | par1;
+                this.color = par41 << 24 | par31 << 16 | par21 << 8 | par11;
             }
             else
             {
-                this.color = par1 << 24 | par2 << 16 | par3 << 8 | par4;
+                this.color = par11 << 24 | par21 << 16 | par31 << 8 | par41;
             }
         }
     }
@@ -454,7 +458,7 @@ public class Tessellator
     /**
      * Adds a vertex specifying both x,y,z and the texture u,v for it.
      */
-    public void addVertexWithUV(double par1, double par3, double par5, double par7, double par9)
+    public void addVertexWithUV(final double par1, final double par3, final double par5, final double par7, final double par9)
     {
         this.setTextureUV(par7, par9);
         this.addVertex(par1, par3, par5);
@@ -464,7 +468,7 @@ public class Tessellator
      * Adds a vertex with the specified x,y,z to the current draw call. It will trigger a draw() if the buffer gets
      * full.
      */
-    public void addVertex(double par1, double par3, double par5)
+    public void addVertex(final double par1, final double par3, final double par5)
     {
         if (rawBufferIndex >= rawBufferSize - 32) 
         {
@@ -485,7 +489,7 @@ public class Tessellator
         {
             for (int i = 0; i < 2; ++i)
             {
-                int j = 8 * (3 - i);
+                final int j = 8 * (3 - i);
 
                 if (this.hasTexture)
                 {
@@ -542,22 +546,22 @@ public class Tessellator
     /**
      * Sets the color to the given opaque value (stored as byte values packed in an integer).
      */
-    public void setColorOpaque_I(int par1)
+    public void setColorOpaque_I(final int par1)
     {
-        int j = par1 >> 16 & 255;
-        int k = par1 >> 8 & 255;
-        int l = par1 & 255;
+        final int j = par1 >> 16 & 255;
+        final int k = par1 >> 8 & 255;
+        final int l = par1 & 255;
         this.setColorOpaque(j, k, l);
     }
 
     /**
      * Sets the color to the given color (packed as bytes in integer) and alpha values.
      */
-    public void setColorRGBA_I(int par1, int par2)
+    public void setColorRGBA_I(final int par1, final int par2)
     {
-        int k = par1 >> 16 & 255;
-        int l = par1 >> 8 & 255;
-        int i1 = par1 & 255;
+        final int k = par1 >> 16 & 255;
+        final int l = par1 >> 8 & 255;
+        final int i1 = par1 & 255;
         this.setColorRGBA(k, l, i1, par2);
     }
 
@@ -572,19 +576,19 @@ public class Tessellator
     /**
      * Sets the normal for the current draw call.
      */
-    public void setNormal(float par1, float par2, float par3)
+    public void setNormal(final float par1, final float par2, final float par3)
     {
         this.hasNormals = true;
-        byte b0 = (byte)((int)(par1 * 127.0F));
-        byte b1 = (byte)((int)(par2 * 127.0F));
-        byte b2 = (byte)((int)(par3 * 127.0F));
+        final byte b0 = (byte)((int)(par1 * 127.0F));
+        final byte b1 = (byte)((int)(par2 * 127.0F));
+        final byte b2 = (byte)((int)(par3 * 127.0F));
         this.normal = b0 & 255 | (b1 & 255) << 8 | (b2 & 255) << 16;
     }
 
     /**
      * Sets the translation for all vertices in the current draw call.
      */
-    public void setTranslation(double par1, double par3, double par5)
+    public void setTranslation(final double par1, final double par3, final double par5)
     {
         this.xOffset = par1;
         this.yOffset = par3;
@@ -594,7 +598,7 @@ public class Tessellator
     /**
      * Offsets the translation for all vertices in the current draw call.
      */
-    public void addTranslation(float par1, float par2, float par3)
+    public void addTranslation(final float par1, final float par2, final float par3)
     {
         this.xOffset += (double)par1;
         this.yOffset += (double)par2;

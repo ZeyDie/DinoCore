@@ -43,7 +43,7 @@ public class DamageSource
     private boolean explosion;
     public String damageType;
 
-    public static DamageSource causeMobDamage(EntityLivingBase par0EntityLivingBase)
+    public static DamageSource causeMobDamage(final EntityLivingBase par0EntityLivingBase)
     {
         return new EntityDamageSource("mob", par0EntityLivingBase);
     }
@@ -51,7 +51,7 @@ public class DamageSource
     /**
      * returns an EntityDamageSource of type player
      */
-    public static DamageSource causePlayerDamage(EntityPlayer par0EntityPlayer)
+    public static DamageSource causePlayerDamage(final EntityPlayer par0EntityPlayer)
     {
         return new EntityDamageSource("player", par0EntityPlayer);
     }
@@ -59,7 +59,7 @@ public class DamageSource
     /**
      * returns EntityDamageSourceIndirect of an arrow
      */
-    public static DamageSource causeArrowDamage(EntityArrow par0EntityArrow, Entity par1Entity)
+    public static DamageSource causeArrowDamage(final EntityArrow par0EntityArrow, final Entity par1Entity)
     {
         return (new EntityDamageSourceIndirect("arrow", par0EntityArrow, par1Entity)).setProjectile();
     }
@@ -67,17 +67,17 @@ public class DamageSource
     /**
      * returns EntityDamageSourceIndirect of a fireball
      */
-    public static DamageSource causeFireballDamage(EntityFireball par0EntityFireball, Entity par1Entity)
+    public static DamageSource causeFireballDamage(final EntityFireball par0EntityFireball, final Entity par1Entity)
     {
         return par1Entity == null ? (new EntityDamageSourceIndirect("onFire", par0EntityFireball, par0EntityFireball)).setFireDamage().setProjectile() : (new EntityDamageSourceIndirect("fireball", par0EntityFireball, par1Entity)).setFireDamage().setProjectile();
     }
 
-    public static DamageSource causeThrownDamage(Entity par0Entity, Entity par1Entity)
+    public static DamageSource causeThrownDamage(final Entity par0Entity, final Entity par1Entity)
     {
         return (new EntityDamageSourceIndirect("thrown", par0Entity, par1Entity)).setProjectile();
     }
 
-    public static DamageSource causeIndirectMagicDamage(Entity par0Entity, Entity par1Entity)
+    public static DamageSource causeIndirectMagicDamage(final Entity par0Entity, final Entity par1Entity)
     {
         return (new EntityDamageSourceIndirect("indirectMagic", par0Entity, par1Entity)).setDamageBypassesArmor().setMagicDamage();
     }
@@ -85,12 +85,12 @@ public class DamageSource
     /**
      * Returns the EntityDamageSource of the Thorns enchantment
      */
-    public static DamageSource causeThornsDamage(Entity par0Entity)
+    public static DamageSource causeThornsDamage(final Entity par0Entity)
     {
         return (new EntityDamageSource("thorns", par0Entity)).setMagicDamage();
     }
 
-    public static DamageSource setExplosionSource(Explosion par0Explosion)
+    public static DamageSource setExplosionSource(final Explosion par0Explosion)
     {
         return par0Explosion != null && par0Explosion.getExplosivePlacedBy() != null ? (new EntityDamageSource("explosion.player", par0Explosion.getExplosivePlacedBy())).setDifficultyScaled().setExplosion() : (new DamageSource("explosion")).setDifficultyScaled().setExplosion();
     }
@@ -141,7 +141,7 @@ public class DamageSource
         return this.isDamageAllowedInCreativeMode;
     }
 
-    protected DamageSource(String par1Str)
+    protected DamageSource(final String par1Str)
     {
         this.damageType = par1Str;
     }
@@ -181,11 +181,11 @@ public class DamageSource
     /**
      * Returns the message to be displayed on player death.
      */
-    public ChatMessageComponent getDeathMessage(EntityLivingBase par1EntityLivingBase)
+    public ChatMessageComponent getDeathMessage(final EntityLivingBase par1EntityLivingBase)
     {
-        EntityLivingBase entitylivingbase1 = par1EntityLivingBase.func_94060_bK();
-        String s = "death.attack." + this.damageType;
-        String s1 = s + ".player";
+        final EntityLivingBase entitylivingbase1 = par1EntityLivingBase.func_94060_bK();
+        final String s = "death.attack." + this.damageType;
+        final String s1 = s + ".player";
         return entitylivingbase1 != null && StatCollector.func_94522_b(s1) ? ChatMessageComponent.createFromTranslationWithSubstitutions(s1, new Object[] {par1EntityLivingBase.getTranslatedEntityName(), entitylivingbase1.getTranslatedEntityName()}): ChatMessageComponent.createFromTranslationWithSubstitutions(s, new Object[] {par1EntityLivingBase.getTranslatedEntityName()});
     }
 

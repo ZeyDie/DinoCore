@@ -2,7 +2,7 @@ package net.minecraft.enchantment;
 
 public class EnchantmentArrowInfinite extends Enchantment
 {
-    public EnchantmentArrowInfinite(int par1, int par2)
+    public EnchantmentArrowInfinite(final int par1, final int par2)
     {
         super(par1, par2, EnumEnchantmentType.bow);
         this.setName("arrowInfinite");
@@ -11,7 +11,7 @@ public class EnchantmentArrowInfinite extends Enchantment
     /**
      * Returns the minimal value of enchantability needed on the enchantment level passed.
      */
-    public int getMinEnchantability(int par1)
+    public int getMinEnchantability(final int par1)
     {
         return 20;
     }
@@ -19,7 +19,7 @@ public class EnchantmentArrowInfinite extends Enchantment
     /**
      * Returns the maximum value of enchantability nedded on the enchantment level passed.
      */
-    public int getMaxEnchantability(int par1)
+    public int getMaxEnchantability(final int par1)
     {
         return 50;
     }

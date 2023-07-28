@@ -6,7 +6,7 @@ public class RangedAttribute extends BaseAttribute
     private final double maximumValue;
     private String field_111119_c;
 
-    public RangedAttribute(String par1Str, double par2, double par4, double par6)
+    public RangedAttribute(final String par1Str, final double par2, final double par4, final double par6)
     {
         super(par1Str, par2);
         this.minimumValue = par4;
@@ -26,7 +26,7 @@ public class RangedAttribute extends BaseAttribute
         }
     }
 
-    public RangedAttribute func_111117_a(String par1Str)
+    public RangedAttribute func_111117_a(final String par1Str)
     {
         this.field_111119_c = par1Str;
         return this;
@@ -39,16 +39,17 @@ public class RangedAttribute extends BaseAttribute
 
     public double clampValue(double par1)
     {
-        if (par1 < this.minimumValue)
+        double par11 = par1;
+        if (par11 < this.minimumValue)
         {
-            par1 = this.minimumValue;
+            par11 = this.minimumValue;
         }
 
-        if (par1 > this.maximumValue)
+        if (par11 > this.maximumValue)
         {
-            par1 = this.maximumValue;
+            par11 = this.maximumValue;
         }
 
-        return par1;
+        return par11;
     }
 }

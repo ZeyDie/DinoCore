@@ -22,31 +22,31 @@ public class EventTransformer implements IClassTransformer
     }
 
     @Override
-    public byte[] transform(String name, String transformedName, byte[] bytes)
+    public byte[] transform(final String name, final String transformedName, final byte[] bytes)
     {
         if (bytes == null || name.equals("net.minecraftforge.event.Event") || name.startsWith("net.minecraft.") || name.indexOf('.') == -1)
         {
             return bytes;
         }
-        ClassReader cr = new ClassReader(bytes);
-        ClassNode classNode = new ClassNode();
+        final ClassReader cr = new ClassReader(bytes);
+        final ClassNode classNode = new ClassNode();
         cr.accept(classNode, 0);
 
         try
         {
             if (buildEvents(classNode))
             {
-                ClassWriter cw = new ClassWriter(COMPUTE_MAXS | COMPUTE_FRAMES);
+                final ClassWriter cw = new ClassWriter(COMPUTE_MAXS | COMPUTE_FRAMES);
                 classNode.accept(cw);
                 return cw.toByteArray();
             }
             return bytes;
         }
-        catch (ClassNotFoundException ex)
+        catch (final ClassNotFoundException ex)
         {
             // Discard silently- it's just noise
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             e.printStackTrace();
         }
@@ -55,9 +55,9 @@ public class EventTransformer implements IClassTransformer
     }
 
     @SuppressWarnings("unchecked")
-    private boolean buildEvents(ClassNode classNode) throws Exception
+    private boolean buildEvents(final ClassNode classNode) throws Exception
     {
-        Class<?> parent = this.getClass().getClassLoader().loadClass(classNode.superName.replace('/', '.'));
+        final Class<?> parent = this.getClass().getClassLoader().loadClass(classNode.superName.replace('/', '.'));
         if (!Event.class.isAssignableFrom(parent))
         {
             return false;
@@ -67,10 +67,10 @@ public class EventTransformer implements IClassTransformer
         boolean hasGetListenerList = false;
         boolean hasDefaultCtr = false;
 
-        Class<?> listenerListClazz = Class.forName("net.minecraftforge.event.ListenerList", false, getClass().getClassLoader());
-        Type tList = Type.getType(listenerListClazz);
+        final Class<?> listenerListClazz = Class.forName("net.minecraftforge.event.ListenerList", false, getClass().getClassLoader());
+        final Type tList = Type.getType(listenerListClazz);
 
-        for (MethodNode method : (List<MethodNode>)classNode.methods)
+        for (final MethodNode method : (List<MethodNode>)classNode.methods)
         {
                 if (method.name.equals("setup") &&
                     method.desc.equals(Type.getMethodDescriptor(VOID_TYPE)) &&
@@ -103,7 +103,7 @@ public class EventTransformer implements IClassTransformer
                 }
         }
 
-        Type tSuper = Type.getType(classNode.superName);
+        final Type tSuper = Type.getType(classNode.superName);
 
         //Add private static ListenerList LISTENER_LIST
         classNode.fields.add(new FieldNode(ACC_PRIVATE | ACC_STATIC, "LISTENER_LIST", tList.getDescriptor(), null, null));
@@ -140,7 +140,7 @@ public class EventTransformer implements IClassTransformer
         method.instructions.add(new VarInsnNode(ALOAD, 0));
         method.instructions.add(new MethodInsnNode(INVOKESPECIAL, tSuper.getInternalName(), "setup", getMethodDescriptor(VOID_TYPE)));
         method.instructions.add(new FieldInsnNode(GETSTATIC, classNode.name, "LISTENER_LIST", tList.getDescriptor()));
-        LabelNode initLisitener = new LabelNode();
+        final LabelNode initLisitener = new LabelNode();
         method.instructions.add(new JumpInsnNode(IFNULL, initLisitener));
         method.instructions.add(new InsnNode(RETURN));
         method.instructions.add(initLisitener);

@@ -2,7 +2,7 @@ package net.minecraft.potion;
 
 public class PotionHealth extends Potion
 {
-    public PotionHealth(int par1, boolean par2, int par3)
+    public PotionHealth(final int par1, final boolean par2, final int par3)
     {
         super(par1, par2, par3);
     }
@@ -18,7 +18,7 @@ public class PotionHealth extends Potion
     /**
      * checks if Potion effect is ready to be applied this tick.
      */
-    public boolean isReady(int par1, int par2)
+    public boolean isReady(final int par1, final int par2)
     {
         return par1 >= 1;
     }

@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class VersionCommand extends BukkitCommand {
-    public VersionCommand(String name) {
+    public VersionCommand(final String name) {
         super(name);
 
         this.description = "Gets the version of this server including any plugins in use";
@@ -24,15 +24,15 @@ public class VersionCommand extends BukkitCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
 
         if (args.length == 0) {
             sender.sendMessage("This server is running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")");
         } else {
-            StringBuilder name = new StringBuilder();
+            final StringBuilder name = new StringBuilder();
 
-            for (String arg : args) {
+            for (final String arg : args) {
                 if (name.length() > 0) {
                     name.append(' ');
                 }
@@ -41,7 +41,7 @@ public class VersionCommand extends BukkitCommand {
             }
 
             String pluginName = name.toString();
-            Plugin exactPlugin = Bukkit.getPluginManager().getPlugin(pluginName);
+            final Plugin exactPlugin = Bukkit.getPluginManager().getPlugin(pluginName);
             if (exactPlugin != null) {
                 describeToSender(exactPlugin, sender);
                 return true;
@@ -49,7 +49,7 @@ public class VersionCommand extends BukkitCommand {
 
             boolean found = false;
             pluginName = pluginName.toLowerCase();
-            for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
+            for (final Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
                 if (plugin.getName().toLowerCase().contains(pluginName)) {
                     describeToSender(plugin, sender);
                     found = true;
@@ -64,8 +64,8 @@ public class VersionCommand extends BukkitCommand {
         return true;
     }
 
-    private void describeToSender(Plugin plugin, CommandSender sender) {
-        PluginDescriptionFile desc = plugin.getDescription();
+    private void describeToSender(final Plugin plugin, final CommandSender sender) {
+        final PluginDescriptionFile desc = plugin.getDescription();
         sender.sendMessage(ChatColor.GREEN + desc.getName() + ChatColor.WHITE + " version " + ChatColor.GREEN + desc.getVersion());
 
         if (desc.getDescription() != null) {
@@ -86,8 +86,8 @@ public class VersionCommand extends BukkitCommand {
     }
 
     private String getAuthors(final PluginDescriptionFile desc) {
-        StringBuilder result = new StringBuilder();
-        List<String> authors = desc.getAuthors();
+        final StringBuilder result = new StringBuilder();
+        final List<String> authors = desc.getAuthors();
 
         for (int i = 0; i < authors.size(); i++) {
             if (result.length() > 0) {
@@ -108,15 +108,15 @@ public class VersionCommand extends BukkitCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");
 
         if (args.length == 1) {
-            List<String> completions = new ArrayList<String>();
-            String toComplete = args[0].toLowerCase();
-            for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
+            final List<String> completions = new ArrayList<String>();
+            final String toComplete = args[0].toLowerCase();
+            for (final Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
                 if (StringUtil.startsWithIgnoreCase(plugin.getName(), toComplete)) {
                     completions.add(plugin.getName());
                 }

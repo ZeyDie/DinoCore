@@ -66,7 +66,7 @@ public class GuiIngame extends Gui
     /** The ItemStack that is currently being highlighted */
     protected ItemStack highlightingItemStack;
 
-    public GuiIngame(Minecraft par1Minecraft)
+    public GuiIngame(final Minecraft par1Minecraft)
     {
         this.mc = par1Minecraft;
         this.persistantChatGUI = new GuiNewChat(par1Minecraft);
@@ -75,12 +75,12 @@ public class GuiIngame extends Gui
     /**
      * Render the ingame overlay with quick icon bar, ...
      */
-    public void renderGameOverlay(float par1, boolean par2, int par3, int par4)
+    public void renderGameOverlay(final float par1, final boolean par2, final int par3, final int par4)
     {
-        ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
-        int k = scaledresolution.getScaledWidth();
-        int l = scaledresolution.getScaledHeight();
-        FontRenderer fontrenderer = this.mc.fontRenderer;
+        final ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+        final int k = scaledresolution.getScaledWidth();
+        final int l = scaledresolution.getScaledHeight();
+        final FontRenderer fontrenderer = this.mc.fontRenderer;
         this.mc.entityRenderer.setupOverlayRendering();
         GL11.glEnable(GL11.GL_BLEND);
 
@@ -93,7 +93,7 @@ public class GuiIngame extends Gui
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         }
 
-        ItemStack itemstack = this.mc.thePlayer.inventory.armorItemInSlot(3);
+        final ItemStack itemstack = this.mc.thePlayer.inventory.armorItemInSlot(3);
 
         if (this.mc.gameSettings.thirdPersonView == 0 && itemstack != null && itemstack.getItem() != null)
         {
@@ -109,7 +109,7 @@ public class GuiIngame extends Gui
 
         if (!this.mc.thePlayer.isPotionActive(Potion.confusion))
         {
-            float f1 = this.mc.thePlayer.prevTimeInPortal + (this.mc.thePlayer.timeInPortal - this.mc.thePlayer.prevTimeInPortal) * par1;
+            final float f1 = this.mc.thePlayer.prevTimeInPortal + (this.mc.thePlayer.timeInPortal - this.mc.thePlayer.prevTimeInPortal) * par1;
 
             if (f1 > 0.0F)
             {
@@ -125,7 +125,7 @@ public class GuiIngame extends Gui
         {
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.mc.getTextureManager().bindTexture(widgetsTexPath);
-            InventoryPlayer inventoryplayer = this.mc.thePlayer.inventory;
+            final InventoryPlayer inventoryplayer = this.mc.thePlayer.inventory;
             this.zLevel = -90.0F;
             this.drawTexturedModalRect(k / 2 - 91, l - 22, 0, 0, 182, 22);
             this.drawTexturedModalRect(k / 2 - 91 - 1 + inventoryplayer.currentItem * 20, l - 22 - 1, 0, 22, 24, 22);
@@ -190,7 +190,7 @@ public class GuiIngame extends Gui
         int k2;
         int l2;
         float f3;
-        short short1;
+        final short short1;
 
         if (this.mc.thePlayer.isRidingHorse())
         {
@@ -233,12 +233,12 @@ public class GuiIngame extends Gui
             if (this.mc.thePlayer.experienceLevel > 0)
             {
                 this.mc.mcProfiler.startSection("expLevel");
-                boolean flag1 = false;
+                final boolean flag1 = false;
                 i2 = flag1 ? 16777215 : 8453920;
-                String s = "" + this.mc.thePlayer.experienceLevel;
+                final String s = "" + this.mc.thePlayer.experienceLevel;
                 l2 = (k - fontrenderer.getStringWidth(s)) / 2;
                 k2 = l - 31 - 4;
-                boolean flag2 = false;
+                final boolean flag2 = false;
                 fontrenderer.drawString(s, l2 + 1, k2, 0);
                 fontrenderer.drawString(s, l2 - 1, k2, 0);
                 fontrenderer.drawString(s, l2, k2 + 1, 0);
@@ -278,7 +278,7 @@ public class GuiIngame extends Gui
                     GL11.glEnable(GL11.GL_BLEND);
                     GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
                     fontrenderer.drawStringWithShadow(s1, k1, i2, 16777215 + (j2 << 24));
-                    FontRenderer font = highlightingItemStack.getItem().getFontRenderer(highlightingItemStack);
+                    final FontRenderer font = highlightingItemStack.getItem().getFontRenderer(highlightingItemStack);
                     if (font != null)
                     {
                         k1 = (k - font.getStringWidth(s1)) / 2;
@@ -328,10 +328,10 @@ public class GuiIngame extends Gui
             fontrenderer.drawStringWithShadow(this.mc.getEntityDebug(), 2, 22, 16777215);
             fontrenderer.drawStringWithShadow(this.mc.debugInfoEntities(), 2, 32, 16777215);
             fontrenderer.drawStringWithShadow(this.mc.getWorldProviderName(), 2, 42, 16777215);
-            long l3 = Runtime.getRuntime().maxMemory();
-            long i4 = Runtime.getRuntime().totalMemory();
-            long j4 = Runtime.getRuntime().freeMemory();
-            long k4 = i4 - j4;
+            final long l3 = Runtime.getRuntime().maxMemory();
+            final long i4 = Runtime.getRuntime().totalMemory();
+            final long j4 = Runtime.getRuntime().freeMemory();
+            final long k4 = i4 - j4;
             String s2 = "Used memory: " + k4 * 100L / l3 + "% (" + k4 / 1024L / 1024L + "MB) of " + l3 / 1024L / 1024L + "MB";
             i3 = 14737632;
             this.drawString(fontrenderer, s2, k - fontrenderer.getStringWidth(s2) - 2, 2, 14737632);
@@ -339,16 +339,16 @@ public class GuiIngame extends Gui
             this.drawString(fontrenderer, s2, k - fontrenderer.getStringWidth(s2) - 2, 12, 14737632);
             k3 = MathHelper.floor_double(this.mc.thePlayer.posX);
             j3 = MathHelper.floor_double(this.mc.thePlayer.posY);
-            int l4 = MathHelper.floor_double(this.mc.thePlayer.posZ);
+            final int l4 = MathHelper.floor_double(this.mc.thePlayer.posZ);
             this.drawString(fontrenderer, String.format("x: %.5f (%d) // c: %d (%d)", new Object[] {Double.valueOf(this.mc.thePlayer.posX), Integer.valueOf(k3), Integer.valueOf(k3 >> 4), Integer.valueOf(k3 & 15)}), 2, 64, 14737632);
             this.drawString(fontrenderer, String.format("y: %.3f (feet pos, %.3f eyes pos)", new Object[] {Double.valueOf(this.mc.thePlayer.boundingBox.minY), Double.valueOf(this.mc.thePlayer.posY)}), 2, 72, 14737632);
             this.drawString(fontrenderer, String.format("z: %.5f (%d) // c: %d (%d)", new Object[] {Double.valueOf(this.mc.thePlayer.posZ), Integer.valueOf(l4), Integer.valueOf(l4 >> 4), Integer.valueOf(l4 & 15)}), 2, 80, 14737632);
-            int i5 = MathHelper.floor_double((double)(this.mc.thePlayer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+            final int i5 = MathHelper.floor_double((double)(this.mc.thePlayer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
             this.drawString(fontrenderer, "f: " + i5 + " (" + Direction.directions[i5] + ") / " + MathHelper.wrapAngleTo180_float(this.mc.thePlayer.rotationYaw), 2, 88, 14737632);
 
             if (this.mc.theWorld != null && this.mc.theWorld.blockExists(k3, j3, l4))
             {
-                Chunk chunk = this.mc.theWorld.getChunkFromBlockCoords(k3, l4);
+                final Chunk chunk = this.mc.theWorld.getChunkFromBlockCoords(k3, l4);
                 this.drawString(fontrenderer, "lc: " + (chunk.getTopFilledSegment() + 15) + " b: " + chunk.getBiomeGenForWorldCoords(k3 & 15, l4 & 15, this.mc.theWorld.getWorldChunkManager()).biomeName + " bl: " + chunk.getSavedLightValue(EnumSkyBlock.Block, k3 & 15, j3, l4 & 15) + " sl: " + chunk.getSavedLightValue(EnumSkyBlock.Sky, k3 & 15, j3, l4 & 15) + " rl: " + chunk.getBlockLightValue(k3 & 15, j3, l4 & 15, 0), 2, 96, 14737632);
             }
 
@@ -410,8 +410,8 @@ public class GuiIngame extends Gui
         if (this.mc.gameSettings.keyBindPlayerList.pressed && (!this.mc.isIntegratedServerRunning() || this.mc.thePlayer.sendQueue.playerInfoList.size() > 1 || scoreobjective != null))
         {
             this.mc.mcProfiler.startSection("playerList");
-            NetClientHandler netclienthandler = this.mc.thePlayer.sendQueue;
-            List list = netclienthandler.playerInfoList;
+            final NetClientHandler netclienthandler = this.mc.thePlayer.sendQueue;
+            final List list = netclienthandler.playerInfoList;
             j2 = netclienthandler.currentServerMaxPlayers;
             l2 = j2;
 
@@ -427,8 +427,8 @@ public class GuiIngame extends Gui
                 j5 = 150;
             }
 
-            int k5 = (k - k2 * j5) / 2;
-            byte b0 = 10;
+            final int k5 = (k - k2 * j5) / 2;
+            final byte b0 = 10;
             drawRect(k5 - 1, b0 - 1, k5 + j5 * k2, b0 + 9 * l2, Integer.MIN_VALUE);
 
             for (i3 = 0; i3 < j2; ++i3)
@@ -441,29 +441,29 @@ public class GuiIngame extends Gui
 
                 if (i3 < list.size())
                 {
-                    GuiPlayerInfo guiplayerinfo = (GuiPlayerInfo)list.get(i3);
-                    ScorePlayerTeam scoreplayerteam = this.mc.theWorld.getScoreboard().getPlayersTeam(guiplayerinfo.name);
-                    String s3 = ScorePlayerTeam.formatPlayerName(scoreplayerteam, guiplayerinfo.name);
+                    final GuiPlayerInfo guiplayerinfo = (GuiPlayerInfo)list.get(i3);
+                    final ScorePlayerTeam scoreplayerteam = this.mc.theWorld.getScoreboard().getPlayersTeam(guiplayerinfo.name);
+                    final String s3 = ScorePlayerTeam.formatPlayerName(scoreplayerteam, guiplayerinfo.name);
                     fontrenderer.drawStringWithShadow(s3, k3, j3, 16777215);
 
                     if (scoreobjective != null)
                     {
-                        int l5 = k3 + fontrenderer.getStringWidth(s3) + 5;
-                        int i6 = k3 + j5 - 12 - 5;
+                        final int l5 = k3 + fontrenderer.getStringWidth(s3) + 5;
+                        final int i6 = k3 + j5 - 12 - 5;
 
                         if (i6 - l5 > 5)
                         {
-                            Score score = scoreobjective.getScoreboard().func_96529_a(guiplayerinfo.name, scoreobjective);
-                            String s4 = EnumChatFormatting.YELLOW + "" + score.getScorePoints();
+                            final Score score = scoreobjective.getScoreboard().func_96529_a(guiplayerinfo.name, scoreobjective);
+                            final String s4 = EnumChatFormatting.YELLOW + "" + score.getScorePoints();
                             fontrenderer.drawStringWithShadow(s4, i6 - fontrenderer.getStringWidth(s4), j3, 16777215);
                         }
                     }
 
                     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                     this.mc.getTextureManager().bindTexture(icons);
-                    byte b1 = 0;
-                    boolean flag3 = false;
-                    byte b2;
+                    final byte b1 = 0;
+                    final boolean flag3 = false;
+                    final byte b2;
 
                     if (guiplayerinfo.responseTime < 0)
                     {
@@ -502,46 +502,46 @@ public class GuiIngame extends Gui
         GL11.glEnable(GL11.GL_ALPHA_TEST);
     }
 
-    protected void func_96136_a(ScoreObjective par1ScoreObjective, int par2, int par3, FontRenderer par4FontRenderer)
+    protected void func_96136_a(final ScoreObjective par1ScoreObjective, final int par2, final int par3, final FontRenderer par4FontRenderer)
     {
-        Scoreboard scoreboard = par1ScoreObjective.getScoreboard();
-        Collection collection = scoreboard.func_96534_i(par1ScoreObjective);
+        final Scoreboard scoreboard = par1ScoreObjective.getScoreboard();
+        final Collection collection = scoreboard.func_96534_i(par1ScoreObjective);
 
         if (collection.size() <= 15)
         {
             int k = par4FontRenderer.getStringWidth(par1ScoreObjective.getDisplayName());
             String s;
 
-            for (Iterator iterator = collection.iterator(); iterator.hasNext(); k = Math.max(k, par4FontRenderer.getStringWidth(s)))
+            for (final Iterator iterator = collection.iterator(); iterator.hasNext(); k = Math.max(k, par4FontRenderer.getStringWidth(s)))
             {
-                Score score = (Score)iterator.next();
-                ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
+                final Score score = (Score)iterator.next();
+                final ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
                 s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": " + EnumChatFormatting.RED + score.getScorePoints();
             }
 
-            int l = collection.size() * par4FontRenderer.FONT_HEIGHT;
-            int i1 = par2 / 2 + l / 3;
-            byte b0 = 3;
-            int j1 = par3 - k - b0;
+            final int l = collection.size() * par4FontRenderer.FONT_HEIGHT;
+            final int i1 = par2 / 2 + l / 3;
+            final byte b0 = 3;
+            final int j1 = par3 - k - b0;
             int k1 = 0;
-            Iterator iterator1 = collection.iterator();
+            final Iterator iterator1 = collection.iterator();
 
             while (iterator1.hasNext())
             {
-                Score score1 = (Score)iterator1.next();
+                final Score score1 = (Score)iterator1.next();
                 ++k1;
-                ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(score1.getPlayerName());
-                String s1 = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, score1.getPlayerName());
-                String s2 = EnumChatFormatting.RED + "" + score1.getScorePoints();
-                int l1 = i1 - k1 * par4FontRenderer.FONT_HEIGHT;
-                int i2 = par3 - b0 + 2;
+                final ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(score1.getPlayerName());
+                final String s1 = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, score1.getPlayerName());
+                final String s2 = EnumChatFormatting.RED + "" + score1.getScorePoints();
+                final int l1 = i1 - k1 * par4FontRenderer.FONT_HEIGHT;
+                final int i2 = par3 - b0 + 2;
                 drawRect(j1 - 2, l1, i2, l1 + par4FontRenderer.FONT_HEIGHT, 1342177280);
                 par4FontRenderer.drawString(s1, j1, l1, 553648127);
                 par4FontRenderer.drawString(s2, i2 - par4FontRenderer.getStringWidth(s2), l1, 553648127);
 
                 if (k1 == collection.size())
                 {
-                    String s3 = par1ScoreObjective.getDisplayName();
+                    final String s3 = par1ScoreObjective.getDisplayName();
                     drawRect(j1 - 2, l1 - par4FontRenderer.FONT_HEIGHT - 1, i2, l1 - 1, 1610612736);
                     drawRect(j1 - 2, l1 - 1, i2, l1, 1342177280);
                     par4FontRenderer.drawString(s3, j1 + k / 2 - par4FontRenderer.getStringWidth(s3) / 2, l1 - par4FontRenderer.FONT_HEIGHT, 553648127);
@@ -550,7 +550,7 @@ public class GuiIngame extends Gui
         }
     }
 
-    protected void func_110327_a(int par1, int par2)
+    protected void func_110327_a(final int par1, final int par2)
     {
         boolean flag = this.mc.thePlayer.hurtResistantTime / 3 % 2 == 1;
 
@@ -559,24 +559,24 @@ public class GuiIngame extends Gui
             flag = false;
         }
 
-        int k = MathHelper.ceiling_float_int(this.mc.thePlayer.getHealth());
-        int l = MathHelper.ceiling_float_int(this.mc.thePlayer.prevHealth);
+        final int k = MathHelper.ceiling_float_int(this.mc.thePlayer.getHealth());
+        final int l = MathHelper.ceiling_float_int(this.mc.thePlayer.prevHealth);
         this.rand.setSeed((long)(this.updateCounter * 312871));
-        boolean flag1 = false;
-        FoodStats foodstats = this.mc.thePlayer.getFoodStats();
-        int i1 = foodstats.getFoodLevel();
-        int j1 = foodstats.getPrevFoodLevel();
-        AttributeInstance attributeinstance = this.mc.thePlayer.getEntityAttribute(SharedMonsterAttributes.maxHealth);
-        int k1 = par1 / 2 - 91;
-        int l1 = par1 / 2 + 91;
-        int i2 = par2 - 39;
-        float f = (float)attributeinstance.getAttributeValue();
-        float f1 = this.mc.thePlayer.getAbsorptionAmount();
-        int j2 = MathHelper.ceiling_float_int((f + f1) / 2.0F / 10.0F);
-        int k2 = Math.max(10 - (j2 - 2), 3);
-        int l2 = i2 - (j2 - 1) * k2 - 10;
+        final boolean flag1 = false;
+        final FoodStats foodstats = this.mc.thePlayer.getFoodStats();
+        final int i1 = foodstats.getFoodLevel();
+        final int j1 = foodstats.getPrevFoodLevel();
+        final AttributeInstance attributeinstance = this.mc.thePlayer.getEntityAttribute(SharedMonsterAttributes.maxHealth);
+        final int k1 = par1 / 2 - 91;
+        final int l1 = par1 / 2 + 91;
+        final int i2 = par2 - 39;
+        final float f = (float)attributeinstance.getAttributeValue();
+        final float f1 = this.mc.thePlayer.getAbsorptionAmount();
+        final int j2 = MathHelper.ceiling_float_int((f + f1) / 2.0F / 10.0F);
+        final int k2 = Math.max(10 - (j2 - 2), 3);
+        final int l2 = i2 - (j2 - 1) * k2 - 10;
         float f2 = f1;
-        int i3 = ForgeHooks.getTotalArmorValue(mc.thePlayer);
+        final int i3 = ForgeHooks.getTotalArmorValue(mc.thePlayer);
         int j3 = -1;
 
         if (this.mc.thePlayer.isPotionActive(Potion.regeneration))
@@ -699,7 +699,7 @@ public class GuiIngame extends Gui
             }
         }
 
-        Entity entity = this.mc.thePlayer.ridingEntity;
+        final Entity entity = this.mc.thePlayer.ridingEntity;
         int l4;
 
         if (entity == null)
@@ -758,9 +758,9 @@ public class GuiIngame extends Gui
         else if (entity instanceof EntityLivingBase)
         {
             this.mc.mcProfiler.endStartSection("mountHealth");
-            EntityLivingBase entitylivingbase = (EntityLivingBase)entity;
+            final EntityLivingBase entitylivingbase = (EntityLivingBase)entity;
             l4 = (int)Math.ceil((double)entitylivingbase.getHealth());
-            float f3 = entitylivingbase.getMaxHealth();
+            final float f3 = entitylivingbase.getMaxHealth();
             k4 = (int)(f3 + 0.5F) / 2;
 
             if (k4 > 30)
@@ -772,12 +772,12 @@ public class GuiIngame extends Gui
 
             for (int i5 = 0; k4 > 0; i5 += 20)
             {
-                int j5 = Math.min(k4, 10);
+                final int j5 = Math.min(k4, 10);
                 k4 -= j5;
 
                 for (int k5 = 0; k5 < j5; ++k5)
                 {
-                    byte b3 = 52;
+                    final byte b3 = 52;
                     byte b4 = 0;
 
                     if (flag1)
@@ -785,7 +785,7 @@ public class GuiIngame extends Gui
                         b4 = 1;
                     }
 
-                    int l5 = l1 - k5 * 8 - 9;
+                    final int l5 = l1 - k5 * 8 - 9;
                     this.drawTexturedModalRect(l5, j4, b3 + b4 * 9, 9, 9, 9);
 
                     if (k5 * 2 + 1 + i5 < l4)
@@ -835,13 +835,13 @@ public class GuiIngame extends Gui
         if (BossStatus.bossName != null && BossStatus.statusBarLength > 0)
         {
             --BossStatus.statusBarLength;
-            FontRenderer fontrenderer = this.mc.fontRenderer;
-            ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
-            int i = scaledresolution.getScaledWidth();
-            short short1 = 182;
-            int j = i / 2 - short1 / 2;
-            int k = (int)(BossStatus.healthScale * (float)(short1 + 1));
-            byte b0 = 12;
+            final FontRenderer fontrenderer = this.mc.fontRenderer;
+            final ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+            final int i = scaledresolution.getScaledWidth();
+            final short short1 = 182;
+            final int j = i / 2 - short1 / 2;
+            final int k = (int)(BossStatus.healthScale * (float)(short1 + 1));
+            final byte b0 = 12;
             this.drawTexturedModalRect(j, b0, 0, 74, short1, 5);
             this.drawTexturedModalRect(j, b0, 0, 74, short1, 5);
 
@@ -850,14 +850,14 @@ public class GuiIngame extends Gui
                 this.drawTexturedModalRect(j, b0, 0, 79, k, 5);
             }
 
-            String s = BossStatus.bossName;
+            final String s = BossStatus.bossName;
             fontrenderer.drawStringWithShadow(s, i / 2 - fontrenderer.getStringWidth(s) / 2, b0 - 10, 16777215);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.mc.getTextureManager().bindTexture(icons);
         }
     }
 
-    protected void renderPumpkinBlur(int par1, int par2)
+    protected void renderPumpkinBlur(final int par1, final int par2)
     {
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glDepthMask(false);
@@ -865,7 +865,7 @@ public class GuiIngame extends Gui
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glDisable(GL11.GL_ALPHA_TEST);
         this.mc.getTextureManager().bindTexture(pumpkinBlurTexPath);
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
         tessellator.addVertexWithUV(0.0D, (double)par2, -90.0D, 0.0D, 1.0D);
         tessellator.addVertexWithUV((double)par1, (double)par2, -90.0D, 1.0D, 1.0D);
@@ -881,27 +881,28 @@ public class GuiIngame extends Gui
     /**
      * Renders the vignette. Args: vignetteBrightness, width, height
      */
-    protected void renderVignette(float par1, int par2, int par3)
+    protected void renderVignette(float par1, final int par2, final int par3)
     {
-        par1 = 1.0F - par1;
+        float par11 = par1;
+        par11 = 1.0F - par11;
 
-        if (par1 < 0.0F)
+        if (par11 < 0.0F)
         {
-            par1 = 0.0F;
+            par11 = 0.0F;
         }
 
-        if (par1 > 1.0F)
+        if (par11 > 1.0F)
         {
-            par1 = 1.0F;
+            par11 = 1.0F;
         }
 
-        this.prevVignetteBrightness = (float)((double)this.prevVignetteBrightness + (double)(par1 - this.prevVignetteBrightness) * 0.01D);
+        this.prevVignetteBrightness = (float)((double)this.prevVignetteBrightness + (double)(par11 - this.prevVignetteBrightness) * 0.01D);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glDepthMask(false);
         GL11.glBlendFunc(GL11.GL_ZERO, GL11.GL_ONE_MINUS_SRC_COLOR);
         GL11.glColor4f(this.prevVignetteBrightness, this.prevVignetteBrightness, this.prevVignetteBrightness, 1.0F);
         this.mc.getTextureManager().bindTexture(vignetteTexPath);
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
         tessellator.addVertexWithUV(0.0D, (double)par3, -90.0D, 0.0D, 1.0D);
         tessellator.addVertexWithUV((double)par2, (double)par3, -90.0D, 1.0D, 1.0D);
@@ -914,27 +915,28 @@ public class GuiIngame extends Gui
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
     }
 
-    protected void func_130015_b(float par1, int par2, int par3)
+    protected void func_130015_b(float par1, final int par2, final int par3)
     {
-        if (par1 < 1.0F)
+        float par11 = par1;
+        if (par11 < 1.0F)
         {
-            par1 *= par1;
-            par1 *= par1;
-            par1 = par1 * 0.8F + 0.2F;
+            par11 *= par11;
+            par11 *= par11;
+            par11 = par11 * 0.8F + 0.2F;
         }
 
         GL11.glDisable(GL11.GL_ALPHA_TEST);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glDepthMask(false);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, par1);
-        Icon icon = Block.portal.getBlockTextureFromSide(1);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, par11);
+        final Icon icon = Block.portal.getBlockTextureFromSide(1);
         this.mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
-        float f1 = icon.getMinU();
-        float f2 = icon.getMinV();
-        float f3 = icon.getMaxU();
-        float f4 = icon.getMaxV();
-        Tessellator tessellator = Tessellator.instance;
+        final float f1 = icon.getMinU();
+        final float f2 = icon.getMinV();
+        final float f3 = icon.getMaxU();
+        final float f4 = icon.getMaxV();
+        final Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
         tessellator.addVertexWithUV(0.0D, (double)par3, -90.0D, (double)f1, (double)f4);
         tessellator.addVertexWithUV((double)par2, (double)par3, -90.0D, (double)f3, (double)f4);
@@ -950,18 +952,18 @@ public class GuiIngame extends Gui
     /**
      * Renders the specified item of the inventory slot at the specified location. Args: slot, x, y, partialTick
      */
-    protected void renderInventorySlot(int par1, int par2, int par3, float par4)
+    protected void renderInventorySlot(final int par1, final int par2, final int par3, final float par4)
     {
-        ItemStack itemstack = this.mc.thePlayer.inventory.mainInventory[par1];
+        final ItemStack itemstack = this.mc.thePlayer.inventory.mainInventory[par1];
 
         if (itemstack != null)
         {
-            float f1 = (float)itemstack.animationsToGo - par4;
+            final float f1 = (float)itemstack.animationsToGo - par4;
 
             if (f1 > 0.0F)
             {
                 GL11.glPushMatrix();
-                float f2 = 1.0F + f1 / 5.0F;
+                final float f2 = 1.0F + f1 / 5.0F;
                 GL11.glTranslatef((float)(par2 + 8), (float)(par3 + 12), 0.0F);
                 GL11.glScalef(1.0F / f2, (f2 + 1.0F) / 2.0F, 1.0F);
                 GL11.glTranslatef((float)(-(par2 + 8)), (float)(-(par3 + 12)), 0.0F);
@@ -992,7 +994,7 @@ public class GuiIngame extends Gui
 
         if (this.mc.thePlayer != null)
         {
-            ItemStack itemstack = this.mc.thePlayer.inventory.getCurrentItem();
+            final ItemStack itemstack = this.mc.thePlayer.inventory.getCurrentItem();
 
             if (itemstack == null)
             {
@@ -1014,12 +1016,12 @@ public class GuiIngame extends Gui
         }
     }
 
-    public void setRecordPlayingMessage(String par1Str)
+    public void setRecordPlayingMessage(final String par1Str)
     {
         this.func_110326_a("Now playing: " + par1Str, true);
     }
 
-    public void func_110326_a(String par1Str, boolean par2)
+    public void func_110326_a(final String par1Str, final boolean par2)
     {
         this.recordPlaying = par1Str;
         this.recordPlayingUpFor = 60;

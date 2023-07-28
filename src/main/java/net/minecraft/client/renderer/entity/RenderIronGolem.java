@@ -31,12 +31,12 @@ public class RenderIronGolem extends RenderLiving
     /**
      * Renders the Iron Golem.
      */
-    public void doRenderIronGolem(EntityIronGolem par1EntityIronGolem, double par2, double par4, double par6, float par8, float par9)
+    public void doRenderIronGolem(final EntityIronGolem par1EntityIronGolem, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         super.doRenderLiving(par1EntityIronGolem, par2, par4, par6, par8, par9);
     }
 
-    protected ResourceLocation getIronGolemTextures(EntityIronGolem par1EntityIronGolem)
+    protected ResourceLocation getIronGolemTextures(final EntityIronGolem par1EntityIronGolem)
     {
         return ironGolemTextures;
     }
@@ -44,15 +44,15 @@ public class RenderIronGolem extends RenderLiving
     /**
      * Rotates Iron Golem corpse.
      */
-    protected void rotateIronGolemCorpse(EntityIronGolem par1EntityIronGolem, float par2, float par3, float par4)
+    protected void rotateIronGolemCorpse(final EntityIronGolem par1EntityIronGolem, final float par2, final float par3, final float par4)
     {
         super.rotateCorpse(par1EntityIronGolem, par2, par3, par4);
 
         if ((double)par1EntityIronGolem.limbSwingAmount >= 0.01D)
         {
-            float f3 = 13.0F;
-            float f4 = par1EntityIronGolem.limbSwing - par1EntityIronGolem.limbSwingAmount * (1.0F - par4) + 6.0F;
-            float f5 = (Math.abs(f4 % f3 - f3 * 0.5F) - f3 * 0.25F) / (f3 * 0.25F);
+            final float f3 = 13.0F;
+            final float f4 = par1EntityIronGolem.limbSwing - par1EntityIronGolem.limbSwingAmount * (1.0F - par4) + 6.0F;
+            final float f5 = (Math.abs(f4 % f3 - f3 * 0.5F) - f3 * 0.25F) / (f3 * 0.25F);
             GL11.glRotatef(6.5F * f5, 0.0F, 0.0F, 1.0F);
         }
     }
@@ -60,7 +60,7 @@ public class RenderIronGolem extends RenderLiving
     /**
      * Renders Iron Golem Equipped items.
      */
-    protected void renderIronGolemEquippedItems(EntityIronGolem par1EntityIronGolem, float par2)
+    protected void renderIronGolemEquippedItems(final EntityIronGolem par1EntityIronGolem, final float par2)
     {
         super.renderEquippedItems(par1EntityIronGolem, par2);
 
@@ -71,11 +71,11 @@ public class RenderIronGolem extends RenderLiving
             GL11.glRotatef(5.0F + 180.0F * this.ironGolemModel.ironGolemRightArm.rotateAngleX / (float)Math.PI, 1.0F, 0.0F, 0.0F);
             GL11.glTranslatef(-0.6875F, 1.25F, -0.9375F);
             GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
-            float f1 = 0.8F;
+            final float f1 = 0.8F;
             GL11.glScalef(f1, -f1, f1);
-            int i = par1EntityIronGolem.getBrightnessForRender(par2);
-            int j = i % 65536;
-            int k = i / 65536;
+            final int i = par1EntityIronGolem.getBrightnessForRender(par2);
+            final int j = i % 65536;
+            final int k = i / 65536;
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j / 1.0F, (float)k / 1.0F);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -86,22 +86,22 @@ public class RenderIronGolem extends RenderLiving
         }
     }
 
-    public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9)
+    public void doRenderLiving(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.doRenderIronGolem((EntityIronGolem)par1EntityLiving, par2, par4, par6, par8, par9);
     }
 
-    protected void renderEquippedItems(EntityLivingBase par1EntityLivingBase, float par2)
+    protected void renderEquippedItems(final EntityLivingBase par1EntityLivingBase, final float par2)
     {
         this.renderIronGolemEquippedItems((EntityIronGolem)par1EntityLivingBase, par2);
     }
 
-    protected void rotateCorpse(EntityLivingBase par1EntityLivingBase, float par2, float par3, float par4)
+    protected void rotateCorpse(final EntityLivingBase par1EntityLivingBase, final float par2, final float par3, final float par4)
     {
         this.rotateIronGolemCorpse((EntityIronGolem)par1EntityLivingBase, par2, par3, par4);
     }
 
-    public void renderPlayer(EntityLivingBase par1EntityLivingBase, double par2, double par4, double par6, float par8, float par9)
+    public void renderPlayer(final EntityLivingBase par1EntityLivingBase, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.doRenderIronGolem((EntityIronGolem)par1EntityLivingBase, par2, par4, par6, par8, par9);
     }
@@ -109,7 +109,7 @@ public class RenderIronGolem extends RenderLiving
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.getIronGolemTextures((EntityIronGolem)par1Entity);
     }
@@ -120,7 +120,7 @@ public class RenderIronGolem extends RenderLiving
      * (Render<T extends Entity) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.doRenderIronGolem((EntityIronGolem)par1Entity, par2, par4, par6, par8, par9);
     }

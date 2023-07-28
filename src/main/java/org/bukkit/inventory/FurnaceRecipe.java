@@ -16,7 +16,7 @@ public class FurnaceRecipe implements Recipe {
      * @param result The item you want the recipe to create.
      * @param source The input material.
      */
-    public FurnaceRecipe(ItemStack result, Material source) {
+    public FurnaceRecipe(final ItemStack result, final Material source) {
         this(result, source, 0);
     }
 
@@ -26,7 +26,7 @@ public class FurnaceRecipe implements Recipe {
      * @param result The item you want the recipe to create.
      * @param source The input material.
      */
-    public FurnaceRecipe(ItemStack result, MaterialData source) {
+    public FurnaceRecipe(final ItemStack result, final MaterialData source) {
         this(result, source.getItemType(), source.getData());
     }
 
@@ -39,7 +39,7 @@ public class FurnaceRecipe implements Recipe {
      * @deprecated Magic value
      */
     @Deprecated
-    public FurnaceRecipe(ItemStack result, Material source, int data) {
+    public FurnaceRecipe(final ItemStack result, final Material source, final int data) {
         this.output = new ItemStack(result);
         this.ingredient = new ItemStack(source, 1, (short) data);
     }
@@ -50,7 +50,7 @@ public class FurnaceRecipe implements Recipe {
      * @param input The input material.
      * @return The changed recipe, so you can chain calls.
      */
-    public FurnaceRecipe setInput(MaterialData input) {
+    public FurnaceRecipe setInput(final MaterialData input) {
         return setInput(input.getItemType(), input.getData());
     }
 
@@ -60,7 +60,7 @@ public class FurnaceRecipe implements Recipe {
      * @param input The input material.
      * @return The changed recipe, so you can chain calls.
      */
-    public FurnaceRecipe setInput(Material input) {
+    public FurnaceRecipe setInput(final Material input) {
         return setInput(input, 0);
     }
 
@@ -73,7 +73,7 @@ public class FurnaceRecipe implements Recipe {
      * @deprecated Magic value
      */
     @Deprecated
-    public FurnaceRecipe setInput(Material input, int data) {
+    public FurnaceRecipe setInput(final Material input, final int data) {
         this.ingredient = new ItemStack(input, 1, (short) data);
         return this;
     }

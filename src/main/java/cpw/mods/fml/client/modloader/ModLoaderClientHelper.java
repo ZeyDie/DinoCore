@@ -47,21 +47,21 @@ import java.util.logging.Level;
 
 public class ModLoaderClientHelper implements IModLoaderSidedHelper
 {
-    public static int obtainBlockModelIdFor(BaseMod mod, boolean inventoryRenderer)
+    public static int obtainBlockModelIdFor(final BaseMod mod, final boolean inventoryRenderer)
     {
-        int renderId=RenderingRegistry.getNextAvailableRenderId();
-        ModLoaderBlockRendererHandler bri=new ModLoaderBlockRendererHandler(renderId, inventoryRenderer, mod);
+        final int renderId=RenderingRegistry.getNextAvailableRenderId();
+        final ModLoaderBlockRendererHandler bri=new ModLoaderBlockRendererHandler(renderId, inventoryRenderer, mod);
         RenderingRegistry.registerBlockHandler(bri);
         return renderId;
     }
 
 
-    public static void handleFinishLoadingFor(ModLoaderModContainer mc, Minecraft game)
+    public static void handleFinishLoadingFor(final ModLoaderModContainer mc, final Minecraft game)
     {
         FMLLog.log(mc.getModId(), Level.FINE, "Handling post startup activities for ModLoader mod %s", mc.getModId());
-        BaseMod mod = (BaseMod) mc.getMod();
+        final BaseMod mod = (BaseMod) mc.getMod();
 
-        Map<Class<? extends Entity>, Render> renderers = Maps.newHashMap(RenderManager.instance.entityRenderMap);
+        final Map<Class<? extends Entity>, Render> renderers = Maps.newHashMap(RenderManager.instance.entityRenderMap);
 
         try
         {
@@ -69,25 +69,25 @@ public class ModLoaderClientHelper implements IModLoaderSidedHelper
             mod.addRenderer(renderers);
             FMLLog.log(mc.getModId(), Level.FINEST, "Received %d renderers from basemod %s", renderers.size(), mc.getModId());
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             FMLLog.log(mc.getModId(), Level.SEVERE, e, "A severe problem was detected with the mod %s during the addRenderer call. Continuing, but expect odd results", mc.getModId());
         }
 
-        MapDifference<Class<? extends Entity>, Render> difference = Maps.difference(RenderManager.instance.entityRenderMap, renderers, Equivalence.identity());
+        final MapDifference<Class<? extends Entity>, Render> difference = Maps.difference(RenderManager.instance.entityRenderMap, renderers, Equivalence.identity());
 
-        for ( Entry<Class<? extends Entity>, Render> e : difference.entriesOnlyOnLeft().entrySet())
+        for ( final Entry<Class<? extends Entity>, Render> e : difference.entriesOnlyOnLeft().entrySet())
         {
             FMLLog.log(mc.getModId(), Level.WARNING, "The mod %s attempted to remove an entity renderer %s from the entity map. This will be ignored.", mc.getModId(), e.getKey().getName());
         }
 
-        for (Entry<Class<? extends Entity>, Render> e : difference.entriesOnlyOnRight().entrySet())
+        for (final Entry<Class<? extends Entity>, Render> e : difference.entriesOnlyOnRight().entrySet())
         {
             FMLLog.log(mc.getModId(), Level.FINEST, "Registering ModLoader entity renderer %s as instance of %s", e.getKey().getName(), e.getValue().getClass().getName());
             RenderingRegistry.registerEntityRenderingHandler(e.getKey(), e.getValue());
         }
 
-        for (Entry<Class<? extends Entity>, ValueDifference<Render>> e : difference.entriesDiffering().entrySet())
+        for (final Entry<Class<? extends Entity>, ValueDifference<Render>> e : difference.entriesDiffering().entrySet())
         {
             FMLLog.log(mc.getModId(), Level.FINEST, "Registering ModLoader entity rendering override for %s as instance of %s", e.getKey().getName(), e.getValue().rightValue().getClass().getName());
             RenderingRegistry.registerEntityRenderingHandler(e.getKey(), e.getValue().rightValue());
@@ -97,13 +97,13 @@ public class ModLoaderClientHelper implements IModLoaderSidedHelper
         {
             mod.registerAnimation(game);
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             FMLLog.log(mc.getModId(), Level.SEVERE, e, "A severe problem was detected with the mod %s during the registerAnimation call. Continuing, but expect odd results", mc.getModId());
         }
     }
 
-    public ModLoaderClientHelper(Minecraft client)
+    public ModLoaderClientHelper(final Minecraft client)
     {
         this.client = client;
         ModLoaderHelper.sidedHelper = this;
@@ -121,16 +121,16 @@ public class ModLoaderClientHelper implements IModLoaderSidedHelper
     private static Multimap<ModLoaderModContainer, ModLoaderKeyBindingHandler> keyBindingContainers;
 
     @Override
-    public void finishModLoading(ModLoaderModContainer mc)
+    public void finishModLoading(final ModLoaderModContainer mc)
     {
         handleFinishLoadingFor(mc, client);
     }
 
 
-    public static void registerKeyBinding(BaseModProxy mod, KeyBinding keyHandler, boolean allowRepeat)
+    public static void registerKeyBinding(final BaseModProxy mod, final KeyBinding keyHandler, final boolean allowRepeat)
     {
-        ModLoaderModContainer mlmc = (ModLoaderModContainer) Loader.instance().activeModContainer();
-        ModLoaderKeyBindingHandler handler = Iterables.getOnlyElement(keyBindingContainers.get(mlmc));
+        final ModLoaderModContainer mlmc = (ModLoaderModContainer) Loader.instance().activeModContainer();
+        final ModLoaderKeyBindingHandler handler = Iterables.getOnlyElement(keyBindingContainers.get(mlmc));
         handler.setModContainer(mlmc);
         handler.addKeyBinding(keyHandler, allowRepeat);
         KeyBindingRegistry.registerKeyBinding(handler);
@@ -138,28 +138,28 @@ public class ModLoaderClientHelper implements IModLoaderSidedHelper
 
 
     @Override
-    public Object getClientGui(BaseModProxy mod, EntityPlayer player, int ID, int x, int y, int z)
+    public Object getClientGui(final BaseModProxy mod, final EntityPlayer player, final int ID, final int x, final int y, final int z)
     {
         return ((net.minecraft.src.BaseMod)mod).getContainerGUI((EntityClientPlayerMP) player, ID, x, y, z);
     }
 
 
     @Override
-    public Entity spawnEntity(BaseModProxy mod, EntitySpawnPacket input, EntityRegistration er)
+    public Entity spawnEntity(final BaseModProxy mod, final EntitySpawnPacket input, final EntityRegistration er)
     {
         return ((net.minecraft.src.BaseMod)mod).spawnEntity(er.getModEntityId(), client.theWorld, input.scaledX, input.scaledY, input.scaledZ);
     }
 
 
     @Override
-    public void sendClientPacket(BaseModProxy mod, Packet250CustomPayload packet)
+    public void sendClientPacket(final BaseModProxy mod, final Packet250CustomPayload packet)
     {
         ((net.minecraft.src.BaseMod)mod).clientCustomPayload(client.thePlayer.sendQueue, packet);
     }
 
     private Map<INetworkManager,NetHandler> managerLookups = new MapMaker().weakKeys().weakValues().makeMap();
     @Override
-    public void clientConnectionOpened(NetHandler netClientHandler, INetworkManager manager, BaseModProxy mod)
+    public void clientConnectionOpened(final NetHandler netClientHandler, final INetworkManager manager, final BaseModProxy mod)
     {
         managerLookups.put(manager, netClientHandler);
         ((BaseMod)mod).clientConnect((NetClientHandler)netClientHandler);
@@ -167,7 +167,7 @@ public class ModLoaderClientHelper implements IModLoaderSidedHelper
 
 
     @Override
-    public boolean clientConnectionClosed(INetworkManager manager, BaseModProxy mod)
+    public boolean clientConnectionClosed(final INetworkManager manager, final BaseModProxy mod)
     {
         if (managerLookups.containsKey(manager))
         {

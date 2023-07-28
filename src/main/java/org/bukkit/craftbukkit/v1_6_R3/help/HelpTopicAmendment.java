@@ -9,7 +9,7 @@ public class HelpTopicAmendment {
     private final String fullText;
     private final String permission;
 
-    public HelpTopicAmendment(String topicName, String shortText, String fullText, String permission) {
+    public HelpTopicAmendment(final String topicName, final String shortText, final String fullText, final String permission) {
         this.fullText = fullText;
         this.shortText = shortText;
         this.topicName = topicName;

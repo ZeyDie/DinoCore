@@ -22,7 +22,7 @@ import java.util.Set;
 
 public class WorldType
 {
-    public static final BiomeGenBase[] base11Biomes = new BiomeGenBase[] {BiomeGenBase.desert, BiomeGenBase.forest, BiomeGenBase.extremeHills, BiomeGenBase.swampland, BiomeGenBase.plains, BiomeGenBase.taiga};
+    public static final BiomeGenBase[] base11Biomes = {BiomeGenBase.desert, BiomeGenBase.forest, BiomeGenBase.extremeHills, BiomeGenBase.swampland, BiomeGenBase.plains, BiomeGenBase.taiga};
     public static final BiomeGenBase[] base12Biomes = ObjectArrays.concat(base11Biomes, BiomeGenBase.jungle);
 
     /** List of world types. */
@@ -59,12 +59,12 @@ public class WorldType
 
     protected BiomeGenBase[] biomesForWorldType;
 
-    public WorldType(int par1, String par2Str)
+    public WorldType(final int par1, final String par2Str)
     {
         this(par1, par2Str, 0);
     }
 
-    public WorldType(int par1, String par2Str, int par3)
+    public WorldType(final int par1, final String par2Str, final int par3)
     {
         this.worldType = par2Str;
         this.generatorVersion = par3;
@@ -111,7 +111,7 @@ public class WorldType
         return this.generatorVersion;
     }
 
-    public WorldType getWorldTypeForGeneratorVersion(int par1)
+    public WorldType getWorldTypeForGeneratorVersion(final int par1)
     {
         return this == DEFAULT && par1 == 0 ? DEFAULT_1_1 : this;
     }
@@ -119,7 +119,7 @@ public class WorldType
     /**
      * Sets canBeCreated to the provided value, and returns this.
      */
-    private WorldType setCanBeCreated(boolean par1)
+    private WorldType setCanBeCreated(final boolean par1)
     {
         this.canBeCreated = par1;
         return this;
@@ -152,7 +152,7 @@ public class WorldType
         return this.isWorldTypeVersioned;
     }
 
-    public static WorldType parseWorldType(String par0Str)
+    public static WorldType parseWorldType(final String par0Str)
     {
         for (int i = 0; i < worldTypes.length; ++i)
         {
@@ -170,11 +170,11 @@ public class WorldType
         return this.worldTypeId;
     }
 
-    public WorldChunkManager getChunkManager(World world)
+    public WorldChunkManager getChunkManager(final World world)
     {
         if (this == FLAT)
         {
-            FlatGeneratorInfo flatgeneratorinfo = FlatGeneratorInfo.createFlatGeneratorFromString(world.getWorldInfo().getGeneratorOptions());
+            final FlatGeneratorInfo flatgeneratorinfo = FlatGeneratorInfo.createFlatGeneratorFromString(world.getWorldInfo().getGeneratorOptions());
             return new WorldChunkManagerHell(BiomeGenBase.biomeList[flatgeneratorinfo.getBiome()], 0.5F, 0.5F);
         }
         else
@@ -183,22 +183,22 @@ public class WorldType
         }
     }
 
-    public IChunkProvider getChunkGenerator(World world, String generatorOptions)
+    public IChunkProvider getChunkGenerator(final World world, final String generatorOptions)
     {
         return (this == FLAT ? new ChunkProviderFlat(world, world.getSeed(), world.getWorldInfo().isMapFeaturesEnabled(), generatorOptions) : new ChunkProviderGenerate(world, world.getSeed(), world.getWorldInfo().isMapFeaturesEnabled()));
     }
 
-    public int getMinimumSpawnHeight(World world)
+    public int getMinimumSpawnHeight(final World world)
     {
         return this == FLAT ? 4 : 64;
     }
 
-    public double getHorizon(World world)
+    public double getHorizon(final World world)
     {
         return this == FLAT ? 0.0D : 63.0D;
     }
 
-    public boolean hasVoidParticles(boolean flag)
+    public boolean hasVoidParticles(final boolean flag)
     {
         return this != FLAT && !flag;
     }
@@ -212,21 +212,21 @@ public class WorldType
         return biomesForWorldType;
     }
 
-    public void addNewBiome(BiomeGenBase biome)
+    public void addNewBiome(final BiomeGenBase biome)
     {
-        Set<BiomeGenBase> newBiomesForWorld = Sets.newLinkedHashSet(Arrays.asList(biomesForWorldType));
+        final Set<BiomeGenBase> newBiomesForWorld = Sets.newLinkedHashSet(Arrays.asList(biomesForWorldType));
         newBiomesForWorld.add(biome);
         biomesForWorldType = newBiomesForWorld.toArray(new BiomeGenBase[0]);
     }
 
-    public void removeBiome(BiomeGenBase biome)
+    public void removeBiome(final BiomeGenBase biome)
     {
-        Set<BiomeGenBase> newBiomesForWorld = Sets.newLinkedHashSet(Arrays.asList(biomesForWorldType));
+        final Set<BiomeGenBase> newBiomesForWorld = Sets.newLinkedHashSet(Arrays.asList(biomesForWorldType));
         newBiomesForWorld.remove(biome);
         biomesForWorldType = newBiomesForWorld.toArray(new BiomeGenBase[0]);
     }
 
-    public boolean handleSlimeSpawnReduction(Random random, World world)
+    public boolean handleSlimeSpawnReduction(final Random random, final World world)
     {
         return this == FLAT ? random.nextInt(4) != 1 : false;
     }
@@ -252,7 +252,7 @@ public class WorldType
      * @param guiCreateWorld the createworld GUI
      */
     @SideOnly(Side.CLIENT)
-    public void onCustomizeButton(Minecraft instance, GuiCreateWorld guiCreateWorld)
+    public void onCustomizeButton(final Minecraft instance, final GuiCreateWorld guiCreateWorld)
     {
         if (this == FLAT)
         {

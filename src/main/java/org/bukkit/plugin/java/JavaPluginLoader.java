@@ -47,7 +47,7 @@ public class JavaPluginLoader implements PluginLoader {
     final boolean extended = this.getClass() != JavaPluginLoader.class;
     boolean warn;
 
-    private final Pattern[] fileFilters0 = new Pattern[]{Pattern.compile("\\.jar$"),};
+    private final Pattern[] fileFilters0 = {Pattern.compile("\\.jar$"),};
     /**
      * @deprecated Internal field that wasn't intended to be exposed
      */
@@ -73,7 +73,7 @@ public class JavaPluginLoader implements PluginLoader {
      * This class was not meant to be extended
      */
     @Deprecated
-    public JavaPluginLoader(Server instance) {
+    public JavaPluginLoader(final Server instance) {
         Validate.notNull(instance, "Server cannot be null");
         server = instance;
         warn = instance.getWarningState() != WarningState.OFF;
@@ -83,22 +83,22 @@ public class JavaPluginLoader implements PluginLoader {
         }
     }
 
-    public Plugin loadPlugin(File file) throws InvalidPluginException {
+    public Plugin loadPlugin(final File file) throws InvalidPluginException {
         Validate.notNull(file, "File cannot be null");
 
         if (!file.exists()) {
             throw new InvalidPluginException(new FileNotFoundException(file.getPath() + " does not exist"));
         }
 
-        PluginDescriptionFile description;
+        final PluginDescriptionFile description;
         try {
             description = getPluginDescription(file);
-        } catch (InvalidDescriptionException ex) {
+        } catch (final InvalidDescriptionException ex) {
             throw new InvalidPluginException(ex);
         }
 
-        File dataFolder = new File(file.getParentFile(), description.getName());
-        File oldDataFolder = extended ? getDataFolder(file) : getDataFolder0(file); // Don't warn on deprecation, but maintain overridability
+        final File dataFolder = new File(file.getParentFile(), description.getName());
+        final File oldDataFolder = extended ? getDataFolder(file) : getDataFolder0(file); // Don't warn on deprecation, but maintain overridability
 
         // Found old data folder
         if (dataFolder.equals(oldDataFolder)) {
@@ -138,11 +138,11 @@ public class JavaPluginLoader implements PluginLoader {
             depend = ImmutableList.<String>of();
         }
 
-        for (String pluginName : depend) {
+        for (final String pluginName : depend) {
             if (loaders0 == null) {
                 throw new UnknownDependencyException(pluginName);
             }
-            PluginClassLoader current = loaders0.get(pluginName);
+            final PluginClassLoader current = loaders0.get(pluginName);
 
             if (current == null) {
                 throw new UnknownDependencyException(pluginName);
@@ -153,7 +153,7 @@ public class JavaPluginLoader implements PluginLoader {
         JavaPlugin result = null;
 
         try {
-            URL[] urls = new URL[1];
+            final URL[] urls = new URL[1];
 
             urls[0] = file.toURI().toURL();
 
@@ -164,17 +164,17 @@ public class JavaPluginLoader implements PluginLoader {
                 loader = new PluginClassLoader(this, urls, getClass().getClassLoader(), description); // Cauldron - pass description
             }
 
-            Class<?> jarClass = Class.forName(description.getMain(), true, loader);
-            Class<? extends JavaPlugin> plugin = jarClass.asSubclass(JavaPlugin.class);
+            final Class<?> jarClass = Class.forName(description.getMain(), true, loader);
+            final Class<? extends JavaPlugin> plugin = jarClass.asSubclass(JavaPlugin.class);
 
-            Constructor<? extends JavaPlugin> constructor = plugin.getConstructor();
+            final Constructor<? extends JavaPlugin> constructor = plugin.getConstructor();
 
             result = constructor.newInstance();
 
             result.initialize(this, server, description, dataFolder, file, loader);
-        } catch (InvocationTargetException ex) {
+        } catch (final InvocationTargetException ex) {
             throw new InvalidPluginException(ex.getCause());
-        } catch (Throwable ex) {
+        } catch (final Throwable ex) {
             throw new InvalidPluginException(ex);
         }
 
@@ -187,7 +187,7 @@ public class JavaPluginLoader implements PluginLoader {
      * @deprecated Relic method from PluginLoader that didn't get purged
      */
     @Deprecated
-    public Plugin loadPlugin(File file, boolean ignoreSoftDependencies) throws InvalidPluginException {
+    public Plugin loadPlugin(final File file, final boolean ignoreSoftDependencies) throws InvalidPluginException {
         if (warn) {
             server.getLogger().log(Level.WARNING, "Method \"public Plugin loadPlugin(File, boolean)\" is Deprecated, and may be removed in a future version of Bukkit", new AuthorNagException(""));
             warn = false;
@@ -199,7 +199,7 @@ public class JavaPluginLoader implements PluginLoader {
      * @deprecated Internal method that wasn't intended to be exposed
      */
     @Deprecated
-    protected File getDataFolder(File file) {
+    protected File getDataFolder(final File file) {
         if (warn) {
             server.getLogger().log(Level.WARNING, "Method \"protected File getDataFolder(File)\" is Deprecated, and may be removed in a future version of Bukkit", new AuthorNagException(""));
             warn = false;
@@ -207,14 +207,14 @@ public class JavaPluginLoader implements PluginLoader {
         return getDataFolder0(file);
     }
 
-    private File getDataFolder0(File file) {
+    private File getDataFolder0(final File file) {
         File dataFolder = null;
 
-        String filename = file.getName();
-        int index = file.getName().lastIndexOf(".");
+        final String filename = file.getName();
+        final int index = file.getName().lastIndexOf(".");
 
         if (index != -1) {
-            String name = filename.substring(0, index);
+            final String name = filename.substring(0, index);
 
             dataFolder = new File(file.getParentFile(), name);
         } else {
@@ -227,7 +227,7 @@ public class JavaPluginLoader implements PluginLoader {
         return dataFolder;
     }
 
-    public PluginDescriptionFile getPluginDescription(File file) throws InvalidDescriptionException {
+    public PluginDescriptionFile getPluginDescription(final File file) throws InvalidDescriptionException {
         Validate.notNull(file, "File cannot be null");
 
         JarFile jar = null;
@@ -235,7 +235,7 @@ public class JavaPluginLoader implements PluginLoader {
 
         try {
             jar = new JarFile(file);
-            JarEntry entry = jar.getJarEntry("plugin.yml");
+            final JarEntry entry = jar.getJarEntry("plugin.yml");
 
             if (entry == null) {
                 throw new InvalidDescriptionException(new FileNotFoundException("Jar does not contain plugin.yml"));
@@ -245,21 +245,21 @@ public class JavaPluginLoader implements PluginLoader {
 
             return new PluginDescriptionFile(stream);
 
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             throw new InvalidDescriptionException(ex);
-        } catch (YAMLException ex) {
+        } catch (final YAMLException ex) {
             throw new InvalidDescriptionException(ex);
         } finally {
             if (jar != null) {
                 try {
                     jar.close();
-                } catch (IOException e) {
+                } catch (final IOException e) {
                 }
             }
             if (stream != null) {
                 try {
                     stream.close();
-                } catch (IOException e) {
+                } catch (final IOException e) {
                 }
             }
         }
@@ -287,12 +287,12 @@ public class JavaPluginLoader implements PluginLoader {
         if (cachedClass != null) {
             return cachedClass;
         } else {
-            for (String current : loaders0.keySet()) {
-                PluginClassLoader loader = loaders0.get(current);
+            for (final String current : loaders0.keySet()) {
+                final PluginClassLoader loader = loaders0.get(current);
 
                 try {
                     cachedClass = loader.extended ? loader.findClass(name, false) : loader.findClass0(name, false); // Don't warn on deprecation, but maintain overridability
-                } catch (ClassNotFoundException cnfe) {
+                } catch (final ClassNotFoundException cnfe) {
                 }
                 if (cachedClass != null) {
                     return cachedClass;
@@ -319,7 +319,7 @@ public class JavaPluginLoader implements PluginLoader {
             classes0.put(name, clazz);
 
             if (ConfigurationSerializable.class.isAssignableFrom(clazz)) {
-                Class<? extends ConfigurationSerializable> serializable = clazz.asSubclass(ConfigurationSerializable.class);
+                final Class<? extends ConfigurationSerializable> serializable = clazz.asSubclass(ConfigurationSerializable.class);
                 ConfigurationSerialization.registerClass(serializable);
             }
         }
@@ -329,7 +329,7 @@ public class JavaPluginLoader implements PluginLoader {
      * @deprecated Internal method that wasn't intended to be exposed
      */
     @Deprecated
-    public void removeClass(String name) {
+    public void removeClass(final String name) {
         if (warn) {
             server.getLogger().log(Level.WARNING, "Method \"public void removeClass(String)\" is Deprecated, and may be removed in a future version of Bukkit", new AuthorNagException(""));
             warn = false;
@@ -337,37 +337,33 @@ public class JavaPluginLoader implements PluginLoader {
         removeClass0(name);
     }
 
-    private void removeClass0(String name) {
-        Class<?> clazz = classes0.remove(name);
+    private void removeClass0(final String name) {
+        final Class<?> clazz = classes0.remove(name);
 
         try {
             if ((clazz != null) && (ConfigurationSerializable.class.isAssignableFrom(clazz))) {
-                Class<? extends ConfigurationSerializable> serializable = clazz.asSubclass(ConfigurationSerializable.class);
+                final Class<? extends ConfigurationSerializable> serializable = clazz.asSubclass(ConfigurationSerializable.class);
                 ConfigurationSerialization.unregisterClass(serializable);
             }
-        } catch (NullPointerException ex) {
+        } catch (final NullPointerException ex) {
             // Boggle!
             // (Native methods throwing NPEs is not fun when you can't stop it before-hand)
         }
     }
 
-    public Map<Class<? extends Event>, Set<RegisteredListener>> createRegisteredListeners(Listener listener, final Plugin plugin) {
+    public Map<Class<? extends Event>, Set<RegisteredListener>> createRegisteredListeners(final Listener listener, final Plugin plugin) {
         Validate.notNull(plugin, "Plugin can not be null");
         Validate.notNull(listener, "Listener can not be null");
 
-        boolean useTimings = server.getPluginManager().useTimings();
-        Map<Class<? extends Event>, Set<RegisteredListener>> ret = new HashMap<Class<? extends Event>, Set<RegisteredListener>>();
-        Set<Method> methods;
+        final boolean useTimings = server.getPluginManager().useTimings();
+        final Map<Class<? extends Event>, Set<RegisteredListener>> ret = new HashMap<Class<? extends Event>, Set<RegisteredListener>>();
+        final Set<Method> methods;
         try {
-            Method[] publicMethods = listener.getClass().getMethods();
+            final Method[] publicMethods = listener.getClass().getMethods();
             methods = new HashSet<Method>(publicMethods.length, Float.MAX_VALUE);
-            for (Method method : publicMethods) {
-                methods.add(method);
-            }
-            for (Method method : listener.getClass().getDeclaredMethods()) {
-                methods.add(method);
-            }
-        } catch (NoClassDefFoundError e) {
+            methods.addAll(Arrays.asList(publicMethods));
+            methods.addAll(Arrays.asList(listener.getClass().getDeclaredMethods()));
+        } catch (final NoClassDefFoundError e) {
             plugin.getLogger().severe("Plugin " + plugin.getDescription().getFullName() + " has failed to register events for " + listener.getClass() + " because " + e.getMessage() + " does not exist.");
             return ret;
         }
@@ -391,8 +387,8 @@ public class JavaPluginLoader implements PluginLoader {
             for (Class<?> clazz = eventClass; Event.class.isAssignableFrom(clazz); clazz = clazz.getSuperclass()) {
                 // This loop checks for extending deprecated events
                 if (clazz.getAnnotation(Deprecated.class) != null) {
-                    Warning warning = clazz.getAnnotation(Warning.class);
-                    WarningState warningState = server.getWarningState();
+                    final Warning warning = clazz.getAnnotation(Warning.class);
+                    final WarningState warningState = server.getWarningState();
                     if (!warningState.printFor(warning)) {
                         break;
                     }
@@ -404,7 +400,7 @@ public class JavaPluginLoader implements PluginLoader {
                                     plugin.getDescription().getFullName(),
                                     clazz.getName(),
                                     method.toGenericString(),
-                                    (warning != null && warning.reason().length() != 0) ? warning.reason() : "Server performance will be affected",
+                                    (warning != null && !warning.reason().isEmpty()) ? warning.reason() : "Server performance will be affected",
                                     Arrays.toString(plugin.getDescription().getAuthors().toArray())),
                             warningState == WarningState.ON ? new AuthorNagException(null) : null);
                     break;
@@ -417,14 +413,14 @@ public class JavaPluginLoader implements PluginLoader {
             final IProxiedEvent fastEvent = ProxyCreator.createEventProxy(method);
             //TODO Kepa2012End
 
-            EventExecutor executor = new EventExecutor() {
-                public void execute(Listener listener, Event event) throws EventException {
+            final EventExecutor executor = new EventExecutor() {
+                public void execute(final Listener listener, final Event event) throws EventException {
                     try {
                         if (!eventClass.isAssignableFrom(event.getClass())) {
                             return;
                         }
                         // Spigot start
-                        boolean isAsync = event.isAsynchronous();
+                        final boolean isAsync = event.isAsynchronous();
                         if (!isAsync) timings.startTiming();
 
                         //TODO Kepa2012Start
@@ -436,9 +432,9 @@ public class JavaPluginLoader implements PluginLoader {
                             method.invoke(listener, event);
                         if (!isAsync) timings.stopTiming();
                         // Spigot end
-                    } catch (InvocationTargetException ex) {
+                    } catch (final InvocationTargetException ex) {
                         throw new EventException(ex.getCause());
-                    } catch (Throwable t) {
+                    } catch (final Throwable t) {
                         throw new EventException(t);
                     }
                 }
@@ -458,9 +454,9 @@ public class JavaPluginLoader implements PluginLoader {
         if (!plugin.isEnabled()) {
             plugin.getLogger().info("Enabling " + plugin.getDescription().getFullName());
 
-            JavaPlugin jPlugin = (JavaPlugin) plugin;
+            final JavaPlugin jPlugin = (JavaPlugin) plugin;
 
-            String pluginName = jPlugin.getDescription().getName();
+            final String pluginName = jPlugin.getDescription().getName();
 
             if (!loaders0.containsKey(pluginName)) {
                 loaders0.put(pluginName, (PluginClassLoader) jPlugin.getClassLoader());
@@ -468,7 +464,7 @@ public class JavaPluginLoader implements PluginLoader {
 
             try {
                 jPlugin.setEnabled(true);
-            } catch (Throwable ex) {
+            } catch (final Throwable ex) {
                 server.getLogger().log(Level.SEVERE, "Error occurred while enabling " + plugin.getDescription().getFullName() + " (Is it up to date?)", ex);
             }
 
@@ -478,31 +474,31 @@ public class JavaPluginLoader implements PluginLoader {
         }
     }
 
-    public void disablePlugin(Plugin plugin) {
+    public void disablePlugin(final Plugin plugin) {
         Validate.isTrue(plugin instanceof JavaPlugin, "Plugin is not associated with this PluginLoader");
 
         if (plugin.isEnabled()) {
-            String message = String.format("Disabling %s", plugin.getDescription().getFullName());
+            final String message = String.format("Disabling %s", plugin.getDescription().getFullName());
             plugin.getLogger().info(message);
 
             server.getPluginManager().callEvent(new PluginDisableEvent(plugin));
 
-            JavaPlugin jPlugin = (JavaPlugin) plugin;
-            ClassLoader cloader = jPlugin.getClassLoader();
+            final JavaPlugin jPlugin = (JavaPlugin) plugin;
+            final ClassLoader cloader = jPlugin.getClassLoader();
 
             try {
                 jPlugin.setEnabled(false);
-            } catch (Throwable ex) {
+            } catch (final Throwable ex) {
                 server.getLogger().log(Level.SEVERE, "Error occurred while disabling " + plugin.getDescription().getFullName() + " (Is it up to date?)", ex);
             }
 
             loaders0.remove(jPlugin.getDescription().getName());
 
             if (cloader instanceof PluginClassLoader) {
-                PluginClassLoader loader = (PluginClassLoader) cloader;
-                Set<String> names = loader.extended ? loader.getClasses() : loader.getClasses0(); // Don't warn on deprecation, but maintain overridability
+                final PluginClassLoader loader = (PluginClassLoader) cloader;
+                final Set<String> names = loader.extended ? loader.getClasses() : loader.getClasses0(); // Don't warn on deprecation, but maintain overridability
 
-                for (String name : names) {
+                for (final String name : names) {
                     if (extended) {
                         removeClass(name);
                     } else {
@@ -521,28 +517,28 @@ public class JavaPluginLoader implements PluginLoader {
      */
     public InheritanceMap getGlobalInheritanceMap() {
         if (globalInheritanceMap == null) {
-            Map<String, String> relocationsCurrent = new HashMap<String, String>();
+            final Map<String, String> relocationsCurrent = new HashMap<String, String>();
             relocationsCurrent.put("net.minecraft.server", "net.minecraft.server." + PluginClassLoader.getNativeVersion());
-            JarMapping currentMappings = new JarMapping();
+            final JarMapping currentMappings = new JarMapping();
 
             try {
                 currentMappings.loadMappings(
                         new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("mappings/" + PluginClassLoader.getNativeVersion() + "/cb2numpkg.srg"))),
                         new MavenShade(relocationsCurrent),
                         null, false);
-            } catch (IOException ex) {
+            } catch (final IOException ex) {
                 ex.printStackTrace();
                 throw new RuntimeException(ex);
             }
 
-            BiMap<String, String> inverseClassMap = HashBiMap.create(currentMappings.classes).inverse();
+            final BiMap<String, String> inverseClassMap = HashBiMap.create(currentMappings.classes).inverse();
             globalInheritanceMap = new InheritanceMap();
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("mappings/" + PluginClassLoader.getNativeVersion() + "/nms.inheritmap")));
+            final BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("mappings/" + PluginClassLoader.getNativeVersion() + "/nms.inheritmap")));
 
             try {
                 globalInheritanceMap.load(reader, inverseClassMap);
-            } catch (IOException ex) {
+            } catch (final IOException ex) {
                 ex.printStackTrace();
                 throw new RuntimeException(ex);
             }

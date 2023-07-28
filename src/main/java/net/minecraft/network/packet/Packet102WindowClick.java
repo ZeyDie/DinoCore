@@ -29,7 +29,7 @@ public class Packet102WindowClick extends Packet
     public Packet102WindowClick() {}
 
     @SideOnly(Side.CLIENT)
-    public Packet102WindowClick(int par1, int par2, int par3, int par4, ItemStack par5ItemStack, short par6)
+    public Packet102WindowClick(final int par1, final int par2, final int par3, final int par4, final ItemStack par5ItemStack, final short par6)
     {
         this.window_Id = par1;
         this.inventorySlot = par2;
@@ -42,7 +42,7 @@ public class Packet102WindowClick extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleWindowClick(this);
     }
@@ -50,7 +50,7 @@ public class Packet102WindowClick extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.window_Id = par1DataInput.readByte();
         this.inventorySlot = par1DataInput.readShort();
@@ -63,7 +63,7 @@ public class Packet102WindowClick extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeByte(this.window_Id);
         par1DataOutput.writeShort(this.inventorySlot);

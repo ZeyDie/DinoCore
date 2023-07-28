@@ -8,7 +8,7 @@ import org.bukkit.entity.LivingEntity;
 
 public class CraftArrow extends AbstractProjectile implements Arrow {
 
-    public CraftArrow(CraftServer server, net.minecraft.entity.projectile.EntityArrow entity) {
+    public CraftArrow(final CraftServer server, final net.minecraft.entity.projectile.EntityArrow entity) {
         super(server, entity);
     }
 
@@ -20,7 +20,7 @@ public class CraftArrow extends AbstractProjectile implements Arrow {
         return null;
     }
 
-    public void setShooter(LivingEntity shooter) {
+    public void setShooter(final LivingEntity shooter) {
         if (shooter instanceof CraftLivingEntity) {
             getHandle().shootingEntity = ((CraftLivingEntity) shooter).getHandle();
         }
@@ -50,7 +50,7 @@ public class CraftArrow extends AbstractProjectile implements Arrow {
         }
 
         @Override
-        public void setDamage(double damage)
+        public void setDamage(final double damage)
         {
             getHandle().setDamage( damage );
         }

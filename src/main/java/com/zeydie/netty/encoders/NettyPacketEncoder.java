@@ -41,7 +41,7 @@ public final class NettyPacketEncoder extends MessageToMessageEncoder<Packet> {
             }
 
             list.add(byteBuf);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }

@@ -16,7 +16,7 @@ public class GuiScreenConfirmation extends GuiScreen
     protected final String field_140047_c;
     protected final int field_140044_d;
 
-    public GuiScreenConfirmation(GuiScreen par1GuiScreen, GuiScreenConfirmationType par2GuiScreenConfirmationType, String par3Str, String par4Str, int par5)
+    public GuiScreenConfirmation(final GuiScreen par1GuiScreen, final GuiScreenConfirmationType par2GuiScreenConfirmationType, final String par3Str, final String par4Str, final int par5)
     {
         this.field_140048_a = par1GuiScreen;
         this.field_140044_d = par5;
@@ -39,7 +39,7 @@ public class GuiScreenConfirmation extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         this.field_140048_a.confirmClicked(par1GuiButton.id == 0, this.field_140044_d);
     }
@@ -47,7 +47,7 @@ public class GuiScreenConfirmation extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRenderer, this.field_140045_e.field_140072_d, this.width / 2, 70, this.field_140045_e.field_140075_c);

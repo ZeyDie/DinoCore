@@ -182,7 +182,7 @@ public class EntityRenderer
      */
     public int debugViewDirection;
 
-    public EntityRenderer(Minecraft par1Minecraft)
+    public EntityRenderer(final Minecraft par1Minecraft)
     {
         this.mc = par1Minecraft;
         this.itemRenderer = new ItemRenderer(par1Minecraft);
@@ -225,7 +225,7 @@ public class EntityRenderer
 
         f = this.mc.theWorld.getLightBrightness(MathHelper.floor_double(this.mc.renderViewEntity.posX), MathHelper.floor_double(this.mc.renderViewEntity.posY), MathHelper.floor_double(this.mc.renderViewEntity.posZ));
         f1 = (float)(3 - this.mc.gameSettings.renderDistance) / 3.0F;
-        float f2 = f * (1.0F - f1) + f1;
+        final float f2 = f * (1.0F - f1) + f1;
         this.fogColor1 += (f2 - this.fogColor1) * 0.1F;
         ++this.rendererUpdateCount;
         this.itemRenderer.updateEquippedItem();
@@ -252,7 +252,7 @@ public class EntityRenderer
     /**
      * Finds what block or object the mouse is over at the specified partial tick time. Args: partialTickTime
      */
-    public void getMouseOver(float par1)
+    public void getMouseOver(final float par1)
     {
         if (this.mc.renderViewEntity != null)
         {
@@ -262,7 +262,7 @@ public class EntityRenderer
                 double d0 = (double)this.mc.playerController.getBlockReachDistance();
                 this.mc.objectMouseOver = this.mc.renderViewEntity.rayTrace(d0, par1);
                 double d1 = d0;
-                Vec3 vec3 = this.mc.renderViewEntity.getPosition(par1);
+                final Vec3 vec3 = this.mc.renderViewEntity.getPosition(par1);
 
                 if (this.mc.playerController.extendedReach())
                 {
@@ -284,22 +284,22 @@ public class EntityRenderer
                     d1 = this.mc.objectMouseOver.hitVec.distanceTo(vec3);
                 }
 
-                Vec3 vec31 = this.mc.renderViewEntity.getLook(par1);
-                Vec3 vec32 = vec3.addVector(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0);
+                final Vec3 vec31 = this.mc.renderViewEntity.getLook(par1);
+                final Vec3 vec32 = vec3.addVector(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0);
                 this.pointedEntity = null;
-                float f1 = 1.0F;
-                List list = this.mc.theWorld.getEntitiesWithinAABBExcludingEntity(this.mc.renderViewEntity, this.mc.renderViewEntity.boundingBox.addCoord(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0).expand((double)f1, (double)f1, (double)f1));
+                final float f1 = 1.0F;
+                final List list = this.mc.theWorld.getEntitiesWithinAABBExcludingEntity(this.mc.renderViewEntity, this.mc.renderViewEntity.boundingBox.addCoord(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0).expand((double)f1, (double)f1, (double)f1));
                 double d2 = d1;
 
                 for (int i = 0; i < list.size(); ++i)
                 {
-                    Entity entity = (Entity)list.get(i);
+                    final Entity entity = (Entity)list.get(i);
 
                     if (entity.canBeCollidedWith())
                     {
-                        float f2 = entity.getCollisionBorderSize();
-                        AxisAlignedBB axisalignedbb = entity.boundingBox.expand((double)f2, (double)f2, (double)f2);
-                        MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
+                        final float f2 = entity.getCollisionBorderSize();
+                        final AxisAlignedBB axisalignedbb = entity.boundingBox.expand((double)f2, (double)f2, (double)f2);
+                        final MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
 
                         if (axisalignedbb.isVecInside(vec3))
                         {
@@ -311,7 +311,7 @@ public class EntityRenderer
                         }
                         else if (movingobjectposition != null)
                         {
-                            double d3 = vec3.distanceTo(movingobjectposition.hitVec);
+                            final double d3 = vec3.distanceTo(movingobjectposition.hitVec);
 
                             if (d3 < d2 || d2 == 0.0D)
                             {
@@ -352,7 +352,7 @@ public class EntityRenderer
     {
         if (mc.renderViewEntity instanceof EntityPlayerSP)
         {
-            EntityPlayerSP entityplayersp = (EntityPlayerSP)this.mc.renderViewEntity;
+            final EntityPlayerSP entityplayersp = (EntityPlayerSP)this.mc.renderViewEntity;
             this.fovMultiplierTemp = entityplayersp.getFOVMultiplier();
         }
         else
@@ -376,7 +376,7 @@ public class EntityRenderer
     /**
      * Changes the field of view of the player depending on if they are underwater or not
      */
-    private float getFOVModifier(float par1, boolean par2)
+    private float getFOVModifier(final float par1, final boolean par2)
     {
         if (this.debugViewDirection > 0)
         {
@@ -384,7 +384,7 @@ public class EntityRenderer
         }
         else
         {
-            EntityLivingBase entityplayer = (EntityLivingBase)this.mc.renderViewEntity;
+            final EntityLivingBase entityplayer = (EntityLivingBase)this.mc.renderViewEntity;
             float f1 = 70.0F;
 
             if (par2)
@@ -395,11 +395,11 @@ public class EntityRenderer
 
             if (entityplayer.getHealth() <= 0.0F)
             {
-                float f2 = (float)entityplayer.deathTime + par1;
+                final float f2 = (float)entityplayer.deathTime + par1;
                 f1 /= (1.0F - 500.0F / (f2 + 500.0F)) * 2.0F + 1.0F;
             }
 
-            int i = ActiveRenderInfo.getBlockIdAtEntityViewpoint(this.mc.theWorld, entityplayer, par1);
+            final int i = ActiveRenderInfo.getBlockIdAtEntityViewpoint(this.mc.theWorld, entityplayer, par1);
 
             if (i != 0 && Block.blocksList[i].blockMaterial == Material.water)
             {
@@ -410,9 +410,9 @@ public class EntityRenderer
         }
     }
 
-    private void hurtCameraEffect(float par1)
+    private void hurtCameraEffect(final float par1)
     {
-        EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
+        final EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
         float f1 = (float)entitylivingbase.hurtTime - par1;
         float f2;
 
@@ -436,15 +436,15 @@ public class EntityRenderer
     /**
      * Setups all the GL settings for view bobbing. Args: partialTickTime
      */
-    private void setupViewBobbing(float par1)
+    private void setupViewBobbing(final float par1)
     {
         if (this.mc.renderViewEntity instanceof EntityPlayer)
         {
-            EntityPlayer entityplayer = (EntityPlayer)this.mc.renderViewEntity;
-            float f1 = entityplayer.distanceWalkedModified - entityplayer.prevDistanceWalkedModified;
-            float f2 = -(entityplayer.distanceWalkedModified + f1 * par1);
-            float f3 = entityplayer.prevCameraYaw + (entityplayer.cameraYaw - entityplayer.prevCameraYaw) * par1;
-            float f4 = entityplayer.prevCameraPitch + (entityplayer.cameraPitch - entityplayer.prevCameraPitch) * par1;
+            final EntityPlayer entityplayer = (EntityPlayer)this.mc.renderViewEntity;
+            final float f1 = entityplayer.distanceWalkedModified - entityplayer.prevDistanceWalkedModified;
+            final float f2 = -(entityplayer.distanceWalkedModified + f1 * par1);
+            final float f3 = entityplayer.prevCameraYaw + (entityplayer.cameraYaw - entityplayer.prevCameraYaw) * par1;
+            final float f4 = entityplayer.prevCameraPitch + (entityplayer.cameraPitch - entityplayer.prevCameraPitch) * par1;
             GL11.glTranslatef(MathHelper.sin(f2 * (float)Math.PI) * f3 * 0.5F, -Math.abs(MathHelper.cos(f2 * (float)Math.PI) * f3), 0.0F);
             GL11.glRotatef(MathHelper.sin(f2 * (float)Math.PI) * f3 * 3.0F, 0.0F, 0.0F, 1.0F);
             GL11.glRotatef(Math.abs(MathHelper.cos(f2 * (float)Math.PI - 0.2F) * f3) * 5.0F, 1.0F, 0.0F, 0.0F);
@@ -455,9 +455,9 @@ public class EntityRenderer
     /**
      * sets up player's eye (or camera in third person mode)
      */
-    private void orientCamera(float par1)
+    private void orientCamera(final float par1)
     {
-        EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
+        final EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
         float f1 = entitylivingbase.yOffset - 1.62F;
         double d0 = entitylivingbase.prevPosX + (entitylivingbase.posX - entitylivingbase.prevPosX) * (double)par1;
         double d1 = entitylivingbase.prevPosY + (entitylivingbase.posY - entitylivingbase.prevPosY) * (double)par1 - (double)f1;
@@ -480,7 +480,7 @@ public class EntityRenderer
         {
             double d3 = (double)(this.thirdPersonDistanceTemp + (this.thirdPersonDistance - this.thirdPersonDistanceTemp) * par1);
             float f2;
-            float f3;
+            final float f3;
 
             if (this.mc.gameSettings.debugCamEnable)
             {
@@ -500,9 +500,9 @@ public class EntityRenderer
                     f2 += 180.0F;
                 }
 
-                double d4 = (double)(-MathHelper.sin(f3 / 180.0F * (float)Math.PI) * MathHelper.cos(f2 / 180.0F * (float)Math.PI)) * d3;
-                double d5 = (double)(MathHelper.cos(f3 / 180.0F * (float)Math.PI) * MathHelper.cos(f2 / 180.0F * (float)Math.PI)) * d3;
-                double d6 = (double)(-MathHelper.sin(f2 / 180.0F * (float)Math.PI)) * d3;
+                final double d4 = (double)(-MathHelper.sin(f3 / 180.0F * (float)Math.PI) * MathHelper.cos(f2 / 180.0F * (float)Math.PI)) * d3;
+                final double d5 = (double)(MathHelper.cos(f3 / 180.0F * (float)Math.PI) * MathHelper.cos(f2 / 180.0F * (float)Math.PI)) * d3;
+                final double d6 = (double)(-MathHelper.sin(f2 / 180.0F * (float)Math.PI)) * d3;
 
                 for (int l = 0; l < 8; ++l)
                 {
@@ -512,11 +512,11 @@ public class EntityRenderer
                     f4 *= 0.1F;
                     f5 *= 0.1F;
                     f6 *= 0.1F;
-                    MovingObjectPosition movingobjectposition = this.mc.theWorld.clip(this.mc.theWorld.getWorldVec3Pool().getVecFromPool(d0 + (double)f4, d1 + (double)f5, d2 + (double)f6), this.mc.theWorld.getWorldVec3Pool().getVecFromPool(d0 - d4 + (double)f4 + (double)f6, d1 - d6 + (double)f5, d2 - d5 + (double)f6));
+                    final MovingObjectPosition movingobjectposition = this.mc.theWorld.clip(this.mc.theWorld.getWorldVec3Pool().getVecFromPool(d0 + (double)f4, d1 + (double)f5, d2 + (double)f6), this.mc.theWorld.getWorldVec3Pool().getVecFromPool(d0 - d4 + (double)f4 + (double)f6, d1 - d6 + (double)f5, d2 - d5 + (double)f6));
 
                     if (movingobjectposition != null)
                     {
-                        double d7 = movingobjectposition.hitVec.distanceTo(this.mc.theWorld.getWorldVec3Pool().getVecFromPool(d0, d1, d2));
+                        final double d7 = movingobjectposition.hitVec.distanceTo(this.mc.theWorld.getWorldVec3Pool().getVecFromPool(d0, d1, d2));
 
                         if (d7 < d3)
                         {
@@ -558,12 +558,12 @@ public class EntityRenderer
     /**
      * sets up projection, view effects, camera position/rotation
      */
-    private void setupCameraTransform(float par1, int par2)
+    private void setupCameraTransform(final float par1, final int par2)
     {
         this.farPlaneDistance = (float)(256 >> this.mc.gameSettings.renderDistance);
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
-        float f1 = 0.07F;
+        final float f1 = 0.07F;
 
         if (this.mc.gameSettings.anaglyph)
         {
@@ -622,7 +622,7 @@ public class EntityRenderer
 
         if (this.debugViewDirection > 0)
         {
-            int j = this.debugViewDirection - 1;
+            final int j = this.debugViewDirection - 1;
 
             if (j == 1)
             {
@@ -654,13 +654,13 @@ public class EntityRenderer
     /**
      * Render player hand
      */
-    private void renderHand(float par1, int par2)
+    private void renderHand(final float par1, final int par2)
     {
         if (this.debugViewDirection <= 0)
         {
             GL11.glMatrixMode(GL11.GL_PROJECTION);
             GL11.glLoadIdentity();
-            float f1 = 0.07F;
+            final float f1 = 0.07F;
 
             if (this.mc.gameSettings.anaglyph)
             {
@@ -677,7 +677,7 @@ public class EntityRenderer
 
             if (this.mc.playerController.enableEverythingIsScrewedUpMode())
             {
-                float f2 = 0.6666667F;
+                final float f2 = 0.6666667F;
                 GL11.glScalef(1.0F, f2, 1.0F);
             }
 
@@ -722,7 +722,7 @@ public class EntityRenderer
     /**
      * Disable secondary texture unit used by lightmap
      */
-    public void disableLightmap(double par1)
+    public void disableLightmap(final double par1)
     {
         OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -732,12 +732,12 @@ public class EntityRenderer
     /**
      * Enable lightmap in secondary texture unit
      */
-    public void enableLightmap(double par1)
+    public void enableLightmap(final double par1)
     {
         OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit);
         GL11.glMatrixMode(GL11.GL_TEXTURE);
         GL11.glLoadIdentity();
-        float f = 0.00390625F;
+        final float f = 0.00390625F;
         GL11.glScalef(f, f, f);
         GL11.glTranslatef(8.0F, 8.0F, 8.0F);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
@@ -767,27 +767,27 @@ public class EntityRenderer
         this.lightmapUpdateNeeded = true;
     }
 
-    private void updateLightmap(float par1)
+    private void updateLightmap(final float par1)
     {
-        WorldClient worldclient = this.mc.theWorld;
+        final WorldClient worldclient = this.mc.theWorld;
 
         if (worldclient != null)
         {
             for (int i = 0; i < 256; ++i)
             {
-                float f1 = worldclient.getSunBrightness(1.0F) * 0.95F + 0.05F;
+                final float f1 = worldclient.getSunBrightness(1.0F) * 0.95F + 0.05F;
                 float f2 = worldclient.provider.lightBrightnessTable[i / 16] * f1;
-                float f3 = worldclient.provider.lightBrightnessTable[i % 16] * (this.torchFlickerX * 0.1F + 1.5F);
+                final float f3 = worldclient.provider.lightBrightnessTable[i % 16] * (this.torchFlickerX * 0.1F + 1.5F);
 
                 if (worldclient.lastLightningBolt > 0)
                 {
                     f2 = worldclient.provider.lightBrightnessTable[i / 16];
                 }
 
-                float f4 = f2 * (worldclient.getSunBrightness(1.0F) * 0.65F + 0.35F);
-                float f5 = f2 * (worldclient.getSunBrightness(1.0F) * 0.65F + 0.35F);
-                float f6 = f3 * ((f3 * 0.6F + 0.4F) * 0.6F + 0.4F);
-                float f7 = f3 * (f3 * f3 * 0.6F + 0.4F);
+                final float f4 = f2 * (worldclient.getSunBrightness(1.0F) * 0.65F + 0.35F);
+                final float f5 = f2 * (worldclient.getSunBrightness(1.0F) * 0.65F + 0.35F);
+                final float f6 = f3 * ((f3 * 0.6F + 0.4F) * 0.6F + 0.4F);
+                final float f7 = f3 * (f3 * f3 * 0.6F + 0.4F);
                 float f8 = f4 + f3;
                 float f9 = f5 + f6;
                 float f10 = f2 + f7;
@@ -892,10 +892,10 @@ public class EntityRenderer
                     f10 = 0.0F;
                 }
 
-                short short1 = 255;
-                int j = (int)(f8 * 255.0F);
-                int k = (int)(f9 * 255.0F);
-                int l = (int)(f10 * 255.0F);
+                final short short1 = 255;
+                final int j = (int)(f8 * 255.0F);
+                final int k = (int)(f9 * 255.0F);
+                final int l = (int)(f10 * 255.0F);
                 this.lightmapColors[i] = short1 << 24 | j << 16 | k << 8 | l;
             }
 
@@ -907,16 +907,16 @@ public class EntityRenderer
     /**
      * Gets the night vision brightness
      */
-    private float getNightVisionBrightness(EntityPlayer par1EntityPlayer, float par2)
+    private float getNightVisionBrightness(final EntityPlayer par1EntityPlayer, final float par2)
     {
-        int i = par1EntityPlayer.getActivePotionEffect(Potion.nightVision).getDuration();
+        final int i = par1EntityPlayer.getActivePotionEffect(Potion.nightVision).getDuration();
         return i > 200 ? 1.0F : 0.7F + MathHelper.sin(((float)i - par2) * (float)Math.PI * 0.2F) * 0.3F;
     }
 
     /**
      * Will update any inputs that effect the camera angle (mouse) and then render the world and GUI
      */
-    public void updateCameraAndRender(float par1)
+    public void updateCameraAndRender(final float par1)
     {
         this.mc.mcProfiler.startSection("lightTex");
 
@@ -926,7 +926,7 @@ public class EntityRenderer
         }
 
         this.mc.mcProfiler.endSection();
-        boolean flag = Display.isActive();
+        final boolean flag = Display.isActive();
 
         if (!flag && this.mc.gameSettings.pauseOnLostFocus && (!this.mc.gameSettings.touchscreen || !Mouse.isButtonDown(1)))
         {
@@ -945,8 +945,8 @@ public class EntityRenderer
         if (this.mc.inGameHasFocus && flag)
         {
             this.mc.mouseHelper.mouseXYChange();
-            float f1 = this.mc.gameSettings.mouseSensitivity * 0.6F + 0.2F;
-            float f2 = f1 * f1 * f1 * 8.0F;
+            final float f1 = this.mc.gameSettings.mouseSensitivity * 0.6F + 0.2F;
+            final float f2 = f1 * f1 * f1 * 8.0F;
             float f3 = (float)this.mc.mouseHelper.deltaX * f2;
             float f4 = (float)this.mc.mouseHelper.deltaY * f2;
             byte b0 = 1;
@@ -960,7 +960,7 @@ public class EntityRenderer
             {
                 this.smoothCamYaw += f3;
                 this.smoothCamPitch += f4;
-                float f5 = par1 - this.smoothCamPartialTicks;
+                final float f5 = par1 - this.smoothCamPartialTicks;
                 this.smoothCamPartialTicks = par1;
                 f3 = this.smoothCamFilterX * f5;
                 f4 = this.smoothCamFilterY * f5;
@@ -977,12 +977,12 @@ public class EntityRenderer
         if (!this.mc.skipRenderWorld)
         {
             anaglyphEnable = this.mc.gameSettings.anaglyph;
-            ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
-            int i = scaledresolution.getScaledWidth();
-            int j = scaledresolution.getScaledHeight();
-            int k = Mouse.getX() * i / this.mc.displayWidth;
-            int l = j - Mouse.getY() * j / this.mc.displayHeight - 1;
-            int i1 = performanceToFps(this.mc.gameSettings.limitFramerate);
+            final ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+            final int i = scaledresolution.getScaledWidth();
+            final int j = scaledresolution.getScaledHeight();
+            final int k = Mouse.getX() * i / this.mc.displayWidth;
+            final int l = j - Mouse.getY() * j / this.mc.displayHeight - 1;
+            final int i1 = performanceToFps(this.mc.gameSettings.limitFramerate);
 
             if (this.mc.theWorld != null)
             {
@@ -1026,10 +1026,10 @@ public class EntityRenderer
                 {
                     this.mc.currentScreen.drawScreen(k, l, par1);
                 }
-                catch (Throwable throwable)
+                catch (final Throwable throwable)
                 {
-                    CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Rendering screen");
-                    CrashReportCategory crashreportcategory = crashreport.makeCategory("Screen render details");
+                    final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Rendering screen");
+                    final CrashReportCategory crashreportcategory = crashreport.makeCategory("Screen render details");
                     crashreportcategory.addCrashSectionCallable("Screen name", new CallableScreenName(this));
                     crashreportcategory.addCrashSectionCallable("Mouse location", new CallableMouseLocation(this, k, l));
                     crashreportcategory.addCrashSectionCallable("Screen size", new CallableScreenSize(this, scaledresolution));
@@ -1039,7 +1039,7 @@ public class EntityRenderer
         }
     }
 
-    public void renderWorld(float par1, long par2)
+    public void renderWorld(final float par1, final long par2)
     {
         this.mc.mcProfiler.startSection("lightTex");
 
@@ -1058,12 +1058,12 @@ public class EntityRenderer
 
         this.mc.mcProfiler.endStartSection("pick");
         this.getMouseOver(par1);
-        EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
-        RenderGlobal renderglobal = this.mc.renderGlobal;
-        EffectRenderer effectrenderer = this.mc.effectRenderer;
-        double d0 = entitylivingbase.lastTickPosX + (entitylivingbase.posX - entitylivingbase.lastTickPosX) * (double)par1;
-        double d1 = entitylivingbase.lastTickPosY + (entitylivingbase.posY - entitylivingbase.lastTickPosY) * (double)par1;
-        double d2 = entitylivingbase.lastTickPosZ + (entitylivingbase.posZ - entitylivingbase.lastTickPosZ) * (double)par1;
+        final EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
+        final RenderGlobal renderglobal = this.mc.renderGlobal;
+        final EffectRenderer effectrenderer = this.mc.effectRenderer;
+        final double d0 = entitylivingbase.lastTickPosX + (entitylivingbase.posX - entitylivingbase.lastTickPosX) * (double)par1;
+        final double d1 = entitylivingbase.lastTickPosY + (entitylivingbase.posY - entitylivingbase.lastTickPosY) * (double)par1;
+        final double d2 = entitylivingbase.lastTickPosZ + (entitylivingbase.posZ - entitylivingbase.lastTickPosZ) * (double)par1;
         this.mc.mcProfiler.endStartSection("center");
 
         for (int j = 0; j < 2; ++j)
@@ -1109,7 +1109,7 @@ public class EntityRenderer
             }
 
             this.mc.mcProfiler.endStartSection("culling");
-            Frustrum frustrum = new Frustrum();
+            final Frustrum frustrum = new Frustrum();
             frustrum.setPosition(d0, d1, d2);
             this.mc.renderGlobal.clipRenderersByFrustum(frustrum, par1);
 
@@ -1119,7 +1119,7 @@ public class EntityRenderer
 
                 while (!this.mc.renderGlobal.updateRenderers(entitylivingbase, false) && par2 != 0L)
                 {
-                    long k = par2 - System.nanoTime();
+                    final long k = par2 - System.nanoTime();
 
                     if (k < 0L || k > 1000000000L)
                     {
@@ -1193,7 +1193,7 @@ public class EntityRenderer
                 }
 
                 GL11.glColorMask(false, false, false, false);
-                int l = renderglobal.sortAndRender(entitylivingbase, 1, (double)par1);
+                final int l = renderglobal.sortAndRender(entitylivingbase, 1, (double)par1);
 
                 if (this.mc.gameSettings.anaglyph)
                 {
@@ -1301,7 +1301,7 @@ public class EntityRenderer
     /**
      * Render clouds if enabled
      */
-    private void renderCloudsCheck(RenderGlobal par1RenderGlobal, float par2)
+    private void renderCloudsCheck(final RenderGlobal par1RenderGlobal, final float par2)
     {
         if (this.mc.gameSettings.shouldRenderClouds())
         {
@@ -1328,12 +1328,12 @@ public class EntityRenderer
         if (f != 0.0F)
         {
             this.random.setSeed((long)this.rendererUpdateCount * 312987231L);
-            EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
-            WorldClient worldclient = this.mc.theWorld;
-            int i = MathHelper.floor_double(entitylivingbase.posX);
-            int j = MathHelper.floor_double(entitylivingbase.posY);
-            int k = MathHelper.floor_double(entitylivingbase.posZ);
-            byte b0 = 10;
+            final EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
+            final WorldClient worldclient = this.mc.theWorld;
+            final int i = MathHelper.floor_double(entitylivingbase.posX);
+            final int j = MathHelper.floor_double(entitylivingbase.posY);
+            final int k = MathHelper.floor_double(entitylivingbase.posZ);
+            final byte b0 = 10;
             double d0 = 0.0D;
             double d1 = 0.0D;
             double d2 = 0.0D;
@@ -1351,16 +1351,16 @@ public class EntityRenderer
 
             for (int j1 = 0; j1 < i1; ++j1)
             {
-                int k1 = i + this.random.nextInt(b0) - this.random.nextInt(b0);
-                int l1 = k + this.random.nextInt(b0) - this.random.nextInt(b0);
-                int i2 = worldclient.getPrecipitationHeight(k1, l1);
-                int j2 = worldclient.getBlockId(k1, i2 - 1, l1);
-                BiomeGenBase biomegenbase = worldclient.getBiomeGenForCoords(k1, l1);
+                final int k1 = i + this.random.nextInt(b0) - this.random.nextInt(b0);
+                final int l1 = k + this.random.nextInt(b0) - this.random.nextInt(b0);
+                final int i2 = worldclient.getPrecipitationHeight(k1, l1);
+                final int j2 = worldclient.getBlockId(k1, i2 - 1, l1);
+                final BiomeGenBase biomegenbase = worldclient.getBiomeGenForCoords(k1, l1);
 
                 if (i2 <= j + b0 && i2 >= j - b0 && biomegenbase.canSpawnLightningBolt() && biomegenbase.getFloatTemperature() >= 0.2F)
                 {
-                    float f1 = this.random.nextFloat();
-                    float f2 = this.random.nextFloat();
+                    final float f1 = this.random.nextFloat();
+                    final float f2 = this.random.nextFloat();
 
                     if (j2 > 0)
                     {
@@ -1404,9 +1404,9 @@ public class EntityRenderer
     /**
      * Render rain and snow
      */
-    protected void renderRainSnow(float par1)
+    protected void renderRainSnow(final float par1)
     {
-        float f1 = this.mc.theWorld.getRainStrength(par1);
+        final float f1 = this.mc.theWorld.getRainStrength(par1);
 
         if (f1 > 0.0F)
         {
@@ -1421,31 +1421,31 @@ public class EntityRenderer
                 {
                     for (int j = 0; j < 32; ++j)
                     {
-                        float f2 = (float)(j - 16);
-                        float f3 = (float)(i - 16);
-                        float f4 = MathHelper.sqrt_float(f2 * f2 + f3 * f3);
+                        final float f2 = (float)(j - 16);
+                        final float f3 = (float)(i - 16);
+                        final float f4 = MathHelper.sqrt_float(f2 * f2 + f3 * f3);
                         this.rainXCoords[i << 5 | j] = -f3 / f4;
                         this.rainYCoords[i << 5 | j] = f2 / f4;
                     }
                 }
             }
 
-            EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
-            WorldClient worldclient = this.mc.theWorld;
-            int k = MathHelper.floor_double(entitylivingbase.posX);
-            int l = MathHelper.floor_double(entitylivingbase.posY);
-            int i1 = MathHelper.floor_double(entitylivingbase.posZ);
-            Tessellator tessellator = Tessellator.instance;
+            final EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
+            final WorldClient worldclient = this.mc.theWorld;
+            final int k = MathHelper.floor_double(entitylivingbase.posX);
+            final int l = MathHelper.floor_double(entitylivingbase.posY);
+            final int i1 = MathHelper.floor_double(entitylivingbase.posZ);
+            final Tessellator tessellator = Tessellator.instance;
             GL11.glDisable(GL11.GL_CULL_FACE);
             GL11.glNormal3f(0.0F, 1.0F, 0.0F);
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GL11.glAlphaFunc(GL11.GL_GREATER, 0.01F);
             this.mc.getTextureManager().bindTexture(locationSnowPng);
-            double d0 = entitylivingbase.lastTickPosX + (entitylivingbase.posX - entitylivingbase.lastTickPosX) * (double)par1;
-            double d1 = entitylivingbase.lastTickPosY + (entitylivingbase.posY - entitylivingbase.lastTickPosY) * (double)par1;
-            double d2 = entitylivingbase.lastTickPosZ + (entitylivingbase.posZ - entitylivingbase.lastTickPosZ) * (double)par1;
-            int j1 = MathHelper.floor_double(d1);
+            final double d0 = entitylivingbase.lastTickPosX + (entitylivingbase.posX - entitylivingbase.lastTickPosX) * (double)par1;
+            final double d1 = entitylivingbase.lastTickPosY + (entitylivingbase.posY - entitylivingbase.lastTickPosY) * (double)par1;
+            final double d2 = entitylivingbase.lastTickPosZ + (entitylivingbase.posZ - entitylivingbase.lastTickPosZ) * (double)par1;
+            final int j1 = MathHelper.floor_double(d1);
             byte b0 = 5;
 
             if (this.mc.gameSettings.fancyGraphics)
@@ -1455,7 +1455,7 @@ public class EntityRenderer
 
             boolean flag = false;
             byte b1 = -1;
-            float f5 = (float)this.rendererUpdateCount + par1;
+            final float f5 = (float)this.rendererUpdateCount + par1;
 
             if (this.mc.gameSettings.fancyGraphics)
             {
@@ -1469,14 +1469,14 @@ public class EntityRenderer
             {
                 for (int l1 = k - b0; l1 <= k + b0; ++l1)
                 {
-                    int i2 = (k1 - i1 + 16) * 32 + l1 - k + 16;
-                    float f6 = this.rainXCoords[i2] * 0.5F;
-                    float f7 = this.rainYCoords[i2] * 0.5F;
-                    BiomeGenBase biomegenbase = worldclient.getBiomeGenForCoords(l1, k1);
+                    final int i2 = (k1 - i1 + 16) * 32 + l1 - k + 16;
+                    final float f6 = this.rainXCoords[i2] * 0.5F;
+                    final float f7 = this.rainYCoords[i2] * 0.5F;
+                    final BiomeGenBase biomegenbase = worldclient.getBiomeGenForCoords(l1, k1);
 
                     if (biomegenbase.canSpawnLightningBolt() || biomegenbase.getEnableSnow())
                     {
-                        int j2 = worldclient.getPrecipitationHeight(l1, k1);
+                        final int j2 = worldclient.getPrecipitationHeight(l1, k1);
                         int k2 = l - b0;
                         int l2 = l + b0;
 
@@ -1490,7 +1490,7 @@ public class EntityRenderer
                             l2 = j2;
                         }
 
-                        float f8 = 1.0F;
+                        final float f8 = 1.0F;
                         int i3 = j2;
 
                         if (j2 < j1)
@@ -1501,9 +1501,9 @@ public class EntityRenderer
                         if (k2 != l2)
                         {
                             this.random.setSeed((long)(l1 * l1 * 3121 + l1 * 45238971 ^ k1 * k1 * 418711 + k1 * 13761));
-                            float f9 = biomegenbase.getFloatTemperature();
-                            double d3;
-                            float f10;
+                            final float f9 = biomegenbase.getFloatTemperature();
+                            final double d3;
+                            final float f10;
 
                             if (worldclient.getWorldChunkManager().getTemperatureAtHeight(f9, j2) >= 0.15F)
                             {
@@ -1520,10 +1520,10 @@ public class EntityRenderer
                                 }
 
                                 f10 = ((float)(this.rendererUpdateCount + l1 * l1 * 3121 + l1 * 45238971 + k1 * k1 * 418711 + k1 * 13761 & 31) + par1) / 32.0F * (3.0F + this.random.nextFloat());
-                                double d4 = (double)((float)l1 + 0.5F) - entitylivingbase.posX;
+                                final double d4 = (double)((float)l1 + 0.5F) - entitylivingbase.posX;
                                 d3 = (double)((float)k1 + 0.5F) - entitylivingbase.posZ;
-                                float f11 = MathHelper.sqrt_double(d4 * d4 + d3 * d3) / (float)b0;
-                                float f12 = 1.0F;
+                                final float f11 = MathHelper.sqrt_double(d4 * d4 + d3 * d3) / (float)b0;
+                                final float f12 = 1.0F;
                                 tessellator.setBrightness(worldclient.getLightBrightnessForSkyBlocks(l1, i3, k1, 0));
                                 tessellator.setColorRGBA_F(f12, f12, f12, ((1.0F - f11 * f11) * 0.5F + 0.5F) * f1);
                                 tessellator.setTranslation(-d0 * 1.0D, -d1 * 1.0D, -d2 * 1.0D);
@@ -1548,12 +1548,12 @@ public class EntityRenderer
                                 }
 
                                 f10 = ((float)(this.rendererUpdateCount & 511) + par1) / 512.0F;
-                                float f13 = this.random.nextFloat() + f5 * 0.01F * (float)this.random.nextGaussian();
-                                float f14 = this.random.nextFloat() + f5 * (float)this.random.nextGaussian() * 0.001F;
+                                final float f13 = this.random.nextFloat() + f5 * 0.01F * (float)this.random.nextGaussian();
+                                final float f14 = this.random.nextFloat() + f5 * (float)this.random.nextGaussian() * 0.001F;
                                 d3 = (double)((float)l1 + 0.5F) - entitylivingbase.posX;
-                                double d5 = (double)((float)k1 + 0.5F) - entitylivingbase.posZ;
-                                float f15 = MathHelper.sqrt_double(d3 * d3 + d5 * d5) / (float)b0;
-                                float f16 = 1.0F;
+                                final double d5 = (double)((float)k1 + 0.5F) - entitylivingbase.posZ;
+                                final float f15 = MathHelper.sqrt_double(d3 * d3 + d5 * d5) / (float)b0;
+                                final float f16 = 1.0F;
                                 tessellator.setBrightness((worldclient.getLightBrightnessForSkyBlocks(l1, i3, k1, 0) * 3 + 15728880) / 4);
                                 tessellator.setColorRGBA_F(f16, f16, f16, ((1.0F - f15 * f15) * 0.3F + 0.5F) * f1);
                                 tessellator.setTranslation(-d0 * 1.0D, -d1 * 1.0D, -d2 * 1.0D);
@@ -1585,7 +1585,7 @@ public class EntityRenderer
      */
     public void setupOverlayRendering()
     {
-        ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+        final ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
         GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
@@ -1598,17 +1598,17 @@ public class EntityRenderer
     /**
      * calculates fog and calls glClearColor
      */
-    private void updateFogColor(float par1)
+    private void updateFogColor(final float par1)
     {
-        WorldClient worldclient = this.mc.theWorld;
-        EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
+        final WorldClient worldclient = this.mc.theWorld;
+        final EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
         float f1 = 1.0F / (float)(4 - this.mc.gameSettings.renderDistance);
         f1 = 1.0F - (float)Math.pow((double)f1, 0.25D);
-        Vec3 vec3 = worldclient.getSkyColor(this.mc.renderViewEntity, par1);
-        float f2 = (float)vec3.xCoord;
-        float f3 = (float)vec3.yCoord;
-        float f4 = (float)vec3.zCoord;
-        Vec3 vec31 = worldclient.getFogColor(par1);
+        final Vec3 vec3 = worldclient.getSkyColor(this.mc.renderViewEntity, par1);
+        final float f2 = (float)vec3.xCoord;
+        final float f3 = (float)vec3.yCoord;
+        final float f4 = (float)vec3.zCoord;
+        final Vec3 vec31 = worldclient.getFogColor(par1);
         this.fogColorRed = (float)vec31.xCoord;
         this.fogColorGreen = (float)vec31.yCoord;
         this.fogColorBlue = (float)vec31.zCoord;
@@ -1616,7 +1616,7 @@ public class EntityRenderer
 
         if (this.mc.gameSettings.renderDistance < 2)
         {
-            Vec3 vec32 = MathHelper.sin(worldclient.getCelestialAngleRadians(par1)) > 0.0F ? worldclient.getWorldVec3Pool().getVecFromPool(-1.0D, 0.0D, 0.0D) : worldclient.getWorldVec3Pool().getVecFromPool(1.0D, 0.0D, 0.0D);
+            final Vec3 vec32 = MathHelper.sin(worldclient.getCelestialAngleRadians(par1)) > 0.0F ? worldclient.getWorldVec3Pool().getVecFromPool(-1.0D, 0.0D, 0.0D) : worldclient.getWorldVec3Pool().getVecFromPool(1.0D, 0.0D, 0.0D);
             f5 = (float)entitylivingbase.getLook(par1).dotProduct(vec32);
 
             if (f5 < 0.0F)
@@ -1626,7 +1626,7 @@ public class EntityRenderer
 
             if (f5 > 0.0F)
             {
-                float[] afloat = worldclient.provider.calcSunriseSunsetColors(worldclient.getCelestialAngle(par1), par1);
+                final float[] afloat = worldclient.provider.calcSunriseSunsetColors(worldclient.getCelestialAngle(par1), par1);
 
                 if (afloat != null)
                 {
@@ -1641,7 +1641,7 @@ public class EntityRenderer
         this.fogColorRed += (f2 - this.fogColorRed) * f1;
         this.fogColorGreen += (f3 - this.fogColorGreen) * f1;
         this.fogColorBlue += (f4 - this.fogColorBlue) * f1;
-        float f6 = worldclient.getRainStrength(par1);
+        final float f6 = worldclient.getRainStrength(par1);
         float f7;
 
         if (f6 > 0.0F)
@@ -1663,12 +1663,12 @@ public class EntityRenderer
             this.fogColorBlue *= f7;
         }
 
-        int i = ActiveRenderInfo.getBlockIdAtEntityViewpoint(this.mc.theWorld, entitylivingbase, par1);
+        final int i = ActiveRenderInfo.getBlockIdAtEntityViewpoint(this.mc.theWorld, entitylivingbase, par1);
         float f8;
 
         if (this.cloudFog)
         {
-            Vec3 vec33 = worldclient.getCloudColour(par1);
+            final Vec3 vec33 = worldclient.getCloudColour(par1);
             this.fogColorRed = (float)vec33.xCoord;
             this.fogColorGreen = (float)vec33.yCoord;
             this.fogColorBlue = (float)vec33.zCoord;
@@ -1695,7 +1695,7 @@ public class EntityRenderer
 
         if (entitylivingbase.isPotionActive(Potion.blindness))
         {
-            int j = entitylivingbase.getActivePotionEffect(Potion.blindness).getDuration();
+            final int j = entitylivingbase.getActivePotionEffect(Potion.blindness).getDuration();
 
             if (j < 20)
             {
@@ -1756,7 +1756,7 @@ public class EntityRenderer
         {
             f9 = (this.fogColorRed * 30.0F + this.fogColorGreen * 59.0F + this.fogColorBlue * 11.0F) / 100.0F;
             f10 = (this.fogColorRed * 30.0F + this.fogColorGreen * 70.0F) / 100.0F;
-            float f11 = (this.fogColorRed * 30.0F + this.fogColorBlue * 70.0F) / 100.0F;
+            final float f11 = (this.fogColorRed * 30.0F + this.fogColorBlue * 70.0F) / 100.0F;
             this.fogColorRed = f9;
             this.fogColorGreen = f10;
             this.fogColorBlue = f11;
@@ -1769,9 +1769,9 @@ public class EntityRenderer
      * Sets up the fog to be rendered. If the arg passed in is -1 the fog starts at 0 and goes to 80% of far plane
      * distance and is used for sky rendering.
      */
-    private void setupFog(int par1, float par2)
+    private void setupFog(final int par1, final float par2)
     {
-        EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
+        final EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
         boolean flag = false;
 
         if (entitylivingbase instanceof EntityPlayer)
@@ -1798,13 +1798,13 @@ public class EntityRenderer
             GL11.glFog(GL11.GL_FOG_COLOR, this.setFogColorBuffer(this.fogColorRed, this.fogColorGreen, this.fogColorBlue, 1.0F));
             GL11.glNormal3f(0.0F, -1.0F, 0.0F);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            int j = ActiveRenderInfo.getBlockIdAtEntityViewpoint(this.mc.theWorld, entitylivingbase, par2);
+            final int j = ActiveRenderInfo.getBlockIdAtEntityViewpoint(this.mc.theWorld, entitylivingbase, par2);
             float f1;
 
             if (entitylivingbase.isPotionActive(Potion.blindness))
             {
                 f1 = 5.0F;
-                int k = entitylivingbase.getActivePotionEffect(Potion.blindness).getDuration();
+                final int k = entitylivingbase.getActivePotionEffect(Potion.blindness).getDuration();
 
                 if (k < 20)
                 {
@@ -1915,7 +1915,7 @@ public class EntityRenderer
     /**
      * Update and return fogColorBuffer with the RGBA values passed as arguments
      */
-    private FloatBuffer setFogColorBuffer(float par1, float par2, float par3, float par4)
+    private FloatBuffer setFogColorBuffer(final float par1, final float par2, final float par3, final float par4)
     {
         this.fogColorBuffer.clear();
         this.fogColorBuffer.put(par1).put(par2).put(par3).put(par4);
@@ -1926,7 +1926,7 @@ public class EntityRenderer
     /**
      * Converts performance value (0-2) to FPS (35-200)
      */
-    public static int performanceToFps(int par0)
+    public static int performanceToFps(final int par0)
     {
         short short1 = 200;
 
@@ -1946,7 +1946,7 @@ public class EntityRenderer
     /**
      * Get minecraft reference from the EntityRenderer
      */
-    static Minecraft getRendererMinecraft(EntityRenderer par0EntityRenderer)
+    static Minecraft getRendererMinecraft(final EntityRenderer par0EntityRenderer)
     {
         return par0EntityRenderer.mc;
     }

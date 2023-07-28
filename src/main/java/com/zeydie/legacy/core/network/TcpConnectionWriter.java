@@ -17,7 +17,7 @@ public final class TcpConnectionWriter implements Runnable {
 
         try {
             while (this.tcpConnection.isRunning) {
-                boolean shutdownAfterSending = this.tcpConnection.isServerTerminating;
+                final boolean shutdownAfterSending = this.tcpConnection.isServerTerminating;
                 boolean flush;
 
                 for (flush = false; this.tcpConnection.sendPacket(); flush = true) {
@@ -27,7 +27,7 @@ public final class TcpConnectionWriter implements Runnable {
                     if (flush && this.tcpConnection.socketOutputStream != null) {
                         this.tcpConnection.socketOutputStream.flush();
                     }
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     if (!this.tcpConnection.isTerminating) {
                         this.tcpConnection.onNetworkError(e);
                     }

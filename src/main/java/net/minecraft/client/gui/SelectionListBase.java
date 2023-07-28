@@ -24,7 +24,7 @@ public abstract class SelectionListBase
     private int field_96623_l = -1;
     private long field_96624_m;
 
-    public SelectionListBase(Minecraft par1Minecraft, int par2, int par3, int par4, int par5, int par6)
+    public SelectionListBase(final Minecraft par1Minecraft, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         this.mc = par1Minecraft;
         this.field_96616_f = par3;
@@ -74,14 +74,14 @@ public abstract class SelectionListBase
         return this.func_96613_b() - (this.field_96627_h - this.field_96616_f - 4);
     }
 
-    public void func_96612_a(int par1, int par2, float par3)
+    public void func_96612_a(final int par1, final int par2, final float par3)
     {
         this.field_96621_c = par1;
         this.field_96618_d = par2;
         this.func_96611_c();
-        int k = this.func_96608_a();
-        int l = this.func_96606_e();
-        int i1 = l + 6;
+        final int k = this.func_96608_a();
+        final int l = this.func_96606_e();
+        final int i1 = l + 6;
         int j1;
         int k1;
         int l1;
@@ -96,14 +96,14 @@ public abstract class SelectionListBase
 
                 if (par2 >= this.field_96616_f && par2 <= this.field_96627_h)
                 {
-                    int k2 = this.field_96619_e + 2;
+                    final int k2 = this.field_96619_e + 2;
                     j1 = this.field_96617_g - 2;
                     k1 = par2 - this.field_96616_f + (int)this.field_96626_k - 4;
                     l1 = k1 / this.field_96620_b;
 
                     if (par1 >= k2 && par1 <= j1 && l1 >= 0 && k1 >= 0 && l1 < k)
                     {
-                        boolean flag1 = l1 == this.field_96623_l && Minecraft.getSystemTime() - this.field_96624_m < 250L;
+                        final boolean flag1 = l1 == this.field_96623_l && Minecraft.getSystemTime() - this.field_96624_m < 250L;
                         this.func_96615_a(l1, flag1);
                         this.field_96623_l = l1;
                         this.field_96624_m = Minecraft.getSystemTime();
@@ -189,10 +189,10 @@ public abstract class SelectionListBase
         this.func_96614_f();
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_FOG);
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         this.mc.getTextureManager().bindTexture(Gui.optionsBackground);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        float f1 = 32.0F;
+        final float f1 = 32.0F;
         tessellator.startDrawingQuads();
         tessellator.setColorOpaque_I(2105376);
         tessellator.addVertexWithUV((double)this.field_96619_e, (double)this.field_96627_h, 0.0D, (double)((float)this.field_96619_e / f1), (double)((float)(this.field_96627_h + (int)this.field_96626_k) / f1));
@@ -214,7 +214,7 @@ public abstract class SelectionListBase
                 if (this.func_96609_a(l1))
                 {
                     i3 = this.field_96619_e + 2;
-                    int j3 = this.field_96617_g - 2;
+                    final int j3 = this.field_96617_g - 2;
                     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                     GL11.glDisable(GL11.GL_TEXTURE_2D);
                     tessellator.startDrawingQuads();
@@ -237,7 +237,7 @@ public abstract class SelectionListBase
         }
 
         GL11.glDisable(GL11.GL_DEPTH_TEST);
-        byte b0 = 4;
+        final byte b0 = 4;
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glDisable(GL11.GL_ALPHA_TEST);

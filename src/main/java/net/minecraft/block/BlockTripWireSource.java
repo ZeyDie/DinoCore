@@ -15,7 +15,7 @@ import static net.minecraftforge.common.ForgeDirection.*;
 
 public class BlockTripWireSource extends Block
 {
-    public BlockTripWireSource(int par1)
+    public BlockTripWireSource(final int par1)
     {
         super(par1, Material.circuits);
         this.setCreativeTab(CreativeTabs.tabRedstone);
@@ -26,7 +26,7 @@ public class BlockTripWireSource extends Block
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4)
     {
         return null;
     }
@@ -59,7 +59,7 @@ public class BlockTripWireSource extends Block
     /**
      * How many world ticks before ticking
      */
-    public int tickRate(World par1World)
+    public int tickRate(final World par1World)
     {
         return 10;
     }
@@ -67,9 +67,9 @@ public class BlockTripWireSource extends Block
     /**
      * checks to see if you can place this block can be placed on that side of a block: BlockLever overrides
      */
-    public boolean canPlaceBlockOnSide(World par1World, int par2, int par3, int par4, int par5)
+    public boolean canPlaceBlockOnSide(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
-        ForgeDirection dir = ForgeDirection.getOrientation(par5);
+        final ForgeDirection dir = ForgeDirection.getOrientation(par5);
         return (dir == NORTH && par1World.isBlockSolidOnSide(par2, par3, par4 + 1, NORTH)) ||
                (dir == SOUTH && par1World.isBlockSolidOnSide(par2, par3, par4 - 1, SOUTH)) ||
                (dir == WEST  && par1World.isBlockSolidOnSide(par2 + 1, par3, par4, WEST )) ||
@@ -79,7 +79,7 @@ public class BlockTripWireSource extends Block
     /**
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
      */
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
+    public boolean canPlaceBlockAt(final World par1World, final int par2, final int par3, final int par4)
     {
         return par1World.isBlockSolidOnSide(par2 - 1, par3, par4, EAST ) ||
                par1World.isBlockSolidOnSide(par2 + 1, par3, par4, WEST ) ||
@@ -90,7 +90,7 @@ public class BlockTripWireSource extends Block
     /**
      * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
      */
-    public int onBlockPlaced(World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9)
+    public int onBlockPlaced(final World par1World, final int par2, final int par3, final int par4, final int par5, final float par6, final float par7, final float par8, final int par9)
     {
         byte b0 = 0;
 
@@ -120,7 +120,7 @@ public class BlockTripWireSource extends Block
     /**
      * Called after a block is placed
      */
-    public void onPostBlockPlaced(World par1World, int par2, int par3, int par4, int par5)
+    public void onPostBlockPlaced(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         this.func_72143_a(par1World, par2, par3, par4, this.blockID, par5, false, -1, 0);
     }
@@ -129,14 +129,14 @@ public class BlockTripWireSource extends Block
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         if (par5 != this.blockID)
         {
             if (this.func_72144_l(par1World, par2, par3, par4))
             {
-                int i1 = par1World.getBlockMetadata(par2, par3, par4);
-                int j1 = i1 & 3;
+                final int i1 = par1World.getBlockMetadata(par2, par3, par4);
+                final int j1 = i1 & 3;
                 boolean flag = false;
 
                 if (!par1World.isBlockSolidOnSide(par2 - 1, par3, par4, EAST) && j1 == 3)
@@ -168,18 +168,18 @@ public class BlockTripWireSource extends Block
         }
     }
 
-    public void func_72143_a(World par1World, int par2, int par3, int par4, int par5, int par6, boolean par7, int par8, int par9)
+    public void func_72143_a(final World par1World, final int par2, final int par3, final int par4, final int par5, int par6, final boolean par7, final int par8, final int par9)
     {
-        int l1 = par6 & 3;
-        boolean flag1 = (par6 & 4) == 4;
-        boolean flag2 = (par6 & 8) == 8;
+        final int l1 = par6 & 3;
+        final boolean flag1 = (par6 & 4) == 4;
+        final boolean flag2 = (par6 & 8) == 8;
         boolean flag3 = par5 == Block.tripWireSource.blockID;
         boolean flag4 = false;
-        boolean flag5 = !par1World.isBlockSolidOnSide(par2, par3 - 1, par4, UP);
-        int i2 = Direction.offsetX[l1];
-        int j2 = Direction.offsetZ[l1];
+        final boolean flag5 = !par1World.isBlockSolidOnSide(par2, par3 - 1, par4, UP);
+        final int i2 = Direction.offsetX[l1];
+        final int j2 = Direction.offsetZ[l1];
         int k2 = 0;
-        int[] aint = new int[42];
+        final int[] aint = new int[42];
         int l2;
         int i3;
         int j3;
@@ -212,9 +212,9 @@ public class BlockTripWireSource extends Block
             else
             {
                 l3 = i3 == par8 ? par9 : par1World.getBlockMetadata(l2, par3, k3);
-                boolean flag6 = (l3 & 8) != 8;
-                boolean flag7 = (l3 & 1) == 1;
-                boolean flag8 = (l3 & 2) == 2;
+                final boolean flag6 = (l3 & 8) != 8;
+                final boolean flag7 = (l3 & 1) == 1;
+                final boolean flag8 = (l3 & 2) == 2;
                 flag3 &= flag8 == flag5;
                 flag4 |= flag6 && flag7;
                 aint[i3] = l3;
@@ -230,7 +230,7 @@ public class BlockTripWireSource extends Block
         flag3 &= k2 > 1;
         flag4 &= flag3;
         i3 = (flag3 ? 4 : 0) | (flag4 ? 8 : 0);
-        par6 = l1 | i3;
+        int par61 = l1 | i3;
 
         if (k2 > 0)
         {
@@ -243,8 +243,8 @@ public class BlockTripWireSource extends Block
         }
 
         // CraftBukkit start
-        org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2, par3, par4);
-        BlockRedstoneEvent eventRedstone = new BlockRedstoneEvent(block, 15, 0);
+        final org.bukkit.block.Block block = par1World.getWorld().getBlockAt(par2, par3, par4);
+        final BlockRedstoneEvent eventRedstone = new BlockRedstoneEvent(block, 15, 0);
         par1World.getServer().getPluginManager().callEvent(eventRedstone);
 
         if (eventRedstone.getNewCurrent() > 0)
@@ -256,7 +256,7 @@ public class BlockTripWireSource extends Block
 
         if (par5 > 0)
         {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, par6, 3);
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, par61, 3);
 
             if (par7)
             {
@@ -292,7 +292,7 @@ public class BlockTripWireSource extends Block
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         this.func_72143_a(par1World, par2, par3, par4, this.blockID, par1World.getBlockMetadata(par2, par3, par4), true, -1, 0);
     }
@@ -300,7 +300,7 @@ public class BlockTripWireSource extends Block
     /**
      * only of the conditions are right
      */
-    private void playSoundEffect(World par1World, int par2, int par3, int par4, boolean par5, boolean par6, boolean par7, boolean par8)
+    private void playSoundEffect(final World par1World, final int par2, final int par3, final int par4, final boolean par5, final boolean par6, final boolean par7, final boolean par8)
     {
         if (par6 && !par8)
         {
@@ -320,7 +320,7 @@ public class BlockTripWireSource extends Block
         }
     }
 
-    private void notifyNeighborOfChange(World par1World, int par2, int par3, int par4, int par5)
+    private void notifyNeighborOfChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         par1World.notifyBlocksOfNeighborChange(par2, par3, par4, this.blockID);
 
@@ -342,7 +342,7 @@ public class BlockTripWireSource extends Block
         }
     }
 
-    private boolean func_72144_l(World par1World, int par2, int par3, int par4)
+    private boolean func_72144_l(final World par1World, final int par2, final int par3, final int par4)
     {
         if (!this.canPlaceBlockAt(par1World, par2, par3, par4))
         {
@@ -359,10 +359,10 @@ public class BlockTripWireSource extends Block
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
-        int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4) & 3;
-        float f = 0.1875F;
+        final int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4) & 3;
+        final float f = 0.1875F;
 
         if (l == 3)
         {
@@ -387,10 +387,10 @@ public class BlockTripWireSource extends Block
      * different metadata value, but before the new metadata value is set. Args: World, x, y, z, old block ID, old
      * metadata
      */
-    public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    public void breakBlock(final World par1World, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
-        boolean flag = (par6 & 4) == 4;
-        boolean flag1 = (par6 & 8) == 8;
+        final boolean flag = (par6 & 4) == 4;
+        final boolean flag1 = (par6 & 8) == 8;
 
         if (flag || flag1)
         {
@@ -400,7 +400,7 @@ public class BlockTripWireSource extends Block
         if (flag1)
         {
             par1World.notifyBlocksOfNeighborChange(par2, par3, par4, this.blockID);
-            int j1 = par6 & 3;
+            final int j1 = par6 & 3;
 
             if (j1 == 3)
             {
@@ -428,7 +428,7 @@ public class BlockTripWireSource extends Block
      * returns true, standard redstone propagation rules will apply instead and this will not be called. Args: World, X,
      * Y, Z, side. Note that the side is reversed - eg it is 1 (up) when checking the bottom of the block.
      */
-    public int isProvidingWeakPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public int isProvidingWeakPower(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
         return (par1IBlockAccess.getBlockMetadata(par2, par3, par4) & 8) == 8 ? 15 : 0;
     }
@@ -437,9 +437,9 @@ public class BlockTripWireSource extends Block
      * Returns true if the block is emitting direct/strong redstone power on the specified side. Args: World, X, Y, Z,
      * side. Note that the side is reversed - eg it is 1 (up) when checking the bottom of the block.
      */
-    public int isProvidingStrongPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public int isProvidingStrongPower(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
-        int i1 = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
+        final int i1 = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
 
         if ((i1 & 8) != 8)
         {
@@ -447,7 +447,7 @@ public class BlockTripWireSource extends Block
         }
         else
         {
-            int j1 = i1 & 3;
+            final int j1 = i1 & 3;
             return j1 == 2 && par5 == 2 ? 15 : (j1 == 0 && par5 == 3 ? 15 : (j1 == 1 && par5 == 4 ? 15 : (j1 == 3 && par5 == 5 ? 15 : 0)));
         }
     }

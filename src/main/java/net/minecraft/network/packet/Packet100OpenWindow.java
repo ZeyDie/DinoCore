@@ -20,7 +20,7 @@ public class Packet100OpenWindow extends Packet
 
     public Packet100OpenWindow() {}
 
-    public Packet100OpenWindow(int par1, int par2, String par3Str, int par4, boolean par5)
+    public Packet100OpenWindow(final int par1, final int par2, final String par3Str, final int par4, final boolean par5)
     {
         this.windowId = par1;
         this.inventoryType = par2;
@@ -29,7 +29,7 @@ public class Packet100OpenWindow extends Packet
         this.useProvidedWindowTitle = par5;
     }
 
-    public Packet100OpenWindow(int par1, int par2, String par3Str, int par4, boolean par5, int par6)
+    public Packet100OpenWindow(final int par1, final int par2, final String par3Str, final int par4, final boolean par5, final int par6)
     {
         this(par1, par2, par3Str, par4, par5);
         this.field_111008_f = par6;
@@ -38,7 +38,7 @@ public class Packet100OpenWindow extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleOpenWindow(this);
     }
@@ -46,7 +46,7 @@ public class Packet100OpenWindow extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.windowId = par1DataInput.readByte() & 255;
         this.inventoryType = par1DataInput.readByte() & 255;
@@ -63,7 +63,7 @@ public class Packet100OpenWindow extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeByte(this.windowId & 255);
         par1DataOutput.writeByte(this.inventoryType & 255);

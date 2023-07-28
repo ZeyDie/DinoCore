@@ -32,7 +32,7 @@ public class GuiMerchant extends GuiContainer
     private int currentRecipeIndex;
     private String field_94082_v;
 
-    public GuiMerchant(InventoryPlayer par1InventoryPlayer, IMerchant par2IMerchant, World par3World, String par4Str)
+    public GuiMerchant(final InventoryPlayer par1InventoryPlayer, final IMerchant par2IMerchant, final World par3World, final String par4Str)
     {
         super(new ContainerMerchant(par1InventoryPlayer, par2IMerchant, par3World));
         this.theIMerchant = par2IMerchant;
@@ -45,8 +45,8 @@ public class GuiMerchant extends GuiContainer
     public void initGui()
     {
         super.initGui();
-        int i = (this.width - this.xSize) / 2;
-        int j = (this.height - this.ySize) / 2;
+        final int i = (this.width - this.xSize) / 2;
+        final int j = (this.height - this.ySize) / 2;
         this.buttonList.add(this.nextRecipeButtonIndex = new GuiButtonMerchant(1, i + 120 + 27, j + 24 - 1, true));
         this.buttonList.add(this.previousRecipeButtonIndex = new GuiButtonMerchant(2, i + 36 - 19, j + 24 - 1, false));
         this.nextRecipeButtonIndex.enabled = false;
@@ -56,7 +56,7 @@ public class GuiMerchant extends GuiContainer
     /**
      * Draw the foreground layer for the GuiContainer (everything in front of the items)
      */
-    protected void drawGuiContainerForegroundLayer(int par1, int par2)
+    protected void drawGuiContainerForegroundLayer(final int par1, final int par2)
     {
         this.fontRenderer.drawString(this.field_94082_v, this.xSize / 2 - this.fontRenderer.getStringWidth(this.field_94082_v) / 2, 6, 4210752);
         this.fontRenderer.drawString(I18n.getString("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
@@ -68,7 +68,7 @@ public class GuiMerchant extends GuiContainer
     public void updateScreen()
     {
         super.updateScreen();
-        MerchantRecipeList merchantrecipelist = this.theIMerchant.getRecipes(this.mc.thePlayer);
+        final MerchantRecipeList merchantrecipelist = this.theIMerchant.getRecipes(this.mc.thePlayer);
 
         if (merchantrecipelist != null)
         {
@@ -80,7 +80,7 @@ public class GuiMerchant extends GuiContainer
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         boolean flag = false;
 
@@ -98,15 +98,15 @@ public class GuiMerchant extends GuiContainer
         if (flag)
         {
             ((ContainerMerchant)this.inventorySlots).setCurrentRecipeIndex(this.currentRecipeIndex);
-            ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
-            DataOutputStream dataoutputstream = new DataOutputStream(bytearrayoutputstream);
+            final ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
+            final DataOutputStream dataoutputstream = new DataOutputStream(bytearrayoutputstream);
 
             try
             {
                 dataoutputstream.writeInt(this.currentRecipeIndex);
                 this.mc.getNetHandler().addToSendQueue(new Packet250CustomPayload("MC|TrSel", bytearrayoutputstream.toByteArray()));
             }
-            catch (Exception exception)
+            catch (final Exception exception)
             {
                 exception.printStackTrace();
             }
@@ -116,19 +116,19 @@ public class GuiMerchant extends GuiContainer
     /**
      * Draw the background layer for the GuiContainer (everything behind the items)
      */
-    protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
+    protected void drawGuiContainerBackgroundLayer(final float par1, final int par2, final int par3)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(merchantGuiTextures);
-        int k = (this.width - this.xSize) / 2;
-        int l = (this.height - this.ySize) / 2;
+        final int k = (this.width - this.xSize) / 2;
+        final int l = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
-        MerchantRecipeList merchantrecipelist = this.theIMerchant.getRecipes(this.mc.thePlayer);
+        final MerchantRecipeList merchantrecipelist = this.theIMerchant.getRecipes(this.mc.thePlayer);
 
         if (merchantrecipelist != null && !merchantrecipelist.isEmpty())
         {
-            int i1 = this.currentRecipeIndex;
-            MerchantRecipe merchantrecipe = (MerchantRecipe)merchantrecipelist.get(i1);
+            final int i1 = this.currentRecipeIndex;
+            final MerchantRecipe merchantrecipe = (MerchantRecipe)merchantrecipelist.get(i1);
 
             if (merchantrecipe.func_82784_g())
             {
@@ -144,21 +144,21 @@ public class GuiMerchant extends GuiContainer
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         super.drawScreen(par1, par2, par3);
-        MerchantRecipeList merchantrecipelist = this.theIMerchant.getRecipes(this.mc.thePlayer);
+        final MerchantRecipeList merchantrecipelist = this.theIMerchant.getRecipes(this.mc.thePlayer);
 
         if (merchantrecipelist != null && !merchantrecipelist.isEmpty())
         {
-            int k = (this.width - this.xSize) / 2;
-            int l = (this.height - this.ySize) / 2;
-            int i1 = this.currentRecipeIndex;
-            MerchantRecipe merchantrecipe = (MerchantRecipe)merchantrecipelist.get(i1);
+            final int k = (this.width - this.xSize) / 2;
+            final int l = (this.height - this.ySize) / 2;
+            final int i1 = this.currentRecipeIndex;
+            final MerchantRecipe merchantrecipe = (MerchantRecipe)merchantrecipelist.get(i1);
             GL11.glPushMatrix();
-            ItemStack itemstack = merchantrecipe.getItemToBuy();
-            ItemStack itemstack1 = merchantrecipe.getSecondItemToBuy();
-            ItemStack itemstack2 = merchantrecipe.getItemToSell();
+            final ItemStack itemstack = merchantrecipe.getItemToBuy();
+            final ItemStack itemstack1 = merchantrecipe.getSecondItemToBuy();
+            final ItemStack itemstack2 = merchantrecipe.getItemToSell();
             RenderHelper.enableGUIStandardItemLighting();
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glEnable(GL12.GL_RESCALE_NORMAL);

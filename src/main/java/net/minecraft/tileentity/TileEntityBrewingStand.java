@@ -24,8 +24,8 @@ import java.util.List;
 
 public class TileEntityBrewingStand extends TileEntity implements ISidedInventory
 {
-    private static final int[] field_102017_a = new int[] {3};
-    private static final int[] field_102016_b = new int[] {0, 1, 2};
+    private static final int[] field_102017_a = {3};
+    private static final int[] field_102016_b = {0, 1, 2};
 
     /** The itemstacks currently placed in the slots of the brewing stand */
     public ItemStack[] brewingItemStacks = new ItemStack[4]; // CraftBukkit - private -> public
@@ -45,12 +45,12 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
     public List<HumanEntity> transaction = new java.util.ArrayList<HumanEntity>();
     private int maxStack = 64;
 
-    public void onOpen(CraftHumanEntity who)
+    public void onOpen(final CraftHumanEntity who)
     {
         transaction.add(who);
     }
 
-    public void onClose(CraftHumanEntity who)
+    public void onClose(final CraftHumanEntity who)
     {
         transaction.remove(who);
     }
@@ -65,7 +65,7 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
         return this.brewingItemStacks;
     }
 
-    public void setMaxStackSize(int size)
+    public void setMaxStackSize(final int size)
     {
         maxStack = size;
     }
@@ -85,10 +85,10 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
      */
     public boolean isInvNameLocalized()
     {
-        return this.field_94132_e != null && this.field_94132_e.length() > 0;
+        return this.field_94132_e != null && !this.field_94132_e.isEmpty();
     }
 
-    public void func_94131_a(String par1Str)
+    public void func_94131_a(final String par1Str)
     {
         this.field_94132_e = par1Str;
     }
@@ -108,7 +108,7 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
     public void updateEntity()
     {
         // CraftBukkit start - Use wall time instead of ticks for brewing
-        int elapsedTicks = MinecraftServer.currentTick - this.lastTick;
+        final int elapsedTicks = MinecraftServer.currentTick - this.lastTick;
         this.lastTick = MinecraftServer.currentTick;
 
         if (this.brewTime > 0)
@@ -138,7 +138,7 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
             this.ingredientID = this.brewingItemStacks[3].itemID;
         }
 
-        int i = this.getFilledSlots();
+        final int i = this.getFilledSlots();
 
         if (i != this.filledSlots)
         {
@@ -158,7 +158,7 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
     {
         if (this.brewingItemStacks[3] != null && this.brewingItemStacks[3].stackSize > 0)
         {
-            ItemStack itemstack = this.brewingItemStacks[3];
+            final ItemStack itemstack = this.brewingItemStacks[3];
 
             if (!Item.itemsList[itemstack.itemID].isPotionIngredient())
             {
@@ -172,8 +172,8 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
                 {
                     if (this.brewingItemStacks[i] != null && this.brewingItemStacks[i].getItem() instanceof ItemPotion)
                     {
-                        int j = this.brewingItemStacks[i].getItemDamage();
-                        int k = this.getPotionResult(j, itemstack);
+                        final int j = this.brewingItemStacks[i].getItemDamage();
+                        final int k = this.getPotionResult(j, itemstack);
 
                         if (!ItemPotion.isSplash(j) && ItemPotion.isSplash(k))
                         {
@@ -181,8 +181,8 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
                             break;
                         }
 
-                        List list = Item.potion.getEffects(j);
-                        List list1 = Item.potion.getEffects(k);
+                        final List list = Item.potion.getEffects(j);
+                        final List list1 = Item.potion.getEffects(k);
 
                         if ((j <= 0 || list != list1) && (list == null || !list.equals(list1) && list1 != null) && j != k)
                         {
@@ -205,12 +205,12 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
     {
         if (this.canBrew())
         {
-            ItemStack itemstack = this.brewingItemStacks[3];
+            final ItemStack itemstack = this.brewingItemStacks[3];
 
             // CraftBukkit start
             if (getOwner() != null)
             {
-                BrewEvent event = new BrewEvent(worldObj.getWorld().getBlockAt(xCoord, yCoord, zCoord), (org.bukkit.inventory.BrewerInventory) this.getOwner().getInventory());
+                final BrewEvent event = new BrewEvent(worldObj.getWorld().getBlockAt(xCoord, yCoord, zCoord), (org.bukkit.inventory.BrewerInventory) this.getOwner().getInventory());
                 org.bukkit.Bukkit.getPluginManager().callEvent(event);
 
                 if (event.isCancelled())
@@ -225,10 +225,10 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
             {
                 if (this.brewingItemStacks[i] != null && this.brewingItemStacks[i].getItem() instanceof ItemPotion)
                 {
-                    int j = this.brewingItemStacks[i].getItemDamage();
-                    int k = this.getPotionResult(j, itemstack);
-                    List list = Item.potion.getEffects(j);
-                    List list1 = Item.potion.getEffects(k);
+                    final int j = this.brewingItemStacks[i].getItemDamage();
+                    final int k = this.getPotionResult(j, itemstack);
+                    final List list = Item.potion.getEffects(j);
+                    final List list1 = Item.potion.getEffects(k);
 
                     if ((j <= 0 || list != list1) && (list == null || !list.equals(list1) && list1 != null))
                     {
@@ -265,7 +265,7 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
     /**
      * The result of brewing a potion of the specified damage value with an ingredient itemstack.
      */
-    private int getPotionResult(int par1, ItemStack par2ItemStack)
+    private int getPotionResult(final int par1, final ItemStack par2ItemStack)
     {
         return par2ItemStack == null ? par1 : (Item.itemsList[par2ItemStack.itemID].isPotionIngredient() ? PotionHelper.applyIngredient(par1, Item.itemsList[par2ItemStack.itemID].getPotionEffect()) : par1);
     }
@@ -273,16 +273,16 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
     /**
      * Reads a tile entity from NBT.
      */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
-        NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
+        final NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
         this.brewingItemStacks = new ItemStack[this.getSizeInventory()];
 
         for (int i = 0; i < nbttaglist.tagCount(); ++i)
         {
-            NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
-            byte b0 = nbttagcompound1.getByte("Slot");
+            final NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
+            final byte b0 = nbttagcompound1.getByte("Slot");
 
             if (b0 >= 0 && b0 < this.brewingItemStacks.length)
             {
@@ -301,17 +301,17 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
     /**
      * Writes a tile entity to NBT.
      */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setShort("BrewTime", (short)this.brewTime);
-        NBTTagList nbttaglist = new NBTTagList();
+        final NBTTagList nbttaglist = new NBTTagList();
 
         for (int i = 0; i < this.brewingItemStacks.length; ++i)
         {
             if (this.brewingItemStacks[i] != null)
             {
-                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+                final NBTTagCompound nbttagcompound1 = new NBTTagCompound();
                 nbttagcompound1.setByte("Slot", (byte)i);
                 this.brewingItemStacks[i].writeToNBT(nbttagcompound1);
                 nbttaglist.appendTag(nbttagcompound1);
@@ -329,7 +329,7 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
     /**
      * Returns the stack in slot i
      */
-    public ItemStack getStackInSlot(int par1)
+    public ItemStack getStackInSlot(final int par1)
     {
         return par1 >= 0 && par1 < this.brewingItemStacks.length ? this.brewingItemStacks[par1] : null;
     }
@@ -338,11 +338,11 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
      * new stack.
      */
-    public ItemStack decrStackSize(int par1, int par2)
+    public ItemStack decrStackSize(final int par1, final int par2)
     {
         if (par1 >= 0 && par1 < this.brewingItemStacks.length)
         {
-            ItemStack itemstack = this.brewingItemStacks[par1];
+            final ItemStack itemstack = this.brewingItemStacks[par1];
             this.brewingItemStacks[par1] = null;
             return itemstack;
         }
@@ -356,11 +356,11 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      */
-    public ItemStack getStackInSlotOnClosing(int par1)
+    public ItemStack getStackInSlotOnClosing(final int par1)
     {
         if (par1 >= 0 && par1 < this.brewingItemStacks.length)
         {
-            ItemStack itemstack = this.brewingItemStacks[par1];
+            final ItemStack itemstack = this.brewingItemStacks[par1];
             this.brewingItemStacks[par1] = null;
             return itemstack;
         }
@@ -373,7 +373,7 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
-    public void setInventorySlotContents(int par1, ItemStack par2ItemStack)
+    public void setInventorySlotContents(final int par1, final ItemStack par2ItemStack)
     {
         if (par1 >= 0 && par1 < this.brewingItemStacks.length)
         {
@@ -393,7 +393,7 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
+    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer)
     {
         return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
     }
@@ -405,13 +405,13 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack)
+    public boolean isItemValidForSlot(final int par1, final ItemStack par2ItemStack)
     {
         return par1 == 3 ? Item.itemsList[par2ItemStack.itemID].isPotionIngredient() : par2ItemStack.getItem() instanceof ItemPotion || par2ItemStack.itemID == Item.glassBottle.itemID;
     }
 
     @SideOnly(Side.CLIENT)
-    public void setBrewTime(int par1)
+    public void setBrewTime(final int par1)
     {
         this.brewTime = par1;
     }
@@ -438,7 +438,7 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
      * Returns an array containing the indices of the slots that can be accessed by automation on the given side of this
      * block.
      */
-    public int[] getAccessibleSlotsFromSide(int par1)
+    public int[] getAccessibleSlotsFromSide(final int par1)
     {
         return par1 == 1 ? field_102017_a : field_102016_b;
     }
@@ -447,7 +447,7 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
      * Returns true if automation can insert the given item in the given slot from the given side. Args: Slot, item,
      * side
      */
-    public boolean canInsertItem(int par1, ItemStack par2ItemStack, int par3)
+    public boolean canInsertItem(final int par1, final ItemStack par2ItemStack, final int par3)
     {
         return this.isItemValidForSlot(par1, par2ItemStack);
     }
@@ -456,7 +456,7 @@ public class TileEntityBrewingStand extends TileEntity implements ISidedInventor
      * Returns true if automation can extract the given item in the given slot from the given side. Args: Slot, item,
      * side
      */
-    public boolean canExtractItem(int par1, ItemStack par2ItemStack, int par3)
+    public boolean canExtractItem(final int par1, final ItemStack par2ItemStack, final int par3)
     {
         return true;
     }

@@ -13,9 +13,9 @@ public class WorldTemplate extends ValueObject
     public String field_110733_c;
     public String field_110731_d;
 
-    public static WorldTemplate func_110730_a(JsonNode par0JsonNode)
+    public static WorldTemplate func_110730_a(final JsonNode par0JsonNode)
     {
-        WorldTemplate worldtemplate = new WorldTemplate();
+        final WorldTemplate worldtemplate = new WorldTemplate();
 
         try
         {
@@ -24,7 +24,7 @@ public class WorldTemplate extends ValueObject
             worldtemplate.field_110733_c = par0JsonNode.getStringValue(new Object[] {"version"});
             worldtemplate.field_110731_d = par0JsonNode.getStringValue(new Object[] {"author"});
         }
-        catch (IllegalArgumentException illegalargumentexception)
+        catch (final IllegalArgumentException illegalargumentexception)
         {
             ;
         }

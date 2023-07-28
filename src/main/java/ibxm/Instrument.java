@@ -24,7 +24,7 @@ public class Instrument {
 		return volume_envelope;
 	}
 	
-	public void set_volume_envelope( Envelope envelope ) {
+	public void set_volume_envelope(final Envelope envelope ) {
 		if( envelope != null ) {
 			volume_envelope = envelope;
 		}
@@ -34,13 +34,13 @@ public class Instrument {
 		return panning_envelope;
 	}
 	
-	public void set_panning_envelope( Envelope envelope ) {
+	public void set_panning_envelope(final Envelope envelope ) {
 		if( envelope != null ) {
 			panning_envelope = envelope;
 		}
 	}
 	
-	public Sample get_sample_from_key( int key ) {
+	public Sample get_sample_from_key(final int key ) {
 		int sample_idx;
 		sample_idx = 0;
 		if( key > 0 && key <= key_to_sample.length ) {
@@ -49,7 +49,7 @@ public class Instrument {
 		return get_sample( sample_idx );
 	}
 	
-	public void set_key_to_sample( int key, int sample ) {
+	public void set_key_to_sample(final int key, final int sample ) {
 		if( key > 0 && key <= key_to_sample.length ) {
 			key_to_sample[ key - 1 ] = sample;
 		}
@@ -60,14 +60,15 @@ public class Instrument {
 	}
 	
 	public void set_num_samples( int num_samples ) {
-		if( num_samples < 1 ) {
-			num_samples = 1;
+        int num_samples1 = num_samples;
+        if( num_samples1 < 1 ) {
+			num_samples1 = 1;
 		}
-		samples = new Sample[ num_samples ];
+		samples = new Sample[num_samples1];
 		set_sample( 0, null );
 	}
 	
-	public Sample get_sample( int sample_index ) {
+	public Sample get_sample(final int sample_index ) {
 		Sample sample;
 		sample = null;
 		if( sample_index >= 0 && sample_index < samples.length ) {
@@ -79,7 +80,7 @@ public class Instrument {
 		return sample;
 	}
 	
-	public void set_sample( int sample_index, Sample sample ) {
+	public void set_sample(final int sample_index, final Sample sample ) {
 		if( sample_index >= 0 && sample_index < samples.length ) {
 			samples[ sample_index ] = sample;
 		}

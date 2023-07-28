@@ -23,7 +23,7 @@ public class CraftChunkSnapshot implements ChunkSnapshot {
     private final double[] biomeTemp;
     private final double[] biomeRain;
 
-    CraftChunkSnapshot(int x, int z, String wname, long wtime, short[][] sectionBlockIDs, byte[][] sectionBlockData, byte[][] sectionSkyLights, byte[][] sectionEmitLights, boolean[] sectionEmpty, int[] hmap, net.minecraft.world.biome.BiomeGenBase[] biome, double[] biomeTemp, double[] biomeRain) {
+    CraftChunkSnapshot(final int x, final int z, final String wname, final long wtime, final short[][] sectionBlockIDs, final byte[][] sectionBlockData, final byte[][] sectionSkyLights, final byte[][] sectionEmitLights, final boolean[] sectionEmpty, final int[] hmap, final net.minecraft.world.biome.BiomeGenBase[] biome, final double[] biomeTemp, final double[] biomeRain) {
         this.x = x;
         this.z = z;
         this.worldname = wname;
@@ -51,38 +51,38 @@ public class CraftChunkSnapshot implements ChunkSnapshot {
         return worldname;
     }
 
-    public final int getBlockTypeId(int x, int y, int z) {
+    public final int getBlockTypeId(final int x, final int y, final int z) {
         return blockids[y >> 4][((y & 0xF) << 8) | (z << 4) | x];
     }
 
-    public final int getBlockData(int x, int y, int z) {
-        int off = ((y & 0xF) << 7) | (z << 3) | (x >> 1);
+    public final int getBlockData(final int x, final int y, final int z) {
+        final int off = ((y & 0xF) << 7) | (z << 3) | (x >> 1);
         return (blockdata[y >> 4][off] >> ((x & 1) << 2)) & 0xF;
     }
 
-    public final int getBlockSkyLight(int x, int y, int z) {
-        int off = ((y & 0xF) << 7) | (z << 3) | (x >> 1);
+    public final int getBlockSkyLight(final int x, final int y, final int z) {
+        final int off = ((y & 0xF) << 7) | (z << 3) | (x >> 1);
         return (skylight[y >> 4][off] >> ((x & 1) << 2)) & 0xF;
     }
 
-    public final int getBlockEmittedLight(int x, int y, int z) {
-        int off = ((y & 0xF) << 7) | (z << 3) | (x >> 1);
+    public final int getBlockEmittedLight(final int x, final int y, final int z) {
+        final int off = ((y & 0xF) << 7) | (z << 3) | (x >> 1);
         return (emitlight[y >> 4][off] >> ((x & 1) << 2)) & 0xF;
     }
 
-    public final int getHighestBlockYAt(int x, int z) {
+    public final int getHighestBlockYAt(final int x, final int z) {
         return hmap[z << 4 | x];
     }
 
-    public final Biome getBiome(int x, int z) {
+    public final Biome getBiome(final int x, final int z) {
         return CraftBlock.biomeBaseToBiome(biome[z << 4 | x]);
     }
 
-    public final double getRawBiomeTemperature(int x, int z) {
+    public final double getRawBiomeTemperature(final int x, final int z) {
         return biomeTemp[z << 4 | x];
     }
 
-    public final double getRawBiomeRainfall(int x, int z) {
+    public final double getRawBiomeRainfall(final int x, final int z) {
         return biomeRain[z << 4 | x];
     }
 
@@ -90,7 +90,7 @@ public class CraftChunkSnapshot implements ChunkSnapshot {
         return captureFulltime;
     }
 
-    public final boolean isSectionEmpty(int sy) {
+    public final boolean isSectionEmpty(final int sy) {
         return empty[sy];
     }
 }

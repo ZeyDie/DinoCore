@@ -21,7 +21,7 @@ public class DedicatedServerListenThread extends NetworkListenThread {
     private final NettyServerListenThread nettyServerListenThread;
     //TODO ZeyCodeEnd
 
-    public DedicatedServerListenThread(MinecraftServer par1MinecraftServer, InetAddress par2InetAddress, int par3) throws IOException {
+    public DedicatedServerListenThread(final MinecraftServer par1MinecraftServer, final InetAddress par2InetAddress, final int par3) throws IOException {
         super(par1MinecraftServer);
 
         this.theServerListenThread = new ServerListenThread(this, par2InetAddress, par3);
@@ -76,7 +76,7 @@ public class DedicatedServerListenThread extends NetworkListenThread {
         return (DedicatedServer) super.getServer();
     }
 
-    public void func_71761_a(InetAddress par1InetAddress) {
+    public void func_71761_a(final InetAddress par1InetAddress) {
         //TODO ZeyCodeStart
         if (NettySettings.getInstance().getSettings().isEnable())
             this.nettyServerListenThread.func_71769_a(par1InetAddress);

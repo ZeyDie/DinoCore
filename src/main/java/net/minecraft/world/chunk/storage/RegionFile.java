@@ -21,7 +21,7 @@ public class RegionFile
     private int sizeDelta;
     private long lastModified;
 
-    public RegionFile(File par1File)
+    public RegionFile(final File par1File)
     {
         this.fileName = par1File;
         this.sizeDelta = 0;
@@ -93,7 +93,7 @@ public class RegionFile
                 this.chunkTimestamps[j] = k;
             }
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             ioexception.printStackTrace();
         }
@@ -101,7 +101,7 @@ public class RegionFile
 
     // CraftBukkit start - This is a copy (sort of) of the method below it, make sure they stay in sync
 
-    public synchronized boolean chunkExists(int i, int j)
+    public synchronized boolean chunkExists(final int i, final int j)
     {
         if (this.outOfBounds(i, j))
         {
@@ -111,7 +111,7 @@ public class RegionFile
         {
             try
             {
-                int k = this.getOffset(i, j);
+                final int k = this.getOffset(i, j);
 
                 if (k == 0)
                 {
@@ -119,8 +119,8 @@ public class RegionFile
                 }
                 else
                 {
-                    int l = k >> 8;
-                    int i1 = k & 255;
+                    final int l = k >> 8;
+                    final int i1 = k & 255;
 
                     if (l + i1 > this.sectorFree.size())
                     {
@@ -128,14 +128,14 @@ public class RegionFile
                     }
 
                     this.dataFile.seek((long)(l * 4096));
-                    int j1 = this.dataFile.readInt();
+                    final int j1 = this.dataFile.readInt();
 
                     if (j1 > 4096 * i1 || j1 <= 0)
                     {
                         return false;
                     }
 
-                    byte b0 = this.dataFile.readByte();
+                    final byte b0 = this.dataFile.readByte();
 
                     if (b0 == 1 || b0 == 2)
                     {
@@ -143,7 +143,7 @@ public class RegionFile
                     }
                 }
             }
-            catch (IOException ioexception)
+            catch (final IOException ioexception)
             {
                 return false;
             }
@@ -157,7 +157,7 @@ public class RegionFile
     /**
      * args: x, y - get uncompressed chunk stream from the region file
      */
-    public synchronized DataInputStream getChunkDataInputStream(int par1, int par2)
+    public synchronized DataInputStream getChunkDataInputStream(final int par1, final int par2)
     {
         if (this.outOfBounds(par1, par2))
         {
@@ -167,7 +167,7 @@ public class RegionFile
         {
             try
             {
-                int k = this.getOffset(par1, par2);
+                final int k = this.getOffset(par1, par2);
 
                 if (k == 0)
                 {
@@ -175,8 +175,8 @@ public class RegionFile
                 }
                 else
                 {
-                    int l = k >> 8;
-                    int i1 = k & 255;
+                    final int l = k >> 8;
+                    final int i1 = k & 255;
 
                     if (l + i1 > this.sectorFree.size())
                     {
@@ -185,7 +185,7 @@ public class RegionFile
                     else
                     {
                         this.dataFile.seek((long)(l * 4096));
-                        int j1 = this.dataFile.readInt();
+                        final int j1 = this.dataFile.readInt();
 
                         if (j1 > 4096 * i1)
                         {
@@ -197,8 +197,8 @@ public class RegionFile
                         }
                         else
                         {
-                            byte b0 = this.dataFile.readByte();
-                            byte[] abyte;
+                            final byte b0 = this.dataFile.readByte();
+                            final byte[] abyte;
 
                             if (b0 == 1)
                             {
@@ -220,7 +220,7 @@ public class RegionFile
                     }
                 }
             }
-            catch (IOException ioexception)
+            catch (final IOException ioexception)
             {
                 return null;
             }
@@ -230,7 +230,7 @@ public class RegionFile
     /**
      * args: x, z - get an output stream used to write chunk data, data is on disk when the returned stream is closed
      */
-    public DataOutputStream getChunkDataOutputStream(int par1, int par2)
+    public DataOutputStream getChunkDataOutputStream(final int par1, final int par2)
     {
         return this.outOfBounds(par1, par2) ? null : new DataOutputStream(new DeflaterOutputStream(new RegionFileChunkBuffer(this, par1, par2)));
     }
@@ -238,14 +238,14 @@ public class RegionFile
     /**
      * args: x, z, data, length - write chunk data at (x, z) to disk
      */
-    protected synchronized void write(int par1, int par2, byte[] par3ArrayOfByte, int par4)
+    protected synchronized void write(final int par1, final int par2, final byte[] par3ArrayOfByte, final int par4)
     {
         try
         {
-            int l = this.getOffset(par1, par2);
+            final int l = this.getOffset(par1, par2);
             int i1 = l >> 8;
-            int j1 = l & 255;
-            int k1 = (par4 + 5) / 4096 + 1;
+            final int j1 = l & 255;
+            final int k1 = (par4 + 5) / 4096 + 1;
 
             if (k1 >= 256)
             {
@@ -328,7 +328,7 @@ public class RegionFile
 
             this.setChunkTimestamp(par1, par2, (int)(MinecraftServer.getSystemTimeMillis() / 1000L));
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             ioexception.printStackTrace();
         }
@@ -337,7 +337,7 @@ public class RegionFile
     /**
      * args: sectorNumber, data, length - write the chunk data to this RegionFile
      */
-    private void write(int par1, byte[] par2ArrayOfByte, int par3) throws IOException
+    private void write(final int par1, final byte[] par2ArrayOfByte, final int par3) throws IOException
     {
         this.dataFile.seek((long)(par1 * 4096));
         this.dataFile.writeInt(par3 + 1);
@@ -348,7 +348,7 @@ public class RegionFile
     /**
      * args: x, z - check region bounds
      */
-    private boolean outOfBounds(int par1, int par2)
+    private boolean outOfBounds(final int par1, final int par2)
     {
         return par1 < 0 || par1 >= 32 || par2 < 0 || par2 >= 32;
     }
@@ -356,7 +356,7 @@ public class RegionFile
     /**
      * args: x, y - get chunk's offset in region file
      */
-    private int getOffset(int par1, int par2)
+    private int getOffset(final int par1, final int par2)
     {
         return this.offsets[par1 + par2 * 32];
     }
@@ -364,7 +364,7 @@ public class RegionFile
     /**
      * args: x, z, - true if chunk has been saved / converted
      */
-    public boolean isChunkSaved(int par1, int par2)
+    public boolean isChunkSaved(final int par1, final int par2)
     {
         return this.getOffset(par1, par2) != 0;
     }
@@ -372,7 +372,7 @@ public class RegionFile
     /**
      * args: x, z, offset - sets the chunk's offset in the region file
      */
-    private void setOffset(int par1, int par2, int par3) throws IOException
+    private void setOffset(final int par1, final int par2, final int par3) throws IOException
     {
         this.offsets[par1 + par2 * 32] = par3;
         this.dataFile.seek((long)((par1 + par2 * 32) * 4));
@@ -382,7 +382,7 @@ public class RegionFile
     /**
      * args: x, z, timestamp - sets the chunk's write timestamp
      */
-    private void setChunkTimestamp(int par1, int par2, int par3) throws IOException
+    private void setChunkTimestamp(final int par1, final int par2, final int par3) throws IOException
     {
         this.chunkTimestamps[par1 + par2 * 32] = par3;
         this.dataFile.seek((long)(4096 + (par1 + par2 * 32) * 4));

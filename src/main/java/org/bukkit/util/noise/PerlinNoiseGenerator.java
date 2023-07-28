@@ -10,13 +10,13 @@ import java.util.Random;
  * @see SimplexNoiseGenerator "Improved" and faster version with slighly different results
  */
 public class PerlinNoiseGenerator extends NoiseGenerator {
-    protected static final int grad3[][] = {{1, 1, 0}, {-1, 1, 0}, {1, -1, 0}, {-1, -1, 0},
+    protected static final int[][] grad3 = {{1, 1, 0}, {-1, 1, 0}, {1, -1, 0}, {-1, -1, 0},
         {1, 0, 1}, {-1, 0, 1}, {1, 0, -1}, {-1, 0, -1},
         {0, 1, 1}, {0, -1, 1}, {0, 1, -1}, {0, -1, -1}};
     private static final PerlinNoiseGenerator instance = new PerlinNoiseGenerator();
 
     protected PerlinNoiseGenerator() {
-        int p[] = {151, 160, 137, 91, 90, 15, 131, 13, 201,
+        final int[] p = {151, 160, 137, 91, 90, 15, 131, 13, 201,
             95, 96, 53, 194, 233, 7, 225, 140, 36, 103, 30, 69, 142, 8, 99, 37,
             240, 21, 10, 23, 190, 6, 148, 247, 120, 234, 75, 0, 26, 197, 62,
             94, 252, 219, 203, 117, 35, 11, 32, 57, 177, 33, 88, 237, 149, 56,
@@ -45,7 +45,7 @@ public class PerlinNoiseGenerator extends NoiseGenerator {
      *
      * @param world World to construct this generator for
      */
-    public PerlinNoiseGenerator(World world) {
+    public PerlinNoiseGenerator(final World world) {
         this(new Random(world.getSeed()));
     }
 
@@ -54,7 +54,7 @@ public class PerlinNoiseGenerator extends NoiseGenerator {
      *
      * @param seed Seed to construct this generator for
      */
-    public PerlinNoiseGenerator(long seed) {
+    public PerlinNoiseGenerator(final long seed) {
         this(new Random(seed));
     }
 
@@ -63,7 +63,7 @@ public class PerlinNoiseGenerator extends NoiseGenerator {
      *
      * @param rand Random to construct with
      */
-    public PerlinNoiseGenerator(Random rand) {
+    public PerlinNoiseGenerator(final Random rand) {
         offsetX = rand.nextDouble() * 256;
         offsetY = rand.nextDouble() * 256;
         offsetZ = rand.nextDouble() * 256;
@@ -73,8 +73,8 @@ public class PerlinNoiseGenerator extends NoiseGenerator {
         }
 
         for (int i = 0; i < 256; i++) {
-            int pos = rand.nextInt(256 - i) + i;
-            int old = perm[i];
+            final int pos = rand.nextInt(256 - i) + i;
+            final int old = perm[i];
 
             perm[i] = perm[pos];
             perm[pos] = old;
@@ -88,7 +88,7 @@ public class PerlinNoiseGenerator extends NoiseGenerator {
      * @param x X coordinate
      * @return Noise at given location, from range -1 to 1
      */
-    public static double getNoise(double x) {
+    public static double getNoise(final double x) {
         return instance.noise(x);
     }
 
@@ -99,7 +99,7 @@ public class PerlinNoiseGenerator extends NoiseGenerator {
      * @param y Y coordinate
      * @return Noise at given location, from range -1 to 1
      */
-    public static double getNoise(double x, double y) {
+    public static double getNoise(final double x, final double y) {
         return instance.noise(x, y);
     }
 
@@ -111,7 +111,7 @@ public class PerlinNoiseGenerator extends NoiseGenerator {
      * @param z Z coordinate
      * @return Noise at given location, from range -1 to 1
      */
-    public static double getNoise(double x, double y, double z) {
+    public static double getNoise(final double x, final double y, final double z) {
         return instance.noise(x, y, z);
     }
 
@@ -126,45 +126,48 @@ public class PerlinNoiseGenerator extends NoiseGenerator {
 
     @Override
     public double noise(double x, double y, double z) {
-        x += offsetX;
-        y += offsetY;
-        z += offsetZ;
+        double x1 = x;
+        double y1 = y;
+        double z1 = z;
+        x1 += offsetX;
+        y1 += offsetY;
+        z1 += offsetZ;
 
-        int floorX = floor(x);
-        int floorY = floor(y);
-        int floorZ = floor(z);
+        final int floorX = floor(x1);
+        final int floorY = floor(y1);
+        final int floorZ = floor(z1);
 
         // Find unit cube containing the point
-        int X = floorX & 255;
-        int Y = floorY & 255;
-        int Z = floorZ & 255;
+        final int X = floorX & 255;
+        final int Y = floorY & 255;
+        final int Z = floorZ & 255;
 
         // Get relative xyz coordinates of the point within the cube
-        x -= floorX;
-        y -= floorY;
-        z -= floorZ;
+        x1 -= floorX;
+        y1 -= floorY;
+        z1 -= floorZ;
 
         // Compute fade curves for xyz
-        double fX = fade(x);
-        double fY = fade(y);
-        double fZ = fade(z);
+        final double fX = fade(x1);
+        final double fY = fade(y1);
+        final double fZ = fade(z1);
 
         // Hash coordinates of the cube corners
-        int A = perm[X] + Y;
-        int AA = perm[A] + Z;
-        int AB = perm[A + 1] + Z;
-        int B = perm[X + 1] + Y;
-        int BA = perm[B] + Z;
-        int BB = perm[B + 1] + Z;
+        final int A = perm[X] + Y;
+        final int AA = perm[A] + Z;
+        final int AB = perm[A + 1] + Z;
+        final int B = perm[X + 1] + Y;
+        final int BA = perm[B] + Z;
+        final int BB = perm[B + 1] + Z;
 
-        return lerp(fZ, lerp(fY, lerp(fX, grad(perm[AA], x, y, z),
-                        grad(perm[BA], x - 1, y, z)),
-                    lerp(fX, grad(perm[AB], x, y - 1, z),
-                        grad(perm[BB], x - 1, y - 1, z))),
-                lerp(fY, lerp(fX, grad(perm[AA + 1], x, y, z - 1),
-                        grad(perm[BA + 1], x - 1, y, z - 1)),
-                    lerp(fX, grad(perm[AB + 1], x, y - 1, z - 1),
-                        grad(perm[BB + 1], x - 1, y - 1, z - 1))));
+        return lerp(fZ, lerp(fY, lerp(fX, grad(perm[AA], x1, y1, z1),
+                        grad(perm[BA], x1 - 1, y1, z1)),
+                    lerp(fX, grad(perm[AB], x1, y1 - 1, z1),
+                        grad(perm[BB], x1 - 1, y1 - 1, z1))),
+                lerp(fY, lerp(fX, grad(perm[AA + 1], x1, y1, z1 - 1),
+                        grad(perm[BA + 1], x1 - 1, y1, z1 - 1)),
+                    lerp(fX, grad(perm[AB + 1], x1, y1 - 1, z1 - 1),
+                        grad(perm[BB + 1], x1 - 1, y1 - 1, z1 - 1))));
     }
 
     /**
@@ -176,7 +179,7 @@ public class PerlinNoiseGenerator extends NoiseGenerator {
      * @param amplitude How much to alter the amplitude by each octave
      * @return Resulting noise
      */
-    public static double getNoise(double x, int octaves, double frequency, double amplitude) {
+    public static double getNoise(final double x, final int octaves, final double frequency, final double amplitude) {
         return instance.noise(x, octaves, frequency, amplitude);
     }
 
@@ -190,7 +193,7 @@ public class PerlinNoiseGenerator extends NoiseGenerator {
      * @param amplitude How much to alter the amplitude by each octave
      * @return Resulting noise
      */
-    public static double getNoise(double x, double y, int octaves, double frequency, double amplitude) {
+    public static double getNoise(final double x, final double y, final int octaves, final double frequency, final double amplitude) {
         return instance.noise(x, y, octaves, frequency, amplitude);
     }
 
@@ -205,7 +208,7 @@ public class PerlinNoiseGenerator extends NoiseGenerator {
      * @param amplitude How much to alter the amplitude by each octave
      * @return Resulting noise
      */
-    public static double getNoise(double x, double y, double z, int octaves, double frequency, double amplitude) {
+    public static double getNoise(final double x, final double y, final double z, final int octaves, final double frequency, final double amplitude) {
         return instance.noise(x, y, z, octaves, frequency, amplitude);
     }
 }

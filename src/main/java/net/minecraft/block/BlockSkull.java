@@ -29,7 +29,7 @@ import java.util.Random;
 
 public class BlockSkull extends BlockContainer
 {
-    protected BlockSkull(int par1)
+    protected BlockSkull(final int par1)
     {
         super(par1, Material.circuits);
         this.setBlockBounds(0.25F, 0.0F, 0.25F, 0.75F, 0.5F, 0.75F);
@@ -63,9 +63,9 @@ public class BlockSkull extends BlockContainer
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
-        int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4) & 7;
+        final int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4) & 7;
 
         switch (l)
         {
@@ -91,7 +91,7 @@ public class BlockSkull extends BlockContainer
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4)
     {
         this.setBlockBoundsBasedOnState(par1World, par2, par3, par4);
         return super.getCollisionBoundingBoxFromPool(par1World, par2, par3, par4);
@@ -100,16 +100,16 @@ public class BlockSkull extends BlockContainer
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
+    public void onBlockPlacedBy(final World par1World, final int par2, final int par3, final int par4, final EntityLivingBase par5EntityLivingBase, final ItemStack par6ItemStack)
     {
-        int l = MathHelper.floor_double((double)(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F) + 2.5D) & 3;
+        final int l = MathHelper.floor_double((double)(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F) + 2.5D) & 3;
         par1World.setBlockMetadataWithNotify(par2, par3, par4, l, 2);
     }
 
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World par1World)
+    public TileEntity createNewTileEntity(final World par1World)
     {
         return new TileEntitySkull();
     }
@@ -119,7 +119,7 @@ public class BlockSkull extends BlockContainer
     /**
      * only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
      */
-    public int idPicked(World par1World, int par2, int par3, int par4)
+    public int idPicked(final World par1World, final int par2, final int par3, final int par4)
     {
         return Item.skull.itemID;
     }
@@ -127,16 +127,16 @@ public class BlockSkull extends BlockContainer
     /**
      * Get the block's damage value (for use with pick block).
      */
-    public int getDamageValue(World par1World, int par2, int par3, int par4)
+    public int getDamageValue(final World par1World, final int par2, final int par3, final int par4)
     {
-        TileEntity tileentity = par1World.getBlockTileEntity(par2, par3, par4);
+        final TileEntity tileentity = par1World.getBlockTileEntity(par2, par3, par4);
         return tileentity != null && tileentity instanceof TileEntitySkull ? ((TileEntitySkull)tileentity).getSkullType() : super.getDamageValue(par1World, par2, par3, par4);
     }
 
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int par1)
+    public int damageDropped(final int par1)
     {
         return par1;
     }
@@ -144,17 +144,18 @@ public class BlockSkull extends BlockContainer
     /**
      * Called when the block is attempted to be harvested
      */
-    public void onBlockHarvested(World par1World, int par2, int par3, int par4, int par5, EntityPlayer par6EntityPlayer)
+    public void onBlockHarvested(final World par1World, final int par2, final int par3, final int par4, int par5, final EntityPlayer par6EntityPlayer)
     {
+        int par51 = par5;
         if (par6EntityPlayer.capabilities.isCreativeMode)
         {
-            par5 |= 8;
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, par5, 4);
+            par51 |= 8;
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, par51, 4);
         }
 
-        dropBlockAsItem(par1World, par2, par3, par4, par5, 0);
+        dropBlockAsItem(par1World, par2, par3, par4, par51, 0);
 
-        super.onBlockHarvested(par1World, par2, par3, par4, par5, par6EntityPlayer);
+        super.onBlockHarvested(par1World, par2, par3, par4, par51, par6EntityPlayer);
     }
 
     /**
@@ -162,25 +163,25 @@ public class BlockSkull extends BlockContainer
      * different metadata value, but before the new metadata value is set. Args: World, x, y, z, old block ID, old
      * metadata
      */
-    public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    public void breakBlock(final World par1World, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         super.breakBlock(par1World, par2, par3, par4, par5, par6);
     }
 
     @Override
-    public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune)
+    public ArrayList<ItemStack> getBlockDropped(final World world, final int x, final int y, final int z, final int metadata, final int fortune)
     {
-        ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+        final ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
         if ((metadata & 8) == 0)
         {
-            ItemStack itemstack = new ItemStack(Item.skull.itemID, 1, this.getDamageValue(world, x, y, z));
-            TileEntitySkull tileentityskull = (TileEntitySkull)world.getBlockTileEntity(x, y, z);
+            final ItemStack itemstack = new ItemStack(Item.skull.itemID, 1, this.getDamageValue(world, x, y, z));
+            final TileEntitySkull tileentityskull = (TileEntitySkull)world.getBlockTileEntity(x, y, z);
 
             if (tileentityskull == null)
             {
                 return drops;
             }
-            if (tileentityskull.getSkullType() == 3 && tileentityskull.getExtraType() != null && tileentityskull.getExtraType().length() > 0)
+            if (tileentityskull.getSkullType() == 3 && tileentityskull.getExtraType() != null && !tileentityskull.getExtraType().isEmpty())
             {
                 itemstack.setTagCompound(new NBTTagCompound());
                 itemstack.getTagCompound().setString("SkullOwner", tileentityskull.getExtraType());
@@ -193,7 +194,7 @@ public class BlockSkull extends BlockContainer
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return Item.skull.itemID;
     }
@@ -201,13 +202,13 @@ public class BlockSkull extends BlockContainer
     /**
      * This method attempts to create a wither at the given location and skull
      */
-    public void makeWither(World par1World, int par2, int par3, int par4, TileEntitySkull par5TileEntitySkull)
+    public void makeWither(final World par1World, final int par2, final int par3, final int par4, final TileEntitySkull par5TileEntitySkull)
     {
         if (par5TileEntitySkull.getSkullType() == 1 && par3 >= 2 && par1World.difficultySetting > 0 && !par1World.isRemote)
         {
-            int l = Block.slowSand.blockID;
+            final int l = Block.slowSand.blockID;
             int i1;
-            EntityWither entitywither;
+            final EntityWither entitywither;
             int j1;
 
             for (i1 = -2; i1 <= 0; ++i1)
@@ -215,7 +216,7 @@ public class BlockSkull extends BlockContainer
                 if (par1World.getBlockId(par2, par3 - 1, par4 + i1) == l && par1World.getBlockId(par2, par3 - 1, par4 + i1 + 1) == l && par1World.getBlockId(par2, par3 - 2, par4 + i1 + 1) == l && par1World.getBlockId(par2, par3 - 1, par4 + i1 + 2) == l && this.func_82528_d(par1World, par2, par3, par4 + i1, 1) && this.func_82528_d(par1World, par2, par3, par4 + i1 + 1, 1) && this.func_82528_d(par1World, par2, par3, par4 + i1 + 2, 1))
                 {
                     // CraftBukkit start - Use BlockStateListPopulator
-                    BlockStateListPopulator blockList = new BlockStateListPopulator(par1World.getWorld());
+                    final BlockStateListPopulator blockList = new BlockStateListPopulator(par1World.getWorld());
                     par1World.setBlockMetadataWithNotify(par2, par3, par4 + i1, 8, 2);
                     par1World.setBlockMetadataWithNotify(par2, par3, par4 + i1 + 1, 8, 2);
                     par1World.setBlockMetadataWithNotify(par2, par3, par4 + i1 + 2, 8, 2);
@@ -255,7 +256,7 @@ public class BlockSkull extends BlockContainer
                 if (par1World.getBlockId(par2 + i1, par3 - 1, par4) == l && par1World.getBlockId(par2 + i1 + 1, par3 - 1, par4) == l && par1World.getBlockId(par2 + i1 + 1, par3 - 2, par4) == l && par1World.getBlockId(par2 + i1 + 2, par3 - 1, par4) == l && this.func_82528_d(par1World, par2 + i1, par3, par4, 1) && this.func_82528_d(par1World, par2 + i1 + 1, par3, par4, 1) && this.func_82528_d(par1World, par2 + i1 + 2, par3, par4, 1))
                 {
                     // CraftBukkit start - Use BlockStateListPopulator
-                    BlockStateListPopulator blockList = new BlockStateListPopulator(par1World.getWorld());
+                    final BlockStateListPopulator blockList = new BlockStateListPopulator(par1World.getWorld());
                     par1World.setBlockMetadataWithNotify(par2 + i1, par3, par4, 8, 2);
                     par1World.setBlockMetadataWithNotify(par2 + i1 + 1, par3, par4, 8, 2);
                     par1World.setBlockMetadataWithNotify(par2 + i1 + 2, par3, par4, 8, 2);
@@ -290,7 +291,7 @@ public class BlockSkull extends BlockContainer
         }
     }
 
-    private boolean func_82528_d(World par1World, int par2, int par3, int par4, int par5)
+    private boolean func_82528_d(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         if (par1World.getBlockId(par2, par3, par4) != this.blockID)
         {
@@ -298,7 +299,7 @@ public class BlockSkull extends BlockContainer
         }
         else
         {
-            TileEntity tileentity = par1World.getBlockTileEntity(par2, par3, par4);
+            final TileEntity tileentity = par1World.getBlockTileEntity(par2, par3, par4);
             return tileentity != null && tileentity instanceof TileEntitySkull ? ((TileEntitySkull)tileentity).getSkullType() == par5 : false;
         }
     }
@@ -309,14 +310,14 @@ public class BlockSkull extends BlockContainer
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister) {}
+    public void registerIcons(final IconRegister par1IconRegister) {}
 
     @SideOnly(Side.CLIENT)
 
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
         return Block.slowSand.getBlockTextureFromSide(par1);
     }

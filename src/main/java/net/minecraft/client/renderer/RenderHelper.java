@@ -36,9 +36,9 @@ public class RenderHelper
         GL11.glEnable(GL11.GL_LIGHT1);
         GL11.glEnable(GL11.GL_COLOR_MATERIAL);
         GL11.glColorMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_AMBIENT_AND_DIFFUSE);
-        float f = 0.4F;
-        float f1 = 0.6F;
-        float f2 = 0.0F;
+        final float f = 0.4F;
+        final float f1 = 0.6F;
+        final float f2 = 0.0F;
         GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, setColorBuffer(field_82884_b.xCoord, field_82884_b.yCoord, field_82884_b.zCoord, 0.0D));
         GL11.glLight(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, setColorBuffer(f1, f1, f1, 1.0F));
         GL11.glLight(GL11.GL_LIGHT0, GL11.GL_AMBIENT, setColorBuffer(0.0F, 0.0F, 0.0F, 1.0F));
@@ -54,7 +54,7 @@ public class RenderHelper
     /**
      * Update and return colorBuffer with the RGBA values passed as arguments
      */
-    private static FloatBuffer setColorBuffer(double par0, double par2, double par4, double par6)
+    private static FloatBuffer setColorBuffer(final double par0, final double par2, final double par4, final double par6)
     {
         return setColorBuffer((float)par0, (float)par2, (float)par4, (float)par6);
     }
@@ -62,7 +62,7 @@ public class RenderHelper
     /**
      * Update and return colorBuffer with the RGBA values passed as arguments
      */
-    private static FloatBuffer setColorBuffer(float par0, float par1, float par2, float par3)
+    private static FloatBuffer setColorBuffer(final float par0, final float par1, final float par2, final float par3)
     {
         colorBuffer.clear();
         colorBuffer.put(par0).put(par1).put(par2).put(par3);

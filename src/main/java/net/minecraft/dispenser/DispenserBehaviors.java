@@ -17,7 +17,7 @@ public class DispenserBehaviors
         BlockDispenser.dispenseBehaviorRegistry.putObject(Item.firework, new DispenserBehaviorFireworks());
         BlockDispenser.dispenseBehaviorRegistry.putObject(Item.fireballCharge, new DispenserBehaviorFireball());
         BlockDispenser.dispenseBehaviorRegistry.putObject(Item.boat, new DispenserBehaviorBoat());
-        DispenserBehaviorFilledBucket dispenserbehaviorfilledbucket = new DispenserBehaviorFilledBucket();
+        final DispenserBehaviorFilledBucket dispenserbehaviorfilledbucket = new DispenserBehaviorFilledBucket();
         BlockDispenser.dispenseBehaviorRegistry.putObject(Item.bucketLava, dispenserbehaviorfilledbucket);
         BlockDispenser.dispenseBehaviorRegistry.putObject(Item.bucketWater, dispenserbehaviorfilledbucket);
         BlockDispenser.dispenseBehaviorRegistry.putObject(Item.bucketEmpty, new DispenserBehaviorEmptyBucket());

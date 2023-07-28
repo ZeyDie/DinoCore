@@ -17,9 +17,9 @@ public class SeedCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String commandLabel, String[] args) {
+    public boolean execute(final CommandSender sender, final String commandLabel, final String[] args) {
         if (!testPermission(sender)) return true;
-        long seed;
+        final long seed;
         if (sender instanceof Player) {
             seed = ((Player) sender).getWorld().getSeed();
         } else {
@@ -30,7 +30,7 @@ public class SeedCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) throws IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");

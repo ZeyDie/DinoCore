@@ -18,7 +18,7 @@ public class ContainerDispenser extends Container
     private InventoryPlayer player;
     // CraftBukkit end
 
-    public ContainerDispenser(IInventory par1IInventory, TileEntityDispenser par2TileEntityDispenser)
+    public ContainerDispenser(final IInventory par1IInventory, final TileEntityDispenser par2TileEntityDispenser)
     {
         this.tileEntityDispenser = par2TileEntityDispenser;
         // CraftBukkit start - Save player
@@ -50,7 +50,7 @@ public class ContainerDispenser extends Container
         }
     }
 
-    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
+    public boolean canInteractWith(final EntityPlayer par1EntityPlayer)
     {
         if (!this.checkReachable)
         {
@@ -63,14 +63,14 @@ public class ContainerDispenser extends Container
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+    public ItemStack transferStackInSlot(final EntityPlayer par1EntityPlayer, final int par2)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(par2);
+        final Slot slot = (Slot)this.inventorySlots.get(par2);
 
         if (slot != null && slot.getHasStack())
         {
-            ItemStack itemstack1 = slot.getStack();
+            final ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
             if (par2 < 9)
@@ -113,7 +113,7 @@ public class ContainerDispenser extends Container
             return bukkitEntity;
         }
 
-        CraftInventory inventory = new CraftInventory(this.tileEntityDispenser);
+        final CraftInventory inventory = new CraftInventory(this.tileEntityDispenser);
         bukkitEntity = new CraftInventoryView(this.player.player.getBukkitEntity(), inventory, this);
         return bukkitEntity;
     }

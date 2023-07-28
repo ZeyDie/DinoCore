@@ -16,31 +16,31 @@ public class BackupList
 {
     public List field_111223_a;
 
-    public static BackupList func_111222_a(String par0Str)
+    public static BackupList func_111222_a(final String par0Str)
     {
-        BackupList backuplist = new BackupList();
+        final BackupList backuplist = new BackupList();
         backuplist.field_111223_a = new ArrayList();
 
         try
         {
-            JsonRootNode jsonrootnode = (new JdomParser()).parse(par0Str);
+            final JsonRootNode jsonrootnode = (new JdomParser()).parse(par0Str);
 
             if (jsonrootnode.isArrayNode(new Object[] {"backups"}))
             {
-                Iterator iterator = jsonrootnode.getArrayNode(new Object[] {"backups"}).iterator();
+                final Iterator iterator = jsonrootnode.getArrayNode(new Object[] {"backups"}).iterator();
 
                 while (iterator.hasNext())
                 {
-                    JsonNode jsonnode = (JsonNode)iterator.next();
+                    final JsonNode jsonnode = (JsonNode)iterator.next();
                     backuplist.field_111223_a.add(Backup.func_110724_a(jsonnode));
                 }
             }
         }
-        catch (InvalidSyntaxException invalidsyntaxexception)
+        catch (final InvalidSyntaxException invalidsyntaxexception)
         {
             ;
         }
-        catch (IllegalArgumentException illegalargumentexception)
+        catch (final IllegalArgumentException illegalargumentexception)
         {
             ;
         }

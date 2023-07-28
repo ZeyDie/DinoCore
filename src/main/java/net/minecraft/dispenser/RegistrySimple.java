@@ -15,7 +15,7 @@ public class RegistrySimple implements IRegistry
         return Maps.newHashMap();
     }
 
-    public Object getObject(Object par1Obj)
+    public Object getObject(final Object par1Obj)
     {
         return this.registryObjects.get(par1Obj);
     }
@@ -23,7 +23,7 @@ public class RegistrySimple implements IRegistry
     /**
      * Register an object on this registry.
      */
-    public void putObject(Object par1Obj, Object par2Obj)
+    public void putObject(final Object par1Obj, final Object par2Obj)
     {
         this.registryObjects.put(par1Obj, par2Obj);
     }

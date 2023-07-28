@@ -11,7 +11,7 @@ class CallableType3 implements Callable
     /** Reference to the IntegratedServer object. */
     final IntegratedServer theIntegratedServer;
 
-    CallableType3(IntegratedServer par1IntegratedServer)
+    CallableType3(final IntegratedServer par1IntegratedServer)
     {
         this.theIntegratedServer = par1IntegratedServer;
     }

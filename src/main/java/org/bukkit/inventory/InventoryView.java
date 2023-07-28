@@ -47,7 +47,7 @@ public abstract class InventoryView {
         ENCHANT_BUTTON3(2, InventoryType.ENCHANTING);
         int id;
         InventoryType style;
-        private Property(int id, InventoryType appliesTo) {
+        private Property(final int id, final InventoryType appliesTo) {
             this.id = id;
             style = appliesTo;
         }
@@ -104,7 +104,7 @@ public abstract class InventoryView {
      * @param slot The ID as returned by InventoryClickEvent.getRawSlot()
      * @param item The new item to put in the slot, or null to clear it.
      */
-    public void setItem(int slot, ItemStack item) {
+    public void setItem(final int slot, final ItemStack item) {
         if (slot != OUTSIDE) {
             if (slot < getTopInventory().getSize()) {
                 getTopInventory().setItem(convertSlot(slot),item);
@@ -122,7 +122,7 @@ public abstract class InventoryView {
      * @param slot The ID as returned by InventoryClickEvent.getRawSlot()
      * @return The item currently in the slot.
      */
-    public ItemStack getItem(int slot) {
+    public ItemStack getItem(final int slot) {
         if (slot == OUTSIDE) {
             return null;
         }
@@ -138,7 +138,7 @@ public abstract class InventoryView {
      *
      * @param item The item to put on the cursor, or null to remove the item on their cursor.
      */
-    public final void setCursor(ItemStack item) {
+    public final void setCursor(final ItemStack item) {
         getPlayer().setItemOnCursor(item);
     }
 
@@ -161,8 +161,8 @@ public abstract class InventoryView {
      * @param rawSlot The raw slot ID.
      * @return The converted slot ID.
      */
-    public final int convertSlot(int rawSlot) {
-        int numInTop = getTopInventory().getSize();
+    public final int convertSlot(final int rawSlot) {
+        final int numInTop = getTopInventory().getSize();
         if (rawSlot < numInTop) {
             return rawSlot;
         }
@@ -203,7 +203,7 @@ public abstract class InventoryView {
      * @return true if the property was updated successfully, false if the
      *     property is not supported by that inventory
      */
-    public final boolean setProperty(Property prop, int value) {
+    public final boolean setProperty(final Property prop, final int value) {
         return getPlayer().setWindowProperty(prop, value);
     }
 

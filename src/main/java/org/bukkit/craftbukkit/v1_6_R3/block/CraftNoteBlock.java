@@ -27,16 +27,16 @@ public class CraftNoteBlock extends CraftBlockState implements NoteBlock {
         return note.note;
     }
 
-    public void setNote(Note n) {
+    public void setNote(final Note n) {
         note.note = n.getId();
     }
 
-    public void setRawNote(byte n) {
+    public void setRawNote(final byte n) {
         note.note = n;
     }
 
     public boolean play() {
-        Block block = getBlock();
+        final Block block = getBlock();
 
         if (block.getType() == Material.NOTE_BLOCK) {
             note.triggerNote(world.getHandle(), getX(), getY(), getZ());
@@ -46,8 +46,8 @@ public class CraftNoteBlock extends CraftBlockState implements NoteBlock {
         }
     }
 
-    public boolean play(byte instrument, byte note) {
-        Block block = getBlock();
+    public boolean play(final byte instrument, final byte note) {
+        final Block block = getBlock();
 
         if (block.getType() == Material.NOTE_BLOCK) {
             world.getHandle().addBlockEvent(getX(), getY(), getZ(), block.getTypeId(), instrument, note);
@@ -57,8 +57,8 @@ public class CraftNoteBlock extends CraftBlockState implements NoteBlock {
         }
     }
 
-    public boolean play(Instrument instrument, Note note) {
-        Block block = getBlock();
+    public boolean play(final Instrument instrument, final Note note) {
+        final Block block = getBlock();
 
         if (block.getType() == Material.NOTE_BLOCK) {
             world.getHandle().addBlockEvent(getX(), getY(), getZ(), block.getTypeId(), instrument.getType(), note.getId());

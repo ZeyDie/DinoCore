@@ -17,25 +17,25 @@ public class RenderEnchantmentTable extends TileEntitySpecialRenderer
     private static final ResourceLocation enchantingTableBookTextures = new ResourceLocation("textures/entity/enchanting_table_book.png");
     private ModelBook enchantmentBook = new ModelBook();
 
-    public void renderTileEntityEnchantmentTableAt(TileEntityEnchantmentTable par1TileEntityEnchantmentTable, double par2, double par4, double par6, float par8)
+    public void renderTileEntityEnchantmentTableAt(final TileEntityEnchantmentTable par1TileEntityEnchantmentTable, final double par2, final double par4, final double par6, final float par8)
     {
         GL11.glPushMatrix();
         GL11.glTranslatef((float)par2 + 0.5F, (float)par4 + 0.75F, (float)par6 + 0.5F);
-        float f1 = (float)par1TileEntityEnchantmentTable.tickCount + par8;
+        final float f1 = (float)par1TileEntityEnchantmentTable.tickCount + par8;
         GL11.glTranslatef(0.0F, 0.1F + MathHelper.sin(f1 * 0.1F) * 0.01F, 0.0F);
         float f2;
 
-        for (f2 = par1TileEntityEnchantmentTable.bookRotation2 - par1TileEntityEnchantmentTable.bookRotationPrev; f2 >= (float)Math.PI; f2 -= ((float)Math.PI * 2F))
+        for (f2 = par1TileEntityEnchantmentTable.bookRotation2 - par1TileEntityEnchantmentTable.bookRotationPrev; f2 >= (float)Math.PI; f2 -= ((float)Math.PI * 2.0F))
         {
             ;
         }
 
         while (f2 < -(float)Math.PI)
         {
-            f2 += ((float)Math.PI * 2F);
+            f2 += ((float)Math.PI * 2.0F);
         }
 
-        float f3 = par1TileEntityEnchantmentTable.bookRotationPrev + f2 * par8;
+        final float f3 = par1TileEntityEnchantmentTable.bookRotationPrev + f2 * par8;
         GL11.glRotatef(-f3 * 180.0F / (float)Math.PI, 0.0F, 1.0F, 0.0F);
         GL11.glRotatef(80.0F, 0.0F, 0.0F, 1.0F);
         this.bindTexture(enchantingTableBookTextures);
@@ -64,13 +64,13 @@ public class RenderEnchantmentTable extends TileEntitySpecialRenderer
             f5 = 1.0F;
         }
 
-        float f6 = par1TileEntityEnchantmentTable.bookSpreadPrev + (par1TileEntityEnchantmentTable.bookSpread - par1TileEntityEnchantmentTable.bookSpreadPrev) * par8;
+        final float f6 = par1TileEntityEnchantmentTable.bookSpreadPrev + (par1TileEntityEnchantmentTable.bookSpread - par1TileEntityEnchantmentTable.bookSpreadPrev) * par8;
         GL11.glEnable(GL11.GL_CULL_FACE);
         this.enchantmentBook.render((Entity)null, f1, f4, f5, f6, 0.0F, 0.0625F);
         GL11.glPopMatrix();
     }
 
-    public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8)
+    public void renderTileEntityAt(final TileEntity par1TileEntity, final double par2, final double par4, final double par6, final float par8)
     {
         this.renderTileEntityEnchantmentTableAt((TileEntityEnchantmentTable)par1TileEntity, par2, par4, par6, par8);
     }

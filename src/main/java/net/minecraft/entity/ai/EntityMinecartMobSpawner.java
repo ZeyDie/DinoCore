@@ -13,12 +13,12 @@ public class EntityMinecartMobSpawner extends EntityMinecart
     /** Mob spawner logic for this spawner minecart. */
     private final MobSpawnerBaseLogic mobSpawnerLogic = new EntityMinecartMobSpawnerLogic(this);
 
-    public EntityMinecartMobSpawner(World par1World)
+    public EntityMinecartMobSpawner(final World par1World)
     {
         super(par1World);
     }
 
-    public EntityMinecartMobSpawner(World par1World, double par2, double par4, double par6)
+    public EntityMinecartMobSpawner(final World par1World, final double par2, final double par4, final double par6)
     {
         super(par1World, par2, par4, par6);
     }
@@ -36,7 +36,7 @@ public class EntityMinecartMobSpawner extends EntityMinecart
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    protected void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    protected void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.mobSpawnerLogic.readFromNBT(par1NBTTagCompound);
@@ -45,14 +45,14 @@ public class EntityMinecartMobSpawner extends EntityMinecart
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    protected void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    protected void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         this.mobSpawnerLogic.writeToNBT(par1NBTTagCompound);
     }
 
     @SideOnly(Side.CLIENT)
-    public void handleHealthUpdate(byte par1)
+    public void handleHealthUpdate(final byte par1)
     {
         this.mobSpawnerLogic.setDelayToMin(par1);
     }

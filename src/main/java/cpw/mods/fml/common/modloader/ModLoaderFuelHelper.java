@@ -20,13 +20,13 @@ public class ModLoaderFuelHelper implements IFuelHandler
 
     private BaseModProxy mod;
 
-    public ModLoaderFuelHelper(BaseModProxy mod)
+    public ModLoaderFuelHelper(final BaseModProxy mod)
     {
         this.mod = mod;
     }
 
     @Override
-    public int getBurnTime(ItemStack fuel)
+    public int getBurnTime(final ItemStack fuel)
     {
         return mod.addFuel(fuel.itemID, fuel.getItemDamage());
     }

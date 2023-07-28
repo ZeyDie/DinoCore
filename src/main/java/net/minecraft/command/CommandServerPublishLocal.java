@@ -18,14 +18,14 @@ public class CommandServerPublishLocal extends CommandBase
         return 4;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.publish.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
-        String s = MinecraftServer.getServer().shareToLAN(EnumGameType.SURVIVAL, false);
+        final String s = MinecraftServer.getServer().shareToLAN(EnumGameType.SURVIVAL, false);
 
         if (s != null)
         {

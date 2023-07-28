@@ -49,7 +49,7 @@ public class EntityRegainHealthEvent extends EntityEvent implements Cancellable 
      *
      * @param amount the amount of health the entity will regain
      */
-    public void setAmount(double amount) {
+    public void setAmount(final double amount) {
         this.amount = amount;
     }
 
@@ -59,7 +59,7 @@ public class EntityRegainHealthEvent extends EntityEvent implements Cancellable 
      * under any circumstances.
      */
     @Deprecated
-    public void _INVALID_setAmount(int amount) {
+    public void _INVALID_setAmount(final int amount) {
         setAmount(amount);
     }
 
@@ -67,7 +67,7 @@ public class EntityRegainHealthEvent extends EntityEvent implements Cancellable 
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         cancelled = cancel;
     }
 

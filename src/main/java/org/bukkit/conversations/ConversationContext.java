@@ -19,7 +19,7 @@ public class ConversationContext {
      * @param forWhom The subject of the conversation.
      * @param initialSessionData Any initial values to put in the sessionData map.
      */
-    public ConversationContext(Plugin plugin, Conversable forWhom, Map<Object, Object> initialSessionData) {
+    public ConversationContext(final Plugin plugin, final Conversable forWhom, final Map<Object, Object> initialSessionData) {
         this.plugin = plugin;
         this.forWhom = forWhom;
         this.sessionData = initialSessionData;
@@ -58,7 +58,7 @@ public class ConversationContext {
      * @param key The session data key.
      * @return The requested session data.
      */
-    public Object getSessionData(Object key) {
+    public Object getSessionData(final Object key) {
         return sessionData.get(key);
     }
 
@@ -69,7 +69,7 @@ public class ConversationContext {
      * @param key The session data key.
      * @param value The session data value.
      */
-    public void setSessionData(Object key, Object value) {
+    public void setSessionData(final Object key, final Object value) {
         sessionData.put(key, value);
     }
 }

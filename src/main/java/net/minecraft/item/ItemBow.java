@@ -16,11 +16,11 @@ import net.minecraftforge.event.entity.player.ArrowNockEvent;
 
 public class ItemBow extends Item
 {
-    public static final String[] bowPullIconNameArray = new String[] {"pulling_0", "pulling_1", "pulling_2"};
+    public static final String[] bowPullIconNameArray = {"pulling_0", "pulling_1", "pulling_2"};
     @SideOnly(Side.CLIENT)
     private Icon[] iconArray;
 
-    public ItemBow(int par1)
+    public ItemBow(final int par1)
     {
         super(par1);
         this.maxStackSize = 1;
@@ -31,12 +31,12 @@ public class ItemBow extends Item
     /**
      * called when the player releases the use item button. Args: itemstack, world, entityplayer, itemInUseCount
      */
-    public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer, int par4)
+    public void onPlayerStoppedUsing(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer, final int par4)
     {
         int j = this.getMaxItemUseDuration(par1ItemStack) - par4;
 
         { // Cauldron - scope
-        ArrowLooseEvent event = new ArrowLooseEvent(par3EntityPlayer, par1ItemStack, j);
+        final ArrowLooseEvent event = new ArrowLooseEvent(par3EntityPlayer, par1ItemStack, j);
         MinecraftForge.EVENT_BUS.post(event);
         if (event.isCanceled())
         {
@@ -45,7 +45,7 @@ public class ItemBow extends Item
         j = event.charge;
         } // Cauldron
 
-        boolean flag = par3EntityPlayer.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, par1ItemStack) > 0;
+        final boolean flag = par3EntityPlayer.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, par1ItemStack) > 0;
 
         if (flag || par3EntityPlayer.inventory.hasItem(Item.arrow.itemID))
         {
@@ -62,21 +62,21 @@ public class ItemBow extends Item
                 f = 1.0F;
             }
 
-            EntityArrow entityarrow = new EntityArrow(par2World, par3EntityPlayer, f * 2.0F);
+            final EntityArrow entityarrow = new EntityArrow(par2World, par3EntityPlayer, f * 2.0F);
 
             if (f == 1.0F)
             {
                 entityarrow.setIsCritical(true);
             }
 
-            int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, par1ItemStack);
+            final int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, par1ItemStack);
 
             if (k > 0)
             {
                 entityarrow.setDamage(entityarrow.getDamage() + (double)k * 0.5D + 0.5D);
             }
 
-            int l = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, par1ItemStack);
+            final int l = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, par1ItemStack);
 
             if (l > 0)
             {
@@ -89,7 +89,7 @@ public class ItemBow extends Item
             }
 
             // CraftBukkit start
-            org.bukkit.event.entity.EntityShootBowEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callEntityShootBowEvent(par3EntityPlayer, par1ItemStack, entityarrow, f);
+            final org.bukkit.event.entity.EntityShootBowEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callEntityShootBowEvent(par3EntityPlayer, par1ItemStack, entityarrow, f);
 
             if (event.isCancelled())
             {
@@ -119,7 +119,7 @@ public class ItemBow extends Item
         }
     }
 
-    public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onEaten(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         return par1ItemStack;
     }
@@ -127,7 +127,7 @@ public class ItemBow extends Item
     /**
      * How long it takes to use or consume an item
      */
-    public int getMaxItemUseDuration(ItemStack par1ItemStack)
+    public int getMaxItemUseDuration(final ItemStack par1ItemStack)
     {
         return 72000;
     }
@@ -135,7 +135,7 @@ public class ItemBow extends Item
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    public EnumAction getItemUseAction(ItemStack par1ItemStack)
+    public EnumAction getItemUseAction(final ItemStack par1ItemStack)
     {
         return EnumAction.bow;
     }
@@ -143,9 +143,9 @@ public class ItemBow extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
-        ArrowNockEvent event = new ArrowNockEvent(par3EntityPlayer, par1ItemStack);
+        final ArrowNockEvent event = new ArrowNockEvent(par3EntityPlayer, par1ItemStack);
         MinecraftForge.EVENT_BUS.post(event);
         if (event.isCanceled())
         {
@@ -169,7 +169,7 @@ public class ItemBow extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.itemIcon = par1IconRegister.registerIcon(this.getIconString() + "_standby");
         this.iconArray = new Icon[bowPullIconNameArray.length];
@@ -185,7 +185,7 @@ public class ItemBow extends Item
     /**
      * used to cycle through icons based on their used duration, i.e. for the bow
      */
-    public Icon getItemIconForUseDuration(int par1)
+    public Icon getItemIconForUseDuration(final int par1)
     {
         return this.iconArray[par1];
     }

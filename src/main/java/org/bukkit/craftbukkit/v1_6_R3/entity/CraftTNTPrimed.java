@@ -8,7 +8,7 @@ import org.bukkit.entity.TNTPrimed;
 
 public class CraftTNTPrimed extends CraftEntity implements TNTPrimed {
 
-    public CraftTNTPrimed(CraftServer server, net.minecraft.entity.item.EntityTNTPrimed entity) {
+    public CraftTNTPrimed(final CraftServer server, final net.minecraft.entity.item.EntityTNTPrimed entity) {
         super(server, entity);
     }
 
@@ -20,11 +20,11 @@ public class CraftTNTPrimed extends CraftEntity implements TNTPrimed {
         return getHandle().isIncendiary;
     }
 
-    public void setIsIncendiary(boolean isIncendiary) {
+    public void setIsIncendiary(final boolean isIncendiary) {
         getHandle().isIncendiary = isIncendiary;
     }
 
-    public void setYield(float yield) {
+    public void setYield(final float yield) {
         getHandle().yield = yield;
     }
 
@@ -32,7 +32,7 @@ public class CraftTNTPrimed extends CraftEntity implements TNTPrimed {
         return getHandle().fuse;
     }
 
-    public void setFuseTicks(int fuseTicks) {
+    public void setFuseTicks(final int fuseTicks) {
         getHandle().fuse = fuseTicks;
     }
 
@@ -51,10 +51,10 @@ public class CraftTNTPrimed extends CraftEntity implements TNTPrimed {
     }
 
     public Entity getSource() {
-        net.minecraft.entity.EntityLivingBase source = getHandle().getTntPlacedBy();
+        final net.minecraft.entity.EntityLivingBase source = getHandle().getTntPlacedBy();
 
         if (source != null) {
-            Entity bukkitEntity = source.getBukkitEntity();
+            final Entity bukkitEntity = source.getBukkitEntity();
 
             if (bukkitEntity.isValid()) {
                 return bukkitEntity;

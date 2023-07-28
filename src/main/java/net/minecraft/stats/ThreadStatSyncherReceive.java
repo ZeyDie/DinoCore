@@ -8,7 +8,7 @@ class ThreadStatSyncherReceive extends Thread
 {
     final StatsSyncher syncher;
 
-    ThreadStatSyncherReceive(StatsSyncher par1StatsSyncher)
+    ThreadStatSyncherReceive(final StatsSyncher par1StatsSyncher)
     {
         this.syncher = par1StatsSyncher;
     }
@@ -26,7 +26,7 @@ class ThreadStatSyncherReceive extends Thread
                 StatsSyncher.func_77416_a(this.syncher, StatsSyncher.func_77410_a(this.syncher, StatsSyncher.func_77408_b(this.syncher), StatsSyncher.func_77407_c(this.syncher), StatsSyncher.func_77411_d(this.syncher)));
             }
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             exception.printStackTrace();
         }

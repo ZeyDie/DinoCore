@@ -20,7 +20,7 @@ public class StatsComponent extends JComponent
     private String[] field_120036_d = new String[11];
     private final MinecraftServer field_120037_e;
 
-    public StatsComponent(MinecraftServer par1MinecraftServer)
+    public StatsComponent(final MinecraftServer par1MinecraftServer)
     {
         this.field_120037_e = par1MinecraftServer;
         this.setPreferredSize(new Dimension(456, 246));
@@ -33,7 +33,7 @@ public class StatsComponent extends JComponent
     private void func_120034_a()
     {
         this.field_120036_d = new String[5 + DimensionManager.getIDs().length];
-        long i = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+        final long i = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
         System.gc();
         this.field_120036_d[0] = "Memory use: " + i / 1024L / 1024L + " mb (" + Runtime.getRuntime().freeMemory() * 100L / Runtime.getRuntime().maxMemory() + "% free)";
         this.field_120036_d[1] = "Threads: " + TcpConnection.field_74471_a.get() + " + " + TcpConnection.field_74469_b.get();
@@ -44,11 +44,11 @@ public class StatsComponent extends JComponent
         if (this.field_120037_e.worldServers != null)
         {
             int j = 0;
-            for (Integer id : DimensionManager.getIDs())
+            for (final Integer id : DimensionManager.getIDs())
             {
                 this.field_120036_d[5 + j] = "Lvl " + id + " tick: " + field_120040_a.format(this.func_120035_a(this.field_120037_e.worldTickTimes.get(id)) * 1.0E-6D) + " ms";
 
-                WorldServer world = DimensionManager.getWorld(id);
+                final WorldServer world = DimensionManager.getWorld(id);
                 if (world != null && world.theChunkProviderServer != null)
                 {
                     this.field_120036_d[5 + j] = this.field_120036_d[5 + j] + ", " + world.theChunkProviderServer.makeString();
@@ -58,12 +58,12 @@ public class StatsComponent extends JComponent
             }
         }
 
-        double d0 = 12500.0D;
+        final double d0 = 12500.0D;
         this.field_120038_b[this.field_120039_c++ & 255] = (int)(this.func_120035_a(this.field_120037_e.sentPacketSizeArray) * 100.0D / 12500.0D);
         this.repaint();
     }
 
-    private double func_120035_a(long[] par1ArrayOfLong)
+    private double func_120035_a(final long[] par1ArrayOfLong)
     {
         long i = 0L;
 
@@ -75,7 +75,7 @@ public class StatsComponent extends JComponent
         return (double)i / (double)par1ArrayOfLong.length;
     }
 
-    public void paint(Graphics par1Graphics)
+    public void paint(final Graphics par1Graphics)
     {
         par1Graphics.setColor(new Color(16777215));
         par1Graphics.fillRect(0, 0, 456, 246);
@@ -83,7 +83,7 @@ public class StatsComponent extends JComponent
 
         for (i = 0; i < 256; ++i)
         {
-            int j = this.field_120038_b[i + this.field_120039_c & 255];
+            final int j = this.field_120038_b[i + this.field_120039_c & 255];
             par1Graphics.setColor(new Color(j + 28 << 16));
             par1Graphics.fillRect(i, 100 - j, 1, j);
         }
@@ -92,7 +92,7 @@ public class StatsComponent extends JComponent
 
         for (i = 0; i < this.field_120036_d.length; ++i)
         {
-            String s = this.field_120036_d[i];
+            final String s = this.field_120036_d[i];
 
             if (s != null)
             {
@@ -101,7 +101,7 @@ public class StatsComponent extends JComponent
         }
     }
 
-    static void func_120033_a(StatsComponent par0StatsComponent)
+    static void func_120033_a(final StatsComponent par0StatsComponent)
     {
         par0StatsComponent.func_120034_a();
     }

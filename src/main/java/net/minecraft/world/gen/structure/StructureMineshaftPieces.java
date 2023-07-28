@@ -10,7 +10,7 @@ import java.util.Random;
 public class StructureMineshaftPieces
 {
     /** List of contents that can generate in Mineshafts. */
-    public static final WeightedRandomChestContent[] mineshaftChestContents = new WeightedRandomChestContent[] {new WeightedRandomChestContent(Item.ingotIron.itemID, 0, 1, 5, 10), new WeightedRandomChestContent(Item.ingotGold.itemID, 0, 1, 3, 5), new WeightedRandomChestContent(Item.redstone.itemID, 0, 4, 9, 5), new WeightedRandomChestContent(Item.dyePowder.itemID, 4, 4, 9, 5), new WeightedRandomChestContent(Item.diamond.itemID, 0, 1, 2, 3), new WeightedRandomChestContent(Item.coal.itemID, 0, 3, 8, 10), new WeightedRandomChestContent(Item.bread.itemID, 0, 1, 3, 15), new WeightedRandomChestContent(Item.pickaxeIron.itemID, 0, 1, 1, 1), new WeightedRandomChestContent(Block.rail.blockID, 0, 4, 8, 1), new WeightedRandomChestContent(Item.melonSeeds.itemID, 0, 2, 4, 10), new WeightedRandomChestContent(Item.pumpkinSeeds.itemID, 0, 2, 4, 10), new WeightedRandomChestContent(Item.saddle.itemID, 0, 1, 1, 3), new WeightedRandomChestContent(Item.horseArmorIron.itemID, 0, 1, 1, 1)};
+    public static final WeightedRandomChestContent[] mineshaftChestContents = {new WeightedRandomChestContent(Item.ingotIron.itemID, 0, 1, 5, 10), new WeightedRandomChestContent(Item.ingotGold.itemID, 0, 1, 3, 5), new WeightedRandomChestContent(Item.redstone.itemID, 0, 4, 9, 5), new WeightedRandomChestContent(Item.dyePowder.itemID, 4, 4, 9, 5), new WeightedRandomChestContent(Item.diamond.itemID, 0, 1, 2, 3), new WeightedRandomChestContent(Item.coal.itemID, 0, 3, 8, 10), new WeightedRandomChestContent(Item.bread.itemID, 0, 1, 3, 15), new WeightedRandomChestContent(Item.pickaxeIron.itemID, 0, 1, 1, 1), new WeightedRandomChestContent(Block.rail.blockID, 0, 4, 8, 1), new WeightedRandomChestContent(Item.melonSeeds.itemID, 0, 2, 4, 10), new WeightedRandomChestContent(Item.pumpkinSeeds.itemID, 0, 2, 4, 10), new WeightedRandomChestContent(Item.saddle.itemID, 0, 1, 1, 3), new WeightedRandomChestContent(Item.horseArmorIron.itemID, 0, 1, 1, 1)};
 
     public static void func_143048_a()
     {
@@ -20,10 +20,10 @@ public class StructureMineshaftPieces
         MapGenStructureIO.func_143031_a(ComponentMineshaftStairs.class, "MSStairs");
     }
 
-    private static StructureComponent getRandomComponent(List par0List, Random par1Random, int par2, int par3, int par4, int par5, int par6)
+    private static StructureComponent getRandomComponent(final List par0List, final Random par1Random, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
-        int j1 = par1Random.nextInt(100);
-        StructureBoundingBox structureboundingbox;
+        final int j1 = par1Random.nextInt(100);
+        final StructureBoundingBox structureboundingbox;
 
         if (j1 >= 80)
         {
@@ -56,7 +56,7 @@ public class StructureMineshaftPieces
         return null;
     }
 
-    private static StructureComponent getNextMineShaftComponent(StructureComponent par0StructureComponent, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
+    private static StructureComponent getNextMineShaftComponent(final StructureComponent par0StructureComponent, final List par1List, final Random par2Random, final int par3, final int par4, final int par5, final int par6, final int par7)
     {
         if (par7 > 8)
         {
@@ -64,7 +64,7 @@ public class StructureMineshaftPieces
         }
         else if (Math.abs(par3 - par0StructureComponent.getBoundingBox().minX) <= 80 && Math.abs(par5 - par0StructureComponent.getBoundingBox().minZ) <= 80)
         {
-            StructureComponent structurecomponent1 = getRandomComponent(par1List, par2Random, par3, par4, par5, par6, par7 + 1);
+            final StructureComponent structurecomponent1 = getRandomComponent(par1List, par2Random, par3, par4, par5, par6, par7 + 1);
 
             if (structurecomponent1 != null)
             {
@@ -80,7 +80,7 @@ public class StructureMineshaftPieces
         }
     }
 
-    static StructureComponent getNextComponent(StructureComponent par0StructureComponent, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
+    static StructureComponent getNextComponent(final StructureComponent par0StructureComponent, final List par1List, final Random par2Random, final int par3, final int par4, final int par5, final int par6, final int par7)
     {
         return getNextMineShaftComponent(par0StructureComponent, par1List, par2Random, par3, par4, par5, par6, par7);
     }

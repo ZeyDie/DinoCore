@@ -30,7 +30,7 @@ public class TripwireHook extends SimpleAttachableMaterialData implements Redsto
         super(type, data);
     }
 
-    public TripwireHook(BlockFace dir) {
+    public TripwireHook(final BlockFace dir) {
         this();
         setFacingDirection(dir);
     }
@@ -49,7 +49,7 @@ public class TripwireHook extends SimpleAttachableMaterialData implements Redsto
      *
      * @param connected - true if connected, false if not
      */
-    public void setConnected(boolean connected) {
+    public void setConnected(final boolean connected) {
         int dat = getData() & (0x8 | 0x3);
         if (connected) {
             dat |= 0x4;
@@ -71,7 +71,7 @@ public class TripwireHook extends SimpleAttachableMaterialData implements Redsto
      *
      * @param act - true if activated, false if not
      */
-    public void setActivated(boolean act) {
+    public void setActivated(final boolean act) {
         int dat = getData() & (0x4 | 0x3);
         if (act) {
             dat |= 0x8;
@@ -79,7 +79,7 @@ public class TripwireHook extends SimpleAttachableMaterialData implements Redsto
         setData((byte) dat);
     }
 
-    public void setFacingDirection(BlockFace face) {
+    public void setFacingDirection(final BlockFace face) {
         int dat = getData() & 0xC;
         switch (face) {
         case WEST:

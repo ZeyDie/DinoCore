@@ -12,7 +12,7 @@ public class ScoreObjective
     private final ScoreObjectiveCriteria objectiveCriteria;
     private String displayName;
 
-    public ScoreObjective(Scoreboard par1Scoreboard, String par2Str, ScoreObjectiveCriteria par3ScoreObjectiveCriteria)
+    public ScoreObjective(final Scoreboard par1Scoreboard, final String par2Str, final ScoreObjectiveCriteria par3ScoreObjectiveCriteria)
     {
         this.theScoreboard = par1Scoreboard;
         this.name = par2Str;
@@ -41,7 +41,7 @@ public class ScoreObjective
         return this.displayName;
     }
 
-    public void setDisplayName(String par1Str)
+    public void setDisplayName(final String par1Str)
     {
         this.displayName = par1Str;
         this.theScoreboard.func_96532_b(this);

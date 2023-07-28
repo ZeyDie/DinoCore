@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class EntityMooshroom extends EntityCow implements IShearable
 {
-    public EntityMooshroom(World par1World)
+    public EntityMooshroom(final World par1World)
     {
         super(par1World);
         this.setSize(0.9F, 1.3F);
@@ -21,9 +21,9 @@ public class EntityMooshroom extends EntityCow implements IShearable
     /**
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
-    public boolean interact(EntityPlayer par1EntityPlayer)
+    public boolean interact(final EntityPlayer par1EntityPlayer)
     {
-        ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
+        final ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
 
         if (itemstack != null && itemstack.itemID == Item.bowlEmpty.itemID && this.getGrowingAge() >= 0)
         {
@@ -45,7 +45,7 @@ public class EntityMooshroom extends EntityCow implements IShearable
         }
     }
 
-    public EntityMooshroom func_94900_c(EntityAgeable par1EntityAgeable)
+    public EntityMooshroom func_94900_c(final EntityAgeable par1EntityAgeable)
     {
         return new EntityMooshroom(this.worldObj);
     }
@@ -53,34 +53,34 @@ public class EntityMooshroom extends EntityCow implements IShearable
     /**
      * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
      */
-    public EntityCow spawnBabyAnimal(EntityAgeable par1EntityAgeable)
+    public EntityCow spawnBabyAnimal(final EntityAgeable par1EntityAgeable)
     {
         return this.func_94900_c(par1EntityAgeable);
     }
 
-    public EntityAgeable createChild(EntityAgeable par1EntityAgeable)
+    public EntityAgeable createChild(final EntityAgeable par1EntityAgeable)
     {
         return this.func_94900_c(par1EntityAgeable);
     }
 
     @Override
-    public boolean isShearable(ItemStack item, World world, int X, int Y, int Z)
+    public boolean isShearable(final ItemStack item, final World world, final int X, final int Y, final int Z)
     {
         return getGrowingAge() >= 0;
     }
 
     @Override
-    public ArrayList<ItemStack> onSheared(ItemStack item, World world, int X, int Y, int Z, int fortune)
+    public ArrayList<ItemStack> onSheared(final ItemStack item, final World world, final int X, final int Y, final int Z, final int fortune)
     {
         setDead();
-        EntityCow entitycow = new EntityCow(worldObj);
+        final EntityCow entitycow = new EntityCow(worldObj);
         entitycow.setLocationAndAngles(posX, posY, posZ, rotationYaw, rotationPitch);
         entitycow.setHealth(this.getHealth());
         entitycow.renderYawOffset = renderYawOffset;
         worldObj.spawnEntityInWorld(entitycow);
         worldObj.spawnParticle("largeexplode", posX, posY + (double)(height / 2.0F), posZ, 0.0D, 0.0D, 0.0D);
 
-        ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+        final ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
         for (int x = 0; x < 5; x++)
         {
             ret.add(new ItemStack(Block.mushroomRed));

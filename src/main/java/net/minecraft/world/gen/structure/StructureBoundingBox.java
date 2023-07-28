@@ -24,7 +24,7 @@ public class StructureBoundingBox
 
     public StructureBoundingBox() {}
 
-    public StructureBoundingBox(int[] par1ArrayOfInteger)
+    public StructureBoundingBox(final int[] par1ArrayOfInteger)
     {
         if (par1ArrayOfInteger.length == 6)
         {
@@ -48,7 +48,7 @@ public class StructureBoundingBox
     /**
      * used to project a possible new component Bounding Box - to check if it would cut anything already spawned
      */
-    public static StructureBoundingBox getComponentToAddBoundingBox(int par0, int par1, int par2, int par3, int par4, int par5, int par6, int par7, int par8, int par9)
+    public static StructureBoundingBox getComponentToAddBoundingBox(final int par0, final int par1, final int par2, final int par3, final int par4, final int par5, final int par6, final int par7, final int par8, final int par9)
     {
         switch (par9)
         {
@@ -65,7 +65,7 @@ public class StructureBoundingBox
         }
     }
 
-    public StructureBoundingBox(StructureBoundingBox par1StructureBoundingBox)
+    public StructureBoundingBox(final StructureBoundingBox par1StructureBoundingBox)
     {
         this.minX = par1StructureBoundingBox.minX;
         this.minY = par1StructureBoundingBox.minY;
@@ -75,7 +75,7 @@ public class StructureBoundingBox
         this.maxZ = par1StructureBoundingBox.maxZ;
     }
 
-    public StructureBoundingBox(int par1, int par2, int par3, int par4, int par5, int par6)
+    public StructureBoundingBox(final int par1, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         this.minX = par1;
         this.minY = par2;
@@ -85,7 +85,7 @@ public class StructureBoundingBox
         this.maxZ = par6;
     }
 
-    public StructureBoundingBox(int par1, int par2, int par3, int par4)
+    public StructureBoundingBox(final int par1, final int par2, final int par3, final int par4)
     {
         this.minX = par1;
         this.minZ = par2;
@@ -98,7 +98,7 @@ public class StructureBoundingBox
     /**
      * Returns whether the given bounding box intersects with this one. Args: structureboundingbox
      */
-    public boolean intersectsWith(StructureBoundingBox par1StructureBoundingBox)
+    public boolean intersectsWith(final StructureBoundingBox par1StructureBoundingBox)
     {
         return this.maxX >= par1StructureBoundingBox.minX && this.minX <= par1StructureBoundingBox.maxX && this.maxZ >= par1StructureBoundingBox.minZ && this.minZ <= par1StructureBoundingBox.maxZ && this.maxY >= par1StructureBoundingBox.minY && this.minY <= par1StructureBoundingBox.maxY;
     }
@@ -106,7 +106,7 @@ public class StructureBoundingBox
     /**
      * Discover if a coordinate is inside the bounding box area.
      */
-    public boolean intersectsWith(int par1, int par2, int par3, int par4)
+    public boolean intersectsWith(final int par1, final int par2, final int par3, final int par4)
     {
         return this.maxX >= par1 && this.minX <= par3 && this.maxZ >= par2 && this.minZ <= par4;
     }
@@ -114,7 +114,7 @@ public class StructureBoundingBox
     /**
      * Expands a bounding box's dimensions to include the supplied bounding box.
      */
-    public void expandTo(StructureBoundingBox par1StructureBoundingBox)
+    public void expandTo(final StructureBoundingBox par1StructureBoundingBox)
     {
         this.minX = Math.min(this.minX, par1StructureBoundingBox.minX);
         this.minY = Math.min(this.minY, par1StructureBoundingBox.minY);
@@ -127,7 +127,7 @@ public class StructureBoundingBox
     /**
      * Offsets the current bounding box by the specified coordinates. Args: x, y, z
      */
-    public void offset(int par1, int par2, int par3)
+    public void offset(final int par1, final int par2, final int par3)
     {
         this.minX += par1;
         this.minY += par2;
@@ -140,7 +140,7 @@ public class StructureBoundingBox
     /**
      * Returns true if block is inside bounding box
      */
-    public boolean isVecInside(int par1, int par2, int par3)
+    public boolean isVecInside(final int par1, final int par2, final int par3)
     {
         return par1 >= this.minX && par1 <= this.maxX && par3 >= this.minZ && par3 <= this.maxZ && par2 >= this.minY && par2 <= this.maxY;
     }
@@ -189,7 +189,7 @@ public class StructureBoundingBox
         return "(" + this.minX + ", " + this.minY + ", " + this.minZ + "; " + this.maxX + ", " + this.maxY + ", " + this.maxZ + ")";
     }
 
-    public NBTTagIntArray func_143047_a(String par1Str)
+    public NBTTagIntArray func_143047_a(final String par1Str)
     {
         return new NBTTagIntArray(par1Str, new int[] {this.minX, this.minY, this.minZ, this.maxX, this.maxY, this.maxZ});
     }

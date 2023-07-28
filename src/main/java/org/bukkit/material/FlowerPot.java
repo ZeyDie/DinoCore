@@ -86,8 +86,8 @@ public class FlowerPot extends MaterialData {
      *
      * @param materialData MaterialData of the block to put in the flower pot.
      */
-    public void setContents(MaterialData materialData) {
-        Material mat = materialData.getItemType();
+    public void setContents(final MaterialData materialData) {
+        final Material mat = materialData.getItemType();
 
         if (mat == Material.RED_ROSE) {
             setData((byte) 1);
@@ -102,7 +102,7 @@ public class FlowerPot extends MaterialData {
         } else if (mat == Material.DEAD_BUSH) {
             setData((byte) 10);
         } else if (mat == Material.SAPLING) {
-            TreeSpecies species = ((Tree) materialData).getSpecies();
+            final TreeSpecies species = ((Tree) materialData).getSpecies();
 
             if (species == TreeSpecies.GENERIC) {
                 setData((byte) 3);
@@ -114,7 +114,7 @@ public class FlowerPot extends MaterialData {
                 setData((byte) 6);
             }
         } else if (mat == Material.LONG_GRASS) {
-            GrassSpecies species = ((LongGrass) materialData).getSpecies();
+            final GrassSpecies species = ((LongGrass) materialData).getSpecies();
 
             if (species == GrassSpecies.FERN_LIKE) {
                 setData((byte) 11);

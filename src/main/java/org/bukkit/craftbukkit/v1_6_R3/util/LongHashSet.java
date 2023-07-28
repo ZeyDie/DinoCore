@@ -37,7 +37,7 @@ public class LongHashSet {
         this(INITIAL_SIZE);
     }
 
-    public LongHashSet(int size) {
+    public LongHashSet(final int size) {
         values = new long[(size==0 ? 1 : size)];
         elements = 0;
         freeEntries = values.length;
@@ -56,7 +56,7 @@ public class LongHashSet {
         return elements == 0;
     }
 
-    public boolean contains(int msw, int lsw) {
+    public boolean contains(final int msw, final int lsw) {
         // Spigot start
         if ( elements == 0 )
         {
@@ -70,7 +70,7 @@ public class LongHashSet {
         return contains(LongHash.toLong(msw, lsw));
     }
 
-    public boolean contains(long value) {
+    public boolean contains(final long value) {
         // Spigot start
         if ( elements == 0 )
         {
@@ -81,7 +81,7 @@ public class LongHashSet {
             return true;
         }
         // Spigot end
-        int hash = hash(value);
+        final int hash = hash(value);
         int index = (hash & 0x7FFFFFFF) % values.length;
         int offset = 1;
 
@@ -98,13 +98,13 @@ public class LongHashSet {
         return values[index] != FREE;
     }
 
-    public boolean add(int msw, int lsw) {
+    public boolean add(final int msw, final int lsw) {
         return add(LongHash.toLong(msw, lsw));
     }
 
-    public boolean add(long value) {
+    public boolean add(final long value) {
         flat.put( value, Boolean.TRUE ); // Spigot
-        int hash = hash(value);
+        final int hash = hash(value);
         int index = (hash & 0x7FFFFFFF) % values.length;
         int offset = 1;
         int deletedix = -1;
@@ -146,20 +146,20 @@ public class LongHashSet {
         }
     }
 
-    public void remove(int msw, int lsw) {
+    public void remove(final int msw, final int lsw) {
         // Spigot start
         flat.remove(msw, lsw);
         remove0(LongHash.toLong(msw, lsw));
     }
 
-    public boolean remove(long value) {
+    public boolean remove(final long value) {
         flat.remove(value);
         return remove0(value);
     }
 
-    private boolean remove0(long value) {
+    private boolean remove0(final long value) {
         // Spigot end
-        int hash = hash(value);
+        final int hash = hash(value);
         int index = (hash & 0x7FFFFFFF) % values.length;
         int offset = 1;
 
@@ -195,11 +195,11 @@ public class LongHashSet {
     }
 
     public long[] toArray() {
-        long[] result = new long[elements];
-        long[] values = Java15Compat.Arrays_copyOf(this.values, this.values.length);
+        final long[] result = new long[elements];
+        final long[] values = Java15Compat.Arrays_copyOf(this.values, this.values.length);
         int pos = 0;
 
-        for (long value : values) {
+        for (final long value : values) {
             if (value != FREE && value != REMOVED) {
                 result[pos++] = value;
             }
@@ -209,7 +209,7 @@ public class LongHashSet {
     }
 
     public long popFirst() {
-        for (long value : values) {
+        for (final long value : values) {
             if (value != FREE && value != REMOVED) {
                 remove(value);
                 return value;
@@ -220,23 +220,24 @@ public class LongHashSet {
     }
 
     public long[] popAll() {
-        long[] ret = toArray();
+        final long[] ret = toArray();
         clear();
         return ret;
     }
 
     // This method copied from Murmur3, written by Austin Appleby released under Public Domain
     private int hash(long value) {
-        value ^= value >>> 33;
-        value *= 0xff51afd7ed558ccdL;
-        value ^= value >>> 33;
-        value *= 0xc4ceb9fe1a85ec53L;
-        value ^= value >>> 33;
-        return (int) value;
+        long value1 = value;
+        value1 ^= value1 >>> 33;
+        value1 *= 0xff51afd7ed558ccdL;
+        value1 ^= value1 >>> 33;
+        value1 *= 0xc4ceb9fe1a85ec53L;
+        value1 ^= value1 >>> 33;
+        return (int) value1;
     }
 
     private void rehash() {
-        int gargagecells = values.length - (elements + freeEntries);
+        final int gargagecells = values.length - (elements + freeEntries);
         if (gargagecells / (double) values.length > 0.05) {
             rehash(values.length);
         } else {
@@ -244,15 +245,15 @@ public class LongHashSet {
         }
     }
 
-    private void rehash(int newCapacity) {
-        long[] newValues = new long[newCapacity];
+    private void rehash(final int newCapacity) {
+        final long[] newValues = new long[newCapacity];
 
-        for (long value : values) {
+        for (final long value : values) {
             if (value == FREE || value == REMOVED) {
                 continue;
             }
 
-            int hash = hash(value);
+            final int hash = hash(value);
             int index = (hash & 0x7FFFFFFF) % newCapacity;
             int offset = 1;
 
@@ -294,7 +295,7 @@ public class LongHashSet {
                 throw new ConcurrentModificationException();
             }
 
-            int length = values.length;
+            final int length = values.length;
             if (index >= length) {
                 lastReturned = -2;
                 throw new NoSuchElementException();

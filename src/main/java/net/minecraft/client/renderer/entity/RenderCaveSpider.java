@@ -19,17 +19,17 @@ public class RenderCaveSpider extends RenderSpider
         this.shadowSize *= 0.7F;
     }
 
-    protected void scaleSpider(EntityCaveSpider par1EntityCaveSpider, float par2)
+    protected void scaleSpider(final EntityCaveSpider par1EntityCaveSpider, final float par2)
     {
         GL11.glScalef(0.7F, 0.7F, 0.7F);
     }
 
-    protected ResourceLocation getCaveSpiderTextures(EntityCaveSpider par1EntityCaveSpider)
+    protected ResourceLocation getCaveSpiderTextures(final EntityCaveSpider par1EntityCaveSpider)
     {
         return caveSpiderTextures;
     }
 
-    protected ResourceLocation getSpiderTextures(EntitySpider par1EntitySpider)
+    protected ResourceLocation getSpiderTextures(final EntitySpider par1EntitySpider)
     {
         return this.getCaveSpiderTextures((EntityCaveSpider)par1EntitySpider);
     }
@@ -38,7 +38,7 @@ public class RenderCaveSpider extends RenderSpider
      * Allows the render to do any OpenGL state modifications necessary before the model is rendered. Args:
      * entityLiving, partialTickTime
      */
-    protected void preRenderCallback(EntityLivingBase par1EntityLivingBase, float par2)
+    protected void preRenderCallback(final EntityLivingBase par1EntityLivingBase, final float par2)
     {
         this.scaleSpider((EntityCaveSpider)par1EntityLivingBase, par2);
     }
@@ -46,7 +46,7 @@ public class RenderCaveSpider extends RenderSpider
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.getCaveSpiderTextures((EntityCaveSpider)par1Entity);
     }

@@ -82,7 +82,7 @@ public class FMLServerHandler implements IFMLSidedHandler
      *
      * @param minecraftServer
      */
-    public void beginServerLoading(MinecraftServer minecraftServer)
+    public void beginServerLoading(final MinecraftServer minecraftServer)
     {
         server = minecraftServer;
         Loader.instance().loadMods();
@@ -99,7 +99,7 @@ public class FMLServerHandler implements IFMLSidedHandler
     }
 
     @Override
-    public void haltGame(String message, Throwable exception)
+    public void haltGame(final String message, final Throwable exception)
     {
         throw new RuntimeException(message, exception);
     }
@@ -139,40 +139,40 @@ public class FMLServerHandler implements IFMLSidedHandler
     }
 
     @Override
-    public void showGuiScreen(Object clientGuiElement)
+    public void showGuiScreen(final Object clientGuiElement)
     {
 
     }
 
     @Override
-    public Entity spawnEntityIntoClientWorld(EntityRegistration er, EntitySpawnPacket packet)
+    public Entity spawnEntityIntoClientWorld(final EntityRegistration er, final EntitySpawnPacket packet)
     {
         // NOOP
         return null;
     }
 
     @Override
-    public void adjustEntityLocationOnClient(EntitySpawnAdjustmentPacket entitySpawnAdjustmentPacket)
+    public void adjustEntityLocationOnClient(final EntitySpawnAdjustmentPacket entitySpawnAdjustmentPacket)
     {
         // NOOP
     }
     @Override
-    public void sendPacket(Packet packet)
+    public void sendPacket(final Packet packet)
     {
         throw new RuntimeException("You cannot send a bare packet without a target on the server!");
     }
     @Override
-    public void displayMissingMods(ModMissingPacket modMissingPacket)
+    public void displayMissingMods(final ModMissingPacket modMissingPacket)
     {
         // NOOP on server
     }
     @Override
-    public void handleTinyPacket(NetHandler handler, Packet131MapData mapData)
+    public void handleTinyPacket(final NetHandler handler, final Packet131MapData mapData)
     {
         // NOOP on server
     }
     @Override
-    public void setClientCompatibilityLevel(byte compatibilityLevel)
+    public void setClientCompatibilityLevel(final byte compatibilityLevel)
     {
         // NOOP on server
     }
@@ -188,14 +188,14 @@ public class FMLServerHandler implements IFMLSidedHandler
         return false;
     }
     @Override
-    public void disconnectIDMismatch(MapDifference<Integer, ItemData> s, NetHandler handler, INetworkManager mgr)
+    public void disconnectIDMismatch(final MapDifference<Integer, ItemData> s, final NetHandler handler, final INetworkManager mgr)
     {
 
     }
     @Override
-    public void addModAsResource(ModContainer container)
+    public void addModAsResource(final ModContainer container)
     {
-        File source = container.getSource();
+        final File source = container.getSource();
         try
         {
             if (source.isDirectory())
@@ -207,18 +207,18 @@ public class FMLServerHandler implements IFMLSidedHandler
                 searchZipForENUSLanguage(source);
             }
         }
-        catch (IOException ioe)
+        catch (final IOException ioe)
         {
 
         }
     }
     private static final Pattern assetENUSLang = Pattern.compile("assets/(.*)/lang/en_US.lang");
-    private void searchZipForENUSLanguage(File source) throws IOException
+    private void searchZipForENUSLanguage(final File source) throws IOException
     {
-        ZipFile zf = new ZipFile(source);
-        for (ZipEntry ze : Collections.list(zf.entries()))
+        final ZipFile zf = new ZipFile(source);
+        for (final ZipEntry ze : Collections.list(zf.entries()))
         {
-            Matcher matcher = assetENUSLang.matcher(ze.getName());
+            final Matcher matcher = assetENUSLang.matcher(ze.getName());
             if (matcher.matches())
             {
                 FMLLog.fine("Injecting found translation data in zip file %s at %s into language system", source.getName(), ze.getName());
@@ -227,16 +227,16 @@ public class FMLServerHandler implements IFMLSidedHandler
         }
         zf.close();
     }
-    private void searchDirForENUSLanguage(File source, String path) throws IOException
+    private void searchDirForENUSLanguage(final File source, final String path) throws IOException
     {
-        for (File file : source.listFiles())
+        for (final File file : source.listFiles())
         {
-            String currPath = path+file.getName();
+            final String currPath = path+file.getName();
             if (file.isDirectory())
             {
                 searchDirForENUSLanguage(file, currPath+'/');
             }
-            Matcher matcher = assetENUSLang.matcher(currPath);
+            final Matcher matcher = assetENUSLang.matcher(currPath);
             if (matcher.matches())
             {
                 FMLLog.fine("Injecting found translation data at %s into language system", currPath);

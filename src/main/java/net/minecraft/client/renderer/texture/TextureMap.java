@@ -38,7 +38,7 @@ public class TextureMap extends AbstractTexture implements TickableTextureObject
     public final String basePath;
     private final TextureAtlasSprite missingImage = new TextureAtlasSprite("missingno");
 
-    public TextureMap(int par1, String par2Str)
+    public TextureMap(final int par1, final String par2Str)
     {
         this.textureType = par1;
         this.basePath = par2Str;
@@ -52,40 +52,40 @@ public class TextureMap extends AbstractTexture implements TickableTextureObject
         this.missingImage.setIconHeight(16);
     }
 
-    public void loadTexture(ResourceManager par1ResourceManager) throws IOException
+    public void loadTexture(final ResourceManager par1ResourceManager) throws IOException
     {
         this.initMissingImage();
         this.loadTextureAtlas(par1ResourceManager);
     }
 
-    public void loadTextureAtlas(ResourceManager par1ResourceManager)
+    public void loadTextureAtlas(final ResourceManager par1ResourceManager)
     {
         registerIcons(); //Re-gather list of Icons, allows for addition/removal of blocks/items after this map was initially constructed.
 
-        int i = Minecraft.getGLMaximumTextureSize();
-        Stitcher stitcher = new Stitcher(i, i, true);
+        final int i = Minecraft.getGLMaximumTextureSize();
+        final Stitcher stitcher = new Stitcher(i, i, true);
         this.mapUploadedSprites.clear();
         this.listAnimatedSprites.clear();
         ForgeHooksClient.onTextureStitchedPre(this);
-        Iterator iterator = this.mapRegisteredSprites.entrySet().iterator();
+        final Iterator iterator = this.mapRegisteredSprites.entrySet().iterator();
 
         while (iterator.hasNext())
         {
-            Entry entry = (Entry)iterator.next();
-            ResourceLocation resourcelocation = new ResourceLocation((String)entry.getKey());
-            TextureAtlasSprite textureatlassprite = (TextureAtlasSprite)entry.getValue();
-            ResourceLocation resourcelocation1 = new ResourceLocation(resourcelocation.getResourceDomain(), String.format("%s/%s%s", new Object[] {this.basePath, resourcelocation.getResourcePath(), ".png"}));
+            final Entry entry = (Entry)iterator.next();
+            final ResourceLocation resourcelocation = new ResourceLocation((String)entry.getKey());
+            final TextureAtlasSprite textureatlassprite = (TextureAtlasSprite)entry.getValue();
+            final ResourceLocation resourcelocation1 = new ResourceLocation(resourcelocation.getResourceDomain(), String.format("%s/%s%s", new Object[] {this.basePath, resourcelocation.getResourcePath(), ".png"}));
 
             try
             {
                 if (!textureatlassprite.load(par1ResourceManager, resourcelocation1)) continue;
             }
-            catch (RuntimeException runtimeexception)
+            catch (final RuntimeException runtimeexception)
             {
                 Minecraft.getMinecraft().getLogAgent().logSevere(String.format("Unable to parse animation metadata from %s: %s", new Object[] {resourcelocation1, runtimeexception.getMessage()}));
                 continue;
             }
-            catch (IOException ioexception)
+            catch (final IOException ioexception)
             {
                 Minecraft.getMinecraft().getLogAgent().logSevere("Using missing texture, unable to load: " + resourcelocation1);
                 continue;
@@ -100,20 +100,20 @@ public class TextureMap extends AbstractTexture implements TickableTextureObject
         {
             stitcher.doStitch();
         }
-        catch (StitcherException stitcherexception)
+        catch (final StitcherException stitcherexception)
         {
             throw stitcherexception;
         }
 
         TextureUtil.allocateTexture(this.getGlTextureId(), stitcher.getCurrentWidth(), stitcher.getCurrentHeight());
-        HashMap hashmap = Maps.newHashMap(this.mapRegisteredSprites);
+        final HashMap hashmap = Maps.newHashMap(this.mapRegisteredSprites);
         Iterator iterator1 = stitcher.getStichSlots().iterator();
         TextureAtlasSprite textureatlassprite1;
 
         while (iterator1.hasNext())
         {
             textureatlassprite1 = (TextureAtlasSprite)iterator1.next();
-            String s = textureatlassprite1.getIconName();
+            final String s = textureatlassprite1.getIconName();
             hashmap.remove(s);
             this.mapUploadedSprites.put(s, textureatlassprite1);
 
@@ -121,10 +121,10 @@ public class TextureMap extends AbstractTexture implements TickableTextureObject
             {
                 TextureUtil.uploadTextureSub(textureatlassprite1.getFrameTextureData(0), textureatlassprite1.getIconWidth(), textureatlassprite1.getIconHeight(), textureatlassprite1.getOriginX(), textureatlassprite1.getOriginY(), false, false);
             }
-            catch (Throwable throwable)
+            catch (final Throwable throwable)
             {
-                CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Stitching texture atlas");
-                CrashReportCategory crashreportcategory = crashreport.makeCategory("Texture being stitched together");
+                final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Stitching texture atlas");
+                final CrashReportCategory crashreportcategory = crashreport.makeCategory("Texture being stitched together");
                 crashreportcategory.addCrashSection("Atlas path", this.basePath);
                 crashreportcategory.addCrashSection("Sprite", textureatlassprite1);
                 throw new ReportedException(crashreport);
@@ -158,12 +158,12 @@ public class TextureMap extends AbstractTexture implements TickableTextureObject
 
         if (this.textureType == 0)
         {
-            Block[] ablock = Block.blocksList;
+            final Block[] ablock = Block.blocksList;
             i = ablock.length;
 
             for (j = 0; j < i; ++j)
             {
-                Block block = ablock[j];
+                final Block block = ablock[j];
 
                 if (block != null)
                 {
@@ -175,12 +175,12 @@ public class TextureMap extends AbstractTexture implements TickableTextureObject
             RenderManager.instance.updateIcons(this);
         }
 
-        Item[] aitem = Item.itemsList;
+        final Item[] aitem = Item.itemsList;
         i = aitem.length;
 
         for (j = 0; j < i; ++j)
         {
-            Item item = aitem[j];
+            final Item item = aitem[j];
 
             if (item != null && item.getSpriteNumber() == this.textureType)
             {
@@ -189,7 +189,7 @@ public class TextureMap extends AbstractTexture implements TickableTextureObject
         }
     }
 
-    public TextureAtlasSprite getAtlasSprite(String par1Str)
+    public TextureAtlasSprite getAtlasSprite(final String par1Str)
     {
         TextureAtlasSprite textureatlassprite = (TextureAtlasSprite)this.mapUploadedSprites.get(par1Str);
 
@@ -204,48 +204,49 @@ public class TextureMap extends AbstractTexture implements TickableTextureObject
     public void updateAnimations()
     {
         TextureUtil.bindTexture(this.getGlTextureId());
-        Iterator iterator = this.listAnimatedSprites.iterator();
+        final Iterator iterator = this.listAnimatedSprites.iterator();
 
         while (iterator.hasNext())
         {
-            TextureAtlasSprite textureatlassprite = (TextureAtlasSprite)iterator.next();
+            final TextureAtlasSprite textureatlassprite = (TextureAtlasSprite)iterator.next();
             textureatlassprite.updateAnimation();
         }
     }
 
     public Icon registerIcon(String par1Str)
     {
-        if (par1Str == null)
+        String par1Str1 = par1Str;
+        if (par1Str1 == null)
         {
             (new RuntimeException("Don\'t register null!")).printStackTrace();
-            par1Str = "null"; //Don't allow things to actually register null..
+            par1Str1 = "null"; //Don't allow things to actually register null..
         }
 
-        Object object = (TextureAtlasSprite)this.mapRegisteredSprites.get(par1Str);
+        Object object = (TextureAtlasSprite)this.mapRegisteredSprites.get(par1Str1);
 
         if (object == null)
         {
             if (this.textureType == 1)
             {
-                if ("clock".equals(par1Str))
+                if ("clock".equals(par1Str1))
                 {
-                    object = new TextureClock(par1Str);
+                    object = new TextureClock(par1Str1);
                 }
-                else if ("compass".equals(par1Str))
+                else if ("compass".equals(par1Str1))
                 {
-                    object = new TextureCompass(par1Str);
+                    object = new TextureCompass(par1Str1);
                 }
                 else
                 {
-                    object = new TextureAtlasSprite(par1Str);
+                    object = new TextureAtlasSprite(par1Str1);
                 }
             }
             else
             {
-                object = new TextureAtlasSprite(par1Str);
+                object = new TextureAtlasSprite(par1Str1);
             }
 
-            this.mapRegisteredSprites.put(par1Str, object);
+            this.mapRegisteredSprites.put(par1Str1, object);
         }
 
         return (Icon)object;
@@ -271,7 +272,7 @@ public class TextureMap extends AbstractTexture implements TickableTextureObject
      * @param name The name of the entry to find
      * @return The registered entry, null if nothing was registered.
      */
-    public TextureAtlasSprite getTextureExtry(String name)
+    public TextureAtlasSprite getTextureExtry(final String name)
     {
         return (TextureAtlasSprite)mapRegisteredSprites.get(name);
     }
@@ -284,7 +285,7 @@ public class TextureMap extends AbstractTexture implements TickableTextureObject
      * @param entry Entry instance
      * @return True if the entry was added to the map, false otherwise.
      */
-    public boolean setTextureEntry(String name, TextureAtlasSprite entry)
+    public boolean setTextureEntry(final String name, final TextureAtlasSprite entry)
     {
         if (!mapRegisteredSprites.containsKey(name))
         {

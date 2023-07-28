@@ -22,17 +22,17 @@ public class EntityAINearestAttackableTarget extends EntityAITarget
     private final IEntitySelector targetEntitySelector;
     private EntityLivingBase targetEntity;
 
-    public EntityAINearestAttackableTarget(EntityCreature par1EntityCreature, Class par2Class, int par3, boolean par4)
+    public EntityAINearestAttackableTarget(final EntityCreature par1EntityCreature, final Class par2Class, final int par3, final boolean par4)
     {
         this(par1EntityCreature, par2Class, par3, par4, false);
     }
 
-    public EntityAINearestAttackableTarget(EntityCreature par1EntityCreature, Class par2Class, int par3, boolean par4, boolean par5)
+    public EntityAINearestAttackableTarget(final EntityCreature par1EntityCreature, final Class par2Class, final int par3, final boolean par4, final boolean par5)
     {
         this(par1EntityCreature, par2Class, par3, par4, par5, (IEntitySelector)null);
     }
 
-    public EntityAINearestAttackableTarget(EntityCreature par1EntityCreature, Class par2Class, int par3, boolean par4, boolean par5, IEntitySelector par6IEntitySelector)
+    public EntityAINearestAttackableTarget(final EntityCreature par1EntityCreature, final Class par2Class, final int par3, final boolean par4, final boolean par5, final IEntitySelector par6IEntitySelector)
     {
         super(par1EntityCreature, par4, par5);
         this.targetClass = par2Class;
@@ -53,8 +53,8 @@ public class EntityAINearestAttackableTarget extends EntityAITarget
         }
         else
         {
-            double d0 = this.getTargetDistance();
-            List list = this.taskOwner.worldObj.selectEntitiesWithinAABB(this.targetClass, this.taskOwner.boundingBox.expand(d0, 4.0D, d0), this.targetEntitySelector);
+            final double d0 = this.getTargetDistance();
+            final List list = this.taskOwner.worldObj.selectEntitiesWithinAABB(this.targetClass, this.taskOwner.boundingBox.expand(d0, 4.0D, d0), this.targetEntitySelector);
             Collections.sort(list, this.theNearestAttackableTargetSorter);
 
             if (list.isEmpty())

@@ -13,21 +13,21 @@ public abstract class SimpleAttachableMaterialData extends MaterialData implemen
      * @deprecated Magic value
      */
     @Deprecated
-    public SimpleAttachableMaterialData(int type) {
+    public SimpleAttachableMaterialData(final int type) {
         super(type);
     }
 
-    public SimpleAttachableMaterialData(int type, BlockFace direction) {
+    public SimpleAttachableMaterialData(final int type, final BlockFace direction) {
         this(type);
         setFacingDirection(direction);
     }
 
-    public SimpleAttachableMaterialData(Material type, BlockFace direction) {
+    public SimpleAttachableMaterialData(final Material type, final BlockFace direction) {
         this(type);
         setFacingDirection(direction);
     }
 
-    public SimpleAttachableMaterialData(Material type) {
+    public SimpleAttachableMaterialData(final Material type) {
         super(type);
     }
 
@@ -36,7 +36,7 @@ public abstract class SimpleAttachableMaterialData extends MaterialData implemen
      * @deprecated Magic value
      */
     @Deprecated
-    public SimpleAttachableMaterialData(int type, byte data) {
+    public SimpleAttachableMaterialData(final int type, final byte data) {
         super(type, data);
     }
 
@@ -45,12 +45,12 @@ public abstract class SimpleAttachableMaterialData extends MaterialData implemen
      * @deprecated Magic value
      */
     @Deprecated
-    public SimpleAttachableMaterialData(Material type, byte data) {
+    public SimpleAttachableMaterialData(final Material type, final byte data) {
         super(type, data);
     }
 
     public BlockFace getFacing() {
-        BlockFace attachedFace = getAttachedFace();
+        final BlockFace attachedFace = getAttachedFace();
         return attachedFace == null ? null : attachedFace.getOppositeFace();
     }
 

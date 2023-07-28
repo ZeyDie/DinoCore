@@ -16,7 +16,7 @@ public class IllegalPluginAccessException extends RuntimeException {
      *
      * @param msg the detail message.
      */
-    public IllegalPluginAccessException(String msg) {
+    public IllegalPluginAccessException(final String msg) {
         super(msg);
     }
 }

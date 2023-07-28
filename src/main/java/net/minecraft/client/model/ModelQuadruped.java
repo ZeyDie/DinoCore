@@ -18,7 +18,7 @@ public class ModelQuadruped extends ModelBase
     protected float field_78145_g = 8.0F;
     protected float field_78151_h = 4.0F;
 
-    public ModelQuadruped(int par1, float par2)
+    public ModelQuadruped(final int par1, final float par2)
     {
         this.head.addBox(-4.0F, -4.0F, -8.0F, 8, 8, 8, par2);
         this.head.setRotationPoint(0.0F, (float)(18 - par1), -6.0F);
@@ -42,13 +42,13 @@ public class ModelQuadruped extends ModelBase
     /**
      * Sets the models various rotation angles then renders the model.
      */
-    public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7)
+    public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7)
     {
         this.setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 
         if (this.isChild)
         {
-            float f6 = 2.0F;
+            final float f6 = 2.0F;
             GL11.glPushMatrix();
             GL11.glTranslatef(0.0F, this.field_78145_g * par7, this.field_78151_h * par7);
             this.head.render(par7);
@@ -79,12 +79,12 @@ public class ModelQuadruped extends ModelBase
      * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how
      * "far" arms and legs can swing at most.
      */
-    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity)
+    public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity)
     {
-        float f6 = (180F / (float)Math.PI);
-        this.head.rotateAngleX = par5 / (180F / (float)Math.PI);
-        this.head.rotateAngleY = par4 / (180F / (float)Math.PI);
-        this.body.rotateAngleX = ((float)Math.PI / 2F);
+        final float f6 = (180.0F / (float)Math.PI);
+        this.head.rotateAngleX = par5 / (180.0F / (float)Math.PI);
+        this.head.rotateAngleY = par4 / (180.0F / (float)Math.PI);
+        this.body.rotateAngleX = ((float)Math.PI / 2.0F);
         this.leg1.rotateAngleX = MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
         this.leg2.rotateAngleX = MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 1.4F * par2;
         this.leg3.rotateAngleX = MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 1.4F * par2;

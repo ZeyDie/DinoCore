@@ -44,7 +44,7 @@ public class PlayerMoveEvent extends PlayerEvent implements Cancellable {
      *
      * @param cancel true if you wish to cancel this event
      */
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 
@@ -62,7 +62,7 @@ public class PlayerMoveEvent extends PlayerEvent implements Cancellable {
      *
      * @param from New location to mark as the players previous location
      */
-    public void setFrom(Location from) {
+    public void setFrom(final Location from) {
         this.from = from;
     }
 
@@ -80,7 +80,7 @@ public class PlayerMoveEvent extends PlayerEvent implements Cancellable {
      *
      * @param to New Location this player will move to
      */
-    public void setTo(Location to) {
+    public void setTo(final Location to) {
         this.to = to;
     }
 

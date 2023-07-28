@@ -10,19 +10,19 @@ import org.bukkit.help.HelpTopic;
 public class CustomHelpTopic extends HelpTopic {
     private final String permissionNode;
 
-    public CustomHelpTopic(String name, String shortText, String fullText, String permissionNode) {
+    public CustomHelpTopic(final String name, final String shortText, final String fullText, final String permissionNode) {
         this.permissionNode = permissionNode;
         this.name = name;
         this.shortText = shortText;
         this.fullText = shortText + "\n" + fullText;
     }
 
-    public boolean canSee(CommandSender sender) {
+    public boolean canSee(final CommandSender sender) {
         if (sender instanceof ConsoleCommandSender) {
             return true;
         }
 
-        if (!permissionNode.equals("")) {
+        if (!permissionNode.isEmpty()) {
             return sender.hasPermission(permissionNode);
         } else {
             return true;

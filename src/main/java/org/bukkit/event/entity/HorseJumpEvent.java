@@ -21,7 +21,7 @@ public class HorseJumpEvent extends EntityEvent implements Cancellable {
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         cancelled = cancel;
     }
 
@@ -63,7 +63,7 @@ public class HorseJumpEvent extends EntityEvent implements Cancellable {
      *
      * @param power power of the jump
      */
-    public void setPower(float power) {
+    public void setPower(final float power) {
         this.power = power;
     }
 

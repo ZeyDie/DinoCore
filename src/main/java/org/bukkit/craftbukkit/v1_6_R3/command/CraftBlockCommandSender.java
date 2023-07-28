@@ -9,7 +9,7 @@ import org.bukkit.command.BlockCommandSender;
 public class CraftBlockCommandSender extends ServerCommandSender implements BlockCommandSender {
     private final net.minecraft.tileentity.TileEntityCommandBlock commandBlock;
 
-    public CraftBlockCommandSender(net.minecraft.tileentity.TileEntityCommandBlock commandBlock) {
+    public CraftBlockCommandSender(final net.minecraft.tileentity.TileEntityCommandBlock commandBlock) {
         super();
         this.commandBlock = commandBlock;
     }
@@ -18,10 +18,10 @@ public class CraftBlockCommandSender extends ServerCommandSender implements Bloc
         return commandBlock.getWorldObj().getWorld().getBlockAt(commandBlock.xCoord, commandBlock.yCoord, commandBlock.zCoord);
     }
 
-    public void sendMessage(String message) {
+    public void sendMessage(final String message) {
     }
 
-    public void sendMessage(String[] messages) {
+    public void sendMessage(final String[] messages) {
     }
 
     public String getName() {
@@ -32,7 +32,7 @@ public class CraftBlockCommandSender extends ServerCommandSender implements Bloc
         return true;
     }
 
-    public void setOp(boolean value) {
+    public void setOp(final boolean value) {
         throw new UnsupportedOperationException("Cannot change operator status of a block");
     }
 }

@@ -12,7 +12,7 @@ public abstract class BlockRotatedPillar extends Block
     @SideOnly(Side.CLIENT)
     protected Icon field_111051_a;
 
-    protected BlockRotatedPillar(int par1, Material par2Material)
+    protected BlockRotatedPillar(final int par1, final Material par2Material)
     {
         super(par1, par2Material);
     }
@@ -28,9 +28,9 @@ public abstract class BlockRotatedPillar extends Block
     /**
      * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
      */
-    public int onBlockPlaced(World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9)
+    public int onBlockPlaced(final World par1World, final int par2, final int par3, final int par4, final int par5, final float par6, final float par7, final float par8, final int par9)
     {
-        int j1 = par9 & 3;
+        final int j1 = par9 & 3;
         byte b0 = 0;
 
         switch (par5)
@@ -56,17 +56,17 @@ public abstract class BlockRotatedPillar extends Block
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
-        int k = par2 & 12;
-        int l = par2 & 3;
+        final int k = par2 & 12;
+        final int l = par2 & 3;
         return k == 0 && (par1 == 1 || par1 == 0) ? this.getEndIcon(l) : (k == 4 && (par1 == 5 || par1 == 4) ? this.getEndIcon(l) : (k == 8 && (par1 == 2 || par1 == 3) ? this.getEndIcon(l) : this.getSideIcon(l)));
     }
 
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int par1)
+    public int damageDropped(final int par1)
     {
         return par1 & 3;
     }
@@ -83,12 +83,12 @@ public abstract class BlockRotatedPillar extends Block
     /**
      * The icon for the tops and bottoms of the block.
      */
-    protected Icon getEndIcon(int par1)
+    protected Icon getEndIcon(final int par1)
     {
         return this.field_111051_a;
     }
 
-    public int func_111050_e(int par1)
+    public int func_111050_e(final int par1)
     {
         return par1 & 3;
     }
@@ -97,7 +97,7 @@ public abstract class BlockRotatedPillar extends Block
      * Returns an item stack containing a single instance of the current block type. 'i' is the block's subtype/damage
      * and is ignored for blocks which do not support subtypes. Blocks which cannot be harvested should return null.
      */
-    protected ItemStack createStackedBlock(int par1)
+    protected ItemStack createStackedBlock(final int par1)
     {
         return new ItemStack(this.blockID, 1, this.func_111050_e(par1));
     }

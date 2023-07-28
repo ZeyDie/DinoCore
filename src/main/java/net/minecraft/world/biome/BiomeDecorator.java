@@ -142,7 +142,7 @@ public class BiomeDecorator
     /** True if decorator should generate surface lava & water */
     public boolean generateLakes;
 
-    public BiomeDecorator(BiomeGenBase par1BiomeGenBase)
+    public BiomeDecorator(final BiomeGenBase par1BiomeGenBase)
     {
         this.sandGen = new WorldGenSand(7, Block.sand.blockID);
         this.gravelAsSandGen = new WorldGenSand(6, Block.gravel.blockID);
@@ -174,7 +174,7 @@ public class BiomeDecorator
     /**
      * Decorates the world. Calls code that was formerly (pre-1.8) in ChunkProviderGenerate.populate
      */
-    public void decorate(World par1World, Random par2Random, int par3, int par4)
+    public void decorate(final World par1World, final Random par2Random, final int par3, final int par4)
     {
         if (this.currentWorld != null)
         {
@@ -247,7 +247,7 @@ public class BiomeDecorator
         {
             k = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
             l = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
-            WorldGenerator worldgenerator = this.biome.getRandomWorldGenForTrees(this.randomGenerator);
+            final WorldGenerator worldgenerator = this.biome.getRandomWorldGenForTrees(this.randomGenerator);
             worldgenerator.setScale(1.0D, 1.0D, 1.0D);
             worldgenerator.generate(this.currentWorld, this.randomGenerator, k, this.currentWorld.getHeightValue(k, l), l);
         }
@@ -285,7 +285,7 @@ public class BiomeDecorator
             k = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
             l = this.randomGenerator.nextInt(128);
             i1 = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
-            WorldGenerator worldgenerator1 = this.biome.getRandomWorldGenForGrass(this.randomGenerator);
+            final WorldGenerator worldgenerator1 = this.biome.getRandomWorldGenForGrass(this.randomGenerator);
             worldgenerator1.generate(this.currentWorld, this.randomGenerator, k, l, i1);
         }
 
@@ -409,13 +409,13 @@ public class BiomeDecorator
     /**
      * Standard ore generation helper. Generates most ores.
      */
-    protected void genStandardOre1(int par1, WorldGenerator par2WorldGenerator, int par3, int par4)
+    protected void genStandardOre1(final int par1, final WorldGenerator par2WorldGenerator, final int par3, final int par4)
     {
         for (int l = 0; l < par1; ++l)
         {
-            int i1 = this.chunk_X + this.randomGenerator.nextInt(16);
-            int j1 = this.randomGenerator.nextInt(par4 - par3) + par3;
-            int k1 = this.chunk_Z + this.randomGenerator.nextInt(16);
+            final int i1 = this.chunk_X + this.randomGenerator.nextInt(16);
+            final int j1 = this.randomGenerator.nextInt(par4 - par3) + par3;
+            final int k1 = this.chunk_Z + this.randomGenerator.nextInt(16);
             par2WorldGenerator.generate(this.currentWorld, this.randomGenerator, i1, j1, k1);
         }
     }
@@ -423,13 +423,13 @@ public class BiomeDecorator
     /**
      * Standard ore generation helper. Generates Lapis Lazuli.
      */
-    protected void genStandardOre2(int par1, WorldGenerator par2WorldGenerator, int par3, int par4)
+    protected void genStandardOre2(final int par1, final WorldGenerator par2WorldGenerator, final int par3, final int par4)
     {
         for (int l = 0; l < par1; ++l)
         {
-            int i1 = this.chunk_X + this.randomGenerator.nextInt(16);
-            int j1 = this.randomGenerator.nextInt(par4) + this.randomGenerator.nextInt(par4) + (par3 - par4);
-            int k1 = this.chunk_Z + this.randomGenerator.nextInt(16);
+            final int i1 = this.chunk_X + this.randomGenerator.nextInt(16);
+            final int j1 = this.randomGenerator.nextInt(par4) + this.randomGenerator.nextInt(par4) + (par3 - par4);
+            final int k1 = this.chunk_Z + this.randomGenerator.nextInt(16);
             par2WorldGenerator.generate(this.currentWorld, this.randomGenerator, i1, j1, k1);
         }
     }

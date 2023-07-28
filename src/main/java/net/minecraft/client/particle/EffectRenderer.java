@@ -31,7 +31,7 @@ public class EffectRenderer
     /** RNG. */
     private Random rand = new Random();
 
-    public EffectRenderer(World par1World, TextureManager par2TextureManager)
+    public EffectRenderer(final World par1World, final TextureManager par2TextureManager)
     {
         if (par1World != null)
         {
@@ -46,9 +46,9 @@ public class EffectRenderer
         }
     }
 
-    public void addEffect(EntityFX par1EntityFX)
+    public void addEffect(final EntityFX par1EntityFX)
     {
-        int i = par1EntityFX.getFXLayer();
+        final int i = par1EntityFX.getFXLayer();
 
         if (this.fxLayers[i].size() >= 4000)
         {
@@ -64,7 +64,7 @@ public class EffectRenderer
         {
             for (int j = 0; j < this.fxLayers[i].size(); ++j)
             {
-                EntityFX entityfx = (EntityFX)this.fxLayers[i].get(j);
+                final EntityFX entityfx = (EntityFX)this.fxLayers[i].get(j);
 
                 if (entityfx != null)
                 {
@@ -82,13 +82,13 @@ public class EffectRenderer
     /**
      * Renders all current particles. Args player, partialTickTime
      */
-    public void renderParticles(Entity par1Entity, float par2)
+    public void renderParticles(final Entity par1Entity, final float par2)
     {
-        float f1 = ActiveRenderInfo.rotationX;
-        float f2 = ActiveRenderInfo.rotationZ;
-        float f3 = ActiveRenderInfo.rotationYZ;
-        float f4 = ActiveRenderInfo.rotationXY;
-        float f5 = ActiveRenderInfo.rotationXZ;
+        final float f1 = ActiveRenderInfo.rotationX;
+        final float f2 = ActiveRenderInfo.rotationZ;
+        final float f3 = ActiveRenderInfo.rotationYZ;
+        final float f4 = ActiveRenderInfo.rotationXY;
+        final float f5 = ActiveRenderInfo.rotationXZ;
         EntityFX.interpPosX = par1Entity.lastTickPosX + (par1Entity.posX - par1Entity.lastTickPosX) * (double)par2;
         EntityFX.interpPosY = par1Entity.lastTickPosY + (par1Entity.posY - par1Entity.lastTickPosY) * (double)par2;
         EntityFX.interpPosZ = par1Entity.lastTickPosZ + (par1Entity.posZ - par1Entity.lastTickPosZ) * (double)par2;
@@ -115,12 +115,12 @@ public class EffectRenderer
                 GL11.glEnable(GL11.GL_BLEND);
                 GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
                 GL11.glAlphaFunc(GL11.GL_GREATER, 0.003921569F);
-                Tessellator tessellator = Tessellator.instance;
+                final Tessellator tessellator = Tessellator.instance;
                 tessellator.startDrawingQuads();
 
                 for (int j = 0; j < this.fxLayers[i].size(); ++j)
                 {
-                    EntityFX entityfx = (EntityFX)this.fxLayers[i].get(j);
+                    final EntityFX entityfx = (EntityFX)this.fxLayers[i].get(j);
                     if (entityfx == null) continue;
                     tessellator.setBrightness(entityfx.getBrightnessForRender(par2));
                     entityfx.renderParticle(tessellator, par2, f1, f5, f2, f3, f4);
@@ -134,24 +134,24 @@ public class EffectRenderer
         }
     }
 
-    public void renderLitParticles(Entity par1Entity, float par2)
+    public void renderLitParticles(final Entity par1Entity, final float par2)
     {
-        float f1 = 0.017453292F;
-        float f2 = MathHelper.cos(par1Entity.rotationYaw * 0.017453292F);
-        float f3 = MathHelper.sin(par1Entity.rotationYaw * 0.017453292F);
-        float f4 = -f3 * MathHelper.sin(par1Entity.rotationPitch * 0.017453292F);
-        float f5 = f2 * MathHelper.sin(par1Entity.rotationPitch * 0.017453292F);
-        float f6 = MathHelper.cos(par1Entity.rotationPitch * 0.017453292F);
-        byte b0 = 3;
-        List list = this.fxLayers[b0];
+        final float f1 = 0.017453292F;
+        final float f2 = MathHelper.cos(par1Entity.rotationYaw * 0.017453292F);
+        final float f3 = MathHelper.sin(par1Entity.rotationYaw * 0.017453292F);
+        final float f4 = -f3 * MathHelper.sin(par1Entity.rotationPitch * 0.017453292F);
+        final float f5 = f2 * MathHelper.sin(par1Entity.rotationPitch * 0.017453292F);
+        final float f6 = MathHelper.cos(par1Entity.rotationPitch * 0.017453292F);
+        final byte b0 = 3;
+        final List list = this.fxLayers[b0];
 
         if (!list.isEmpty())
         {
-            Tessellator tessellator = Tessellator.instance;
+            final Tessellator tessellator = Tessellator.instance;
 
             for (int i = 0; i < list.size(); ++i)
             {
-                EntityFX entityfx = (EntityFX)list.get(i);
+                final EntityFX entityfx = (EntityFX)list.get(i);
                 if (entityfx == null) continue;
                 tessellator.setBrightness(entityfx.getBrightnessForRender(par2));
                 entityfx.renderParticle(tessellator, par2, f2, f6, f3, f4, f5);
@@ -159,7 +159,7 @@ public class EffectRenderer
         }
     }
 
-    public void clearEffects(World par1World)
+    public void clearEffects(final World par1World)
     {
         this.worldObj = par1World;
 
@@ -169,12 +169,12 @@ public class EffectRenderer
         }
     }
 
-    public void addBlockDestroyEffects(int par1, int par2, int par3, int par4, int par5)
+    public void addBlockDestroyEffects(final int par1, final int par2, final int par3, final int par4, final int par5)
     {
-        Block block = Block.blocksList[par4];
+        final Block block = Block.blocksList[par4];
         if (block != null && !block.addBlockDestroyEffects(worldObj, par1, par2, par3, par5, this))
         {
-            byte b0 = 4;
+            final byte b0 = 4;
 
             for (int j1 = 0; j1 < b0; ++j1)
             {
@@ -182,9 +182,9 @@ public class EffectRenderer
                 {
                     for (int l1 = 0; l1 < b0; ++l1)
                     {
-                        double d0 = (double)par1 + ((double)j1 + 0.5D) / (double)b0;
-                        double d1 = (double)par2 + ((double)k1 + 0.5D) / (double)b0;
-                        double d2 = (double)par3 + ((double)l1 + 0.5D) / (double)b0;
+                        final double d0 = (double)par1 + ((double)j1 + 0.5D) / (double)b0;
+                        final double d1 = (double)par2 + ((double)k1 + 0.5D) / (double)b0;
+                        final double d2 = (double)par3 + ((double)l1 + 0.5D) / (double)b0;
                         this.addEffect((new EntityDiggingFX(this.worldObj, d0, d1, d2, d0 - (double)par1 - 0.5D, d1 - (double)par2 - 0.5D, d2 - (double)par3 - 0.5D, block, par5)).applyColourMultiplier(par1, par2, par3));
                     }
                 }
@@ -195,14 +195,14 @@ public class EffectRenderer
     /**
      * Adds block hit particles for the specified block. Args: x, y, z, sideHit
      */
-    public void addBlockHitEffects(int par1, int par2, int par3, int par4)
+    public void addBlockHitEffects(final int par1, final int par2, final int par3, final int par4)
     {
-        int i1 = this.worldObj.getBlockId(par1, par2, par3);
+        final int i1 = this.worldObj.getBlockId(par1, par2, par3);
 
         if (i1 != 0)
         {
-            Block block = Block.blocksList[i1];
-            float f = 0.1F;
+            final Block block = Block.blocksList[i1];
+            final float f = 0.1F;
             double d0 = (double)par1 + this.rand.nextDouble() * (block.getBlockBoundsMaxX() - block.getBlockBoundsMinX() - (double)(f * 2.0F)) + (double)f + block.getBlockBoundsMinX();
             double d1 = (double)par2 + this.rand.nextDouble() * (block.getBlockBoundsMaxY() - block.getBlockBoundsMinY() - (double)(f * 2.0F)) + (double)f + block.getBlockBoundsMinY();
             double d2 = (double)par3 + this.rand.nextDouble() * (block.getBlockBoundsMaxZ() - block.getBlockBoundsMinZ() - (double)(f * 2.0F)) + (double)f + block.getBlockBoundsMinZ();
@@ -246,9 +246,9 @@ public class EffectRenderer
         return "" + (this.fxLayers[0].size() + this.fxLayers[1].size() + this.fxLayers[2].size());
     }
 
-    public void addBlockHitEffects(int x, int y, int z, MovingObjectPosition target)
+    public void addBlockHitEffects(final int x, final int y, final int z, final MovingObjectPosition target)
     {
-        Block block = Block.blocksList[worldObj.getBlockId(x, y, z)];
+        final Block block = Block.blocksList[worldObj.getBlockId(x, y, z)];
         if (block != null && !block.addBlockHitEffects(worldObj, target, this))
         {
             addBlockHitEffects(x, y, z, target.sideHit);

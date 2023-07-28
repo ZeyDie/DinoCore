@@ -149,7 +149,7 @@ public class RenderGlobal implements IWorldAccess
     private List glRenderLists = new ArrayList();
 
     /** All render lists (fixed length 4) */
-    private RenderList[] allRenderLists = new RenderList[] {new RenderList(), new RenderList(), new RenderList(), new RenderList()};
+    private RenderList[] allRenderLists = {new RenderList(), new RenderList(), new RenderList(), new RenderList()};
 
     /**
      * Previous x position when the renderers were sorted. (Once the distance moves more than 4 units they will be
@@ -174,12 +174,12 @@ public class RenderGlobal implements IWorldAccess
      */
     int frustumCheckOffset;
 
-    public RenderGlobal(Minecraft par1Minecraft)
+    public RenderGlobal(final Minecraft par1Minecraft)
     {
         this.mc = par1Minecraft;
         this.renderEngine = par1Minecraft.getTextureManager();
-        byte b0 = 34;
-        byte b1 = 32;
+        final byte b0 = 34;
+        final byte b1 = 32;
         this.glRenderListBase = GLAllocation.generateDisplayLists(b0 * b0 * b1 * 3);
         this.occlusionEnabled = OpenGlCapsChecker.checkARBOcclusion();
 
@@ -199,11 +199,11 @@ public class RenderGlobal implements IWorldAccess
         this.renderStars();
         GL11.glEndList();
         GL11.glPopMatrix();
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         this.glSkyList = this.starGLCallList + 1;
         GL11.glNewList(this.glSkyList, GL11.GL_COMPILE);
-        byte b2 = 64;
-        int i = 256 / b2 + 2;
+        final byte b2 = 64;
+        final int i = 256 / b2 + 2;
         float f = 16.0F;
         int j;
         int k;
@@ -244,8 +244,8 @@ public class RenderGlobal implements IWorldAccess
 
     private void renderStars()
     {
-        Random random = new Random(10842L);
-        Tessellator tessellator = Tessellator.instance;
+        final Random random = new Random(10842L);
+        final Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
 
         for (int i = 0; i < 1500; ++i)
@@ -253,7 +253,7 @@ public class RenderGlobal implements IWorldAccess
             double d0 = (double)(random.nextFloat() * 2.0F - 1.0F);
             double d1 = (double)(random.nextFloat() * 2.0F - 1.0F);
             double d2 = (double)(random.nextFloat() * 2.0F - 1.0F);
-            double d3 = (double)(0.15F + random.nextFloat() * 0.1F);
+            final double d3 = (double)(0.15F + random.nextFloat() * 0.1F);
             double d4 = d0 * d0 + d1 * d1 + d2 * d2;
 
             if (d4 < 1.0D && d4 > 0.01D)
@@ -262,30 +262,30 @@ public class RenderGlobal implements IWorldAccess
                 d0 *= d4;
                 d1 *= d4;
                 d2 *= d4;
-                double d5 = d0 * 100.0D;
-                double d6 = d1 * 100.0D;
-                double d7 = d2 * 100.0D;
-                double d8 = Math.atan2(d0, d2);
-                double d9 = Math.sin(d8);
-                double d10 = Math.cos(d8);
-                double d11 = Math.atan2(Math.sqrt(d0 * d0 + d2 * d2), d1);
-                double d12 = Math.sin(d11);
-                double d13 = Math.cos(d11);
-                double d14 = random.nextDouble() * Math.PI * 2.0D;
-                double d15 = Math.sin(d14);
-                double d16 = Math.cos(d14);
+                final double d5 = d0 * 100.0D;
+                final double d6 = d1 * 100.0D;
+                final double d7 = d2 * 100.0D;
+                final double d8 = Math.atan2(d0, d2);
+                final double d9 = Math.sin(d8);
+                final double d10 = Math.cos(d8);
+                final double d11 = Math.atan2(Math.sqrt(d0 * d0 + d2 * d2), d1);
+                final double d12 = Math.sin(d11);
+                final double d13 = Math.cos(d11);
+                final double d14 = random.nextDouble() * Math.PI * 2.0D;
+                final double d15 = Math.sin(d14);
+                final double d16 = Math.cos(d14);
 
                 for (int j = 0; j < 4; ++j)
                 {
-                    double d17 = 0.0D;
-                    double d18 = (double)((j & 2) - 1) * d3;
-                    double d19 = (double)((j + 1 & 2) - 1) * d3;
-                    double d20 = d18 * d16 - d19 * d15;
-                    double d21 = d19 * d16 + d18 * d15;
-                    double d22 = d20 * d12 + d17 * d13;
-                    double d23 = d17 * d12 - d20 * d13;
-                    double d24 = d23 * d9 - d21 * d10;
-                    double d25 = d21 * d9 + d23 * d10;
+                    final double d17 = 0.0D;
+                    final double d18 = (double)((j & 2) - 1) * d3;
+                    final double d19 = (double)((j + 1 & 2) - 1) * d3;
+                    final double d20 = d18 * d16 - d19 * d15;
+                    final double d21 = d19 * d16 + d18 * d15;
+                    final double d22 = d20 * d12 + d17 * d13;
+                    final double d23 = d17 * d12 - d20 * d13;
+                    final double d24 = d23 * d9 - d21 * d10;
+                    final double d25 = d21 * d9 + d23 * d10;
                     tessellator.addVertex(d5 + d24, d6 + d22, d7 + d25);
                 }
             }
@@ -297,7 +297,7 @@ public class RenderGlobal implements IWorldAccess
     /**
      * set null to clear
      */
-    public void setWorldAndLoadRenderers(WorldClient par1WorldClient)
+    public void setWorldAndLoadRenderers(final WorldClient par1WorldClient)
     {
         if (this.theWorld != null)
         {
@@ -394,7 +394,7 @@ public class RenderGlobal implements IWorldAccess
 
             if (this.theWorld != null)
             {
-                EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
+                final EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
 
                 if (entitylivingbase != null)
                 {
@@ -410,9 +410,9 @@ public class RenderGlobal implements IWorldAccess
     /**
      * Renders all entities within range and within the frustrum. Args: pos, frustrum, partialTickTime
      */
-    public void renderEntities(Vec3 par1Vec3, ICamera par2ICamera, float par3)
+    public void renderEntities(final Vec3 par1Vec3, final ICamera par2ICamera, final float par3)
     {
-        int pass = MinecraftForgeClient.getRenderPass();
+        final int pass = MinecraftForgeClient.getRenderPass();
         if (this.renderEntitiesStartupCounter > 0)
         {
             if (pass > 0)
@@ -431,7 +431,7 @@ public class RenderGlobal implements IWorldAccess
             this.countEntitiesTotal = 0;
             this.countEntitiesRendered = 0;
             this.countEntitiesHidden = 0;
-            EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
+            final EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
             RenderManager.renderPosX = entitylivingbase.lastTickPosX + (entitylivingbase.posX - entitylivingbase.lastTickPosX) * (double)par3;
             RenderManager.renderPosY = entitylivingbase.lastTickPosY + (entitylivingbase.posY - entitylivingbase.lastTickPosY) * (double)par3;
             RenderManager.renderPosZ = entitylivingbase.lastTickPosZ + (entitylivingbase.posZ - entitylivingbase.lastTickPosZ) * (double)par3;
@@ -441,7 +441,7 @@ public class RenderGlobal implements IWorldAccess
             }
             this.mc.entityRenderer.enableLightmap((double)par3);
             this.theWorld.theProfiler.endStartSection("global");
-            List list = this.theWorld.getLoadedEntityList();
+            final List list = this.theWorld.getLoadedEntityList();
             if (pass == 0) // no indentation for smaller patch size
             {
             this.countEntitiesTotal = list.size();
@@ -471,11 +471,11 @@ public class RenderGlobal implements IWorldAccess
 
                 if (!flag && entity instanceof EntityLiving)
                 {
-                    EntityLiving entityliving = (EntityLiving)entity;
+                    final EntityLiving entityliving = (EntityLiving)entity;
 
                     if (entityliving.getLeashed() && entityliving.getLeashedToEntity() != null)
                     {
-                        Entity entity1 = entityliving.getLeashedToEntity();
+                        final Entity entity1 = entityliving.getLeashedToEntity();
                         flag = par2ICamera.isBoundingBoxInFrustum(entity1.boundingBox);
                     }
                 }
@@ -492,7 +492,7 @@ public class RenderGlobal implements IWorldAccess
 
             for (i = 0; i < this.tileEntities.size(); ++i)
             {
-                TileEntity tile = (TileEntity)tileEntities.get(i);
+                final TileEntity tile = (TileEntity)tileEntities.get(i);
                 if (tile.shouldRenderInPass(pass) && par2ICamera.isBoundingBoxInFrustum(tile.getRenderBoundingBox()))
                 {
                     TileEntityRenderer.instance.renderTileEntity(tile, par3);
@@ -526,22 +526,25 @@ public class RenderGlobal implements IWorldAccess
      */
     private void markRenderersForNewPosition(int par1, int par2, int par3)
     {
-        par1 -= 8;
-        par2 -= 8;
-        par3 -= 8;
+        int par11 = par1;
+        int par21 = par2;
+        int par31 = par3;
+        par11 -= 8;
+        par21 -= 8;
+        par31 -= 8;
         this.minBlockX = Integer.MAX_VALUE;
         this.minBlockY = Integer.MAX_VALUE;
         this.minBlockZ = Integer.MAX_VALUE;
         this.maxBlockX = Integer.MIN_VALUE;
         this.maxBlockY = Integer.MIN_VALUE;
         this.maxBlockZ = Integer.MIN_VALUE;
-        int l = this.renderChunksWide * 16;
-        int i1 = l / 2;
+        final int l = this.renderChunksWide * 16;
+        final int i1 = l / 2;
 
         for (int j1 = 0; j1 < this.renderChunksWide; ++j1)
         {
             int k1 = j1 * 16;
-            int l1 = k1 + i1 - par1;
+            int l1 = k1 + i1 - par11;
 
             if (l1 < 0)
             {
@@ -564,7 +567,7 @@ public class RenderGlobal implements IWorldAccess
             for (int i2 = 0; i2 < this.renderChunksDeep; ++i2)
             {
                 int j2 = i2 * 16;
-                int k2 = j2 + i1 - par3;
+                int k2 = j2 + i1 - par31;
 
                 if (k2 < 0)
                 {
@@ -586,7 +589,7 @@ public class RenderGlobal implements IWorldAccess
 
                 for (int l2 = 0; l2 < this.renderChunksTall; ++l2)
                 {
-                    int i3 = l2 * 16;
+                    final int i3 = l2 * 16;
 
                     if (i3 < this.minBlockY)
                     {
@@ -598,8 +601,8 @@ public class RenderGlobal implements IWorldAccess
                         this.maxBlockY = i3;
                     }
 
-                    WorldRenderer worldrenderer = this.worldRenderers[(i2 * this.renderChunksTall + l2) * this.renderChunksWide + j1];
-                    boolean flag = worldrenderer.needsUpdate;
+                    final WorldRenderer worldrenderer = this.worldRenderers[(i2 * this.renderChunksTall + l2) * this.renderChunksWide + j1];
+                    final boolean flag = worldrenderer.needsUpdate;
                     worldrenderer.setPosition(k1, i3, j2);
 
                     if (!flag && worldrenderer.needsUpdate)
@@ -614,14 +617,14 @@ public class RenderGlobal implements IWorldAccess
     /**
      * Sorts all renderers based on the passed in entity. Args: entityLiving, renderPass, partialTickTime
      */
-    public int sortAndRender(EntityLivingBase par1EntityLivingBase, int par2, double par3)
+    public int sortAndRender(final EntityLivingBase par1EntityLivingBase, final int par2, final double par3)
     {
         this.theWorld.theProfiler.startSection("sortchunks");
 
         for (int j = 0; j < 10; ++j)
         {
             this.worldRenderersCheckIndex = (this.worldRenderersCheckIndex + 1) % this.worldRenderers.length;
-            WorldRenderer worldrenderer = this.worldRenderers[this.worldRenderersCheckIndex];
+            final WorldRenderer worldrenderer = this.worldRenderers[this.worldRenderersCheckIndex];
 
             if (worldrenderer.needsUpdate && !this.worldRenderersToUpdate.contains(worldrenderer))
             {
@@ -644,12 +647,12 @@ public class RenderGlobal implements IWorldAccess
             this.renderersSkippingRenderPass = 0;
         }
 
-        double d1 = par1EntityLivingBase.lastTickPosX + (par1EntityLivingBase.posX - par1EntityLivingBase.lastTickPosX) * par3;
-        double d2 = par1EntityLivingBase.lastTickPosY + (par1EntityLivingBase.posY - par1EntityLivingBase.lastTickPosY) * par3;
-        double d3 = par1EntityLivingBase.lastTickPosZ + (par1EntityLivingBase.posZ - par1EntityLivingBase.lastTickPosZ) * par3;
-        double d4 = par1EntityLivingBase.posX - this.prevSortX;
-        double d5 = par1EntityLivingBase.posY - this.prevSortY;
-        double d6 = par1EntityLivingBase.posZ - this.prevSortZ;
+        final double d1 = par1EntityLivingBase.lastTickPosX + (par1EntityLivingBase.posX - par1EntityLivingBase.lastTickPosX) * par3;
+        final double d2 = par1EntityLivingBase.lastTickPosY + (par1EntityLivingBase.posY - par1EntityLivingBase.lastTickPosY) * par3;
+        final double d3 = par1EntityLivingBase.lastTickPosZ + (par1EntityLivingBase.posZ - par1EntityLivingBase.lastTickPosZ) * par3;
+        final double d4 = par1EntityLivingBase.posX - this.prevSortX;
+        final double d5 = par1EntityLivingBase.posY - this.prevSortY;
+        final double d6 = par1EntityLivingBase.posZ - this.prevSortZ;
 
         if (d4 * d4 + d5 * d5 + d6 * d6 > 16.0D)
         {
@@ -661,12 +664,12 @@ public class RenderGlobal implements IWorldAccess
         }
 
         RenderHelper.disableStandardItemLighting();
-        byte b0 = 0;
+        final byte b0 = 0;
         int k;
 
         if (this.occlusionEnabled && this.mc.gameSettings.advancedOpengl && !this.mc.gameSettings.anaglyph && par2 == 0)
         {
-            byte b1 = 0;
+            final byte b1 = 0;
             int l = 16;
             this.checkOcclusionQueryResult(b1, l);
 
@@ -681,7 +684,7 @@ public class RenderGlobal implements IWorldAccess
             do
             {
                 this.theWorld.theProfiler.endStartSection("occ");
-                int j1 = l;
+                final int j1 = l;
                 l *= 2;
 
                 if (l > this.sortedWorldRenderers.length)
@@ -718,18 +721,18 @@ public class RenderGlobal implements IWorldAccess
 
                         if (this.sortedWorldRenderers[k1].isInFrustum && !this.sortedWorldRenderers[k1].isWaitingOnOcclusionQuery)
                         {
-                            float f3 = MathHelper.sqrt_float(this.sortedWorldRenderers[k1].distanceToEntitySquared(par1EntityLivingBase));
-                            int l1 = (int)(1.0F + f3 / 128.0F);
+                            final float f3 = MathHelper.sqrt_float(this.sortedWorldRenderers[k1].distanceToEntitySquared(par1EntityLivingBase));
+                            final int l1 = (int)(1.0F + f3 / 128.0F);
 
                             if (this.cloudTickCounter % l1 == k1 % l1)
                             {
-                                WorldRenderer worldrenderer1 = this.sortedWorldRenderers[k1];
-                                float f4 = (float)((double)worldrenderer1.posXMinus - d1);
-                                float f5 = (float)((double)worldrenderer1.posYMinus - d2);
-                                float f6 = (float)((double)worldrenderer1.posZMinus - d3);
-                                float f7 = f4 - f;
-                                float f8 = f5 - f1;
-                                float f9 = f6 - f2;
+                                final WorldRenderer worldrenderer1 = this.sortedWorldRenderers[k1];
+                                final float f4 = (float)((double)worldrenderer1.posXMinus - d1);
+                                final float f5 = (float)((double)worldrenderer1.posYMinus - d2);
+                                final float f6 = (float)((double)worldrenderer1.posZMinus - d3);
+                                final float f7 = f4 - f;
+                                final float f8 = f5 - f1;
+                                final float f9 = f6 - f2;
 
                                 if (f7 != 0.0F || f8 != 0.0F || f9 != 0.0F)
                                 {
@@ -787,7 +790,7 @@ public class RenderGlobal implements IWorldAccess
         return k;
     }
 
-    private void checkOcclusionQueryResult(int par1, int par2)
+    private void checkOcclusionQueryResult(final int par1, final int par2)
     {
         for (int k = par1; k < par2; ++k)
         {
@@ -811,7 +814,7 @@ public class RenderGlobal implements IWorldAccess
      * Renders the sorted renders for the specified render pass. Args: startRenderer, numRenderers, renderPass,
      * partialTickTime
      */
-    private int renderSortedRenderers(int par1, int par2, int par3, double par4)
+    private int renderSortedRenderers(final int par1, final int par2, final int par3, final double par4)
     {
         this.glRenderLists.clear();
         int l = 0;
@@ -842,7 +845,7 @@ public class RenderGlobal implements IWorldAccess
 
             if (!this.sortedWorldRenderers[i1].skipRenderPass[par3] && this.sortedWorldRenderers[i1].isInFrustum && (!this.occlusionEnabled || this.sortedWorldRenderers[i1].isVisible))
             {
-                int j1 = this.sortedWorldRenderers[i1].getGLCallListForPass(par3);
+                final int j1 = this.sortedWorldRenderers[i1].getGLCallListForPass(par3);
 
                 if (j1 >= 0)
                 {
@@ -852,10 +855,10 @@ public class RenderGlobal implements IWorldAccess
             }
         }
 
-        EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
-        double d1 = entitylivingbase.lastTickPosX + (entitylivingbase.posX - entitylivingbase.lastTickPosX) * par4;
-        double d2 = entitylivingbase.lastTickPosY + (entitylivingbase.posY - entitylivingbase.lastTickPosY) * par4;
-        double d3 = entitylivingbase.lastTickPosZ + (entitylivingbase.posZ - entitylivingbase.lastTickPosZ) * par4;
+        final EntityLivingBase entitylivingbase = this.mc.renderViewEntity;
+        final double d1 = entitylivingbase.lastTickPosX + (entitylivingbase.posX - entitylivingbase.lastTickPosX) * par4;
+        final double d2 = entitylivingbase.lastTickPosY + (entitylivingbase.posY - entitylivingbase.lastTickPosY) * par4;
+        final double d3 = entitylivingbase.lastTickPosZ + (entitylivingbase.posZ - entitylivingbase.lastTickPosZ) * par4;
         int k1 = 0;
         int l1;
 
@@ -866,7 +869,7 @@ public class RenderGlobal implements IWorldAccess
 
         for (l1 = 0; l1 < this.glRenderLists.size(); ++l1)
         {
-            WorldRenderer worldrenderer = (WorldRenderer)this.glRenderLists.get(l1);
+            final WorldRenderer worldrenderer = (WorldRenderer)this.glRenderLists.get(l1);
             int i2 = -1;
 
             for (int j2 = 0; j2 < k1; ++j2)
@@ -893,7 +896,7 @@ public class RenderGlobal implements IWorldAccess
     /**
      * Render all render lists
      */
-    public void renderAllRenderLists(int par1, double par2)
+    public void renderAllRenderLists(final int par1, final double par2)
     {
         this.mc.entityRenderer.enableLightmap(par2);
 
@@ -911,12 +914,12 @@ public class RenderGlobal implements IWorldAccess
 
         if (this.cloudTickCounter % 20 == 0)
         {
-            Iterator iterator = this.damagedBlocks.values().iterator();
+            final Iterator iterator = this.damagedBlocks.values().iterator();
 
             while (iterator.hasNext())
             {
-                DestroyBlockProgress destroyblockprogress = (DestroyBlockProgress)iterator.next();
-                int i = destroyblockprogress.getCreationCloudUpdateTick();
+                final DestroyBlockProgress destroyblockprogress = (DestroyBlockProgress)iterator.next();
+                final int i = destroyblockprogress.getCreationCloudUpdateTick();
 
                 if (this.cloudTickCounter - i > 400)
                 {
@@ -929,7 +932,7 @@ public class RenderGlobal implements IWorldAccess
     /**
      * Renders the sky with the partial tick time. Args: partialTickTime
      */
-    public void renderSky(float par1)
+    public void renderSky(final float par1)
     {
         IRenderHandler skyProvider = null;
         if ((skyProvider = this.mc.theWorld.provider.getSkyRenderer()) != null)
@@ -946,7 +949,7 @@ public class RenderGlobal implements IWorldAccess
             RenderHelper.disableStandardItemLighting();
             GL11.glDepthMask(false);
             this.renderEngine.bindTexture(locationEndSkyPng);
-            Tessellator tessellator = Tessellator.instance;
+            final Tessellator tessellator = Tessellator.instance;
 
             for (int i = 0; i < 6; ++i)
             {
@@ -994,7 +997,7 @@ public class RenderGlobal implements IWorldAccess
         else if (this.mc.theWorld.provider.isSurfaceWorld())
         {
             GL11.glDisable(GL11.GL_TEXTURE_2D);
-            Vec3 vec3 = this.theWorld.getSkyColor(this.mc.renderViewEntity, par1);
+            final Vec3 vec3 = this.theWorld.getSkyColor(this.mc.renderViewEntity, par1);
             float f1 = (float)vec3.xCoord;
             float f2 = (float)vec3.yCoord;
             float f3 = (float)vec3.zCoord;
@@ -1002,8 +1005,8 @@ public class RenderGlobal implements IWorldAccess
 
             if (this.mc.gameSettings.anaglyph)
             {
-                float f5 = (f1 * 30.0F + f2 * 59.0F + f3 * 11.0F) / 100.0F;
-                float f6 = (f1 * 30.0F + f2 * 70.0F) / 100.0F;
+                final float f5 = (f1 * 30.0F + f2 * 59.0F + f3 * 11.0F) / 100.0F;
+                final float f6 = (f1 * 30.0F + f2 * 70.0F) / 100.0F;
                 f4 = (f1 * 30.0F + f3 * 70.0F) / 100.0F;
                 f1 = f5;
                 f2 = f6;
@@ -1011,7 +1014,7 @@ public class RenderGlobal implements IWorldAccess
             }
 
             GL11.glColor3f(f1, f2, f3);
-            Tessellator tessellator1 = Tessellator.instance;
+            final Tessellator tessellator1 = Tessellator.instance;
             GL11.glDepthMask(false);
             GL11.glEnable(GL11.GL_FOG);
             GL11.glColor3f(f1, f2, f3);
@@ -1021,7 +1024,7 @@ public class RenderGlobal implements IWorldAccess
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             RenderHelper.disableStandardItemLighting();
-            float[] afloat = this.theWorld.provider.calcSunriseSunsetColors(this.theWorld.getCelestialAngle(par1), par1);
+            final float[] afloat = this.theWorld.provider.calcSunriseSunsetColors(this.theWorld.getCelestialAngle(par1), par1);
             float f7;
             float f8;
             float f9;
@@ -1053,14 +1056,14 @@ public class RenderGlobal implements IWorldAccess
                 tessellator1.startDrawing(6);
                 tessellator1.setColorRGBA_F(f4, f7, f8, afloat[3]);
                 tessellator1.addVertex(0.0D, 100.0D, 0.0D);
-                byte b0 = 16;
+                final byte b0 = 16;
                 tessellator1.setColorRGBA_F(afloat[0], afloat[1], afloat[2], 0.0F);
 
                 for (int j = 0; j <= b0; ++j)
                 {
                     f11 = (float)j * (float)Math.PI * 2.0F / (float)b0;
-                    float f12 = MathHelper.sin(f11);
-                    float f13 = MathHelper.cos(f11);
+                    final float f12 = MathHelper.sin(f11);
+                    final float f13 = MathHelper.cos(f11);
                     tessellator1.addVertex((double)(f12 * 120.0F), (double)(f13 * 120.0F), (double)(-f13 * 40.0F * afloat[3]));
                 }
 
@@ -1090,13 +1093,13 @@ public class RenderGlobal implements IWorldAccess
             tessellator1.draw();
             f10 = 20.0F;
             this.renderEngine.bindTexture(locationMoonPhasesPng);
-            int k = this.theWorld.getMoonPhase();
-            int l = k % 4;
-            int i1 = k / 4 % 2;
-            float f14 = (float)(l + 0) / 4.0F;
-            float f15 = (float)(i1 + 0) / 2.0F;
-            float f16 = (float)(l + 1) / 4.0F;
-            float f17 = (float)(i1 + 1) / 2.0F;
+            final int k = this.theWorld.getMoonPhase();
+            final int l = k % 4;
+            final int i1 = k / 4 % 2;
+            final float f14 = (float)(l + 0) / 4.0F;
+            final float f15 = (float)(i1 + 0) / 2.0F;
+            final float f16 = (float)(l + 1) / 4.0F;
+            final float f17 = (float)(i1 + 1) / 2.0F;
             tessellator1.startDrawingQuads();
             tessellator1.addVertexWithUV((double)(-f10), -100.0D, (double)f10, (double)f16, (double)f17);
             tessellator1.addVertexWithUV((double)f10, -100.0D, (double)f10, (double)f14, (double)f17);
@@ -1104,7 +1107,7 @@ public class RenderGlobal implements IWorldAccess
             tessellator1.addVertexWithUV((double)(-f10), -100.0D, (double)(-f10), (double)f16, (double)f15);
             tessellator1.draw();
             GL11.glDisable(GL11.GL_TEXTURE_2D);
-            float f18 = this.theWorld.getStarBrightness(par1) * f4;
+            final float f18 = this.theWorld.getStarBrightness(par1) * f4;
 
             if (f18 > 0.0F)
             {
@@ -1119,7 +1122,7 @@ public class RenderGlobal implements IWorldAccess
             GL11.glPopMatrix();
             GL11.glDisable(GL11.GL_TEXTURE_2D);
             GL11.glColor3f(0.0F, 0.0F, 0.0F);
-            double d0 = this.mc.thePlayer.getPosition(par1).yCoord - this.theWorld.getHorizon();
+            final double d0 = this.mc.thePlayer.getPosition(par1).yCoord - this.theWorld.getHorizon();
 
             if (d0 < 0.0D)
             {
@@ -1173,7 +1176,7 @@ public class RenderGlobal implements IWorldAccess
         }
     }
 
-    public void renderClouds(float par1)
+    public void renderClouds(final float par1)
     {
         IRenderHandler renderer = null;
         if ((renderer = theWorld.provider.getCloudRenderer()) != null)
@@ -1191,14 +1194,14 @@ public class RenderGlobal implements IWorldAccess
             else
             {
                 GL11.glDisable(GL11.GL_CULL_FACE);
-                float f1 = (float)(this.mc.renderViewEntity.lastTickPosY + (this.mc.renderViewEntity.posY - this.mc.renderViewEntity.lastTickPosY) * (double)par1);
-                byte b0 = 32;
-                int i = 256 / b0;
-                Tessellator tessellator = Tessellator.instance;
+                final float f1 = (float)(this.mc.renderViewEntity.lastTickPosY + (this.mc.renderViewEntity.posY - this.mc.renderViewEntity.lastTickPosY) * (double)par1);
+                final byte b0 = 32;
+                final int i = 256 / b0;
+                final Tessellator tessellator = Tessellator.instance;
                 this.renderEngine.bindTexture(locationCloudsPng);
                 GL11.glEnable(GL11.GL_BLEND);
                 GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                Vec3 vec3 = this.theWorld.getCloudColour(par1);
+                final Vec3 vec3 = this.theWorld.getCloudColour(par1);
                 float f2 = (float)vec3.xCoord;
                 float f3 = (float)vec3.yCoord;
                 float f4 = (float)vec3.zCoord;
@@ -1207,24 +1210,24 @@ public class RenderGlobal implements IWorldAccess
                 if (this.mc.gameSettings.anaglyph)
                 {
                     f5 = (f2 * 30.0F + f3 * 59.0F + f4 * 11.0F) / 100.0F;
-                    float f6 = (f2 * 30.0F + f3 * 70.0F) / 100.0F;
-                    float f7 = (f2 * 30.0F + f4 * 70.0F) / 100.0F;
+                    final float f6 = (f2 * 30.0F + f3 * 70.0F) / 100.0F;
+                    final float f7 = (f2 * 30.0F + f4 * 70.0F) / 100.0F;
                     f2 = f5;
                     f3 = f6;
                     f4 = f7;
                 }
 
                 f5 = 4.8828125E-4F;
-                double d0 = (double)((float)this.cloudTickCounter + par1);
+                final double d0 = (double)((float)this.cloudTickCounter + par1);
                 double d1 = this.mc.renderViewEntity.prevPosX + (this.mc.renderViewEntity.posX - this.mc.renderViewEntity.prevPosX) * (double)par1 + d0 * 0.029999999329447746D;
                 double d2 = this.mc.renderViewEntity.prevPosZ + (this.mc.renderViewEntity.posZ - this.mc.renderViewEntity.prevPosZ) * (double)par1;
-                int j = MathHelper.floor_double(d1 / 2048.0D);
-                int k = MathHelper.floor_double(d2 / 2048.0D);
+                final int j = MathHelper.floor_double(d1 / 2048.0D);
+                final int k = MathHelper.floor_double(d2 / 2048.0D);
                 d1 -= (double)(j * 2048);
                 d2 -= (double)(k * 2048);
-                float f8 = this.theWorld.provider.getCloudHeight() - f1 + 0.33F;
-                float f9 = (float)(d1 * (double)f5);
-                float f10 = (float)(d2 * (double)f5);
+                final float f8 = this.theWorld.provider.getCloudHeight() - f1 + 0.33F;
+                final float f9 = (float)(d1 * (double)f5);
+                final float f10 = (float)(d2 * (double)f5);
                 tessellator.startDrawingQuads();
                 tessellator.setColorRGBA_F(f2, f3, f4, 0.8F);
 
@@ -1250,7 +1253,7 @@ public class RenderGlobal implements IWorldAccess
     /**
      * Checks if the given position is to be rendered with cloud fog
      */
-    public boolean hasCloudFog(double par1, double par3, double par5, float par7)
+    public boolean hasCloudFog(final double par1, final double par3, final double par5, final float par7)
     {
         return false;
     }
@@ -1258,25 +1261,25 @@ public class RenderGlobal implements IWorldAccess
     /**
      * Renders the 3d fancy clouds
      */
-    public void renderCloudsFancy(float par1)
+    public void renderCloudsFancy(final float par1)
     {
         GL11.glDisable(GL11.GL_CULL_FACE);
-        float f1 = (float)(this.mc.renderViewEntity.lastTickPosY + (this.mc.renderViewEntity.posY - this.mc.renderViewEntity.lastTickPosY) * (double)par1);
-        Tessellator tessellator = Tessellator.instance;
-        float f2 = 12.0F;
-        float f3 = 4.0F;
-        double d0 = (double)((float)this.cloudTickCounter + par1);
+        final float f1 = (float)(this.mc.renderViewEntity.lastTickPosY + (this.mc.renderViewEntity.posY - this.mc.renderViewEntity.lastTickPosY) * (double)par1);
+        final Tessellator tessellator = Tessellator.instance;
+        final float f2 = 12.0F;
+        final float f3 = 4.0F;
+        final double d0 = (double)((float)this.cloudTickCounter + par1);
         double d1 = (this.mc.renderViewEntity.prevPosX + (this.mc.renderViewEntity.posX - this.mc.renderViewEntity.prevPosX) * (double)par1 + d0 * 0.029999999329447746D) / (double)f2;
         double d2 = (this.mc.renderViewEntity.prevPosZ + (this.mc.renderViewEntity.posZ - this.mc.renderViewEntity.prevPosZ) * (double)par1) / (double)f2 + 0.33000001311302185D;
-        float f4 = this.theWorld.provider.getCloudHeight() - f1 + 0.33F;
-        int i = MathHelper.floor_double(d1 / 2048.0D);
-        int j = MathHelper.floor_double(d2 / 2048.0D);
+        final float f4 = this.theWorld.provider.getCloudHeight() - f1 + 0.33F;
+        final int i = MathHelper.floor_double(d1 / 2048.0D);
+        final int j = MathHelper.floor_double(d2 / 2048.0D);
         d1 -= (double)(i * 2048);
         d2 -= (double)(j * 2048);
         this.renderEngine.bindTexture(locationCloudsPng);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        Vec3 vec3 = this.theWorld.getCloudColour(par1);
+        final Vec3 vec3 = this.theWorld.getCloudColour(par1);
         float f5 = (float)vec3.xCoord;
         float f6 = (float)vec3.yCoord;
         float f7 = (float)vec3.zCoord;
@@ -1299,11 +1302,11 @@ public class RenderGlobal implements IWorldAccess
         f9 = 0.00390625F;
         f8 = (float)MathHelper.floor_double(d1) * f9;
         f10 = (float)MathHelper.floor_double(d2) * f9;
-        float f11 = (float)(d1 - (double)MathHelper.floor_double(d1));
-        float f12 = (float)(d2 - (double)MathHelper.floor_double(d2));
-        byte b0 = 8;
-        byte b1 = 4;
-        float f13 = 9.765625E-4F;
+        final float f11 = (float)(d1 - (double)MathHelper.floor_double(d1));
+        final float f12 = (float)(d2 - (double)MathHelper.floor_double(d2));
+        final byte b0 = 8;
+        final byte b1 = 4;
+        final float f13 = 9.765625E-4F;
         GL11.glScalef(f2, 1.0F, f2);
 
         for (int k = 0; k < 2; ++k)
@@ -1333,10 +1336,10 @@ public class RenderGlobal implements IWorldAccess
                 for (int i1 = -b1 + 1; i1 <= b1; ++i1)
                 {
                     tessellator.startDrawingQuads();
-                    float f14 = (float)(l * b0);
-                    float f15 = (float)(i1 * b0);
-                    float f16 = f14 - f11;
-                    float f17 = f15 - f12;
+                    final float f14 = (float)(l * b0);
+                    final float f15 = (float)(i1 * b0);
+                    final float f16 = f14 - f11;
+                    final float f17 = f15 - f12;
 
                     if (f4 > -f3 - 1.0F)
                     {
@@ -1428,13 +1431,13 @@ public class RenderGlobal implements IWorldAccess
     /**
      * Updates some of the renderers sorted by distance from the player
      */
-    public boolean updateRenderers(EntityLivingBase par1EntityLivingBase, boolean par2)
+    public boolean updateRenderers(final EntityLivingBase par1EntityLivingBase, final boolean par2)
     {
-        byte b0 = 2;
-        RenderSorter rendersorter = new RenderSorter(par1EntityLivingBase);
-        WorldRenderer[] aworldrenderer = new WorldRenderer[b0];
+        final byte b0 = 2;
+        final RenderSorter rendersorter = new RenderSorter(par1EntityLivingBase);
+        final WorldRenderer[] aworldrenderer = new WorldRenderer[b0];
         ArrayList arraylist = null;
-        int i = this.worldRenderersToUpdate.size();
+        final int i = this.worldRenderersToUpdate.size();
         int j = 0;
         this.theWorld.theProfiler.startSection("nearChunksSearch");
         int k;
@@ -1522,7 +1525,7 @@ public class RenderGlobal implements IWorldAccess
 
         for (j1 = b0 - 1; j1 >= 0; --j1)
         {
-            WorldRenderer worldrenderer1 = aworldrenderer[j1];
+            final WorldRenderer worldrenderer1 = aworldrenderer[j1];
 
             if (worldrenderer1 != null)
             {
@@ -1546,7 +1549,7 @@ public class RenderGlobal implements IWorldAccess
 
         for (i1 = this.worldRenderersToUpdate.size(); j1 != i1; ++j1)
         {
-            WorldRenderer worldrenderer2 = (WorldRenderer)this.worldRenderersToUpdate.get(j1);
+            final WorldRenderer worldrenderer2 = (WorldRenderer)this.worldRenderersToUpdate.get(j1);
 
             if (worldrenderer2 != null)
             {
@@ -1589,16 +1592,16 @@ public class RenderGlobal implements IWorldAccess
         }
     }
 
-    public void drawBlockDamageTexture(Tessellator par1Tessellator, EntityPlayer par2EntityPlayer, float par3)
+    public void drawBlockDamageTexture(final Tessellator par1Tessellator, final EntityPlayer par2EntityPlayer, final float par3)
     {
         drawBlockDamageTexture(par1Tessellator, (EntityLivingBase)par2EntityPlayer, par3);
     }
 
-    public void drawBlockDamageTexture(Tessellator par1Tessellator, EntityLivingBase par2EntityPlayer, float par3)
+    public void drawBlockDamageTexture(final Tessellator par1Tessellator, final EntityLivingBase par2EntityPlayer, final float par3)
     {
-        double d0 = par2EntityPlayer.lastTickPosX + (par2EntityPlayer.posX - par2EntityPlayer.lastTickPosX) * (double)par3;
-        double d1 = par2EntityPlayer.lastTickPosY + (par2EntityPlayer.posY - par2EntityPlayer.lastTickPosY) * (double)par3;
-        double d2 = par2EntityPlayer.lastTickPosZ + (par2EntityPlayer.posZ - par2EntityPlayer.lastTickPosZ) * (double)par3;
+        final double d0 = par2EntityPlayer.lastTickPosX + (par2EntityPlayer.posX - par2EntityPlayer.lastTickPosX) * (double)par3;
+        final double d1 = par2EntityPlayer.lastTickPosY + (par2EntityPlayer.posY - par2EntityPlayer.lastTickPosY) * (double)par3;
+        final double d2 = par2EntityPlayer.lastTickPosZ + (par2EntityPlayer.posZ - par2EntityPlayer.lastTickPosZ) * (double)par3;
 
         if (!this.damagedBlocks.isEmpty())
         {
@@ -1613,14 +1616,14 @@ public class RenderGlobal implements IWorldAccess
             par1Tessellator.startDrawingQuads();
             par1Tessellator.setTranslation(-d0, -d1, -d2);
             par1Tessellator.disableColor();
-            Iterator iterator = this.damagedBlocks.values().iterator();
+            final Iterator iterator = this.damagedBlocks.values().iterator();
 
             while (iterator.hasNext())
             {
-                DestroyBlockProgress destroyblockprogress = (DestroyBlockProgress)iterator.next();
-                double d3 = (double)destroyblockprogress.getPartialBlockX() - d0;
-                double d4 = (double)destroyblockprogress.getPartialBlockY() - d1;
-                double d5 = (double)destroyblockprogress.getPartialBlockZ() - d2;
+                final DestroyBlockProgress destroyblockprogress = (DestroyBlockProgress)iterator.next();
+                final double d3 = (double)destroyblockprogress.getPartialBlockX() - d0;
+                final double d4 = (double)destroyblockprogress.getPartialBlockY() - d1;
+                final double d5 = (double)destroyblockprogress.getPartialBlockZ() - d2;
 
                 if (d3 * d3 + d4 * d4 + d5 * d5 > 1024.0D)
                 {
@@ -1628,7 +1631,7 @@ public class RenderGlobal implements IWorldAccess
                 }
                 else
                 {
-                    int i = this.theWorld.getBlockId(destroyblockprogress.getPartialBlockX(), destroyblockprogress.getPartialBlockY(), destroyblockprogress.getPartialBlockZ());
+                    final int i = this.theWorld.getBlockId(destroyblockprogress.getPartialBlockX(), destroyblockprogress.getPartialBlockY(), destroyblockprogress.getPartialBlockZ());
                     Block block = i > 0 ? Block.blocksList[i] : null;
 
                     if (block == null)
@@ -1654,7 +1657,7 @@ public class RenderGlobal implements IWorldAccess
     /**
      * Draws the selection box for the player. Args: entityPlayer, rayTraceHit, i, itemStack, partialTickTime
      */
-    public void drawSelectionBox(EntityPlayer par1EntityPlayer, MovingObjectPosition par2MovingObjectPosition, int par3, float par4)
+    public void drawSelectionBox(final EntityPlayer par1EntityPlayer, final MovingObjectPosition par2MovingObjectPosition, final int par3, final float par4)
     {
         if (par3 == 0 && par2MovingObjectPosition.typeOfHit == EnumMovingObjectType.TILE)
         {
@@ -1664,15 +1667,15 @@ public class RenderGlobal implements IWorldAccess
             GL11.glLineWidth(2.0F);
             GL11.glDisable(GL11.GL_TEXTURE_2D);
             GL11.glDepthMask(false);
-            float f1 = 0.002F;
-            int j = this.theWorld.getBlockId(par2MovingObjectPosition.blockX, par2MovingObjectPosition.blockY, par2MovingObjectPosition.blockZ);
+            final float f1 = 0.002F;
+            final int j = this.theWorld.getBlockId(par2MovingObjectPosition.blockX, par2MovingObjectPosition.blockY, par2MovingObjectPosition.blockZ);
 
             if (j > 0)
             {
                 Block.blocksList[j].setBlockBoundsBasedOnState(this.theWorld, par2MovingObjectPosition.blockX, par2MovingObjectPosition.blockY, par2MovingObjectPosition.blockZ);
-                double d0 = par1EntityPlayer.lastTickPosX + (par1EntityPlayer.posX - par1EntityPlayer.lastTickPosX) * (double)par4;
-                double d1 = par1EntityPlayer.lastTickPosY + (par1EntityPlayer.posY - par1EntityPlayer.lastTickPosY) * (double)par4;
-                double d2 = par1EntityPlayer.lastTickPosZ + (par1EntityPlayer.posZ - par1EntityPlayer.lastTickPosZ) * (double)par4;
+                final double d0 = par1EntityPlayer.lastTickPosX + (par1EntityPlayer.posX - par1EntityPlayer.lastTickPosX) * (double)par4;
+                final double d1 = par1EntityPlayer.lastTickPosY + (par1EntityPlayer.posY - par1EntityPlayer.lastTickPosY) * (double)par4;
+                final double d2 = par1EntityPlayer.lastTickPosZ + (par1EntityPlayer.posZ - par1EntityPlayer.lastTickPosZ) * (double)par4;
                 this.drawOutlinedBoundingBox(Block.blocksList[j].getSelectedBoundingBoxFromPool(this.theWorld, par2MovingObjectPosition.blockX, par2MovingObjectPosition.blockY, par2MovingObjectPosition.blockZ).expand((double)f1, (double)f1, (double)f1).getOffsetBoundingBox(-d0, -d1, -d2));
             }
 
@@ -1685,9 +1688,9 @@ public class RenderGlobal implements IWorldAccess
     /**
      * Draws lines for the edges of the bounding box.
      */
-    private void drawOutlinedBoundingBox(AxisAlignedBB par1AxisAlignedBB)
+    private void drawOutlinedBoundingBox(final AxisAlignedBB par1AxisAlignedBB)
     {
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawing(3);
         tessellator.addVertex(par1AxisAlignedBB.minX, par1AxisAlignedBB.minY, par1AxisAlignedBB.minZ);
         tessellator.addVertex(par1AxisAlignedBB.maxX, par1AxisAlignedBB.minY, par1AxisAlignedBB.minZ);
@@ -1717,14 +1720,14 @@ public class RenderGlobal implements IWorldAccess
     /**
      * Marks the blocks in the given range for update
      */
-    public void markBlocksForUpdate(int par1, int par2, int par3, int par4, int par5, int par6)
+    public void markBlocksForUpdate(final int par1, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
-        int k1 = MathHelper.bucketInt(par1, 16);
-        int l1 = MathHelper.bucketInt(par2, 16);
-        int i2 = MathHelper.bucketInt(par3, 16);
-        int j2 = MathHelper.bucketInt(par4, 16);
-        int k2 = MathHelper.bucketInt(par5, 16);
-        int l2 = MathHelper.bucketInt(par6, 16);
+        final int k1 = MathHelper.bucketInt(par1, 16);
+        final int l1 = MathHelper.bucketInt(par2, 16);
+        final int i2 = MathHelper.bucketInt(par3, 16);
+        final int j2 = MathHelper.bucketInt(par4, 16);
+        final int k2 = MathHelper.bucketInt(par5, 16);
+        final int l2 = MathHelper.bucketInt(par6, 16);
 
         for (int i3 = k1; i3 <= j2; ++i3)
         {
@@ -1753,8 +1756,8 @@ public class RenderGlobal implements IWorldAccess
                         j4 += this.renderChunksDeep;
                     }
 
-                    int k4 = (j4 * this.renderChunksTall + l3) * this.renderChunksWide + j3;
-                    WorldRenderer worldrenderer = this.worldRenderers[k4];
+                    final int k4 = (j4 * this.renderChunksTall + l3) * this.renderChunksWide + j3;
+                    final WorldRenderer worldrenderer = this.worldRenderers[k4];
 
                     if (worldrenderer != null && !worldrenderer.needsUpdate)
                     {
@@ -1770,7 +1773,7 @@ public class RenderGlobal implements IWorldAccess
      * On the client, re-renders the block. On the server, sends the block to the client (which will re-render it),
      * including the tile entity description packet if applicable. Args: x, y, z
      */
-    public void markBlockForUpdate(int par1, int par2, int par3)
+    public void markBlockForUpdate(final int par1, final int par2, final int par3)
     {
         this.markBlocksForUpdate(par1 - 1, par2 - 1, par3 - 1, par1 + 1, par2 + 1, par3 + 1);
     }
@@ -1778,7 +1781,7 @@ public class RenderGlobal implements IWorldAccess
     /**
      * On the client, re-renders this block. On the server, does nothing. Used for lighting updates.
      */
-    public void markBlockForRenderUpdate(int par1, int par2, int par3)
+    public void markBlockForRenderUpdate(final int par1, final int par2, final int par3)
     {
         this.markBlocksForUpdate(par1 - 1, par2 - 1, par3 - 1, par1 + 1, par2 + 1, par3 + 1);
     }
@@ -1787,7 +1790,7 @@ public class RenderGlobal implements IWorldAccess
      * On the client, re-renders all blocks in this range, inclusive. On the server, does nothing. Args: min x, min y,
      * min z, max x, max y, max z
      */
-    public void markBlockRangeForRenderUpdate(int par1, int par2, int par3, int par4, int par5, int par6)
+    public void markBlockRangeForRenderUpdate(final int par1, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         this.markBlocksForUpdate(par1 - 1, par2 - 1, par3 - 1, par4 + 1, par5 + 1, par6 + 1);
     }
@@ -1796,7 +1799,7 @@ public class RenderGlobal implements IWorldAccess
      * Checks all renderers that previously weren't in the frustum and 1/16th of those that previously were in the
      * frustum for frustum clipping Args: frustum, partialTickTime
      */
-    public void clipRenderersByFrustum(ICamera par1ICamera, float par2)
+    public void clipRenderersByFrustum(final ICamera par1ICamera, final float par2)
     {
         for (int i = 0; i < this.worldRenderers.length; ++i)
         {
@@ -1812,9 +1815,9 @@ public class RenderGlobal implements IWorldAccess
     /**
      * Plays the specified record. Arg: recordName, x, y, z
      */
-    public void playRecord(String par1Str, int par2, int par3, int par4)
+    public void playRecord(final String par1Str, final int par2, final int par3, final int par4)
     {
-        ItemRecord itemrecord = ItemRecord.getRecord(par1Str);
+        final ItemRecord itemrecord = ItemRecord.getRecord(par1Str);
 
         if (par1Str != null && itemrecord != null)
         {
@@ -1827,26 +1830,26 @@ public class RenderGlobal implements IWorldAccess
     /**
      * Plays the specified sound. Arg: soundName, x, y, z, volume, pitch
      */
-    public void playSound(String par1Str, double par2, double par4, double par6, float par8, float par9) {}
+    public void playSound(final String par1Str, final double par2, final double par4, final double par6, final float par8, final float par9) {}
 
     /**
      * Plays sound to all near players except the player reference given
      */
-    public void playSoundToNearExcept(EntityPlayer par1EntityPlayer, String par2Str, double par3, double par5, double par7, float par9, float par10) {}
+    public void playSoundToNearExcept(final EntityPlayer par1EntityPlayer, final String par2Str, final double par3, final double par5, final double par7, final float par9, final float par10) {}
 
     /**
      * Spawns a particle. Arg: particleType, x, y, z, velX, velY, velZ
      */
-    public void spawnParticle(String par1Str, double par2, double par4, double par6, double par8, double par10, double par12)
+    public void spawnParticle(final String par1Str, final double par2, final double par4, final double par6, final double par8, final double par10, final double par12)
     {
         try
         {
             this.doSpawnParticle(par1Str, par2, par4, par6, par8, par10, par12);
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
-            CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Exception while adding particle");
-            CrashReportCategory crashreportcategory = crashreport.makeCategory("Particle being added");
+            final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Exception while adding particle");
+            final CrashReportCategory crashreportcategory = crashreport.makeCategory("Particle being added");
             crashreportcategory.addCrashSection("Name", par1Str);
             crashreportcategory.addCrashSectionCallable("Position", new CallableParticlePositionInfo(this, par2, par4, par6));
             throw new ReportedException(crashreport);
@@ -1856,7 +1859,7 @@ public class RenderGlobal implements IWorldAccess
     /**
      * Spawns a particle. Arg: particleType, x, y, z, velX, velY, velZ
      */
-    public EntityFX doSpawnParticle(String par1Str, double par2, double par4, double par6, double par8, double par10, double par12)
+    public EntityFX doSpawnParticle(final String par1Str, final double par2, final double par4, final double par6, final double par8, final double par10, final double par12)
     {
         if (this.mc != null && this.mc.renderViewEntity != null && this.mc.effectRenderer != null)
         {
@@ -1867,9 +1870,9 @@ public class RenderGlobal implements IWorldAccess
                 i = 2;
             }
 
-            double d6 = this.mc.renderViewEntity.posX - par2;
-            double d7 = this.mc.renderViewEntity.posY - par4;
-            double d8 = this.mc.renderViewEntity.posZ - par6;
+            final double d6 = this.mc.renderViewEntity.posX - par2;
+            final double d7 = this.mc.renderViewEntity.posY - par4;
+            final double d8 = this.mc.renderViewEntity.posZ - par6;
             EntityFX entityfx = null;
 
             if (par1Str.equals("hugeexplosion"))
@@ -1891,7 +1894,7 @@ public class RenderGlobal implements IWorldAccess
             }
             else
             {
-                double d9 = 16.0D;
+                final double d9 = 16.0D;
 
                 if (d6 * d6 + d7 * d7 + d8 * d8 > d9 * d9)
                 {
@@ -1957,7 +1960,7 @@ public class RenderGlobal implements IWorldAccess
                     {
                         entityfx = new EntitySpellParticleFX(this.theWorld, par2, par4, par6, par8, par10, par12);
                         ((EntitySpellParticleFX)entityfx).setBaseSpellTextureIndex(144);
-                        float f = this.theWorld.rand.nextFloat() * 0.5F + 0.35F;
+                        final float f = this.theWorld.rand.nextFloat() * 0.5F + 0.35F;
                         ((EntityFX)entityfx).setRBGColorF(1.0F * f, 0.0F * f, 1.0F * f);
                     }
                     else if (par1Str.equals("note"))
@@ -2042,9 +2045,9 @@ public class RenderGlobal implements IWorldAccess
                     }
                     else
                     {
-                        int j;
-                        String[] astring;
-                        int k;
+                        final int j;
+                        final String[] astring;
+                        final int k;
 
                         if (par1Str.startsWith("iconcrack_"))
                         {
@@ -2089,13 +2092,13 @@ public class RenderGlobal implements IWorldAccess
      * Called on all IWorldAccesses when an entity is created or loaded. On client worlds, starts downloading any
      * necessary textures. On server worlds, adds the entity to the entity tracker.
      */
-    public void onEntityCreate(Entity par1Entity) {}
+    public void onEntityCreate(final Entity par1Entity) {}
 
     /**
      * Called on all IWorldAccesses when an entity is unloaded or destroyed. On client worlds, releases any downloaded
      * textures. On server worlds, removes the entity from the entity tracker.
      */
-    public void onEntityDestroy(Entity par1Entity) {}
+    public void onEntityDestroy(final Entity par1Entity) {}
 
     /**
      * Deletes all display lists
@@ -2105,9 +2108,9 @@ public class RenderGlobal implements IWorldAccess
         GLAllocation.deleteDisplayLists(this.glRenderListBase);
     }
 
-    public void broadcastSound(int par1, int par2, int par3, int par4, int par5)
+    public void broadcastSound(final int par1, final int par2, final int par3, final int par4, final int par5)
     {
-        Random random = this.theWorld.rand;
+        final Random random = this.theWorld.rand;
 
         switch (par1)
         {
@@ -2115,10 +2118,10 @@ public class RenderGlobal implements IWorldAccess
             case 1018:
                 if (this.mc.renderViewEntity != null)
                 {
-                    double d0 = (double)par2 - this.mc.renderViewEntity.posX;
-                    double d1 = (double)par3 - this.mc.renderViewEntity.posY;
-                    double d2 = (double)par4 - this.mc.renderViewEntity.posZ;
-                    double d3 = Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
+                    final double d0 = (double)par2 - this.mc.renderViewEntity.posX;
+                    final double d1 = (double)par3 - this.mc.renderViewEntity.posY;
+                    final double d2 = (double)par4 - this.mc.renderViewEntity.posZ;
+                    final double d3 = Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
                     double d4 = this.mc.renderViewEntity.posX;
                     double d5 = this.mc.renderViewEntity.posY;
                     double d6 = this.mc.renderViewEntity.posZ;
@@ -2146,13 +2149,13 @@ public class RenderGlobal implements IWorldAccess
     /**
      * Plays a pre-canned sound effect along with potentially auxiliary data-driven one-shot behaviour (particles, etc).
      */
-    public void playAuxSFX(EntityPlayer par1EntityPlayer, int par2, int par3, int par4, int par5, int par6)
+    public void playAuxSFX(final EntityPlayer par1EntityPlayer, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
-        Random random = this.theWorld.rand;
-        double d0;
-        double d1;
-        double d2;
-        String s;
+        final Random random = this.theWorld.rand;
+        final double d0;
+        final double d1;
+        final double d2;
+        final String s;
         int j1;
         int k1;
         double d3;
@@ -2237,16 +2240,16 @@ public class RenderGlobal implements IWorldAccess
                 this.theWorld.playSound((double)((float)par3 + 0.5F), (double)((float)par4 + 0.5F), (double)((float)par5 + 0.5F), "random.anvil_land", 0.3F, this.theWorld.rand.nextFloat() * 0.1F + 0.9F, false);
                 break;
             case 2000:
-                int l1 = par6 % 3 - 1;
-                int i2 = par6 / 3 % 3 - 1;
+                final int l1 = par6 % 3 - 1;
+                final int i2 = par6 / 3 % 3 - 1;
                 d1 = (double)par3 + (double)l1 * 0.6D + 0.5D;
                 d2 = (double)par4 + 0.5D;
-                double d8 = (double)par5 + (double)i2 * 0.6D + 0.5D;
+                final double d8 = (double)par5 + (double)i2 * 0.6D + 0.5D;
 
                 for (int j2 = 0; j2 < 10; ++j2)
                 {
-                    double d9 = random.nextDouble() * 0.2D + 0.01D;
-                    double d10 = d1 + (double)l1 * 0.01D + (random.nextDouble() - 0.5D) * (double)i2 * 0.5D;
+                    final double d9 = random.nextDouble() * 0.2D + 0.01D;
+                    final double d10 = d1 + (double)l1 * 0.01D + (random.nextDouble() - 0.5D) * (double)i2 * 0.5D;
                     d7 = d2 + (random.nextDouble() - 0.5D) * 0.5D;
                     d3 = d8 + (double)i2 * 0.01D + (random.nextDouble() - 0.5D) * (double)l1 * 0.5D;
                     d4 = (double)l1 * d9 + random.nextGaussian() * 0.01D;
@@ -2261,7 +2264,7 @@ public class RenderGlobal implements IWorldAccess
 
                 if (k1 > 0)
                 {
-                    Block block = Block.blocksList[k1];
+                    final Block block = Block.blocksList[k1];
                     this.mc.sndManager.playSound(block.stepSound.getBreakSound(), (float)par3 + 0.5F, (float)par4 + 0.5F, (float)par5 + 0.5F, (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
                 }
 
@@ -2279,9 +2282,9 @@ public class RenderGlobal implements IWorldAccess
                 }
 
                 j1 = Item.potion.getColorFromDamage(par6);
-                float f = (float)(j1 >> 16 & 255) / 255.0F;
-                float f1 = (float)(j1 >> 8 & 255) / 255.0F;
-                float f2 = (float)(j1 >> 0 & 255) / 255.0F;
+                final float f = (float)(j1 >> 16 & 255) / 255.0F;
+                final float f1 = (float)(j1 >> 8 & 255) / 255.0F;
+                final float f2 = (float)(j1 >> 0 & 255) / 255.0F;
                 String s1 = "spell";
 
                 if (Item.potion.isEffectInstant(par6))
@@ -2296,11 +2299,11 @@ public class RenderGlobal implements IWorldAccess
                     d4 = Math.cos(d3) * d7;
                     d5 = 0.01D + random.nextDouble() * 0.5D;
                     d6 = Math.sin(d3) * d7;
-                    EntityFX entityfx = this.doSpawnParticle(s1, d0 + d4 * 0.1D, d1 + 0.3D, d2 + d6 * 0.1D, d4, d5, d6);
+                    final EntityFX entityfx = this.doSpawnParticle(s1, d0 + d4 * 0.1D, d1 + 0.3D, d2 + d6 * 0.1D, d4, d5, d6);
 
                     if (entityfx != null)
                     {
-                        float f3 = 0.75F + random.nextFloat() * 0.25F;
+                        final float f3 = 0.75F + random.nextFloat() * 0.25F;
                         entityfx.setRBGColorF(f * f3, f1 * f3, f2 * f3);
                         entityfx.multiplyVelocity((float)d7);
                     }
@@ -2319,7 +2322,7 @@ public class RenderGlobal implements IWorldAccess
                     this.spawnParticle(s, d0, d1, d2, random.nextGaussian() * 0.15D, random.nextDouble() * 0.2D, random.nextGaussian() * 0.15D);
                 }
 
-                for (double d11 = 0.0D; d11 < (Math.PI * 2D); d11 += 0.15707963267948966D)
+                for (double d11 = 0.0D; d11 < (Math.PI * 2.0D); d11 += 0.15707963267948966D)
                 {
                     this.spawnParticle("portal", d0 + Math.cos(d11) * 5.0D, d1 - 0.4D, d2 + Math.sin(d11) * 5.0D, Math.cos(d11) * -5.0D, 0.0D, Math.sin(d11) * -5.0D);
                     this.spawnParticle("portal", d0 + Math.cos(d11) * 5.0D, d1 - 0.4D, d2 + Math.sin(d11) * 5.0D, Math.cos(d11) * -7.0D, 0.0D, Math.sin(d11) * -7.0D);
@@ -2329,9 +2332,9 @@ public class RenderGlobal implements IWorldAccess
             case 2004:
                 for (int k2 = 0; k2 < 20; ++k2)
                 {
-                    double d12 = (double)par3 + 0.5D + ((double)this.theWorld.rand.nextFloat() - 0.5D) * 2.0D;
-                    double d13 = (double)par4 + 0.5D + ((double)this.theWorld.rand.nextFloat() - 0.5D) * 2.0D;
-                    double d14 = (double)par5 + 0.5D + ((double)this.theWorld.rand.nextFloat() - 0.5D) * 2.0D;
+                    final double d12 = (double)par3 + 0.5D + ((double)this.theWorld.rand.nextFloat() - 0.5D) * 2.0D;
+                    final double d13 = (double)par4 + 0.5D + ((double)this.theWorld.rand.nextFloat() - 0.5D) * 2.0D;
+                    final double d14 = (double)par5 + 0.5D + ((double)this.theWorld.rand.nextFloat() - 0.5D) * 2.0D;
                     this.theWorld.spawnParticle("smoke", d12, d13, d14, 0.0D, 0.0D, 0.0D);
                     this.theWorld.spawnParticle("flame", d12, d13, d14, 0.0D, 0.0D, 0.0D);
                 }
@@ -2346,7 +2349,7 @@ public class RenderGlobal implements IWorldAccess
      * Starts (or continues) destroying a block with given ID at the given coordinates for the given partially destroyed
      * value
      */
-    public void destroyBlockPartially(int par1, int par2, int par3, int par4, int par5)
+    public void destroyBlockPartially(final int par1, final int par2, final int par3, final int par4, final int par5)
     {
         if (par5 >= 0 && par5 < 10)
         {
@@ -2367,7 +2370,7 @@ public class RenderGlobal implements IWorldAccess
         }
     }
 
-    public void registerDestroyBlockIcons(IconRegister par1IconRegister)
+    public void registerDestroyBlockIcons(final IconRegister par1IconRegister)
     {
         this.destroyBlockIcons = new Icon[10];
 

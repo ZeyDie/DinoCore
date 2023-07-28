@@ -18,14 +18,14 @@ class GuiCreateFlatWorldListSlot extends GuiSlot
 
     final GuiCreateFlatWorld createFlatWorldGui;
 
-    public GuiCreateFlatWorldListSlot(GuiCreateFlatWorld par1GuiCreateFlatWorld)
+    public GuiCreateFlatWorldListSlot(final GuiCreateFlatWorld par1GuiCreateFlatWorld)
     {
         super(par1GuiCreateFlatWorld.mc, par1GuiCreateFlatWorld.width, par1GuiCreateFlatWorld.height, 43, par1GuiCreateFlatWorld.height - 60, 24);
         this.createFlatWorldGui = par1GuiCreateFlatWorld;
         this.field_82454_a = -1;
     }
 
-    private void func_82452_a(int par1, int par2, ItemStack par3ItemStack)
+    private void func_82452_a(final int par1, final int par2, final ItemStack par3ItemStack)
     {
         this.func_82451_d(par1 + 1, par2 + 1);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
@@ -40,20 +40,20 @@ class GuiCreateFlatWorldListSlot extends GuiSlot
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
     }
 
-    private void func_82451_d(int par1, int par2)
+    private void func_82451_d(final int par1, final int par2)
     {
         this.func_82450_b(par1, par2, 0, 0);
     }
 
-    private void func_82450_b(int par1, int par2, int par3, int par4)
+    private void func_82450_b(final int par1, final int par2, final int par3, final int par4)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.createFlatWorldGui.mc.getTextureManager().bindTexture(Gui.statIcons);
-        float f = 0.0078125F;
-        float f1 = 0.0078125F;
-        boolean flag = true;
-        boolean flag1 = true;
-        Tessellator tessellator = Tessellator.instance;
+        final float f = 0.0078125F;
+        final float f1 = 0.0078125F;
+        final boolean flag = true;
+        final boolean flag1 = true;
+        final Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
         tessellator.addVertexWithUV((double)(par1 + 0), (double)(par2 + 18), (double)this.createFlatWorldGui.zLevel, (double)((float)(par3 + 0) * 0.0078125F), (double)((float)(par4 + 18) * 0.0078125F));
         tessellator.addVertexWithUV((double)(par1 + 18), (double)(par2 + 18), (double)this.createFlatWorldGui.zLevel, (double)((float)(par3 + 18) * 0.0078125F), (double)((float)(par4 + 18) * 0.0078125F));
@@ -73,7 +73,7 @@ class GuiCreateFlatWorldListSlot extends GuiSlot
     /**
      * the element in the slot that was clicked, boolean for wether it was double clicked or not
      */
-    protected void elementClicked(int par1, boolean par2)
+    protected void elementClicked(final int par1, final boolean par2)
     {
         this.field_82454_a = par1;
         this.createFlatWorldGui.func_82270_g();
@@ -82,21 +82,21 @@ class GuiCreateFlatWorldListSlot extends GuiSlot
     /**
      * returns true if the element passed in is currently selected
      */
-    protected boolean isSelected(int par1)
+    protected boolean isSelected(final int par1)
     {
         return par1 == this.field_82454_a;
     }
 
     protected void drawBackground() {}
 
-    protected void drawSlot(int par1, int par2, int par3, int par4, Tessellator par5Tessellator)
+    protected void drawSlot(final int par1, final int par2, final int par3, final int par4, final Tessellator par5Tessellator)
     {
-        FlatLayerInfo flatlayerinfo = (FlatLayerInfo)GuiCreateFlatWorld.func_82271_a(this.createFlatWorldGui).getFlatLayers().get(GuiCreateFlatWorld.func_82271_a(this.createFlatWorldGui).getFlatLayers().size() - par1 - 1);
-        ItemStack itemstack = flatlayerinfo.getFillBlock() == 0 ? null : new ItemStack(flatlayerinfo.getFillBlock(), 1, flatlayerinfo.getFillBlockMeta());
-        String s = itemstack == null ? "Air" : Item.itemsList[flatlayerinfo.getFillBlock()].getItemStackDisplayName(itemstack);
+        final FlatLayerInfo flatlayerinfo = (FlatLayerInfo)GuiCreateFlatWorld.func_82271_a(this.createFlatWorldGui).getFlatLayers().get(GuiCreateFlatWorld.func_82271_a(this.createFlatWorldGui).getFlatLayers().size() - par1 - 1);
+        final ItemStack itemstack = flatlayerinfo.getFillBlock() == 0 ? null : new ItemStack(flatlayerinfo.getFillBlock(), 1, flatlayerinfo.getFillBlockMeta());
+        final String s = itemstack == null ? "Air" : Item.itemsList[flatlayerinfo.getFillBlock()].getItemStackDisplayName(itemstack);
         this.func_82452_a(par2, par3, itemstack);
         this.createFlatWorldGui.fontRenderer.drawString(s, par2 + 18 + 5, par3 + 3, 16777215);
-        String s1;
+        final String s1;
 
         if (par1 == 0)
         {

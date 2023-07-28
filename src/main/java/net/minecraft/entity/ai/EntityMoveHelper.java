@@ -17,7 +17,7 @@ public class EntityMoveHelper
     private double speed;
     private boolean update;
 
-    public EntityMoveHelper(EntityLiving par1EntityLiving)
+    public EntityMoveHelper(final EntityLiving par1EntityLiving)
     {
         this.entity = par1EntityLiving;
         this.posX = par1EntityLiving.posX;
@@ -38,7 +38,7 @@ public class EntityMoveHelper
     /**
      * Sets the speed and location to move to
      */
-    public void setMoveTo(double par1, double par3, double par5, double par7)
+    public void setMoveTo(final double par1, final double par3, final double par5, final double par7)
     {
         this.posX = par1;
         this.posY = par3;
@@ -54,15 +54,15 @@ public class EntityMoveHelper
         if (this.update)
         {
             this.update = false;
-            int i = MathHelper.floor_double(this.entity.boundingBox.minY + 0.5D);
-            double d0 = this.posX - this.entity.posX;
-            double d1 = this.posZ - this.entity.posZ;
-            double d2 = this.posY - (double)i;
-            double d3 = d0 * d0 + d2 * d2 + d1 * d1;
+            final int i = MathHelper.floor_double(this.entity.boundingBox.minY + 0.5D);
+            final double d0 = this.posX - this.entity.posX;
+            final double d1 = this.posZ - this.entity.posZ;
+            final double d2 = this.posY - (double)i;
+            final double d3 = d0 * d0 + d2 * d2 + d1 * d1;
 
             if (d3 >= 2.500000277905201E-7D)
             {
-                float f = (float)(TrigMath.atan2(d1, d0) * 180.0D / Math.PI) - 90.0F;  // CraftBukkit - Math -> TrigMath
+                final float f = (float)(TrigMath.atan2(d1, d0) * 180.0D / Math.PI) - 90.0F;  // CraftBukkit - Math -> TrigMath
                 this.entity.rotationYaw = this.limitAngle(this.entity.rotationYaw, f, 30.0F);
                 this.entity.setAIMoveSpeed((float)(this.speed * this.entity.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue()));
 
@@ -77,7 +77,7 @@ public class EntityMoveHelper
     /**
      * Limits the given angle to a upper and lower limit.
      */
-    private float limitAngle(float par1, float par2, float par3)
+    private float limitAngle(final float par1, final float par2, final float par3)
     {
         float f3 = MathHelper.wrapAngleTo180_float(par2 - par1);
 

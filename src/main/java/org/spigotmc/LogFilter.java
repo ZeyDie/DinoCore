@@ -7,11 +7,11 @@ import java.util.regex.Pattern;
 public class LogFilter implements Filter
 {
 
-    public boolean isLoggable(LogRecord record)
+    public boolean isLoggable(final LogRecord record)
     {
         if ( record.getMessage() != null )
         {
-            for ( Pattern pattern : SpigotConfig.logFilters )
+            for ( final Pattern pattern : SpigotConfig.logFilters )
             {
                 if ( pattern.matcher( record.getMessage() ).matches() )
                 {

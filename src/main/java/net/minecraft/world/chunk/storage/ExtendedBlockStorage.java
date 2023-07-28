@@ -44,7 +44,7 @@ public class ExtendedBlockStorage
     /** The NibbleArray containing a block of Sky-light data. */
     private NibbleArray skylightArray;
 
-    public ExtendedBlockStorage(int par1, boolean par2)
+    public ExtendedBlockStorage(final int par1, final boolean par2)
     {
         this.yBase = par1;
         this.blockLSBArray = new byte[4096];
@@ -58,7 +58,7 @@ public class ExtendedBlockStorage
     }
 
     // CraftBukkit start
-    public ExtendedBlockStorage(int y, boolean flag, byte[] blkIds, byte[] extBlkIds)
+    public ExtendedBlockStorage(final int y, final boolean flag, final byte[] blkIds, final byte[] extBlkIds)
     {
         this.yBase = y;
         this.blockLSBArray = blkIds;
@@ -84,9 +84,9 @@ public class ExtendedBlockStorage
      * Returns the extended block ID for a location in a chunk, merged from a byte array and a NibbleArray to form a
      * full 12-bit block ID.
      */
-    public int getExtBlockID(int par1, int par2, int par3)
+    public int getExtBlockID(final int par1, final int par2, final int par3)
     {
-        int l = this.blockLSBArray[par2 << 8 | par3 << 4 | par1] & 255;
+        final int l = this.blockLSBArray[par2 << 8 | par3 << 4 | par1] & 255;
         return this.blockMSBArray != null ? this.blockMSBArray.get(par1, par2, par3) << 8 | l : l;
     }
 
@@ -95,7 +95,7 @@ public class ExtendedBlockStorage
      * a byte array. Also performs reference counting to determine whether or not to broadly cull this Chunk from the
      * random-update tick list.
      */
-    public void setExtBlockID(int par1, int par2, int par3, int par4)
+    public void setExtBlockID(final int par1, final int par2, final int par3, final int par4)
     {
         int i1 = this.blockLSBArray[par2 << 8 | par3 << 4 | par1] & 255;
 
@@ -151,7 +151,7 @@ public class ExtendedBlockStorage
     /**
      * Returns the metadata associated with the block at the given coordinates in this ExtendedBlockStorage.
      */
-    public int getExtBlockMetadata(int par1, int par2, int par3)
+    public int getExtBlockMetadata(final int par1, final int par2, final int par3)
     {
         return this.blockMetadataArray.get(par1, par2, par3);
     }
@@ -159,7 +159,7 @@ public class ExtendedBlockStorage
     /**
      * Sets the metadata of the Block at the given coordinates in this ExtendedBlockStorage to the given metadata.
      */
-    public void setExtBlockMetadata(int par1, int par2, int par3, int par4)
+    public void setExtBlockMetadata(final int par1, final int par2, final int par3, final int par4)
     {
         this.blockMetadataArray.set(par1, par2, par3, par4);
     }
@@ -192,7 +192,7 @@ public class ExtendedBlockStorage
     /**
      * Sets the saved Sky-light value in the extended block storage structure.
      */
-    public void setExtSkylightValue(int par1, int par2, int par3, int par4)
+    public void setExtSkylightValue(final int par1, final int par2, final int par3, final int par4)
     {
         this.skylightArray.set(par1, par2, par3, par4);
     }
@@ -200,7 +200,7 @@ public class ExtendedBlockStorage
     /**
      * Gets the saved Sky-light value in the extended block storage structure.
      */
-    public int getExtSkylightValue(int par1, int par2, int par3)
+    public int getExtSkylightValue(final int par1, final int par2, final int par3)
     {
         return this.skylightArray.get(par1, par2, par3);
     }
@@ -208,7 +208,7 @@ public class ExtendedBlockStorage
     /**
      * Sets the saved Block-light value in the extended block storage structure.
      */
-    public void setExtBlocklightValue(int par1, int par2, int par3, int par4)
+    public void setExtBlocklightValue(final int par1, final int par2, final int par3, final int par4)
     {
         this.blocklightArray.set(par1, par2, par3, par4);
     }
@@ -216,7 +216,7 @@ public class ExtendedBlockStorage
     /**
      * Gets the saved Block-light value in the extended block storage structure.
      */
-    public int getExtBlocklightValue(int par1, int par2, int par3)
+    public int getExtBlocklightValue(final int par1, final int par2, final int par3)
     {
         return this.blocklightArray.get(par1, par2, par3);
     }
@@ -224,7 +224,7 @@ public class ExtendedBlockStorage
     public void removeInvalidBlocks()
     {
         // CraftBukkit start - Optimize for speed
-        byte[] blkIds = this.blockLSBArray;
+        final byte[] blkIds = this.blockLSBArray;
         int cntNonEmpty = 0;
         int cntTicking = 0;
 
@@ -232,7 +232,7 @@ public class ExtendedBlockStorage
         {
             for (int off = 0; off < blkIds.length; off++)
             {
-                int l = blkIds[off] & 0xFF;
+                final int l = blkIds[off] & 0xFF;
 
                 if (l > 0)
                 {
@@ -255,11 +255,11 @@ public class ExtendedBlockStorage
         else
         {
             this.blockMSBArray.forceToNonTrivialArray(); // Spigot
-            byte[] ext = this.blockMSBArray.getValueArray();
+            final byte[] ext = this.blockMSBArray.getValueArray();
 
             for (int off = 0, off2 = 0; off < blkIds.length;)
             {
-                byte extid = ext[off2];
+                final byte extid = ext[off2];
                 int l = (blkIds[off] & 0xFF) | ((extid & 0xF) << 8); // Even data
 
                 if (l > 0)
@@ -332,7 +332,7 @@ public class ExtendedBlockStorage
             {
                 for (int k = 0; k < 16; ++k)
                 {
-                    int l = this.getExtBlockID(i, j, k);
+                    final int l = this.getExtBlockID(i, j, k);
 
                     if (l > 0)
                     {
@@ -403,7 +403,7 @@ public class ExtendedBlockStorage
     /**
      * Sets the array of block ID least significant bits for this ExtendedBlockStorage.
      */
-    public void setBlockLSBArray(byte[] par1ArrayOfByte)
+    public void setBlockLSBArray(final byte[] par1ArrayOfByte)
     {
         this.blockLSBArray = this.validateByteArray(par1ArrayOfByte); // CraftBukkit - Validate data
     }
@@ -411,7 +411,7 @@ public class ExtendedBlockStorage
     /**
      * Sets the array of blockID most significant bits (blockMSBArray) for this ExtendedBlockStorage.
      */
-    public void setBlockMSBArray(NibbleArray par1NibbleArray)
+    public void setBlockMSBArray(final NibbleArray par1NibbleArray)
     {
         // CraftBukkit start - Don't hang on to an empty nibble array
         boolean empty = true;
@@ -436,7 +436,7 @@ public class ExtendedBlockStorage
     /**
      * Sets the NibbleArray of block metadata (blockMetadataArray) for this ExtendedBlockStorage.
      */
-    public void setBlockMetadataArray(NibbleArray par1NibbleArray)
+    public void setBlockMetadataArray(final NibbleArray par1NibbleArray)
     {
         this.blockMetadataArray = this.validateNibbleArray(par1NibbleArray); // CraftBukkit - Validate data
     }
@@ -444,7 +444,7 @@ public class ExtendedBlockStorage
     /**
      * Sets the NibbleArray instance used for Block-light values in this particular storage block.
      */
-    public void setBlocklightArray(NibbleArray par1NibbleArray)
+    public void setBlocklightArray(final NibbleArray par1NibbleArray)
     {
         this.blocklightArray = this.validateNibbleArray(par1NibbleArray); // CraftBukkit - Validate data
     }
@@ -452,13 +452,13 @@ public class ExtendedBlockStorage
     /**
      * Sets the NibbleArray instance used for Sky-light values in this particular storage block.
      */
-    public void setSkylightArray(NibbleArray par1NibbleArray)
+    public void setSkylightArray(final NibbleArray par1NibbleArray)
     {
         this.skylightArray = this.validateNibbleArray(par1NibbleArray); // CraftBukkit - Validate data
     }
     
     // CraftBukkit start - Validate array lengths
-    private NibbleArray validateNibbleArray(NibbleArray nibbleArray)
+    private NibbleArray validateNibbleArray(final NibbleArray nibbleArray)
     {
         // Spigot start - fix for more awesome nibble arrays
         if (nibbleArray != null && nibbleArray.getByteLength() < 2048)
@@ -472,14 +472,15 @@ public class ExtendedBlockStorage
 
     private byte[] validateByteArray(byte[] byteArray)
     {
-        if (byteArray != null && byteArray.length < 4096)
+        byte[] byteArray1 = byteArray;
+        if (byteArray1 != null && byteArray1.length < 4096)
         {
-            byte[] newArray = new byte[4096];
-            System.arraycopy(byteArray, 0, newArray, 0, byteArray.length);
-            byteArray = newArray;
+            final byte[] newArray = new byte[4096];
+            System.arraycopy(byteArray1, 0, newArray, 0, byteArray1.length);
+            byteArray1 = newArray;
         }
 
-        return byteArray;
+        return byteArray1;
     }
     // CraftBukkit end
 

@@ -36,13 +36,13 @@ import java.util.logging.Level;
 public class VersionParser
 {
     private static final Splitter SEPARATOR = Splitter.on('@').omitEmptyStrings().trimResults();
-    public static ArtifactVersion parseVersionReference(String labelledRef)
+    public static ArtifactVersion parseVersionReference(final String labelledRef)
     {
         if (Strings.isNullOrEmpty(labelledRef))
         {
             throw new RuntimeException(String.format("Empty reference %s", labelledRef));
         }
-        List<String> parts = Lists.newArrayList(SEPARATOR.split(labelledRef));
+        final List<String> parts = Lists.newArrayList(SEPARATOR.split(labelledRef));
         if (parts.size()>2)
         {
             throw new RuntimeException(String.format("Invalid versioned reference %s", labelledRef));
@@ -54,18 +54,18 @@ public class VersionParser
         return new DefaultArtifactVersion(parts.get(0),parseRange(parts.get(1)));
     }
 
-    public static boolean satisfies(ArtifactVersion target, ArtifactVersion source)
+    public static boolean satisfies(final ArtifactVersion target, final ArtifactVersion source)
     {
         return target.containsVersion(source);
     }
 
-    public static VersionRange parseRange(String range)
+    public static VersionRange parseRange(final String range)
     {
         try
         {
             return VersionRange.createFromVersionSpec(range);
         }
-        catch (InvalidVersionSpecificationException e)
+        catch (final InvalidVersionSpecificationException e)
         {
             FMLLog.log(Level.SEVERE, e, "Unable to parse a version range specification successfully %s", range);
             throw new LoaderException(e);

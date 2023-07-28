@@ -7,7 +7,7 @@ public class ChunkDataEvent extends ChunkEvent
 {
     private final NBTTagCompound data;
 
-    public ChunkDataEvent(Chunk chunk, NBTTagCompound data)
+    public ChunkDataEvent(final Chunk chunk, final NBTTagCompound data)
     {
         super(chunk);
         this.data = data;
@@ -20,7 +20,7 @@ public class ChunkDataEvent extends ChunkEvent
     
     public static class Load extends ChunkDataEvent
     {
-        public Load(Chunk chunk, NBTTagCompound data)
+        public Load(final Chunk chunk, final NBTTagCompound data)
         {
             super(chunk, data);
         }
@@ -28,7 +28,7 @@ public class ChunkDataEvent extends ChunkEvent
 
     public static class Save extends ChunkDataEvent
     {
-        public Save(Chunk chunk, NBTTagCompound data)
+        public Save(final Chunk chunk, final NBTTagCompound data)
         {
             super(chunk, data);
         }

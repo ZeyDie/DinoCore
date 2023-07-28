@@ -19,7 +19,7 @@ public class CraftJukebox extends CraftBlockState implements Jukebox {
     }
 
     public Material getPlaying() {
-        net.minecraft.item.ItemStack record = jukebox.func_96097_a();
+        final net.minecraft.item.ItemStack record = jukebox.func_96097_a();
         if (record == null) {
             return Material.AIR;
         }
@@ -27,19 +27,20 @@ public class CraftJukebox extends CraftBlockState implements Jukebox {
     }
 
     public void setPlaying(Material record) {
-        if (record == null || net.minecraft.item.Item.itemsList[record.getId()] == null) {
-            record = Material.AIR;
+        Material record1 = record;
+        if (record1 == null || net.minecraft.item.Item.itemsList[record1.getId()] == null) {
+            record1 = Material.AIR;
             jukebox.func_96098_a(null);
         } else {
-            jukebox.func_96098_a(new net.minecraft.item.ItemStack(net.minecraft.item.Item.itemsList[record.getId()], 1));
+            jukebox.func_96098_a(new net.minecraft.item.ItemStack(net.minecraft.item.Item.itemsList[record1.getId()], 1));
         }
         jukebox.onInventoryChanged();
-        if (record == Material.AIR) {
+        if (record1 == Material.AIR) {
             world.getHandle().setBlockMetadataWithNotify(getX(), getY(), getZ(), 0, 3);
         } else {
             world.getHandle().setBlockMetadataWithNotify(getX(), getY(), getZ(), 1, 3);
         }
-        world.playEffect(getLocation(), Effect.RECORD_PLAY, record.getId());
+        world.playEffect(getLocation(), Effect.RECORD_PLAY, record1.getId());
     }
 
     public boolean isPlaying() {
@@ -47,7 +48,7 @@ public class CraftJukebox extends CraftBlockState implements Jukebox {
     }
 
     public boolean eject() {
-        boolean result = isPlaying();
+        final boolean result = isPlaying();
         ((net.minecraft.block.BlockJukeBox) net.minecraft.block.Block.jukebox).ejectRecord(world.getHandle(), getX(), getY(), getZ());
         return result;
     }

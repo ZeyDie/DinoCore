@@ -39,7 +39,7 @@ public class GuiAchievement extends Gui
     private RenderItem itemRender;
     private boolean haveAchiement;
 
-    public GuiAchievement(Minecraft par1Minecraft)
+    public GuiAchievement(final Minecraft par1Minecraft)
     {
         this.theGame = par1Minecraft;
         this.itemRender = new RenderItem();
@@ -48,7 +48,7 @@ public class GuiAchievement extends Gui
     /**
      * Queue a taken achievement to be displayed.
      */
-    public void queueTakenAchievement(Achievement par1Achievement)
+    public void queueTakenAchievement(final Achievement par1Achievement)
     {
         this.achievementGetLocalText = I18n.getString("achievement.get");
         this.achievementStatName = I18n.getString(par1Achievement.getName());
@@ -60,7 +60,7 @@ public class GuiAchievement extends Gui
     /**
      * Queue a information about a achievement to be displayed.
      */
-    public void queueAchievementInformation(Achievement par1Achievement)
+    public void queueAchievementInformation(final Achievement par1Achievement)
     {
         this.achievementGetLocalText = I18n.getString(par1Achievement.getName());
         this.achievementStatName = par1Achievement.getDescription();
@@ -81,7 +81,7 @@ public class GuiAchievement extends Gui
         GL11.glLoadIdentity();
         this.achievementWindowWidth = this.theGame.displayWidth;
         this.achievementWindowHeight = this.theGame.displayHeight;
-        ScaledResolution scaledresolution = new ScaledResolution(this.theGame.gameSettings, this.theGame.displayWidth, this.theGame.displayHeight);
+        final ScaledResolution scaledresolution = new ScaledResolution(this.theGame.gameSettings, this.theGame.displayWidth, this.theGame.displayHeight);
         this.achievementWindowWidth = scaledresolution.getScaledWidth();
         this.achievementWindowHeight = scaledresolution.getScaledHeight();
         GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
@@ -100,7 +100,7 @@ public class GuiAchievement extends Gui
     {
         if (this.theAchievement != null && this.achievementTime != 0L)
         {
-            double d0 = (double)(Minecraft.getSystemTime() - this.achievementTime) / 3000.0D;
+            final double d0 = (double)(Minecraft.getSystemTime() - this.achievementTime) / 3000.0D;
 
             if (!this.haveAchiement && (d0 < 0.0D || d0 > 1.0D))
             {
@@ -128,8 +128,8 @@ public class GuiAchievement extends Gui
 
                 d1 *= d1;
                 d1 *= d1;
-                int i = this.achievementWindowWidth - 160;
-                int j = 0 - (int)(d1 * 36.0D);
+                final int i = this.achievementWindowWidth - 160;
+                final int j = 0 - (int)(d1 * 36.0D);
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                 GL11.glEnable(GL11.GL_TEXTURE_2D);
                 this.theGame.getTextureManager().bindTexture(achievementTextures);

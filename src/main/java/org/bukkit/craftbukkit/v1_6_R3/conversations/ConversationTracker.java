@@ -12,7 +12,7 @@ public class ConversationTracker {
 
     private LinkedList<Conversation> conversationQueue = new LinkedList<Conversation>();
 
-    public synchronized boolean beginConversation(Conversation conversation) {
+    public synchronized boolean beginConversation(final Conversation conversation) {
         if (!conversationQueue.contains(conversation)) {
             conversationQueue.addLast(conversation);
             if (conversationQueue.getFirst() == conversation) {
@@ -24,7 +24,7 @@ public class ConversationTracker {
         return true;
     }
 
-    public synchronized void abandonConversation(Conversation conversation, ConversationAbandonedEvent details) {
+    public synchronized void abandonConversation(final Conversation conversation, final ConversationAbandonedEvent details) {
         if (!conversationQueue.isEmpty()) {
             if (conversationQueue.getFirst() == conversation) {
                 conversation.abandon(details);
@@ -40,14 +40,14 @@ public class ConversationTracker {
 
     public synchronized void abandonAllConversations() {
 
-        LinkedList<Conversation> oldQueue = conversationQueue;
+        final LinkedList<Conversation> oldQueue = conversationQueue;
         conversationQueue = new LinkedList<Conversation>();
-        for(Conversation conversation : oldQueue) {
+        for(final Conversation conversation : oldQueue) {
             conversation.abandon(new ConversationAbandonedEvent(conversation, new ManuallyAbandonedConversationCanceller()));
         }
     }
 
-    public synchronized void acceptConversationInput(String input) {
+    public synchronized void acceptConversationInput(final String input) {
         if (isConversing()) {
             conversationQueue.getFirst().acceptInput(input);
         }

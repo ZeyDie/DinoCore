@@ -12,14 +12,14 @@ import java.util.List;
 
 public class ItemAppleGold extends ItemFood
 {
-    public ItemAppleGold(int par1, int par2, float par3, boolean par4)
+    public ItemAppleGold(final int par1, final int par2, final float par3, final boolean par4)
     {
         super(par1, par2, par3, par4);
         this.setHasSubtypes(true);
     }
 
     @SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack par1ItemStack)
+    public boolean hasEffect(final ItemStack par1ItemStack)
     {
         return par1ItemStack.getItemDamage() > 0;
     }
@@ -29,12 +29,12 @@ public class ItemAppleGold extends ItemFood
     /**
      * Return an item rarity from EnumRarity
      */
-    public EnumRarity getRarity(ItemStack par1ItemStack)
+    public EnumRarity getRarity(final ItemStack par1ItemStack)
     {
         return par1ItemStack.getItemDamage() == 0 ? EnumRarity.rare : EnumRarity.epic;
     }
 
-    protected void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    protected void onFoodEaten(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         if (!par2World.isRemote)
         {
@@ -61,7 +61,7 @@ public class ItemAppleGold extends ItemFood
     /**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */
-    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubItems(final int par1, final CreativeTabs par2CreativeTabs, final List par3List)
     {
         par3List.add(new ItemStack(par1, 1, 0));
         par3List.add(new ItemStack(par1, 1, 1));

@@ -7,12 +7,12 @@ class AnvilSaveConverterFileFilter implements FilenameFilter
 {
     final AnvilSaveConverter parent;
 
-    AnvilSaveConverterFileFilter(AnvilSaveConverter par1AnvilSaveConverter)
+    AnvilSaveConverterFileFilter(final AnvilSaveConverter par1AnvilSaveConverter)
     {
         this.parent = par1AnvilSaveConverter;
     }
 
-    public boolean accept(File par1File, String par2Str)
+    public boolean accept(final File par1File, final String par2Str)
     {
         return par2Str.endsWith(".mcr");
     }

@@ -14,7 +14,7 @@ public class ComponentStrongholdStairs2 extends ComponentStrongholdStairs
 
     public ComponentStrongholdStairs2() {}
 
-    public ComponentStrongholdStairs2(int par1, Random par2Random, int par3, int par4)
+    public ComponentStrongholdStairs2(final int par1, final Random par2Random, final int par3, final int par4)
     {
         super(0, par2Random, par3, par4);
     }

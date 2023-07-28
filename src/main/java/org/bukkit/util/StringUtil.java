@@ -22,7 +22,7 @@ public class StringUtil {
         Validate.notNull(collection, "Collection cannot be null");
         Validate.notNull(originals, "Originals cannot be null");
 
-        for (String string : originals) {
+        for (final String string : originals) {
             if (startsWithIgnoreCase(string, token)) {
                 collection.add(string);
             }

@@ -22,13 +22,13 @@ public class ChunkCache implements IBlockAccess
     /** Reference to the World object. */
     private World worldObj;
 
-    public ChunkCache(World par1World, int par2, int par3, int par4, int par5, int par6, int par7, int par8)
+    public ChunkCache(final World par1World, final int par2, final int par3, final int par4, final int par5, final int par6, final int par7, final int par8)
     {
         this.worldObj = par1World;
         this.chunkX = par2 - par8 >> 4;
         this.chunkZ = par4 - par8 >> 4;
-        int l1 = par5 + par8 >> 4;
-        int i2 = par7 + par8 >> 4;
+        final int l1 = par5 + par8 >> 4;
+        final int i2 = par7 + par8 >> 4;
         this.chunkArray = new Chunk[l1 - this.chunkX + 1][i2 - this.chunkZ + 1];
         this.isEmpty = true;
         int j2;
@@ -75,7 +75,7 @@ public class ChunkCache implements IBlockAccess
     /**
      * Returns the block ID at coords x,y,z
      */
-    public int getBlockId(int par1, int par2, int par3)
+    public int getBlockId(final int par1, final int par2, final int par3)
     {
         if (par2 < 0)
         {
@@ -87,12 +87,12 @@ public class ChunkCache implements IBlockAccess
         }
         else
         {
-            int l = (par1 >> 4) - this.chunkX;
-            int i1 = (par3 >> 4) - this.chunkZ;
+            final int l = (par1 >> 4) - this.chunkX;
+            final int i1 = (par3 >> 4) - this.chunkZ;
 
             if (l >= 0 && l < this.chunkArray.length && i1 >= 0 && i1 < this.chunkArray[l].length)
             {
-                Chunk chunk = this.chunkArray[l][i1];
+                final Chunk chunk = this.chunkArray[l][i1];
                 return chunk == null ? 0 : chunk.getBlockID(par1 & 15, par2, par3 & 15);
             }
             else
@@ -105,13 +105,13 @@ public class ChunkCache implements IBlockAccess
     /**
      * Returns the TileEntity associated with a given block in X,Y,Z coordinates, or null if no TileEntity exists
      */
-    public TileEntity getBlockTileEntity(int par1, int par2, int par3)
+    public TileEntity getBlockTileEntity(final int par1, final int par2, final int par3)
     {
-        int l = (par1 >> 4) - this.chunkX;
-        int i1 = (par3 >> 4) - this.chunkZ;
+        final int l = (par1 >> 4) - this.chunkX;
+        final int i1 = (par3 >> 4) - this.chunkZ;
         if (l >= 0 && l < this.chunkArray.length && i1 >= 0 && i1 < this.chunkArray[l].length)
         {
-            Chunk chunk = this.chunkArray[l][i1];
+            final Chunk chunk = this.chunkArray[l][i1];
             return chunk == null ? null : chunk.getChunkBlockTileEntity(par1 & 15, par2, par3 & 15);
         }
         else
@@ -121,7 +121,7 @@ public class ChunkCache implements IBlockAccess
     }
 
     @SideOnly(Side.CLIENT)
-    public float getBrightness(int par1, int par2, int par3, int par4)
+    public float getBrightness(final int par1, final int par2, final int par3, final int par4)
     {
         int i1 = this.getLightValue(par1, par2, par3);
 
@@ -138,9 +138,9 @@ public class ChunkCache implements IBlockAccess
     /**
      * Any Light rendered on a 1.8 Block goes through here
      */
-    public int getLightBrightnessForSkyBlocks(int par1, int par2, int par3, int par4)
+    public int getLightBrightnessForSkyBlocks(final int par1, final int par2, final int par3, final int par4)
     {
-        int i1 = this.getSkyBlockTypeBrightness(EnumSkyBlock.Sky, par1, par2, par3);
+        final int i1 = this.getSkyBlockTypeBrightness(EnumSkyBlock.Sky, par1, par2, par3);
         int j1 = this.getSkyBlockTypeBrightness(EnumSkyBlock.Block, par1, par2, par3);
 
         if (j1 < par4)
@@ -154,7 +154,7 @@ public class ChunkCache implements IBlockAccess
     /**
      * Returns the block metadata at coords x,y,z
      */
-    public int getBlockMetadata(int par1, int par2, int par3)
+    public int getBlockMetadata(final int par1, final int par2, final int par3)
     {
         if (par2 < 0)
         {
@@ -166,11 +166,11 @@ public class ChunkCache implements IBlockAccess
         }
         else
         {
-            int l = (par1 >> 4) - this.chunkX;
-            int i1 = (par3 >> 4) - this.chunkZ;
+            final int l = (par1 >> 4) - this.chunkX;
+            final int i1 = (par3 >> 4) - this.chunkZ;
             if (l >= 0 && l < this.chunkArray.length && i1 >= 0 && i1 < this.chunkArray[l].length)
             {
-                Chunk chunk = this.chunkArray[l][i1];
+                final Chunk chunk = this.chunkArray[l][i1];
                 return chunk == null ? 0 : chunk.getBlockMetadata(par1 & 15, par2, par3 & 15);
             }
             return 0;
@@ -183,7 +183,7 @@ public class ChunkCache implements IBlockAccess
      * Returns how bright the block is shown as which is the block's light value looked up in a lookup table (light
      * values aren't linear for brightness). Args: x, y, z
      */
-    public float getLightBrightness(int par1, int par2, int par3)
+    public float getLightBrightness(final int par1, final int par2, final int par3)
     {
         return this.worldObj.provider.lightBrightnessTable[this.getLightValue(par1, par2, par3)];
     }
@@ -193,7 +193,7 @@ public class ChunkCache implements IBlockAccess
     /**
      * Gets the light value of the specified block coords. Args: x, y, z
      */
-    public int getLightValue(int par1, int par2, int par3)
+    public int getLightValue(final int par1, final int par2, final int par3)
     {
         return this.getLightValueExt(par1, par2, par3, true);
     }
@@ -203,7 +203,7 @@ public class ChunkCache implements IBlockAccess
     /**
      * Get light value with flag
      */
-    public int getLightValueExt(int par1, int par2, int par3, boolean par4)
+    public int getLightValueExt(final int par1, final int par2, final int par3, final boolean par4)
     {
         if (par1 >= -30000000 && par3 >= -30000000 && par1 < 30000000 && par3 <= 30000000)
         {
@@ -217,10 +217,10 @@ public class ChunkCache implements IBlockAccess
                 if (l == Block.stoneSingleSlab.blockID || l == Block.woodSingleSlab.blockID || l == Block.tilledField.blockID || l == Block.stairsWoodOak.blockID || l == Block.stairsCobblestone.blockID)
                 {
                     i1 = this.getLightValueExt(par1, par2 + 1, par3, false);
-                    int j1 = this.getLightValueExt(par1 + 1, par2, par3, false);
-                    int k1 = this.getLightValueExt(par1 - 1, par2, par3, false);
-                    int l1 = this.getLightValueExt(par1, par2, par3 + 1, false);
-                    int i2 = this.getLightValueExt(par1, par2, par3 - 1, false);
+                    final int j1 = this.getLightValueExt(par1 + 1, par2, par3, false);
+                    final int k1 = this.getLightValueExt(par1 - 1, par2, par3, false);
+                    final int l1 = this.getLightValueExt(par1, par2, par3 + 1, false);
+                    final int i2 = this.getLightValueExt(par1, par2, par3 - 1, false);
 
                     if (j1 > i1)
                     {
@@ -277,9 +277,9 @@ public class ChunkCache implements IBlockAccess
     /**
      * Returns the block's material.
      */
-    public Material getBlockMaterial(int par1, int par2, int par3)
+    public Material getBlockMaterial(final int par1, final int par2, final int par3)
     {
-        int l = this.getBlockId(par1, par2, par3);
+        final int l = this.getBlockId(par1, par2, par3);
         return l == 0 ? Material.air : Block.blocksList[l].blockMaterial;
     }
 
@@ -288,7 +288,7 @@ public class ChunkCache implements IBlockAccess
     /**
      * Gets the biome for a given set of x/z coordinates
      */
-    public BiomeGenBase getBiomeGenForCoords(int par1, int par2)
+    public BiomeGenBase getBiomeGenForCoords(final int par1, final int par2)
     {
         return this.worldObj.getBiomeGenForCoords(par1, par2);
     }
@@ -298,18 +298,18 @@ public class ChunkCache implements IBlockAccess
     /**
      * Returns true if the block at the specified coordinates is an opaque cube. Args: x, y, z
      */
-    public boolean isBlockOpaqueCube(int par1, int par2, int par3)
+    public boolean isBlockOpaqueCube(final int par1, final int par2, final int par3)
     {
-        Block block = Block.blocksList[this.getBlockId(par1, par2, par3)];
+        final Block block = Block.blocksList[this.getBlockId(par1, par2, par3)];
         return block == null ? false : block.isOpaqueCube();
     }
 
     /**
      * Indicate if a material is a normal solid opaque cube.
      */
-    public boolean isBlockNormalCube(int par1, int par2, int par3)
+    public boolean isBlockNormalCube(final int par1, final int par2, final int par3)
     {
-        Block block = Block.blocksList[this.getBlockId(par1, par2, par3)];
+        final Block block = Block.blocksList[this.getBlockId(par1, par2, par3)];
         return block == null ? false : block.blockMaterial.blocksMovement() && block.renderAsNormalBlock();
     }
 
@@ -318,7 +318,7 @@ public class ChunkCache implements IBlockAccess
     /**
      * Returns true if the block at the given coordinate has a solid (buildable) top surface.
      */
-    public boolean doesBlockHaveSolidTopSurface(int par1, int par2, int par3)
+    public boolean doesBlockHaveSolidTopSurface(final int par1, final int par2, final int par3)
     {
         return this.worldObj.doesBlockHaveSolidTopSurface(par1, par2, par3);
     }
@@ -334,9 +334,9 @@ public class ChunkCache implements IBlockAccess
     /**
      * Returns true if the block at the specified coordinates is empty
      */
-    public boolean isAirBlock(int par1, int par2, int par3)
+    public boolean isAirBlock(final int par1, final int par2, final int par3)
     {
-        int id = getBlockId(par1, par2, par3);
+        final int id = getBlockId(par1, par2, par3);
         return id == 0 || Block.blocksList[id] == null || Block.blocksList[id].isAirBlock(this.worldObj, par1, par2, par3);
     }
 
@@ -346,19 +346,20 @@ public class ChunkCache implements IBlockAccess
      * Brightness for SkyBlock.Sky is clear white and (through color computing it is assumed) DEPENDENT ON DAYTIME.
      * Brightness for SkyBlock.Block is yellowish and independent.
      */
-    public int getSkyBlockTypeBrightness(EnumSkyBlock par1EnumSkyBlock, int par2, int par3, int par4)
+    public int getSkyBlockTypeBrightness(final EnumSkyBlock par1EnumSkyBlock, final int par2, int par3, final int par4)
     {
-        if (par3 < 0)
+        int par31 = par3;
+        if (par31 < 0)
         {
-            par3 = 0;
+            par31 = 0;
         }
 
-        if (par3 >= 256)
+        if (par31 >= 256)
         {
-            par3 = 255;
+            par31 = 255;
         }
 
-        if (par3 >= 0 && par3 < 256 && par2 >= -30000000 && par4 >= -30000000 && par2 < 30000000 && par4 <= 30000000)
+        if (par31 >= 0 && par31 < 256 && par2 >= -30000000 && par4 >= -30000000 && par2 < 30000000 && par4 <= 30000000)
         {
             if (par1EnumSkyBlock == EnumSkyBlock.Sky && this.worldObj.provider.hasNoSky)
             {
@@ -367,15 +368,15 @@ public class ChunkCache implements IBlockAccess
             else
             {
                 int l;
-                int i1;
+                final int i1;
 
-                if (Block.useNeighborBrightness[this.getBlockId(par2, par3, par4)])
+                if (Block.useNeighborBrightness[this.getBlockId(par2, par31, par4)])
                 {
-                    l = this.getSpecialBlockBrightness(par1EnumSkyBlock, par2, par3 + 1, par4);
-                    i1 = this.getSpecialBlockBrightness(par1EnumSkyBlock, par2 + 1, par3, par4);
-                    int j1 = this.getSpecialBlockBrightness(par1EnumSkyBlock, par2 - 1, par3, par4);
-                    int k1 = this.getSpecialBlockBrightness(par1EnumSkyBlock, par2, par3, par4 + 1);
-                    int l1 = this.getSpecialBlockBrightness(par1EnumSkyBlock, par2, par3, par4 - 1);
+                    l = this.getSpecialBlockBrightness(par1EnumSkyBlock, par2, par31 + 1, par4);
+                    i1 = this.getSpecialBlockBrightness(par1EnumSkyBlock, par2 + 1, par31, par4);
+                    final int j1 = this.getSpecialBlockBrightness(par1EnumSkyBlock, par2 - 1, par31, par4);
+                    final int k1 = this.getSpecialBlockBrightness(par1EnumSkyBlock, par2, par31, par4 + 1);
+                    final int l1 = this.getSpecialBlockBrightness(par1EnumSkyBlock, par2, par31, par4 - 1);
 
                     if (i1 > l)
                     {
@@ -403,7 +404,7 @@ public class ChunkCache implements IBlockAccess
                 {
                     l = (par2 >> 4) - this.chunkX;
                     i1 = (par4 >> 4) - this.chunkZ;
-                    return this.chunkArray[l][i1].getSavedLightValue(par1EnumSkyBlock, par2 & 15, par3, par4 & 15);
+                    return this.chunkArray[l][i1].getSavedLightValue(par1EnumSkyBlock, par2 & 15, par31, par4 & 15);
                 }
             }
         }
@@ -418,23 +419,24 @@ public class ChunkCache implements IBlockAccess
     /**
      * is only used on stairs and tilled fields
      */
-    public int getSpecialBlockBrightness(EnumSkyBlock par1EnumSkyBlock, int par2, int par3, int par4)
+    public int getSpecialBlockBrightness(final EnumSkyBlock par1EnumSkyBlock, final int par2, int par3, final int par4)
     {
-        if (par3 < 0)
+        int par31 = par3;
+        if (par31 < 0)
         {
-            par3 = 0;
+            par31 = 0;
         }
 
-        if (par3 >= 256)
+        if (par31 >= 256)
         {
-            par3 = 255;
+            par31 = 255;
         }
 
-        if (par3 >= 0 && par3 < 256 && par2 >= -30000000 && par4 >= -30000000 && par2 < 30000000 && par4 <= 30000000)
+        if (par31 >= 0 && par31 < 256 && par2 >= -30000000 && par4 >= -30000000 && par2 < 30000000 && par4 <= 30000000)
         {
-            int l = (par2 >> 4) - this.chunkX;
-            int i1 = (par4 >> 4) - this.chunkZ;
-            return this.chunkArray[l][i1].getSavedLightValue(par1EnumSkyBlock, par2 & 15, par3, par4 & 15);
+            final int l = (par2 >> 4) - this.chunkX;
+            final int i1 = (par4 >> 4) - this.chunkZ;
+            return this.chunkArray[l][i1].getSavedLightValue(par1EnumSkyBlock, par2 & 15, par31, par4 & 15);
         }
         else
         {
@@ -455,21 +457,21 @@ public class ChunkCache implements IBlockAccess
     /**
      * Is this block powering in the specified direction Args: x, y, z, direction
      */
-    public int isBlockProvidingPowerTo(int par1, int par2, int par3, int par4)
+    public int isBlockProvidingPowerTo(final int par1, final int par2, final int par3, final int par4)
     {
-        int i1 = this.getBlockId(par1, par2, par3);
+        final int i1 = this.getBlockId(par1, par2, par3);
         return i1 == 0 ? 0 : Block.blocksList[i1].isProvidingStrongPower(this, par1, par2, par3, par4);
     }
 
-    public boolean isBlockSolidOnSide(int x, int y, int z, ForgeDirection side, boolean _default)
+    public boolean isBlockSolidOnSide(final int x, final int y, final int z, final ForgeDirection side, final boolean _default)
     {
         if (x < -30000000 || z < -30000000 || x >= 30000000 || z >= 30000000)
         {
             return _default;
         }
 
-        int blockId = getBlockId(x, y, z);
-        Block block = Block.blocksList[blockId];
+        final int blockId = getBlockId(x, y, z);
+        final Block block = Block.blocksList[blockId];
 
         if (block != null)
         {

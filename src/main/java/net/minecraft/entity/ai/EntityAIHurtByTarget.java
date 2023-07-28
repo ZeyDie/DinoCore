@@ -11,7 +11,7 @@ public class EntityAIHurtByTarget extends EntityAITarget
     boolean entityCallsForHelp;
     private int field_142052_b;
 
-    public EntityAIHurtByTarget(EntityCreature par1EntityCreature, boolean par2)
+    public EntityAIHurtByTarget(final EntityCreature par1EntityCreature, final boolean par2)
     {
         super(par1EntityCreature, false);
         this.entityCallsForHelp = par2;
@@ -23,7 +23,7 @@ public class EntityAIHurtByTarget extends EntityAITarget
      */
     public boolean shouldExecute()
     {
-        int i = this.taskOwner.func_142015_aE();
+        final int i = this.taskOwner.func_142015_aE();
         return i != this.field_142052_b && this.isSuitableTarget(this.taskOwner.getAITarget(), false);
     }
 
@@ -37,13 +37,13 @@ public class EntityAIHurtByTarget extends EntityAITarget
 
         if (this.entityCallsForHelp)
         {
-            double d0 = this.getTargetDistance();
-            List list = this.taskOwner.worldObj.getEntitiesWithinAABB(this.taskOwner.getClass(), AxisAlignedBB.getAABBPool().getAABB(this.taskOwner.posX, this.taskOwner.posY, this.taskOwner.posZ, this.taskOwner.posX + 1.0D, this.taskOwner.posY + 1.0D, this.taskOwner.posZ + 1.0D).expand(d0, 10.0D, d0));
-            Iterator iterator = list.iterator();
+            final double d0 = this.getTargetDistance();
+            final List list = this.taskOwner.worldObj.getEntitiesWithinAABB(this.taskOwner.getClass(), AxisAlignedBB.getAABBPool().getAABB(this.taskOwner.posX, this.taskOwner.posY, this.taskOwner.posZ, this.taskOwner.posX + 1.0D, this.taskOwner.posY + 1.0D, this.taskOwner.posZ + 1.0D).expand(d0, 10.0D, d0));
+            final Iterator iterator = list.iterator();
 
             while (iterator.hasNext())
             {
-                EntityCreature entitycreature = (EntityCreature)iterator.next();
+                final EntityCreature entitycreature = (EntityCreature)iterator.next();
 
                 if (this.taskOwner != entitycreature && entitycreature.getAttackTarget() == null && !entitycreature.isOnSameTeam(this.taskOwner.getAITarget()))
                 {

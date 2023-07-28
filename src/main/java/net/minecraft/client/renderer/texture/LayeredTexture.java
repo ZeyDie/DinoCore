@@ -19,27 +19,27 @@ public class LayeredTexture extends AbstractTexture
 {
     public final List layeredTextureNames;
 
-    public LayeredTexture(String ... par1ArrayOfStr)
+    public LayeredTexture(final String ... par1ArrayOfStr)
     {
         this.layeredTextureNames = Lists.newArrayList(par1ArrayOfStr);
     }
 
-    public void loadTexture(ResourceManager par1ResourceManager) throws IOException
+    public void loadTexture(final ResourceManager par1ResourceManager) throws IOException
     {
         BufferedImage bufferedimage = null;
 
         try
         {
-            Iterator iterator = this.layeredTextureNames.iterator();
+            final Iterator iterator = this.layeredTextureNames.iterator();
 
             while (iterator.hasNext())
             {
-                String s = (String)iterator.next();
+                final String s = (String)iterator.next();
 
                 if (s != null)
                 {
-                    InputStream inputstream = par1ResourceManager.getResource(new ResourceLocation(s)).getInputStream();
-                    BufferedImage bufferedimage1 = ImageIO.read(inputstream);
+                    final InputStream inputstream = par1ResourceManager.getResource(new ResourceLocation(s)).getInputStream();
+                    final BufferedImage bufferedimage1 = ImageIO.read(inputstream);
 
                     if (bufferedimage == null)
                     {
@@ -50,7 +50,7 @@ public class LayeredTexture extends AbstractTexture
                 }
             }
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             ioexception.printStackTrace();
             return;

@@ -28,25 +28,25 @@ public class StatFileWriter
     private boolean field_77456_c;
     private StatsSyncher statsSyncher;
 
-    public StatFileWriter(Session par1Session, File par2File)
+    public StatFileWriter(final Session par1Session, final File par2File)
     {
-        File file2 = new File(par2File, "stats");
+        final File file2 = new File(par2File, "stats");
 
         if (!file2.exists())
         {
             file2.mkdir();
         }
 
-        File[] afile = par2File.listFiles();
-        int i = afile.length;
+        final File[] afile = par2File.listFiles();
+        final int i = afile.length;
 
         for (int j = 0; j < i; ++j)
         {
-            File file3 = afile[j];
+            final File file3 = afile[j];
 
             if (file3.getName().startsWith("stats_") && file3.getName().endsWith(".dat"))
             {
-                File file4 = new File(file2, file3.getName());
+                final File file4 = new File(file2, file3.getName());
 
                 if (!file4.exists())
                 {
@@ -59,17 +59,17 @@ public class StatFileWriter
         this.statsSyncher = new StatsSyncher(par1Session, this, file2);
     }
 
-    public void readStat(StatBase par1StatBase, int par2)
+    public void readStat(final StatBase par1StatBase, final int par2)
     {
         this.writeStatToMap(this.field_77455_b, par1StatBase, par2);
         this.writeStatToMap(this.field_77457_a, par1StatBase, par2);
         this.field_77456_c = true;
     }
 
-    private void writeStatToMap(Map par1Map, StatBase par2StatBase, int par3)
+    private void writeStatToMap(final Map par1Map, final StatBase par2StatBase, final int par3)
     {
-        Integer integer = (Integer)par1Map.get(par2StatBase);
-        int j = integer == null ? 0 : integer.intValue();
+        final Integer integer = (Integer)par1Map.get(par2StatBase);
+        final int j = integer == null ? 0 : integer.intValue();
         par1Map.put(par2StatBase, Integer.valueOf(j + par3));
     }
 
@@ -81,72 +81,72 @@ public class StatFileWriter
     /**
      * write a whole Map of stats to the statmap
      */
-    public void writeStats(Map par1Map)
+    public void writeStats(final Map par1Map)
     {
         if (par1Map != null)
         {
             this.field_77456_c = true;
-            Iterator iterator = par1Map.keySet().iterator();
+            final Iterator iterator = par1Map.keySet().iterator();
 
             while (iterator.hasNext())
             {
-                StatBase statbase = (StatBase)iterator.next();
+                final StatBase statbase = (StatBase)iterator.next();
                 this.writeStatToMap(this.field_77455_b, statbase, ((Integer)par1Map.get(statbase)).intValue());
                 this.writeStatToMap(this.field_77457_a, statbase, ((Integer)par1Map.get(statbase)).intValue());
             }
         }
     }
 
-    public void func_77452_b(Map par1Map)
+    public void func_77452_b(final Map par1Map)
     {
         if (par1Map != null)
         {
-            Iterator iterator = par1Map.keySet().iterator();
+            final Iterator iterator = par1Map.keySet().iterator();
 
             while (iterator.hasNext())
             {
-                StatBase statbase = (StatBase)iterator.next();
-                Integer integer = (Integer)this.field_77455_b.get(statbase);
-                int i = integer == null ? 0 : integer.intValue();
+                final StatBase statbase = (StatBase)iterator.next();
+                final Integer integer = (Integer)this.field_77455_b.get(statbase);
+                final int i = integer == null ? 0 : integer.intValue();
                 this.field_77457_a.put(statbase, Integer.valueOf(((Integer)par1Map.get(statbase)).intValue() + i));
             }
         }
     }
 
-    public void func_77448_c(Map par1Map)
+    public void func_77448_c(final Map par1Map)
     {
         if (par1Map != null)
         {
             this.field_77456_c = true;
-            Iterator iterator = par1Map.keySet().iterator();
+            final Iterator iterator = par1Map.keySet().iterator();
 
             while (iterator.hasNext())
             {
-                StatBase statbase = (StatBase)iterator.next();
+                final StatBase statbase = (StatBase)iterator.next();
                 this.writeStatToMap(this.field_77455_b, statbase, ((Integer)par1Map.get(statbase)).intValue());
             }
         }
     }
 
-    public static Map func_77453_b(String par0Str)
+    public static Map func_77453_b(final String par0Str)
     {
-        HashMap hashmap = new HashMap();
+        final HashMap hashmap = new HashMap();
 
         try
         {
-            String s1 = "local";
-            StringBuilder stringbuilder = new StringBuilder();
-            JsonRootNode jsonrootnode = (new JdomParser()).parse(par0Str);
-            List list = jsonrootnode.getArrayNode(new Object[] {"stats-change"});
-            Iterator iterator = list.iterator();
+            final String s1 = "local";
+            final StringBuilder stringbuilder = new StringBuilder();
+            final JsonRootNode jsonrootnode = (new JdomParser()).parse(par0Str);
+            final List list = jsonrootnode.getArrayNode(new Object[] {"stats-change"});
+            final Iterator iterator = list.iterator();
 
             while (iterator.hasNext())
             {
-                JsonNode jsonnode = (JsonNode)iterator.next();
-                Map map = jsonnode.getFields();
-                Entry entry = (Entry)map.entrySet().iterator().next();
-                int i = Integer.parseInt(((JsonStringNode)entry.getKey()).getText());
-                int j = Integer.parseInt(((JsonNode)entry.getValue()).getText());
+                final JsonNode jsonnode = (JsonNode)iterator.next();
+                final Map map = jsonnode.getFields();
+                final Entry entry = (Entry)map.entrySet().iterator().next();
+                final int i = Integer.parseInt(((JsonStringNode)entry.getKey()).getText());
+                final int j = Integer.parseInt(((JsonNode)entry.getValue()).getText());
                 boolean flag = true;
                 StatBase statbase = StatList.getOneShotStat(i);
 
@@ -165,8 +165,8 @@ public class StatFileWriter
                 }
             }
 
-            MD5String md5string = new MD5String(s1);
-            String s2 = md5string.getMD5String(stringbuilder.toString());
+            final MD5String md5string = new MD5String(s1);
+            final String s2 = md5string.getMD5String(stringbuilder.toString());
 
             if (!s2.equals(jsonrootnode.getStringValue(new Object[] {"checksum"})))
             {
@@ -174,7 +174,7 @@ public class StatFileWriter
                 return null;
             }
         }
-        catch (InvalidSyntaxException invalidsyntaxexception)
+        catch (final InvalidSyntaxException invalidsyntaxexception)
         {
             invalidsyntaxexception.printStackTrace();
         }
@@ -182,10 +182,10 @@ public class StatFileWriter
         return hashmap;
     }
 
-    public static String func_77441_a(String par0Str, String par1Str, Map par2Map)
+    public static String func_77441_a(final String par0Str, final String par1Str, final Map par2Map)
     {
-        StringBuilder stringbuilder = new StringBuilder();
-        StringBuilder stringbuilder1 = new StringBuilder();
+        final StringBuilder stringbuilder = new StringBuilder();
+        final StringBuilder stringbuilder1 = new StringBuilder();
         boolean flag = true;
         stringbuilder.append("{\r\n");
 
@@ -198,11 +198,11 @@ public class StatFileWriter
         }
 
         stringbuilder.append("  \"stats-change\":[");
-        Iterator iterator = par2Map.keySet().iterator();
+        final Iterator iterator = par2Map.keySet().iterator();
 
         while (iterator.hasNext())
         {
-            StatBase statbase = (StatBase)iterator.next();
+            final StatBase statbase = (StatBase)iterator.next();
 
             if (flag)
             {
@@ -223,7 +223,7 @@ public class StatFileWriter
             stringbuilder.append("}");
         }
 
-        MD5String md5string = new MD5String(par1Str);
+        final MD5String md5string = new MD5String(par1Str);
         stringbuilder.append("\r\n  ],\r\n");
         stringbuilder.append("  \"checksum\":\"").append(md5string.getMD5String(stringbuilder1.toString())).append("\"\r\n");
         stringbuilder.append("}");
@@ -233,7 +233,7 @@ public class StatFileWriter
     /**
      * Returns true if the achievement has been unlocked.
      */
-    public boolean hasAchievementUnlocked(Achievement par1Achievement)
+    public boolean hasAchievementUnlocked(final Achievement par1Achievement)
     {
         return this.field_77457_a.containsKey(par1Achievement);
     }
@@ -241,14 +241,14 @@ public class StatFileWriter
     /**
      * Returns true if the parent has been unlocked, or there is no parent
      */
-    public boolean canUnlockAchievement(Achievement par1Achievement)
+    public boolean canUnlockAchievement(final Achievement par1Achievement)
     {
         return par1Achievement.parentAchievement == null || this.hasAchievementUnlocked(par1Achievement.parentAchievement);
     }
 
-    public int writeStat(StatBase par1StatBase)
+    public int writeStat(final StatBase par1StatBase)
     {
-        Integer integer = (Integer)this.field_77457_a.get(par1StatBase);
+        final Integer integer = (Integer)this.field_77457_a.get(par1StatBase);
         return integer == null ? 0 : integer.intValue();
     }
 

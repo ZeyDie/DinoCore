@@ -51,7 +51,7 @@ public class GuiScreenBook extends GuiScreen
     private GuiButton buttonFinalize;
     private GuiButton buttonCancel;
 
-    public GuiScreenBook(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack, boolean par3)
+    public GuiScreenBook(final EntityPlayer par1EntityPlayer, final ItemStack par2ItemStack, final boolean par3)
     {
         this.editingPlayer = par1EntityPlayer;
         this.itemstackBook = par2ItemStack;
@@ -59,7 +59,7 @@ public class GuiScreenBook extends GuiScreen
 
         if (par2ItemStack.hasTagCompound())
         {
-            NBTTagCompound nbttagcompound = par2ItemStack.getTagCompound();
+            final NBTTagCompound nbttagcompound = par2ItemStack.getTagCompound();
             this.bookPages = nbttagcompound.getTagList("pages");
 
             if (this.bookPages != null)
@@ -111,8 +111,8 @@ public class GuiScreenBook extends GuiScreen
             this.buttonList.add(this.buttonDone = new GuiButton(0, this.width / 2 - 100, 4 + this.bookImageHeight, 200, 20, I18n.getString("gui.done")));
         }
 
-        int i = (this.width - this.bookImageWidth) / 2;
-        byte b0 = 2;
+        final int i = (this.width - this.bookImageWidth) / 2;
+        final byte b0 = 2;
         this.buttonList.add(this.buttonNextPage = new GuiButtonNextPage(1, i + 120, b0 + 154, true));
         this.buttonList.add(this.buttonPreviousPage = new GuiButtonNextPage(2, i + 38, b0 + 154, false));
         this.updateButtons();
@@ -137,11 +137,11 @@ public class GuiScreenBook extends GuiScreen
             this.buttonSign.drawButton = !this.editingTitle;
             this.buttonCancel.drawButton = this.editingTitle;
             this.buttonFinalize.drawButton = this.editingTitle;
-            this.buttonFinalize.enabled = this.bookTitle.trim().length() > 0;
+            this.buttonFinalize.enabled = !this.bookTitle.trim().isEmpty();
         }
     }
 
-    private void sendBookToServer(boolean par1)
+    private void sendBookToServer(final boolean par1)
     {
         if (this.bookIsUnsigned && this.bookModified)
         {
@@ -149,9 +149,9 @@ public class GuiScreenBook extends GuiScreen
             {
                 while (this.bookPages.tagCount() > 1)
                 {
-                    NBTTagString nbttagstring = (NBTTagString)this.bookPages.tagAt(this.bookPages.tagCount() - 1);
+                    final NBTTagString nbttagstring = (NBTTagString)this.bookPages.tagAt(this.bookPages.tagCount() - 1);
 
-                    if (nbttagstring.data != null && nbttagstring.data.length() != 0)
+                    if (nbttagstring.data != null && !nbttagstring.data.isEmpty())
                     {
                         break;
                     }
@@ -161,7 +161,7 @@ public class GuiScreenBook extends GuiScreen
 
                 if (this.itemstackBook.hasTagCompound())
                 {
-                    NBTTagCompound nbttagcompound = this.itemstackBook.getTagCompound();
+                    final NBTTagCompound nbttagcompound = this.itemstackBook.getTagCompound();
                     nbttagcompound.setTag("pages", this.bookPages);
                 }
                 else
@@ -179,15 +179,15 @@ public class GuiScreenBook extends GuiScreen
                     this.itemstackBook.itemID = Item.writtenBook.itemID;
                 }
 
-                ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
-                DataOutputStream dataoutputstream = new DataOutputStream(bytearrayoutputstream);
+                final ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
+                final DataOutputStream dataoutputstream = new DataOutputStream(bytearrayoutputstream);
 
                 try
                 {
                     Packet.writeItemStack(this.itemstackBook, dataoutputstream);
                     this.mc.getNetHandler().addToSendQueue(new Packet250CustomPayload(s, bytearrayoutputstream.toByteArray()));
                 }
-                catch (Exception exception)
+                catch (final Exception exception)
                 {
                     exception.printStackTrace();
                 }
@@ -198,7 +198,7 @@ public class GuiScreenBook extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
@@ -261,7 +261,7 @@ public class GuiScreenBook extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         super.keyTyped(par1, par2);
 
@@ -281,7 +281,7 @@ public class GuiScreenBook extends GuiScreen
     /**
      * Processes keystrokes when editing the text of a book
      */
-    private void keyTypedInBook(char par1, int par2)
+    private void keyTypedInBook(final char par1, final int par2)
     {
         switch (par1)
         {
@@ -292,9 +292,9 @@ public class GuiScreenBook extends GuiScreen
                 switch (par2)
                 {
                     case 14:
-                        String s = this.func_74158_i();
+                        final String s = this.func_74158_i();
 
-                        if (s.length() > 0)
+                        if (!s.isEmpty())
                         {
                             this.func_74159_a(s.substring(0, s.length() - 1));
                         }
@@ -313,7 +313,7 @@ public class GuiScreenBook extends GuiScreen
         }
     }
 
-    private void func_74162_c(char par1, int par2)
+    private void func_74162_c(final char par1, final int par2)
     {
         switch (par2)
         {
@@ -348,7 +348,7 @@ public class GuiScreenBook extends GuiScreen
     {
         if (this.bookPages != null && this.currPage >= 0 && this.currPage < this.bookPages.tagCount())
         {
-            NBTTagString nbttagstring = (NBTTagString)this.bookPages.tagAt(this.currPage);
+            final NBTTagString nbttagstring = (NBTTagString)this.bookPages.tagAt(this.currPage);
             return nbttagstring.toString();
         }
         else
@@ -357,21 +357,21 @@ public class GuiScreenBook extends GuiScreen
         }
     }
 
-    private void func_74159_a(String par1Str)
+    private void func_74159_a(final String par1Str)
     {
         if (this.bookPages != null && this.currPage >= 0 && this.currPage < this.bookPages.tagCount())
         {
-            NBTTagString nbttagstring = (NBTTagString)this.bookPages.tagAt(this.currPage);
+            final NBTTagString nbttagstring = (NBTTagString)this.bookPages.tagAt(this.currPage);
             nbttagstring.data = par1Str;
             this.bookModified = true;
         }
     }
 
-    private void func_74160_b(String par1Str)
+    private void func_74160_b(final String par1Str)
     {
-        String s1 = this.func_74158_i();
-        String s2 = s1 + par1Str;
-        int i = this.fontRenderer.splitStringWidth(s2 + "" + EnumChatFormatting.BLACK + "_", 118);
+        final String s1 = this.func_74158_i();
+        final String s2 = s1 + par1Str;
+        final int i = this.fontRenderer.splitStringWidth(s2 + "" + EnumChatFormatting.BLACK + "_", 118);
 
         if (i <= 118 && s2.length() < 256)
         {
@@ -382,16 +382,16 @@ public class GuiScreenBook extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(bookGuiTextures);
-        int k = (this.width - this.bookImageWidth) / 2;
-        byte b0 = 2;
+        final int k = (this.width - this.bookImageWidth) / 2;
+        final byte b0 = 2;
         this.drawTexturedModalRect(k, b0, 0, 0, this.bookImageWidth, this.bookImageHeight);
         String s;
         String s1;
-        int l;
+        final int l;
 
         if (this.editingTitle)
         {
@@ -412,12 +412,12 @@ public class GuiScreenBook extends GuiScreen
             s1 = I18n.getString("book.editTitle");
             l = this.fontRenderer.getStringWidth(s1);
             this.fontRenderer.drawString(s1, k + 36 + (116 - l) / 2, b0 + 16 + 16, 0);
-            int i1 = this.fontRenderer.getStringWidth(s);
+            final int i1 = this.fontRenderer.getStringWidth(s);
             this.fontRenderer.drawString(s, k + 36 + (116 - i1) / 2, b0 + 48, 0);
-            String s2 = String.format(I18n.getString("book.byAuthor"), new Object[] {this.editingPlayer.getCommandSenderName()});
-            int j1 = this.fontRenderer.getStringWidth(s2);
+            final String s2 = String.format(I18n.getString("book.byAuthor"), new Object[] {this.editingPlayer.getCommandSenderName()});
+            final int j1 = this.fontRenderer.getStringWidth(s2);
             this.fontRenderer.drawString(EnumChatFormatting.DARK_GRAY + s2, k + 36 + (116 - j1) / 2, b0 + 48 + 10, 0);
-            String s3 = I18n.getString("book.finalizeWarning");
+            final String s3 = I18n.getString("book.finalizeWarning");
             this.fontRenderer.drawSplitString(s3, k + 36, b0 + 80, 116, 0);
         }
         else
@@ -427,7 +427,7 @@ public class GuiScreenBook extends GuiScreen
 
             if (this.bookPages != null && this.currPage >= 0 && this.currPage < this.bookPages.tagCount())
             {
-                NBTTagString nbttagstring = (NBTTagString)this.bookPages.tagAt(this.currPage);
+                final NBTTagString nbttagstring = (NBTTagString)this.bookPages.tagAt(this.currPage);
                 s1 = nbttagstring.toString();
             }
 

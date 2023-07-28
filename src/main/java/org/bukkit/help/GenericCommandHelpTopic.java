@@ -16,7 +16,7 @@ public class GenericCommandHelpTopic extends HelpTopic {
 
     protected Command command;
 
-    public GenericCommandHelpTopic(Command command) {
+    public GenericCommandHelpTopic(final Command command) {
         this.command = command;
 
         if (command.getLabel().startsWith("/")) {
@@ -26,7 +26,7 @@ public class GenericCommandHelpTopic extends HelpTopic {
         }
 
         // The short text is the first line of the description
-        int i = command.getDescription().indexOf("\n");
+        final int i = command.getDescription().indexOf("\n");
         if (i > 1) {
             shortText = command.getDescription().substring(0, i - 1);
         } else {
@@ -34,7 +34,7 @@ public class GenericCommandHelpTopic extends HelpTopic {
         }
 
         // Build full text
-        StringBuffer sb = new StringBuffer();
+        final StringBuffer sb = new StringBuffer();
 
         sb.append(ChatColor.GOLD);
         sb.append("Description: ");
@@ -48,17 +48,17 @@ public class GenericCommandHelpTopic extends HelpTopic {
         sb.append(ChatColor.WHITE);
         sb.append(command.getUsage().replace("<command>", name.substring(1)));
 
-        if (command.getAliases().size() > 0) {
+        if (!command.getAliases().isEmpty()) {
             sb.append("\n");
             sb.append(ChatColor.GOLD);
             sb.append("Aliases: ");
             sb.append(ChatColor.WHITE);
-            sb.append(ChatColor.WHITE + StringUtils.join(command.getAliases(), ", "));
+            sb.append(ChatColor.WHITE).append(StringUtils.join(command.getAliases(), ", "));
         }
         fullText = sb.toString();
     }
 
-    public boolean canSee(CommandSender sender) {
+    public boolean canSee(final CommandSender sender) {
         if (!command.isRegistered() && !(command instanceof VanillaCommand)) {
             // Unregistered commands should not show up in the help (ignore VanillaCommands)
             return false;

@@ -17,7 +17,7 @@ public class Packet43Experience extends Packet
 
     public Packet43Experience() {}
 
-    public Packet43Experience(float par1, int par2, int par3)
+    public Packet43Experience(final float par1, final int par2, final int par3)
     {
         this.experience = par1;
         this.experienceTotal = par2;
@@ -27,7 +27,7 @@ public class Packet43Experience extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.experience = par1DataInput.readFloat();
         this.experienceLevel = par1DataInput.readShort();
@@ -37,7 +37,7 @@ public class Packet43Experience extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeFloat(this.experience);
         par1DataOutput.writeShort(this.experienceLevel);
@@ -47,7 +47,7 @@ public class Packet43Experience extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleExperience(this);
     }
@@ -72,7 +72,7 @@ public class Packet43Experience extends Packet
      * eg return packet30entity.entityId == entityId; WARNING : will throw if you compare a packet to a different packet
      * class
      */
-    public boolean containsSameEntityIDAs(Packet par1Packet)
+    public boolean containsSameEntityIDAs(final Packet par1Packet)
     {
         return true;
     }

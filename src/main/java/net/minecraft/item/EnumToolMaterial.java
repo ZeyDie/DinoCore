@@ -37,7 +37,7 @@ public enum EnumToolMaterial {
     //Added by forge for custom Armor materials.
     public Item customCraftingMaterial = null;
 
-    private EnumToolMaterial(int par3, int par4, float par5, float par6, int par7) {
+    private EnumToolMaterial(final int par3, final int par4, final float par5, final float par6, final int par7) {
         this.harvestLevel = par3;
         this.maxUses = par4;
         this.efficiencyOnProperMaterial = par5;

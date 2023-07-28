@@ -37,7 +37,7 @@ public class EntityGhast extends EntityFlying implements IMob
     /** The explosion radius of spawned fireballs. */
     private int explosionStrength = 1;
 
-    public EntityGhast(World par1World)
+    public EntityGhast(final World par1World)
     {
         super(par1World);
         this.setSize(4.0F, 4.0F);
@@ -54,7 +54,7 @@ public class EntityGhast extends EntityFlying implements IMob
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2)
     {
         if (this.isEntityInvulnerable())
         {
@@ -94,9 +94,9 @@ public class EntityGhast extends EntityFlying implements IMob
 
         this.despawnEntity();
         this.prevAttackCounter = this.attackCounter;
-        double d0 = this.waypointX - this.posX;
-        double d1 = this.waypointY - this.posY;
-        double d2 = this.waypointZ - this.posZ;
+        final double d0 = this.waypointX - this.posX;
+        final double d1 = this.waypointY - this.posY;
+        final double d2 = this.waypointZ - this.posZ;
         double d3 = d0 * d0 + d1 * d1 + d2 * d2;
 
         if (d3 < 1.0D || d3 > 3600.0D)
@@ -128,7 +128,7 @@ public class EntityGhast extends EntityFlying implements IMob
         if (this.targetedEntity != null && this.targetedEntity.isDead)
         {
             // CraftBukkit start
-            EntityTargetEvent event = new EntityTargetEvent(this.getBukkitEntity(), null, EntityTargetEvent.TargetReason.TARGET_DIED);
+            final EntityTargetEvent event = new EntityTargetEvent(this.getBukkitEntity(), null, EntityTargetEvent.TargetReason.TARGET_DIED);
             this.worldObj.getServer().getPluginManager().callEvent(event);
 
             if (!event.isCancelled())
@@ -149,11 +149,11 @@ public class EntityGhast extends EntityFlying implements IMob
         if (this.targetedEntity == null || this.aggroCooldown-- <= 0)
         {
             // CraftBukkit start
-            Entity target = this.worldObj.getClosestVulnerablePlayerToEntity(this, 100.0D);
+            final Entity target = this.worldObj.getClosestVulnerablePlayerToEntity(this, 100.0D);
 
             if (target != null)
             {
-                EntityTargetEvent event = new EntityTargetEvent(this.getBukkitEntity(), target.getBukkitEntity(), EntityTargetEvent.TargetReason.CLOSEST_PLAYER);
+                final EntityTargetEvent event = new EntityTargetEvent(this.getBukkitEntity(), target.getBukkitEntity(), EntityTargetEvent.TargetReason.CLOSEST_PLAYER);
                 this.worldObj.getServer().getPluginManager().callEvent(event);
 
                 if (!event.isCancelled())
@@ -177,13 +177,13 @@ public class EntityGhast extends EntityFlying implements IMob
             }
         }
 
-        double d4 = 64.0D;
+        final double d4 = 64.0D;
 
         if (this.targetedEntity != null && this.targetedEntity.getDistanceSqToEntity(this) < d4 * d4)
         {
-            double d5 = this.targetedEntity.posX - this.posX;
-            double d6 = this.targetedEntity.boundingBox.minY + (double)(this.targetedEntity.height / 2.0F) - (this.posY + (double)(this.height / 2.0F));
-            double d7 = this.targetedEntity.posZ - this.posZ;
+            final double d5 = this.targetedEntity.posX - this.posX;
+            final double d6 = this.targetedEntity.boundingBox.minY + (double)(this.targetedEntity.height / 2.0F) - (this.posY + (double)(this.height / 2.0F));
+            final double d7 = this.targetedEntity.posZ - this.posZ;
             this.renderYawOffset = this.rotationYaw = -((float)Math.atan2(d5, d7)) * 180.0F / (float)Math.PI;
 
             if (this.canEntityBeSeen(this.targetedEntity))
@@ -198,11 +198,11 @@ public class EntityGhast extends EntityFlying implements IMob
                 if (this.attackCounter == 20)
                 {
                     this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1008, (int)this.posX, (int)this.posY, (int)this.posZ, 0);
-                    EntityLargeFireball entitylargefireball = new EntityLargeFireball(this.worldObj, this, d5, d6, d7);
+                    final EntityLargeFireball entitylargefireball = new EntityLargeFireball(this.worldObj, this, d5, d6, d7);
                     // CraftBukkit - set yield when setting explosionpower
                     entitylargefireball.yield = entitylargefireball.field_92057_e = this.explosionStrength;
-                    double d8 = 4.0D;
-                    Vec3 vec3 = this.getLook(1.0F);
+                    final double d8 = 4.0D;
+                    final Vec3 vec3 = this.getLook(1.0F);
                     entitylargefireball.posX = this.posX + vec3.xCoord * d8;
                     entitylargefireball.posY = this.posY + (double)(this.height / 2.0F) + 0.5D;
                     entitylargefireball.posZ = this.posZ + vec3.zCoord * d8;
@@ -227,8 +227,8 @@ public class EntityGhast extends EntityFlying implements IMob
 
         if (!this.worldObj.isRemote)
         {
-            byte b0 = this.dataWatcher.getWatchableObjectByte(16);
-            byte b1 = (byte)(this.attackCounter > 10 ? 1 : 0);
+            final byte b0 = this.dataWatcher.getWatchableObjectByte(16);
+            final byte b1 = (byte)(this.attackCounter > 10 ? 1 : 0);
 
             if (b0 != b1)
             {
@@ -240,12 +240,12 @@ public class EntityGhast extends EntityFlying implements IMob
     /**
      * True if the ghast has an unobstructed line of travel to the waypoint.
      */
-    private boolean isCourseTraversable(double par1, double par3, double par5, double par7)
+    private boolean isCourseTraversable(final double par1, final double par3, final double par5, final double par7)
     {
-        double d4 = (this.waypointX - this.posX) / par7;
-        double d5 = (this.waypointY - this.posY) / par7;
-        double d6 = (this.waypointZ - this.posZ) / par7;
-        AxisAlignedBB axisalignedbb = this.boundingBox.copy();
+        final double d4 = (this.waypointX - this.posX) / par7;
+        final double d5 = (this.waypointY - this.posY) / par7;
+        final double d6 = (this.waypointZ - this.posZ) / par7;
+        final AxisAlignedBB axisalignedbb = this.boundingBox.copy();
 
         for (int i = 1; (double)i < par7; ++i)
         {
@@ -296,7 +296,7 @@ public class EntityGhast extends EntityFlying implements IMob
      * Drop 0-2 items of this living's type. @param par1 - Whether this entity has recently been hit by a player. @param
      * par2 - Level of Looting used to kill this mob.
      */
-    protected void dropFewItems(boolean par1, int par2)
+    protected void dropFewItems(final boolean par1, final int par2)
     {
         int j = this.rand.nextInt(2) + this.rand.nextInt(1 + par2);
         int k;
@@ -341,7 +341,7 @@ public class EntityGhast extends EntityFlying implements IMob
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setInteger("ExplosionPower", this.explosionStrength);
@@ -350,7 +350,7 @@ public class EntityGhast extends EntityFlying implements IMob
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
 

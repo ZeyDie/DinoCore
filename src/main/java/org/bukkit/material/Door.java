@@ -57,7 +57,7 @@ public class Door extends MaterialData implements Directional, Openable {
      * @deprecated Does not work (correctly) anymore
      */
     @Deprecated
-    public void setOpen(boolean isOpen) {
+    public void setOpen(final boolean isOpen) {
         setData((byte) (isOpen ? (getData() | 0x4) : (getData() & ~0x4)));
     }
 
@@ -75,7 +75,7 @@ public class Door extends MaterialData implements Directional, Openable {
      * @deprecated Shouldn't be used anymore
      */
     @Deprecated
-    public void setTopHalf(boolean isTopHalf) {
+    public void setTopHalf(final boolean isTopHalf) {
         setData((byte) (isTopHalf ? (getData() | 0x8) : (getData() & ~0x8)));
     }
 
@@ -85,7 +85,7 @@ public class Door extends MaterialData implements Directional, Openable {
      */
     @Deprecated
     public BlockFace getHingeCorner() {
-        byte d = getData();
+        final byte d = getData();
 
         if ((d & 0x3) == 0x3) {
             return BlockFace.NORTH_WEST;
@@ -110,7 +110,7 @@ public class Door extends MaterialData implements Directional, Openable {
      * @deprecated Does not work (correctly) anymore
      */
     @Deprecated
-    public void setFacingDirection(BlockFace face) {
+    public void setFacingDirection(final BlockFace face) {
         byte data = (byte) (getData() & 0x12);
         switch (face) {
         case NORTH:
@@ -136,7 +136,7 @@ public class Door extends MaterialData implements Directional, Openable {
      */
     @Deprecated
     public BlockFace getFacing() {
-        byte data = (byte) (getData() & 0x3);
+        final byte data = (byte) (getData() & 0x3);
         switch (data) {
         case 0:
             return BlockFace.WEST;

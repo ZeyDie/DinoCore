@@ -19,17 +19,17 @@ public class RenderMagmaCube extends RenderLiving
         super(new ModelMagmaCube(), 0.25F);
     }
 
-    protected ResourceLocation getMagmaCubeTextures(EntityMagmaCube par1EntityMagmaCube)
+    protected ResourceLocation getMagmaCubeTextures(final EntityMagmaCube par1EntityMagmaCube)
     {
         return magmaCubeTextures;
     }
 
-    protected void scaleMagmaCube(EntityMagmaCube par1EntityMagmaCube, float par2)
+    protected void scaleMagmaCube(final EntityMagmaCube par1EntityMagmaCube, final float par2)
     {
-        int i = par1EntityMagmaCube.getSlimeSize();
-        float f1 = (par1EntityMagmaCube.prevSquishFactor + (par1EntityMagmaCube.squishFactor - par1EntityMagmaCube.prevSquishFactor) * par2) / ((float)i * 0.5F + 1.0F);
-        float f2 = 1.0F / (f1 + 1.0F);
-        float f3 = (float)i;
+        final int i = par1EntityMagmaCube.getSlimeSize();
+        final float f1 = (par1EntityMagmaCube.prevSquishFactor + (par1EntityMagmaCube.squishFactor - par1EntityMagmaCube.prevSquishFactor) * par2) / ((float)i * 0.5F + 1.0F);
+        final float f2 = 1.0F / (f1 + 1.0F);
+        final float f3 = (float)i;
         GL11.glScalef(f2 * f3, 1.0F / f2 * f3, f2 * f3);
     }
 
@@ -37,7 +37,7 @@ public class RenderMagmaCube extends RenderLiving
      * Allows the render to do any OpenGL state modifications necessary before the model is rendered. Args:
      * entityLiving, partialTickTime
      */
-    protected void preRenderCallback(EntityLivingBase par1EntityLivingBase, float par2)
+    protected void preRenderCallback(final EntityLivingBase par1EntityLivingBase, final float par2)
     {
         this.scaleMagmaCube((EntityMagmaCube)par1EntityLivingBase, par2);
     }
@@ -45,7 +45,7 @@ public class RenderMagmaCube extends RenderLiving
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.getMagmaCubeTextures((EntityMagmaCube)par1Entity);
     }

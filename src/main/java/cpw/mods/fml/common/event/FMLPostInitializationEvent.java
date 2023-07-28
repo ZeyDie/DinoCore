@@ -18,7 +18,7 @@ import cpw.mods.fml.common.LoaderState.ModState;
 
 public class FMLPostInitializationEvent extends FMLStateEvent
 {
-    public FMLPostInitializationEvent(Object... data)
+    public FMLPostInitializationEvent(final Object... data)
     {
         super(data);
     }
@@ -29,16 +29,16 @@ public class FMLPostInitializationEvent extends FMLStateEvent
         return ModState.POSTINITIALIZED;
     }
 
-    public Object buildSoftDependProxy(String modId, String className)
+    public Object buildSoftDependProxy(final String modId, final String className)
     {
         if (Loader.isModLoaded(modId))
         {
             try
             {
-                Class<?> clz = Class.forName(className,true,Loader.instance().getModClassLoader());
+                final Class<?> clz = Class.forName(className,true,Loader.instance().getModClassLoader());
                 return clz.newInstance();
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 Throwables.propagateIfPossible(e);
                 return null;

@@ -23,7 +23,7 @@ public class Packet131MapData extends Packet
         this.isChunkDataPacket = true;
     }
 
-    public Packet131MapData(short par1, short par2, byte[] par3ArrayOfByte)
+    public Packet131MapData(final short par1, final short par2, final byte[] par3ArrayOfByte)
     {
         this.isChunkDataPacket = true;
         this.itemID = par1;
@@ -34,7 +34,7 @@ public class Packet131MapData extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.itemID = par1DataInput.readShort();
         this.uniqueID = par1DataInput.readShort();
@@ -45,7 +45,7 @@ public class Packet131MapData extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeShort(this.itemID);
         par1DataOutput.writeShort(this.uniqueID);
@@ -56,7 +56,7 @@ public class Packet131MapData extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleMapData(this);
     }

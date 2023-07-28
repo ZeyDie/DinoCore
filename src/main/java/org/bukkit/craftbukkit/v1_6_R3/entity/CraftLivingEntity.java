@@ -46,7 +46,7 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
         return Math.min(Math.max(0, getHandle().getHealth()), getMaxHealth());
     }
 
-    public void setHealth(double health) {
+    public void setHealth(final double health) {
         if ((health < 0) || (health > getMaxHealth())) {
             throw new IllegalArgumentException("Health must be between 0 and " + getMaxHealth());
         }
@@ -64,7 +64,7 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
         return getHandle().getMaxHealth();
     }
 
-    public void setMaxHealth(double amount) {
+    public void setMaxHealth(final double amount) {
         Validate.isTrue(amount > 0, "Max health must be greater than 0");
 
         getHandle().getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.maxHealth).setAttribute(amount);
@@ -92,23 +92,24 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
         return getHandle().getEyeHeight();
     }
 
-    public double getEyeHeight(boolean ignoreSneaking) {
+    public double getEyeHeight(final boolean ignoreSneaking) {
         return getEyeHeight();
     }
 
-    private List<Block> getLineOfSight(HashSet<Byte> transparent, int maxDistance, int maxLength) {
-        if (maxDistance > 120) {
-            maxDistance = 120;
+    private List<Block> getLineOfSight(final HashSet<Byte> transparent, int maxDistance, final int maxLength) {
+        int maxDistance1 = maxDistance;
+        if (maxDistance1 > 120) {
+            maxDistance1 = 120;
         }
-        ArrayList<Block> blocks = new ArrayList<Block>();
-        Iterator<Block> itr = new BlockIterator(this, maxDistance);
+        final ArrayList<Block> blocks = new ArrayList<Block>();
+        final Iterator<Block> itr = new BlockIterator(this, maxDistance1);
         while (itr.hasNext()) {
-            Block block = itr.next();
+            final Block block = itr.next();
             blocks.add(block);
             if (maxLength != 0 && blocks.size() > maxLength) {
                 blocks.remove(0);
             }
-            int id = block.getTypeId();
+            final int id = block.getTypeId();
             if (transparent == null) {
                 if (id != 0) {
                     break;
@@ -122,16 +123,16 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
         return blocks;
     }
 
-    public List<Block> getLineOfSight(HashSet<Byte> transparent, int maxDistance) {
+    public List<Block> getLineOfSight(final HashSet<Byte> transparent, final int maxDistance) {
         return getLineOfSight(transparent, maxDistance, 0);
     }
 
-    public Block getTargetBlock(HashSet<Byte> transparent, int maxDistance) {
-        List<Block> blocks = getLineOfSight(transparent, maxDistance, 1);
+    public Block getTargetBlock(final HashSet<Byte> transparent, final int maxDistance) {
+        final List<Block> blocks = getLineOfSight(transparent, maxDistance, 1);
         return blocks.get(0);
     }
 
-    public List<Block> getLastTwoTargetBlocks(HashSet<Byte> transparent, int maxDistance) {
+    public List<Block> getLastTwoTargetBlocks(final HashSet<Byte> transparent, final int maxDistance) {
         return getLineOfSight(transparent, maxDistance, 2);
     }
 
@@ -144,7 +145,7 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
         return getHandle().getAir();
     }
 
-    public void setRemainingAir(int ticks) {
+    public void setRemainingAir(final int ticks) {
         getHandle().setAir(ticks);
     }
 
@@ -152,15 +153,15 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
         return getHandle().maxAirTicks;
     }
 
-    public void setMaximumAir(int ticks) {
+    public void setMaximumAir(final int ticks) {
         getHandle().maxAirTicks = ticks;
     }
 
-    public void damage(double amount) {
+    public void damage(final double amount) {
         damage(amount, null);
     }
 
-    public void damage(double amount, org.bukkit.entity.Entity source) {
+    public void damage(final double amount, final org.bukkit.entity.Entity source) {
         net.minecraft.util.DamageSource reason = net.minecraft.util.DamageSource.generic;
 
         if (source instanceof HumanEntity) {
@@ -177,7 +178,7 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     }
 
     public Location getEyeLocation() {
-        Location loc = getLocation();
+        final Location loc = getLocation();
         loc.setY(loc.getY() + getEyeHeight());
         return loc;
     }
@@ -186,7 +187,7 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
         return getHandle().maxHurtResistantTime;
     }
 
-    public void setMaximumNoDamageTicks(int ticks) {
+    public void setMaximumNoDamageTicks(final int ticks) {
         getHandle().maxHurtResistantTime = ticks;
     }
 
@@ -194,7 +195,7 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
         return getHandle().lastDamage;
     }
 
-    public void setLastDamage(double damage) {
+    public void setLastDamage(final double damage) {
         getHandle().lastDamage = (float) damage;
     }
 
@@ -202,7 +203,7 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
         return getHandle().hurtResistantTime;
     }
 
-    public void setNoDamageTicks(int ticks) {
+    public void setNoDamageTicks(final int ticks) {
         getHandle().hurtResistantTime = ticks;
     }
 
@@ -224,11 +225,11 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
         return getHandle().attackingPlayer == null ? null : (Player) getHandle().attackingPlayer.getBukkitEntity();
     }
 
-    public boolean addPotionEffect(PotionEffect effect) {
+    public boolean addPotionEffect(final PotionEffect effect) {
         return addPotionEffect(effect, false);
     }
 
-    public boolean addPotionEffect(PotionEffect effect, boolean force) {
+    public boolean addPotionEffect(final PotionEffect effect, final boolean force) {
         if (hasPotionEffect(effect.getType())) {
             if (!force) {
                 return false;
@@ -239,28 +240,28 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
         return true;
     }
 
-    public boolean addPotionEffects(Collection<PotionEffect> effects) {
+    public boolean addPotionEffects(final Collection<PotionEffect> effects) {
         boolean success = true;
-        for (PotionEffect effect : effects) {
+        for (final PotionEffect effect : effects) {
             success &= addPotionEffect(effect);
         }
         return success;
     }
 
-    public boolean hasPotionEffect(PotionEffectType type) {
+    public boolean hasPotionEffect(final PotionEffectType type) {
         return getHandle().isPotionActive(net.minecraft.potion.Potion.potionTypes[type.getId()]);
     }
 
-    public void removePotionEffect(PotionEffectType type) {
+    public void removePotionEffect(final PotionEffectType type) {
         getHandle().removePotionEffect(type.getId()); // Should be removeEffect.
     }
 
     public Collection<PotionEffect> getActivePotionEffects() {
-        List<PotionEffect> effects = new ArrayList<PotionEffect>();
-        for (Object raw : getHandle().activePotionsMap.values()) {
+        final List<PotionEffect> effects = new ArrayList<PotionEffect>();
+        for (final Object raw : getHandle().activePotionsMap.values()) {
             if (!(raw instanceof net.minecraft.potion.PotionEffect))
                 continue;
-            net.minecraft.potion.PotionEffect handle = (net.minecraft.potion.PotionEffect) raw;
+            final net.minecraft.potion.PotionEffect handle = (net.minecraft.potion.PotionEffect) raw;
             if (PotionEffectType.getById(handle.getPotionID()) == null) continue; // Cauldron - ignore null types
             effects.add(new PotionEffect(PotionEffectType.getById(handle.getPotionID()), handle.getDuration(), handle.getAmplifier(), handle.getIsAmbient()));
         }
@@ -268,8 +269,8 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends Projectile> T launchProjectile(Class<? extends T> projectile) {
-        net.minecraft.world.World world = ((CraftWorld) getWorld()).getHandle();
+    public <T extends Projectile> T launchProjectile(final Class<? extends T> projectile) {
+        final net.minecraft.world.World world = ((CraftWorld) getWorld()).getHandle();
         net.minecraft.entity.Entity launch = null;
 
         if (Snowball.class.isAssignableFrom(projectile)) {
@@ -283,8 +284,8 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
         } else if (ThrownPotion.class.isAssignableFrom(projectile)) {
             launch = new net.minecraft.entity.projectile.EntityPotion(world, getHandle(), CraftItemStack.asNMSCopy(new ItemStack(Material.POTION, 1)));
         } else if (Fireball.class.isAssignableFrom(projectile)) {
-            Location location = getEyeLocation();
-            Vector direction = location.getDirection().multiply(10);
+            final Location location = getEyeLocation();
+            final Vector direction = location.getDirection().multiply(10);
 
             if (SmallFireball.class.isAssignableFrom(projectile)) {
                 launch = new net.minecraft.entity.projectile.EntitySmallFireball(world, getHandle(), direction.getX(), direction.getY(), direction.getZ());
@@ -305,14 +306,14 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
 
     public EntityType getType() {
         // Cauldron start
-        EntityType type = EntityType.fromName(this.entityName);
+        final EntityType type = EntityType.fromName(this.entityName);
         if (type != null)
             return type;
         else return EntityType.UNKNOWN;
         // Cauldron end
     }
 
-    public boolean hasLineOfSight(Entity other) {
+    public boolean hasLineOfSight(final Entity other) {
         return getHandle().canEntityBeSeen(((CraftEntity) other).getHandle());
     }
 
@@ -320,7 +321,7 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
         return getHandle() instanceof net.minecraft.entity.EntityLiving && !((net.minecraft.entity.EntityLiving) getHandle()).persistenceRequired;
     }
 
-    public void setRemoveWhenFarAway(boolean remove) {
+    public void setRemoveWhenFarAway(final boolean remove) {
         if (getHandle() instanceof net.minecraft.entity.EntityLiving) {
             ((net.minecraft.entity.EntityLiving) getHandle()).persistenceRequired = !remove;
         }
@@ -330,7 +331,7 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
         return equipment;
     }
 
-    public void setCanPickupItems(boolean pickup) {
+    public void setCanPickupItems(final boolean pickup) {
         if (getHandle() instanceof net.minecraft.entity.EntityLiving) {
             ((net.minecraft.entity.EntityLiving) getHandle()).canPickUpLoot = pickup;
         }
@@ -341,7 +342,7 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     }
 
     @Override
-    public boolean teleport(Location location, PlayerTeleportEvent.TeleportCause cause) {
+    public boolean teleport(final Location location, final PlayerTeleportEvent.TeleportCause cause) {
         if (getHealth() == 0) {
             return false;
         }
@@ -350,20 +351,21 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     }
 
     public void setCustomName(String name) {
+        String name1 = name;
         if (!(getHandle() instanceof net.minecraft.entity.EntityLiving)) {
             return;
         }
 
-        if (name == null) {
-            name = "";
+        if (name1 == null) {
+            name1 = "";
         }
 
         // Names cannot be more than 64 characters due to DataWatcher limitations
-        if (name.length() > 64) {
-            name = name.substring(0, 64);
+        if (name1.length() > 64) {
+            name1 = name1.substring(0, 64);
         }
 
-        ((net.minecraft.entity.EntityLiving) getHandle()).setCustomNameTag(name);
+        ((net.minecraft.entity.EntityLiving) getHandle()).setCustomNameTag(name1);
     }
 
     public String getCustomName() {
@@ -371,16 +373,16 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
             return null;
         }
 
-        String name = ((net.minecraft.entity.EntityLiving) getHandle()).getCustomNameTag();
+        final String name = ((net.minecraft.entity.EntityLiving) getHandle()).getCustomNameTag();
 
-        if (name == null || name.length() == 0) {
+        if (name == null || name.isEmpty()) {
             return null;
         }
 
         return name;
     }
 
-    public void setCustomNameVisible(boolean flag) {
+    public void setCustomNameVisible(final boolean flag) {
         if (getHandle() instanceof net.minecraft.entity.EntityLiving) {
             ((net.minecraft.entity.EntityLiving) getHandle()).setAlwaysRenderNameTag(flag);
         }
@@ -412,7 +414,7 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
         return true;
     }
 
-    public boolean setLeashHolder(Entity holder) {
+    public boolean setLeashHolder(final Entity holder) {
         if ((getHandle() instanceof net.minecraft.entity.boss.EntityWither) || !(getHandle() instanceof net.minecraft.entity.EntityLiving)) {
             return false;
         }
@@ -436,17 +438,17 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     }
 
     @Deprecated
-    public void _INVALID_setLastDamage(int damage) {
+    public void _INVALID_setLastDamage(final int damage) {
         setLastDamage(damage);
     }
 
     @Deprecated
-    public void _INVALID_damage(int amount) {
+    public void _INVALID_damage(final int amount) {
         damage(amount);
     }
 
     @Deprecated
-    public void _INVALID_damage(int amount, Entity source) {
+    public void _INVALID_damage(final int amount, final Entity source) {
         damage(amount, source);
     }
 
@@ -456,7 +458,7 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     }
 
     @Deprecated
-    public void _INVALID_setHealth(int health) {
+    public void _INVALID_setHealth(final int health) {
         setHealth(health);
     }
 
@@ -466,7 +468,7 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     }
 
     @Deprecated
-    public void _INVALID_setMaxHealth(int health) {
+    public void _INVALID_setMaxHealth(final int health) {
         setMaxHealth(health);
     }
 }

@@ -23,13 +23,13 @@ public class Packet19EntityAction extends Packet
     public Packet19EntityAction() {}
 
     @SideOnly(Side.CLIENT)
-    public Packet19EntityAction(Entity par1Entity, int par2)
+    public Packet19EntityAction(final Entity par1Entity, final int par2)
     {
         this(par1Entity, par2, 0);
     }
 
     @SideOnly(Side.CLIENT)
-    public Packet19EntityAction(Entity par1Entity, int par2, int par3)
+    public Packet19EntityAction(final Entity par1Entity, final int par2, final int par3)
     {
         this.entityId = par1Entity.entityId;
         this.action = par2;
@@ -39,7 +39,7 @@ public class Packet19EntityAction extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.entityId = par1DataInput.readInt();
         this.action = par1DataInput.readByte();
@@ -49,7 +49,7 @@ public class Packet19EntityAction extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.entityId);
         par1DataOutput.writeByte(this.action);
@@ -59,7 +59,7 @@ public class Packet19EntityAction extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleEntityAction(this);
     }

@@ -15,7 +15,7 @@ import net.minecraftforge.event.Event;
 public class GuiOpenEvent extends Event
 {
     public GuiScreen gui;
-    public GuiOpenEvent(GuiScreen gui)
+    public GuiOpenEvent(final GuiScreen gui)
     {
         this.gui = gui;
     }

@@ -10,7 +10,7 @@ class CallableParticleScreenName implements Callable
 {
     final Minecraft theMinecraft;
 
-    CallableParticleScreenName(Minecraft par1Minecraft)
+    CallableParticleScreenName(final Minecraft par1Minecraft)
     {
         this.theMinecraft = par1Minecraft;
     }

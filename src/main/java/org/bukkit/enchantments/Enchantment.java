@@ -125,7 +125,7 @@ public abstract class Enchantment {
     private static boolean acceptingNew = true;
     private final int id;
 
-    public Enchantment(int id) {
+    public Enchantment(final int id) {
         this.id = id;
     }
 
@@ -186,7 +186,7 @@ public abstract class Enchantment {
     public abstract boolean canEnchantItem(ItemStack item);
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
@@ -217,7 +217,7 @@ public abstract class Enchantment {
      *
      * @param enchantment Enchantment to register
      */
-    public static void registerEnchantment(Enchantment enchantment) {
+    public static void registerEnchantment(final Enchantment enchantment) {
         if (byId.containsKey(enchantment.id) || byName.containsKey(enchantment.getName())) {
             //throw new IllegalArgumentException("Cannot set already-set enchantment"); // Cauldron - yes we can
         } else if (!isAcceptingRegistrations()) {
@@ -253,7 +253,7 @@ public abstract class Enchantment {
      * @deprecated Magic value
      */
     @Deprecated
-    public static Enchantment getById(int id) {
+    public static Enchantment getById(final int id) {
         return byId.get(id);
     }
 
@@ -263,7 +263,7 @@ public abstract class Enchantment {
      * @param name Name to fetch
      * @return Resulting Enchantment, or null if not found
      */
-    public static Enchantment getByName(String name) {
+    public static Enchantment getByName(final String name) {
         return byName.get(name);
     }
 
@@ -273,6 +273,6 @@ public abstract class Enchantment {
      * @return Array of enchantments
      */
     public static Enchantment[] values() {
-        return byId.values().toArray(new Enchantment[byId.size()]);
+        return byId.values().toArray(new Enchantment[0]);
     }
 }

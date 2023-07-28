@@ -29,7 +29,7 @@ public class EnchantCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String commandLabel, String[] args) {
+    public boolean execute(final CommandSender sender, final String commandLabel, final String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length < 2) {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
@@ -41,18 +41,18 @@ public class EnchantCommand extends VanillaCommand {
             force = args[args.length > 3 ? 3 : 2].equalsIgnoreCase("force");
         }
 
-        Player player = Bukkit.getPlayerExact(args[0]);
+        final Player player = Bukkit.getPlayerExact(args[0]);
         if (player == null) {
             sender.sendMessage("Can't find player " + args[0]);
         } else {
-            ItemStack item = player.getItemInHand();
+            final ItemStack item = player.getItemInHand();
             if (item.getType() == Material.AIR) {
                 sender.sendMessage("The player isn't holding an item");
             } else {
                 String itemName = item.getType().toString().replaceAll("_", " ");
                 itemName = WordUtils.capitalizeFully(itemName);
 
-                Enchantment enchantment = getEnchantment(args[1].toUpperCase());
+                final Enchantment enchantment = getEnchantment(args[1].toUpperCase());
                 if (enchantment == null) {
                     sender.sendMessage(String.format("Enchantment does not exist: %s", args[1]));
                 }  else {
@@ -64,9 +64,9 @@ public class EnchantCommand extends VanillaCommand {
                     } else {
                         int level = 1;
                         if (args.length > 2) {
-                            Integer integer = getInteger(args[2]);
-                            int minLevel = enchantment.getStartLevel();
-                            int maxLevel = force ? Short.MAX_VALUE : enchantment.getMaxLevel();
+                            final Integer integer = getInteger(args[2]);
+                            final int minLevel = enchantment.getStartLevel();
+                            final int maxLevel = force ? Short.MAX_VALUE : enchantment.getMaxLevel();
 
                             if (integer != null) {
                                 if (integer == 0) {
@@ -89,12 +89,12 @@ public class EnchantCommand extends VanillaCommand {
                             }
                         }
 
-                        Map<Enchantment, Integer> enchantments = item.getEnchantments();
+                        final Map<Enchantment, Integer> enchantments = item.getEnchantments();
                         boolean conflicts = false;
 
                         if (!force && !enchantments.isEmpty()) { // TODO: Improve this to use a "hasEnchantments" call
-                            for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-                                Enchantment enchant = entry.getKey();
+                            for (final Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+                                final Enchantment enchant = entry.getKey();
 
                                 if (enchant.equals(enchantment)) continue;
                                 if (enchant.conflictsWith(enchantment)) {
@@ -119,7 +119,7 @@ public class EnchantCommand extends VanillaCommand {
     }
 
      @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) throws IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");
@@ -141,11 +141,11 @@ public class EnchantCommand extends VanillaCommand {
         return ImmutableList.of();
      }
 
-    private Enchantment getEnchantment(String lookup) {
+    private Enchantment getEnchantment(final String lookup) {
         Enchantment enchantment = Enchantment.getByName(lookup);
 
         if (enchantment == null) {
-            Integer id = getInteger(lookup);
+            final Integer id = getInteger(lookup);
             if (id != null) {
                 enchantment = Enchantment.getById(id);
             }
@@ -159,7 +159,7 @@ public class EnchantCommand extends VanillaCommand {
             throw new IllegalStateException("Enchantments have already been built!");
         }
 
-        for (Enchantment enchantment : Enchantment.values()) {
+        for (final Enchantment enchantment : Enchantment.values()) {
             ENCHANTMENT_NAMES.add(enchantment.getName());
         }
 

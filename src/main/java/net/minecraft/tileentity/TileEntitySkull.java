@@ -20,7 +20,7 @@ public class TileEntitySkull extends TileEntity
     /**
      * Writes a tile entity to NBT.
      */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setByte("SkullType", (byte)(this.skullType & 255));
@@ -31,7 +31,7 @@ public class TileEntitySkull extends TileEntity
     /**
      * Reads a tile entity from NBT.
      */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
         this.skullType = par1NBTTagCompound.getByte("SkullType");
@@ -48,7 +48,7 @@ public class TileEntitySkull extends TileEntity
      */
     public Packet getDescriptionPacket()
     {
-        NBTTagCompound nbttagcompound = new NBTTagCompound();
+        final NBTTagCompound nbttagcompound = new NBTTagCompound();
         this.writeToNBT(nbttagcompound);
         return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 4, nbttagcompound);
     }
@@ -56,7 +56,7 @@ public class TileEntitySkull extends TileEntity
     /**
      * Set the entity type for the skull
      */
-    public void setSkullType(int par1, String par2Str)
+    public void setSkullType(final int par1, final String par2Str)
     {
         this.skullType = par1;
         this.extraType = par2Str;
@@ -73,7 +73,7 @@ public class TileEntitySkull extends TileEntity
     /**
      * Set the skull's rotation
      */
-    public void setSkullRotation(int par1)
+    public void setSkullRotation(final int par1)
     {
         this.skullRotation = par1;
     }

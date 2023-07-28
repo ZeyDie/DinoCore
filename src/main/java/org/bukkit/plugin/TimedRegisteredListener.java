@@ -23,7 +23,7 @@ public class TimedRegisteredListener extends RegisteredListener {
     }
 
     @Override
-    public void callEvent(Event event) throws EventException {
+    public void callEvent(final Event event) throws EventException {
         // Spigot start
         if ( org.bukkit.Bukkit.getServer() != null && !org.bukkit.Bukkit.getServer().getPluginManager().useTimings() )
         {
@@ -36,27 +36,28 @@ public class TimedRegisteredListener extends RegisteredListener {
             return;
         }
         count++;
-        Class<? extends Event> newEventClass = event.getClass();
+        final Class<? extends Event> newEventClass = event.getClass();
         if (this.eventClass == null) {
             this.eventClass = newEventClass;
         } else if (!this.eventClass.equals(newEventClass)) {
             multiple = true;
             this.eventClass = getCommonSuperclass(newEventClass, this.eventClass).asSubclass(Event.class);
         }
-        long start = System.nanoTime();
+        final long start = System.nanoTime();
         super.callEvent(event);
         // Spigot start
-        long diff = System.nanoTime() - start;
+        final long diff = System.nanoTime() - start;
         curTickTotal += diff;
         totalTime += diff;
         // Spigot end
     }
 
-    private static Class<?> getCommonSuperclass(Class<?> class1, Class<?> class2) {
-        while (!class1.isAssignableFrom(class2)) {
-            class1 = class1.getSuperclass();
+    private static Class<?> getCommonSuperclass(Class<?> class1, final Class<?> class2) {
+        Class<?> class11 = class1;
+        while (!class11.isAssignableFrom(class2)) {
+            class11 = class11.getSuperclass();
         }
-        return class1;
+        return class11;
     }
 
     /**

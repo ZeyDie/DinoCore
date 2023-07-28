@@ -28,9 +28,9 @@ public class ModLoaderVillageTradeHandler implements IVillageTradeHandler
     private List<TradeEntry> trades = Lists.newArrayList();
 
     @Override
-    public void manipulateTradesForVillager(EntityVillager villager, MerchantRecipeList recipeList, Random random)
+    public void manipulateTradesForVillager(final EntityVillager villager, final MerchantRecipeList recipeList, final Random random)
     {
-        for (TradeEntry ent : trades)
+        for (final TradeEntry ent : trades)
         {
             if (ent.buying)
             {
@@ -43,7 +43,7 @@ public class ModLoaderVillageTradeHandler implements IVillageTradeHandler
         }
     }
 
-    public void addTrade(TradeEntry entry)
+    public void addTrade(final TradeEntry entry)
     {
         trades.add(entry);
     }

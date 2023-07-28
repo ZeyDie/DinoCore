@@ -13,7 +13,7 @@ public class ItemMinecart extends Item
     private static final IBehaviorDispenseItem dispenserMinecartBehavior = new BehaviorDispenseMinecart();
     public int minecartType;
 
-    public ItemMinecart(int par1, int par2)
+    public ItemMinecart(final int par1, final int par2)
     {
         super(par1);
         this.maxStackSize = 1;
@@ -26,16 +26,16 @@ public class ItemMinecart extends Item
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final World par3World, final int par4, final int par5, final int par6, final int par7, final float par8, final float par9, final float par10)
     {
-        int i1 = par3World.getBlockId(par4, par5, par6);
+        final int i1 = par3World.getBlockId(par4, par5, par6);
 
         if (BlockRailBase.isRailBlock(i1))
         {
             if (!par3World.isRemote)
             {
                 // CraftBukkit start - Minecarts
-                org.bukkit.event.player.PlayerInteractEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callPlayerInteractEvent(par2EntityPlayer, org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK, par4, par5, par6, par7, par1ItemStack);
+                final org.bukkit.event.player.PlayerInteractEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callPlayerInteractEvent(par2EntityPlayer, org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK, par4, par5, par6, par7, par1ItemStack);
 
                 if (event.isCancelled())
                 {
@@ -43,7 +43,7 @@ public class ItemMinecart extends Item
                 }
 
                 // CraftBukkit end
-                EntityMinecart entityminecart = EntityMinecart.createMinecart(par3World, (double)((float)par4 + 0.5F), (double)((float)par5 + 0.5F), (double)((float)par6 + 0.5F), this.minecartType);
+                final EntityMinecart entityminecart = EntityMinecart.createMinecart(par3World, (double)((float)par4 + 0.5F), (double)((float)par5 + 0.5F), (double)((float)par6 + 0.5F), this.minecartType);
 
                 if (par1ItemStack.hasDisplayName())
                 {

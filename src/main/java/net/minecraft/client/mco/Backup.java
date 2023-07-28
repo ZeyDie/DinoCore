@@ -14,9 +14,9 @@ public class Backup extends ValueObject
     public Date field_110725_b;
     public long field_110726_c;
 
-    public static Backup func_110724_a(JsonNode par0JsonNode)
+    public static Backup func_110724_a(final JsonNode par0JsonNode)
     {
-        Backup backup = new Backup();
+        final Backup backup = new Backup();
 
         try
         {
@@ -24,7 +24,7 @@ public class Backup extends ValueObject
             backup.field_110725_b = new Date(Long.parseLong(par0JsonNode.getNumberValue(new Object[] {"lastModifiedDate"})));
             backup.field_110726_c = Long.parseLong(par0JsonNode.getNumberValue(new Object[] {"size"}));
         }
-        catch (IllegalArgumentException illegalargumentexception)
+        catch (final IllegalArgumentException illegalargumentexception)
         {
             ;
         }

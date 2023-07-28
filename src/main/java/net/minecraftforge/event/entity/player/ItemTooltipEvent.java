@@ -23,7 +23,7 @@ public class ItemTooltipEvent extends PlayerEvent
     /**
      * This event is fired in {@link ItemStack#getTooltip(EntityPlayer, boolean)}, which in turn is called from it's respective GUIContainer.
      */
-    public ItemTooltipEvent(ItemStack itemStack, EntityPlayer entityPlayer, List<String> toolTip, boolean showAdvancedItemTooltips)
+    public ItemTooltipEvent(final ItemStack itemStack, final EntityPlayer entityPlayer, final List<String> toolTip, final boolean showAdvancedItemTooltips)
     {
         super(entityPlayer);
         this.itemStack = itemStack;

@@ -88,7 +88,7 @@ public class FMLCommonHandler
 
 
 
-    public void beginLoading(IFMLSidedHandler handler)
+    public void beginLoading(final IFMLSidedHandler handler)
     {
         sidedDelegate = handler;
         FMLLog.log("MinecraftForge", Level.INFO, "Attempting early MinecraftForge initialization");
@@ -97,21 +97,21 @@ public class FMLCommonHandler
         FMLLog.log("MinecraftForge", Level.INFO, "Completed early MinecraftForge initialization");
     }
 
-    public void rescheduleTicks(Side side)
+    public void rescheduleTicks(final Side side)
     {
         TickRegistry.updateTickQueue(side.isClient() ? scheduledClientTicks : scheduledServerTicks, side);
     }
-    public void tickStart(EnumSet<TickType> ticks, Side side, Object ... data)
+    public void tickStart(final EnumSet<TickType> ticks, final Side side, final Object ... data)
     {
-        List<IScheduledTickHandler> scheduledTicks = side.isClient() ? scheduledClientTicks : scheduledServerTicks;
+        final List<IScheduledTickHandler> scheduledTicks = side.isClient() ? scheduledClientTicks : scheduledServerTicks;
 
-        if (scheduledTicks.size()==0)
+        if (scheduledTicks.isEmpty())
         {
             return;
         }
-        for (IScheduledTickHandler ticker : scheduledTicks)
+        for (final IScheduledTickHandler ticker : scheduledTicks)
         {
-            EnumSet<TickType> ticksToRun = EnumSet.copyOf(Objects.firstNonNull(ticker.ticks(), EnumSet.noneOf(TickType.class)));
+            final EnumSet<TickType> ticksToRun = EnumSet.copyOf(Objects.firstNonNull(ticker.ticks(), EnumSet.noneOf(TickType.class)));
             ticksToRun.retainAll(ticks);
             if (!ticksToRun.isEmpty())
             {
@@ -124,17 +124,17 @@ public class FMLCommonHandler
         }
     }
 
-    public void tickEnd(EnumSet<TickType> ticks, Side side, Object ... data)
+    public void tickEnd(final EnumSet<TickType> ticks, final Side side, final Object ... data)
     {
-        List<IScheduledTickHandler> scheduledTicks = side.isClient() ? scheduledClientTicks : scheduledServerTicks;
+        final List<IScheduledTickHandler> scheduledTicks = side.isClient() ? scheduledClientTicks : scheduledServerTicks;
 
-        if (scheduledTicks.size()==0)
+        if (scheduledTicks.isEmpty())
         {
             return;
         }
-        for (IScheduledTickHandler ticker : scheduledTicks)
+        for (final IScheduledTickHandler ticker : scheduledTicks)
         {
-            EnumSet<TickType> ticksToRun = EnumSet.copyOf(Objects.firstNonNull(ticker.ticks(), EnumSet.noneOf(TickType.class)));
+            final EnumSet<TickType> ticksToRun = EnumSet.copyOf(Objects.firstNonNull(ticker.ticks(), EnumSet.noneOf(TickType.class)));
             ticksToRun.retainAll(ticks);
             if (!ticksToRun.isEmpty())
             {
@@ -158,7 +158,7 @@ public class FMLCommonHandler
      * Find the container that associates with the supplied mod object
      * @param mod
      */
-    public ModContainer findContainerFor(Object mod)
+    public ModContainer findContainerFor(final Object mod)
     {
         return Loader.instance().getReversedModObjectList().get(mod);
     }
@@ -183,7 +183,7 @@ public class FMLCommonHandler
      */
     public Side getEffectiveSide()
     {
-        Thread thr = Thread.currentThread();
+        final Thread thr = Thread.currentThread();
         if ((thr instanceof ThreadMinecraftServer) || (thr instanceof ServerListenThread))
         {
             return Side.SERVER;
@@ -194,7 +194,7 @@ public class FMLCommonHandler
     /**
      * Raise an exception
      */
-    public void raiseException(Throwable exception, String message, boolean stopGame)
+    public void raiseException(final Throwable exception, final String message, final boolean stopGame)
     {
         FMLLog.log(Level.SEVERE, exception, "Something raised an exception. The message was '%s'. 'stopGame' is %b", message, stopGame);
         if (stopGame)
@@ -210,14 +210,14 @@ public class FMLCommonHandler
         {
             try {
                 forge = Class.forName("net.minecraftforge.common.MinecraftForge");
-            } catch (Exception ex) {
+            } catch (final Exception ex) {
                 noForge = true;
             }
         }
         return forge;
     }
 
-    private Object callForgeMethod(String method)
+    private Object callForgeMethod(final String method)
     {
         if (noForge)
             return null;
@@ -225,7 +225,7 @@ public class FMLCommonHandler
         {
             return findMinecraftForge().getMethod(method).invoke(null);
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             // No Forge installation
             return null;
@@ -236,11 +236,11 @@ public class FMLCommonHandler
     {
         if (brandings == null)
         {
-            Builder brd = ImmutableList.<String>builder();
+            final Builder brd = ImmutableList.<String>builder();
             brd.add(Loader.instance().getMCVersionString());
             brd.add(Loader.instance().getMCPVersionString());
             brd.add("FML v"+Loader.instance().getFMLVersionString());
-            String forgeBranding = (String) callForgeMethod("getBrandingVersion");
+            final String forgeBranding = (String) callForgeMethod("getBrandingVersion");
             if (!Strings.isNullOrEmpty(forgeBranding))
             {
                 brd.add(forgeBranding);
@@ -253,8 +253,8 @@ public class FMLCommonHandler
             {
                 brd.add(Loader.instance().getFMLBrandingProperties().get("fmlbranding"));
             }
-            int tModCount = Loader.instance().getModList().size();
-            int aModCount = Loader.instance().getActiveModList().size();
+            final int tModCount = Loader.instance().getModList().size();
+            final int aModCount = Loader.instance().getActiveModList().size();
             brd.add(String.format("%d mod%s loaded, %d mod%s active", tModCount, tModCount!=1 ? "s" :"", aModCount, aModCount!=1 ? "s" :"" ));
             brandings = brd.build();
         }
@@ -282,7 +282,7 @@ public class FMLCommonHandler
     /**
      * Every tick just after world and other ticks occur
      */
-    public void onPostWorldTick(Object world)
+    public void onPostWorldTick(final Object world)
     {
         tickEnd(EnumSet.of(TickType.WORLD), Side.SERVER, world);
     	ProfilerSection.DIMENSION_TICK.stop(world); // Cauldron - mobius hook
@@ -297,27 +297,27 @@ public class FMLCommonHandler
     /**
      * Every tick just before world and other ticks occur
      */
-    public void onPreWorldTick(Object world)
+    public void onPreWorldTick(final Object world)
     {
     	ProfilerSection.DIMENSION_TICK.start(world); // Cauldron - mobius hook
         tickStart(EnumSet.of(TickType.WORLD), Side.SERVER, world);
     }
 
-    public void onWorldLoadTick(World[] worlds)
+    public void onWorldLoadTick(final World[] worlds)
     {
         rescheduleTicks(Side.SERVER);
-        for (World w : worlds)
+        for (final World w : worlds)
         {
             tickStart(EnumSet.of(TickType.WORLDLOAD), Side.SERVER, w);
         }
     }
 
-    public boolean handleServerAboutToStart(MinecraftServer server)
+    public boolean handleServerAboutToStart(final MinecraftServer server)
     {
         return Loader.instance().serverAboutToStart(server);
     }
 
-    public boolean handleServerStarting(MinecraftServer server)
+    public boolean handleServerStarting(final MinecraftServer server)
     {
         return Loader.instance().serverStarting(server);
     }
@@ -337,22 +337,22 @@ public class FMLCommonHandler
         return sidedDelegate.getServer();
     }
 
-    public void showGuiScreen(Object clientGuiElement)
+    public void showGuiScreen(final Object clientGuiElement)
     {
         sidedDelegate.showGuiScreen(clientGuiElement);
     }
 
-    public Entity spawnEntityIntoClientWorld(EntityRegistration registration, EntitySpawnPacket entitySpawnPacket)
+    public Entity spawnEntityIntoClientWorld(final EntityRegistration registration, final EntitySpawnPacket entitySpawnPacket)
     {
         return sidedDelegate.spawnEntityIntoClientWorld(registration, entitySpawnPacket);
     }
 
-    public void adjustEntityLocationOnClient(EntitySpawnAdjustmentPacket entitySpawnAdjustmentPacket)
+    public void adjustEntityLocationOnClient(final EntitySpawnAdjustmentPacket entitySpawnAdjustmentPacket)
     {
         sidedDelegate.adjustEntityLocationOnClient(entitySpawnAdjustmentPacket);
     }
 
-    public void onServerStart(DedicatedServer dedicatedServer)
+    public void onServerStart(final DedicatedServer dedicatedServer)
     {
         FMLServerHandler.instance();
         sidedDelegate.beginServerLoading(dedicatedServer);
@@ -375,63 +375,63 @@ public class FMLCommonHandler
         tickEnd(EnumSet.of(TickType.CLIENT), Side.CLIENT);
     }
 
-    public void onRenderTickStart(float timer)
+    public void onRenderTickStart(final float timer)
     {
         tickStart(EnumSet.of(TickType.RENDER), Side.CLIENT, timer);
     }
 
-    public void onRenderTickEnd(float timer)
+    public void onRenderTickEnd(final float timer)
     {
         tickEnd(EnumSet.of(TickType.RENDER), Side.CLIENT, timer);
     }
 
-    public void onPlayerPreTick(EntityPlayer player)
+    public void onPlayerPreTick(final EntityPlayer player)
     {
-        Side side = player instanceof EntityPlayerMP ? Side.SERVER : Side.CLIENT;
+        final Side side = player instanceof EntityPlayerMP ? Side.SERVER : Side.CLIENT;
         tickStart(EnumSet.of(TickType.PLAYER), side, player);
     }
 
-    public void onPlayerPostTick(EntityPlayer player)
+    public void onPlayerPostTick(final EntityPlayer player)
     {
-        Side side = player instanceof EntityPlayerMP ? Side.SERVER : Side.CLIENT;
+        final Side side = player instanceof EntityPlayerMP ? Side.SERVER : Side.CLIENT;
         tickEnd(EnumSet.of(TickType.PLAYER), side, player);
     }
 
-    public void registerCrashCallable(ICrashCallable callable)
+    public void registerCrashCallable(final ICrashCallable callable)
     {
         crashCallables.add(callable);
     }
 
-    public void enhanceCrashReport(CrashReport crashReport, CrashReportCategory category)
+    public void enhanceCrashReport(final CrashReport crashReport, final CrashReportCategory category)
     {
-        for (ICrashCallable call: crashCallables)
+        for (final ICrashCallable call: crashCallables)
         {
             category.addCrashSectionCallable(call.getLabel(), call);
         }
     }
 
-    public void handleTinyPacket(NetHandler handler, Packet131MapData mapData)
+    public void handleTinyPacket(final NetHandler handler, final Packet131MapData mapData)
     {
         sidedDelegate.handleTinyPacket(handler, mapData);
     }
 
-    public void handleWorldDataSave(SaveHandler handler, WorldInfo worldInfo, NBTTagCompound tagCompound)
+    public void handleWorldDataSave(final SaveHandler handler, final WorldInfo worldInfo, final NBTTagCompound tagCompound)
     {
-        for (ModContainer mc : Loader.instance().getModList())
+        for (final ModContainer mc : Loader.instance().getModList())
         {
             if (mc instanceof InjectedModContainer)
             {
-                WorldAccessContainer wac = ((InjectedModContainer)mc).getWrappedWorldAccessContainer();
+                final WorldAccessContainer wac = ((InjectedModContainer)mc).getWrappedWorldAccessContainer();
                 if (wac != null)
                 {
-                    NBTTagCompound dataForWriting = wac.getDataForWriting(handler, worldInfo);
+                    final NBTTagCompound dataForWriting = wac.getDataForWriting(handler, worldInfo);
                     tagCompound.setCompoundTag(mc.getModId(), dataForWriting);
                 }
             }
         }
     }
 
-    public void handleWorldDataLoad(SaveHandler handler, WorldInfo worldInfo, NBTTagCompound tagCompound)
+    public void handleWorldDataLoad(final SaveHandler handler, final WorldInfo worldInfo, final NBTTagCompound tagCompound)
     {
         if (getEffectiveSide()!=Side.SERVER)
         {
@@ -442,13 +442,13 @@ public class FMLCommonHandler
             return;
         }
         handlerSet.add(handler);
-        Map<String,NBTBase> additionalProperties = Maps.newHashMap();
+        final Map<String,NBTBase> additionalProperties = Maps.newHashMap();
         worldInfo.setAdditionalProperties(additionalProperties);
-        for (ModContainer mc : Loader.instance().getModList())
+        for (final ModContainer mc : Loader.instance().getModList())
         {
             if (mc instanceof InjectedModContainer)
             {
-                WorldAccessContainer wac = ((InjectedModContainer)mc).getWrappedWorldAccessContainer();
+                final WorldAccessContainer wac = ((InjectedModContainer)mc).getWrappedWorldAccessContainer();
                 if (wac != null)
                 {
                     wac.readData(handler, worldInfo, additionalProperties, tagCompound.getCompoundTag(mc.getModId()));
@@ -466,7 +466,7 @@ public class FMLCommonHandler
         return sidedDelegate.shouldServerShouldBeKilledQuietly();
     }
 
-    public void disconnectIDMismatch(MapDifference<Integer, ItemData> serverDifference, NetHandler toKill, INetworkManager network)
+    public void disconnectIDMismatch(final MapDifference<Integer, ItemData> serverDifference, final NetHandler toKill, final INetworkManager network)
     {
         sidedDelegate.disconnectIDMismatch(serverDifference, toKill, network);
     }
@@ -474,7 +474,7 @@ public class FMLCommonHandler
     public void handleServerStopped()
     {
         sidedDelegate.serverStopped();
-        MinecraftServer server = getMinecraftServerInstance();
+        final MinecraftServer server = getMinecraftServerInstance();
         Loader.instance().serverStopped();
         // FORCE the internal server to stop: hello optifine workaround!
         if (server!=null) ObfuscationReflectionHelper.setPrivateValue(MinecraftServer.class, server, false, "field_71316"+"_v", "u", "serverStopped");
@@ -483,7 +483,7 @@ public class FMLCommonHandler
     public String getModName()
     {
         // Cauldron start    
-        List<String> modNames = Lists.newArrayListWithExpectedSize(6);
+        final List<String> modNames = Lists.newArrayListWithExpectedSize(6);
         modNames.add("mcpc");
         modNames.add("cauldron");
         modNames.add("craftbukkit");
@@ -501,7 +501,7 @@ public class FMLCommonHandler
         return Joiner.on(',').join(modNames);
     }
 
-    public void addModToResourcePack(ModContainer container)
+    public void addModToResourcePack(final ModContainer container)
     {
         sidedDelegate.addModAsResource(container);
     }

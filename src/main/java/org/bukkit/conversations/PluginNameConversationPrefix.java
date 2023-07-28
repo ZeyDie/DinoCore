@@ -15,11 +15,11 @@ public class PluginNameConversationPrefix implements ConversationPrefix {
     
     private String cachedPrefix;
     
-    public PluginNameConversationPrefix(Plugin plugin) {
+    public PluginNameConversationPrefix(final Plugin plugin) {
         this(plugin, " > ", ChatColor.LIGHT_PURPLE);
     }
     
-    public PluginNameConversationPrefix(Plugin plugin, String separator, ChatColor prefixColor) {
+    public PluginNameConversationPrefix(final Plugin plugin, final String separator, final ChatColor prefixColor) {
         this.separator = separator;
         this.prefixColor = prefixColor;
         this.plugin = plugin;
@@ -33,7 +33,7 @@ public class PluginNameConversationPrefix implements ConversationPrefix {
      * @param context Context information about the conversation.
      * @return An empty string.
      */
-    public String getPrefix(ConversationContext context) {
+    public String getPrefix(final ConversationContext context) {
         return cachedPrefix;
     }
 }

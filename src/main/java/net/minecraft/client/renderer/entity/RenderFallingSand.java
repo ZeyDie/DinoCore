@@ -28,10 +28,10 @@ public class RenderFallingSand extends Render
     /**
      * The actual render method that is used in doRender
      */
-    public void doRenderFallingSand(EntityFallingSand par1EntityFallingSand, double par2, double par4, double par6, float par8, float par9)
+    public void doRenderFallingSand(final EntityFallingSand par1EntityFallingSand, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
-        World world = par1EntityFallingSand.getWorld();
-        Block block = Block.blocksList[par1EntityFallingSand.blockID];
+        final World world = par1EntityFallingSand.getWorld();
+        final Block block = Block.blocksList[par1EntityFallingSand.blockID];
 
         if (world.getBlockId(MathHelper.floor_double(par1EntityFallingSand.posX), MathHelper.floor_double(par1EntityFallingSand.posY), MathHelper.floor_double(par1EntityFallingSand.posZ)) != par1EntityFallingSand.blockID)
         {
@@ -39,7 +39,7 @@ public class RenderFallingSand extends Render
             GL11.glTranslatef((float)par2, (float)par4, (float)par6);
             this.bindEntityTexture(par1EntityFallingSand);
             GL11.glDisable(GL11.GL_LIGHTING);
-            Tessellator tessellator;
+            final Tessellator tessellator;
 
             if (block instanceof BlockAnvil && block.getRenderType() == 35)
             {
@@ -72,7 +72,7 @@ public class RenderFallingSand extends Render
         }
     }
 
-    protected ResourceLocation getFallingSandTextures(EntityFallingSand par1EntityFallingSand)
+    protected ResourceLocation getFallingSandTextures(final EntityFallingSand par1EntityFallingSand)
     {
         return TextureMap.locationBlocksTexture;
     }
@@ -80,7 +80,7 @@ public class RenderFallingSand extends Render
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.getFallingSandTextures((EntityFallingSand)par1Entity);
     }
@@ -91,7 +91,7 @@ public class RenderFallingSand extends Render
      * (Render<T extends Entity) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.doRenderFallingSand((EntityFallingSand)par1Entity, par2, par4, par6, par8, par9);
     }

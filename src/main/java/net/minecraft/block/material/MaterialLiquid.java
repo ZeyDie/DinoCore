@@ -2,7 +2,7 @@ package net.minecraft.block.material;
 
 public class MaterialLiquid extends Material
 {
-    public MaterialLiquid(MapColor par1MapColor)
+    public MaterialLiquid(final MapColor par1MapColor)
     {
         super(par1MapColor);
         this.setReplaceable();

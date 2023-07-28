@@ -7,7 +7,7 @@ public class StatCrafting extends StatBase
 {
     private final int itemID;
 
-    public StatCrafting(int par1, String par2Str, int par3)
+    public StatCrafting(final int par1, final String par2Str, final int par3)
     {
         super(par1, par2Str);
         this.itemID = par3;

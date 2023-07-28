@@ -29,7 +29,7 @@ public class GuiSnooper extends GuiScreen
     private GuiSnooperList snooperList;
     private GuiButton buttonAllowSnooping;
 
-    public GuiSnooper(GuiScreen par1GuiScreen, GameSettings par2GameSettings)
+    public GuiSnooper(final GuiScreen par1GuiScreen, final GameSettings par2GameSettings)
     {
         this.snooperGuiScreen = par1GuiScreen;
         this.snooperGameSettings = par2GameSettings;
@@ -41,13 +41,13 @@ public class GuiSnooper extends GuiScreen
     public void initGui()
     {
         this.snooperTitle = I18n.getString("options.snooper.title");
-        String s = I18n.getString("options.snooper.desc");
-        ArrayList arraylist = new ArrayList();
-        Iterator iterator = this.fontRenderer.listFormattedStringToWidth(s, this.width - 30).iterator();
+        final String s = I18n.getString("options.snooper.desc");
+        final ArrayList arraylist = new ArrayList();
+        final Iterator iterator = this.fontRenderer.listFormattedStringToWidth(s, this.width - 30).iterator();
 
         while (iterator.hasNext())
         {
-            String s1 = (String)iterator.next();
+            final String s1 = (String)iterator.next();
             arraylist.add(s1);
         }
 
@@ -56,7 +56,7 @@ public class GuiSnooper extends GuiScreen
         this.field_74096_d.clear();
         this.buttonList.add(this.buttonAllowSnooping = new GuiButton(1, this.width / 2 - 152, this.height - 30, 150, 20, this.snooperGameSettings.getKeyBinding(EnumOptions.SNOOPER_ENABLED)));
         this.buttonList.add(new GuiButton(2, this.width / 2 + 2, this.height - 30, 150, 20, I18n.getString("gui.done")));
-        boolean flag = this.mc.getIntegratedServer() != null && this.mc.getIntegratedServer().getPlayerUsageSnooper() != null;
+        final boolean flag = this.mc.getIntegratedServer() != null && this.mc.getIntegratedServer().getPlayerUsageSnooper() != null;
         Iterator iterator1 = (new TreeMap(this.mc.getPlayerUsageSnooper().getCurrentStats())).entrySet().iterator();
         Entry entry;
 
@@ -85,7 +85,7 @@ public class GuiSnooper extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
@@ -107,18 +107,18 @@ public class GuiSnooper extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.snooperList.drawScreen(par1, par2, par3);
         this.drawCenteredString(this.fontRenderer, this.snooperTitle, this.width / 2, 8, 16777215);
         int k = 22;
-        String[] astring = this.field_74101_n;
-        int l = astring.length;
+        final String[] astring = this.field_74101_n;
+        final int l = astring.length;
 
         for (int i1 = 0; i1 < l; ++i1)
         {
-            String s = astring[i1];
+            final String s = astring[i1];
             this.drawCenteredString(this.fontRenderer, s, this.width / 2, k, 8421504);
             k += this.fontRenderer.FONT_HEIGHT;
         }
@@ -126,12 +126,12 @@ public class GuiSnooper extends GuiScreen
         super.drawScreen(par1, par2, par3);
     }
 
-    static List func_74095_a(GuiSnooper par0GuiSnooper)
+    static List func_74095_a(final GuiSnooper par0GuiSnooper)
     {
         return par0GuiSnooper.field_74098_c;
     }
 
-    static List func_74094_b(GuiSnooper par0GuiSnooper)
+    static List func_74094_b(final GuiSnooper par0GuiSnooper)
     {
         return par0GuiSnooper.field_74096_d;
     }

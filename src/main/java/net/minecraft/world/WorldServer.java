@@ -93,14 +93,14 @@ public class WorldServer extends World {
     /**
      * Double buffer of ServerBlockEventList[] for holding pending BlockEventData's
      */
-    private ServerBlockEventList[] blockEventCache = new ServerBlockEventList[]{new ServerBlockEventList((ServerBlockEvent) null), new ServerBlockEventList((ServerBlockEvent) null)};
+    private ServerBlockEventList[] blockEventCache = {new ServerBlockEventList((ServerBlockEvent) null), new ServerBlockEventList((ServerBlockEvent) null)};
 
     /**
      * The index into the blockEventCache; either 0, or 1, toggled in sendBlockEventPackets  where all BlockEvent are
      * applied locally and send to clients.
      */
     private int blockEventCacheIndex;
-    public static final WeightedRandomChestContent[] bonusChestContent = new WeightedRandomChestContent[]{new WeightedRandomChestContent(Item.stick.itemID, 0, 1, 3, 10), new WeightedRandomChestContent(Block.planks.blockID, 0, 1, 3, 10), new WeightedRandomChestContent(Block.wood.blockID, 0, 1, 3, 10), new WeightedRandomChestContent(Item.axeStone.itemID, 0, 1, 1, 3), new WeightedRandomChestContent(Item.axeWood.itemID, 0, 1, 1, 5), new WeightedRandomChestContent(Item.pickaxeStone.itemID, 0, 1, 1, 3), new WeightedRandomChestContent(Item.pickaxeWood.itemID, 0, 1, 1, 5), new WeightedRandomChestContent(Item.appleRed.itemID, 0, 2, 3, 5), new WeightedRandomChestContent(Item.bread.itemID, 0, 2, 3, 3)};
+    public static final WeightedRandomChestContent[] bonusChestContent = {new WeightedRandomChestContent(Item.stick.itemID, 0, 1, 3, 10), new WeightedRandomChestContent(Block.planks.blockID, 0, 1, 3, 10), new WeightedRandomChestContent(Block.wood.blockID, 0, 1, 3, 10), new WeightedRandomChestContent(Item.axeStone.itemID, 0, 1, 1, 3), new WeightedRandomChestContent(Item.axeWood.itemID, 0, 1, 1, 5), new WeightedRandomChestContent(Item.pickaxeStone.itemID, 0, 1, 1, 3), new WeightedRandomChestContent(Item.pickaxeWood.itemID, 0, 1, 1, 5), new WeightedRandomChestContent(Item.appleRed.itemID, 0, 2, 3, 5), new WeightedRandomChestContent(Item.bread.itemID, 0, 2, 3, 3)};
     private List<NextTickListEntry> pendingTickEntries = new ArrayList<NextTickListEntry>(); // Spigot
     private int nextPendingTickEntry; // Spigot
 
@@ -115,7 +115,7 @@ public class WorldServer extends World {
     protected Set<ChunkCoordIntPair> doneChunks = new HashSet<ChunkCoordIntPair>();
     public List<Teleporter> customTeleporters = new ArrayList<Teleporter>();
 
-    public WorldServer(MinecraftServer par1MinecraftServer, ISaveHandler par2ISaveHandler, String par3Str, int par4, WorldSettings par5WorldSettings, Profiler par6Profiler, ILogAgent par7ILogAgent) {
+    public WorldServer(final MinecraftServer par1MinecraftServer, final ISaveHandler par2ISaveHandler, final String par3Str, final int par4, final WorldSettings par5WorldSettings, final Profiler par6Profiler, final ILogAgent par7ILogAgent) {
         super(par2ISaveHandler, par3Str, par5WorldSettings, WorldProvider.getProviderForDimension(par4), par6Profiler, par7ILogAgent);
         this.dimension = par4;
         this.mcServer = par1MinecraftServer;
@@ -157,7 +157,7 @@ public class WorldServer extends World {
         DimensionManager.setWorld(par4, this);
     }
 
-    public WorldServer(MinecraftServer minecraftServer, ISaveHandler saveHandler, String par2String, WorldProvider provider, WorldSettings par4WorldSettings, Profiler theProfiler, ILogAgent worldLogAgent) {
+    public WorldServer(final MinecraftServer minecraftServer, final ISaveHandler saveHandler, final String par2String, final WorldProvider provider, final WorldSettings par4WorldSettings, final Profiler theProfiler, final ILogAgent worldLogAgent) {
         super(saveHandler, par2String, provider, par4WorldSettings, theProfiler, worldLogAgent);
         this.dimension = provider.dimensionId;
         this.pvpMode = minecraftServer.isPVPEnabled();
@@ -170,7 +170,7 @@ public class WorldServer extends World {
     // CraftBukkit start
     public final int dimension;
 
-    public WorldServer(MinecraftServer minecraftserver, ISaveHandler isavehandler, String s, int i, WorldSettings worldsettings, Profiler profiler, ILogAgent ilogagent, org.bukkit.World.Environment env, org.bukkit.generator.ChunkGenerator gen) {
+    public WorldServer(final MinecraftServer minecraftserver, final ISaveHandler isavehandler, final String s, final int i, final WorldSettings worldsettings, final Profiler profiler, final ILogAgent ilogagent, final org.bukkit.World.Environment env, final org.bukkit.generator.ChunkGenerator gen) {
         super(isavehandler, s, worldsettings, WorldProvider.getProviderForDimension(i), profiler, ilogagent, gen, env);
         this.dimension = i;
         this.pvpMode = minecraftserver.isPVPEnabled();
@@ -217,7 +217,7 @@ public class WorldServer extends World {
     }
 
     // Cauldron start - wrapper to get CB support
-    public WorldServer(MinecraftServer par1MinecraftServer, ISaveHandler par2ISaveHandler, String par3Str, int par4, ILogAgent ilogagent, WorldSettings par5WorldSettings, Profiler par6Profiler) {
+    public WorldServer(final MinecraftServer par1MinecraftServer, final ISaveHandler par2ISaveHandler, final String par3Str, final int par4, final ILogAgent ilogagent, final WorldSettings par5WorldSettings, final Profiler par6Profiler) {
         this(par1MinecraftServer, par2ISaveHandler, par3Str, par4, par5WorldSettings, par6Profiler, ilogagent, null, null);
     }
     // Cauldron end
@@ -228,9 +228,9 @@ public class WorldServer extends World {
     /**
      * Returns the TileEntity associated with a given block in X,Y,Z coordinates, or null if no TileEntity exists
      */
-    public TileEntity getBlockTileEntity(int i, int j, int k) {
+    public TileEntity getBlockTileEntity(final int i, final int j, final int k) {
         TileEntity result = super.getBlockTileEntity(i, j, k);
-        int type = getBlockId(i, j, k);
+        final int type = getBlockId(i, j, k);
 
         if (type == Block.chest.blockID) {
             if (!(result instanceof TileEntityChest)) {
@@ -286,12 +286,12 @@ public class WorldServer extends World {
         return result;
     }
 
-    private TileEntity fixTileEntity(int x, int y, int z, int type, TileEntity found) {
+    private TileEntity fixTileEntity(final int x, final int y, final int z, final int type, final TileEntity found) {
         this.getServer().getLogger().severe("Block at " + x + "," + y + "," + z + " is " + org.bukkit.Material.getMaterial(type).toString() + " but has " + found + ". "
                 + "Bukkit will attempt to fix this, but there may be additional damage that we cannot recover.");
 
         if (Block.blocksList[type] instanceof BlockContainer) {
-            TileEntity replacement = ((BlockContainer) Block.blocksList[type]).createNewTileEntity(this);
+            final TileEntity replacement = ((BlockContainer) Block.blocksList[type]).createNewTileEntity(this);
             replacement.worldObj = this;
             this.setBlockTileEntity(x, y, z, replacement);
             return replacement;
@@ -301,7 +301,7 @@ public class WorldServer extends World {
         }
     }
 
-    private boolean canSpawn(int x, int z) {
+    private boolean canSpawn(final int x, final int z) {
         if (this.generator != null) {
             return this.generator.canSpawn(this.getWorld(), x, z);
         } else {
@@ -325,7 +325,7 @@ public class WorldServer extends World {
 
         if (this.areAllPlayersAsleep()) {
             if (this.getGameRules().getGameRuleBooleanValue("doDaylightCycle")) {
-                long i = this.worldInfo.getWorldTime() + 24000L;
+                final long i = this.worldInfo.getWorldTime() + 24000L;
                 this.worldInfo.setWorldTime(i - i % 24000L);
             }
 
@@ -334,9 +334,9 @@ public class WorldServer extends World {
 
         this.theProfiler.startSection("mobSpawner");
         // CraftBukkit start - Only call spawner if we have players online and the world allows for mobs or animals
-        long time = this.worldInfo.getWorldTotalTime();
+        final long time = this.worldInfo.getWorldTotalTime();
 
-        if (this.getGameRules().getGameRuleBooleanValue("doMobSpawning") && (this.spawnHostileMobs || this.spawnPeacefulMobs) && (this instanceof WorldServer && this.playerEntities.size() > 0)) {
+        if (this.getGameRules().getGameRuleBooleanValue("doMobSpawning") && (this.spawnHostileMobs || this.spawnPeacefulMobs) && (this instanceof WorldServer && !this.playerEntities.isEmpty())) {
             timings.mobSpawn.startTiming(); // Spigot
             this.animalSpawner.findChunksForSpawning(this, this.spawnHostileMobs && (this.ticksPerMonsterSpawns != 0 && time % this.ticksPerMonsterSpawns == 0L), this.spawnPeacefulMobs && (this.ticksPerAnimalSpawns != 0 && time % this.ticksPerAnimalSpawns == 0L), this.worldInfo.getWorldTotalTime() % 400L == 0L);
             timings.mobSpawn.stopTiming(); // Spigot
@@ -346,7 +346,7 @@ public class WorldServer extends World {
         timings.doChunkUnload.startTiming(); // Spigot
         this.theProfiler.endStartSection("chunkSource");
         this.chunkProvider.unloadQueuedChunks();
-        int j = this.calculateSkylightSubtracted(1.0F);
+        final int j = this.calculateSkylightSubtracted(1.0F);
 
         if (j != this.skylightSubtracted) {
             this.skylightSubtracted = j;
@@ -379,7 +379,7 @@ public class WorldServer extends World {
         this.theProfiler.endStartSection("portalForcer");
         timings.doPortalForcer.startTiming(); // Spigot
         this.worldTeleporter.removeStalePortalLocations(this.getTotalWorldTime());
-        for (Teleporter tele : customTeleporters) {
+        for (final Teleporter tele : customTeleporters) {
             tele.removeStalePortalLocations(getTotalWorldTime());
         }
         timings.doPortalForcer.stopTiming(); // Spigot
@@ -400,7 +400,7 @@ public class WorldServer extends World {
     /**
      * only spawns creatures allowed by the chunkProvider
      */
-    public SpawnListEntry spawnRandomCreature(EnumCreatureType par1EnumCreatureType, int par2, int par3, int par4) {
+    public SpawnListEntry spawnRandomCreature(final EnumCreatureType par1EnumCreatureType, final int par2, final int par3, final int par4) {
         List list = this.getChunkProvider().getPossibleCreatures(par1EnumCreatureType, par2, par3, par4);
         list = ForgeEventFactory.getPotentialSpawns(this, par1EnumCreatureType, par2, par3, par4, list);
         return list != null && !list.isEmpty() ? (SpawnListEntry) WeightedRandom.getRandomItem(this.rand, list) : null;
@@ -411,10 +411,10 @@ public class WorldServer extends World {
      */
     public void updateAllPlayersSleepingFlag() {
         this.allPlayersSleeping = !this.playerEntities.isEmpty();
-        Iterator iterator = this.playerEntities.iterator();
+        final Iterator iterator = this.playerEntities.iterator();
 
         while (iterator.hasNext()) {
-            EntityPlayer entityplayer = (EntityPlayer) iterator.next();
+            final EntityPlayer entityplayer = (EntityPlayer) iterator.next();
 
             if (!entityplayer.isPlayerSleeping() && !entityplayer.fauxSleeping)   // CraftBukkit
             {
@@ -426,10 +426,10 @@ public class WorldServer extends World {
 
     protected void wakeAllPlayers() {
         this.allPlayersSleeping = false;
-        Iterator iterator = this.playerEntities.iterator();
+        final Iterator iterator = this.playerEntities.iterator();
 
         while (iterator.hasNext()) {
-            EntityPlayer entityplayer = (EntityPlayer) iterator.next();
+            final EntityPlayer entityplayer = (EntityPlayer) iterator.next();
 
             if (entityplayer.isPlayerSleeping()) {
                 entityplayer.wakeUpPlayer(false, false, true);
@@ -441,9 +441,9 @@ public class WorldServer extends World {
 
     private void resetRainAndThunder() {
         // CraftBukkit start
-        WeatherChangeEvent weather = new WeatherChangeEvent(this.getWorld(), false);
+        final WeatherChangeEvent weather = new WeatherChangeEvent(this.getWorld(), false);
         this.getServer().getPluginManager().callEvent(weather);
-        ThunderChangeEvent thunder = new ThunderChangeEvent(this.getWorld(), false);
+        final ThunderChangeEvent thunder = new ThunderChangeEvent(this.getWorld(), false);
         this.getServer().getPluginManager().callEvent(thunder);
 
         if (!weather.isCancelled()) {
@@ -462,7 +462,7 @@ public class WorldServer extends World {
 
     public boolean areAllPlayersAsleep() {
         if (this.allPlayersSleeping && !this.isRemote) {
-            Iterator iterator = this.playerEntities.iterator();
+            final Iterator iterator = this.playerEntities.iterator();
             // CraftBukkit - This allows us to assume that some people are in bed but not really, allowing time to pass in spite of AFKers
             boolean foundActualSleepers = false;
             EntityPlayer entityplayer;
@@ -528,11 +528,11 @@ public class WorldServer extends World {
         // Iterator iterator = this.chunkTickList.iterator();
 
         // Spigot start
-        for (TLongShortIterator iter = activeChunkSet_CB.iterator(); iter.hasNext(); ) {
+        for (final TLongShortIterator iter = activeChunkSet_CB.iterator(); iter.hasNext(); ) {
             iter.advance();
-            long chunkCoord = iter.key();
-            int chunkX = World.keyToX(chunkCoord);
-            int chunkZ = World.keyToZ(chunkCoord);
+            final long chunkCoord = iter.key();
+            final int chunkX = World.keyToX(chunkCoord);
+            final int chunkZ = World.keyToZ(chunkCoord);
             // If unloaded, or in process of being unloaded, drop it
             if ((!this.chunkExists(chunkX, chunkZ)) || (this.theChunkProviderServer.chunksToUnload.contains(chunkX, chunkZ))) {
                 activeChunkSet.remove(new ChunkCoordIntPair(chunkX, chunkZ)); // Cauldron - vanilla compatibility
@@ -541,11 +541,11 @@ public class WorldServer extends World {
             }
             // Spigot end
             // ChunkCoordIntPair chunkcoordintpair = (ChunkCoordIntPair) iterator.next();
-            int k = chunkX * 16;
-            int l = chunkZ * 16;
+            final int k = chunkX * 16;
+            final int l = chunkZ * 16;
 
             this.theProfiler.startSection("getChunk");
-            Chunk chunk = this.getChunkFromChunkCoords(chunkX, chunkZ);
+            final Chunk chunk = this.getChunkFromChunkCoords(chunkX, chunkZ);
             // CraftBukkit end
 
             this.moodSoundAndLightCheck(k, l, chunk);
@@ -580,9 +580,9 @@ public class WorldServer extends World {
 
                 if (this.isBlockFreezableNaturally(j1 + k, l1 - 1, k1 + l)) {
                     // CraftBukkit start
-                    BlockState blockState = this.getWorld().getBlockAt(j1 + k, l1 - 1, k1 + l).getState();
+                    final BlockState blockState = this.getWorld().getBlockAt(j1 + k, l1 - 1, k1 + l).getState();
                     blockState.setTypeId(Block.ice.blockID);
-                    BlockFormEvent iceBlockForm = new BlockFormEvent(blockState.getBlock(), blockState);
+                    final BlockFormEvent iceBlockForm = new BlockFormEvent(blockState.getBlock(), blockState);
                     this.getServer().getPluginManager().callEvent(iceBlockForm);
                     if (!iceBlockForm.isCancelled()) {
                         blockState.update(true);
@@ -592,10 +592,10 @@ public class WorldServer extends World {
 
                 if (this.isRaining() && this.canSnowAt(j1 + k, l1, k1 + l)) {
                     // CraftBukkit start
-                    BlockState blockState = this.getWorld().getBlockAt(j1 + k, l1, k1 + l).getState();
+                    final BlockState blockState = this.getWorld().getBlockAt(j1 + k, l1, k1 + l).getState();
                     blockState.setTypeId(Block.snow.blockID);
 
-                    BlockFormEvent snow = new BlockFormEvent(blockState.getBlock(), blockState);
+                    final BlockFormEvent snow = new BlockFormEvent(blockState.getBlock(), blockState);
                     this.getServer().getPluginManager().callEvent(snow);
 
                     if (!snow.isCancelled()) {
@@ -605,7 +605,7 @@ public class WorldServer extends World {
                 }
 
                 if (this.isRaining()) {
-                    BiomeGenBase biomegenbase = this.getBiomeGenForCoords(j1 + k, k1 + l);
+                    final BiomeGenBase biomegenbase = this.getBiomeGenForCoords(j1 + k, k1 + l);
 
                     if (biomegenbase.canSpawnLightningBolt()) {
                         i2 = this.getBlockId(j1 + k, l1 - 1, k1 + l);
@@ -617,24 +617,24 @@ public class WorldServer extends World {
             }
 
             this.theProfiler.endStartSection("tickTiles");
-            ExtendedBlockStorage[] aextendedblockstorage = chunk.getBlockStorageArray();
+            final ExtendedBlockStorage[] aextendedblockstorage = chunk.getBlockStorageArray();
 
             j1 = aextendedblockstorage.length;
 
             for (k1 = 0; k1 < j1; ++k1) {
-                ExtendedBlockStorage extendedblockstorage = aextendedblockstorage[k1];
+                final ExtendedBlockStorage extendedblockstorage = aextendedblockstorage[k1];
 
                 if (extendedblockstorage != null && extendedblockstorage.getNeedsRandomTick()) {
                     for (int j2 = 0; j2 < 3; ++j2) {
                         this.updateLCG = this.updateLCG * 3 + 1013904223;
                         i2 = this.updateLCG >> 2;
-                        int k2 = i2 & 15;
-                        int l2 = i2 >> 8 & 15;
-                        int i3 = i2 >> 16 & 15;
-                        int j3 = extendedblockstorage.getExtBlockID(k2, i3, l2);
+                        final int k2 = i2 & 15;
+                        final int l2 = i2 >> 8 & 15;
+                        final int i3 = i2 >> 16 & 15;
+                        final int j3 = extendedblockstorage.getExtBlockID(k2, i3, l2);
 
                         ++j;
-                        Block block = Block.blocksList[j3];
+                        final Block block = Block.blocksList[j3];
 
                         if (block != null && block.getTickRandomly()) {
                             ++i;
@@ -652,12 +652,12 @@ public class WorldServer extends World {
     /**
      * Returns true if the given block will receive a scheduled tick in this tick. Args: X, Y, Z, blockID
      */
-    public boolean isBlockTickScheduledThisTick(int par1, int par2, int par3, int par4) {
+    public boolean isBlockTickScheduledThisTick(final int par1, final int par2, final int par3, final int par4) {
         // Spigot start
-        int te_cnt = this.pendingTickEntries.size();
+        final int te_cnt = this.pendingTickEntries.size();
 
         for (int idx = this.nextPendingTickEntry; idx < te_cnt; idx++) {
-            NextTickListEntry ent = this.pendingTickEntries.get(idx);
+            final NextTickListEntry ent = this.pendingTickEntries.get(idx);
 
             if ((ent.xCoord == par1) && (ent.yCoord == par2) && (ent.zCoord == par3) && Block.isAssociatedBlockID(ent.blockID, par4)) {
                 return true;
@@ -671,12 +671,13 @@ public class WorldServer extends World {
     /**
      * Schedules a tick to a block with a delay (Most commonly the tick rate)
      */
-    public void scheduleBlockUpdate(int par1, int par2, int par3, int par4, int par5) {
+    public void scheduleBlockUpdate(final int par1, final int par2, final int par3, final int par4, final int par5) {
         this.scheduleBlockUpdateWithPriority(par1, par2, par3, par4, par5, 0);
     }
 
-    public void scheduleBlockUpdateWithPriority(int par1, int par2, int par3, int par4, int par5, int par6) {
-        NextTickListEntry nextticklistentry = new NextTickListEntry(par1, par2, par3, par4);
+    public void scheduleBlockUpdateWithPriority(final int par1, final int par2, final int par3, final int par4, int par5, final int par6) {
+        int par51 = par5;
+        final NextTickListEntry nextticklistentry = new NextTickListEntry(par1, par2, par3, par4);
         //Keeping here as a note for future when it may be restored.
         //boolean isForced = getPersistentChunks().containsKey(new ChunkCoordIntPair(nextticklistentry.xCoord >> 4, nextticklistentry.zCoord >> 4));
         //byte b0 = isForced ? 0 : 8;
@@ -687,7 +688,7 @@ public class WorldServer extends World {
                 b0 = 8;
 
                 if (this.checkChunksExist(nextticklistentry.xCoord - b0, nextticklistentry.yCoord - b0, nextticklistentry.zCoord - b0, nextticklistentry.xCoord + b0, nextticklistentry.yCoord + b0, nextticklistentry.zCoord + b0)) {
-                    int k1 = this.getBlockId(nextticklistentry.xCoord, nextticklistentry.yCoord, nextticklistentry.zCoord);
+                    final int k1 = this.getBlockId(nextticklistentry.xCoord, nextticklistentry.yCoord, nextticklistentry.zCoord);
 
                     if (k1 == nextticklistentry.blockID && k1 > 0) {
                         Block.blocksList[k1].updateTick(this, nextticklistentry.xCoord, nextticklistentry.yCoord, nextticklistentry.zCoord, this.rand);
@@ -697,12 +698,12 @@ public class WorldServer extends World {
                 return;
             }
 
-            par5 = 1;
+            par51 = 1;
         }
 
         if (this.checkChunksExist(par1 - b0, par2 - b0, par3 - b0, par1 + b0, par2 + b0, par3 + b0)) {
             if (par4 > 0) {
-                nextticklistentry.setScheduledTime((long) par5 + this.worldInfo.getWorldTotalTime());
+                nextticklistentry.setScheduledTime((long) par51 + this.worldInfo.getWorldTotalTime());
                 nextticklistentry.setPriority(par6);
             }
 
@@ -715,8 +716,8 @@ public class WorldServer extends World {
     /**
      * Schedules a block update from the saved information in a chunk. Called when the chunk is loaded.
      */
-    public void scheduleBlockUpdateFromLoad(int par1, int par2, int par3, int par4, int par5, int par6) {
-        NextTickListEntry nextticklistentry = new NextTickListEntry(par1, par2, par3, par4);
+    public void scheduleBlockUpdateFromLoad(final int par1, final int par2, final int par3, final int par4, final int par5, final int par6) {
+        final NextTickListEntry nextticklistentry = new NextTickListEntry(par1, par2, par3, par4);
         nextticklistentry.setPriority(par6);
 
         if (par4 > 0) {
@@ -760,7 +761,7 @@ public class WorldServer extends World {
     /**
      * Runs through the list of updates to run and ticks them
      */
-    public boolean tickUpdates(boolean par1) {
+    public boolean tickUpdates(final boolean par1) {
         // Spigot start
         int i = this.tickEntryQueue.size();
         this.nextPendingTickEntry = 0;
@@ -793,7 +794,7 @@ public class WorldServer extends World {
                     this.removeNextTickIfNeeded(nextticklistentry);
                     this.pendingTickEntries.add(nextticklistentry);
                     // Spigot end
-                } catch (Exception exception) {
+                } catch (final Exception exception) {
                     continue;
                 }
                 //TODO ZoomCodeEnd
@@ -818,22 +819,22 @@ public class WorldServer extends World {
                 nextticklistentry = pendingTickEntries.get(j);
                 this.nextPendingTickEntry = j + 1; // treat this as dequeued
                 // Spigot end
-                byte b0 = 0;
+                final byte b0 = 0;
 
                 if (this.checkChunksExist(nextticklistentry.xCoord - b0, nextticklistentry.yCoord - b0, nextticklistentry.zCoord - b0, nextticklistentry.xCoord + b0, nextticklistentry.yCoord + b0, nextticklistentry.zCoord + b0)) {
-                    int k = this.getBlockId(nextticklistentry.xCoord, nextticklistentry.yCoord, nextticklistentry.zCoord);
+                    final int k = this.getBlockId(nextticklistentry.xCoord, nextticklistentry.yCoord, nextticklistentry.zCoord);
 
                     if (k > 0 && Block.isAssociatedBlockID(k, nextticklistentry.blockID)) {
                         try {
                             Block.blocksList[k].updateTick(this, nextticklistentry.xCoord, nextticklistentry.yCoord, nextticklistentry.zCoord, this.rand);
-                        } catch (Throwable throwable) {
-                            CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Exception while ticking a block");
-                            CrashReportCategory crashreportcategory = crashreport.makeCategory("Block being ticked");
+                        } catch (final Throwable throwable) {
+                            final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Exception while ticking a block");
+                            final CrashReportCategory crashreportcategory = crashreport.makeCategory("Block being ticked");
                             int l;
 
                             try {
                                 l = this.getBlockMetadata(nextticklistentry.xCoord, nextticklistentry.yCoord, nextticklistentry.zCoord);
-                            } catch (Throwable throwable1) {
+                            } catch (final Throwable throwable1) {
                                 l = -1;
                             }
 
@@ -855,7 +856,7 @@ public class WorldServer extends World {
         }
     }
 
-    public List getPendingBlockUpdates(Chunk par1Chunk, boolean par2) {
+    public List getPendingBlockUpdates(final Chunk par1Chunk, final boolean par2) {
         // Spigot start
         return this.getNextTickEntriesForChunk(par1Chunk, par2);
         // Spigot end
@@ -865,7 +866,7 @@ public class WorldServer extends World {
      * Will update the entity in the world if the chunk the entity is in is currently loaded or its forced to update.
      * Args: entity, forceUpdate
      */
-    public void updateEntityWithOptionalForce(Entity par1Entity, boolean par2) {
+    public void updateEntityWithOptionalForce(final Entity par1Entity, final boolean par2) {
         /* CraftBukkit start - We prevent spawning in general, so this butchering is not needed
         if (!this.server.getSpawnAnimals() && (entity instanceof EntityAnimal || entity instanceof EntityWaterAnimal)) {
             entity.die();
@@ -883,12 +884,12 @@ public class WorldServer extends World {
     /**
      * direct call to super.updateEntityWithOptionalForce
      */
-    public void uncheckedUpdateEntity(Entity par1Entity, boolean par2) {
+    public void uncheckedUpdateEntity(final Entity par1Entity, final boolean par2) {
         try {
             super.updateEntityWithOptionalForce(par1Entity, par2);
-        } catch (Throwable throwable) {
-            CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Forcefully ticking entity");
-            CrashReportCategory crashreportcategory = crashreport.makeCategory("Entity being force ticked");
+        } catch (final Throwable throwable) {
+            final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Forcefully ticking entity");
+            final CrashReportCategory crashreportcategory = crashreport.makeCategory("Entity being force ticked");
             par1Entity.addEntityCrashInfo(crashreportcategory);
             throw new ReportedException(crashreport);
         }
@@ -898,11 +899,11 @@ public class WorldServer extends World {
      * Creates the chunk provider for this world. Called in the constructor. Retrieves provider from worldProvider?
      */
     protected IChunkProvider createChunkProvider() {
-        IChunkLoader ichunkloader = this.saveHandler.getChunkLoader(this.provider);
+        final IChunkLoader ichunkloader = this.saveHandler.getChunkLoader(this.provider);
         // Cauldron start - if provider is vanilla, proceed to create a bukkit compatible chunk generator
         if (this.provider.getClass().toString().length() <= 3 || this.provider.getClass().toString().contains("net.minecraft")) {
             // CraftBukkit start
-            org.bukkit.craftbukkit.v1_6_R3.generator.InternalChunkGenerator gen;
+            final org.bukkit.craftbukkit.v1_6_R3.generator.InternalChunkGenerator gen;
 
             if (this.generator != null) {
                 gen = new org.bukkit.craftbukkit.v1_6_R3.generator.CustomChunkGenerator(this, this.getSeed(), this.generator);
@@ -926,20 +927,20 @@ public class WorldServer extends World {
     /**
      * pars: min x,y,z , max x,y,z
      */
-    public List getAllTileEntityInBox(int par1, int par2, int par3, int par4, int par5, int par6) {
-        ArrayList arraylist = new ArrayList();
+    public List getAllTileEntityInBox(final int par1, final int par2, final int par3, final int par4, final int par5, final int par6) {
+        final ArrayList arraylist = new ArrayList();
 
         // CraftBukkit start - Get tile entities from chunks instead of world
         for (int chunkX = (par1 >> 4); chunkX <= ((par4 - 1) >> 4); chunkX++) {
             for (int chunkZ = (par3 >> 4); chunkZ <= ((par6 - 1) >> 4); chunkZ++) {
-                Chunk chunk = getChunkFromChunkCoords(chunkX, chunkZ);
+                final Chunk chunk = getChunkFromChunkCoords(chunkX, chunkZ);
 
                 if (chunk == null) {
                     continue;
                 }
 
-                for (Object te : chunk.chunkTileEntityMap.values()) {
-                    TileEntity tileentity = (TileEntity) te;
+                for (final Object te : chunk.chunkTileEntityMap.values()) {
+                    final TileEntity tileentity = (TileEntity) te;
 
                     if ((tileentity.xCoord >= par1) && (tileentity.yCoord >= par2) && (tileentity.zCoord >= par3) && (tileentity.xCoord < par4) && (tileentity.yCoord < par5) && (tileentity.zCoord < par6)) {
                         arraylist.add(tileentity);
@@ -955,15 +956,15 @@ public class WorldServer extends World {
     /**
      * Called when checking if a certain block can be mined or not. The 'spawn safe zone' check is located here.
      */
-    public boolean canMineBlock(EntityPlayer par1EntityPlayer, int par2, int par3, int par4) {
+    public boolean canMineBlock(final EntityPlayer par1EntityPlayer, final int par2, final int par3, final int par4) {
         return super.canMineBlock(par1EntityPlayer, par2, par3, par4);
     }
 
-    public boolean canMineBlockBody(EntityPlayer par1EntityPlayer, int par2, int par3, int par4) {
+    public boolean canMineBlockBody(final EntityPlayer par1EntityPlayer, final int par2, final int par3, final int par4) {
         return !this.mcServer.isBlockProtected(this, par2, par3, par4, par1EntityPlayer);
     }
 
-    protected void initialize(WorldSettings par1WorldSettings) {
+    protected void initialize(final WorldSettings par1WorldSettings) {
         if (this.entityIdMap == null) {
             this.entityIdMap = new IntHashMap();
         }
@@ -991,23 +992,23 @@ public class WorldServer extends World {
     /**
      * creates a spawn position at random within 256 blocks of 0,0
      */
-    protected void createSpawnPosition(WorldSettings par1WorldSettings) {
+    protected void createSpawnPosition(final WorldSettings par1WorldSettings) {
         if (!this.provider.canRespawnHere()) {
             this.worldInfo.setSpawnPosition(0, this.provider.getAverageGroundLevel(), 0);
         } else {
             this.findingSpawnPoint = true;
-            WorldChunkManager worldchunkmanager = this.provider.worldChunkMgr;
-            List list = worldchunkmanager.getBiomesToSpawnIn();
-            Random random = new Random(this.getSeed());
-            ChunkPosition chunkposition = worldchunkmanager.findBiomePosition(0, 0, 256, list, random);
+            final WorldChunkManager worldchunkmanager = this.provider.worldChunkMgr;
+            final List list = worldchunkmanager.getBiomesToSpawnIn();
+            final Random random = new Random(this.getSeed());
+            final ChunkPosition chunkposition = worldchunkmanager.findBiomePosition(0, 0, 256, list, random);
             int i = 0;
-            int j = this.provider.getAverageGroundLevel();
+            final int j = this.provider.getAverageGroundLevel();
             int k = 0;
 
             // CraftBukkit start
             if (this.generator != null) {
-                Random rand = new Random(this.getSeed());
-                org.bukkit.Location spawn = this.generator.getFixedSpawnLocation(((WorldServer) this).getWorld(), rand);
+                final Random rand = new Random(this.getSeed());
+                final org.bukkit.Location spawn = this.generator.getFixedSpawnLocation(((WorldServer) this).getWorld(), rand);
 
                 if (spawn != null) {
                     if (spawn.getWorld() != ((WorldServer) this).getWorld()) {
@@ -1055,12 +1056,12 @@ public class WorldServer extends World {
      * Creates the bonus chest in the world.
      */
     protected void createBonusChest() {
-        WorldGeneratorBonusChest worldgeneratorbonuschest = new WorldGeneratorBonusChest(ChestGenHooks.getItems(BONUS_CHEST, rand), ChestGenHooks.getCount(BONUS_CHEST, rand));
+        final WorldGeneratorBonusChest worldgeneratorbonuschest = new WorldGeneratorBonusChest(ChestGenHooks.getItems(BONUS_CHEST, rand), ChestGenHooks.getCount(BONUS_CHEST, rand));
 
         for (int i = 0; i < 10; ++i) {
-            int j = this.worldInfo.getSpawnX() + this.rand.nextInt(6) - this.rand.nextInt(6);
-            int k = this.worldInfo.getSpawnZ() + this.rand.nextInt(6) - this.rand.nextInt(6);
-            int l = this.getTopSolidOrLiquidBlock(j, k) + 1;
+            final int j = this.worldInfo.getSpawnX() + this.rand.nextInt(6) - this.rand.nextInt(6);
+            final int k = this.worldInfo.getSpawnZ() + this.rand.nextInt(6) - this.rand.nextInt(6);
+            final int l = this.getTopSolidOrLiquidBlock(j, k) + 1;
 
             if (worldgeneratorbonuschest.generate(this, this.rand, j, l, k)) {
                 break;
@@ -1078,7 +1079,7 @@ public class WorldServer extends World {
     /**
      * Saves all chunks to disk while updating progress bar.
      */
-    public void saveAllChunks(boolean par1, IProgressUpdate par2IProgressUpdate) throws MinecraftException {
+    public void saveAllChunks(final boolean par1, final IProgressUpdate par2IProgressUpdate) throws MinecraftException {
         if (this.chunkProvider.canSave()) {
             if (par2IProgressUpdate != null) {
                 par2IProgressUpdate.displayProgressMessage("Saving level");
@@ -1114,10 +1115,10 @@ public class WorldServer extends World {
         this.perWorldStorage.saveAllData();
     }
 
-    protected void onEntityAdded(Entity par1Entity) {
+    protected void onEntityAdded(final Entity par1Entity) {
         super.onEntityAdded(par1Entity);
         this.entityIdMap.addKey(par1Entity.entityId, par1Entity);
-        Entity[] aentity = par1Entity.getParts();
+        final Entity[] aentity = par1Entity.getParts();
 
         if (aentity != null) {
             for (int i = 0; i < aentity.length; ++i) {
@@ -1126,10 +1127,10 @@ public class WorldServer extends World {
         }
     }
 
-    public void onEntityRemoved(Entity par1Entity) {
+    public void onEntityRemoved(final Entity par1Entity) {
         super.onEntityRemoved(par1Entity);
         this.entityIdMap.removeObject(par1Entity.entityId);
-        Entity[] aentity = par1Entity.getParts();
+        final Entity[] aentity = par1Entity.getParts();
 
         if (aentity != null) {
             for (int i = 0; i < aentity.length; ++i) {
@@ -1141,18 +1142,18 @@ public class WorldServer extends World {
     /**
      * Returns the Entity with the given ID, or null if it doesn't exist in this World.
      */
-    public Entity getEntityByID(int par1) {
+    public Entity getEntityByID(final int par1) {
         return (Entity) this.entityIdMap.lookup(par1);
     }
 
     /**
      * adds a lightning bolt to the list of lightning bolts in this world.
      */
-    public boolean addWeatherEffect(Entity par1Entity) {
+    public boolean addWeatherEffect(final Entity par1Entity) {
         // Cauldron start - vanilla compatibility
         if (par1Entity instanceof net.minecraft.entity.effect.EntityLightningBolt) {
             // CraftBukkit start
-            LightningStrikeEvent lightning = new LightningStrikeEvent(this.getWorld(), (org.bukkit.entity.LightningStrike) par1Entity.getBukkitEntity());
+            final LightningStrikeEvent lightning = new LightningStrikeEvent(this.getWorld(), (org.bukkit.entity.LightningStrike) par1Entity.getBukkitEntity());
             this.getServer().getPluginManager().callEvent(lightning);
 
             if (lightning.isCancelled()) {
@@ -1172,17 +1173,17 @@ public class WorldServer extends World {
     /**
      * sends a Packet 38 (Entity Status) to all tracked players of that entity
      */
-    public void setEntityState(Entity par1Entity, byte par2) {
-        Packet38EntityStatus packet38entitystatus = new Packet38EntityStatus(par1Entity.entityId, par2);
+    public void setEntityState(final Entity par1Entity, final byte par2) {
+        final Packet38EntityStatus packet38entitystatus = new Packet38EntityStatus(par1Entity.entityId, par2);
         this.getEntityTracker().sendPacketToAllAssociatedPlayers(par1Entity, packet38entitystatus);
     }
 
     /**
      * returns a new explosion. Does initiation (at time of writing Explosion is not finished)
      */
-    public Explosion newExplosion(Entity par1Entity, double par2, double par4, double par6, float par8, boolean par9, boolean par10) {
+    public Explosion newExplosion(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final boolean par9, final boolean par10) {
         // CraftBukkit start
-        Explosion explosion = super.newExplosion(par1Entity, par2, par4, par6, par8, par9, par10);
+        final Explosion explosion = super.newExplosion(par1Entity, par2, par4, par6, par8, par9, par10);
 
         if (explosion.wasCanceled) {
             return explosion;
@@ -1200,10 +1201,10 @@ public class WorldServer extends World {
             explosion.affectedBlockPositions.clear();
         }
 
-        Iterator iterator = this.playerEntities.iterator();
+        final Iterator iterator = this.playerEntities.iterator();
 
         while (iterator.hasNext()) {
-            EntityPlayer entityplayer = (EntityPlayer) iterator.next();
+            final EntityPlayer entityplayer = (EntityPlayer) iterator.next();
 
             if (entityplayer.getDistanceSq(par2, par4, par6) < 4096.0D) {
                 ((EntityPlayerMP) entityplayer).playerNetServerHandler.sendPacketToPlayer(new Packet60Explosion(par2, par4, par6, par8, explosion.affectedBlockPositions, (Vec3) explosion.func_77277_b().get(entityplayer)));
@@ -1217,9 +1218,9 @@ public class WorldServer extends World {
      * Adds a block event with the given Args to the blockEventCache. During the next tick(), the block specified will
      * have its onBlockEvent handler called with the given parameters. Args: X,Y,Z, BlockID, EventID, EventParameter
      */
-    public void addBlockEvent(int par1, int par2, int par3, int par4, int par5, int par6) {
-        BlockEventData blockeventdata = new BlockEventData(par1, par2, par3, par4, par5, par6);
-        Iterator iterator = this.blockEventCache[this.blockEventCacheIndex].iterator();
+    public void addBlockEvent(final int par1, final int par2, final int par3, final int par4, final int par5, final int par6) {
+        final BlockEventData blockeventdata = new BlockEventData(par1, par2, par3, par4, par5, par6);
+        final Iterator iterator = this.blockEventCache[this.blockEventCacheIndex].iterator();
         BlockEventData blockeventdata1;
 
         do {
@@ -1238,12 +1239,12 @@ public class WorldServer extends World {
      */
     private void sendAndApplyBlockEvents() {
         while (!this.blockEventCache[this.blockEventCacheIndex].isEmpty()) {
-            int i = this.blockEventCacheIndex;
+            final int i = this.blockEventCacheIndex;
             this.blockEventCacheIndex ^= 1;
-            Iterator iterator = this.blockEventCache[i].iterator();
+            final Iterator iterator = this.blockEventCache[i].iterator();
 
             while (iterator.hasNext()) {
-                BlockEventData blockeventdata = (BlockEventData) iterator.next();
+                final BlockEventData blockeventdata = (BlockEventData) iterator.next();
 
                 if (this.onBlockEventReceived(blockeventdata)) {
                     this.mcServer.getConfigurationManager().sendToAllNear((double) blockeventdata.getX(), (double) blockeventdata.getY(), (double) blockeventdata.getZ(), 64.0D, this.provider.dimensionId, new Packet54PlayNoteBlock(blockeventdata.getX(), blockeventdata.getY(), blockeventdata.getZ(), blockeventdata.getBlockID(), blockeventdata.getEventID(), blockeventdata.getEventParameter()));
@@ -1257,8 +1258,8 @@ public class WorldServer extends World {
     /**
      * Called to apply a pending BlockEvent to apply to the current world.
      */
-    private boolean onBlockEventReceived(BlockEventData par1BlockEventData) {
-        int i = this.getBlockId(par1BlockEventData.getX(), par1BlockEventData.getY(), par1BlockEventData.getZ());
+    private boolean onBlockEventReceived(final BlockEventData par1BlockEventData) {
+        final int i = this.getBlockId(par1BlockEventData.getX(), par1BlockEventData.getY(), par1BlockEventData.getZ());
         return i == par1BlockEventData.getBlockID() ? Block.blocksList[i].onBlockEventReceived(this, par1BlockEventData.getX(), par1BlockEventData.getY(), par1BlockEventData.getZ(), par1BlockEventData.getEventID(), par1BlockEventData.getEventParameter()) : false;
     }
 
@@ -1273,7 +1274,7 @@ public class WorldServer extends World {
      * Updates all weather states.
      */
     protected void updateWeather() {
-        boolean flag = this.isRaining();
+        final boolean flag = this.isRaining();
         super.updateWeather();
 
         if (flag != this.isRaining()) {
@@ -1315,8 +1316,8 @@ public class WorldServer extends World {
     }
 
     // Spigot start
-    private void addNextTickIfNeeded(NextTickListEntry ent) {
-        long coord = LongHash.toLong(ent.xCoord >> 4, ent.zCoord >> 4);
+    private void addNextTickIfNeeded(final NextTickListEntry ent) {
+        final long coord = LongHash.toLong(ent.xCoord >> 4, ent.zCoord >> 4);
         Set<NextTickListEntry> chunkset = this.tickEntriesByChunk.get(coord);
 
         if (chunkset == null) {
@@ -1332,9 +1333,9 @@ public class WorldServer extends World {
         this.pendingTickListEntriesHashSet.add(ent); // Cauldron - vanilla compatibility
     }
 
-    private void removeNextTickIfNeeded(NextTickListEntry ent) {
-        long coord = LongHash.toLong(ent.xCoord >> 4, ent.zCoord >> 4);
-        Set<NextTickListEntry> chunkset = this.tickEntriesByChunk.get(coord);
+    private void removeNextTickIfNeeded(final NextTickListEntry ent) {
+        final long coord = LongHash.toLong(ent.xCoord >> 4, ent.zCoord >> 4);
+        final Set<NextTickListEntry> chunkset = this.tickEntriesByChunk.get(coord);
 
         if (chunkset != null) {
             chunkset.remove(ent);
@@ -1348,9 +1349,9 @@ public class WorldServer extends World {
         this.pendingTickListEntriesHashSet.remove(ent); // Cauldron - vanilla compatibility
     }
 
-    private List<NextTickListEntry> getNextTickEntriesForChunk(Chunk chunk, boolean remove) {
-        long coord = LongHash.toLong(chunk.xPosition, chunk.zPosition);
-        Set<NextTickListEntry> chunkset = this.tickEntriesByChunk.get(coord);
+    private List<NextTickListEntry> getNextTickEntriesForChunk(final Chunk chunk, final boolean remove) {
+        final long coord = LongHash.toLong(chunk.xPosition, chunk.zPosition);
+        final Set<NextTickListEntry> chunkset = this.tickEntriesByChunk.get(coord);
         List<NextTickListEntry> list = null;
 
         if (chunkset != null) {
@@ -1365,14 +1366,14 @@ public class WorldServer extends World {
 
         // See if any on list of ticks being processed now
         if (this.nextPendingTickEntry < this.pendingTickEntries.size()) {
-            int xmin = (chunk.xPosition << 4);
-            int xmax = xmin + 16;
-            int zmin = (chunk.zPosition << 4);
-            int zmax = zmin + 16;
-            int te_cnt = this.pendingTickEntries.size();
+            final int xmin = (chunk.xPosition << 4);
+            final int xmax = xmin + 16;
+            final int zmin = (chunk.zPosition << 4);
+            final int zmax = zmin + 16;
+            final int te_cnt = this.pendingTickEntries.size();
 
             for (int i = this.nextPendingTickEntry; i < te_cnt; i++) {
-                NextTickListEntry ent = this.pendingTickEntries.get(i);
+                final NextTickListEntry ent = this.pendingTickEntries.get(i);
 
                 if ((ent.xCoord >= xmin) && (ent.xCoord < xmax) && (ent.zCoord >= zmin) && (ent.zCoord < zmax)) {
                     if (list == null) {
@@ -1387,11 +1388,11 @@ public class WorldServer extends World {
         return list;
     }
 
-    public boolean isEmpty(int a, int b, int c) {
+    public boolean isEmpty(final int a, final int b, final int c) {
         return isAirBlock(a, b, c);
     }
 
-    public int getTypeId(int a, int b, int c) {
+    public int getTypeId(final int a, final int b, final int c) {
         return getBlockId(a, b, c);
     }
 }

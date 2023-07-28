@@ -14,19 +14,19 @@ public class ChunkPosition
     /** The z coordinate of this ChunkPosition */
     public final int z;
 
-    public ChunkPosition(int par1, int par2, int par3)
+    public ChunkPosition(final int par1, final int par2, final int par3)
     {
         this.x = par1;
         this.y = par2;
         this.z = par3;
     }
 
-    public ChunkPosition(Vec3 par1Vec3)
+    public ChunkPosition(final Vec3 par1Vec3)
     {
         this(MathHelper.floor_double(par1Vec3.xCoord), MathHelper.floor_double(par1Vec3.yCoord), MathHelper.floor_double(par1Vec3.zCoord));
     }
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         if (!(par1Obj instanceof ChunkPosition))
         {
@@ -34,7 +34,7 @@ public class ChunkPosition
         }
         else
         {
-            ChunkPosition chunkposition = (ChunkPosition)par1Obj;
+            final ChunkPosition chunkposition = (ChunkPosition)par1Obj;
             return chunkposition.x == this.x && chunkposition.y == this.y && chunkposition.z == this.z;
         }
     }

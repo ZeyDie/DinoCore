@@ -38,7 +38,7 @@ public class BlockDispenseEvent extends BlockEvent implements Cancellable {
      *
      * @param item the item being dispensed
      */
-    public void setItem(ItemStack item) {
+    public void setItem(final ItemStack item) {
         this.item = item;
     }
 
@@ -58,7 +58,7 @@ public class BlockDispenseEvent extends BlockEvent implements Cancellable {
      *
      * @param vel the velocity of the item being dispensed
      */
-    public void setVelocity(Vector vel) {
+    public void setVelocity(final Vector vel) {
         velocity = vel;
     }
 
@@ -66,7 +66,7 @@ public class BlockDispenseEvent extends BlockEvent implements Cancellable {
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         cancelled = cancel;
     }
 

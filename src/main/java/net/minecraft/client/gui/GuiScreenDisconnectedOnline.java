@@ -16,7 +16,7 @@ public class GuiScreenDisconnectedOnline extends GuiScreen
     private List field_98110_d;
     private final GuiScreen field_98114_n;
 
-    public GuiScreenDisconnectedOnline(GuiScreen par1GuiScreen, String par2Str, String par3Str, Object ... par4ArrayOfObj)
+    public GuiScreenDisconnectedOnline(final GuiScreen par1GuiScreen, final String par2Str, final String par3Str, final Object ... par4ArrayOfObj)
     {
         this.field_98114_n = par1GuiScreen;
         this.field_98113_a = I18n.getString(par2Str);
@@ -27,7 +27,7 @@ public class GuiScreenDisconnectedOnline extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2) {}
+    protected void keyTyped(final char par1, final int par2) {}
 
     /**
      * Adds the buttons (and other controls) to the screen in question.
@@ -50,7 +50,7 @@ public class GuiScreenDisconnectedOnline extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.id == 0)
         {
@@ -61,7 +61,7 @@ public class GuiScreenDisconnectedOnline extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRenderer, this.field_98113_a, this.width / 2, this.height / 2 - 50, 11184810);
@@ -69,9 +69,9 @@ public class GuiScreenDisconnectedOnline extends GuiScreen
 
         if (this.field_98110_d != null)
         {
-            for (Iterator iterator = this.field_98110_d.iterator(); iterator.hasNext(); k += this.fontRenderer.FONT_HEIGHT)
+            for (final Iterator iterator = this.field_98110_d.iterator(); iterator.hasNext(); k += this.fontRenderer.FONT_HEIGHT)
             {
-                String s = (String)iterator.next();
+                final String s = (String)iterator.next();
                 this.drawCenteredString(this.fontRenderer, s, this.width / 2, k, 16777215);
             }
         }

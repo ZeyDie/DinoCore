@@ -35,7 +35,7 @@ public class GuiWinGame extends GuiScreen
     public void updateScreen()
     {
         ++this.updateCounter;
-        float f = (float)(this.field_73989_c + this.height + this.height + 24) / this.field_73987_d;
+        final float f = (float)(this.field_73989_c + this.height + this.height + 24) / this.field_73987_d;
 
         if ((float)this.updateCounter > f)
         {
@@ -46,7 +46,7 @@ public class GuiWinGame extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         if (par2 == 1)
         {
@@ -83,10 +83,10 @@ public class GuiWinGame extends GuiScreen
             try
             {
                 String s = "";
-                String s1 = "" + EnumChatFormatting.WHITE + EnumChatFormatting.OBFUSCATED + EnumChatFormatting.GREEN + EnumChatFormatting.AQUA;
-                short short1 = 274;
+                final String s1 = "" + EnumChatFormatting.WHITE + EnumChatFormatting.OBFUSCATED + EnumChatFormatting.GREEN + EnumChatFormatting.AQUA;
+                final short short1 = 274;
                 BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(this.mc.getResourceManager().getResource(new ResourceLocation("texts/end.txt")).getInputStream(), Charsets.UTF_8));
-                Random random = new Random(8124371L);
+                final Random random = new Random(8124371L);
                 int i;
 
                 while ((s = bufferedreader.readLine()) != null)
@@ -122,26 +122,26 @@ public class GuiWinGame extends GuiScreen
 
                 this.field_73989_c = this.lines.size() * 12;
             }
-            catch (Exception exception)
+            catch (final Exception exception)
             {
                 exception.printStackTrace();
             }
         }
     }
 
-    private void func_73986_b(int par1, int par2, float par3)
+    private void func_73986_b(final int par1, final int par2, final float par3)
     {
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         this.mc.getTextureManager().bindTexture(Gui.optionsBackground);
         tessellator.startDrawingQuads();
         tessellator.setColorRGBA_F(1.0F, 1.0F, 1.0F, 1.0F);
-        int k = this.width;
-        float f1 = 0.0F - ((float)this.updateCounter + par3) * 0.5F * this.field_73987_d;
-        float f2 = (float)this.height - ((float)this.updateCounter + par3) * 0.5F * this.field_73987_d;
-        float f3 = 0.015625F;
+        final int k = this.width;
+        final float f1 = 0.0F - ((float)this.updateCounter + par3) * 0.5F * this.field_73987_d;
+        final float f2 = (float)this.height - ((float)this.updateCounter + par3) * 0.5F * this.field_73987_d;
+        final float f3 = 0.015625F;
         float f4 = ((float)this.updateCounter + par3 - 0.0F) * 0.02F;
-        float f5 = (float)(this.field_73989_c + this.height + this.height + 24) / this.field_73987_d;
-        float f6 = (f5 - 20.0F - ((float)this.updateCounter + par3)) * 0.005F;
+        final float f5 = (float)(this.field_73989_c + this.height + this.height + 24) / this.field_73987_d;
+        final float f6 = (f5 - 20.0F - ((float)this.updateCounter + par3)) * 0.005F;
 
         if (f6 < f4)
         {
@@ -166,14 +166,14 @@ public class GuiWinGame extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.func_73986_b(par1, par2, par3);
-        Tessellator tessellator = Tessellator.instance;
-        short short1 = 274;
-        int k = this.width / 2 - short1 / 2;
-        int l = this.height + 50;
-        float f1 = -((float)this.updateCounter + par3) * this.field_73987_d;
+        final Tessellator tessellator = Tessellator.instance;
+        final short short1 = 274;
+        final int k = this.width / 2 - short1 / 2;
+        final int l = this.height + 50;
+        final float f1 = -((float)this.updateCounter + par3) * this.field_73987_d;
         GL11.glPushMatrix();
         GL11.glTranslatef(0.0F, f1, 0.0F);
         this.mc.getTextureManager().bindTexture(minecraftLogoTexture);
@@ -188,7 +188,7 @@ public class GuiWinGame extends GuiScreen
         {
             if (j1 == this.lines.size() - 1)
             {
-                float f2 = (float)i1 + f1 - (float)(this.height / 2 - 6);
+                final float f2 = (float)i1 + f1 - (float)(this.height / 2 - 6);
 
                 if (f2 < 0.0F)
                 {
@@ -198,7 +198,7 @@ public class GuiWinGame extends GuiScreen
 
             if ((float)i1 + f1 + 12.0F + 8.0F > 0.0F && (float)i1 + f1 < (float)this.height)
             {
-                String s = (String)this.lines.get(j1);
+                final String s = (String)this.lines.get(j1);
 
                 if (s.startsWith("[C]"))
                 {
@@ -221,7 +221,7 @@ public class GuiWinGame extends GuiScreen
         tessellator.startDrawingQuads();
         tessellator.setColorRGBA_F(1.0F, 1.0F, 1.0F, 1.0F);
         j1 = this.width;
-        int k1 = this.height;
+        final int k1 = this.height;
         tessellator.addVertexWithUV(0.0D, (double)k1, (double)this.zLevel, 0.0D, 1.0D);
         tessellator.addVertexWithUV((double)j1, (double)k1, (double)this.zLevel, 1.0D, 1.0D);
         tessellator.addVertexWithUV((double)j1, 0.0D, (double)this.zLevel, 1.0D, 0.0D);

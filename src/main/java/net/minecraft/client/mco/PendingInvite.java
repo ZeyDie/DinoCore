@@ -12,9 +12,9 @@ public class PendingInvite extends ValueObject
     public String field_130092_b;
     public String field_130093_c;
 
-    public static PendingInvite func_130091_a(JsonNode par0JsonNode)
+    public static PendingInvite func_130091_a(final JsonNode par0JsonNode)
     {
-        PendingInvite pendinginvite = new PendingInvite();
+        final PendingInvite pendinginvite = new PendingInvite();
 
         try
         {
@@ -22,7 +22,7 @@ public class PendingInvite extends ValueObject
             pendinginvite.field_130092_b = par0JsonNode.getStringValue(new Object[] {"worldName"});
             pendinginvite.field_130093_c = par0JsonNode.getStringValue(new Object[] {"worldOwnerName"});
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             ;
         }

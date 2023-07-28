@@ -64,9 +64,9 @@ public class FMLNetworkHandler
 
     private Map<Integer, NetworkModHandler> networkIdLookup = Maps.newHashMap();
 
-    public static void handlePacket250Packet(Packet250CustomPayload packet, INetworkManager network, NetHandler handler)
+    public static void handlePacket250Packet(final Packet250CustomPayload packet, final INetworkManager network, final NetHandler handler)
     {
-        String target = packet.channel;
+        final String target = packet.channel;
 
         if (target.startsWith("MC|"))
         {
@@ -82,14 +82,14 @@ public class FMLNetworkHandler
         }
     }
 
-    public static void onConnectionEstablishedToServer(NetHandler clientHandler, INetworkManager manager, Packet1Login login)
+    public static void onConnectionEstablishedToServer(final NetHandler clientHandler, final INetworkManager manager, final Packet1Login login)
     {
         NetworkRegistry.instance().clientLoggedIn(clientHandler, manager, login);
     }
 
-    private void handleFMLPacket(Packet250CustomPayload packet, INetworkManager network, NetHandler netHandler)
+    private void handleFMLPacket(final Packet250CustomPayload packet, final INetworkManager network, final NetHandler netHandler)
     {
-        FMLPacket pkt = FMLPacket.readPacket(network, packet.data);
+        final FMLPacket pkt = FMLPacket.readPacket(network, packet.data);
         // Part of an incomplete multipart packet
         if (pkt == null)
         {
@@ -102,7 +102,7 @@ public class FMLNetworkHandler
         }
         else
         {
-            EntityPlayer pl = netHandler.getPlayer();
+            final EntityPlayer pl = netHandler.getPlayer();
             if (pl != null)
             {
                 userName = pl.getCommandSenderName();
@@ -112,12 +112,12 @@ public class FMLNetworkHandler
         pkt.execute(network, this, netHandler, userName);
     }
 
-    public static void onConnectionReceivedFromClient(NetLoginHandler netLoginHandler, MinecraftServer server, SocketAddress address, String userName)
+    public static void onConnectionReceivedFromClient(final NetLoginHandler netLoginHandler, final MinecraftServer server, final SocketAddress address, final String userName)
     {
         instance().handleClientConnection(netLoginHandler, server, address, userName);
     }
 
-    private void handleClientConnection(NetLoginHandler netLoginHandler, MinecraftServer server, SocketAddress address, String userName)
+    private void handleClientConnection(final NetLoginHandler netLoginHandler, final MinecraftServer server, final SocketAddress address, final String userName)
     {
         if (!loginStates.containsKey(netLoginHandler))
         {
@@ -140,7 +140,7 @@ public class FMLNetworkHandler
         {
         case LOGIN_RECEIVED:
             // mods can try and kick undesireables here
-            String modKick = NetworkRegistry.instance().connectionReceived(netLoginHandler, netLoginHandler.myTCPConnection);
+            final String modKick = NetworkRegistry.instance().connectionReceived(netLoginHandler, netLoginHandler.myTCPConnection);
             if (modKick != null)
             {
                 netLoginHandler.completeConnection(modKick);
@@ -187,17 +187,17 @@ public class FMLNetworkHandler
      * @param userName
      * @return if the user can carry on
      */
-    private boolean handleVanillaLoginKick(NetLoginHandler netLoginHandler, MinecraftServer server, SocketAddress address, String userName)
+    private boolean handleVanillaLoginKick(final NetLoginHandler netLoginHandler, final MinecraftServer server, final SocketAddress address, final String userName)
     {
         // Vanilla reasons first
         // Cauldron start
-        ServerConfigurationManager playerList = server.getConfigurationManager();
-        EntityPlayerMP player = playerList.attemptLogin(netLoginHandler, netLoginHandler.clientUsername, netLoginHandler.hostname);
+        final ServerConfigurationManager playerList = server.getConfigurationManager();
+        final EntityPlayerMP player = playerList.attemptLogin(netLoginHandler, netLoginHandler.clientUsername, netLoginHandler.hostname);
         return player != null;
         // Cauldron end
     }
 
-    public static void handleLoginPacketOnServer(NetLoginHandler handler, Packet1Login login)
+    public static void handleLoginPacketOnServer(final NetLoginHandler handler, final Packet1Login login)
     {
         if (login.clientEntityId == FML_HASH)
         {
@@ -219,7 +219,7 @@ public class FMLNetworkHandler
         }
     }
 
-    static void setHandlerState(NetLoginHandler handler, int state)
+    static void setHandlerState(final NetLoginHandler handler, final int state)
     {
         instance().loginStates.put(handler, state);
     }
@@ -233,7 +233,7 @@ public class FMLNetworkHandler
     {
         // Always reset compat to zero before sending our fake packet
         FMLCommonHandler.instance().getSidedDelegate().setClientCompatibilityLevel((byte) 0);
-        Packet1Login fake = new Packet1Login();
+        final Packet1Login fake = new Packet1Login();
         // Hash FML using a simple function
         fake.clientEntityId = FML_HASH;
         // The FML protocol version
@@ -248,14 +248,14 @@ public class FMLNetworkHandler
         return PacketDispatcher.getPacket("FML", FMLPacket.makePacket(MOD_LIST_REQUEST));
     }
 
-    public void registerNetworkMod(NetworkModHandler handler)
+    public void registerNetworkMod(final NetworkModHandler handler)
     {
         networkModHandlers.put(handler.getContainer(), handler);
         networkIdLookup.put(handler.getNetworkId(), handler);
     }
-    public boolean registerNetworkMod(ModContainer container, Class<?> networkModClass, ASMDataTable asmData)
+    public boolean registerNetworkMod(final ModContainer container, final Class<?> networkModClass, final ASMDataTable asmData)
     {
-        NetworkModHandler handler = new NetworkModHandler(container, networkModClass, asmData);
+        final NetworkModHandler handler = new NetworkModHandler(container, networkModClass, asmData);
         if (handler.isNetworkMod())
         {
             registerNetworkMod(handler);
@@ -264,7 +264,7 @@ public class FMLNetworkHandler
         return handler.isNetworkMod();
     }
 
-    public NetworkModHandler findNetworkModHandler(Object mc)
+    public NetworkModHandler findNetworkModHandler(final Object mc)
     {
         if (mc instanceof InjectedModContainer)
         {
@@ -289,7 +289,7 @@ public class FMLNetworkHandler
         return networkModHandlers.keySet();
     }
 
-    public static void handlePlayerLogin(EntityPlayerMP player, NetServerHandler netHandler, INetworkManager manager)
+    public static void handlePlayerLogin(final EntityPlayerMP player, final NetServerHandler netHandler, final INetworkManager manager)
     {
         NetworkRegistry.instance().playerLoggedIn(player, netHandler, manager);
         GameRegistry.onPlayerLogin(player);
@@ -300,10 +300,10 @@ public class FMLNetworkHandler
         return networkIdLookup;
     }
 
-    public void bindNetworkId(String key, Integer value)
+    public void bindNetworkId(final String key, final Integer value)
     {
-        Map<String, ModContainer> mods = Loader.instance().getIndexedModList();
-        NetworkModHandler handler = findNetworkModHandler(mods.get(key));
+        final Map<String, ModContainer> mods = Loader.instance().getIndexedModList();
+        final NetworkModHandler handler = findNetworkModHandler(mods.get(key));
         if (handler != null)
         {
             handler.setNetworkId(value);
@@ -311,28 +311,28 @@ public class FMLNetworkHandler
         }
     }
 
-    public static void onClientConnectionToRemoteServer(NetHandler netClientHandler, String server, int port, INetworkManager networkManager)
+    public static void onClientConnectionToRemoteServer(final NetHandler netClientHandler, final String server, final int port, final INetworkManager networkManager)
     {
         NetworkRegistry.instance().connectionOpened(netClientHandler, server, port, networkManager);
     }
 
-    public static void onClientConnectionToIntegratedServer(NetHandler netClientHandler, MinecraftServer server, INetworkManager networkManager)
+    public static void onClientConnectionToIntegratedServer(final NetHandler netClientHandler, final MinecraftServer server, final INetworkManager networkManager)
     {
         NetworkRegistry.instance().connectionOpened(netClientHandler, server, networkManager);
     }
 
-    public static void onConnectionClosed(INetworkManager manager, EntityPlayer player)
+    public static void onConnectionClosed(final INetworkManager manager, final EntityPlayer player)
     {
         NetworkRegistry.instance().connectionClosed(manager, player);
     }
 
 
-    public static void openGui(EntityPlayer player, Object mod, int modGuiId, World world, int x, int y, int z)
+    public static void openGui(final EntityPlayer player, final Object mod, final int modGuiId, final World world, final int x, final int y, final int z)
     {
         ModContainer mc = FMLCommonHandler.instance().findContainerFor(mod);
         if (mc == null)
         {
-            NetworkModHandler nmh = instance().findNetworkModHandler(mod);
+            final NetworkModHandler nmh = instance().findNetworkModHandler(mod);
             if (nmh != null)
             {
                 mc = nmh.getContainer();
@@ -357,9 +357,9 @@ public class FMLNetworkHandler
         }
     }
 
-    public static Packet getEntitySpawningPacket(Entity entity)
+    public static Packet getEntitySpawningPacket(final Entity entity)
     {
-        EntityRegistration er = EntityRegistry.instance().lookupModSpawn(entity.getClass(), false);
+        final EntityRegistration er = EntityRegistry.instance().lookupModSpawn(entity.getClass(), false);
         if (er == null)
         {
             return null;
@@ -371,18 +371,18 @@ public class FMLNetworkHandler
         return PacketDispatcher.getPacket("FML", FMLPacket.makePacket(Type.ENTITYSPAWN, er, entity, instance().findNetworkModHandler(er.getContainer())));
     }
 
-    public static void makeEntitySpawnAdjustment(int entityId, EntityPlayerMP player, int serverX, int serverY, int serverZ)
+    public static void makeEntitySpawnAdjustment(final int entityId, final EntityPlayerMP player, final int serverX, final int serverY, final int serverZ)
     {
-        Packet250CustomPayload pkt = PacketDispatcher.getPacket("FML", FMLPacket.makePacket(Type.ENTITYSPAWNADJUSTMENT, entityId, serverX, serverY, serverZ));
+        final Packet250CustomPayload pkt = PacketDispatcher.getPacket("FML", FMLPacket.makePacket(Type.ENTITYSPAWNADJUSTMENT, entityId, serverX, serverY, serverZ));
         player.playerNetServerHandler.sendPacketToPlayer(pkt);
     }
 
     public static InetAddress computeLocalHost() throws IOException
     {
         InetAddress add = null;
-        List<InetAddress> addresses = Lists.newArrayList();
-        InetAddress localHost = InetAddress.getLocalHost();
-        for (NetworkInterface ni : Collections.list(NetworkInterface.getNetworkInterfaces()))
+        final List<InetAddress> addresses = Lists.newArrayList();
+        final InetAddress localHost = InetAddress.getLocalHost();
+        for (final NetworkInterface ni : Collections.list(NetworkInterface.getNetworkInterfaces()))
         {
             if (!ni.isLoopback() && ni.isUp())
             {
@@ -396,7 +396,7 @@ public class FMLNetworkHandler
         }
         if (add == null && !addresses.isEmpty())
         {
-            for (InetAddress addr: addresses)
+            for (final InetAddress addr: addresses)
             {
                 if (addr.getAddress().length == 4)
                 {
@@ -412,12 +412,12 @@ public class FMLNetworkHandler
         return add;
     }
 
-    public static Packet3Chat handleChatMessage(NetHandler handler, Packet3Chat chat)
+    public static Packet3Chat handleChatMessage(final NetHandler handler, final Packet3Chat chat)
     {
         return NetworkRegistry.instance().handleChat(handler, chat);
     }
 
-    public static void handlePacket131Packet(NetHandler handler, Packet131MapData mapData)
+    public static void handlePacket131Packet(final NetHandler handler, final Packet131MapData mapData)
     {
         if (handler instanceof NetServerHandler || mapData.itemID != Item.map.itemID)
         {

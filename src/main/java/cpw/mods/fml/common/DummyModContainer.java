@@ -30,12 +30,12 @@ public class DummyModContainer implements ModContainer
     private ArtifactVersion processedVersion;
     private String label;
 
-    public DummyModContainer(ModMetadata md)
+    public DummyModContainer(final ModMetadata md)
     {
         this.md = md;
     }
 
-    public DummyModContainer(String label)
+    public DummyModContainer(final String label)
     {
         this.label = label;
     }
@@ -44,7 +44,7 @@ public class DummyModContainer implements ModContainer
     }
 
     @Override
-    public void bindMetadata(MetadataCollection mc)
+    public void bindMetadata(final MetadataCollection mc)
     {
     }
 
@@ -108,18 +108,18 @@ public class DummyModContainer implements ModContainer
         return md.version;
     }
 
-    public boolean matches(Object mod)
+    public boolean matches(final Object mod)
     {
         return false;
     }
 
     @Override
-    public void setEnabledState(boolean enabled)
+    public void setEnabledState(final boolean enabled)
     {
     }
 
     @Override
-    public boolean registerBus(EventBus bus, LoadController controller)
+    public boolean registerBus(final EventBus bus, final LoadController controller)
     {
         return false;
     }

@@ -81,9 +81,9 @@ public class GuiCreateWorld extends GuiScreen
     /**
      * If the world name is one of these, it'll be surrounded with underscores.
      */
-    private static final String[] ILLEGAL_WORLD_NAMES = new String[] {"CON", "COM", "PRN", "AUX", "CLOCK$", "NUL", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"};
+    private static final String[] ILLEGAL_WORLD_NAMES = {"CON", "COM", "PRN", "AUX", "CLOCK$", "NUL", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"};
 
-    public GuiCreateWorld(GuiScreen par1GuiScreen)
+    public GuiCreateWorld(final GuiScreen par1GuiScreen)
     {
         this.parentGuiScreen = par1GuiScreen;
         this.seed = "";
@@ -137,12 +137,12 @@ public class GuiCreateWorld extends GuiScreen
     private void makeUseableName()
     {
         this.folderName = this.textboxWorldName.getText().trim();
-        char[] achar = ChatAllowedCharacters.allowedCharactersArray;
-        int i = achar.length;
+        final char[] achar = ChatAllowedCharacters.allowedCharactersArray;
+        final int i = achar.length;
 
         for (int j = 0; j < i; ++j)
         {
-            char c0 = achar[j];
+            final char c0 = achar[j];
             this.folderName = this.folderName.replace(c0, '_');
         }
 
@@ -194,28 +194,29 @@ public class GuiCreateWorld extends GuiScreen
         }
     }
 
-    public static String func_73913_a(ISaveFormat par0ISaveFormat, String par1Str)
+    public static String func_73913_a(final ISaveFormat par0ISaveFormat, String par1Str)
     {
-        par1Str = par1Str.replaceAll("[\\./\"]", "_");
-        String[] astring = ILLEGAL_WORLD_NAMES;
-        int i = astring.length;
+        String par1Str1 = par1Str;
+        par1Str1 = par1Str1.replaceAll("[\\./\"]", "_");
+        final String[] astring = ILLEGAL_WORLD_NAMES;
+        final int i = astring.length;
 
         for (int j = 0; j < i; ++j)
         {
-            String s1 = astring[j];
+            final String s1 = astring[j];
 
-            if (par1Str.equalsIgnoreCase(s1))
+            if (par1Str1.equalsIgnoreCase(s1))
             {
-                par1Str = "_" + par1Str + "_";
+                par1Str1 = "_" + par1Str1 + "_";
             }
         }
 
-        while (par0ISaveFormat.getWorldInfo(par1Str) != null)
+        while (par0ISaveFormat.getWorldInfo(par1Str1) != null)
         {
-            par1Str = par1Str + "-";
+            par1Str1 = par1Str1 + "-";
         }
 
-        return par1Str;
+        return par1Str1;
     }
 
     /**
@@ -229,7 +230,7 @@ public class GuiCreateWorld extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
@@ -248,20 +249,20 @@ public class GuiCreateWorld extends GuiScreen
 
                 this.createClicked = true;
                 long i = (new Random()).nextLong();
-                String s = this.textboxSeed.getText();
+                final String s = this.textboxSeed.getText();
 
                 if (!MathHelper.stringNullOrLengthZero(s))
                 {
                     try
                     {
-                        long j = Long.parseLong(s);
+                        final long j = Long.parseLong(s);
 
                         if (j != 0L)
                         {
                             i = j;
                         }
                     }
-                    catch (NumberFormatException numberformatexception)
+                    catch (final NumberFormatException numberformatexception)
                     {
                         i = (long)s.hashCode();
                     }
@@ -269,8 +270,8 @@ public class GuiCreateWorld extends GuiScreen
 
                 WorldType.worldTypes[this.worldTypeId].onGUICreateWorldPress();
 
-                EnumGameType enumgametype = EnumGameType.getByName(this.gameMode);
-                WorldSettings worldsettings = new WorldSettings(i, enumgametype, this.generateStructures, this.isHardcore, WorldType.worldTypes[this.worldTypeId]);
+                final EnumGameType enumgametype = EnumGameType.getByName(this.gameMode);
+                final WorldSettings worldsettings = new WorldSettings(i, enumgametype, this.generateStructures, this.isHardcore, WorldType.worldTypes[this.worldTypeId]);
                 worldsettings.func_82750_a(this.generatorOptionsToUse);
 
                 if (this.bonusItems && !this.isHardcore)
@@ -387,7 +388,7 @@ public class GuiCreateWorld extends GuiScreen
         this.func_82288_a(!this.moreOptions);
     }
 
-    private void func_82288_a(boolean par1)
+    private void func_82288_a(final boolean par1)
     {
         this.moreOptions = par1;
         this.buttonGameMode.drawButton = !this.moreOptions;
@@ -410,7 +411,7 @@ public class GuiCreateWorld extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         if (this.textboxWorldName.isFocused() && !this.moreOptions)
         {
@@ -428,14 +429,14 @@ public class GuiCreateWorld extends GuiScreen
             this.actionPerformed((GuiButton)this.buttonList.get(0));
         }
 
-        ((GuiButton)this.buttonList.get(0)).enabled = this.textboxWorldName.getText().length() > 0;
+        ((GuiButton)this.buttonList.get(0)).enabled = !this.textboxWorldName.getText().isEmpty();
         this.makeUseableName();
     }
 
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int par1, int par2, int par3)
+    protected void mouseClicked(final int par1, final int par2, final int par3)
     {
         super.mouseClicked(par1, par2, par3);
 
@@ -452,7 +453,7 @@ public class GuiCreateWorld extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRenderer, I18n.getString("selectWorld.create"), this.width / 2, 20, 16777215);
@@ -477,7 +478,7 @@ public class GuiCreateWorld extends GuiScreen
         super.drawScreen(par1, par2, par3);
     }
 
-    public void func_82286_a(WorldInfo par1WorldInfo)
+    public void func_82286_a(final WorldInfo par1WorldInfo)
     {
         this.localizedNewWorldText = I18n.getStringParams("selectWorld.newWorld.copyOf", new Object[] {par1WorldInfo.getWorldName()});
         this.seed = par1WorldInfo.getSeed() + "";

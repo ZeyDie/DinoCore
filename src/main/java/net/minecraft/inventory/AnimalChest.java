@@ -14,7 +14,7 @@ import java.util.List;
 
 public class AnimalChest extends InventoryBasic
 {
-    public AnimalChest(String par1Str, int par2)
+    public AnimalChest(final String par1Str, final int par2)
     {
         super(par1Str, false, par2);
     }
@@ -24,7 +24,7 @@ public class AnimalChest extends InventoryBasic
     private EntityHorse horse;
     private int maxStack = MAX_STACK;
 
-    public AnimalChest(String s, int i, EntityHorse horse)
+    public AnimalChest(final String s, final int i, final EntityHorse horse)
     {
         this(s, i);
         this.horse = horse;
@@ -37,13 +37,13 @@ public class AnimalChest extends InventoryBasic
     }
 
     @Override
-    public void onOpen(CraftHumanEntity who)
+    public void onOpen(final CraftHumanEntity who)
     {
         transaction.add(who);
     }
 
     @Override
-    public void onClose(CraftHumanEntity who)
+    public void onClose(final CraftHumanEntity who)
     {
         transaction.remove(who);
     }
@@ -61,7 +61,7 @@ public class AnimalChest extends InventoryBasic
     }
 
     @Override
-    public void setMaxStackSize(int size)
+    public void setMaxStackSize(final int size)
     {
         maxStack = size;
     }
@@ -79,7 +79,7 @@ public class AnimalChest extends InventoryBasic
     // CraftBukkit end
 
     @SideOnly(Side.CLIENT)
-    public AnimalChest(String par1Str, boolean par2, int par3)
+    public AnimalChest(final String par1Str, final boolean par2, final int par3)
     {
         super(par1Str, par2, par3);
     }

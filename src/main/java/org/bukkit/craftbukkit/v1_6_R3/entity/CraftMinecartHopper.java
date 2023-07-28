@@ -10,7 +10,7 @@ import org.bukkit.inventory.Inventory;
 final class CraftMinecartHopper extends CraftMinecart implements HopperMinecart {
     private final CraftInventory inventory;
 
-    CraftMinecartHopper(CraftServer server, net.minecraft.entity.item.EntityMinecartHopper entity) {
+    CraftMinecartHopper(final CraftServer server, final net.minecraft.entity.item.EntityMinecartHopper entity) {
         super(server, entity);
         inventory = new CraftInventory(entity);
     }

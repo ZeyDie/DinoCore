@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class StructureStrongholdPieces
 {
-    private static final StructureStrongholdPieceWeight[] pieceWeightArray = new StructureStrongholdPieceWeight[] {new StructureStrongholdPieceWeight(ComponentStrongholdStraight.class, 40, 0), new StructureStrongholdPieceWeight(ComponentStrongholdPrison.class, 5, 5), new StructureStrongholdPieceWeight(ComponentStrongholdLeftTurn.class, 20, 0), new StructureStrongholdPieceWeight(ComponentStrongholdRightTurn.class, 20, 0), new StructureStrongholdPieceWeight(ComponentStrongholdRoomCrossing.class, 10, 6), new StructureStrongholdPieceWeight(ComponentStrongholdStairsStraight.class, 5, 5), new StructureStrongholdPieceWeight(ComponentStrongholdStairs.class, 5, 5), new StructureStrongholdPieceWeight(ComponentStrongholdCrossing.class, 5, 4), new StructureStrongholdPieceWeight(ComponentStrongholdChestCorridor.class, 5, 4), new StructureStrongholdPieceWeight2(ComponentStrongholdLibrary.class, 10, 2), new StructureStrongholdPieceWeight3(ComponentStrongholdPortalRoom.class, 20, 1)};
+    private static final StructureStrongholdPieceWeight[] pieceWeightArray = {new StructureStrongholdPieceWeight(ComponentStrongholdStraight.class, 40, 0), new StructureStrongholdPieceWeight(ComponentStrongholdPrison.class, 5, 5), new StructureStrongholdPieceWeight(ComponentStrongholdLeftTurn.class, 20, 0), new StructureStrongholdPieceWeight(ComponentStrongholdRightTurn.class, 20, 0), new StructureStrongholdPieceWeight(ComponentStrongholdRoomCrossing.class, 10, 6), new StructureStrongholdPieceWeight(ComponentStrongholdStairsStraight.class, 5, 5), new StructureStrongholdPieceWeight(ComponentStrongholdStairs.class, 5, 5), new StructureStrongholdPieceWeight(ComponentStrongholdCrossing.class, 5, 4), new StructureStrongholdPieceWeight(ComponentStrongholdChestCorridor.class, 5, 4), new StructureStrongholdPieceWeight2(ComponentStrongholdLibrary.class, 10, 2), new StructureStrongholdPieceWeight3(ComponentStrongholdPortalRoom.class, 20, 1)};
     private static List structurePieceList;
     private static Class strongComponentType;
     static int totalWeight;
@@ -36,12 +36,12 @@ public class StructureStrongholdPieces
     public static void prepareStructurePieces()
     {
         structurePieceList = new ArrayList();
-        StructureStrongholdPieceWeight[] astructurestrongholdpieceweight = pieceWeightArray;
-        int i = astructurestrongholdpieceweight.length;
+        final StructureStrongholdPieceWeight[] astructurestrongholdpieceweight = pieceWeightArray;
+        final int i = astructurestrongholdpieceweight.length;
 
         for (int j = 0; j < i; ++j)
         {
-            StructureStrongholdPieceWeight structurestrongholdpieceweight = astructurestrongholdpieceweight[j];
+            final StructureStrongholdPieceWeight structurestrongholdpieceweight = astructurestrongholdpieceweight[j];
             structurestrongholdpieceweight.instancesSpawned = 0;
             structurePieceList.add(structurestrongholdpieceweight);
         }
@@ -55,7 +55,7 @@ public class StructureStrongholdPieces
         totalWeight = 0;
         StructureStrongholdPieceWeight structurestrongholdpieceweight;
 
-        for (Iterator iterator = structurePieceList.iterator(); iterator.hasNext(); totalWeight += structurestrongholdpieceweight.pieceWeight)
+        for (final Iterator iterator = structurePieceList.iterator(); iterator.hasNext(); totalWeight += structurestrongholdpieceweight.pieceWeight)
         {
             structurestrongholdpieceweight = (StructureStrongholdPieceWeight)iterator.next();
 
@@ -71,7 +71,7 @@ public class StructureStrongholdPieces
     /**
      * translates the PieceWeight class to the Component class
      */
-    private static ComponentStronghold getStrongholdComponentFromWeightedPiece(Class par0Class, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
+    private static ComponentStronghold getStrongholdComponentFromWeightedPiece(final Class par0Class, final List par1List, final Random par2Random, final int par3, final int par4, final int par5, final int par6, final int par7)
     {
         Object object = null;
 
@@ -123,7 +123,7 @@ public class StructureStrongholdPieces
         return (ComponentStronghold)object;
     }
 
-    private static ComponentStronghold getNextComponent(ComponentStrongholdStairs2 par0ComponentStrongholdStairs2, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
+    private static ComponentStronghold getNextComponent(final ComponentStrongholdStairs2 par0ComponentStrongholdStairs2, final List par1List, final Random par2Random, final int par3, final int par4, final int par5, final int par6, final int par7)
     {
         if (!canAddStructurePieces())
         {
@@ -133,7 +133,7 @@ public class StructureStrongholdPieces
         {
             if (strongComponentType != null)
             {
-                ComponentStronghold componentstronghold = getStrongholdComponentFromWeightedPiece(strongComponentType, par1List, par2Random, par3, par4, par5, par6, par7);
+                final ComponentStronghold componentstronghold = getStrongholdComponentFromWeightedPiece(strongComponentType, par1List, par2Random, par3, par4, par5, par6, par7);
                 strongComponentType = null;
 
                 if (componentstronghold != null)
@@ -148,11 +148,11 @@ public class StructureStrongholdPieces
             {
                 ++j1;
                 int k1 = par2Random.nextInt(totalWeight);
-                Iterator iterator = structurePieceList.iterator();
+                final Iterator iterator = structurePieceList.iterator();
 
                 while (iterator.hasNext())
                 {
-                    StructureStrongholdPieceWeight structurestrongholdpieceweight = (StructureStrongholdPieceWeight)iterator.next();
+                    final StructureStrongholdPieceWeight structurestrongholdpieceweight = (StructureStrongholdPieceWeight)iterator.next();
                     k1 -= structurestrongholdpieceweight.pieceWeight;
 
                     if (k1 < 0)
@@ -162,7 +162,7 @@ public class StructureStrongholdPieces
                             break;
                         }
 
-                        ComponentStronghold componentstronghold1 = getStrongholdComponentFromWeightedPiece(structurestrongholdpieceweight.pieceClass, par1List, par2Random, par3, par4, par5, par6, par7);
+                        final ComponentStronghold componentstronghold1 = getStrongholdComponentFromWeightedPiece(structurestrongholdpieceweight.pieceClass, par1List, par2Random, par3, par4, par5, par6, par7);
 
                         if (componentstronghold1 != null)
                         {
@@ -180,7 +180,7 @@ public class StructureStrongholdPieces
                 }
             }
 
-            StructureBoundingBox structureboundingbox = ComponentStrongholdCorridor.func_74992_a(par1List, par2Random, par3, par4, par5, par6);
+            final StructureBoundingBox structureboundingbox = ComponentStrongholdCorridor.func_74992_a(par1List, par2Random, par3, par4, par5, par6);
 
             if (structureboundingbox != null && structureboundingbox.minY > 1)
             {
@@ -193,7 +193,7 @@ public class StructureStrongholdPieces
         }
     }
 
-    private static StructureComponent getNextValidComponent(ComponentStrongholdStairs2 par0ComponentStrongholdStairs2, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
+    private static StructureComponent getNextValidComponent(final ComponentStrongholdStairs2 par0ComponentStrongholdStairs2, final List par1List, final Random par2Random, final int par3, final int par4, final int par5, final int par6, final int par7)
     {
         if (par7 > 50)
         {
@@ -201,7 +201,7 @@ public class StructureStrongholdPieces
         }
         else if (Math.abs(par3 - par0ComponentStrongholdStairs2.getBoundingBox().minX) <= 112 && Math.abs(par5 - par0ComponentStrongholdStairs2.getBoundingBox().minZ) <= 112)
         {
-            ComponentStronghold componentstronghold = getNextComponent(par0ComponentStrongholdStairs2, par1List, par2Random, par3, par4, par5, par6, par7 + 1);
+            final ComponentStronghold componentstronghold = getNextComponent(par0ComponentStrongholdStairs2, par1List, par2Random, par3, par4, par5, par6, par7 + 1);
 
             if (componentstronghold != null)
             {
@@ -217,12 +217,12 @@ public class StructureStrongholdPieces
         }
     }
 
-    static StructureComponent getNextValidComponentAccess(ComponentStrongholdStairs2 par0ComponentStrongholdStairs2, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
+    static StructureComponent getNextValidComponentAccess(final ComponentStrongholdStairs2 par0ComponentStrongholdStairs2, final List par1List, final Random par2Random, final int par3, final int par4, final int par5, final int par6, final int par7)
     {
         return getNextValidComponent(par0ComponentStrongholdStairs2, par1List, par2Random, par3, par4, par5, par6, par7);
     }
 
-    static Class setComponentType(Class par0Class)
+    static Class setComponentType(final Class par0Class)
     {
         strongComponentType = par0Class;
         return par0Class;

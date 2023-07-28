@@ -28,7 +28,7 @@ public abstract class MapGenStructure extends MapGenBase
     /**
      * Recursively called by generate() (generate) and optionally by itself.
      */
-    protected final void recursiveGenerate(World par1World, int par2, int par3, int par4, int par5, byte[] par6ArrayOfByte)
+    protected final void recursiveGenerate(final World par1World, final int par2, final int par3, final int par4, final int par5, final byte[] par6ArrayOfByte)
     {
         this.func_143027_a(par1World);
 
@@ -40,15 +40,15 @@ public abstract class MapGenStructure extends MapGenBase
             {
                 if (this.canSpawnStructureAtCoords(par2, par3))
                 {
-                    StructureStart structurestart = this.getStructureStart(par2, par3);
+                    final StructureStart structurestart = this.getStructureStart(par2, par3);
                     this.structureMap.put(Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(par2, par3)), structurestart);
                     this.func_143026_a(par2, par3, structurestart);
                 }
             }
-            catch (Throwable throwable)
+            catch (final Throwable throwable)
             {
-                CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Exception preparing structure feature");
-                CrashReportCategory crashreportcategory = crashreport.makeCategory("Feature being prepared");
+                final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Exception preparing structure feature");
+                final CrashReportCategory crashreportcategory = crashreport.makeCategory("Feature being prepared");
                 crashreportcategory.addCrashSectionCallable("Is feature chunk", new CallableIsFeatureChunk(this, par2, par3));
                 crashreportcategory.addCrashSection("Chunk location", String.format("%d,%d", new Object[] {Integer.valueOf(par2), Integer.valueOf(par3)}));
                 crashreportcategory.addCrashSectionCallable("Chunk pos hash", new CallableChunkPosHash(this, par2, par3));
@@ -61,17 +61,17 @@ public abstract class MapGenStructure extends MapGenBase
     /**
      * Generates structures in specified chunk next to existing structures. Does *not* generate StructureStarts.
      */
-    public boolean generateStructuresInChunk(World par1World, Random par2Random, int par3, int par4)
+    public boolean generateStructuresInChunk(final World par1World, final Random par2Random, final int par3, final int par4)
     {
         this.func_143027_a(par1World);
-        int k = (par3 << 4) + 8;
-        int l = (par4 << 4) + 8;
+        final int k = (par3 << 4) + 8;
+        final int l = (par4 << 4) + 8;
         boolean flag = false;
-        Iterator iterator = this.structureMap.values().iterator();
+        final Iterator iterator = this.structureMap.values().iterator();
 
         while (iterator.hasNext())
         {
-            StructureStart structurestart = (StructureStart)iterator.next();
+            final StructureStart structurestart = (StructureStart)iterator.next();
 
             if (structurestart.isSizeableStructure() && structurestart.getBoundingBox().intersectsWith(k, l, k + 15, l + 15))
             {
@@ -87,27 +87,27 @@ public abstract class MapGenStructure extends MapGenBase
     /**
      * Returns true if the structure generator has generated a structure located at the given position tuple.
      */
-    public boolean hasStructureAt(int par1, int par2, int par3)
+    public boolean hasStructureAt(final int par1, final int par2, final int par3)
     {
         this.func_143027_a(this.worldObj);
         return this.func_143028_c(par1, par2, par3) != null;
     }
 
-    protected StructureStart func_143028_c(int par1, int par2, int par3)
+    protected StructureStart func_143028_c(final int par1, final int par2, final int par3)
     {
-        Iterator iterator = this.structureMap.values().iterator();
+        final Iterator iterator = this.structureMap.values().iterator();
 
         while (iterator.hasNext())
         {
-            StructureStart structurestart = (StructureStart)iterator.next();
+            final StructureStart structurestart = (StructureStart)iterator.next();
 
             if (structurestart.isSizeableStructure() && structurestart.getBoundingBox().intersectsWith(par1, par3, par1, par3))
             {
-                Iterator iterator1 = structurestart.getComponents().iterator();
+                final Iterator iterator1 = structurestart.getComponents().iterator();
 
                 while (iterator1.hasNext())
                 {
-                    StructureComponent structurecomponent = (StructureComponent)iterator1.next();
+                    final StructureComponent structurecomponent = (StructureComponent)iterator1.next();
 
                     if (structurecomponent.getBoundingBox().isVecInside(par1, par2, par3))
                     {
@@ -120,10 +120,10 @@ public abstract class MapGenStructure extends MapGenBase
         return null;
     }
 
-    public boolean func_142038_b(int par1, int par2, int par3)
+    public boolean func_142038_b(final int par1, final int par2, final int par3)
     {
         this.func_143027_a(this.worldObj);
-        Iterator iterator = this.structureMap.values().iterator();
+        final Iterator iterator = this.structureMap.values().iterator();
         StructureStart structurestart;
 
         do
@@ -140,20 +140,20 @@ public abstract class MapGenStructure extends MapGenBase
         return structurestart.getBoundingBox().intersectsWith(par1, par3, par1, par3);
     }
 
-    public ChunkPosition getNearestInstance(World par1World, int par2, int par3, int par4)
+    public ChunkPosition getNearestInstance(final World par1World, final int par2, final int par3, final int par4)
     {
         this.worldObj = par1World;
         this.func_143027_a(par1World);
         this.rand.setSeed(par1World.getSeed());
-        long l = this.rand.nextLong();
-        long i1 = this.rand.nextLong();
-        long j1 = (long)(par2 >> 4) * l;
-        long k1 = (long)(par4 >> 4) * i1;
+        final long l = this.rand.nextLong();
+        final long i1 = this.rand.nextLong();
+        final long j1 = (long)(par2 >> 4) * l;
+        final long k1 = (long)(par4 >> 4) * i1;
         this.rand.setSeed(j1 ^ k1 ^ par1World.getSeed());
         this.recursiveGenerate(par1World, par2 >> 4, par4 >> 4, 0, 0, (byte[])null);
         double d0 = Double.MAX_VALUE;
         ChunkPosition chunkposition = null;
-        Iterator iterator = this.structureMap.values().iterator();
+        final Iterator iterator = this.structureMap.values().iterator();
         ChunkPosition chunkposition1;
         int l1;
         int i2;
@@ -162,11 +162,11 @@ public abstract class MapGenStructure extends MapGenBase
 
         while (iterator.hasNext())
         {
-            StructureStart structurestart = (StructureStart)iterator.next();
+            final StructureStart structurestart = (StructureStart)iterator.next();
 
             if (structurestart.isSizeableStructure())
             {
-                StructureComponent structurecomponent = (StructureComponent)structurestart.getComponents().get(0);
+                final StructureComponent structurecomponent = (StructureComponent)structurestart.getComponents().get(0);
                 chunkposition1 = structurecomponent.getCenter();
                 i2 = chunkposition1.x - par2;
                 l1 = chunkposition1.y - par3;
@@ -187,12 +187,12 @@ public abstract class MapGenStructure extends MapGenBase
         }
         else
         {
-            List list = this.getCoordList();
+            final List list = this.getCoordList();
 
             if (list != null)
             {
                 ChunkPosition chunkposition2 = null;
-                Iterator iterator1 = list.iterator();
+                final Iterator iterator1 = list.iterator();
 
                 while (iterator1.hasNext())
                 {
@@ -227,7 +227,7 @@ public abstract class MapGenStructure extends MapGenBase
         return null;
     }
 
-    private void func_143027_a(World par1World)
+    private void func_143027_a(final World par1World)
     {
         if (this.field_143029_e == null)
         {
@@ -258,22 +258,22 @@ public abstract class MapGenStructure extends MapGenBase
             }
             else
             {
-                NBTTagCompound nbttagcompound = this.field_143029_e.func_143041_a();
-                Iterator iterator = nbttagcompound.getTags().iterator();
+                final NBTTagCompound nbttagcompound = this.field_143029_e.func_143041_a();
+                final Iterator iterator = nbttagcompound.getTags().iterator();
 
                 while (iterator.hasNext())
                 {
-                    NBTBase nbtbase = (NBTBase)iterator.next();
+                    final NBTBase nbtbase = (NBTBase)iterator.next();
 
                     if (nbtbase.getId() == 10)
                     {
-                        NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbtbase;
+                        final NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbtbase;
 
                         if (nbttagcompound1.hasKey("ChunkX") && nbttagcompound1.hasKey("ChunkZ"))
                         {
-                            int i = nbttagcompound1.getInteger("ChunkX");
-                            int j = nbttagcompound1.getInteger("ChunkZ");
-                            StructureStart structurestart = MapGenStructureIO.func_143035_a(nbttagcompound1, par1World);
+                            final int i = nbttagcompound1.getInteger("ChunkX");
+                            final int j = nbttagcompound1.getInteger("ChunkZ");
+                            final StructureStart structurestart = MapGenStructureIO.func_143035_a(nbttagcompound1, par1World);
                             this.structureMap.put(Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(i, j)), structurestart);
                         }
                     }
@@ -282,7 +282,7 @@ public abstract class MapGenStructure extends MapGenBase
         }
     }
 
-    private void func_143026_a(int par1, int par2, StructureStart par3StructureStart)
+    private void func_143026_a(final int par1, final int par2, final StructureStart par3StructureStart)
     {
         this.field_143029_e.func_143043_a(par3StructureStart.func_143021_a(par1, par2), par1, par2);
         this.field_143029_e.markDirty();

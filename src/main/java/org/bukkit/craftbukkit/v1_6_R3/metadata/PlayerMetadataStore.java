@@ -17,7 +17,7 @@ public class PlayerMetadataStore extends MetadataStoreBase<OfflinePlayer> implem
      * @return a unique metadata key
      */
     @Override
-    protected String disambiguate(OfflinePlayer player, String metadataKey) {
+    protected String disambiguate(final OfflinePlayer player, final String metadataKey) {
         return player.getName().toLowerCase() + ":" + metadataKey;
     }
 }

@@ -26,7 +26,7 @@ public class SoundUpdaterMinecart implements IUpdatePlayerListBox
     private float minecartRideSoundVolume;
     private double minecartSpeed;
 
-    public SoundUpdaterMinecart(SoundManager par1SoundManager, EntityMinecart par2EntityMinecart, EntityPlayerSP par3EntityPlayerSP)
+    public SoundUpdaterMinecart(final SoundManager par1SoundManager, final EntityMinecart par2EntityMinecart, final EntityPlayerSP par3EntityPlayerSP)
     {
         this.theSoundManager = par1SoundManager;
         this.theMinecart = par2EntityMinecart;
@@ -39,13 +39,13 @@ public class SoundUpdaterMinecart implements IUpdatePlayerListBox
     public void update()
     {
         boolean flag = false;
-        boolean flag1 = this.playerSPRidingMinecart;
-        boolean flag2 = this.minecartIsDead;
-        boolean flag3 = this.minecartIsMoving;
-        float f = this.minecartMoveSoundVolume;
-        float f1 = this.minecartSoundPitch;
-        float f2 = this.minecartRideSoundVolume;
-        double d0 = this.minecartSpeed;
+        final boolean flag1 = this.playerSPRidingMinecart;
+        final boolean flag2 = this.minecartIsDead;
+        final boolean flag3 = this.minecartIsMoving;
+        final float f = this.minecartMoveSoundVolume;
+        final float f1 = this.minecartSoundPitch;
+        final float f2 = this.minecartRideSoundVolume;
+        final double d0 = this.minecartSpeed;
         this.playerSPRidingMinecart = this.thePlayer != null && this.theMinecart.riddenByEntity == this.thePlayer;
         this.minecartIsDead = this.theMinecart.isDead;
         this.minecartSpeed = (double)MathHelper.sqrt_double(this.theMinecart.motionX * this.theMinecart.motionX + this.theMinecart.motionZ * this.theMinecart.motionZ);

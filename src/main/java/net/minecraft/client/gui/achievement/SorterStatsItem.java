@@ -15,16 +15,16 @@ class SorterStatsItem implements Comparator
 
     final GuiSlotStatsItem slotStatsItemGUI;
 
-    SorterStatsItem(GuiSlotStatsItem par1GuiSlotStatsItem, GuiStats par2GuiStats)
+    SorterStatsItem(final GuiSlotStatsItem par1GuiSlotStatsItem, final GuiStats par2GuiStats)
     {
         this.slotStatsItemGUI = par1GuiSlotStatsItem;
         this.statsGUI = par2GuiStats;
     }
 
-    public int func_78337_a(StatCrafting par1StatCrafting, StatCrafting par2StatCrafting)
+    public int func_78337_a(final StatCrafting par1StatCrafting, final StatCrafting par2StatCrafting)
     {
-        int i = par1StatCrafting.getItemID();
-        int j = par2StatCrafting.getItemID();
+        final int i = par1StatCrafting.getItemID();
+        final int j = par2StatCrafting.getItemID();
         StatBase statbase = null;
         StatBase statbase1 = null;
 
@@ -56,8 +56,8 @@ class SorterStatsItem implements Comparator
                 return -1;
             }
 
-            int k = GuiStats.getStatsFileWriter(this.slotStatsItemGUI.slotGuiStats).writeStat(statbase);
-            int l = GuiStats.getStatsFileWriter(this.slotStatsItemGUI.slotGuiStats).writeStat(statbase1);
+            final int k = GuiStats.getStatsFileWriter(this.slotStatsItemGUI.slotGuiStats).writeStat(statbase);
+            final int l = GuiStats.getStatsFileWriter(this.slotStatsItemGUI.slotGuiStats).writeStat(statbase1);
 
             if (k != l)
             {
@@ -68,7 +68,7 @@ class SorterStatsItem implements Comparator
         return i - j;
     }
 
-    public int compare(Object par1Obj, Object par2Obj)
+    public int compare(final Object par1Obj, final Object par2Obj)
     {
         return this.func_78337_a((StatCrafting)par1Obj, (StatCrafting)par2Obj);
     }

@@ -17,7 +17,7 @@ public class Packet27PlayerInput extends Packet
     public Packet27PlayerInput() {}
 
     @SideOnly(Side.CLIENT)
-    public Packet27PlayerInput(float par1, float par2, boolean par3, boolean par4)
+    public Packet27PlayerInput(final float par1, final float par2, final boolean par3, final boolean par4)
     {
         this.field_111017_a = par1;
         this.field_111015_b = par2;
@@ -28,7 +28,7 @@ public class Packet27PlayerInput extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.field_111017_a = par1DataInput.readFloat();
         this.field_111015_b = par1DataInput.readFloat();
@@ -39,7 +39,7 @@ public class Packet27PlayerInput extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeFloat(this.field_111017_a);
         par1DataOutput.writeFloat(this.field_111015_b);
@@ -50,7 +50,7 @@ public class Packet27PlayerInput extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.func_110774_a(this);
     }

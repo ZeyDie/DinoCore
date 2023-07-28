@@ -43,12 +43,12 @@ public class ModListRequestPacket extends FMLPacket
     }
 
     @Override
-    public byte[] generatePacket(Object... data)
+    public byte[] generatePacket(final Object... data)
     {
-        ByteArrayDataOutput dat = ByteStreams.newDataOutput();
-        Set<ModContainer> activeMods = FMLNetworkHandler.instance().getNetworkModList();
+        final ByteArrayDataOutput dat = ByteStreams.newDataOutput();
+        final Set<ModContainer> activeMods = FMLNetworkHandler.instance().getNetworkModList();
         dat.writeInt(activeMods.size());
-        for (ModContainer mc : activeMods)
+        for (final ModContainer mc : activeMods)
         {
             dat.writeUTF(mc.getModId());
         }
@@ -57,11 +57,11 @@ public class ModListRequestPacket extends FMLPacket
     }
 
     @Override
-    public FMLPacket consumePacket(byte[] data)
+    public FMLPacket consumePacket(final byte[] data)
     {
         sentModList = Lists.newArrayList();
-        ByteArrayDataInput in = ByteStreams.newDataInput(data);
-        int listSize = in.readInt();
+        final ByteArrayDataInput in = ByteStreams.newDataInput(data);
+        final int listSize = in.readInt();
         for (int i = 0; i < listSize; i++)
         {
             sentModList.add(in.readUTF());
@@ -70,7 +70,7 @@ public class ModListRequestPacket extends FMLPacket
         {
             compatibilityLevel = in.readByte();
         }
-        catch (IllegalStateException e)
+        catch (final IllegalStateException e)
         {
             FMLLog.fine("No compatibility byte found - the server is too old");
         }
@@ -85,15 +85,15 @@ public class ModListRequestPacket extends FMLPacket
      * @see cpw.mods.fml.common.network.FMLPacket#execute(INetworkManager, FMLNetworkHandler, NetHandler, String)
      */
     @Override
-    public void execute(INetworkManager mgr, FMLNetworkHandler handler, NetHandler netHandler, String userName)
+    public void execute(final INetworkManager mgr, final FMLNetworkHandler handler, final NetHandler netHandler, final String userName)
     {
-        List<String> missingMods = Lists.newArrayList();
-        Map<String,String> modVersions = Maps.newHashMap();
-        Map<String, ModContainer> indexedModList = Maps.newHashMap(Loader.instance().getIndexedModList());
+        final List<String> missingMods = Lists.newArrayList();
+        final Map<String,String> modVersions = Maps.newHashMap();
+        final Map<String, ModContainer> indexedModList = Maps.newHashMap(Loader.instance().getIndexedModList());
 
-        for (String m : sentModList)
+        for (final String m : sentModList)
         {
-            ModContainer mc = indexedModList.get(m);
+            final ModContainer mc = indexedModList.get(m);
             if (mc == null)
             {
                 missingMods.add(m);
@@ -103,13 +103,13 @@ public class ModListRequestPacket extends FMLPacket
             modVersions.put(m, mc.getVersion());
         }
 
-        if (indexedModList.size()>0)
+        if (!indexedModList.isEmpty())
         {
-            for (Entry<String, ModContainer> e : indexedModList.entrySet())
+            for (final Entry<String, ModContainer> e : indexedModList.entrySet())
             {
                 if (e.getValue().isNetworkMod())
                 {
-                    NetworkModHandler missingHandler = FMLNetworkHandler.instance().findNetworkModHandler(e.getValue());
+                    final NetworkModHandler missingHandler = FMLNetworkHandler.instance().findNetworkModHandler(e.getValue());
                     if (missingHandler.requiresServerSide())
                     {
                         // TODO : what should we do if a mod is marked "serverSideRequired"? Stop the connection?

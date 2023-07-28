@@ -10,7 +10,7 @@ public class LanguageMetadataSection implements MetadataSection
 {
     private final Collection languages;
 
-    public LanguageMetadataSection(Collection par1Collection)
+    public LanguageMetadataSection(final Collection par1Collection)
     {
         this.languages = par1Collection;
     }

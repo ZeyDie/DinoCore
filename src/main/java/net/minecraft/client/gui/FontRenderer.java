@@ -99,7 +99,7 @@ public class FontRenderer implements ResourceManagerReloadListener
      */
     private boolean strikethroughStyle;
 
-    public FontRenderer(GameSettings par1GameSettings, ResourceLocation par2ResourceLocation, TextureManager par3TextureManager, boolean par4)
+    public FontRenderer(final GameSettings par1GameSettings, final ResourceLocation par2ResourceLocation, final TextureManager par3TextureManager, final boolean par4)
     {
         this.locationFontTexture = par2ResourceLocation;
         this.renderEngine = par3TextureManager;
@@ -108,7 +108,7 @@ public class FontRenderer implements ResourceManagerReloadListener
 
         for (int i = 0; i < 32; ++i)
         {
-            int j = (i >> 3 & 1) * 85;
+            final int j = (i >> 3 & 1) * 85;
             int k = (i >> 2 & 1) * 170 + j;
             int l = (i >> 1 & 1) * 170 + j;
             int i1 = (i >> 0 & 1) * 170 + j;
@@ -120,9 +120,9 @@ public class FontRenderer implements ResourceManagerReloadListener
 
             if (par1GameSettings.anaglyph)
             {
-                int j1 = (k * 30 + l * 59 + i1 * 11) / 100;
-                int k1 = (k * 30 + l * 70) / 100;
-                int l1 = (k * 30 + i1 * 70) / 100;
+                final int j1 = (k * 30 + l * 59 + i1 * 11) / 100;
+                final int k1 = (k * 30 + l * 70) / 100;
+                final int l1 = (k * 30 + i1 * 70) / 100;
                 k = j1;
                 l = k1;
                 i1 = l1;
@@ -141,38 +141,38 @@ public class FontRenderer implements ResourceManagerReloadListener
         this.readGlyphSizes();
     }
 
-    public void onResourceManagerReload(ResourceManager par1ResourceManager)
+    public void onResourceManagerReload(final ResourceManager par1ResourceManager)
     {
         this.readFontTexture();
     }
 
     private void readFontTexture()
     {
-        BufferedImage bufferedimage;
+        final BufferedImage bufferedimage;
 
         try
         {
             bufferedimage = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(this.locationFontTexture).getInputStream());
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             throw new RuntimeException(ioexception);
         }
 
-        int i = bufferedimage.getWidth();
-        int j = bufferedimage.getHeight();
-        int[] aint = new int[i * j];
+        final int i = bufferedimage.getWidth();
+        final int j = bufferedimage.getHeight();
+        final int[] aint = new int[i * j];
         bufferedimage.getRGB(0, 0, i, j, aint, 0, i);
-        int k = j / 16;
-        int l = i / 16;
-        byte b0 = 1;
-        float f = 8.0F / (float)l;
+        final int k = j / 16;
+        final int l = i / 16;
+        final byte b0 = 1;
+        final float f = 8.0F / (float)l;
         int i1 = 0;
 
         while (i1 < 256)
         {
-            int j1 = i1 % 16;
-            int k1 = i1 / 16;
+            final int j1 = i1 % 16;
+            final int k1 = i1 / 16;
 
             if (i1 == 32)
             {
@@ -185,12 +185,12 @@ public class FontRenderer implements ResourceManagerReloadListener
             {
                 if (l1 >= 0)
                 {
-                    int i2 = j1 * l + l1;
+                    final int i2 = j1 * l + l1;
                     boolean flag = true;
 
                     for (int j2 = 0; j2 < k && flag; ++j2)
                     {
-                        int k2 = (k1 * l + j2) * i;
+                        final int k2 = (k1 * l + j2) * i;
 
                         if ((aint[i2 + k2] >> 24 & 255) != 0)
                         {
@@ -217,10 +217,10 @@ public class FontRenderer implements ResourceManagerReloadListener
     {
         try
         {
-            InputStream inputstream = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("font/glyph_sizes.bin")).getInputStream();
+            final InputStream inputstream = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("font/glyph_sizes.bin")).getInputStream();
             inputstream.read(this.glyphWidth);
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             throw new RuntimeException(ioexception);
         }
@@ -229,7 +229,7 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Pick how to render a single character and return the width used.
      */
-    private float renderCharAtPos(int par1, char par2, boolean par3)
+    private float renderCharAtPos(final int par1, final char par2, final boolean par3)
     {
         return par2 == 32 ? 4.0F : (par1 > 0 && !this.unicodeFlag ? this.renderDefaultChar(par1 + 32, par3) : this.renderUnicodeChar(par2, par3));
     }
@@ -237,13 +237,13 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Render a single character with the default.png font at current (posX,posY) location...
      */
-    private float renderDefaultChar(int par1, boolean par2)
+    private float renderDefaultChar(final int par1, final boolean par2)
     {
-        float f = (float)(par1 % 16 * 8);
-        float f1 = (float)(par1 / 16 * 8);
-        float f2 = par2 ? 1.0F : 0.0F;
+        final float f = (float)(par1 % 16 * 8);
+        final float f1 = (float)(par1 / 16 * 8);
+        final float f2 = par2 ? 1.0F : 0.0F;
         this.renderEngine.bindTexture(this.locationFontTexture);
-        float f3 = (float)this.charWidth[par1] - 0.01F;
+        final float f3 = (float)this.charWidth[par1] - 0.01F;
         GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
         GL11.glTexCoord2f(f / 128.0F, f1 / 128.0F);
         GL11.glVertex3f(this.posX + f2, this.posY, 0.0F);
@@ -257,7 +257,7 @@ public class FontRenderer implements ResourceManagerReloadListener
         return (float)this.charWidth[par1];
     }
 
-    private ResourceLocation getUnicodePageLocation(int par1)
+    private ResourceLocation getUnicodePageLocation(final int par1)
     {
         if (unicodePageLocations[par1] == null)
         {
@@ -270,7 +270,7 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Load one of the /font/glyph_XX.png into a new GL texture and store the texture ID in glyphTextureName array.
      */
-    private void loadGlyphTexture(int par1)
+    private void loadGlyphTexture(final int par1)
     {
         this.renderEngine.bindTexture(this.getUnicodePageLocation(par1));
     }
@@ -278,7 +278,7 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Render a single Unicode character at current (posX,posY) location using one of the /font/glyph_XX.png files...
      */
-    private float renderUnicodeChar(char par1, boolean par2)
+    private float renderUnicodeChar(final char par1, final boolean par2)
     {
         if (this.glyphWidth[par1] == 0)
         {
@@ -286,16 +286,16 @@ public class FontRenderer implements ResourceManagerReloadListener
         }
         else
         {
-            int i = par1 / 256;
+            final int i = par1 / 256;
             this.loadGlyphTexture(i);
-            int j = this.glyphWidth[par1] >>> 4;
-            int k = this.glyphWidth[par1] & 15;
-            float f = (float)j;
-            float f1 = (float)(k + 1);
-            float f2 = (float)(par1 % 16 * 16) + f;
-            float f3 = (float)((par1 & 255) / 16 * 16);
-            float f4 = f1 - f - 0.02F;
-            float f5 = par2 ? 1.0F : 0.0F;
+            final int j = this.glyphWidth[par1] >>> 4;
+            final int k = this.glyphWidth[par1] & 15;
+            final float f = (float)j;
+            final float f1 = (float)(k + 1);
+            final float f2 = (float)(par1 % 16 * 16) + f;
+            final float f3 = (float)((par1 & 255) / 16 * 16);
+            final float f4 = f1 - f - 0.02F;
+            final float f5 = par2 ? 1.0F : 0.0F;
             GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
             GL11.glTexCoord2f(f2 / 256.0F, f3 / 256.0F);
             GL11.glVertex3f(this.posX + f5, this.posY, 0.0F);
@@ -313,7 +313,7 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Draws the specified string with a shadow.
      */
-    public int drawStringWithShadow(String par1Str, int par2, int par3, int par4)
+    public int drawStringWithShadow(final String par1Str, final int par2, final int par3, final int par4)
     {
         return this.drawString(par1Str, par2, par3, par4, true);
     }
@@ -321,7 +321,7 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Draws the specified string.
      */
-    public int drawString(String par1Str, int par2, int par3, int par4)
+    public int drawString(final String par1Str, final int par2, final int par3, final int par4)
     {
         return this.drawString(par1Str, par2, par3, par4, false);
     }
@@ -329,25 +329,26 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Draws the specified string. Args: string, x, y, color, dropShadow
      */
-    public int drawString(String par1Str, int par2, int par3, int par4, boolean par5)
+    public int drawString(String par1Str, final int par2, final int par3, final int par4, final boolean par5)
     {
+        String par1Str1 = par1Str;
         this.resetStyles();
 
         if (this.bidiFlag)
         {
-            par1Str = this.bidiReorder(par1Str);
+            par1Str1 = this.bidiReorder(par1Str1);
         }
 
         int l;
 
         if (par5)
         {
-            l = this.renderString(par1Str, par2 + 1, par3 + 1, par4, true);
-            l = Math.max(l, this.renderString(par1Str, par2, par3, par4, false));
+            l = this.renderString(par1Str1, par2 + 1, par3 + 1, par4, true);
+            l = Math.max(l, this.renderString(par1Str1, par2, par3, par4, false));
         }
         else
         {
-            l = this.renderString(par1Str, par2, par3, par4, false);
+            l = this.renderString(par1Str1, par2, par3, par4, false);
         }
 
         return l;
@@ -356,28 +357,28 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Apply Unicode Bidirectional Algorithm to string and return a new possibly reordered string for visual rendering.
      */
-    private String bidiReorder(String par1Str)
+    private String bidiReorder(final String par1Str)
     {
         if (par1Str != null && Bidi.requiresBidi(par1Str.toCharArray(), 0, par1Str.length()))
         {
-            Bidi bidi = new Bidi(par1Str, -2);
-            byte[] abyte = new byte[bidi.getRunCount()];
-            String[] astring = new String[abyte.length];
+            final Bidi bidi = new Bidi(par1Str, -2);
+            final byte[] abyte = new byte[bidi.getRunCount()];
+            final String[] astring = new String[abyte.length];
             int i;
 
             for (int j = 0; j < abyte.length; ++j)
             {
-                int k = bidi.getRunStart(j);
+                final int k = bidi.getRunStart(j);
                 i = bidi.getRunLimit(j);
-                int l = bidi.getRunLevel(j);
-                String s1 = par1Str.substring(k, i);
+                final int l = bidi.getRunLevel(j);
+                final String s1 = par1Str.substring(k, i);
                 abyte[j] = (byte)l;
                 astring[j] = s1;
             }
 
-            String[] astring1 = (String[])astring.clone();
+            final String[] astring1 = (String[])astring.clone();
             Bidi.reorderVisually(abyte, 0, astring, 0, abyte.length);
-            StringBuilder stringbuilder = new StringBuilder();
+            final StringBuilder stringbuilder = new StringBuilder();
             i = 0;
 
             while (i < astring.length)
@@ -449,11 +450,11 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Render a single line string at the current (posX,posY) and update posX
      */
-    private void renderStringAtPos(String par1Str, boolean par2)
+    private void renderStringAtPos(final String par1Str, final boolean par2)
     {
         for (int i = 0; i < par1Str.length(); ++i)
         {
-            char c0 = par1Str.charAt(i);
+            final char c0 = par1Str.charAt(i);
             int j;
             int k;
 
@@ -530,8 +531,8 @@ public class FontRenderer implements ResourceManagerReloadListener
                     j = k;
                 }
 
-                float f = this.unicodeFlag ? 0.5F : 1.0F;
-                boolean flag1 = (j <= 0 || this.unicodeFlag) && par2;
+                final float f = this.unicodeFlag ? 0.5F : 1.0F;
+                final boolean flag1 = (j <= 0 || this.unicodeFlag) && par2;
 
                 if (flag1)
                 {
@@ -589,7 +590,7 @@ public class FontRenderer implements ResourceManagerReloadListener
                     tessellator = Tessellator.instance;
                     GL11.glDisable(GL11.GL_TEXTURE_2D);
                     tessellator.startDrawingQuads();
-                    int l = this.underlineStyle ? -1 : 0;
+                    final int l = this.underlineStyle ? -1 : 0;
                     tessellator.addVertex((double)(this.posX + (float)l), (double)(this.posY + (float)this.FONT_HEIGHT), 0.0D);
                     tessellator.addVertex((double)(this.posX + f1), (double)(this.posY + (float)this.FONT_HEIGHT), 0.0D);
                     tessellator.addVertex((double)(this.posX + f1), (double)(this.posY + (float)this.FONT_HEIGHT - 1.0F), 0.0D);
@@ -606,43 +607,46 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Render string either left or right aligned depending on bidiFlag
      */
-    private int renderStringAligned(String par1Str, int par2, int par3, int par4, int par5, boolean par6)
+    private int renderStringAligned(String par1Str, int par2, final int par3, final int par4, final int par5, final boolean par6)
     {
+        String par1Str1 = par1Str;
+        int par21 = par2;
         if (this.bidiFlag)
         {
-            par1Str = this.bidiReorder(par1Str);
-            int i1 = this.getStringWidth(par1Str);
-            par2 = par2 + par4 - i1;
+            par1Str1 = this.bidiReorder(par1Str1);
+            final int i1 = this.getStringWidth(par1Str1);
+            par21 = par21 + par4 - i1;
         }
 
-        return this.renderString(par1Str, par2, par3, par5, par6);
+        return this.renderString(par1Str1, par21, par3, par5, par6);
     }
 
     /**
      * Render single line string by setting GL color, current (posX,posY), and calling renderStringAtPos()
      */
-    private int renderString(String par1Str, int par2, int par3, int par4, boolean par5)
+    private int renderString(final String par1Str, final int par2, final int par3, int par4, final boolean par5)
     {
+        int par41 = par4;
         if (par1Str == null)
         {
             return 0;
         }
         else
         {
-            if ((par4 & -67108864) == 0)
+            if ((par41 & -67108864) == 0)
             {
-                par4 |= -16777216;
+                par41 |= -16777216;
             }
 
             if (par5)
             {
-                par4 = (par4 & 16579836) >> 2 | par4 & -16777216;
+                par41 = (par41 & 16579836) >> 2 | par41 & -16777216;
             }
 
-            this.red = (float)(par4 >> 16 & 255) / 255.0F;
-            this.blue = (float)(par4 >> 8 & 255) / 255.0F;
-            this.green = (float)(par4 & 255) / 255.0F;
-            this.alpha = (float)(par4 >> 24 & 255) / 255.0F;
+            this.red = (float)(par41 >> 16 & 255) / 255.0F;
+            this.blue = (float)(par41 >> 8 & 255) / 255.0F;
+            this.green = (float)(par41 & 255) / 255.0F;
+            this.alpha = (float)(par41 >> 24 & 255) / 255.0F;
             GL11.glColor4f(this.red, this.blue, this.green, this.alpha);
             this.posX = (float)par2;
             this.posY = (float)par3;
@@ -654,7 +658,7 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Returns the width of this string. Equivalent of FontMetrics.stringWidth(String s).
      */
-    public int getStringWidth(String par1Str)
+    public int getStringWidth(final String par1Str)
     {
         if (par1Str == null)
         {
@@ -705,7 +709,7 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Returns the width of this character as rendered.
      */
-    public int getCharWidth(char par1)
+    public int getCharWidth(final char par1)
     {
         if (par1 == 167)
         {
@@ -717,7 +721,7 @@ public class FontRenderer implements ResourceManagerReloadListener
         }
         else
         {
-            int i = ChatAllowedCharacters.allowedCharacters.indexOf(par1);
+            final int i = ChatAllowedCharacters.allowedCharacters.indexOf(par1);
 
             if (i >= 0 && !this.unicodeFlag)
             {
@@ -747,7 +751,7 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Trims a string to fit a specified Width.
      */
-    public String trimStringToWidth(String par1Str, int par2)
+    public String trimStringToWidth(final String par1Str, final int par2)
     {
         return this.trimStringToWidth(par1Str, par2, false);
     }
@@ -755,19 +759,19 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Trims a string to a specified width, and will reverse it if par3 is set.
      */
-    public String trimStringToWidth(String par1Str, int par2, boolean par3)
+    public String trimStringToWidth(final String par1Str, final int par2, final boolean par3)
     {
-        StringBuilder stringbuilder = new StringBuilder();
+        final StringBuilder stringbuilder = new StringBuilder();
         int j = 0;
-        int k = par3 ? par1Str.length() - 1 : 0;
-        int l = par3 ? -1 : 1;
+        final int k = par3 ? par1Str.length() - 1 : 0;
+        final int l = par3 ? -1 : 1;
         boolean flag1 = false;
         boolean flag2 = false;
 
         for (int i1 = k; i1 >= 0 && i1 < par1Str.length() && j < par2; i1 += l)
         {
-            char c0 = par1Str.charAt(i1);
-            int j1 = this.getCharWidth(c0);
+            final char c0 = par1Str.charAt(i1);
+            final int j1 = this.getCharWidth(c0);
 
             if (flag1)
             {
@@ -822,44 +826,46 @@ public class FontRenderer implements ResourceManagerReloadListener
      */
     private String trimStringNewline(String par1Str)
     {
-        while (par1Str != null && par1Str.endsWith("\n"))
+        String par1Str1 = par1Str;
+        while (par1Str1 != null && par1Str1.endsWith("\n"))
         {
-            par1Str = par1Str.substring(0, par1Str.length() - 1);
+            par1Str1 = par1Str1.substring(0, par1Str1.length() - 1);
         }
 
-        return par1Str;
+        return par1Str1;
     }
 
     /**
      * Splits and draws a String with wordwrap (maximum length is parameter k)
      */
-    public void drawSplitString(String par1Str, int par2, int par3, int par4, int par5)
+    public void drawSplitString(String par1Str, final int par2, final int par3, final int par4, final int par5)
     {
         this.resetStyles();
         this.textColor = par5;
-        par1Str = this.trimStringNewline(par1Str);
-        this.renderSplitString(par1Str, par2, par3, par4, false);
+        String par1Str1 = this.trimStringNewline(par1Str);
+        this.renderSplitString(par1Str1, par2, par3, par4, false);
     }
 
     /**
      * Perform actual work of rendering a multi-line string with wordwrap and with darker drop shadow color if flag is
      * set
      */
-    private void renderSplitString(String par1Str, int par2, int par3, int par4, boolean par5)
+    private void renderSplitString(final String par1Str, final int par2, int par3, final int par4, final boolean par5)
     {
-        List list = this.listFormattedStringToWidth(par1Str, par4);
+        int par31 = par3;
+        final List list = this.listFormattedStringToWidth(par1Str, par4);
 
-        for (Iterator iterator = list.iterator(); iterator.hasNext(); par3 += this.FONT_HEIGHT)
+        for (final Iterator iterator = list.iterator(); iterator.hasNext(); par31 += this.FONT_HEIGHT)
         {
-            String s1 = (String)iterator.next();
-            this.renderStringAligned(s1, par2, par3, par4, this.textColor, par5);
+            final String s1 = (String)iterator.next();
+            this.renderStringAligned(s1, par2, par31, par4, this.textColor, par5);
         }
     }
 
     /**
      * Returns the width of the wordwrapped String (maximum length is parameter k)
      */
-    public int splitStringWidth(String par1Str, int par2)
+    public int splitStringWidth(final String par1Str, final int par2)
     {
         return this.FONT_HEIGHT * this.listFormattedStringToWidth(par1Str, par2).size();
     }
@@ -868,7 +874,7 @@ public class FontRenderer implements ResourceManagerReloadListener
      * Set unicodeFlag controlling whether strings should be rendered with Unicode fonts instead of the default.png
      * font.
      */
-    public void setUnicodeFlag(boolean par1)
+    public void setUnicodeFlag(final boolean par1)
     {
         this.unicodeFlag = par1;
     }
@@ -885,7 +891,7 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Set bidiFlag to control if the Unicode Bidirectional Algorithm should be run before rendering any string.
      */
-    public void setBidiFlag(boolean par1)
+    public void setBidiFlag(final boolean par1)
     {
         this.bidiFlag = par1;
     }
@@ -893,7 +899,7 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Breaks a string into a list of pieces that will fit a specified width.
      */
-    public List listFormattedStringToWidth(String par1Str, int par2)
+    public List listFormattedStringToWidth(final String par1Str, final int par2)
     {
         return Arrays.asList(this.wrapFormattedStringToWidth(par1Str, par2).split("\n"));
     }
@@ -901,9 +907,9 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Inserts newline and formatting into a string to wrap it within the specified width.
      */
-    String wrapFormattedStringToWidth(String par1Str, int par2)
+    String wrapFormattedStringToWidth(final String par1Str, final int par2)
     {
-        int j = this.sizeStringToWidth(par1Str, par2);
+        final int j = this.sizeStringToWidth(par1Str, par2);
 
         if (par1Str.length() <= j)
         {
@@ -911,10 +917,10 @@ public class FontRenderer implements ResourceManagerReloadListener
         }
         else
         {
-            String s1 = par1Str.substring(0, j);
-            char c0 = par1Str.charAt(j);
-            boolean flag = c0 == 32 || c0 == 10;
-            String s2 = getFormatFromString(s1) + par1Str.substring(j + (flag ? 1 : 0));
+            final String s1 = par1Str.substring(0, j);
+            final char c0 = par1Str.charAt(j);
+            final boolean flag = c0 == 32 || c0 == 10;
+            final String s2 = getFormatFromString(s1) + par1Str.substring(j + (flag ? 1 : 0));
             return s1 + "\n" + this.wrapFormattedStringToWidth(s2, par2);
         }
     }
@@ -922,16 +928,16 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Determines how many characters from the string will fit into the specified width.
      */
-    private int sizeStringToWidth(String par1Str, int par2)
+    private int sizeStringToWidth(final String par1Str, final int par2)
     {
-        int j = par1Str.length();
+        final int j = par1Str.length();
         int k = 0;
         int l = 0;
         int i1 = -1;
 
         for (boolean flag = false; l < j; ++l)
         {
-            char c0 = par1Str.charAt(l);
+            final char c0 = par1Str.charAt(l);
 
             switch (c0)
             {
@@ -942,7 +948,7 @@ public class FontRenderer implements ResourceManagerReloadListener
                     if (l < j - 1)
                     {
                         ++l;
-                        char c1 = par1Str.charAt(l);
+                        final char c1 = par1Str.charAt(l);
 
                         if (c1 != 108 && c1 != 76)
                         {
@@ -988,7 +994,7 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Checks if the char code is a hexadecimal character, used to set colour.
      */
-    private static boolean isFormatColor(char par0)
+    private static boolean isFormatColor(final char par0)
     {
         return par0 >= 48 && par0 <= 57 || par0 >= 97 && par0 <= 102 || par0 >= 65 && par0 <= 70;
     }
@@ -996,7 +1002,7 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Checks if the char code is O-K...lLrRk-o... used to set special formatting.
      */
-    private static boolean isFormatSpecial(char par0)
+    private static boolean isFormatSpecial(final char par0)
     {
         return par0 >= 107 && par0 <= 111 || par0 >= 75 && par0 <= 79 || par0 == 114 || par0 == 82;
     }
@@ -1004,17 +1010,17 @@ public class FontRenderer implements ResourceManagerReloadListener
     /**
      * Digests a string for nonprinting formatting characters then returns a string containing only that formatting.
      */
-    private static String getFormatFromString(String par0Str)
+    private static String getFormatFromString(final String par0Str)
     {
         String s1 = "";
         int i = -1;
-        int j = par0Str.length();
+        final int j = par0Str.length();
 
         while ((i = par0Str.indexOf(167, i + 1)) != -1)
         {
             if (i < j - 1)
             {
-                char c0 = par0Str.charAt(i + 1);
+                final char c0 = par0Str.charAt(i + 1);
 
                 if (isFormatColor(c0))
                 {

@@ -16,7 +16,7 @@ public class InventoryEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     protected InventoryView transaction;
 
-    public InventoryEvent(InventoryView transaction) {
+    public InventoryEvent(final InventoryView transaction) {
         this.transaction = transaction;
     }
 

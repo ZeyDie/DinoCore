@@ -18,14 +18,14 @@ public class DynamicTexture extends AbstractTexture
     /** height of this icon in pixels */
     private final int height;
 
-    public DynamicTexture(BufferedImage par1BufferedImage)
+    public DynamicTexture(final BufferedImage par1BufferedImage)
     {
         this(par1BufferedImage.getWidth(), par1BufferedImage.getHeight());
         par1BufferedImage.getRGB(0, 0, par1BufferedImage.getWidth(), par1BufferedImage.getHeight(), this.dynamicTextureData, 0, par1BufferedImage.getWidth());
         this.updateDynamicTexture();
     }
 
-    public DynamicTexture(int par1, int par2)
+    public DynamicTexture(final int par1, final int par2)
     {
         this.width = par1;
         this.height = par2;
@@ -33,7 +33,7 @@ public class DynamicTexture extends AbstractTexture
         TextureUtil.allocateTexture(this.getGlTextureId(), par1, par2);
     }
 
-    public void loadTexture(ResourceManager par1ResourceManager) throws IOException {}
+    public void loadTexture(final ResourceManager par1ResourceManager) throws IOException {}
 
     public void updateDynamicTexture()
     {

@@ -33,7 +33,7 @@ public class BlockChest extends BlockContainer
     /** 1 for trapped chests, 0 for normal chests. */
     public final int chestType;
 
-    protected BlockChest(int par1, int par2)
+    protected BlockChest(final int par1, final int par2)
     {
         super(par1, Material.wood);
         this.chestType = par2;
@@ -69,7 +69,7 @@ public class BlockChest extends BlockContainer
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         if (par1IBlockAccess.getBlockId(par2, par3, par4 - 1) == this.blockID)
         {
@@ -96,14 +96,14 @@ public class BlockChest extends BlockContainer
     /**
      * Called whenever the block is added into the world. Args: world, x, y, z
      */
-    public void onBlockAdded(World par1World, int par2, int par3, int par4)
+    public void onBlockAdded(final World par1World, final int par2, final int par3, final int par4)
     {
         super.onBlockAdded(par1World, par2, par3, par4);
         this.unifyAdjacentChests(par1World, par2, par3, par4);
-        int l = par1World.getBlockId(par2, par3, par4 - 1);
-        int i1 = par1World.getBlockId(par2, par3, par4 + 1);
-        int j1 = par1World.getBlockId(par2 - 1, par3, par4);
-        int k1 = par1World.getBlockId(par2 + 1, par3, par4);
+        final int l = par1World.getBlockId(par2, par3, par4 - 1);
+        final int i1 = par1World.getBlockId(par2, par3, par4 + 1);
+        final int j1 = par1World.getBlockId(par2 - 1, par3, par4);
+        final int k1 = par1World.getBlockId(par2 + 1, par3, par4);
 
         if (l == this.blockID)
         {
@@ -129,14 +129,14 @@ public class BlockChest extends BlockContainer
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
+    public void onBlockPlacedBy(final World par1World, final int par2, final int par3, final int par4, final EntityLivingBase par5EntityLivingBase, final ItemStack par6ItemStack)
     {
-        int l = par1World.getBlockId(par2, par3, par4 - 1);
-        int i1 = par1World.getBlockId(par2, par3, par4 + 1);
-        int j1 = par1World.getBlockId(par2 - 1, par3, par4);
-        int k1 = par1World.getBlockId(par2 + 1, par3, par4);
+        final int l = par1World.getBlockId(par2, par3, par4 - 1);
+        final int i1 = par1World.getBlockId(par2, par3, par4 + 1);
+        final int j1 = par1World.getBlockId(par2 - 1, par3, par4);
+        final int k1 = par1World.getBlockId(par2 + 1, par3, par4);
         byte b0 = 0;
-        int l1 = MathHelper.floor_double((double)(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        final int l1 = MathHelper.floor_double((double)(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
         if (l1 == 0)
         {
@@ -202,20 +202,20 @@ public class BlockChest extends BlockContainer
     /**
      * Turns the adjacent chests to a double chest.
      */
-    public void unifyAdjacentChests(World par1World, int par2, int par3, int par4)
+    public void unifyAdjacentChests(final World par1World, final int par2, final int par3, final int par4)
     {
         if (!par1World.isRemote)
         {
-            int l = par1World.getBlockId(par2, par3, par4 - 1);
-            int i1 = par1World.getBlockId(par2, par3, par4 + 1);
-            int j1 = par1World.getBlockId(par2 - 1, par3, par4);
-            int k1 = par1World.getBlockId(par2 + 1, par3, par4);
-            boolean flag = true;
-            int l1;
-            int i2;
-            boolean flag1;
+            final int l = par1World.getBlockId(par2, par3, par4 - 1);
+            final int i1 = par1World.getBlockId(par2, par3, par4 + 1);
+            final int j1 = par1World.getBlockId(par2 - 1, par3, par4);
+            final int k1 = par1World.getBlockId(par2 + 1, par3, par4);
+            final boolean flag = true;
+            final int l1;
+            final int i2;
+            final boolean flag1;
             byte b0;
-            int j2;
+            final int j2;
 
             if (l != this.blockID && i1 != this.blockID)
             {
@@ -314,7 +314,7 @@ public class BlockChest extends BlockContainer
     /**
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
      */
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
+    public boolean canPlaceBlockAt(final World par1World, final int par2, final int par3, final int par4)
     {
         int l = 0;
 
@@ -344,7 +344,7 @@ public class BlockChest extends BlockContainer
     /**
      * Checks the neighbor blocks to see if there is a chest there. Args: world, x, y, z
      */
-    private boolean isThereANeighborChest(World par1World, int par2, int par3, int par4)
+    private boolean isThereANeighborChest(final World par1World, final int par2, final int par3, final int par4)
     {
         return par1World.getBlockId(par2, par3, par4) != this.blockID ? false : (par1World.getBlockId(par2 - 1, par3, par4) == this.blockID ? true : (par1World.getBlockId(par2 + 1, par3, par4) == this.blockID ? true : (par1World.getBlockId(par2, par3, par4 - 1) == this.blockID ? true : par1World.getBlockId(par2, par3, par4 + 1) == this.blockID)));
     }
@@ -353,10 +353,10 @@ public class BlockChest extends BlockContainer
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         super.onNeighborBlockChange(par1World, par2, par3, par4, par5);
-        TileEntityChest tileentitychest = (TileEntityChest)par1World.getBlockTileEntity(par2, par3, par4);
+        final TileEntityChest tileentitychest = (TileEntityChest)par1World.getBlockTileEntity(par2, par3, par4);
 
         if (tileentitychest != null)
         {
@@ -369,23 +369,23 @@ public class BlockChest extends BlockContainer
      * different metadata value, but before the new metadata value is set. Args: World, x, y, z, old block ID, old
      * metadata
      */
-    public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    public void breakBlock(final World par1World, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
-        TileEntityChest tileentitychest = (TileEntityChest)par1World.getBlockTileEntity(par2, par3, par4);
+        final TileEntityChest tileentitychest = (TileEntityChest)par1World.getBlockTileEntity(par2, par3, par4);
 
         if (tileentitychest != null)
         {
             for (int j1 = 0; j1 < tileentitychest.getSizeInventory(); ++j1)
             {
-                ItemStack itemstack = tileentitychest.getStackInSlot(j1);
+                final ItemStack itemstack = tileentitychest.getStackInSlot(j1);
 
                 if (itemstack != null)
                 {
-                    float f = this.random.nextFloat() * 0.8F + 0.1F;
-                    float f1 = this.random.nextFloat() * 0.8F + 0.1F;
+                    final float f = this.random.nextFloat() * 0.8F + 0.1F;
+                    final float f1 = this.random.nextFloat() * 0.8F + 0.1F;
                     EntityItem entityitem;
 
-                    for (float f2 = this.random.nextFloat() * 0.8F + 0.1F; itemstack.stackSize > 0; par1World.spawnEntityInWorld(entityitem))
+                    for (final float f2 = this.random.nextFloat() * 0.8F + 0.1F; itemstack.stackSize > 0; par1World.spawnEntityInWorld(entityitem))
                     {
                         int k1 = this.random.nextInt(21) + 10;
 
@@ -396,7 +396,7 @@ public class BlockChest extends BlockContainer
 
                         itemstack.stackSize -= k1;
                         entityitem = new EntityItem(par1World, (double)((float)par2 + f), (double)((float)par3 + f1), (double)((float)par4 + f2), new ItemStack(itemstack.itemID, k1, itemstack.getItemDamage()));
-                        float f3 = 0.05F;
+                        final float f3 = 0.05F;
                         entityitem.motionX = (double)((float)this.random.nextGaussian() * f3);
                         entityitem.motionY = (double)((float)this.random.nextGaussian() * f3 + 0.2F);
                         entityitem.motionZ = (double)((float)this.random.nextGaussian() * f3);
@@ -418,7 +418,7 @@ public class BlockChest extends BlockContainer
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9)
     {
         if (par1World.isRemote)
         {
@@ -426,7 +426,7 @@ public class BlockChest extends BlockContainer
         }
         else
         {
-            IInventory iinventory = this.getInventory(par1World, par2, par3, par4);
+            final IInventory iinventory = this.getInventory(par1World, par2, par3, par4);
 
             if (iinventory != null)
             {
@@ -441,7 +441,7 @@ public class BlockChest extends BlockContainer
      * Gets the inventory of the chest at the specified coords, accounting for blocks or ocelots on top of the chest,
      * and double chests.
      */
-    public IInventory getInventory(World par1World, int par2, int par3, int par4)
+    public IInventory getInventory(final World par1World, final int par2, final int par3, final int par4)
     {
         Object object = (TileEntityChest)par1World.getBlockTileEntity(par2, par3, par4);
 
@@ -502,9 +502,9 @@ public class BlockChest extends BlockContainer
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World par1World)
+    public TileEntity createNewTileEntity(final World par1World)
     {
-        TileEntityChest tileentitychest = new TileEntityChest();
+        final TileEntityChest tileentitychest = new TileEntityChest();
         return tileentitychest;
     }
 
@@ -521,7 +521,7 @@ public class BlockChest extends BlockContainer
      * returns true, standard redstone propagation rules will apply instead and this will not be called. Args: World, X,
      * Y, Z, side. Note that the side is reversed - eg it is 1 (up) when checking the bottom of the block.
      */
-    public int isProvidingWeakPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public int isProvidingWeakPower(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
         if (!this.canProvidePower())
         {
@@ -529,7 +529,7 @@ public class BlockChest extends BlockContainer
         }
         else
         {
-            int i1 = ((TileEntityChest)par1IBlockAccess.getBlockTileEntity(par2, par3, par4)).numUsingPlayers;
+            final int i1 = ((TileEntityChest)par1IBlockAccess.getBlockTileEntity(par2, par3, par4)).numUsingPlayers;
             return MathHelper.clamp_int(i1, 0, 15);
         }
     }
@@ -538,7 +538,7 @@ public class BlockChest extends BlockContainer
      * Returns true if the block is emitting direct/strong redstone power on the specified side. Args: World, X, Y, Z,
      * side. Note that the side is reversed - eg it is 1 (up) when checking the bottom of the block.
      */
-    public int isProvidingStrongPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public int isProvidingStrongPower(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
         return par5 == 1 ? this.isProvidingWeakPower(par1IBlockAccess, par2, par3, par4, par5) : 0;
     }
@@ -547,9 +547,9 @@ public class BlockChest extends BlockContainer
      * Looks for a sitting ocelot within certain bounds. Such an ocelot is considered to be blocking access to the
      * chest.
      */
-    public static boolean isOcelotBlockingChest(World par0World, int par1, int par2, int par3)
+    public static boolean isOcelotBlockingChest(final World par0World, final int par1, final int par2, final int par3)
     {
-        Iterator iterator = par0World.getEntitiesWithinAABB(EntityOcelot.class, AxisAlignedBB.getAABBPool().getAABB((double)par1, (double)(par2 + 1), (double)par3, (double)(par1 + 1), (double)(par2 + 2), (double)(par3 + 1))).iterator();
+        final Iterator iterator = par0World.getEntitiesWithinAABB(EntityOcelot.class, AxisAlignedBB.getAABBPool().getAABB((double)par1, (double)(par2 + 1), (double)par3, (double)(par1 + 1), (double)(par2 + 2), (double)(par3 + 1))).iterator();
         EntityOcelot entityocelot;
 
         do
@@ -559,7 +559,7 @@ public class BlockChest extends BlockContainer
                 return false;
             }
 
-            EntityOcelot entityocelot1 = (EntityOcelot)iterator.next();
+            final EntityOcelot entityocelot1 = (EntityOcelot)iterator.next();
             entityocelot = (EntityOcelot)entityocelot1;
         }
         while (!entityocelot.isSitting());
@@ -580,7 +580,7 @@ public class BlockChest extends BlockContainer
      * If hasComparatorInputOverride returns true, the return value from this is used instead of the redstone signal
      * strength when this block inputs to a comparator.
      */
-    public int getComparatorInputOverride(World par1World, int par2, int par3, int par4, int par5)
+    public int getComparatorInputOverride(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         return Container.calcRedstoneFromInventory(this.getInventory(par1World, par2, par3, par4));
     }
@@ -591,7 +591,7 @@ public class BlockChest extends BlockContainer
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.blockIcon = par1IconRegister.registerIcon("planks_oak");
     }

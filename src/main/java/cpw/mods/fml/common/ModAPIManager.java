@@ -35,7 +35,7 @@ public class ModAPIManager {
         private Set<String> currentReferents;
         private Set<String> packages;
 
-        public APIContainer(String providedAPI, String apiVersion, File source, ArtifactVersion ownerMod)
+        public APIContainer(final String providedAPI, final String apiVersion, final File source, final ArtifactVersion ownerMod)
         {
             this.providedAPI = providedAPI;
             this.version = apiVersion;
@@ -85,7 +85,7 @@ public class ModAPIManager {
             return ourVersion;
         }
 
-        public void validate(String providedAPI, String apiOwner, String apiVersion)
+        public void validate(final String providedAPI, final String apiOwner, final String apiVersion)
         {
             // TODO Compare this annotation data to the one we first found. Maybe barf if there is inconsistency?
         }
@@ -96,7 +96,7 @@ public class ModAPIManager {
             return "APIContainer{"+providedAPI+":"+version+"}";
         }
 
-        public void addAPIReference(String embedded)
+        public void addAPIReference(final String embedded)
         {
             if (currentReferents.add(embedded))
             {
@@ -104,34 +104,34 @@ public class ModAPIManager {
             }
         }
 
-        public void addOwnedPackage(String apiPackage)
+        public void addOwnedPackage(final String apiPackage)
         {
             packages.add(apiPackage);
         }
 
-        public void addAPIReferences(List<String> candidateIds)
+        public void addAPIReferences(final List<String> candidateIds)
         {
-            for (String modId : candidateIds)
+            for (final String modId : candidateIds)
             {
                 addAPIReference(modId);
             }
         }
     }
-    public void registerDataTableAndParseAPI(ASMDataTable dataTable)
+    public void registerDataTableAndParseAPI(final ASMDataTable dataTable)
     {
         this.dataTable = dataTable;
 
-        Set<ASMData> apiList = dataTable.getAll("cpw.mods.fml.common.API");
+        final Set<ASMData> apiList = dataTable.getAll("cpw.mods.fml.common.API");
 
         apiContainers = Maps.newHashMap();
 
-        for (ASMData data : apiList)
+        for (final ASMData data : apiList)
         {
-            Map<String, Object> annotationInfo = data.getAnnotationInfo();
-            String apiPackage = data.getClassName().substring(0,data.getClassName().indexOf(".package-info"));
-            String providedAPI = (String) annotationInfo.get("provides");
-            String apiOwner = (String) annotationInfo.get("owner");
-            String apiVersion = (String) annotationInfo.get("apiVersion");
+            final Map<String, Object> annotationInfo = data.getAnnotationInfo();
+            final String apiPackage = data.getClassName().substring(0,data.getClassName().indexOf(".package-info"));
+            final String providedAPI = (String) annotationInfo.get("provides");
+            final String apiOwner = (String) annotationInfo.get("owner");
+            final String apiVersion = (String) annotationInfo.get("apiVersion");
             APIContainer container = apiContainers.get(providedAPI);
             if (container == null)
             {
@@ -143,9 +143,9 @@ public class ModAPIManager {
                 container.validate(providedAPI, apiOwner, apiVersion);
             }
             container.addOwnedPackage(apiPackage);
-            for (ModContainer mc : data.getCandidate().getContainedMods())
+            for (final ModContainer mc : data.getCandidate().getContainedMods())
             {
-                String embeddedIn = mc.getModId();
+                final String embeddedIn = mc.getModId();
                 if (container.currentReferents.contains(embeddedIn))
                 {
                     continue;
@@ -158,14 +158,14 @@ public class ModAPIManager {
             }
         }
 
-        for (APIContainer container : apiContainers.values())
+        for (final APIContainer container : apiContainers.values())
         {
-            for (String pkg : container.packages)
+            for (final String pkg : container.packages)
             {
-                Set<ModCandidate> candidates = dataTable.getCandidatesFor(pkg);
-                for (ModCandidate candidate : candidates)
+                final Set<ModCandidate> candidates = dataTable.getCandidatesFor(pkg);
+                for (final ModCandidate candidate : candidates)
                 {
-                    List<String> candidateIds = Lists.transform(candidate.getContainedMods(), new ModIdFunction());
+                    final List<String> candidateIds = Lists.transform(candidate.getContainedMods(), new ModIdFunction());
                     if (!candidateIds.contains(container.ownerMod.getLabel()) && !container.currentReferents.containsAll(candidateIds))
                     {
                         FMLLog.info("Found mod(s) %s containing declared API package %s (owned by %s) without associated API reference",candidateIds, pkg, container.ownerMod);
@@ -178,7 +178,7 @@ public class ModAPIManager {
                 ArtifactVersion owner = container.ownerMod;
                 do
                 {
-                    APIContainer parent = apiContainers.get(owner.getLabel());
+                    final APIContainer parent = apiContainers.get(owner.getLabel());
                     FMLLog.finest("Removing upstream parent %s from %s", parent.ownerMod.getLabel(), container);
                     container.currentReferents.remove(parent.ownerMod.getLabel());
                     container.referredMods.remove(parent.ownerMod);
@@ -190,24 +190,24 @@ public class ModAPIManager {
         }
     }
 
-    public void manageAPI(ModClassLoader modClassLoader, ModDiscoverer discoverer)
+    public void manageAPI(final ModClassLoader modClassLoader, final ModDiscoverer discoverer)
     {
         registerDataTableAndParseAPI(discoverer.getASMTable());
         transformer = modClassLoader.addModAPITransformer(dataTable);
     }
 
-    public void injectAPIModContainers(List<ModContainer> mods, Map<String, ModContainer> nameLookup)
+    public void injectAPIModContainers(final List<ModContainer> mods, final Map<String, ModContainer> nameLookup)
     {
         mods.addAll(apiContainers.values());
         nameLookup.putAll(apiContainers);
     }
 
-    public void cleanupAPIContainers(List<ModContainer> mods)
+    public void cleanupAPIContainers(final List<ModContainer> mods)
     {
         mods.removeAll(apiContainers.values());
     }
 
-    public boolean hasAPI(String modId)
+    public boolean hasAPI(final String modId)
     {
         return apiContainers.containsKey(modId);
     }

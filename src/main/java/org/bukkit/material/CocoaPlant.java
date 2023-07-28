@@ -36,12 +36,12 @@ public class CocoaPlant extends MaterialData implements Directional, Attachable 
         super(type, data);
     }
 
-    public CocoaPlant(CocoaPlantSize sz) {
+    public CocoaPlant(final CocoaPlantSize sz) {
         this();
         setSize(sz);
     }
 
-    public CocoaPlant(CocoaPlantSize sz, BlockFace dir) {
+    public CocoaPlant(final CocoaPlantSize sz, final BlockFace dir) {
         this();
         setSize(sz);
         setFacingDirection(dir);
@@ -68,7 +68,7 @@ public class CocoaPlant extends MaterialData implements Directional, Attachable 
      *
      * @param sz - size of plant
      */
-    public void setSize(CocoaPlantSize sz) {
+    public void setSize(final CocoaPlantSize sz) {
         int dat = getData() & 0x3;
         switch (sz) {
             case SMALL:
@@ -87,7 +87,7 @@ public class CocoaPlant extends MaterialData implements Directional, Attachable 
         return getFacing().getOppositeFace();
     }
 
-    public void setFacingDirection(BlockFace face) {
+    public void setFacingDirection(final BlockFace face) {
         int dat = getData() & 0xC;
         switch (face) {
             default:

@@ -4,7 +4,7 @@ package net.minecraft.network;
 class TcpMasterThread extends Thread {
     final TcpConnection theTcpConnection;
 
-    TcpMasterThread(TcpConnection par1TcpConnection) {
+    TcpMasterThread(final TcpConnection par1TcpConnection) {
         this.theTcpConnection = par1TcpConnection;
     }
 
@@ -16,7 +16,7 @@ class TcpMasterThread extends Thread {
             if (TcpConnection.getReadThread(this.theTcpConnection).isAlive()) {
                 try {
                     TcpConnection.getReadThread(this.theTcpConnection).stop();
-                } catch (Throwable throwable) {
+                } catch (final Throwable throwable) {
                     ;
                 }
             }
@@ -24,11 +24,11 @@ class TcpMasterThread extends Thread {
             if (TcpConnection.getWriteThread(this.theTcpConnection).isAlive()) {
                 try {
                     TcpConnection.getWriteThread(this.theTcpConnection).stop();
-                } catch (Throwable throwable1) {
+                } catch (final Throwable throwable1) {
                     ;
                 }
             }
-        } catch (InterruptedException interruptedexception) {
+        } catch (final InterruptedException interruptedexception) {
             interruptedexception.printStackTrace();
 
             //TODO ZoomCodeStart

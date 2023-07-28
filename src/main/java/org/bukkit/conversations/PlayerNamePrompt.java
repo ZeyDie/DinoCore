@@ -9,19 +9,19 @@ import org.bukkit.plugin.Plugin;
 public abstract class PlayerNamePrompt extends ValidatingPrompt{
     private Plugin plugin;
 
-    public PlayerNamePrompt(Plugin plugin) {
+    public PlayerNamePrompt(final Plugin plugin) {
         super();
         this.plugin = plugin;
     }
 
     @Override
-    protected boolean isInputValid(ConversationContext context, String input) {
+    protected boolean isInputValid(final ConversationContext context, final String input) {
         return plugin.getServer().getPlayer(input) != null;
         
     }
 
     @Override
-    protected Prompt acceptValidatedInput(ConversationContext context, String input) {
+    protected Prompt acceptValidatedInput(final ConversationContext context, final String input) {
         return acceptValidatedInput(context, plugin.getServer().getPlayer(input));
     }
 

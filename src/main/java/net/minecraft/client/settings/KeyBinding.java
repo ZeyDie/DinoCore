@@ -20,9 +20,9 @@ public class KeyBinding
     public boolean pressed;
     public int pressTime;
 
-    public static void onTick(int par0)
+    public static void onTick(final int par0)
     {
-        KeyBinding keybinding = (KeyBinding)hash.lookup(par0);
+        final KeyBinding keybinding = (KeyBinding)hash.lookup(par0);
 
         if (keybinding != null)
         {
@@ -30,9 +30,9 @@ public class KeyBinding
         }
     }
 
-    public static void setKeyBindState(int par0, boolean par1)
+    public static void setKeyBindState(final int par0, final boolean par1)
     {
-        KeyBinding keybinding = (KeyBinding)hash.lookup(par0);
+        final KeyBinding keybinding = (KeyBinding)hash.lookup(par0);
 
         if (keybinding != null)
         {
@@ -42,11 +42,11 @@ public class KeyBinding
 
     public static void unPressAllKeys()
     {
-        Iterator iterator = keybindArray.iterator();
+        final Iterator iterator = keybindArray.iterator();
 
         while (iterator.hasNext())
         {
-            KeyBinding keybinding = (KeyBinding)iterator.next();
+            final KeyBinding keybinding = (KeyBinding)iterator.next();
             keybinding.unpressKey();
         }
     }
@@ -54,16 +54,16 @@ public class KeyBinding
     public static void resetKeyBindingArrayAndHash()
     {
         hash.clearMap();
-        Iterator iterator = keybindArray.iterator();
+        final Iterator iterator = keybindArray.iterator();
 
         while (iterator.hasNext())
         {
-            KeyBinding keybinding = (KeyBinding)iterator.next();
+            final KeyBinding keybinding = (KeyBinding)iterator.next();
             hash.addKey(keybinding.keyCode, keybinding);
         }
     }
 
-    public KeyBinding(String par1Str, int par2)
+    public KeyBinding(final String par1Str, final int par2)
     {
         this.keyDescription = par1Str;
         this.keyCode = par2;

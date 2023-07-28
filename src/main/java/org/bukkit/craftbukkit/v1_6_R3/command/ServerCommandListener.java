@@ -10,13 +10,13 @@ public class ServerCommandListener implements net.minecraft.command.ICommandSend
     private final CommandSender commandSender;
     private final String prefix;
 
-    public ServerCommandListener(CommandSender commandSender) {
+    public ServerCommandListener(final CommandSender commandSender) {
         this.commandSender = commandSender;
-        String[] parts = commandSender.getClass().getName().split("\\.");
+        final String[] parts = commandSender.getClass().getName().split("\\.");
         this.prefix = parts[parts.length - 1];
     }
 
-    public void sendChatToPlayer(net.minecraft.util.ChatMessageComponent chatmessage) {
+    public void sendChatToPlayer(final net.minecraft.util.ChatMessageComponent chatmessage) {
         this.commandSender.sendMessage(chatmessage.toString());
     }
 
@@ -29,10 +29,10 @@ public class ServerCommandListener implements net.minecraft.command.ICommandSend
      */
     public String getCommandSenderName() {
         try {
-            Method getName = commandSender.getClass().getMethod("getName");
+            final Method getName = commandSender.getClass().getMethod("getName");
 
             return (String) getName.invoke(commandSender);
-        } catch (Exception e) {}
+        } catch (final Exception e) {}
 
         return this.prefix;
     }
@@ -40,7 +40,7 @@ public class ServerCommandListener implements net.minecraft.command.ICommandSend
     /**
      * Returns true if the command sender is allowed to use the given command.
      */
-    public boolean canCommandSenderUseCommand(int i, String s) {
+    public boolean canCommandSenderUseCommand(final int i, final String s) {
         return true;
     }
 

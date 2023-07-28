@@ -19,11 +19,11 @@ public abstract class ValidatingPrompt implements Prompt {
      * @param input The input text from the user.
      * @return This prompt or the next Prompt in the prompt graph.
      */
-    public Prompt acceptInput(ConversationContext context, String input) {
+    public Prompt acceptInput(final ConversationContext context, final String input) {
         if (isInputValid(context, input)) {
             return acceptValidatedInput(context, input);
         } else {
-            String failPrompt = getFailedValidationText(context, input);
+            final String failPrompt = getFailedValidationText(context, input);
             if (failPrompt != null) {
                 context.getForWhom().sendRawMessage(ChatColor.RED + failPrompt);
             }
@@ -38,7 +38,7 @@ public abstract class ValidatingPrompt implements Prompt {
      * @param context Context information about the conversation.
      * @return True.
      */
-    public boolean blocksForInput(ConversationContext context) {
+    public boolean blocksForInput(final ConversationContext context) {
         return true;
     }
 
@@ -68,7 +68,7 @@ public abstract class ValidatingPrompt implements Prompt {
      * @param invalidInput The invalid input provided by the user.
      * @return A message explaining how to correct the input.
      */
-    protected String getFailedValidationText(ConversationContext context, String invalidInput) {
+    protected String getFailedValidationText(final ConversationContext context, final String invalidInput) {
         return null;
     }
 }

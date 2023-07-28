@@ -77,7 +77,7 @@ public class Material
     private int mobilityFlag;
     private boolean isAdventureModeExempt;
 
-    public Material(MapColor par1MapColor)
+    public Material(final MapColor par1MapColor)
     {
         this.materialMapColor = par1MapColor;
     }

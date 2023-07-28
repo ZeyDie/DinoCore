@@ -17,7 +17,7 @@ import net.minecraft.client.gui.GuiErrorScreen;
 public class GuiCustomModLoadingErrorScreen extends GuiErrorScreen
 {
     private CustomModLoadingErrorDisplayException customException;
-    public GuiCustomModLoadingErrorScreen(CustomModLoadingErrorDisplayException customException)
+    public GuiCustomModLoadingErrorScreen(final CustomModLoadingErrorDisplayException customException)
     {
         super(null,null);
         this.customException = customException;
@@ -37,7 +37,7 @@ public class GuiCustomModLoadingErrorScreen extends GuiErrorScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.customException.drawScreen(this, fontRenderer, par1, par2, par3);

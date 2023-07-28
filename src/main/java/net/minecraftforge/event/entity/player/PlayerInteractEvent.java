@@ -25,7 +25,7 @@ public class PlayerInteractEvent extends PlayerEvent
     public Result useBlock = DEFAULT;
     public Result useItem = DEFAULT;
     
-    public PlayerInteractEvent(EntityPlayer player, Action action, int x, int y, int z, int face)
+    public PlayerInteractEvent(final EntityPlayer player, final Action action, final int x, final int y, final int z, final int face)
     {
         super(player);
         this.action = action;
@@ -37,7 +37,7 @@ public class PlayerInteractEvent extends PlayerEvent
     }
     
     @Override
-    public void setCanceled(boolean cancel)
+    public void setCanceled(final boolean cancel)
     {
         super.setCanceled(cancel);
         useBlock = (cancel ? DENY : useBlock == DENY ? DEFAULT : useBlock);

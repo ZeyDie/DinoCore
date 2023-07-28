@@ -19,7 +19,7 @@ public class Packet204ClientInfo extends Packet
     public Packet204ClientInfo() {}
 
     @SideOnly(Side.CLIENT)
-    public Packet204ClientInfo(String par1Str, int par2, int par3, boolean par4, int par5, boolean par6)
+    public Packet204ClientInfo(final String par1Str, final int par2, final int par3, final boolean par4, final int par5, final boolean par6)
     {
         this.language = par1Str;
         this.renderDistance = par2;
@@ -32,11 +32,11 @@ public class Packet204ClientInfo extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.language = readString(par1DataInput, 7);
         this.renderDistance = par1DataInput.readByte();
-        byte b0 = par1DataInput.readByte();
+        final byte b0 = par1DataInput.readByte();
         this.chatVisisble = b0 & 7;
         this.chatColours = (b0 & 8) == 8;
         this.gameDifficulty = par1DataInput.readByte();
@@ -46,7 +46,7 @@ public class Packet204ClientInfo extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         writeString(this.language, par1DataOutput);
         par1DataOutput.writeByte(this.renderDistance);
@@ -58,7 +58,7 @@ public class Packet204ClientInfo extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleClientInfo(this);
     }
@@ -113,7 +113,7 @@ public class Packet204ClientInfo extends Packet
      * eg return packet30entity.entityId == entityId; WARNING : will throw if you compare a packet to a different packet
      * class
      */
-    public boolean containsSameEntityIDAs(Packet par1Packet)
+    public boolean containsSameEntityIDAs(final Packet par1Packet)
     {
         return true;
     }

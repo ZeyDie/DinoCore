@@ -23,20 +23,20 @@ public class CommandGameMode extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.gamemode.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         if (par2ArrayOfStr.length > 0)
         {
-            EnumGameType enumgametype = this.getGameModeFromCommand(par1ICommandSender, par2ArrayOfStr[0]);
-            EntityPlayerMP entityplayermp = par2ArrayOfStr.length >= 2 ? getPlayer(par1ICommandSender, par2ArrayOfStr[1]) : getCommandSenderAsPlayer(par1ICommandSender);
+            final EnumGameType enumgametype = this.getGameModeFromCommand(par1ICommandSender, par2ArrayOfStr[0]);
+            final EntityPlayerMP entityplayermp = par2ArrayOfStr.length >= 2 ? getPlayer(par1ICommandSender, par2ArrayOfStr[1]) : getCommandSenderAsPlayer(par1ICommandSender);
             entityplayermp.setGameType(enumgametype);
             entityplayermp.fallDistance = 0.0F;
-            ChatMessageComponent chatmessagecomponent = ChatMessageComponent.createFromTranslationKey("gameMode." + enumgametype.getName());
+            final ChatMessageComponent chatmessagecomponent = ChatMessageComponent.createFromTranslationKey("gameMode." + enumgametype.getName());
 
             if (entityplayermp != par1ICommandSender)
             {
@@ -56,7 +56,7 @@ public class CommandGameMode extends CommandBase
     /**
      * Gets the Game Mode specified in the command.
      */
-    protected EnumGameType getGameModeFromCommand(ICommandSender par1ICommandSender, String par2Str)
+    protected EnumGameType getGameModeFromCommand(final ICommandSender par1ICommandSender, final String par2Str)
     {
         return !par2Str.equalsIgnoreCase(EnumGameType.SURVIVAL.getName()) && !par2Str.equalsIgnoreCase("s") ? (!par2Str.equalsIgnoreCase(EnumGameType.CREATIVE.getName()) && !par2Str.equalsIgnoreCase("c") ? (!par2Str.equalsIgnoreCase(EnumGameType.ADVENTURE.getName()) && !par2Str.equalsIgnoreCase("a") ? WorldSettings.getGameTypeById(parseIntBounded(par1ICommandSender, par2Str, 0, EnumGameType.values().length - 2)) : EnumGameType.ADVENTURE) : EnumGameType.CREATIVE) : EnumGameType.SURVIVAL;
     }
@@ -64,7 +64,7 @@ public class CommandGameMode extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public List addTabCompletionOptions(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         return par2ArrayOfStr.length == 1 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, new String[] {"survival", "creative", "adventure"}): (par2ArrayOfStr.length == 2 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, this.getListOfPlayerUsernames()) : null);
     }
@@ -80,7 +80,7 @@ public class CommandGameMode extends CommandBase
     /**
      * Return whether the specified command parameter index is a username parameter.
      */
-    public boolean isUsernameIndex(String[] par1ArrayOfStr, int par2)
+    public boolean isUsernameIndex(final String[] par1ArrayOfStr, final int par2)
     {
         return par2 == 1;
     }

@@ -20,7 +20,7 @@ public class DuplicateModsFoundException extends LoaderException {
 
 	public SetMultimap<ModContainer,File> dupes;
 
-	public DuplicateModsFoundException(SetMultimap<ModContainer, File> dupes) {
+	public DuplicateModsFoundException(final SetMultimap<ModContainer, File> dupes) {
 		this.dupes = dupes;
 	}
 

@@ -22,7 +22,7 @@ public abstract class Waitable<T> implements Runnable {
         }
         try {
             value = evaluate();
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             this.t = t;
         } finally {
             synchronized (this) {

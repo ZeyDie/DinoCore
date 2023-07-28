@@ -13,7 +13,7 @@ public class Packet133TileEditorOpen extends Packet
 
     public Packet133TileEditorOpen() {}
 
-    public Packet133TileEditorOpen(int par1, int par2, int par3, int par4)
+    public Packet133TileEditorOpen(final int par1, final int par2, final int par3, final int par4)
     {
         this.field_142037_a = par1;
         this.field_142035_b = par2;
@@ -24,7 +24,7 @@ public class Packet133TileEditorOpen extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.func_142031_a(this);
     }
@@ -32,7 +32,7 @@ public class Packet133TileEditorOpen extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.field_142037_a = par1DataInput.readByte();
         this.field_142035_b = par1DataInput.readInt();
@@ -43,7 +43,7 @@ public class Packet133TileEditorOpen extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeByte(this.field_142037_a);
         par1DataOutput.writeInt(this.field_142035_b);

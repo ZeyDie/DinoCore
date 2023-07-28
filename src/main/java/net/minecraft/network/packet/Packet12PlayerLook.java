@@ -15,7 +15,7 @@ public class Packet12PlayerLook extends Packet10Flying
     }
 
     @SideOnly(Side.CLIENT)
-    public Packet12PlayerLook(float par1, float par2, boolean par3)
+    public Packet12PlayerLook(final float par1, final float par2, final boolean par3)
     {
         this.yaw = par1;
         this.pitch = par2;
@@ -26,7 +26,7 @@ public class Packet12PlayerLook extends Packet10Flying
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.yaw = par1DataInput.readFloat();
         this.pitch = par1DataInput.readFloat();
@@ -36,7 +36,7 @@ public class Packet12PlayerLook extends Packet10Flying
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeFloat(this.yaw);
         par1DataOutput.writeFloat(this.pitch);

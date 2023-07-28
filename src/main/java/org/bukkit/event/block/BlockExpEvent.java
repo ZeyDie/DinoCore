@@ -10,7 +10,7 @@ public class BlockExpEvent extends BlockEvent {
     private static final HandlerList handlers = new HandlerList();
     private int exp;
 
-    public BlockExpEvent(Block block, int exp) {
+    public BlockExpEvent(final Block block, final int exp) {
         super(block);
 
         this.exp = exp;
@@ -30,7 +30,7 @@ public class BlockExpEvent extends BlockEvent {
      *
      * @param exp 1 or higher to drop experience, else nothing will drop
      */
-    public void setExpToDrop(int exp) {
+    public void setExpToDrop(final int exp) {
         this.exp = exp;
     }
 

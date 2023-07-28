@@ -10,12 +10,12 @@ public class NBTTagByteArray extends NBTBase
     /** The byte array stored in the tag. */
     public byte[] byteArray;
 
-    public NBTTagByteArray(String par1Str)
+    public NBTTagByteArray(final String par1Str)
     {
         super(par1Str);
     }
 
-    public NBTTagByteArray(String par1Str, byte[] par2ArrayOfByte)
+    public NBTTagByteArray(final String par1Str, final byte[] par2ArrayOfByte)
     {
         super(par1Str);
         this.byteArray = par2ArrayOfByte;
@@ -24,7 +24,7 @@ public class NBTTagByteArray extends NBTBase
     /**
      * Write the actual data contents of the tag, implemented in NBT extension classes
      */
-    void write(DataOutput par1DataOutput) throws IOException
+    void write(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.byteArray.length);
         par1DataOutput.write(this.byteArray);
@@ -33,9 +33,9 @@ public class NBTTagByteArray extends NBTBase
     /**
      * Read the actual data contents of the tag, implemented in NBT extension classes
      */
-    void load(DataInput par1DataInput, int par2) throws IOException
+    void load(final DataInput par1DataInput, final int par2) throws IOException
     {
-        int j = par1DataInput.readInt();
+        final int j = par1DataInput.readInt();
         this.byteArray = new byte[j];
         par1DataInput.readFully(this.byteArray);
     }
@@ -58,12 +58,12 @@ public class NBTTagByteArray extends NBTBase
      */
     public NBTBase copy()
     {
-        byte[] abyte = new byte[this.byteArray.length];
+        final byte[] abyte = new byte[this.byteArray.length];
         System.arraycopy(this.byteArray, 0, abyte, 0, this.byteArray.length);
         return new NBTTagByteArray(this.getName(), abyte);
     }
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         return super.equals(par1Obj) ? Arrays.equals(this.byteArray, ((NBTTagByteArray)par1Obj).byteArray) : false;
     }

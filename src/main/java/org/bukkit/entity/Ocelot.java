@@ -48,12 +48,12 @@ public interface Ocelot extends Animals, Tameable {
         private final int id;
 
         static {
-            for (Type type : values()) {
+            for (final Type type : values()) {
                 types[type.getId()] = type;
             }
         }
 
-        private Type(int id) {
+        private Type(final int id) {
             this.id = id;
         }
 
@@ -76,7 +76,7 @@ public interface Ocelot extends Animals, Tameable {
          * @deprecated Magic value
          */
         @Deprecated
-        public static Type getType(int id) {
+        public static Type getType(final int id) {
             return (id >= types.length) ? null : types[id];
         }
     }

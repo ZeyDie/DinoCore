@@ -21,7 +21,7 @@ public class MissingModsException extends RuntimeException
 
     public Set<ArtifactVersion> missingMods;
 
-    public MissingModsException(Set<ArtifactVersion> missingMods)
+    public MissingModsException(final Set<ArtifactVersion> missingMods)
     {
         this.missingMods = missingMods;
     }

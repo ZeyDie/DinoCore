@@ -42,9 +42,9 @@ public class ModelMagmaCube extends ModelBase
      * Used for easily adding entity-dependent animations. The second and third float params here are the same second
      * and third as in the setRotationAngles method.
      */
-    public void setLivingAnimations(EntityLivingBase par1EntityLivingBase, float par2, float par3, float par4)
+    public void setLivingAnimations(final EntityLivingBase par1EntityLivingBase, final float par2, final float par3, final float par4)
     {
-        EntityMagmaCube entitymagmacube = (EntityMagmaCube)par1EntityLivingBase;
+        final EntityMagmaCube entitymagmacube = (EntityMagmaCube)par1EntityLivingBase;
         float f3 = entitymagmacube.prevSquishFactor + (entitymagmacube.squishFactor - entitymagmacube.prevSquishFactor) * par4;
 
         if (f3 < 0.0F)
@@ -61,7 +61,7 @@ public class ModelMagmaCube extends ModelBase
     /**
      * Sets the models various rotation angles then renders the model.
      */
-    public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7)
+    public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7)
     {
         this.setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
         this.field_78108_b.render(par7);

@@ -14,14 +14,14 @@ public class WorldGenBigTree extends WorldGenerator
      * Contains three sets of two values that provide complimentary indices for a given 'major' index - 1 and 2 for 0, 0
      * and 2 for 1, and 0 and 1 for 2.
      */
-    static final byte[] otherCoordPairs = new byte[] {(byte)2, (byte)0, (byte)0, (byte)1, (byte)2, (byte)1};
+    static final byte[] otherCoordPairs = {(byte)2, (byte)0, (byte)0, (byte)1, (byte)2, (byte)1};
 
     /** random seed for GenBigTree */
     Random rand = new Random();
 
     /** Reference to the World object. */
     World worldObj;
-    int[] basePos = new int[] {0, 0, 0};
+    int[] basePos = {0, 0, 0};
     int heightLimit;
     int height;
     double heightAttenuation = 0.618D;
@@ -48,7 +48,7 @@ public class WorldGenBigTree extends WorldGenerator
     /** Contains a list of a points at which to generate groups of leaves. */
     int[][] leafNodes;
 
-    public WorldGenBigTree(boolean par1)
+    public WorldGenBigTree(final boolean par1)
     {
         super(par1);
     }
@@ -72,10 +72,10 @@ public class WorldGenBigTree extends WorldGenerator
             i = 1;
         }
 
-        int[][] aint = new int[i * this.heightLimit][4];
+        final int[][] aint = new int[i * this.heightLimit][4];
         int j = this.basePos[1] + this.heightLimit - this.leafDistanceLimit;
         int k = 1;
-        int l = this.basePos[1] + this.height;
+        final int l = this.basePos[1] + this.height;
         int i1 = j - this.basePos[1];
         aint[0][0] = this.basePos[0];
         aint[0][1] = j;
@@ -86,7 +86,7 @@ public class WorldGenBigTree extends WorldGenerator
         while (i1 >= 0)
         {
             int j1 = 0;
-            float f = this.layerSize(i1);
+            final float f = this.layerSize(i1);
 
             if (f < 0.0F)
             {
@@ -95,20 +95,20 @@ public class WorldGenBigTree extends WorldGenerator
             }
             else
             {
-                for (double d0 = 0.5D; j1 < i; ++j1)
+                for (final double d0 = 0.5D; j1 < i; ++j1)
                 {
-                    double d1 = this.scaleWidth * (double)f * ((double)this.rand.nextFloat() + 0.328D);
-                    double d2 = (double)this.rand.nextFloat() * 2.0D * Math.PI;
-                    int k1 = MathHelper.floor_double(d1 * Math.sin(d2) + (double)this.basePos[0] + d0);
-                    int l1 = MathHelper.floor_double(d1 * Math.cos(d2) + (double)this.basePos[2] + d0);
-                    int[] aint1 = new int[] {k1, j, l1};
-                    int[] aint2 = new int[] {k1, j + this.leafDistanceLimit, l1};
+                    final double d1 = this.scaleWidth * (double)f * ((double)this.rand.nextFloat() + 0.328D);
+                    final double d2 = (double)this.rand.nextFloat() * 2.0D * Math.PI;
+                    final int k1 = MathHelper.floor_double(d1 * Math.sin(d2) + (double)this.basePos[0] + d0);
+                    final int l1 = MathHelper.floor_double(d1 * Math.cos(d2) + (double)this.basePos[2] + d0);
+                    final int[] aint1 = {k1, j, l1};
+                    final int[] aint2 = {k1, j + this.leafDistanceLimit, l1};
 
                     if (this.checkBlockLine(aint1, aint2) == -1)
                     {
-                        int[] aint3 = new int[] {this.basePos[0], this.basePos[1], this.basePos[2]};
-                        double d3 = Math.sqrt(Math.pow((double)Math.abs(this.basePos[0] - aint1[0]), 2.0D) + Math.pow((double)Math.abs(this.basePos[2] - aint1[2]), 2.0D));
-                        double d4 = d3 * this.branchSlope;
+                        final int[] aint3 = {this.basePos[0], this.basePos[1], this.basePos[2]};
+                        final double d3 = Math.sqrt(Math.pow((double)Math.abs(this.basePos[0] - aint1[0]), 2.0D) + Math.pow((double)Math.abs(this.basePos[2] - aint1[2]), 2.0D));
+                        final double d4 = d3 * this.branchSlope;
 
                         if ((double)aint1[1] - d4 > (double)l)
                         {
@@ -139,13 +139,13 @@ public class WorldGenBigTree extends WorldGenerator
         System.arraycopy(aint, 0, this.leafNodes, 0, k);
     }
 
-    void genTreeLayer(int par1, int par2, int par3, float par4, byte par5, int par6)
+    void genTreeLayer(final int par1, final int par2, final int par3, final float par4, final byte par5, final int par6)
     {
-        int i1 = (int)((double)par4 + 0.618D);
-        byte b1 = otherCoordPairs[par5];
-        byte b2 = otherCoordPairs[par5 + 3];
-        int[] aint = new int[] {par1, par2, par3};
-        int[] aint1 = new int[] {0, 0, 0};
+        final int i1 = (int)((double)par4 + 0.618D);
+        final byte b1 = otherCoordPairs[par5];
+        final byte b2 = otherCoordPairs[par5 + 3];
+        final int[] aint = {par1, par2, par3};
+        final int[] aint1 = {0, 0, 0};
         int j1 = -i1;
         int k1 = -i1;
 
@@ -156,7 +156,7 @@ public class WorldGenBigTree extends WorldGenerator
 
             while (k1 <= i1)
             {
-                double d0 = Math.pow((double)Math.abs(j1) + 0.5D, 2.0D) + Math.pow((double)Math.abs(k1) + 0.5D, 2.0D);
+                final double d0 = Math.pow((double)Math.abs(j1) + 0.5D, 2.0D) + Math.pow((double)Math.abs(k1) + 0.5D, 2.0D);
 
                 if (d0 > (double)(par4 * par4))
                 {
@@ -165,8 +165,8 @@ public class WorldGenBigTree extends WorldGenerator
                 else
                 {
                     aint1[b2] = aint[b2] + k1;
-                    int l1 = this.worldObj.getBlockId(aint1[0], aint1[1], aint1[2]);
-                    Block block = Block.blocksList[l1];
+                    final int l1 = this.worldObj.getBlockId(aint1[0], aint1[1], aint1[2]);
+                    final Block block = Block.blocksList[l1];
 
                     if (block != null &&
                        !block.isAirBlock(worldObj, aint1[0], aint1[1], aint1[2]) &&
@@ -187,7 +187,7 @@ public class WorldGenBigTree extends WorldGenerator
     /**
      * Gets the rough size of a layer of the tree.
      */
-    float layerSize(int par1)
+    float layerSize(final int par1)
     {
         if ((double)par1 < (double)((float)this.heightLimit) * 0.3D)
         {
@@ -195,8 +195,8 @@ public class WorldGenBigTree extends WorldGenerator
         }
         else
         {
-            float f = (float)this.heightLimit / 2.0F;
-            float f1 = (float)this.heightLimit / 2.0F - (float)par1;
+            final float f = (float)this.heightLimit / 2.0F;
+            final float f1 = (float)this.heightLimit / 2.0F - (float)par1;
             float f2;
 
             if (f1 == 0.0F)
@@ -217,7 +217,7 @@ public class WorldGenBigTree extends WorldGenerator
         }
     }
 
-    float leafSize(int par1)
+    float leafSize(final int par1)
     {
         return par1 >= 0 && par1 < this.leafDistanceLimit ? (par1 != 0 && par1 != this.leafDistanceLimit - 1 ? 3.0F : 2.0F) : -1.0F;
     }
@@ -225,13 +225,13 @@ public class WorldGenBigTree extends WorldGenerator
     /**
      * Generates the leaves surrounding an individual entry in the leafNodes list.
      */
-    void generateLeafNode(int par1, int par2, int par3)
+    void generateLeafNode(final int par1, final int par2, final int par3)
     {
         int l = par2;
 
-        for (int i1 = par2 + this.leafDistanceLimit; l < i1; ++l)
+        for (final int i1 = par2 + this.leafDistanceLimit; l < i1; ++l)
         {
-            float f = this.leafSize(l - par2);
+            final float f = this.leafSize(l - par2);
             this.genTreeLayer(par1, l, par3, f, (byte)1, Block.leaves.blockID);
         }
     }
@@ -239,9 +239,9 @@ public class WorldGenBigTree extends WorldGenerator
     /**
      * Places a line of the specified block ID into the world from the first coordinate triplet to the second.
      */
-    void placeBlockLine(int[] par1ArrayOfInteger, int[] par2ArrayOfInteger, int par3)
+    void placeBlockLine(final int[] par1ArrayOfInteger, final int[] par2ArrayOfInteger, final int par3)
     {
-        int[] aint2 = new int[] {0, 0, 0};
+        final int[] aint2 = {0, 0, 0};
         byte b0 = 0;
         byte b1;
 
@@ -257,9 +257,9 @@ public class WorldGenBigTree extends WorldGenerator
 
         if (aint2[b1] != 0)
         {
-            byte b2 = otherCoordPairs[b1];
-            byte b3 = otherCoordPairs[b1 + 3];
-            byte b4;
+            final byte b2 = otherCoordPairs[b1];
+            final byte b3 = otherCoordPairs[b1 + 3];
+            final byte b4;
 
             if (aint2[b1] > 0)
             {
@@ -270,20 +270,20 @@ public class WorldGenBigTree extends WorldGenerator
                 b4 = -1;
             }
 
-            double d0 = (double)aint2[b2] / (double)aint2[b1];
-            double d1 = (double)aint2[b3] / (double)aint2[b1];
-            int[] aint3 = new int[] {0, 0, 0};
+            final double d0 = (double)aint2[b2] / (double)aint2[b1];
+            final double d1 = (double)aint2[b3] / (double)aint2[b1];
+            final int[] aint3 = {0, 0, 0};
             int j = 0;
 
-            for (int k = aint2[b1] + b4; j != k; j += b4)
+            for (final int k = aint2[b1] + b4; j != k; j += b4)
             {
                 aint3[b1] = MathHelper.floor_double((double)(par1ArrayOfInteger[b1] + j) + 0.5D);
                 aint3[b2] = MathHelper.floor_double((double)par1ArrayOfInteger[b2] + (double)j * d0 + 0.5D);
                 aint3[b3] = MathHelper.floor_double((double)par1ArrayOfInteger[b3] + (double)j * d1 + 0.5D);
                 byte b5 = 0;
-                int l = Math.abs(aint3[0] - par1ArrayOfInteger[0]);
-                int i1 = Math.abs(aint3[2] - par1ArrayOfInteger[2]);
-                int j1 = Math.max(l, i1);
+                final int l = Math.abs(aint3[0] - par1ArrayOfInteger[0]);
+                final int i1 = Math.abs(aint3[2] - par1ArrayOfInteger[2]);
+                final int j1 = Math.max(l, i1);
 
                 if (j1 > 0)
                 {
@@ -309,11 +309,11 @@ public class WorldGenBigTree extends WorldGenerator
     {
         int i = 0;
 
-        for (int j = this.leafNodes.length; i < j; ++i)
+        for (final int j = this.leafNodes.length; i < j; ++i)
         {
-            int k = this.leafNodes[i][0];
-            int l = this.leafNodes[i][1];
-            int i1 = this.leafNodes[i][2];
+            final int k = this.leafNodes[i][0];
+            final int l = this.leafNodes[i][1];
+            final int i1 = this.leafNodes[i][2];
             this.generateLeafNode(k, l, i1);
         }
     }
@@ -321,7 +321,7 @@ public class WorldGenBigTree extends WorldGenerator
     /**
      * Indicates whether or not a leaf node requires additional wood to be added to preserve integrity.
      */
-    boolean leafNodeNeedsBase(int par1)
+    boolean leafNodeNeedsBase(final int par1)
     {
         return (double)par1 >= (double)this.heightLimit * 0.2D;
     }
@@ -332,12 +332,12 @@ public class WorldGenBigTree extends WorldGenerator
      */
     void generateTrunk()
     {
-        int i = this.basePos[0];
-        int j = this.basePos[1];
-        int k = this.basePos[1] + this.height;
-        int l = this.basePos[2];
-        int[] aint = new int[] {i, j, l};
-        int[] aint1 = new int[] {i, k, l};
+        final int i = this.basePos[0];
+        final int j = this.basePos[1];
+        final int k = this.basePos[1] + this.height;
+        final int l = this.basePos[2];
+        final int[] aint = {i, j, l};
+        final int[] aint1 = {i, k, l};
         this.placeBlockLine(aint, aint1, Block.wood.blockID);
 
         if (this.trunkSize == 2)
@@ -360,14 +360,14 @@ public class WorldGenBigTree extends WorldGenerator
     void generateLeafNodeBases()
     {
         int i = 0;
-        int j = this.leafNodes.length;
+        final int j = this.leafNodes.length;
 
-        for (int[] aint = new int[] {this.basePos[0], this.basePos[1], this.basePos[2]}; i < j; ++i)
+        for (final int[] aint = {this.basePos[0], this.basePos[1], this.basePos[2]}; i < j; ++i)
         {
-            int[] aint1 = this.leafNodes[i];
-            int[] aint2 = new int[] {aint1[0], aint1[1], aint1[2]};
+            final int[] aint1 = this.leafNodes[i];
+            final int[] aint2 = {aint1[0], aint1[1], aint1[2]};
             aint[1] = aint1[3];
-            int k = aint[1] - this.basePos[1];
+            final int k = aint[1] - this.basePos[1];
 
             if (this.leafNodeNeedsBase(k))
             {
@@ -380,9 +380,9 @@ public class WorldGenBigTree extends WorldGenerator
      * Checks a line of blocks in the world from the first coordinate to triplet to the second, returning the distance
      * (in blocks) before a non-air, non-leaf block is encountered and/or the end is encountered.
      */
-    int checkBlockLine(int[] par1ArrayOfInteger, int[] par2ArrayOfInteger)
+    int checkBlockLine(final int[] par1ArrayOfInteger, final int[] par2ArrayOfInteger)
     {
-        int[] aint2 = new int[] {0, 0, 0};
+        final int[] aint2 = {0, 0, 0};
         byte b0 = 0;
         byte b1;
 
@@ -402,9 +402,9 @@ public class WorldGenBigTree extends WorldGenerator
         }
         else
         {
-            byte b2 = otherCoordPairs[b1];
-            byte b3 = otherCoordPairs[b1 + 3];
-            byte b4;
+            final byte b2 = otherCoordPairs[b1];
+            final byte b3 = otherCoordPairs[b1 + 3];
+            final byte b4;
 
             if (aint2[b1] > 0)
             {
@@ -415,19 +415,19 @@ public class WorldGenBigTree extends WorldGenerator
                 b4 = -1;
             }
 
-            double d0 = (double)aint2[b2] / (double)aint2[b1];
-            double d1 = (double)aint2[b3] / (double)aint2[b1];
-            int[] aint3 = new int[] {0, 0, 0};
+            final double d0 = (double)aint2[b2] / (double)aint2[b1];
+            final double d1 = (double)aint2[b3] / (double)aint2[b1];
+            final int[] aint3 = {0, 0, 0};
             int i = 0;
-            int j;
+            final int j;
 
             for (j = aint2[b1] + b4; i != j; i += b4)
             {
                 aint3[b1] = par1ArrayOfInteger[b1] + i;
                 aint3[b2] = MathHelper.floor_double((double)par1ArrayOfInteger[b2] + (double)i * d0);
                 aint3[b3] = MathHelper.floor_double((double)par1ArrayOfInteger[b3] + (double)i * d1);
-                int k = this.worldObj.getBlockId(aint3[0], aint3[1], aint3[2]);
-                Block block = Block.blocksList[k];
+                final int k = this.worldObj.getBlockId(aint3[0], aint3[1], aint3[2]);
+                final Block block = Block.blocksList[k];
 
                 if ((block != null &&
                    !block.isAirBlock(worldObj, aint3[0], aint3[1], aint3[2]) && 
@@ -448,19 +448,19 @@ public class WorldGenBigTree extends WorldGenerator
      */
     boolean validTreeLocation()
     {
-        int[] aint = new int[] {this.basePos[0], this.basePos[1], this.basePos[2]};
-        int[] aint1 = new int[] {this.basePos[0], this.basePos[1] + this.heightLimit - 1, this.basePos[2]};
-        int i = this.worldObj.getBlockId(this.basePos[0], this.basePos[1] - 1, this.basePos[2]);
+        final int[] aint = {this.basePos[0], this.basePos[1], this.basePos[2]};
+        final int[] aint1 = {this.basePos[0], this.basePos[1] + this.heightLimit - 1, this.basePos[2]};
+        final int i = this.worldObj.getBlockId(this.basePos[0], this.basePos[1] - 1, this.basePos[2]);
 
-        Block soil = Block.blocksList[i];
-        boolean isValidSoil = (soil != null && soil.canSustainPlant(worldObj, basePos[0], basePos[1] - 1, basePos[2], ForgeDirection.UP, (BlockSapling)Block.sapling));
+        final Block soil = Block.blocksList[i];
+        final boolean isValidSoil = (soil != null && soil.canSustainPlant(worldObj, basePos[0], basePos[1] - 1, basePos[2], ForgeDirection.UP, (BlockSapling)Block.sapling));
         if (!isValidSoil)
         {
             return false;
         }
         else
         {
-            int j = this.checkBlockLine(aint, aint1);
+            final int j = this.checkBlockLine(aint, aint1);
 
             if (j == -1)
             {
@@ -481,7 +481,7 @@ public class WorldGenBigTree extends WorldGenerator
     /**
      * Rescales the generator settings, only used in WorldGenBigTree
      */
-    public void setScale(double par1, double par3, double par5)
+    public void setScale(final double par1, final double par3, final double par5)
     {
         this.heightLimitLimit = (int)(par1 * 12.0D);
 
@@ -494,10 +494,10 @@ public class WorldGenBigTree extends WorldGenerator
         this.leafDensity = par5;
     }
 
-    public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
+    public boolean generate(final World par1World, final Random par2Random, final int par3, final int par4, final int par5)
     {
         this.worldObj = par1World;
-        long l = par2Random.nextLong();
+        final long l = par2Random.nextLong();
         this.rand.setSeed(l);
         this.basePos[0] = par3;
         this.basePos[1] = par4;

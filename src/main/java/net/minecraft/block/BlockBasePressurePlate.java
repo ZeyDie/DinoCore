@@ -17,7 +17,7 @@ public abstract class BlockBasePressurePlate extends Block
 {
     private String pressurePlateIconName;
 
-    protected BlockBasePressurePlate(int par1, String par2Str, Material par3Material)
+    protected BlockBasePressurePlate(final int par1, final String par2Str, final Material par3Material)
     {
         super(par1, par3Material);
         this.pressurePlateIconName = par2Str;
@@ -29,15 +29,15 @@ public abstract class BlockBasePressurePlate extends Block
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         this.func_94353_c_(par1IBlockAccess.getBlockMetadata(par2, par3, par4));
     }
 
-    protected void func_94353_c_(int par1)
+    protected void func_94353_c_(final int par1)
     {
-        boolean flag = this.getPowerSupply(par1) > 0;
-        float f = 0.0625F;
+        final boolean flag = this.getPowerSupply(par1) > 0;
+        final float f = 0.0625F;
 
         if (flag)
         {
@@ -52,7 +52,7 @@ public abstract class BlockBasePressurePlate extends Block
     /**
      * How many world ticks before ticking
      */
-    public int tickRate(World par1World)
+    public int tickRate(final World par1World)
     {
         return 20;
     }
@@ -61,7 +61,7 @@ public abstract class BlockBasePressurePlate extends Block
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4)
     {
         return null;
     }
@@ -83,7 +83,7 @@ public abstract class BlockBasePressurePlate extends Block
         return false;
     }
 
-    public boolean getBlocksMovement(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public boolean getBlocksMovement(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         return true;
     }
@@ -91,7 +91,7 @@ public abstract class BlockBasePressurePlate extends Block
     /**
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
      */
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
+    public boolean canPlaceBlockAt(final World par1World, final int par2, final int par3, final int par4)
     {
         return par1World.doesBlockHaveSolidTopSurface(par2, par3 - 1, par4) || BlockFence.isIdAFence(par1World.getBlockId(par2, par3 - 1, par4));
     }
@@ -100,7 +100,7 @@ public abstract class BlockBasePressurePlate extends Block
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         boolean flag = false;
 
@@ -119,11 +119,11 @@ public abstract class BlockBasePressurePlate extends Block
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (!par1World.isRemote)
         {
-            int l = this.getPowerSupply(par1World.getBlockMetadata(par2, par3, par4));
+            final int l = this.getPowerSupply(par1World.getBlockMetadata(par2, par3, par4));
 
             if (l > 0)
             {
@@ -135,11 +135,11 @@ public abstract class BlockBasePressurePlate extends Block
     /**
      * Triggered whenever an entity collides with this block (enters into the block). Args: world, x, y, z, entity
      */
-    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
+    public void onEntityCollidedWithBlock(final World par1World, final int par2, final int par3, final int par4, final Entity par5Entity)
     {
         if (!par1World.isRemote)
         {
-            int l = this.getPowerSupply(par1World.getBlockMetadata(par2, par3, par4));
+            final int l = this.getPowerSupply(par1World.getBlockMetadata(par2, par3, par4));
 
             if (l == 0)
             {
@@ -151,18 +151,18 @@ public abstract class BlockBasePressurePlate extends Block
     /**
      * Checks if there are mobs on the plate. If a mob is on the plate and it is off, it turns it on, and vice versa.
      */
-    protected void setStateIfMobInteractsWithPlate(World par1World, int par2, int par3, int par4, int par5)
+    protected void setStateIfMobInteractsWithPlate(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         int i1 = this.getPlateState(par1World, par2, par3, par4);
-        boolean flag = par5 > 0;
+        final boolean flag = par5 > 0;
         boolean flag1 = i1 > 0;
         // CraftBukkit start - Interact Pressure Plate
-        org.bukkit.World bworld = par1World.getWorld();
-        org.bukkit.plugin.PluginManager manager = par1World.getServer().getPluginManager();
+        final org.bukkit.World bworld = par1World.getWorld();
+        final org.bukkit.plugin.PluginManager manager = par1World.getServer().getPluginManager();
 
         if (flag != flag1)
         {
-            BlockRedstoneEvent eventRedstone = new BlockRedstoneEvent(bworld.getBlockAt(par2, par3, par4), par5, i1);
+            final BlockRedstoneEvent eventRedstone = new BlockRedstoneEvent(bworld.getBlockAt(par2, par3, par4), par5, i1);
             manager.callEvent(eventRedstone);
             flag1 = eventRedstone.getNewCurrent() > 0;
             i1 = eventRedstone.getNewCurrent();
@@ -191,9 +191,9 @@ public abstract class BlockBasePressurePlate extends Block
         }
     }
 
-    protected AxisAlignedBB getSensitiveAABB(int par1, int par2, int par3)
+    protected AxisAlignedBB getSensitiveAABB(final int par1, final int par2, final int par3)
     {
-        float f = 0.125F;
+        final float f = 0.125F;
         return AxisAlignedBB.getAABBPool().getAABB((double)((float)par1 + f), (double)par2, (double)((float)par3 + f), (double)((float)(par1 + 1) - f), (double)par2 + 0.25D, (double)((float)(par3 + 1) - f));
     }
 
@@ -202,7 +202,7 @@ public abstract class BlockBasePressurePlate extends Block
      * different metadata value, but before the new metadata value is set. Args: World, x, y, z, old block ID, old
      * metadata
      */
-    public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    public void breakBlock(final World par1World, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         if (this.getPowerSupply(par6) > 0)
         {
@@ -212,7 +212,7 @@ public abstract class BlockBasePressurePlate extends Block
         super.breakBlock(par1World, par2, par3, par4, par5, par6);
     }
 
-    protected void func_94354_b_(World par1World, int par2, int par3, int par4)
+    protected void func_94354_b_(final World par1World, final int par2, final int par3, final int par4)
     {
         par1World.notifyBlocksOfNeighborChange(par2, par3, par4, this.blockID);
         par1World.notifyBlocksOfNeighborChange(par2, par3 - 1, par4, this.blockID);
@@ -223,7 +223,7 @@ public abstract class BlockBasePressurePlate extends Block
      * returns true, standard redstone propagation rules will apply instead and this will not be called. Args: World, X,
      * Y, Z, side. Note that the side is reversed - eg it is 1 (up) when checking the bottom of the block.
      */
-    public int isProvidingWeakPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public int isProvidingWeakPower(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
         return this.getPowerSupply(par1IBlockAccess.getBlockMetadata(par2, par3, par4));
     }
@@ -232,7 +232,7 @@ public abstract class BlockBasePressurePlate extends Block
      * Returns true if the block is emitting direct/strong redstone power on the specified side. Args: World, X, Y, Z,
      * side. Note that the side is reversed - eg it is 1 (up) when checking the bottom of the block.
      */
-    public int isProvidingStrongPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public int isProvidingStrongPower(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
         return par5 == 1 ? this.getPowerSupply(par1IBlockAccess.getBlockMetadata(par2, par3, par4)) : 0;
     }
@@ -250,9 +250,9 @@ public abstract class BlockBasePressurePlate extends Block
      */
     public void setBlockBoundsForItemRender()
     {
-        float f = 0.5F;
-        float f1 = 0.125F;
-        float f2 = 0.5F;
+        final float f = 0.5F;
+        final float f1 = 0.125F;
+        final float f2 = 0.5F;
         this.setBlockBounds(0.5F - f, 0.5F - f1, 0.5F - f2, 0.5F + f, 0.5F + f1, 0.5F + f2);
     }
 
@@ -287,7 +287,7 @@ public abstract class BlockBasePressurePlate extends Block
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.blockIcon = par1IconRegister.registerIcon(this.pressurePlateIconName);
     }

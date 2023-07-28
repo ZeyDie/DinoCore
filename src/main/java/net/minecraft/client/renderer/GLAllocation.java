@@ -20,14 +20,14 @@ public class GLAllocation
     /**
      * Generates the specified number of display lists and returns the first index.
      */
-    public static synchronized int generateDisplayLists(int par0)
+    public static synchronized int generateDisplayLists(final int par0)
     {
-        int j = GL11.glGenLists(par0);
+        final int j = GL11.glGenLists(par0);
         field_74531_a.put(Integer.valueOf(j), Integer.valueOf(par0));
         return j;
     }
 
-    public static synchronized void deleteDisplayLists(int par0)
+    public static synchronized void deleteDisplayLists(final int par0)
     {
         GL11.glDeleteLists(par0, ((Integer)field_74531_a.remove(Integer.valueOf(par0))).intValue());
     }
@@ -47,11 +47,11 @@ public class GLAllocation
      */
     public static synchronized void deleteTexturesAndDisplayLists()
     {
-        Iterator iterator = field_74531_a.entrySet().iterator();
+        final Iterator iterator = field_74531_a.entrySet().iterator();
 
         while (iterator.hasNext())
         {
-            Entry entry = (Entry)iterator.next();
+            final Entry entry = (Entry)iterator.next();
             GL11.glDeleteLists(((Integer)entry.getKey()).intValue(), ((Integer)entry.getValue()).intValue());
         }
 
@@ -62,7 +62,7 @@ public class GLAllocation
     /**
      * Creates and returns a direct byte buffer with the specified capacity. Applies native ordering to speed up access.
      */
-    public static synchronized ByteBuffer createDirectByteBuffer(int par0)
+    public static synchronized ByteBuffer createDirectByteBuffer(final int par0)
     {
         return ByteBuffer.allocateDirect(par0).order(ByteOrder.nativeOrder());
     }
@@ -70,7 +70,7 @@ public class GLAllocation
     /**
      * Creates and returns a direct int buffer with the specified capacity. Applies native ordering to speed up access.
      */
-    public static IntBuffer createDirectIntBuffer(int par0)
+    public static IntBuffer createDirectIntBuffer(final int par0)
     {
         return createDirectByteBuffer(par0 << 2).asIntBuffer();
     }
@@ -79,7 +79,7 @@ public class GLAllocation
      * Creates and returns a direct float buffer with the specified capacity. Applies native ordering to speed up
      * access.
      */
-    public static FloatBuffer createDirectFloatBuffer(int par0)
+    public static FloatBuffer createDirectFloatBuffer(final int par0)
     {
         return createDirectByteBuffer(par0 << 2).asFloatBuffer();
     }

@@ -11,7 +11,7 @@ import org.bukkit.inventory.InventoryView;
 public class InventoryCloseEvent extends InventoryEvent {
     private static final HandlerList handlers = new HandlerList();
 
-    public InventoryCloseEvent(InventoryView transaction) {
+    public InventoryCloseEvent(final InventoryView transaction) {
         super(transaction);
     }
 

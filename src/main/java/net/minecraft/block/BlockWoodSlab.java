@@ -14,9 +14,9 @@ import java.util.Random;
 public class BlockWoodSlab extends BlockHalfSlab
 {
     /** The type of tree this slab came from. */
-    public static final String[] woodType = new String[] {"oak", "spruce", "birch", "jungle"};
+    public static final String[] woodType = {"oak", "spruce", "birch", "jungle"};
 
-    public BlockWoodSlab(int par1, boolean par2)
+    public BlockWoodSlab(final int par1, final boolean par2)
     {
         super(par1, par2, Material.wood);
         this.setCreativeTab(CreativeTabs.tabBlock);
@@ -27,7 +27,7 @@ public class BlockWoodSlab extends BlockHalfSlab
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
         return Block.planks.getIcon(par1, par2 & 7);
     }
@@ -35,7 +35,7 @@ public class BlockWoodSlab extends BlockHalfSlab
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return Block.woodSingleSlab.blockID;
     }
@@ -44,7 +44,7 @@ public class BlockWoodSlab extends BlockHalfSlab
      * Returns an item stack containing a single instance of the current block type. 'i' is the block's subtype/damage
      * and is ignored for blocks which do not support subtypes. Blocks which cannot be harvested should return null.
      */
-    protected ItemStack createStackedBlock(int par1)
+    protected ItemStack createStackedBlock(final int par1)
     {
         return new ItemStack(Block.woodSingleSlab.blockID, 2, par1 & 7);
     }
@@ -54,12 +54,13 @@ public class BlockWoodSlab extends BlockHalfSlab
      */
     public String getFullSlabName(int par1)
     {
-        if (par1 < 0 || par1 >= woodType.length)
+        int par11 = par1;
+        if (par11 < 0 || par11 >= woodType.length)
         {
-            par1 = 0;
+            par11 = 0;
         }
 
-        return super.getUnlocalizedName() + "." + woodType[par1];
+        return super.getUnlocalizedName() + "." + woodType[par11];
     }
 
     @SideOnly(Side.CLIENT)
@@ -67,7 +68,7 @@ public class BlockWoodSlab extends BlockHalfSlab
     /**
      * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
      */
-    public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubBlocks(final int par1, final CreativeTabs par2CreativeTabs, final List par3List)
     {
         if (par1 != Block.woodDoubleSlab.blockID)
         {
@@ -84,5 +85,5 @@ public class BlockWoodSlab extends BlockHalfSlab
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister) {}
+    public void registerIcons(final IconRegister par1IconRegister) {}
 }

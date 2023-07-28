@@ -8,24 +8,24 @@ public class PositionTextureVertex
     public float texturePositionX;
     public float texturePositionY;
 
-    public PositionTextureVertex(float par1, float par2, float par3, float par4, float par5)
+    public PositionTextureVertex(final float par1, final float par2, final float par3, final float par4, final float par5)
     {
         this(Vec3.createVectorHelper((double)par1, (double)par2, (double)par3), par4, par5);
     }
 
-    public PositionTextureVertex setTexturePosition(float par1, float par2)
+    public PositionTextureVertex setTexturePosition(final float par1, final float par2)
     {
         return new PositionTextureVertex(this, par1, par2);
     }
 
-    public PositionTextureVertex(PositionTextureVertex par1PositionTextureVertex, float par2, float par3)
+    public PositionTextureVertex(final PositionTextureVertex par1PositionTextureVertex, final float par2, final float par3)
     {
         this.vector3D = par1PositionTextureVertex.vector3D;
         this.texturePositionX = par2;
         this.texturePositionY = par3;
     }
 
-    public PositionTextureVertex(Vec3 par1Vec3, float par2, float par3)
+    public PositionTextureVertex(final Vec3 par1Vec3, final float par2, final float par3)
     {
         this.vector3D = par1Vec3;
         this.texturePositionX = par2;

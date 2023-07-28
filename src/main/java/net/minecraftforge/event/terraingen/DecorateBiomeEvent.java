@@ -12,7 +12,7 @@ public class DecorateBiomeEvent extends Event
     public final int chunkX;
     public final int chunkZ;
     
-    public DecorateBiomeEvent(World world, Random rand, int worldX, int worldZ)
+    public DecorateBiomeEvent(final World world, final Random rand, final int worldX, final int worldZ)
     {
         this.world = world;
         this.rand = rand;
@@ -22,7 +22,7 @@ public class DecorateBiomeEvent extends Event
     
     public static class Pre extends DecorateBiomeEvent
     {
-        public Pre(World world, Random rand, int worldX, int worldZ)
+        public Pre(final World world, final Random rand, final int worldX, final int worldZ)
         {
             super(world, rand, worldX, worldZ);
         }
@@ -30,7 +30,7 @@ public class DecorateBiomeEvent extends Event
     
     public static class Post extends DecorateBiomeEvent
     {
-        public Post(World world, Random rand, int worldX, int worldZ)
+        public Post(final World world, final Random rand, final int worldX, final int worldZ)
         {
             super(world, rand, worldX, worldZ);
         }
@@ -50,7 +50,7 @@ public class DecorateBiomeEvent extends Event
         
         public final EventType type;
         
-        public Decorate(World world, Random rand, int worldX, int worldZ, EventType type)
+        public Decorate(final World world, final Random rand, final int worldX, final int worldZ, final EventType type)
         {
             super(world, rand, worldX, worldZ);
             this.type = type;

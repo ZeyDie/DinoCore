@@ -11,13 +11,13 @@ public class ExactMatchConversationCanceller implements ConversationCanceller {
      *
      * @param escapeSequence The string that, if entered by the user, will cancel the conversation.
      */
-    public ExactMatchConversationCanceller(String escapeSequence) {
+    public ExactMatchConversationCanceller(final String escapeSequence) {
         this.escapeSequence = escapeSequence;
     }
     
-    public void setConversation(Conversation conversation) {}
+    public void setConversation(final Conversation conversation) {}
 
-    public boolean cancelBasedOnInput(ConversationContext context, String input) {
+    public boolean cancelBasedOnInput(final ConversationContext context, final String input) {
         return input.equals(escapeSequence);
     }
 

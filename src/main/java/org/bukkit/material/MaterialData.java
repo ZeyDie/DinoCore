@@ -60,7 +60,7 @@ public class MaterialData implements Cloneable {
      * @deprecated Magic value
      */
     @Deprecated
-    public void setData(byte data) {
+    public void setData(final byte data) {
         this.data = data;
     }
 
@@ -99,7 +99,7 @@ public class MaterialData implements Cloneable {
      * @param amount The stack size of the new stack
      * @return New ItemStack containing a copy of this MaterialData
      */
-    public ItemStack toItemStack(int amount) {
+    public ItemStack toItemStack(final int amount) {
         return new ItemStack(type, amount, data);
     }
 
@@ -114,9 +114,9 @@ public class MaterialData implements Cloneable {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj != null && obj instanceof MaterialData) {
-            MaterialData md = (MaterialData) obj;
+            final MaterialData md = (MaterialData) obj;
 
             return (md.getItemTypeId() == getItemTypeId() && md.getData() == getData());
         } else {
@@ -128,7 +128,7 @@ public class MaterialData implements Cloneable {
     public MaterialData clone() {
         try {
             return (MaterialData) super.clone();
-        } catch (CloneNotSupportedException e) {
+        } catch (final CloneNotSupportedException e) {
             throw new Error(e);
         }
     }

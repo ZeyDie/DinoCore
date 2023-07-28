@@ -8,7 +8,7 @@ import net.minecraftforge.event.Cancelable;
 public class LivingDeathEvent extends LivingEvent
 {
     public final DamageSource source;
-    public LivingDeathEvent(EntityLivingBase entity, DamageSource source)
+    public LivingDeathEvent(final EntityLivingBase entity, final DamageSource source)
     {
         super(entity);
         this.source = source;

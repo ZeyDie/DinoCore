@@ -22,7 +22,7 @@ public class EntityAIMoveThroughVillage extends EntityAIBase
     private boolean isNocturnal;
     private List doorList = new ArrayList();
 
-    public EntityAIMoveThroughVillage(EntityCreature par1EntityCreature, double par2, boolean par4)
+    public EntityAIMoveThroughVillage(final EntityCreature par1EntityCreature, final double par2, final boolean par4)
     {
         this.theEntity = par1EntityCreature;
         this.movementSpeed = par2;
@@ -43,7 +43,7 @@ public class EntityAIMoveThroughVillage extends EntityAIBase
         }
         else
         {
-            Village village = this.theEntity.worldObj.villageCollectionObj.findNearestVillage(MathHelper.floor_double(this.theEntity.posX), MathHelper.floor_double(this.theEntity.posY), MathHelper.floor_double(this.theEntity.posZ), 0);
+            final Village village = this.theEntity.worldObj.villageCollectionObj.findNearestVillage(MathHelper.floor_double(this.theEntity.posX), MathHelper.floor_double(this.theEntity.posY), MathHelper.floor_double(this.theEntity.posZ), 0);
 
             if (village == null)
             {
@@ -59,7 +59,7 @@ public class EntityAIMoveThroughVillage extends EntityAIBase
                 }
                 else
                 {
-                    boolean flag = this.theEntity.getNavigator().getCanBreakDoors();
+                    final boolean flag = this.theEntity.getNavigator().getCanBreakDoors();
                     this.theEntity.getNavigator().setBreakDoors(false);
                     this.entityPathNavigate = this.theEntity.getNavigator().getPathToXYZ((double)this.doorInfo.posX, (double)this.doorInfo.posY, (double)this.doorInfo.posZ);
                     this.theEntity.getNavigator().setBreakDoors(flag);
@@ -70,7 +70,7 @@ public class EntityAIMoveThroughVillage extends EntityAIBase
                     }
                     else
                     {
-                        Vec3 vec3 = RandomPositionGenerator.findRandomTargetBlockTowards(this.theEntity, 10, 7, this.theEntity.worldObj.getWorldVec3Pool().getVecFromPool((double)this.doorInfo.posX, (double)this.doorInfo.posY, (double)this.doorInfo.posZ));
+                        final Vec3 vec3 = RandomPositionGenerator.findRandomTargetBlockTowards(this.theEntity, 10, 7, this.theEntity.worldObj.getWorldVec3Pool().getVecFromPool((double)this.doorInfo.posX, (double)this.doorInfo.posY, (double)this.doorInfo.posZ));
 
                         if (vec3 == null)
                         {
@@ -100,7 +100,7 @@ public class EntityAIMoveThroughVillage extends EntityAIBase
         }
         else
         {
-            float f = this.theEntity.width + 4.0F;
+            final float f = this.theEntity.width + 4.0F;
             return this.theEntity.getDistanceSq((double)this.doorInfo.posX, (double)this.doorInfo.posY, (double)this.doorInfo.posZ) > (double)(f * f);
         }
     }
@@ -124,17 +124,17 @@ public class EntityAIMoveThroughVillage extends EntityAIBase
         }
     }
 
-    private VillageDoorInfo func_75412_a(Village par1Village)
+    private VillageDoorInfo func_75412_a(final Village par1Village)
     {
         VillageDoorInfo villagedoorinfo = null;
         int i = Integer.MAX_VALUE;
-        List list = par1Village.getVillageDoorInfoList();
-        Iterator iterator = list.iterator();
+        final List list = par1Village.getVillageDoorInfoList();
+        final Iterator iterator = list.iterator();
 
         while (iterator.hasNext())
         {
-            VillageDoorInfo villagedoorinfo1 = (VillageDoorInfo)iterator.next();
-            int j = villagedoorinfo1.getDistanceSquared(MathHelper.floor_double(this.theEntity.posX), MathHelper.floor_double(this.theEntity.posY), MathHelper.floor_double(this.theEntity.posZ));
+            final VillageDoorInfo villagedoorinfo1 = (VillageDoorInfo)iterator.next();
+            final int j = villagedoorinfo1.getDistanceSquared(MathHelper.floor_double(this.theEntity.posX), MathHelper.floor_double(this.theEntity.posY), MathHelper.floor_double(this.theEntity.posZ));
 
             if (j < i && !this.func_75413_a(villagedoorinfo1))
             {
@@ -146,9 +146,9 @@ public class EntityAIMoveThroughVillage extends EntityAIBase
         return villagedoorinfo;
     }
 
-    private boolean func_75413_a(VillageDoorInfo par1VillageDoorInfo)
+    private boolean func_75413_a(final VillageDoorInfo par1VillageDoorInfo)
     {
-        Iterator iterator = this.doorList.iterator();
+        final Iterator iterator = this.doorList.iterator();
         VillageDoorInfo villagedoorinfo1;
 
         do

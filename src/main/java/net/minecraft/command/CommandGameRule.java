@@ -21,20 +21,20 @@ public class CommandGameRule extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.gamerule.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
-        String s;
+        final String s;
 
         if (par2ArrayOfStr.length == 2)
         {
             s = par2ArrayOfStr[0];
-            String s1 = par2ArrayOfStr[1];
-            GameRules gamerules = this.getGameRules();
+            final String s1 = par2ArrayOfStr[1];
+            final GameRules gamerules = this.getGameRules();
 
             if (gamerules.hasRule(s))
             {
@@ -49,11 +49,11 @@ public class CommandGameRule extends CommandBase
         else if (par2ArrayOfStr.length == 1)
         {
             s = par2ArrayOfStr[0];
-            GameRules gamerules1 = this.getGameRules();
+            final GameRules gamerules1 = this.getGameRules();
 
             if (gamerules1.hasRule(s))
             {
-                String s2 = gamerules1.getGameRuleStringValue(s);
+                final String s2 = gamerules1.getGameRuleStringValue(s);
                 par1ICommandSender.sendChatToPlayer(ChatMessageComponent.createFromText(s).addText(" = ").addText(s2));
             }
             else
@@ -63,7 +63,7 @@ public class CommandGameRule extends CommandBase
         }
         else if (par2ArrayOfStr.length == 0)
         {
-            GameRules gamerules2 = this.getGameRules();
+            final GameRules gamerules2 = this.getGameRules();
             par1ICommandSender.sendChatToPlayer(ChatMessageComponent.createFromText(joinNiceString(gamerules2.getRules())));
         }
         else
@@ -75,7 +75,7 @@ public class CommandGameRule extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public List addTabCompletionOptions(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         return par2ArrayOfStr.length == 1 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, this.getGameRules().getRules()) : (par2ArrayOfStr.length == 2 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, new String[] {"true", "false"}): null);
     }

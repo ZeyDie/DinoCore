@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 
 public abstract class EntityFlying extends EntityLiving
 {
-    public EntityFlying(World par1World)
+    public EntityFlying(final World par1World)
     {
         super(par1World);
     }
@@ -14,18 +14,18 @@ public abstract class EntityFlying extends EntityLiving
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float par1) {}
+    protected void fall(final float par1) {}
 
     /**
      * Takes in the distance the entity has fallen this tick and whether its on the ground to update the fall distance
      * and deal fall damage if landing on the ground.  Args: distanceFallenThisTick, onGround
      */
-    protected void updateFallState(double par1, boolean par3) {}
+    protected void updateFallState(final double par1, final boolean par3) {}
 
     /**
      * Moves the entity based on the specified heading.  Args: strafe, forward
      */
-    public void moveEntityWithHeading(float par1, float par2)
+    public void moveEntityWithHeading(final float par1, final float par2)
     {
         if (this.isInWater())
         {
@@ -50,7 +50,7 @@ public abstract class EntityFlying extends EntityLiving
             if (this.onGround)
             {
                 f2 = 0.54600006F;
-                int i = this.worldObj.getBlockId(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1, MathHelper.floor_double(this.posZ));
+                final int i = this.worldObj.getBlockId(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1, MathHelper.floor_double(this.posZ));
 
                 if (i > 0)
                 {
@@ -58,14 +58,14 @@ public abstract class EntityFlying extends EntityLiving
                 }
             }
 
-            float f3 = 0.16277136F / (f2 * f2 * f2);
+            final float f3 = 0.16277136F / (f2 * f2 * f2);
             this.moveFlying(par1, par2, this.onGround ? 0.1F * f3 : 0.02F);
             f2 = 0.91F;
 
             if (this.onGround)
             {
                 f2 = 0.54600006F;
-                int j = this.worldObj.getBlockId(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1, MathHelper.floor_double(this.posZ));
+                final int j = this.worldObj.getBlockId(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1, MathHelper.floor_double(this.posZ));
 
                 if (j > 0)
                 {
@@ -80,8 +80,8 @@ public abstract class EntityFlying extends EntityLiving
         }
 
         this.prevLimbSwingAmount = this.limbSwingAmount;
-        double d0 = this.posX - this.prevPosX;
-        double d1 = this.posZ - this.prevPosZ;
+        final double d0 = this.posX - this.prevPosX;
+        final double d1 = this.posZ - this.prevPosZ;
         float f4 = MathHelper.sqrt_double(d0 * d0 + d1 * d1) * 4.0F;
 
         if (f4 > 1.0F)

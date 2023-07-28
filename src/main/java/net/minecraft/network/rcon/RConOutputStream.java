@@ -12,7 +12,7 @@ public class RConOutputStream
     /** ByteArrayOutputStream wrapper */
     private DataOutputStream output;
 
-    public RConOutputStream(int par1)
+    public RConOutputStream(final int par1)
     {
         this.byteArrayOutput = new ByteArrayOutputStream(par1);
         this.output = new DataOutputStream(this.byteArrayOutput);
@@ -21,7 +21,7 @@ public class RConOutputStream
     /**
      * Writes the given byte array to the output stream
      */
-    public void writeByteArray(byte[] par1ArrayOfByte) throws IOException
+    public void writeByteArray(final byte[] par1ArrayOfByte) throws IOException
     {
         this.output.write(par1ArrayOfByte, 0, par1ArrayOfByte.length);
     }
@@ -29,7 +29,7 @@ public class RConOutputStream
     /**
      * Writes the given String to the output stream
      */
-    public void writeString(String par1Str) throws IOException
+    public void writeString(final String par1Str) throws IOException
     {
         this.output.writeBytes(par1Str);
         this.output.write(0);
@@ -38,7 +38,7 @@ public class RConOutputStream
     /**
      * Writes the given int to the output stream
      */
-    public void writeInt(int par1) throws IOException
+    public void writeInt(final int par1) throws IOException
     {
         this.output.write(par1);
     }
@@ -46,7 +46,7 @@ public class RConOutputStream
     /**
      * Writes the given short to the output stream
      */
-    public void writeShort(short par1) throws IOException
+    public void writeShort(final short par1) throws IOException
     {
         this.output.writeShort(Short.reverseBytes(par1));
     }

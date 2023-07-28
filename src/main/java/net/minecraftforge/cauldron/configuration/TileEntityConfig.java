@@ -24,7 +24,7 @@ public class TileEntityConfig extends ConfigBase
     public final BoolSetting preventInvalidTileEntityUpdates = new BoolSetting(this, "settings.prevent-invalid-tileentity-updates", true, "Used to determine if a tileentity should tick and if not the TE is added to a ban list. Note: This should help improve performance.");
     /* ======================================================================== */
 
-    public TileEntityConfig(String fileName, String commandName)
+    public TileEntityConfig(final String fileName, final String commandName)
     {
         super(fileName, commandName);
         init();
@@ -51,9 +51,9 @@ public class TileEntityConfig extends ConfigBase
         {
             config = YamlConfiguration.loadConfiguration(configFile);
             String header = HEADER + "\n";
-            for (Setting toggle : settings.values())
+            for (final Setting toggle : settings.values())
             {
-                if (!toggle.description.equals(""))
+                if (!toggle.description.isEmpty())
                     header += "Setting: " + toggle.path + " Default: " + toggle.def + "   # " + toggle.description + "\n";
 
                 config.addDefault(toggle.path, toggle.def);
@@ -65,7 +65,7 @@ public class TileEntityConfig extends ConfigBase
             version = getInt("config-version", 1);
             set("config-version", 1);
 
-            for (TileEntityCache teCache : CauldronHooks.tileEntityCache.values())
+            for (final TileEntityCache teCache : CauldronHooks.tileEntityCache.values())
             {
                 teCache.tickNoPlayers = config.getBoolean( "world-settings." + teCache.worldName + "." + teCache.configPath + ".tick-no-players", config.getBoolean( "world-settings.default." + teCache.configPath + ".tick-no-players") );
                 teCache.tickInterval = config.getInt( "world-settings." + teCache.worldName + "." + teCache.configPath + ".tick-interval", config.getInt( "world-settings.default." + teCache.configPath + ".tick-interval") );
@@ -73,7 +73,7 @@ public class TileEntityConfig extends ConfigBase
             this.saveWorldConfigs();
             this.save();
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
             MinecraftServer.getServer().logSevere("Could not load " + this.configFile);
             ex.printStackTrace();

@@ -16,17 +16,17 @@ public class LowerStringMap implements Map
         return this.internalMap.isEmpty();
     }
 
-    public boolean containsKey(Object par1Obj)
+    public boolean containsKey(final Object par1Obj)
     {
         return this.internalMap.containsKey(par1Obj.toString().toLowerCase());
     }
 
-    public boolean containsValue(Object par1Obj)
+    public boolean containsValue(final Object par1Obj)
     {
         return this.internalMap.containsKey(par1Obj);
     }
 
-    public Object get(Object par1Obj)
+    public Object get(final Object par1Obj)
     {
         return this.internalMap.get(par1Obj.toString().toLowerCase());
     }
@@ -34,23 +34,23 @@ public class LowerStringMap implements Map
     /**
      * a map already defines a general put
      */
-    public Object putLower(String par1Str, Object par2Obj)
+    public Object putLower(final String par1Str, final Object par2Obj)
     {
         return this.internalMap.put(par1Str.toLowerCase(), par2Obj);
     }
 
-    public Object remove(Object par1Obj)
+    public Object remove(final Object par1Obj)
     {
         return this.internalMap.remove(par1Obj.toString().toLowerCase());
     }
 
-    public void putAll(Map par1Map)
+    public void putAll(final Map par1Map)
     {
-        Iterator iterator = par1Map.entrySet().iterator();
+        final Iterator iterator = par1Map.entrySet().iterator();
 
         while (iterator.hasNext())
         {
-            Entry entry = (Entry)iterator.next();
+            final Entry entry = (Entry)iterator.next();
             this.putLower((String)entry.getKey(), entry.getValue());
         }
     }
@@ -75,7 +75,7 @@ public class LowerStringMap implements Map
         return this.internalMap.entrySet();
     }
 
-    public Object put(Object par1Obj, Object par2Obj)
+    public Object put(final Object par1Obj, final Object par2Obj)
     {
         return this.putLower((String)par1Obj, par2Obj);
     }

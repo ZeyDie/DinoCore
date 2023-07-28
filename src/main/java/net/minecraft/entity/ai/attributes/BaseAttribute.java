@@ -6,7 +6,7 @@ public abstract class BaseAttribute implements Attribute
     private final double defaultValue;
     private boolean shouldWatch;
 
-    protected BaseAttribute(String par1Str, double par2)
+    protected BaseAttribute(final String par1Str, final double par2)
     {
         this.field_111115_a = par1Str;
         this.defaultValue = par2;
@@ -32,7 +32,7 @@ public abstract class BaseAttribute implements Attribute
         return this.shouldWatch;
     }
 
-    public BaseAttribute setShouldWatch(boolean par1)
+    public BaseAttribute setShouldWatch(final boolean par1)
     {
         this.shouldWatch = par1;
         return this;

@@ -48,7 +48,7 @@ public abstract class AbstractThread extends Thread {
                     for (final Runnable runnable : runnables)
                         try {
                             runnable.run();
-                        } catch (Exception exception) {
+                        } catch (final Exception exception) {
                             exception.printStackTrace();
                         }
                 }

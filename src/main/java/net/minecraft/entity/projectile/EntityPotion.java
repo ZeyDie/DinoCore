@@ -29,29 +29,29 @@ public class EntityPotion extends EntityThrowable
      */
     public ItemStack potionDamage; // CraftBukkit private --> public
 
-    public EntityPotion(World par1World)
+    public EntityPotion(final World par1World)
     {
         super(par1World);
     }
 
-    public EntityPotion(World par1World, EntityLivingBase par2EntityLivingBase, int par3)
+    public EntityPotion(final World par1World, final EntityLivingBase par2EntityLivingBase, final int par3)
     {
         this(par1World, par2EntityLivingBase, new ItemStack(Item.potion, 1, par3));
     }
 
-    public EntityPotion(World par1World, EntityLivingBase par2EntityLivingBase, ItemStack par3ItemStack)
+    public EntityPotion(final World par1World, final EntityLivingBase par2EntityLivingBase, final ItemStack par3ItemStack)
     {
         super(par1World, par2EntityLivingBase);
         this.potionDamage = par3ItemStack;
     }
 
     @SideOnly(Side.CLIENT)
-    public EntityPotion(World par1World, double par2, double par4, double par6, int par8)
+    public EntityPotion(final World par1World, final double par2, final double par4, final double par6, final int par8)
     {
         this(par1World, par2, par4, par6, new ItemStack(Item.potion, 1, par8));
     }
 
-    public EntityPotion(World par1World, double par2, double par4, double par6, ItemStack par8ItemStack)
+    public EntityPotion(final World par1World, final double par2, final double par4, final double par6, final ItemStack par8ItemStack)
     {
         super(par1World, par2, par4, par6);
         this.potionDamage = par8ItemStack;
@@ -75,7 +75,7 @@ public class EntityPotion extends EntityThrowable
         return -20.0F;
     }
 
-    public void setPotionDamage(int par1)
+    public void setPotionDamage(final int par1)
     {
         if (this.potionDamage == null)
         {
@@ -101,27 +101,27 @@ public class EntityPotion extends EntityThrowable
     /**
      * Called when this EntityThrowable hits a block or entity.
      */
-    protected void onImpact(MovingObjectPosition par1MovingObjectPosition)
+    protected void onImpact(final MovingObjectPosition par1MovingObjectPosition)
     {
         if (!this.worldObj.isRemote)
         {
-            List list = Item.potion.getEffects(this.potionDamage);
+            final List list = Item.potion.getEffects(this.potionDamage);
 
             if (true || list != null && !list.isEmpty())   // CraftBukkit - Call event even if no effects to apply
             {
-                AxisAlignedBB axisalignedbb = this.boundingBox.expand(4.0D, 2.0D, 4.0D);
-                List list1 = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
+                final AxisAlignedBB axisalignedbb = this.boundingBox.expand(4.0D, 2.0D, 4.0D);
+                final List list1 = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
 
                 if (list1 != null)   // CraftBukkit - Run code even if there are no entities around
                 {
-                    Iterator iterator = list1.iterator();
+                    final Iterator iterator = list1.iterator();
                     // CraftBukkit
-                    HashMap<LivingEntity, Double> affected = new HashMap<LivingEntity, Double>();
+                    final HashMap<LivingEntity, Double> affected = new HashMap<LivingEntity, Double>();
 
                     while (iterator.hasNext())
                     {
-                        EntityLivingBase entitylivingbase = (EntityLivingBase)iterator.next();
-                        double d0 = this.getDistanceSqToEntity(entitylivingbase);
+                        final EntityLivingBase entitylivingbase = (EntityLivingBase)iterator.next();
+                        final double d0 = this.getDistanceSqToEntity(entitylivingbase);
 
                         if (d0 < 16.0D)
                         {
@@ -137,26 +137,26 @@ public class EntityPotion extends EntityThrowable
                         }
                     }
 
-                    org.bukkit.event.entity.PotionSplashEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callPotionSplashEvent(this, affected);
+                    final org.bukkit.event.entity.PotionSplashEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callPotionSplashEvent(this, affected);
 
                     if (!event.isCancelled() && list != null && !list.isEmpty())   // do not process effects if there are no effects to process
                     {
-                        for (LivingEntity victim : event.getAffectedEntities())
+                        for (final LivingEntity victim : event.getAffectedEntities())
                         {
                             if (!(victim instanceof CraftLivingEntity))
                             {
                                 continue;
                             }
 
-                            EntityLivingBase entitylivingbase = ((CraftLivingEntity) victim).getHandle();
-                            double d1 = event.getIntensity(victim);
+                            final EntityLivingBase entitylivingbase = ((CraftLivingEntity) victim).getHandle();
+                            final double d1 = event.getIntensity(victim);
                             // CraftBukkit end
-                            Iterator iterator1 = list.iterator();
+                            final Iterator iterator1 = list.iterator();
 
                             while (iterator1.hasNext())
                             {
-                                PotionEffect potioneffect = (PotionEffect)iterator1.next();
-                                int i = potioneffect.getPotionID();
+                                final PotionEffect potioneffect = (PotionEffect)iterator1.next();
+                                final int i = potioneffect.getPotionID();
 
                                 // CraftBukkit start - Abide by PVP settings - for players only!
                                 if (!this.worldObj.pvpMode && this.getThrower() instanceof EntityPlayerMP && entitylivingbase instanceof EntityPlayerMP && entitylivingbase != this.getThrower())
@@ -177,7 +177,7 @@ public class EntityPotion extends EntityThrowable
                                 }
                                 else
                                 {
-                                    int j = (int)(d1 * (double)potioneffect.getDuration() + 0.5D);
+                                    final int j = (int)(d1 * (double)potioneffect.getDuration() + 0.5D);
 
                                     if (j > 20)
                                     {
@@ -198,7 +198,7 @@ public class EntityPotion extends EntityThrowable
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
 
@@ -220,7 +220,7 @@ public class EntityPotion extends EntityThrowable
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
 

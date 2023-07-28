@@ -11,13 +11,13 @@ public class WorldGenHellLava extends WorldGenerator
     private int hellLavaID;
     private boolean field_94524_b;
 
-    public WorldGenHellLava(int par1, boolean par2)
+    public WorldGenHellLava(final int par1, final boolean par2)
     {
         this.hellLavaID = par1;
         this.field_94524_b = par2;
     }
 
-    public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
+    public boolean generate(final World par1World, final Random par2Random, final int par3, final int par4, final int par5)
     {
         if (par1World.getBlockId(par3, par4 + 1, par5) != Block.netherrack.blockID)
         {

@@ -14,7 +14,7 @@ public class EntityAIVillagerMate extends EntityAIBase
     private int matingTimeout;
     Village villageObj;
 
-    public EntityAIVillagerMate(EntityVillager par1EntityVillager)
+    public EntityAIVillagerMate(final EntityVillager par1EntityVillager)
     {
         this.villagerObj = par1EntityVillager;
         this.worldObj = par1EntityVillager.worldObj;
@@ -48,7 +48,7 @@ public class EntityAIVillagerMate extends EntityAIBase
             }
             else
             {
-                Entity entity = this.worldObj.findNearestEntityWithinAABB(EntityVillager.class, this.villagerObj.boundingBox.expand(8.0D, 3.0D, 8.0D), this.villagerObj);
+                final Entity entity = this.worldObj.findNearestEntityWithinAABB(EntityVillager.class, this.villagerObj.boundingBox.expand(8.0D, 3.0D, 8.0D), this.villagerObj);
 
                 if (entity == null)
                 {
@@ -121,14 +121,14 @@ public class EntityAIVillagerMate extends EntityAIBase
         }
         else
         {
-            int i = (int)((double)((float)this.villageObj.getNumVillageDoors()) * 0.35D);
+            final int i = (int)((double)((float)this.villageObj.getNumVillageDoors()) * 0.35D);
             return this.villageObj.getNumVillagers() < i;
         }
     }
 
     private void giveBirth()
     {
-        EntityVillager entityvillager = this.villagerObj.func_90012_b(this.mate);
+        final EntityVillager entityvillager = this.villagerObj.func_90012_b(this.mate);
         this.mate.setGrowingAge(6000);
         this.villagerObj.setGrowingAge(6000);
         entityvillager.setGrowingAge(-24000);

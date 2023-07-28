@@ -11,7 +11,7 @@ class SlotBrewingStandPotion extends Slot
     /** The player that has this container open. */
     private EntityPlayer player;
 
-    public SlotBrewingStandPotion(EntityPlayer par1EntityPlayer, IInventory par2IInventory, int par3, int par4, int par5)
+    public SlotBrewingStandPotion(final EntityPlayer par1EntityPlayer, final IInventory par2IInventory, final int par3, final int par4, final int par5)
     {
         super(par2IInventory, par3, par4, par5);
         this.player = par1EntityPlayer;
@@ -20,7 +20,7 @@ class SlotBrewingStandPotion extends Slot
     /**
      * Check if the stack is a valid item for this slot. Always true beside for the armor slots.
      */
-    public boolean isItemValid(ItemStack par1ItemStack)
+    public boolean isItemValid(final ItemStack par1ItemStack)
     {
         return canHoldPotion(par1ItemStack);
     }
@@ -34,7 +34,7 @@ class SlotBrewingStandPotion extends Slot
         return 1;
     }
 
-    public void onPickupFromSlot(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack)
+    public void onPickupFromSlot(final EntityPlayer par1EntityPlayer, final ItemStack par2ItemStack)
     {
         if (par2ItemStack.getItem() instanceof ItemPotion && par2ItemStack.getItemDamage() > 0)
         {
@@ -47,7 +47,7 @@ class SlotBrewingStandPotion extends Slot
     /**
      * Returns true if this itemstack can be filled with a potion
      */
-    public static boolean canHoldPotion(ItemStack par0ItemStack)
+    public static boolean canHoldPotion(final ItemStack par0ItemStack)
     {
         return par0ItemStack != null && (par0ItemStack.getItem() instanceof ItemPotion || par0ItemStack.itemID == Item.glassBottle.itemID);
     }

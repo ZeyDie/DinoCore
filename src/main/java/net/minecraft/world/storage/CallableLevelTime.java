@@ -6,7 +6,7 @@ class CallableLevelTime implements Callable
 {
     final WorldInfo worldInfoInstance;
 
-    CallableLevelTime(WorldInfo par1WorldInfo)
+    CallableLevelTime(final WorldInfo par1WorldInfo)
     {
         this.worldInfoInstance = par1WorldInfo;
     }

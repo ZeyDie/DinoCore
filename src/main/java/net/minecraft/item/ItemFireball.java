@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 
 public class ItemFireball extends Item
 {
-    public ItemFireball(int par1)
+    public ItemFireball(final int par1)
     {
         super(par1);
         this.setCreativeTab(CreativeTabs.tabMisc);
@@ -17,8 +17,11 @@ public class ItemFireball extends Item
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final World par3World, int par4, int par5, int par6, final int par7, final float par8, final float par9, final float par10)
     {
+        int par51 = par5;
+        int par61 = par6;
+        int par41 = par4;
         if (par3World.isRemote)
         {
             return true;
@@ -27,46 +30,46 @@ public class ItemFireball extends Item
         {
             if (par7 == 0)
             {
-                --par5;
+                --par51;
             }
 
             if (par7 == 1)
             {
-                ++par5;
+                ++par51;
             }
 
             if (par7 == 2)
             {
-                --par6;
+                --par61;
             }
 
             if (par7 == 3)
             {
-                ++par6;
+                ++par61;
             }
 
             if (par7 == 4)
             {
-                --par4;
+                --par41;
             }
 
             if (par7 == 5)
             {
-                ++par4;
+                ++par41;
             }
 
-            if (!par2EntityPlayer.canPlayerEdit(par4, par5, par6, par7, par1ItemStack))
+            if (!par2EntityPlayer.canPlayerEdit(par41, par51, par61, par7, par1ItemStack))
             {
                 return false;
             }
             else
             {
-                int i1 = par3World.getBlockId(par4, par5, par6);
+                final int i1 = par3World.getBlockId(par41, par51, par61);
 
                 if (i1 == 0)
                 {
                     // CraftBukkit start
-                    if (org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callBlockIgniteEvent(par3World, par4, par5, par6, org.bukkit.event.block.BlockIgniteEvent.IgniteCause.FIREBALL, par2EntityPlayer).isCancelled())
+                    if (org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callBlockIgniteEvent(par3World, par41, par51, par61, org.bukkit.event.block.BlockIgniteEvent.IgniteCause.FIREBALL, par2EntityPlayer).isCancelled())
                     {
                         if (!par2EntityPlayer.capabilities.isCreativeMode)
                         {
@@ -77,8 +80,8 @@ public class ItemFireball extends Item
                     }
 
                     // CraftBukkit end
-                    par3World.playSoundEffect((double)par4 + 0.5D, (double)par5 + 0.5D, (double)par6 + 0.5D, "fire.ignite", 1.0F, itemRand.nextFloat() * 0.4F + 0.8F);
-                    par3World.setBlock(par4, par5, par6, Block.fire.blockID);
+                    par3World.playSoundEffect((double) par41 + 0.5D, (double) par51 + 0.5D, (double) par61 + 0.5D, "fire.ignite", 1.0F, itemRand.nextFloat() * 0.4F + 0.8F);
+                    par3World.setBlock(par41, par51, par61, Block.fire.blockID);
                 }
 
                 if (!par2EntityPlayer.capabilities.isCreativeMode)

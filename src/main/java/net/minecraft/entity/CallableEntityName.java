@@ -6,7 +6,7 @@ class CallableEntityName implements Callable
 {
     final Entity theEntity;
 
-    CallableEntityName(Entity par1Entity)
+    CallableEntityName(final Entity par1Entity)
     {
         this.theEntity = par1Entity;
     }

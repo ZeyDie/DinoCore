@@ -21,7 +21,7 @@ import java.io.InputStream;
 public class LZMAInputSupplier implements InputSupplier<InputStream> {
     private InputStream compressedData;
 
-    public LZMAInputSupplier(InputStream compressedData)
+    public LZMAInputSupplier(final InputStream compressedData)
     {
         this.compressedData = compressedData;
     }

@@ -233,7 +233,7 @@ public class Minecraft implements IPlayerUsage
     /** Profiler currently displayed in the debug screen pie chart */
     private String debugProfilerName = "root";
 
-    public Minecraft(Session par1Session, int par2, int par3, boolean par4, boolean par5, File par6File, File par7File, File par8File, Proxy par9Proxy, String par10Str)
+    public Minecraft(final Session par1Session, final int par2, final int par3, final boolean par4, final boolean par5, final File par6File, final File par7File, final File par8File, final Proxy par9Proxy, final String par10Str)
     {
         theMinecraft = this;
         this.mcLogAgent = new LogAgent("Minecraft-Client", " [CLIENT]", (new File(par6File, "output-client.log")).getAbsolutePath());
@@ -260,12 +260,12 @@ public class Minecraft implements IPlayerUsage
 
     private void startTimerHackThread()
     {
-        ThreadClientSleep threadclientsleep = new ThreadClientSleep(this, "Timer hack thread");
+        final ThreadClientSleep threadclientsleep = new ThreadClientSleep(this, "Timer hack thread");
         threadclientsleep.setDaemon(true);
         threadclientsleep.start();
     }
 
-    public void crashed(CrashReport par1CrashReport)
+    public void crashed(final CrashReport par1CrashReport)
     {
         this.hasCrashed = true;
         this.crashReporter = par1CrashReport;
@@ -274,10 +274,10 @@ public class Minecraft implements IPlayerUsage
     /**
      * Wrapper around displayCrashReportInternal
      */
-    public void displayCrashReport(CrashReport par1CrashReport)
+    public void displayCrashReport(final CrashReport par1CrashReport)
     {
-        File file1 = new File(getMinecraft().mcDataDir, "crash-reports");
-        File file2 = new File(file1, "crash-" + (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss")).format(new Date()) + "-client.txt");
+        final File file1 = new File(getMinecraft().mcDataDir, "crash-reports");
+        final File file2 = new File(file1, "crash-" + (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss")).format(new Date()) + "-client.txt");
         System.out.println(par1CrashReport.getCompleteReport());
 
         if (par1CrashReport.getFile() != null)
@@ -297,7 +297,7 @@ public class Minecraft implements IPlayerUsage
         }
     }
 
-    public void setServer(String par1Str, int par2)
+    public void setServer(final String par1Str, final int par2)
     {
         this.serverName = par1Str;
         this.serverPort = par2;
@@ -347,7 +347,7 @@ public class Minecraft implements IPlayerUsage
             {
                 Display.setIcon(new ByteBuffer[] {this.readImage(new File(this.fileAssets, "/icons/icon_16x16.png")), this.readImage(new File(this.fileAssets, "/icons/icon_32x32.png"))});
             }
-            catch (IOException ioexception)
+            catch (final IOException ioexception)
             {
                 ioexception.printStackTrace();
             }
@@ -357,7 +357,7 @@ public class Minecraft implements IPlayerUsage
         {
             ForgeHooksClient.createDisplay();
         }
-        catch (LWJGLException lwjglexception)
+        catch (final LWJGLException lwjglexception)
         {
             lwjglexception.printStackTrace();
 
@@ -365,7 +365,7 @@ public class Minecraft implements IPlayerUsage
             {
                 Thread.sleep(1000L);
             }
-            catch (InterruptedException interruptedexception)
+            catch (final InterruptedException interruptedexception)
             {
                 ;
             }
@@ -459,12 +459,12 @@ public class Minecraft implements IPlayerUsage
 
     public void refreshResources()
     {
-        ArrayList arraylist = Lists.newArrayList(this.defaultResourcePacks);
-        Iterator iterator = this.mcResourcePackRepository.getRepositoryEntries().iterator();
+        final ArrayList arraylist = Lists.newArrayList(this.defaultResourcePacks);
+        final Iterator iterator = this.mcResourcePackRepository.getRepositoryEntries().iterator();
 
         while (iterator.hasNext())
         {
-            ResourcePackRepositoryEntry resourcepackrepositoryentry = (ResourcePackRepositoryEntry)iterator.next();
+            final ResourcePackRepositoryEntry resourcepackrepositoryentry = (ResourcePackRepositoryEntry)iterator.next();
             arraylist.add(resourcepackrepositoryentry.getResourcePack());
         }
 
@@ -482,17 +482,17 @@ public class Minecraft implements IPlayerUsage
         this.defaultResourcePacks.add(this.mcDefaultResourcePack);
     }
 
-    private ByteBuffer readImage(File par1File) throws IOException
+    private ByteBuffer readImage(final File par1File) throws IOException
     {
-        BufferedImage bufferedimage = ImageIO.read(par1File);
-        int[] aint = bufferedimage.getRGB(0, 0, bufferedimage.getWidth(), bufferedimage.getHeight(), (int[])null, 0, bufferedimage.getWidth());
-        ByteBuffer bytebuffer = ByteBuffer.allocate(4 * aint.length);
-        int[] aint1 = aint;
-        int i = aint.length;
+        final BufferedImage bufferedimage = ImageIO.read(par1File);
+        final int[] aint = bufferedimage.getRGB(0, 0, bufferedimage.getWidth(), bufferedimage.getHeight(), (int[])null, 0, bufferedimage.getWidth());
+        final ByteBuffer bytebuffer = ByteBuffer.allocate(4 * aint.length);
+        final int[] aint1 = aint;
+        final int i = aint.length;
 
         for (int j = 0; j < i; ++j)
         {
-            int k = aint1[j];
+            final int k = aint1[j];
             bytebuffer.putInt(k << 8 | k >> 24 & 255);
         }
 
@@ -502,17 +502,17 @@ public class Minecraft implements IPlayerUsage
 
     private void updateDisplayMode() throws LWJGLException
     {
-        HashSet hashset = new HashSet();
+        final HashSet hashset = new HashSet();
         Collections.addAll(hashset, Display.getAvailableDisplayModes());
         DisplayMode displaymode = Display.getDesktopDisplayMode();
 
         if (!hashset.contains(displaymode) && Util.getOSType() == EnumOS.MACOS)
         {
-            Iterator iterator = macDisplayModes.iterator();
+            final Iterator iterator = macDisplayModes.iterator();
 
             while (iterator.hasNext())
             {
-                DisplayMode displaymode1 = (DisplayMode)iterator.next();
+                final DisplayMode displaymode1 = (DisplayMode)iterator.next();
                 boolean flag = true;
                 Iterator iterator1 = hashset.iterator();
                 DisplayMode displaymode2;
@@ -556,7 +556,7 @@ public class Minecraft implements IPlayerUsage
      */
     private void loadScreen() throws LWJGLException
     {
-        ScaledResolution scaledresolution = new ScaledResolution(this.gameSettings, this.displayWidth, this.displayHeight);
+        final ScaledResolution scaledresolution = new ScaledResolution(this.gameSettings, this.displayWidth, this.displayHeight);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
@@ -570,7 +570,7 @@ public class Minecraft implements IPlayerUsage
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_FOG);
         this.renderEngine.bindTexture(locationMojangPng);
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
         tessellator.setColorOpaque_I(16777215);
         tessellator.addVertexWithUV(0.0D, (double)this.displayHeight, 0.0D, 0.0D, 0.0D);
@@ -580,8 +580,8 @@ public class Minecraft implements IPlayerUsage
         tessellator.draw();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         tessellator.setColorOpaque_I(16777215);
-        short short1 = 256;
-        short short2 = 256;
+        final short short1 = 256;
+        final short short2 = 256;
         this.scaledTessellator((scaledresolution.getScaledWidth() - short1) / 2, (scaledresolution.getScaledHeight() - short2) / 2, 0, 0, short1, short2);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_FOG);
@@ -593,11 +593,11 @@ public class Minecraft implements IPlayerUsage
     /**
      * Loads Tessellator with a scaled resolution
      */
-    public void scaledTessellator(int par1, int par2, int par3, int par4, int par5, int par6)
+    public void scaledTessellator(final int par1, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
-        float f = 0.00390625F;
-        float f1 = 0.00390625F;
-        Tessellator tessellator = Tessellator.instance;
+        final float f = 0.00390625F;
+        final float f1 = 0.00390625F;
+        final Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
         tessellator.addVertexWithUV((double)(par1 + 0), (double)(par2 + par6), 0.0D, (double)((float)(par3 + 0) * f), (double)((float)(par4 + par6) * f1));
         tessellator.addVertexWithUV((double)(par1 + par5), (double)(par2 + par6), 0.0D, (double)((float)(par3 + par5) * f), (double)((float)(par4 + par6) * f1));
@@ -619,46 +619,47 @@ public class Minecraft implements IPlayerUsage
      */
     public void displayGuiScreen(GuiScreen par1GuiScreen)
     {
+        GuiScreen par1GuiScreen2 = par1GuiScreen;
         this.statFileWriter.syncStats();
 
-        if (par1GuiScreen == null && this.theWorld == null)
+        if (par1GuiScreen2 == null && this.theWorld == null)
         {
-            par1GuiScreen = new GuiMainMenu();
+            par1GuiScreen2 = new GuiMainMenu();
         }
-        else if (par1GuiScreen == null && this.thePlayer.getHealth() <= 0.0F)
+        else if (par1GuiScreen2 == null && this.thePlayer.getHealth() <= 0.0F)
         {
-            par1GuiScreen = new GuiGameOver();
+            par1GuiScreen2 = new GuiGameOver();
         }
 
-        GuiScreen old = this.currentScreen;
-        GuiOpenEvent event = new GuiOpenEvent(par1GuiScreen);
+        final GuiScreen old = this.currentScreen;
+        final GuiOpenEvent event = new GuiOpenEvent(par1GuiScreen2);
         
         if (MinecraftForge.EVENT_BUS.post(event))
         {
             return;
         }
 
-        par1GuiScreen = event.gui;
-        if (old != null && par1GuiScreen != old)
+        GuiScreen par1GuiScreen1 = event.gui;
+        if (old != null && par1GuiScreen1 != old)
         {
             old.onGuiClosed();
         }
 
-        if (par1GuiScreen instanceof GuiMainMenu)
+        if (par1GuiScreen1 instanceof GuiMainMenu)
         {
             this.gameSettings.showDebugInfo = false;
             this.ingameGUI.getChatGUI().clearChatMessages();
         }
 
-        this.currentScreen = (GuiScreen)par1GuiScreen;
+        this.currentScreen = (GuiScreen) par1GuiScreen1;
 
-        if (par1GuiScreen != null)
+        if (par1GuiScreen1 != null)
         {
             this.setIngameNotInFocus();
-            ScaledResolution scaledresolution = new ScaledResolution(this.gameSettings, this.displayWidth, this.displayHeight);
-            int i = scaledresolution.getScaledWidth();
-            int j = scaledresolution.getScaledHeight();
-            ((GuiScreen)par1GuiScreen).setWorldAndResolution(this, i, j);
+            final ScaledResolution scaledresolution = new ScaledResolution(this.gameSettings, this.displayWidth, this.displayHeight);
+            final int i = scaledresolution.getScaledWidth();
+            final int j = scaledresolution.getScaledHeight();
+            ((GuiScreen) par1GuiScreen1).setWorldAndResolution(this, i, j);
             this.skipRenderWorld = false;
         }
         else
@@ -670,13 +671,13 @@ public class Minecraft implements IPlayerUsage
     /**
      * Checks for an OpenGL error. If there is one, prints the error ID and error string.
      */
-    private void checkGLError(String par1Str)
+    private void checkGLError(final String par1Str)
     {
-        int i = GL11.glGetError();
+        final int i = GL11.glGetError();
 
         if (i != 0)
         {
-            String s1 = GLU.gluErrorString(i);
+            final String s1 = GLU.gluErrorString(i);
             this.getLogAgent().logSevere("########## GL ERROR ##########");
             this.getLogAgent().logSevere("@ " + par1Str);
             this.getLogAgent().logSevere(i + ": " + s1);
@@ -698,7 +699,7 @@ public class Minecraft implements IPlayerUsage
             {
                 this.loadWorld((WorldClient)null);
             }
-            catch (Throwable throwable)
+            catch (final Throwable throwable)
             {
                 ;
             }
@@ -707,7 +708,7 @@ public class Minecraft implements IPlayerUsage
             {
                 GLAllocation.deleteTexturesAndDisplayLists();
             }
-            catch (Throwable throwable1)
+            catch (final Throwable throwable1)
             {
                 ;
             }
@@ -730,13 +731,13 @@ public class Minecraft implements IPlayerUsage
     public void run()
     {
         this.running = true;
-        CrashReport crashreport;
+        final CrashReport crashreport;
 
         try
         {
             this.startGame();
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
             crashreport = CrashReport.makeCrashReport(throwable, "Initializing game");
             crashreport.makeCategory("Initialization");
@@ -766,7 +767,7 @@ public class Minecraft implements IPlayerUsage
                     {
                         this.runGameLoop();
                     }
-                    catch (OutOfMemoryError outofmemoryerror)
+                    catch (final OutOfMemoryError outofmemoryerror)
                     {
                         this.freeMemory();
                         this.displayGuiScreen(new GuiMemoryErrorScreen());
@@ -777,17 +778,17 @@ public class Minecraft implements IPlayerUsage
                 }
             }
         }
-        catch (MinecraftError minecrafterror)
+        catch (final MinecraftError minecrafterror)
         {
         }
-        catch (ReportedException reportedexception)
+        catch (final ReportedException reportedexception)
         {
             this.addGraphicsAndWorldToCrashReport(reportedexception.getCrashReport());
             this.freeMemory();
             reportedexception.printStackTrace();
             this.displayCrashReport(reportedexception.getCrashReport());
         }
-        catch (Throwable throwable1)
+        catch (final Throwable throwable1)
         {
             crashreport = this.addGraphicsAndWorldToCrashReport(new CrashReport("Unexpected error", throwable1));
             this.freeMemory();
@@ -822,7 +823,7 @@ public class Minecraft implements IPlayerUsage
 
         if (this.isGamePaused && this.theWorld != null)
         {
-            float f = this.timer.renderPartialTicks;
+            final float f = this.timer.renderPartialTicks;
             this.timer.updateTimer();
             this.timer.renderPartialTicks = f;
         }
@@ -831,7 +832,7 @@ public class Minecraft implements IPlayerUsage
             this.timer.updateTimer();
         }
 
-        long i = System.nanoTime();
+        final long i = System.nanoTime();
         this.mcProfiler.startSection("tick");
 
         for (int j = 0; j < this.timer.elapsedTicks; ++j)
@@ -840,7 +841,7 @@ public class Minecraft implements IPlayerUsage
         }
 
         this.mcProfiler.endStartSection("preRenderErrors");
-        long k = System.nanoTime() - i;
+        final long k = System.nanoTime() - i;
         this.checkGLError("Pre render");
         RenderBlocks.fancyGrass = this.gameSettings.fancyGraphics;
         this.mcProfiler.endStartSection("sound");
@@ -932,7 +933,7 @@ public class Minecraft implements IPlayerUsage
 
         this.checkGLError("Post render");
         ++this.fpsCounter;
-        boolean flag = this.isGamePaused;
+        final boolean flag = this.isGamePaused;
         this.isGamePaused = this.isSingleplayer() && this.currentScreen != null && this.currentScreen.doesGuiPauseGame() && !this.theIntegratedServer.getPublic();
 
         if (this.isIntegratedServerRunning() && this.thePlayer != null && this.thePlayer.sendQueue != null && this.isGamePaused != flag)
@@ -975,7 +976,7 @@ public class Minecraft implements IPlayerUsage
             memoryReserve = new byte[0];
             this.renderGlobal.deleteAllDisplayLists();
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
             ;
         }
@@ -986,7 +987,7 @@ public class Minecraft implements IPlayerUsage
             AxisAlignedBB.getAABBPool().clearPool();
             this.theWorld.getWorldVec3Pool().clearAndFreeCache();
         }
-        catch (Throwable throwable1)
+        catch (final Throwable throwable1)
         {
             ;
         }
@@ -996,7 +997,7 @@ public class Minecraft implements IPlayerUsage
             System.gc();
             this.loadWorld((WorldClient)null);
         }
-        catch (Throwable throwable2)
+        catch (final Throwable throwable2)
         {
             ;
         }
@@ -1028,17 +1029,18 @@ public class Minecraft implements IPlayerUsage
      */
     private void updateDebugProfilerName(int par1)
     {
-        List list = this.mcProfiler.getProfilingData(this.debugProfilerName);
+        int par11 = par1;
+        final List list = this.mcProfiler.getProfilingData(this.debugProfilerName);
 
         if (list != null && !list.isEmpty())
         {
-            ProfilerResult profilerresult = (ProfilerResult)list.remove(0);
+            final ProfilerResult profilerresult = (ProfilerResult)list.remove(0);
 
-            if (par1 == 0)
+            if (par11 == 0)
             {
-                if (profilerresult.field_76331_c.length() > 0)
+                if (!profilerresult.field_76331_c.isEmpty())
                 {
-                    int j = this.debugProfilerName.lastIndexOf(".");
+                    final int j = this.debugProfilerName.lastIndexOf(".");
 
                     if (j >= 0)
                     {
@@ -1048,27 +1050,27 @@ public class Minecraft implements IPlayerUsage
             }
             else
             {
-                --par1;
+                --par11;
 
-                if (par1 < list.size() && !((ProfilerResult)list.get(par1)).field_76331_c.equals("unspecified"))
+                if (par11 < list.size() && !((ProfilerResult)list.get(par11)).field_76331_c.equals("unspecified"))
                 {
-                    if (this.debugProfilerName.length() > 0)
+                    if (!this.debugProfilerName.isEmpty())
                     {
                         this.debugProfilerName = this.debugProfilerName + ".";
                     }
 
-                    this.debugProfilerName = this.debugProfilerName + ((ProfilerResult)list.get(par1)).field_76331_c;
+                    this.debugProfilerName = this.debugProfilerName + ((ProfilerResult)list.get(par11)).field_76331_c;
                 }
             }
         }
     }
 
-    private void displayDebugInfo(long par1)
+    private void displayDebugInfo(final long par1)
     {
         if (this.mcProfiler.profilingEnabled)
         {
-            List list = this.mcProfiler.getProfilingData(this.debugProfilerName);
-            ProfilerResult profilerresult = (ProfilerResult)list.remove(0);
+            final List list = this.mcProfiler.getProfilingData(this.debugProfilerName);
+            final ProfilerResult profilerresult = (ProfilerResult)list.remove(0);
             GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
             GL11.glMatrixMode(GL11.GL_PROJECTION);
             GL11.glEnable(GL11.GL_COLOR_MATERIAL);
@@ -1079,10 +1081,10 @@ public class Minecraft implements IPlayerUsage
             GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
             GL11.glLineWidth(1.0F);
             GL11.glDisable(GL11.GL_TEXTURE_2D);
-            Tessellator tessellator = Tessellator.instance;
-            short short1 = 160;
-            int j = this.displayWidth - short1 - 10;
-            int k = this.displayHeight - short1 * 2;
+            final Tessellator tessellator = Tessellator.instance;
+            final short short1 = 160;
+            final int j = this.displayWidth - short1 - 10;
+            final int k = this.displayHeight - short1 * 2;
             GL11.glEnable(GL11.GL_BLEND);
             tessellator.startDrawingQuads();
             tessellator.setColorRGBA_I(0, 200);
@@ -1097,7 +1099,7 @@ public class Minecraft implements IPlayerUsage
 
             for (int i1 = 0; i1 < list.size(); ++i1)
             {
-                ProfilerResult profilerresult1 = (ProfilerResult)list.get(i1);
+                final ProfilerResult profilerresult1 = (ProfilerResult)list.get(i1);
                 l = MathHelper.floor_double(profilerresult1.field_76332_a / 4.0D) + 1;
                 tessellator.startDrawing(6);
                 tessellator.setColorOpaque_I(profilerresult1.func_76329_a());
@@ -1132,7 +1134,7 @@ public class Minecraft implements IPlayerUsage
                 d0 += profilerresult1.field_76332_a;
             }
 
-            DecimalFormat decimalformat = new DecimalFormat("##0.00");
+            final DecimalFormat decimalformat = new DecimalFormat("##0.00");
             GL11.glEnable(GL11.GL_TEXTURE_2D);
             String s = "";
 
@@ -1141,7 +1143,7 @@ public class Minecraft implements IPlayerUsage
                 s = s + "[0] ";
             }
 
-            if (profilerresult.field_76331_c.length() == 0)
+            if (profilerresult.field_76331_c.isEmpty())
             {
                 s = s + "ROOT ";
             }
@@ -1156,7 +1158,7 @@ public class Minecraft implements IPlayerUsage
 
             for (int k1 = 0; k1 < list.size(); ++k1)
             {
-                ProfilerResult profilerresult2 = (ProfilerResult)list.get(k1);
+                final ProfilerResult profilerresult2 = (ProfilerResult)list.get(k1);
                 String s1 = "";
 
                 if (profilerresult2.field_76331_c.equals("unspecified"))
@@ -1231,7 +1233,7 @@ public class Minecraft implements IPlayerUsage
         }
     }
 
-    private void sendClickBlockToController(int par1, boolean par2)
+    private void sendClickBlockToController(final int par1, final boolean par2)
     {
         if (!par2)
         {
@@ -1242,9 +1244,9 @@ public class Minecraft implements IPlayerUsage
         {
             if (par2 && this.objectMouseOver != null && this.objectMouseOver.typeOfHit == EnumMovingObjectType.TILE && par1 == 0)
             {
-                int j = this.objectMouseOver.blockX;
-                int k = this.objectMouseOver.blockY;
-                int l = this.objectMouseOver.blockZ;
+                final int j = this.objectMouseOver.blockX;
+                final int k = this.objectMouseOver.blockY;
+                final int l = this.objectMouseOver.blockZ;
                 this.playerController.onPlayerDamageBlock(j, k, l, this.objectMouseOver.sideHit);
 
                 if (this.thePlayer.isCurrentToolAdventureModeExempt(j, k, l))
@@ -1264,7 +1266,7 @@ public class Minecraft implements IPlayerUsage
      * Called whenever the mouse is clicked. Button clicked is 0 for left clicking and 1 for right clicking. Args:
      * buttonClicked
      */
-    private void clickMouse(int par1)
+    private void clickMouse(final int par1)
     {
         if (par1 != 0 || this.leftClickCounter <= 0)
         {
@@ -1279,7 +1281,7 @@ public class Minecraft implements IPlayerUsage
             }
 
             boolean flag = true;
-            ItemStack itemstack = this.thePlayer.inventory.getCurrentItem();
+            final ItemStack itemstack = this.thePlayer.inventory.getCurrentItem();
 
             if (this.objectMouseOver == null)
             {
@@ -1302,10 +1304,10 @@ public class Minecraft implements IPlayerUsage
             }
             else if (this.objectMouseOver.typeOfHit == EnumMovingObjectType.TILE)
             {
-                int j = this.objectMouseOver.blockX;
-                int k = this.objectMouseOver.blockY;
-                int l = this.objectMouseOver.blockZ;
-                int i1 = this.objectMouseOver.sideHit;
+                final int j = this.objectMouseOver.blockX;
+                final int k = this.objectMouseOver.blockY;
+                final int l = this.objectMouseOver.blockZ;
+                final int i1 = this.objectMouseOver.sideHit;
 
                 if (par1 == 0)
                 {
@@ -1313,9 +1315,9 @@ public class Minecraft implements IPlayerUsage
                 }
                 else
                 {
-                    int j1 = itemstack != null ? itemstack.stackSize : 0;
+                    final int j1 = itemstack != null ? itemstack.stackSize : 0;
 
-                    boolean result = !ForgeEventFactory.onPlayerInteract(thePlayer, Action.RIGHT_CLICK_BLOCK, j, k, l, i1).isCanceled();
+                    final boolean result = !ForgeEventFactory.onPlayerInteract(thePlayer, Action.RIGHT_CLICK_BLOCK, j, k, l, i1).isCanceled();
                     if (result && this.playerController.onPlayerRightClick(this.thePlayer, this.theWorld, itemstack, j, k, l, i1, this.objectMouseOver.hitVec))
                     {
                         flag = false;
@@ -1340,9 +1342,9 @@ public class Minecraft implements IPlayerUsage
 
             if (flag && par1 == 1)
             {
-                ItemStack itemstack1 = this.thePlayer.inventory.getCurrentItem();
+                final ItemStack itemstack1 = this.thePlayer.inventory.getCurrentItem();
 
-                boolean result = !ForgeEventFactory.onPlayerInteract(thePlayer, Action.RIGHT_CLICK_AIR, 0, 0, 0, -1).isCanceled();
+                final boolean result = !ForgeEventFactory.onPlayerInteract(thePlayer, Action.RIGHT_CLICK_AIR, 0, 0, 0, -1).isCanceled();
                 if (result && itemstack1 != null && this.playerController.sendUseItem(this.thePlayer, this.theWorld, itemstack1))
                 {
                     this.entityRenderer.itemRenderer.resetEquippedProgress2();
@@ -1402,7 +1404,7 @@ public class Minecraft implements IPlayerUsage
             Display.setVSyncEnabled(this.gameSettings.enableVsync);
             Display.update();
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             exception.printStackTrace();
         }
@@ -1411,16 +1413,16 @@ public class Minecraft implements IPlayerUsage
     /**
      * Called to resize the current screen.
      */
-    private void resize(int par1, int par2)
+    private void resize(final int par1, final int par2)
     {
         this.displayWidth = par1 <= 0 ? 1 : par1;
         this.displayHeight = par2 <= 0 ? 1 : par2;
 
         if (this.currentScreen != null)
         {
-            ScaledResolution scaledresolution = new ScaledResolution(this.gameSettings, par1, par2);
-            int k = scaledresolution.getScaledWidth();
-            int l = scaledresolution.getScaledHeight();
+            final ScaledResolution scaledresolution = new ScaledResolution(this.gameSettings, par1, par2);
+            final int k = scaledresolution.getScaledWidth();
+            final int l = scaledresolution.getScaledHeight();
             this.currentScreen.setWorldAndResolution(this, k, l);
         }
     }
@@ -1485,8 +1487,8 @@ public class Minecraft implements IPlayerUsage
             this.leftClickCounter = 10000;
         }
 
-        CrashReport crashreport;
-        CrashReportCategory crashreportcategory;
+        final CrashReport crashreport;
+        final CrashReportCategory crashreportcategory;
 
         if (this.currentScreen != null)
         {
@@ -1494,7 +1496,7 @@ public class Minecraft implements IPlayerUsage
             {
                 this.currentScreen.handleInput();
             }
-            catch (Throwable throwable)
+            catch (final Throwable throwable)
             {
                 crashreport = CrashReport.makeCrashReport(throwable, "Updating screen events");
                 crashreportcategory = crashreport.makeCategory("Affected screen");
@@ -1508,7 +1510,7 @@ public class Minecraft implements IPlayerUsage
                 {
                     this.currentScreen.updateScreen();
                 }
-                catch (Throwable throwable1)
+                catch (final Throwable throwable1)
                 {
                     crashreport = CrashReport.makeCrashReport(throwable1, "Ticking screen");
                     crashreportcategory = crashreport.makeCategory("Affected screen");
@@ -1541,7 +1543,7 @@ public class Minecraft implements IPlayerUsage
                     KeyBinding.onTick(i - 100);
                 }
 
-                long j = getSystemTime() - this.systemTime;
+                final long j = getSystemTime() - this.systemTime;
 
                 if (j <= 200L)
                 {
@@ -1858,7 +1860,7 @@ public class Minecraft implements IPlayerUsage
                 {
                     this.theWorld.tick();
                 }
-                catch (Throwable throwable2)
+                catch (final Throwable throwable2)
                 {
                     crashreport = CrashReport.makeCrashReport(throwable2, "Exception in world tick");
 
@@ -1905,32 +1907,33 @@ public class Minecraft implements IPlayerUsage
     /**
      * Arguments: World foldername,  World ingame name, WorldSettings
      */
-    public void launchIntegratedServer(String par1Str, String par2Str, WorldSettings par3WorldSettings)
+    public void launchIntegratedServer(final String par1Str, final String par2Str, WorldSettings par3WorldSettings)
     {
+        WorldSettings par3WorldSettings1 = par3WorldSettings;
         this.loadWorld((WorldClient)null);
         System.gc();
-        ISaveHandler isavehandler = this.saveLoader.getSaveLoader(par1Str, false);
+        final ISaveHandler isavehandler = this.saveLoader.getSaveLoader(par1Str, false);
         WorldInfo worldinfo = isavehandler.loadWorldInfo();
 
-        if (worldinfo == null && par3WorldSettings != null)
+        if (worldinfo == null && par3WorldSettings1 != null)
         {
-            worldinfo = new WorldInfo(par3WorldSettings, par1Str);
+            worldinfo = new WorldInfo(par3WorldSettings1, par1Str);
             isavehandler.saveWorldInfo(worldinfo);
         }
 
-        if (par3WorldSettings == null)
+        if (par3WorldSettings1 == null)
         {
-            par3WorldSettings = new WorldSettings(worldinfo);
+            par3WorldSettings1 = new WorldSettings(worldinfo);
         }
 
         this.statFileWriter.readStat(StatList.startGameStat, 1);
 
         GameData.initializeServerGate(2);
 
-        this.theIntegratedServer = new IntegratedServer(this, par1Str, par2Str, par3WorldSettings);
+        this.theIntegratedServer = new IntegratedServer(this, par1Str, par2Str, par3WorldSettings1);
         this.theIntegratedServer.startServerThread();
 
-        MapDifference<Integer, ItemData> idDifferences = GameData.gateWorldLoadingForValidation();
+        final MapDifference<Integer, ItemData> idDifferences = GameData.gateWorldLoadingForValidation();
         if (idDifferences!=null)
         {
             FMLClientHandler.instance().warnIDMismatch(idDifferences, true);
@@ -1950,7 +1953,7 @@ public class Minecraft implements IPlayerUsage
 
         while (!this.theIntegratedServer.serverIsInRunLoop())
         {
-            String s2 = this.theIntegratedServer.getUserMessage();
+            final String s2 = this.theIntegratedServer.getUserMessage();
 
             if (s2 != null)
             {
@@ -1965,7 +1968,7 @@ public class Minecraft implements IPlayerUsage
             {
                 Thread.sleep(200L);
             }
-            catch (InterruptedException interruptedexception)
+            catch (final InterruptedException interruptedexception)
             {
                 ;
             }
@@ -1975,10 +1978,10 @@ public class Minecraft implements IPlayerUsage
 
         try
         {
-            NetClientHandler netclienthandler = new NetClientHandler(this, this.theIntegratedServer);
+            final NetClientHandler netclienthandler = new NetClientHandler(this, this.theIntegratedServer);
             this.myNetworkManager = netclienthandler.getNetManager();
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             this.displayCrashReport(this.addGraphicsAndWorldToCrashReport(new CrashReport("Connecting to integrated server", ioexception)));
         }
@@ -1987,7 +1990,7 @@ public class Minecraft implements IPlayerUsage
     /**
      * unloads the current world first
      */
-    public void loadWorld(WorldClient par1WorldClient)
+    public void loadWorld(final WorldClient par1WorldClient)
     {
         this.loadWorld(par1WorldClient, "");
     }
@@ -1995,7 +1998,7 @@ public class Minecraft implements IPlayerUsage
     /**
      * par2Str is displayed on the loading screen to the user unloads the current world first
      */
-    public void loadWorld(WorldClient par1WorldClient, String par2Str)
+    public void loadWorld(final WorldClient par1WorldClient, final String par2Str)
     {
         this.statFileWriter.syncStats();
 
@@ -2006,7 +2009,7 @@ public class Minecraft implements IPlayerUsage
 
         if (par1WorldClient == null)
         {
-            NetClientHandler netclienthandler = this.getNetHandler();
+            final NetClientHandler netclienthandler = this.getNetHandler();
 
             if (netclienthandler != null)
             {
@@ -2031,7 +2034,7 @@ public class Minecraft implements IPlayerUsage
                     {
                         Thread.sleep(10);
                     }
-                    catch (InterruptedException ie) {}
+                    catch (final InterruptedException ie) {}
                 }
             }
 
@@ -2123,7 +2126,7 @@ public class Minecraft implements IPlayerUsage
         return "P: " + this.effectRenderer.getStatistics() + ". T: " + this.theWorld.getDebugLoadedEntities();
     }
 
-    public void setDimensionAndSpawnPlayer(int par1)
+    public void setDimensionAndSpawnPlayer(final int par1)
     {
         this.theWorld.setSpawnLocation();
         this.theWorld.removeAllEntities();
@@ -2193,7 +2196,7 @@ public class Minecraft implements IPlayerUsage
      * Returns true if the message is a client command and should not be sent to the server. However there are no such
      * commands at this point in time.
      */
-    public boolean handleClientCommand(String par1Str)
+    public boolean handleClientCommand(final String par1Str)
     {
         return ClientCommandHandler.instance.executeCommand(thePlayer, par1Str) == 1;
     }
@@ -2205,8 +2208,8 @@ public class Minecraft implements IPlayerUsage
     {
         if (this.objectMouseOver != null)
         {
-            boolean flag = this.thePlayer.capabilities.isCreativeMode;
-            int k;
+            final boolean flag = this.thePlayer.capabilities.isCreativeMode;
+            final int k;
 
             if (!ForgeHooks.onPickBlock(this.objectMouseOver, this.thePlayer, this.theWorld))
             {
@@ -2224,7 +2227,7 @@ public class Minecraft implements IPlayerUsage
     /**
      * adds core server Info (GL version , Texture pack, isModded, type), and the worldInfo to the crash report
      */
-    public CrashReport addGraphicsAndWorldToCrashReport(CrashReport par1CrashReport)
+    public CrashReport addGraphicsAndWorldToCrashReport(final CrashReport par1CrashReport)
     {
         par1CrashReport.getCategory().addCrashSectionCallable("Launched Version", new CallableLaunchedVersion(this));
         par1CrashReport.getCategory().addCrashSectionCallable("LWJGL", new CallableLWJGLVersion(this));
@@ -2252,7 +2255,7 @@ public class Minecraft implements IPlayerUsage
         return theMinecraft;
     }
 
-    public void addServerStatsToSnooper(PlayerUsageSnooper par1PlayerUsageSnooper)
+    public void addServerStatsToSnooper(final PlayerUsageSnooper par1PlayerUsageSnooper)
     {
         par1PlayerUsageSnooper.addData("fps", Integer.valueOf(debugFPS));
         par1PlayerUsageSnooper.addData("texpack_name", this.mcResourcePackRepository.getResourcePackName());
@@ -2267,13 +2270,13 @@ public class Minecraft implements IPlayerUsage
         }
     }
 
-    public void addServerTypeToSnooper(PlayerUsageSnooper par1PlayerUsageSnooper)
+    public void addServerTypeToSnooper(final PlayerUsageSnooper par1PlayerUsageSnooper)
     {
         par1PlayerUsageSnooper.addData("opengl_version", GL11.glGetString(GL11.GL_VERSION));
         par1PlayerUsageSnooper.addData("opengl_vendor", GL11.glGetString(GL11.GL_VENDOR));
         par1PlayerUsageSnooper.addData("client_brand", ClientBrandRetriever.getClientModName());
         par1PlayerUsageSnooper.addData("launched_version", this.launchedVersion);
-        ContextCapabilities contextcapabilities = GLContext.getCapabilities();
+        final ContextCapabilities contextcapabilities = GLContext.getCapabilities();
         par1PlayerUsageSnooper.addData("gl_caps[ARB_multitexture]", Boolean.valueOf(contextcapabilities.GL_ARB_multitexture));
         par1PlayerUsageSnooper.addData("gl_caps[ARB_multisample]", Boolean.valueOf(contextcapabilities.GL_ARB_multisample));
         par1PlayerUsageSnooper.addData("gl_caps[ARB_texture_cube_map]", Boolean.valueOf(contextcapabilities.GL_ARB_texture_cube_map));
@@ -2309,7 +2312,7 @@ public class Minecraft implements IPlayerUsage
         for (int i = 16384; i > 0; i >>= 1)
         {
             GL11.glTexImage2D(GL11.GL_PROXY_TEXTURE_2D, 0, GL11.GL_RGBA, i, i, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (ByteBuffer)null);
-            int j = GL11.glGetTexLevelParameteri(GL11.GL_PROXY_TEXTURE_2D, 0, GL11.GL_TEXTURE_WIDTH);
+            final int j = GL11.glGetTexLevelParameteri(GL11.GL_PROXY_TEXTURE_2D, 0, GL11.GL_TEXTURE_WIDTH);
 
             if (j != 0)
             {
@@ -2332,7 +2335,7 @@ public class Minecraft implements IPlayerUsage
     /**
      * Set the current ServerData instance.
      */
-    public void setServerData(ServerData par1ServerData)
+    public void setServerData(final ServerData par1ServerData)
     {
         this.currentServerData = par1ServerData;
     }
@@ -2362,7 +2365,7 @@ public class Minecraft implements IPlayerUsage
     {
         if (theMinecraft != null)
         {
-            IntegratedServer integratedserver = theMinecraft.getIntegratedServer();
+            final IntegratedServer integratedserver = theMinecraft.getIntegratedServer();
 
             if (integratedserver != null)
             {
@@ -2371,7 +2374,7 @@ public class Minecraft implements IPlayerUsage
                 {
                     integratedserver.stopServer();
                 }
-                catch (MinecraftException e)
+                catch (final MinecraftException e)
                 {
                     e.printStackTrace();
                 }
@@ -2439,12 +2442,12 @@ public class Minecraft implements IPlayerUsage
         return this.mcLanguageManager;
     }
 
-    static String getLaunchedVersion(Minecraft par0Minecraft)
+    static String getLaunchedVersion(final Minecraft par0Minecraft)
     {
         return par0Minecraft.launchedVersion;
     }
 
-    static LanguageManager func_142024_b(Minecraft par0Minecraft)
+    static LanguageManager func_142024_b(final Minecraft par0Minecraft)
     {
         return par0Minecraft.mcLanguageManager;
     }

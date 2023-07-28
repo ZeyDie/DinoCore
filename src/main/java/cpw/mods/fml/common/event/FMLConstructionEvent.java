@@ -21,7 +21,7 @@ public class FMLConstructionEvent extends FMLStateEvent
     private ModClassLoader modClassLoader;
     private ASMDataTable asmData;
 
-    public FMLConstructionEvent(Object... eventData)
+    public FMLConstructionEvent(final Object... eventData)
     {
         this.modClassLoader = (ModClassLoader)eventData[0];
         this.asmData = (ASMDataTable) eventData[1];

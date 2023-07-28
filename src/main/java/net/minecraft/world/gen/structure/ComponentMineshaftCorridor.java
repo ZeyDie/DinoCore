@@ -26,7 +26,7 @@ public class ComponentMineshaftCorridor extends StructureComponent
 
     public ComponentMineshaftCorridor() {}
 
-    protected void func_143012_a(NBTTagCompound par1NBTTagCompound)
+    protected void func_143012_a(final NBTTagCompound par1NBTTagCompound)
     {
         par1NBTTagCompound.setBoolean("hr", this.hasRails);
         par1NBTTagCompound.setBoolean("sc", this.hasSpiders);
@@ -34,7 +34,7 @@ public class ComponentMineshaftCorridor extends StructureComponent
         par1NBTTagCompound.setInteger("Num", this.sectionCount);
     }
 
-    protected void func_143011_b(NBTTagCompound par1NBTTagCompound)
+    protected void func_143011_b(final NBTTagCompound par1NBTTagCompound)
     {
         this.hasRails = par1NBTTagCompound.getBoolean("hr");
         this.hasSpiders = par1NBTTagCompound.getBoolean("sc");
@@ -42,7 +42,7 @@ public class ComponentMineshaftCorridor extends StructureComponent
         this.sectionCount = par1NBTTagCompound.getInteger("Num");
     }
 
-    public ComponentMineshaftCorridor(int par1, Random par2Random, StructureBoundingBox par3StructureBoundingBox, int par4)
+    public ComponentMineshaftCorridor(final int par1, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox, final int par4)
     {
         super(par1);
         this.coordBaseMode = par4;
@@ -60,14 +60,14 @@ public class ComponentMineshaftCorridor extends StructureComponent
         }
     }
 
-    public static StructureBoundingBox findValidPlacement(List par0List, Random par1Random, int par2, int par3, int par4, int par5)
+    public static StructureBoundingBox findValidPlacement(final List par0List, final Random par1Random, final int par2, final int par3, final int par4, final int par5)
     {
-        StructureBoundingBox structureboundingbox = new StructureBoundingBox(par2, par3, par4, par2, par3 + 2, par4);
+        final StructureBoundingBox structureboundingbox = new StructureBoundingBox(par2, par3, par4, par2, par3 + 2, par4);
         int i1;
 
         for (i1 = par1Random.nextInt(3) + 2; i1 > 0; --i1)
         {
-            int j1 = i1 * 5;
+            final int j1 = i1 * 5;
 
             switch (par5)
             {
@@ -100,10 +100,10 @@ public class ComponentMineshaftCorridor extends StructureComponent
     /**
      * Initiates construction of the Structure Component picked, at the current Location of StructGen
      */
-    public void buildComponent(StructureComponent par1StructureComponent, List par2List, Random par3Random)
+    public void buildComponent(final StructureComponent par1StructureComponent, final List par2List, final Random par3Random)
     {
-        int i = this.getComponentType();
-        int j = par3Random.nextInt(4);
+        final int i = this.getComponentType();
+        final int j = par3Random.nextInt(4);
 
         switch (this.coordBaseMode)
         {
@@ -210,16 +210,16 @@ public class ComponentMineshaftCorridor extends StructureComponent
     /**
      * Used to generate chests with items in it. ex: Temple Chests, Village Blacksmith Chests, Mineshaft Chests.
      */
-    protected boolean generateStructureChestContents(World par1World, StructureBoundingBox par2StructureBoundingBox, Random par3Random, int par4, int par5, int par6, WeightedRandomChestContent[] par7ArrayOfWeightedRandomChestContent, int par8)
+    protected boolean generateStructureChestContents(final World par1World, final StructureBoundingBox par2StructureBoundingBox, final Random par3Random, final int par4, final int par5, final int par6, final WeightedRandomChestContent[] par7ArrayOfWeightedRandomChestContent, final int par8)
     {
-        int i1 = this.getXWithOffset(par4, par6);
-        int j1 = this.getYWithOffset(par5);
-        int k1 = this.getZWithOffset(par4, par6);
+        final int i1 = this.getXWithOffset(par4, par6);
+        final int j1 = this.getYWithOffset(par5);
+        final int k1 = this.getZWithOffset(par4, par6);
 
         if (par2StructureBoundingBox.isVecInside(i1, j1, k1) && par1World.getBlockId(i1, j1, k1) == 0)
         {
             par1World.setBlock(i1, j1, k1, Block.rail.blockID, this.getMetadataWithOffset(Block.rail.blockID, par3Random.nextBoolean() ? 1 : 0), 2);
-            EntityMinecartChest entityminecartchest = new EntityMinecartChest(par1World, (double)((float)i1 + 0.5F), (double)((float)j1 + 0.5F), (double)((float)k1 + 0.5F));
+            final EntityMinecartChest entityminecartchest = new EntityMinecartChest(par1World, (double)((float)i1 + 0.5F), (double)((float)j1 + 0.5F), (double)((float)k1 + 0.5F));
             WeightedRandomChestContent.generateChestContents(par3Random, par7ArrayOfWeightedRandomChestContent, entityminecartchest, par8);
             par1World.spawnEntityInWorld(entityminecartchest);
             return true;
@@ -234,7 +234,7 @@ public class ComponentMineshaftCorridor extends StructureComponent
      * second Part of Structure generating, this for example places Spiderwebs, Mob Spawners, it closes Mineshafts at
      * the end, it adds Fences...
      */
-    public boolean addComponentParts(World par1World, Random par2Random, StructureBoundingBox par3StructureBoundingBox)
+    public boolean addComponentParts(final World par1World, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox)
     {
         if (this.isLiquidInStructureBoundingBox(par1World, par3StructureBoundingBox))
         {
@@ -242,11 +242,11 @@ public class ComponentMineshaftCorridor extends StructureComponent
         }
         else
         {
-            boolean flag = false;
-            boolean flag1 = true;
-            boolean flag2 = false;
-            boolean flag3 = true;
-            int i = this.sectionCount * 5 - 1;
+            final boolean flag = false;
+            final boolean flag1 = true;
+            final boolean flag2 = false;
+            final boolean flag3 = true;
+            final int i = this.sectionCount * 5 - 1;
             this.fillWithBlocks(par1World, par3StructureBoundingBox, 0, 0, 0, 2, 1, i, 0, 0, false);
             this.randomlyFillWithBlocks(par1World, par3StructureBoundingBox, par2Random, 0.8F, 0, 2, 0, 2, 2, i, 0, 0, false);
 
@@ -286,7 +286,7 @@ public class ComponentMineshaftCorridor extends StructureComponent
                 this.randomlyPlaceBlock(par1World, par3StructureBoundingBox, par2Random, 0.05F, 1, 2, k - 1, Block.torchWood.blockID, 0);
                 this.randomlyPlaceBlock(par1World, par3StructureBoundingBox, par2Random, 0.05F, 1, 2, k + 1, Block.torchWood.blockID, 0);
 
-                ChestGenHooks info = ChestGenHooks.getInfo(MINESHAFT_CORRIDOR);
+                final ChestGenHooks info = ChestGenHooks.getInfo(MINESHAFT_CORRIDOR);
 
                 if (par2Random.nextInt(100) == 0)
                 {
@@ -302,14 +302,14 @@ public class ComponentMineshaftCorridor extends StructureComponent
                 {
                     l = this.getYWithOffset(0);
                     int i1 = k - 1 + par2Random.nextInt(3);
-                    int j1 = this.getXWithOffset(1, i1);
+                    final int j1 = this.getXWithOffset(1, i1);
                     i1 = this.getZWithOffset(1, i1);
 
                     if (par3StructureBoundingBox.isVecInside(j1, l, i1))
                     {
                         this.spawnerPlaced = true;
                         par1World.setBlock(j1, l, i1, Block.mobSpawner.blockID, 0, 2);
-                        TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)par1World.getBlockTileEntity(j1, l, i1);
+                        final TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)par1World.getBlockTileEntity(j1, l, i1);
 
                         if (tileentitymobspawner != null)
                         {

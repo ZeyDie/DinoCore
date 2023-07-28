@@ -50,7 +50,7 @@ public class ContainerEnchantment extends Container
     private Player player;
     // CraftBukkit end
 
-    public ContainerEnchantment(InventoryPlayer par1InventoryPlayer, World par2World, int par3, int par4, int par5)
+    public ContainerEnchantment(final InventoryPlayer par1InventoryPlayer, final World par2World, final int par3, final int par4, final int par5)
     {
         this.worldPointer = par2World;
         this.posX = par3;
@@ -78,7 +78,7 @@ public class ContainerEnchantment extends Container
         // CraftBukkit end
     }
 
-    public void addCraftingToCrafters(ICrafting par1ICrafting)
+    public void addCraftingToCrafters(final ICrafting par1ICrafting)
     {
         super.addCraftingToCrafters(par1ICrafting);
         par1ICrafting.sendProgressBarUpdate(this, 0, this.enchantLevels[0]);
@@ -95,7 +95,7 @@ public class ContainerEnchantment extends Container
 
         for (int i = 0; i < this.crafters.size(); ++i)
         {
-            ICrafting icrafting = (ICrafting)this.crafters.get(i);
+            final ICrafting icrafting = (ICrafting)this.crafters.get(i);
             icrafting.sendProgressBarUpdate(this, 0, this.enchantLevels[0]);
             icrafting.sendProgressBarUpdate(this, 1, this.enchantLevels[1]);
             icrafting.sendProgressBarUpdate(this, 2, this.enchantLevels[2]);
@@ -103,7 +103,7 @@ public class ContainerEnchantment extends Container
     }
 
     @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2)
+    public void updateProgressBar(final int par1, final int par2)
     {
         if (par1 >= 0 && par1 <= 2)
         {
@@ -118,11 +118,11 @@ public class ContainerEnchantment extends Container
     /**
      * Callback for when the crafting matrix is changed.
      */
-    public void onCraftMatrixChanged(IInventory par1IInventory)
+    public void onCraftMatrixChanged(final IInventory par1IInventory)
     {
         if (par1IInventory == this.tableInventory)
         {
-            ItemStack itemstack = par1IInventory.getStackInSlot(0);
+            final ItemStack itemstack = par1IInventory.getStackInSlot(0);
             int i;
 
             if (itemstack != null)   // CraftBukkit - relax condition
@@ -161,8 +161,8 @@ public class ContainerEnchantment extends Container
                     }
 
                     // CraftBukkit start
-                    CraftItemStack item = CraftItemStack.asCraftMirror(itemstack);
-                    PrepareItemEnchantEvent event = new PrepareItemEnchantEvent(player, this.getBukkitView(), this.worldPointer.getWorld().getBlockAt(this.posX, this.posY, this.posZ), item, this.enchantLevels, i);
+                    final CraftItemStack item = CraftItemStack.asCraftMirror(itemstack);
+                    final PrepareItemEnchantEvent event = new PrepareItemEnchantEvent(player, this.getBukkitView(), this.worldPointer.getWorld().getBlockAt(this.posX, this.posY, this.posZ), item, this.enchantLevels, i);
                     event.setCancelled(!itemstack.isItemEnchantable());
                     if (this.getBukkitView() != null) this.worldPointer.getServer().getPluginManager().callEvent(event); // Cauldron - allow vanilla mods to bypass
 
@@ -193,32 +193,32 @@ public class ContainerEnchantment extends Container
     /**
      * enchants the item on the table using the specified slot; also deducts XP from player
      */
-    public boolean enchantItem(EntityPlayer par1EntityPlayer, int par2)
+    public boolean enchantItem(final EntityPlayer par1EntityPlayer, final int par2)
     {
-        ItemStack itemstack = this.tableInventory.getStackInSlot(0);
+        final ItemStack itemstack = this.tableInventory.getStackInSlot(0);
 
         if (this.enchantLevels[par2] > 0 && itemstack != null && (par1EntityPlayer.experienceLevel >= this.enchantLevels[par2] || par1EntityPlayer.capabilities.isCreativeMode))
         {
             if (!this.worldPointer.isRemote)
             {
-                List list = EnchantmentHelper.buildEnchantmentList(this.rand, itemstack, this.enchantLevels[par2]);
-                boolean flag = itemstack.itemID == Item.book.itemID;
+                final List list = EnchantmentHelper.buildEnchantmentList(this.rand, itemstack, this.enchantLevels[par2]);
+                final boolean flag = itemstack.itemID == Item.book.itemID;
 
                 if (list != null)
                 {
                     // CraftBukkit start
-                    Map<org.bukkit.enchantments.Enchantment, Integer> enchants = new java.util.HashMap<org.bukkit.enchantments.Enchantment, Integer>();
+                    final Map<org.bukkit.enchantments.Enchantment, Integer> enchants = new java.util.HashMap<org.bukkit.enchantments.Enchantment, Integer>();
 
-                    for (Object obj : list)
+                    for (final Object obj : list)
                     {
-                        EnchantmentData instance = (EnchantmentData) obj;
+                        final EnchantmentData instance = (EnchantmentData) obj;
                         enchants.put(org.bukkit.enchantments.Enchantment.getById(instance.enchantmentobj.effectId), instance.enchantmentLevel);
                     }
 
-                    CraftItemStack item = CraftItemStack.asCraftMirror(itemstack);
-                    EnchantItemEvent event = new EnchantItemEvent((Player) par1EntityPlayer.getBukkitEntity(), this.getBukkitView(), this.worldPointer.getWorld().getBlockAt(this.posX, this.posY, this.posZ), item, this.enchantLevels[par2], enchants, par2);
+                    final CraftItemStack item = CraftItemStack.asCraftMirror(itemstack);
+                    final EnchantItemEvent event = new EnchantItemEvent((Player) par1EntityPlayer.getBukkitEntity(), this.getBukkitView(), this.worldPointer.getWorld().getBlockAt(this.posX, this.posY, this.posZ), item, this.enchantLevels[par2], enchants, par2);
                     if (this.getBukkitView() != null) this.worldPointer.getServer().getPluginManager().callEvent(event); // Cauldron - allow vanilla mods to bypass
-                    int level = event.getExpLevelCost();
+                    final int level = event.getExpLevelCost();
 
                     if (event.isCancelled() || (level > par1EntityPlayer.experienceLevel && !par1EntityPlayer.capabilities.isCreativeMode) || enchants.isEmpty())
                     {
@@ -227,20 +227,20 @@ public class ContainerEnchantment extends Container
 
                     boolean applied = !flag;
 
-                    for (Map.Entry<org.bukkit.enchantments.Enchantment, Integer> entry : event.getEnchantsToAdd().entrySet())
+                    for (final Map.Entry<org.bukkit.enchantments.Enchantment, Integer> entry : event.getEnchantsToAdd().entrySet())
                     {
                         try
                         {
                             if (flag)
                             {
-                                int enchantId = entry.getKey().getId();
+                                final int enchantId = entry.getKey().getId();
 
                                 if (Enchantment.enchantmentsList[enchantId] == null)
                                 {
                                     continue;
                                 }
 
-                                EnchantmentData enchantment = new EnchantmentData(enchantId, entry.getValue());
+                                final EnchantmentData enchantment = new EnchantmentData(enchantId, entry.getValue());
                                 Item.enchantedBook.addEnchantment(itemstack, enchantment);
                                 applied = true;
                                 itemstack.itemID = Item.enchantedBook.itemID;
@@ -251,7 +251,7 @@ public class ContainerEnchantment extends Container
                                 item.addEnchantment(entry.getKey(), entry.getValue());
                             }
                         }
-                        catch (IllegalArgumentException e)
+                        catch (final IllegalArgumentException e)
                         {
                             /* Just swallow invalid enchantments */
                         }
@@ -279,13 +279,13 @@ public class ContainerEnchantment extends Container
     /**
      * Called when the container is closed.
      */
-    public void onContainerClosed(EntityPlayer par1EntityPlayer)
+    public void onContainerClosed(final EntityPlayer par1EntityPlayer)
     {
         super.onContainerClosed(par1EntityPlayer);
 
         if (!this.worldPointer.isRemote)
         {
-            ItemStack itemstack = this.tableInventory.getStackInSlotOnClosing(0);
+            final ItemStack itemstack = this.tableInventory.getStackInSlotOnClosing(0);
 
             if (itemstack != null)
             {
@@ -294,7 +294,7 @@ public class ContainerEnchantment extends Container
         }
     }
 
-    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
+    public boolean canInteractWith(final EntityPlayer par1EntityPlayer)
     {
         if (!this.checkReachable)
         {
@@ -307,14 +307,14 @@ public class ContainerEnchantment extends Container
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+    public ItemStack transferStackInSlot(final EntityPlayer par1EntityPlayer, final int par2)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(par2);
+        final Slot slot = (Slot)this.inventorySlots.get(par2);
 
         if (slot != null && slot.getHasStack())
         {
-            ItemStack itemstack1 = slot.getStack();
+            final ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
             if (par2 == 0)
@@ -371,7 +371,7 @@ public class ContainerEnchantment extends Container
             return bukkitEntity;
         }
 
-        CraftInventoryEnchanting inventory = new CraftInventoryEnchanting(this.tableInventory);
+        final CraftInventoryEnchanting inventory = new CraftInventoryEnchanting(this.tableInventory);
         bukkitEntity = new CraftInventoryView(this.player, inventory, this);
         return bukkitEntity;
     }

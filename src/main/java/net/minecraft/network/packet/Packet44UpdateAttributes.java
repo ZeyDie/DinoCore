@@ -17,14 +17,14 @@ public class Packet44UpdateAttributes extends Packet
 
     public Packet44UpdateAttributes() {}
 
-    public Packet44UpdateAttributes(int par1, Collection par2Collection)
+    public Packet44UpdateAttributes(final int par1, final Collection par2Collection)
     {
         this.field_111005_a = par1;
-        Iterator iterator = par2Collection.iterator();
+        final Iterator iterator = par2Collection.iterator();
 
         while (iterator.hasNext())
         {
-            AttributeInstance attributeinstance = (AttributeInstance)iterator.next();
+            final AttributeInstance attributeinstance = (AttributeInstance)iterator.next();
             this.field_111004_b.add(new Packet44UpdateAttributesSnapshot(this, attributeinstance.func_111123_a().getAttributeUnlocalizedName(), attributeinstance.getBaseValue(), attributeinstance.func_111122_c()));
         }
     }
@@ -32,21 +32,21 @@ public class Packet44UpdateAttributes extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.field_111005_a = par1DataInput.readInt();
-        int i = par1DataInput.readInt();
+        final int i = par1DataInput.readInt();
 
         for (int j = 0; j < i; ++j)
         {
-            String s = readString(par1DataInput, 64);
-            double d0 = par1DataInput.readDouble();
-            ArrayList arraylist = new ArrayList();
-            short short1 = par1DataInput.readShort();
+            final String s = readString(par1DataInput, 64);
+            final double d0 = par1DataInput.readDouble();
+            final ArrayList arraylist = new ArrayList();
+            final short short1 = par1DataInput.readShort();
 
             for (int k = 0; k < short1; ++k)
             {
-                UUID uuid = new UUID(par1DataInput.readLong(), par1DataInput.readLong());
+                final UUID uuid = new UUID(par1DataInput.readLong(), par1DataInput.readLong());
                 arraylist.add(new AttributeModifier(uuid, "Unknown synced attribute modifier", par1DataInput.readDouble(), par1DataInput.readByte()));
             }
 
@@ -57,23 +57,23 @@ public class Packet44UpdateAttributes extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.field_111005_a);
         par1DataOutput.writeInt(this.field_111004_b.size());
-        Iterator iterator = this.field_111004_b.iterator();
+        final Iterator iterator = this.field_111004_b.iterator();
 
         while (iterator.hasNext())
         {
-            Packet44UpdateAttributesSnapshot packet44updateattributessnapshot = (Packet44UpdateAttributesSnapshot)iterator.next();
+            final Packet44UpdateAttributesSnapshot packet44updateattributessnapshot = (Packet44UpdateAttributesSnapshot)iterator.next();
             writeString(packet44updateattributessnapshot.func_142040_a(), par1DataOutput);
             par1DataOutput.writeDouble(packet44updateattributessnapshot.func_142041_b());
             par1DataOutput.writeShort(packet44updateattributessnapshot.func_142039_c().size());
-            Iterator iterator1 = packet44updateattributessnapshot.func_142039_c().iterator();
+            final Iterator iterator1 = packet44updateattributessnapshot.func_142039_c().iterator();
 
             while (iterator1.hasNext())
             {
-                AttributeModifier attributemodifier = (AttributeModifier)iterator1.next();
+                final AttributeModifier attributemodifier = (AttributeModifier)iterator1.next();
                 par1DataOutput.writeLong(attributemodifier.getID().getMostSignificantBits());
                 par1DataOutput.writeLong(attributemodifier.getID().getLeastSignificantBits());
                 par1DataOutput.writeDouble(attributemodifier.getAmount());
@@ -85,7 +85,7 @@ public class Packet44UpdateAttributes extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.func_110773_a(this);
     }

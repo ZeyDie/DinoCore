@@ -30,7 +30,7 @@ public class PlayerRespawnEvent extends PlayerEvent {
      *
      * @param respawnLocation new location for the respawn
      */
-    public void setRespawnLocation(Location respawnLocation) {
+    public void setRespawnLocation(final Location respawnLocation) {
         Validate.notNull(respawnLocation, "Respawn location can not be null");
         Validate.notNull(respawnLocation.getWorld(), "Respawn world can not be null");
 

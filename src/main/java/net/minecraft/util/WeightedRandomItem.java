@@ -7,7 +7,7 @@ public class WeightedRandomItem
      */
     public int itemWeight;
 
-    public WeightedRandomItem(int par1)
+    public WeightedRandomItem(final int par1)
     {
         this.itemWeight = par1;
     }

@@ -20,37 +20,37 @@ public class DefaultArtifactVersion implements ArtifactVersion
     private boolean unbounded;
     private VersionRange range;
 
-    public DefaultArtifactVersion(String versionNumber)
+    public DefaultArtifactVersion(final String versionNumber)
     {
         comparableVersion = new ComparableVersion(versionNumber);
         range = VersionRange.createFromVersion(versionNumber, this);
     }
 
-    public DefaultArtifactVersion(String label, VersionRange range)
+    public DefaultArtifactVersion(final String label, final VersionRange range)
     {
         this.label = label;
         this.range = range;
     }
-    public DefaultArtifactVersion(String label, String version)
+    public DefaultArtifactVersion(final String label, final String version)
     {
         this(version);
         this.label = label;
     }
 
-    public DefaultArtifactVersion(String string, boolean unbounded)
+    public DefaultArtifactVersion(final String string, final boolean unbounded)
     {
         this.label = string;
         this.unbounded = true;
     }
 
     @Override
-    public boolean equals(Object obj)
+    public boolean equals(final Object obj)
     {
         return ((DefaultArtifactVersion)obj).containsVersion(this);
     }
 
     @Override
-    public int compareTo(ArtifactVersion o)
+    public int compareTo(final ArtifactVersion o)
     {
         return unbounded ? 0 : this.comparableVersion.compareTo(((DefaultArtifactVersion)o).comparableVersion);
     }
@@ -62,7 +62,7 @@ public class DefaultArtifactVersion implements ArtifactVersion
     }
 
     @Override
-    public boolean containsVersion(ArtifactVersion source)
+    public boolean containsVersion(final ArtifactVersion source)
     {
         if (!source.getLabel().equals(getLabel()))
         {

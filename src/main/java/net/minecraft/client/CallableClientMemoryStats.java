@@ -10,7 +10,7 @@ class CallableClientMemoryStats implements Callable
 {
     final Minecraft theMinecraft;
 
-    CallableClientMemoryStats(Minecraft par1Minecraft)
+    CallableClientMemoryStats(final Minecraft par1Minecraft)
     {
         this.theMinecraft = par1Minecraft;
     }

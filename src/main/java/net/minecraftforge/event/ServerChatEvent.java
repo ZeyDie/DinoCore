@@ -9,7 +9,7 @@ public class ServerChatEvent extends Event
     public final String message, username;
     public final EntityPlayerMP player;
     public ChatMessageComponent component;
-    public ServerChatEvent(EntityPlayerMP player, String message, ChatMessageComponent component)
+    public ServerChatEvent(final EntityPlayerMP player, final String message, final ChatMessageComponent component)
     {
         super();
         this.message = message;

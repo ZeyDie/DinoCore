@@ -16,17 +16,17 @@ import java.io.*;
 @SideOnly(Side.CLIENT)
 public class GameSettings
 {
-    private static final String[] RENDER_DISTANCES = new String[] {"options.renderDistance.far", "options.renderDistance.normal", "options.renderDistance.short", "options.renderDistance.tiny"};
-    private static final String[] DIFFICULTIES = new String[] {"options.difficulty.peaceful", "options.difficulty.easy", "options.difficulty.normal", "options.difficulty.hard"};
+    private static final String[] RENDER_DISTANCES = {"options.renderDistance.far", "options.renderDistance.normal", "options.renderDistance.short", "options.renderDistance.tiny"};
+    private static final String[] DIFFICULTIES = {"options.difficulty.peaceful", "options.difficulty.easy", "options.difficulty.normal", "options.difficulty.hard"};
 
     /** GUI scale values */
-    private static final String[] GUISCALES = new String[] {"options.guiScale.auto", "options.guiScale.small", "options.guiScale.normal", "options.guiScale.large"};
-    private static final String[] CHAT_VISIBILITIES = new String[] {"options.chat.visibility.full", "options.chat.visibility.system", "options.chat.visibility.hidden"};
-    private static final String[] PARTICLES = new String[] {"options.particles.all", "options.particles.decreased", "options.particles.minimal"};
+    private static final String[] GUISCALES = {"options.guiScale.auto", "options.guiScale.small", "options.guiScale.normal", "options.guiScale.large"};
+    private static final String[] CHAT_VISIBILITIES = {"options.chat.visibility.full", "options.chat.visibility.system", "options.chat.visibility.hidden"};
+    private static final String[] PARTICLES = {"options.particles.all", "options.particles.decreased", "options.particles.minimal"};
 
     /** Limit framerate labels */
-    private static final String[] LIMIT_FRAMERATES = new String[] {"performance.max", "performance.balanced", "performance.powersaver"};
-    private static final String[] AMBIENT_OCCLUSIONS = new String[] {"options.ao.off", "options.ao.min", "options.ao.max"};
+    private static final String[] LIMIT_FRAMERATES = {"performance.max", "performance.balanced", "performance.powersaver"};
+    private static final String[] AMBIENT_OCCLUSIONS = {"options.ao.off", "options.ao.min", "options.ao.max"};
     public float musicVolume = 1.0F;
     public float soundVolume = 1.0F;
     public float mouseSensitivity = 0.5F;
@@ -129,7 +129,7 @@ public class GameSettings
     /** Game settings language */
     public String language;
 
-    public GameSettings(Minecraft par1Minecraft, File par2File)
+    public GameSettings(final Minecraft par1Minecraft, final File par2File)
     {
         this.keyBindings = new KeyBinding[] {this.keyBindAttack, this.keyBindUseItem, this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindPlayerList, this.keyBindPickBlock, this.keyBindCommand};
         this.difficulty = 2;
@@ -152,7 +152,7 @@ public class GameSettings
         this.language = "en_US";
     }
 
-    public String getKeyBindingDescription(int par1)
+    public String getKeyBindingDescription(final int par1)
     {
         return I18n.getString(this.keyBindings[par1].keyDescription);
     }
@@ -160,16 +160,16 @@ public class GameSettings
     /**
      * The string that appears inside the button/slider in the options menu.
      */
-    public String getOptionDisplayString(int par1)
+    public String getOptionDisplayString(final int par1)
     {
-        int j = this.keyBindings[par1].keyCode;
+        final int j = this.keyBindings[par1].keyCode;
         return getKeyDisplayString(j);
     }
 
     /**
      * Represents a key or mouse button as a string. Args: key
      */
-    public static String getKeyDisplayString(int par0)
+    public static String getKeyDisplayString(final int par0)
     {
         return par0 < 0 ? I18n.getStringParams("key.mouseButton", new Object[] {Integer.valueOf(par0 + 101)}): Keyboard.getKeyName(par0);
     }
@@ -177,7 +177,7 @@ public class GameSettings
     /**
      * Returns whether the specified key binding is currently being pressed.
      */
-    public static boolean isKeyDown(KeyBinding par0KeyBinding)
+    public static boolean isKeyDown(final KeyBinding par0KeyBinding)
     {
         return par0KeyBinding.keyCode < 0 ? Mouse.isButtonDown(par0KeyBinding.keyCode + 100) : Keyboard.isKeyDown(par0KeyBinding.keyCode);
     }
@@ -185,7 +185,7 @@ public class GameSettings
     /**
      * Sets a key binding.
      */
-    public void setKeyBinding(int par1, int par2)
+    public void setKeyBinding(final int par1, final int par2)
     {
         this.keyBindings[par1].keyCode = par2;
         this.saveOptions();
@@ -194,7 +194,7 @@ public class GameSettings
     /**
      * If the specified option is controlled by a slider (float value), this will set the float value.
      */
-    public void setOptionFloatValue(EnumOptions par1EnumOptions, float par2)
+    public void setOptionFloatValue(final EnumOptions par1EnumOptions, final float par2)
     {
         if (par1EnumOptions == EnumOptions.MUSIC)
         {
@@ -257,7 +257,7 @@ public class GameSettings
     /**
      * For non-float options. Toggles the option on/off, or cycles through the list i.e. render distances.
      */
-    public void setOptionValue(EnumOptions par1EnumOptions, int par2)
+    public void setOptionValue(final EnumOptions par1EnumOptions, final int par2)
     {
         if (par1EnumOptions == EnumOptions.INVERT_MOUSE)
         {
@@ -382,12 +382,12 @@ public class GameSettings
         this.saveOptions();
     }
 
-    public float getOptionFloatValue(EnumOptions par1EnumOptions)
+    public float getOptionFloatValue(final EnumOptions par1EnumOptions)
     {
         return par1EnumOptions == EnumOptions.FOV ? this.fovSetting : (par1EnumOptions == EnumOptions.GAMMA ? this.gammaSetting : (par1EnumOptions == EnumOptions.MUSIC ? this.musicVolume : (par1EnumOptions == EnumOptions.SOUND ? this.soundVolume : (par1EnumOptions == EnumOptions.SENSITIVITY ? this.mouseSensitivity : (par1EnumOptions == EnumOptions.CHAT_OPACITY ? this.chatOpacity : (par1EnumOptions == EnumOptions.CHAT_HEIGHT_FOCUSED ? this.chatHeightFocused : (par1EnumOptions == EnumOptions.CHAT_HEIGHT_UNFOCUSED ? this.chatHeightUnfocused : (par1EnumOptions == EnumOptions.CHAT_SCALE ? this.chatScale : (par1EnumOptions == EnumOptions.CHAT_WIDTH ? this.chatWidth : 0.0F)))))))));
     }
 
-    public boolean getOptionOrdinalValue(EnumOptions par1EnumOptions)
+    public boolean getOptionOrdinalValue(final EnumOptions par1EnumOptions)
     {
         switch (EnumOptionsHelper.enumOptionsMappingHelperArray[par1EnumOptions.ordinal()])
         {
@@ -428,31 +428,32 @@ public class GameSettings
      * Returns the translation of the given index in the given String array. If the index is smaller than 0 or greater
      * than/equal to the length of the String array, it is changed to 0.
      */
-    private static String getTranslation(String[] par0ArrayOfStr, int par1)
+    private static String getTranslation(final String[] par0ArrayOfStr, int par1)
     {
-        if (par1 < 0 || par1 >= par0ArrayOfStr.length)
+        int par11 = par1;
+        if (par11 < 0 || par11 >= par0ArrayOfStr.length)
         {
-            par1 = 0;
+            par11 = 0;
         }
 
-        return I18n.getString(par0ArrayOfStr[par1]);
+        return I18n.getString(par0ArrayOfStr[par11]);
     }
 
     /**
      * Gets a key binding.
      */
-    public String getKeyBinding(EnumOptions par1EnumOptions)
+    public String getKeyBinding(final EnumOptions par1EnumOptions)
     {
-        String s = I18n.getString(par1EnumOptions.getEnumString()) + ": ";
+        final String s = I18n.getString(par1EnumOptions.getEnumString()) + ": ";
 
         if (par1EnumOptions.getEnumFloat())
         {
-            float f = this.getOptionFloatValue(par1EnumOptions);
+            final float f = this.getOptionFloatValue(par1EnumOptions);
             return par1EnumOptions == EnumOptions.SENSITIVITY ? (f == 0.0F ? s + I18n.getString("options.sensitivity.min") : (f == 1.0F ? s + I18n.getString("options.sensitivity.max") : s + (int)(f * 200.0F) + "%")) : (par1EnumOptions == EnumOptions.FOV ? (f == 0.0F ? s + I18n.getString("options.fov.min") : (f == 1.0F ? s + I18n.getString("options.fov.max") : s + (int)(70.0F + f * 40.0F))) : (par1EnumOptions == EnumOptions.GAMMA ? (f == 0.0F ? s + I18n.getString("options.gamma.min") : (f == 1.0F ? s + I18n.getString("options.gamma.max") : s + "+" + (int)(f * 100.0F) + "%")) : (par1EnumOptions == EnumOptions.CHAT_OPACITY ? s + (int)(f * 90.0F + 10.0F) + "%" : (par1EnumOptions == EnumOptions.CHAT_HEIGHT_UNFOCUSED ? s + GuiNewChat.func_96130_b(f) + "px" : (par1EnumOptions == EnumOptions.CHAT_HEIGHT_FOCUSED ? s + GuiNewChat.func_96130_b(f) + "px" : (par1EnumOptions == EnumOptions.CHAT_WIDTH ? s + GuiNewChat.func_96128_a(f) + "px" : (f == 0.0F ? s + I18n.getString("options.off") : s + (int)(f * 100.0F) + "%")))))));
         }
         else if (par1EnumOptions.getEnumBoolean())
         {
-            boolean flag = this.getOptionOrdinalValue(par1EnumOptions);
+            final boolean flag = this.getOptionOrdinalValue(par1EnumOptions);
             return flag ? s + I18n.getString("options.on") : s + I18n.getString("options.off");
         }
         else if (par1EnumOptions == EnumOptions.RENDER_DISTANCE)
@@ -491,7 +492,7 @@ public class GameSettings
             }
             else
             {
-                String s1 = "options.graphics.fast";
+                final String s1 = "options.graphics.fast";
                 return s + I18n.getString("options.graphics.fast");
             }
         }
@@ -513,14 +514,14 @@ public class GameSettings
                 return;
             }
 
-            BufferedReader bufferedreader = new BufferedReader(new FileReader(this.optionsFile));
+            final BufferedReader bufferedreader = new BufferedReader(new FileReader(this.optionsFile));
             String s = "";
 
             while ((s = bufferedreader.readLine()) != null)
             {
                 try
                 {
-                    String[] astring = s.split(":");
+                    final String[] astring = s.split(":");
 
                     if (astring[0].equals("music"))
                     {
@@ -746,7 +747,7 @@ public class GameSettings
                         }
                     }
                 }
-                catch (Exception exception)
+                catch (final Exception exception)
                 {
                     this.mc.getLogAgent().logWarning("Skipping bad option: " + s);
                 }
@@ -755,7 +756,7 @@ public class GameSettings
             KeyBinding.resetKeyBindingArrayAndHash();
             bufferedreader.close();
         }
-        catch (Exception exception1)
+        catch (final Exception exception1)
         {
             this.mc.getLogAgent().logWarning("Failed to load options");
             exception1.printStackTrace();
@@ -765,7 +766,7 @@ public class GameSettings
     /**
      * Parses a string into a float.
      */
-    private float parseFloat(String par1Str)
+    private float parseFloat(final String par1Str)
     {
         return par1Str.equals("true") ? 1.0F : (par1Str.equals("false") ? 0.0F : Float.parseFloat(par1Str));
     }
@@ -778,7 +779,7 @@ public class GameSettings
         if (FMLClientHandler.instance().isLoading()) return;
         try
         {
-            PrintWriter printwriter = new PrintWriter(new FileWriter(this.optionsFile));
+            final PrintWriter printwriter = new PrintWriter(new FileWriter(this.optionsFile));
             printwriter.println("music:" + this.musicVolume);
             printwriter.println("sound:" + this.soundVolume);
             printwriter.println("invertYMouse:" + this.invertMouse);
@@ -828,7 +829,7 @@ public class GameSettings
 
             printwriter.close();
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             this.mc.getLogAgent().logWarning("Failed to save options");
             exception.printStackTrace();

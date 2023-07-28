@@ -33,12 +33,12 @@ public class TileEntityDispenser extends TileEntity implements IInventory
         return this.dispenserContents;
     }
 
-    public void onOpen(CraftHumanEntity who)
+    public void onOpen(final CraftHumanEntity who)
     {
         transaction.add(who);
     }
 
-    public void onClose(CraftHumanEntity who)
+    public void onClose(final CraftHumanEntity who)
     {
         transaction.remove(who);
     }
@@ -48,7 +48,7 @@ public class TileEntityDispenser extends TileEntity implements IInventory
         return transaction;
     }
 
-    public void setMaxStackSize(int size)
+    public void setMaxStackSize(final int size)
     {
         maxStack = size;
     }
@@ -67,7 +67,7 @@ public class TileEntityDispenser extends TileEntity implements IInventory
     /**
      * Returns the stack in slot i
      */
-    public ItemStack getStackInSlot(int par1)
+    public ItemStack getStackInSlot(final int par1)
     {
         return this.dispenserContents[par1];
     }
@@ -76,11 +76,11 @@ public class TileEntityDispenser extends TileEntity implements IInventory
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
      * new stack.
      */
-    public ItemStack decrStackSize(int par1, int par2)
+    public ItemStack decrStackSize(final int par1, final int par2)
     {
         if (this.dispenserContents[par1] != null)
         {
-            ItemStack itemstack;
+            final ItemStack itemstack;
 
             if (this.dispenserContents[par1].stackSize <= par2)
             {
@@ -112,11 +112,11 @@ public class TileEntityDispenser extends TileEntity implements IInventory
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      */
-    public ItemStack getStackInSlotOnClosing(int par1)
+    public ItemStack getStackInSlotOnClosing(final int par1)
     {
         if (this.dispenserContents[par1] != null)
         {
-            ItemStack itemstack = this.dispenserContents[par1];
+            final ItemStack itemstack = this.dispenserContents[par1];
             this.dispenserContents[par1] = null;
             return itemstack;
         }
@@ -150,7 +150,7 @@ public class TileEntityDispenser extends TileEntity implements IInventory
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
-    public void setInventorySlotContents(int par1, ItemStack par2ItemStack)
+    public void setInventorySlotContents(final int par1, final ItemStack par2ItemStack)
     {
         this.dispenserContents[par1] = par2ItemStack;
 
@@ -165,7 +165,7 @@ public class TileEntityDispenser extends TileEntity implements IInventory
     /**
      * Add item stack in first available inventory slot
      */
-    public int addItem(ItemStack par1ItemStack)
+    public int addItem(final ItemStack par1ItemStack)
     {
         for (int i = 0; i < this.dispenserContents.length; ++i)
         {
@@ -187,7 +187,7 @@ public class TileEntityDispenser extends TileEntity implements IInventory
         return this.isInvNameLocalized() ? this.customName : "container.dispenser";
     }
 
-    public void setCustomName(String par1Str)
+    public void setCustomName(final String par1Str)
     {
         this.customName = par1Str;
     }
@@ -204,16 +204,16 @@ public class TileEntityDispenser extends TileEntity implements IInventory
     /**
      * Reads a tile entity from NBT.
      */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
-        NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
+        final NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
         this.dispenserContents = new ItemStack[this.getSizeInventory()];
 
         for (int i = 0; i < nbttaglist.tagCount(); ++i)
         {
-            NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
-            int j = nbttagcompound1.getByte("Slot") & 255;
+            final NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
+            final int j = nbttagcompound1.getByte("Slot") & 255;
 
             if (j >= 0 && j < this.dispenserContents.length)
             {
@@ -230,16 +230,16 @@ public class TileEntityDispenser extends TileEntity implements IInventory
     /**
      * Writes a tile entity to NBT.
      */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
-        NBTTagList nbttaglist = new NBTTagList();
+        final NBTTagList nbttaglist = new NBTTagList();
 
         for (int i = 0; i < this.dispenserContents.length; ++i)
         {
             if (this.dispenserContents[i] != null)
             {
-                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+                final NBTTagCompound nbttagcompound1 = new NBTTagCompound();
                 nbttagcompound1.setByte("Slot", (byte)i);
                 this.dispenserContents[i].writeToNBT(nbttagcompound1);
                 nbttaglist.appendTag(nbttagcompound1);
@@ -266,7 +266,7 @@ public class TileEntityDispenser extends TileEntity implements IInventory
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
+    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer)
     {
         return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
     }
@@ -278,7 +278,7 @@ public class TileEntityDispenser extends TileEntity implements IInventory
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack)
+    public boolean isItemValidForSlot(final int par1, final ItemStack par2ItemStack)
     {
         return true;
     }

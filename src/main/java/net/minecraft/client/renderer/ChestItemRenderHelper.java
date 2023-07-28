@@ -23,7 +23,7 @@ public class ChestItemRenderHelper
     /**
      * Renders a chest at 0,0,0 - used for item rendering
      */
-    public void renderChest(Block par1Block, int par2, float par3)
+    public void renderChest(final Block par1Block, final int par2, final float par3)
     {
         if (par1Block.blockID == Block.enderChest.blockID)
         {

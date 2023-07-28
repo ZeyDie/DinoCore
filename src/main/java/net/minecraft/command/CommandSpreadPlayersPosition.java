@@ -14,22 +14,22 @@ class CommandSpreadPlayersPosition
 
     CommandSpreadPlayersPosition() {}
 
-    CommandSpreadPlayersPosition(double par1, double par3)
+    CommandSpreadPlayersPosition(final double par1, final double par3)
     {
         this.field_111101_a = par1;
         this.field_111100_b = par3;
     }
 
-    double func_111099_a(CommandSpreadPlayersPosition par1CommandSpreadPlayersPosition)
+    double func_111099_a(final CommandSpreadPlayersPosition par1CommandSpreadPlayersPosition)
     {
-        double d0 = this.field_111101_a - par1CommandSpreadPlayersPosition.field_111101_a;
-        double d1 = this.field_111100_b - par1CommandSpreadPlayersPosition.field_111100_b;
+        final double d0 = this.field_111101_a - par1CommandSpreadPlayersPosition.field_111101_a;
+        final double d1 = this.field_111100_b - par1CommandSpreadPlayersPosition.field_111100_b;
         return Math.sqrt(d0 * d0 + d1 * d1);
     }
 
     void func_111095_a()
     {
-        double d0 = (double)this.func_111096_b();
+        final double d0 = (double)this.func_111096_b();
         this.field_111101_a /= d0;
         this.field_111100_b /= d0;
     }
@@ -39,13 +39,13 @@ class CommandSpreadPlayersPosition
         return MathHelper.sqrt_double(this.field_111101_a * this.field_111101_a + this.field_111100_b * this.field_111100_b);
     }
 
-    public void func_111094_b(CommandSpreadPlayersPosition par1CommandSpreadPlayersPosition)
+    public void func_111094_b(final CommandSpreadPlayersPosition par1CommandSpreadPlayersPosition)
     {
         this.field_111101_a -= par1CommandSpreadPlayersPosition.field_111101_a;
         this.field_111100_b -= par1CommandSpreadPlayersPosition.field_111100_b;
     }
 
-    public boolean func_111093_a(double par1, double par3, double par5, double par7)
+    public boolean func_111093_a(final double par1, final double par3, final double par5, final double par7)
     {
         boolean flag = false;
 
@@ -74,14 +74,14 @@ class CommandSpreadPlayersPosition
         return flag;
     }
 
-    public int func_111092_a(World par1World)
+    public int func_111092_a(final World par1World)
     {
-        int i = MathHelper.floor_double(this.field_111101_a);
-        int j = MathHelper.floor_double(this.field_111100_b);
+        final int i = MathHelper.floor_double(this.field_111101_a);
+        final int j = MathHelper.floor_double(this.field_111100_b);
 
         for (int k = 256; k > 0; --k)
         {
-            int l = par1World.getBlockId(i, k, j);
+            final int l = par1World.getBlockId(i, k, j);
 
             if (l != 0)
             {
@@ -92,18 +92,18 @@ class CommandSpreadPlayersPosition
         return 257;
     }
 
-    public boolean func_111098_b(World par1World)
+    public boolean func_111098_b(final World par1World)
     {
-        int i = MathHelper.floor_double(this.field_111101_a);
-        int j = MathHelper.floor_double(this.field_111100_b);
+        final int i = MathHelper.floor_double(this.field_111101_a);
+        final int j = MathHelper.floor_double(this.field_111100_b);
 
         for (int k = 256; k > 0; --k)
         {
-            int l = par1World.getBlockId(i, k, j);
+            final int l = par1World.getBlockId(i, k, j);
 
             if (l != 0)
             {
-                Material material = Block.blocksList[l].blockMaterial;
+                final Material material = Block.blocksList[l].blockMaterial;
                 return !material.isLiquid() && material != Material.fire;
             }
         }
@@ -111,7 +111,7 @@ class CommandSpreadPlayersPosition
         return false;
     }
 
-    public void func_111097_a(Random par1Random, double par2, double par4, double par6, double par8)
+    public void func_111097_a(final Random par1Random, final double par2, final double par4, final double par6, final double par8)
     {
         this.field_111101_a = MathHelper.getRandomDoubleInRange(par1Random, par2, par6);
         this.field_111100_b = MathHelper.getRandomDoubleInRange(par1Random, par4, par8);

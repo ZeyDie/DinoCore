@@ -28,7 +28,7 @@ public class EntityPigZombie extends EntityZombie
     private int randomSoundDelay;
     private Entity field_110191_bu;
 
-    public EntityPigZombie(World par1World)
+    public EntityPigZombie(final World par1World)
     {
         super(par1World);
         this.isImmuneToFire = true;
@@ -58,7 +58,7 @@ public class EntityPigZombie extends EntityZombie
     {
         if (this.field_110191_bu != this.entityToAttack && !this.worldObj.isRemote)
         {
-            AttributeInstance attributeinstance = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
+            final AttributeInstance attributeinstance = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
             attributeinstance.removeModifier(field_110190_br);
 
             if (this.entityToAttack != null)
@@ -88,7 +88,7 @@ public class EntityPigZombie extends EntityZombie
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setShort("Anger", (short)this.angerLevel);
@@ -97,7 +97,7 @@ public class EntityPigZombie extends EntityZombie
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.angerLevel = par1NBTTagCompound.getShort("Anger");
@@ -115,7 +115,7 @@ public class EntityPigZombie extends EntityZombie
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2)
     {
         if (this.isEntityInvulnerable())
         {
@@ -123,19 +123,19 @@ public class EntityPigZombie extends EntityZombie
         }
         else
         {
-            Entity entity = par1DamageSource.getEntity();
+            final Entity entity = par1DamageSource.getEntity();
 
             if (entity instanceof EntityPlayer)
             {
-                List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(32.0D, 32.0D, 32.0D));
+                final List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(32.0D, 32.0D, 32.0D));
 
                 for (int i = 0; i < list.size(); ++i)
                 {
-                    Entity entity1 = (Entity)list.get(i);
+                    final Entity entity1 = (Entity)list.get(i);
 
                     if (entity1 instanceof EntityPigZombie)
                     {
-                        EntityPigZombie entitypigzombie = (EntityPigZombie)entity1;
+                        final EntityPigZombie entitypigzombie = (EntityPigZombie)entity1;
                         entitypigzombie.becomeAngryAt(entity);
                     }
                 }
@@ -153,8 +153,8 @@ public class EntityPigZombie extends EntityZombie
     private void becomeAngryAt(Entity par1Entity)
     {
         // CraftBukkit start
-        org.bukkit.entity.Entity bukkitTarget = par1Entity == null ? null : par1Entity.getBukkitEntity();
-        EntityTargetEvent event = new EntityTargetEvent(this.getBukkitEntity(), bukkitTarget, EntityTargetEvent.TargetReason.PIG_ZOMBIE_TARGET);
+        final org.bukkit.entity.Entity bukkitTarget = par1Entity == null ? null : par1Entity.getBukkitEntity();
+        final EntityTargetEvent event = new EntityTargetEvent(this.getBukkitEntity(), bukkitTarget, EntityTargetEvent.TargetReason.PIG_ZOMBIE_TARGET);
         this.worldObj.getServer().getPluginManager().callEvent(event);
 
         if (event.isCancelled())
@@ -168,9 +168,9 @@ public class EntityPigZombie extends EntityZombie
             return;
         }
 
-        par1Entity = ((org.bukkit.craftbukkit.v1_6_R3.entity.CraftEntity) event.getTarget()).getHandle();
+        Entity par1Entity1 = ((org.bukkit.craftbukkit.v1_6_R3.entity.CraftEntity) event.getTarget()).getHandle();
         // CraftBukkit end
-        this.entityToAttack = par1Entity;
+        this.entityToAttack = par1Entity1;
         this.angerLevel = 400 + this.rand.nextInt(400);
         this.randomSoundDelay = this.rand.nextInt(40);
     }
@@ -203,7 +203,7 @@ public class EntityPigZombie extends EntityZombie
      * Drop 0-2 items of this living's type. @param par1 - Whether this entity has recently been hit by a player. @param
      * par2 - Level of Looting used to kill this mob.
      */
-    protected void dropFewItems(boolean par1, int par2)
+    protected void dropFewItems(final boolean par1, final int par2)
     {
         int j = this.rand.nextInt(2 + par2);
         int k;
@@ -224,12 +224,12 @@ public class EntityPigZombie extends EntityZombie
     /**
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
-    public boolean interact(EntityPlayer par1EntityPlayer)
+    public boolean interact(final EntityPlayer par1EntityPlayer)
     {
         return false;
     }
 
-    protected void dropRareDrop(int par1)
+    protected void dropRareDrop(final int par1)
     {
         this.dropItem(Item.ingotGold.itemID, 1);
     }
@@ -250,7 +250,7 @@ public class EntityPigZombie extends EntityZombie
         this.setCurrentItemOrArmor(0, new ItemStack(Item.swordGold));
     }
 
-    public EntityLivingData onSpawnWithEgg(EntityLivingData par1EntityLivingData)
+    public EntityLivingData onSpawnWithEgg(final EntityLivingData par1EntityLivingData)
     {
         super.onSpawnWithEgg(par1EntityLivingData);
         this.setVillager(false);

@@ -14,7 +14,7 @@ public interface Arrow extends Projectile
             throw new UnsupportedOperationException( "Not supported yet." );
         }
 
-        public void setDamage(double damage)
+        public void setDamage(final double damage)
         {
             throw new UnsupportedOperationException( "Not supported yet." );
         }

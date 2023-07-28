@@ -18,7 +18,7 @@ import java.util.Random;
 
 public class BlockTripWire extends Block
 {
-    public BlockTripWire(int par1)
+    public BlockTripWire(final int par1)
     {
         super(par1, Material.circuits);
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.15625F, 1.0F);
@@ -28,7 +28,7 @@ public class BlockTripWire extends Block
     /**
      * How many world ticks before ticking
      */
-    public int tickRate(World par1World)
+    public int tickRate(final World par1World)
     {
         return 10;
     }
@@ -37,7 +37,7 @@ public class BlockTripWire extends Block
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4)
     {
         return null;
     }
@@ -80,7 +80,7 @@ public class BlockTripWire extends Block
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return Item.silk.itemID;
     }
@@ -89,11 +89,11 @@ public class BlockTripWire extends Block
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
-        int i1 = par1World.getBlockMetadata(par2, par3, par4);
-        boolean flag = (i1 & 2) == 2;
-        boolean flag1 = !par1World.doesBlockHaveSolidTopSurface(par2, par3 - 1, par4);
+        final int i1 = par1World.getBlockMetadata(par2, par3, par4);
+        final boolean flag = (i1 & 2) == 2;
+        final boolean flag1 = !par1World.doesBlockHaveSolidTopSurface(par2, par3 - 1, par4);
 
         if (flag != flag1)
         {
@@ -105,11 +105,11 @@ public class BlockTripWire extends Block
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
-        int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
-        boolean flag = (l & 4) == 4;
-        boolean flag1 = (l & 2) == 2;
+        final int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
+        final boolean flag = (l & 4) == 4;
+        final boolean flag1 = (l & 2) == 2;
 
         if (!flag1)
         {
@@ -128,9 +128,9 @@ public class BlockTripWire extends Block
     /**
      * Called whenever the block is added into the world. Args: world, x, y, z
      */
-    public void onBlockAdded(World par1World, int par2, int par3, int par4)
+    public void onBlockAdded(final World par1World, final int par2, final int par3, final int par4)
     {
-        int l = par1World.doesBlockHaveSolidTopSurface(par2, par3 - 1, par4) ? 0 : 2;
+        final int l = par1World.doesBlockHaveSolidTopSurface(par2, par3 - 1, par4) ? 0 : 2;
         par1World.setBlockMetadataWithNotify(par2, par3, par4, l, 3);
         this.func_72149_e(par1World, par2, par3, par4, l);
     }
@@ -140,7 +140,7 @@ public class BlockTripWire extends Block
      * different metadata value, but before the new metadata value is set. Args: World, x, y, z, old block ID, old
      * metadata
      */
-    public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    public void breakBlock(final World par1World, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         this.func_72149_e(par1World, par2, par3, par4, par6 | 1);
     }
@@ -148,7 +148,7 @@ public class BlockTripWire extends Block
     /**
      * Called when the block is attempted to be harvested
      */
-    public void onBlockHarvested(World par1World, int par2, int par3, int par4, int par5, EntityPlayer par6EntityPlayer)
+    public void onBlockHarvested(final World par1World, final int par2, final int par3, final int par4, final int par5, final EntityPlayer par6EntityPlayer)
     {
         if (!par1World.isRemote)
         {
@@ -164,12 +164,12 @@ public class BlockTripWire extends Block
     /**
      * only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
      */
-    public int idPicked(World par1World, int par2, int par3, int par4)
+    public int idPicked(final World par1World, final int par2, final int par3, final int par4)
     {
         return Item.silk.itemID;
     }
 
-    private void func_72149_e(World par1World, int par2, int par3, int par4, int par5)
+    private void func_72149_e(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         int i1 = 0;
 
@@ -181,13 +181,13 @@ public class BlockTripWire extends Block
             {
                 if (j1 < 42)
                 {
-                    int k1 = par2 + Direction.offsetX[i1] * j1;
-                    int l1 = par4 + Direction.offsetZ[i1] * j1;
-                    int i2 = par1World.getBlockId(k1, par3, l1);
+                    final int k1 = par2 + Direction.offsetX[i1] * j1;
+                    final int l1 = par4 + Direction.offsetZ[i1] * j1;
+                    final int i2 = par1World.getBlockId(k1, par3, l1);
 
                     if (i2 == Block.tripWireSource.blockID)
                     {
-                        int j2 = par1World.getBlockMetadata(k1, par3, l1) & 3;
+                        final int j2 = par1World.getBlockMetadata(k1, par3, l1) & 3;
 
                         if (j2 == Direction.rotateOpposite[i1])
                         {
@@ -210,7 +210,7 @@ public class BlockTripWire extends Block
     /**
      * Triggered whenever an entity collides with this block (enters into the block). Args: world, x, y, z, entity
      */
-    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
+    public void onEntityCollidedWithBlock(final World par1World, final int par2, final int par3, final int par4, final Entity par5Entity)
     {
         if (!par1World.isRemote)
         {
@@ -224,7 +224,7 @@ public class BlockTripWire extends Block
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (!par1World.isRemote)
         {
@@ -235,20 +235,20 @@ public class BlockTripWire extends Block
         }
     }
 
-    private void updateTripWireState(World par1World, int par2, int par3, int par4)
+    private void updateTripWireState(final World par1World, final int par2, final int par3, final int par4)
     {
         int l = par1World.getBlockMetadata(par2, par3, par4);
-        boolean flag = (l & 1) == 1;
+        final boolean flag = (l & 1) == 1;
         boolean flag1 = false;
-        List list = par1World.getEntitiesWithinAABBExcludingEntity((Entity)null, AxisAlignedBB.getAABBPool().getAABB((double)par2 + this.minX, (double)par3 + this.minY, (double)par4 + this.minZ, (double)par2 + this.maxX, (double)par3 + this.maxY, (double)par4 + this.maxZ));
+        final List list = par1World.getEntitiesWithinAABBExcludingEntity((Entity)null, AxisAlignedBB.getAABBPool().getAABB((double)par2 + this.minX, (double)par3 + this.minY, (double)par4 + this.minZ, (double)par2 + this.maxX, (double)par3 + this.maxY, (double)par4 + this.maxZ));
 
         if (!list.isEmpty())
         {
-            Iterator iterator = list.iterator();
+            final Iterator iterator = list.iterator();
 
             while (iterator.hasNext())
             {
-                Entity entity = (Entity)iterator.next();
+                final Entity entity = (Entity)iterator.next();
 
                 if (!entity.doesEntityNotTriggerPressurePlate())
                 {
@@ -261,17 +261,17 @@ public class BlockTripWire extends Block
         // CraftBukkit start - Call interact even when triggering connected tripwire
         if (flag != flag1 && flag1 && (par1World.getBlockMetadata(par2, par3, par4) & 4) == 4)
         {
-            org.bukkit.World bworld = par1World.getWorld();
-            org.bukkit.plugin.PluginManager manager = par1World.getServer().getPluginManager();
-            org.bukkit.block.Block block = bworld.getBlockAt(par2, par3, par4);
+            final org.bukkit.World bworld = par1World.getWorld();
+            final org.bukkit.plugin.PluginManager manager = par1World.getServer().getPluginManager();
+            final org.bukkit.block.Block block = bworld.getBlockAt(par2, par3, par4);
             boolean allowed = false;
 
             // If all of the events are cancelled block the tripwire trigger, else allow
-            for (Object object : list)
+            for (final Object object : list)
             {
                 if (object != null)
                 {
-                    org.bukkit.event.Cancellable cancellable;
+                    final org.bukkit.event.Cancellable cancellable;
 
                     if (object instanceof EntityPlayer)
                     {
@@ -324,24 +324,24 @@ public class BlockTripWire extends Block
     }
 
     @SideOnly(Side.CLIENT)
-    public static boolean func_72148_a(IBlockAccess par0IBlockAccess, int par1, int par2, int par3, int par4, int par5)
+    public static boolean func_72148_a(final IBlockAccess par0IBlockAccess, final int par1, final int par2, final int par3, final int par4, final int par5)
     {
-        int j1 = par1 + Direction.offsetX[par5];
-        int k1 = par3 + Direction.offsetZ[par5];
-        int l1 = par0IBlockAccess.getBlockId(j1, par2, k1);
-        boolean flag = (par4 & 2) == 2;
-        int i2;
+        final int j1 = par1 + Direction.offsetX[par5];
+        final int k1 = par3 + Direction.offsetZ[par5];
+        final int l1 = par0IBlockAccess.getBlockId(j1, par2, k1);
+        final boolean flag = (par4 & 2) == 2;
+        final int i2;
 
         if (l1 == Block.tripWireSource.blockID)
         {
             i2 = par0IBlockAccess.getBlockMetadata(j1, par2, k1);
-            int j2 = i2 & 3;
+            final int j2 = i2 & 3;
             return j2 == Direction.rotateOpposite[par5];
         }
         else if (l1 == Block.tripWire.blockID)
         {
             i2 = par0IBlockAccess.getBlockMetadata(j1, par2, k1);
-            boolean flag1 = (i2 & 2) == 2;
+            final boolean flag1 = (i2 & 2) == 2;
             return flag == flag1;
         }
         else

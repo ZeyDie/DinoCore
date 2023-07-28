@@ -44,7 +44,7 @@ public class EntityAITempt extends EntityAIBase
     private boolean scaredByPlayerMovement;
     private boolean field_75286_m;
 
-    public EntityAITempt(EntityCreature par1EntityCreature, double par2, int par4, boolean par5)
+    public EntityAITempt(final EntityCreature par1EntityCreature, final double par2, final int par4, final boolean par5)
     {
         this.temptedEntity = par1EntityCreature;
         this.field_75282_b = par2;
@@ -73,7 +73,7 @@ public class EntityAITempt extends EntityAIBase
             }
             else
             {
-                ItemStack itemstack = this.temptingPlayer.getCurrentEquippedItem();
+                final ItemStack itemstack = this.temptingPlayer.getCurrentEquippedItem();
                 return itemstack == null ? false : itemstack.itemID == this.breedingFood;
             }
         }

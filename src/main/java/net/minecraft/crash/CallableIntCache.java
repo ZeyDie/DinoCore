@@ -8,7 +8,7 @@ class CallableIntCache implements Callable
 {
     final CrashReport theCrashReport;
 
-    CallableIntCache(CrashReport par1CrashReport)
+    CallableIntCache(final CrashReport par1CrashReport)
     {
         this.theCrashReport = par1CrashReport;
     }

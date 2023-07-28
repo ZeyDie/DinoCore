@@ -21,7 +21,7 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
     private final CraftServer server;
     private final net.minecraft.world.storage.SaveHandler storage;
 
-    protected CraftOfflinePlayer(CraftServer server, String name) {
+    protected CraftOfflinePlayer(final CraftServer server, final String name) {
         this.server = server;
         this.name = name;
         this.storage = (net.minecraft.world.storage.SaveHandler) (server.console.worlds.get(0).getSaveHandler());
@@ -43,7 +43,7 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
         return server.getHandle().isPlayerOpped(getName().toLowerCase());
     }
 
-    public void setOp(boolean value) {
+    public void setOp(final boolean value) {
         if (value == isOp()) return;
 
         if (value) {
@@ -57,9 +57,9 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
         return server.getHandle().getBannedPlayers().isBanned(name.toLowerCase());
     }
 
-    public void setBanned(boolean value) {
+    public void setBanned(final boolean value) {
         if (value) {
-            net.minecraft.server.management.BanEntry entry = new net.minecraft.server.management.BanEntry(name.toLowerCase());
+            final net.minecraft.server.management.BanEntry entry = new net.minecraft.server.management.BanEntry(name.toLowerCase());
             server.getHandle().getBannedPlayers().put(entry);
         } else {
             server.getHandle().getBannedPlayers().remove(name.toLowerCase());
@@ -72,7 +72,7 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
         return server.getHandle().getWhiteListedPlayers().contains(name.toLowerCase());
     }
 
-    public void setWhitelisted(boolean value) {
+    public void setWhitelisted(final boolean value) {
         if (value) {
             server.getHandle().addToWhiteList(name.toLowerCase());
         } else {
@@ -81,14 +81,14 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
     }
 
     public Map<String, Object> serialize() {
-        Map<String, Object> result = new LinkedHashMap<String, Object>();
+        final Map<String, Object> result = new LinkedHashMap<String, Object>();
 
         result.put("name", name);
 
         return result;
     }
 
-    public static OfflinePlayer deserialize(Map<String, Object> args) {
+    public static OfflinePlayer deserialize(final Map<String, Object> args) {
         return Bukkit.getServer().getOfflinePlayer((String) args.get("name"));
     }
 
@@ -98,8 +98,8 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
     }
 
     public Player getPlayer() {
-        for (Object obj : server.getHandle().playerEntityList) {
-            net.minecraft.entity.player.EntityPlayerMP player = (net.minecraft.entity.player.EntityPlayerMP) obj;
+        for (final Object obj : server.getHandle().playerEntityList) {
+            final net.minecraft.entity.player.EntityPlayerMP player = (net.minecraft.entity.player.EntityPlayerMP) obj;
             if (player.getCommandSenderName().equalsIgnoreCase(getName())) {
                 return (player.playerNetServerHandler != null) ? player.playerNetServerHandler.getPlayerB() : null;
             }
@@ -109,14 +109,14 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
         if (!(obj instanceof OfflinePlayer)) {
             return false;
         }
-        OfflinePlayer other = (OfflinePlayer) obj;
+        final OfflinePlayer other = (OfflinePlayer) obj;
         if ((this.getName() == null) || (other.getName() == null)) {
             return false;
         }
@@ -152,16 +152,16 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
     }
 
     public long getFirstPlayed() {
-        Player player = getPlayer();
+        final Player player = getPlayer();
         if (player != null) return player.getFirstPlayed();
 
-        net.minecraft.nbt.NBTTagCompound data = getBukkitData();
+        final net.minecraft.nbt.NBTTagCompound data = getBukkitData();
 
         if (data != null) {
             if (data.hasKey("firstPlayed")) {
                 return data.getLong("firstPlayed");
             } else {
-                File file = getDataFile();
+                final File file = getDataFile();
                 return file.lastModified();
             }
         } else {
@@ -170,16 +170,16 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
     }
 
     public long getLastPlayed() {
-        Player player = getPlayer();
+        final Player player = getPlayer();
         if (player != null) return player.getLastPlayed();
 
-        net.minecraft.nbt.NBTTagCompound data = getBukkitData();
+        final net.minecraft.nbt.NBTTagCompound data = getBukkitData();
 
         if (data != null) {
             if (data.hasKey("lastPlayed")) {
                 return data.getLong("lastPlayed");
             } else {
-                File file = getDataFile();
+                final File file = getDataFile();
                 return file.lastModified();
             }
         } else {
@@ -192,12 +192,12 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
     }
 
     public Location getBedSpawnLocation() {
-        net.minecraft.nbt.NBTTagCompound data = getData();
+        final net.minecraft.nbt.NBTTagCompound data = getData();
         if (data == null) return null;
 
         if (data.hasKey("SpawnX") && data.hasKey("SpawnY") && data.hasKey("SpawnZ")) {
             String spawnWorld = data.getString("SpawnWorld");
-            if (spawnWorld.equals("")) {
+            if (spawnWorld.isEmpty()) {
                 spawnWorld = server.getWorlds().get(0).getName();
             }
             return new Location(server.getWorld(spawnWorld), data.getInteger("SpawnX"), data.getInteger("SpawnY"), data.getInteger("SpawnZ"));
@@ -205,19 +205,19 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
         return null;
     }
 
-    public void setMetadata(String metadataKey, MetadataValue metadataValue) {
+    public void setMetadata(final String metadataKey, final MetadataValue metadataValue) {
         server.getPlayerMetadata().setMetadata(this, metadataKey, metadataValue);
     }
 
-    public List<MetadataValue> getMetadata(String metadataKey) {
+    public List<MetadataValue> getMetadata(final String metadataKey) {
         return server.getPlayerMetadata().getMetadata(this, metadataKey);
     }
 
-    public boolean hasMetadata(String metadataKey) {
+    public boolean hasMetadata(final String metadataKey) {
         return server.getPlayerMetadata().hasMetadata(this, metadataKey);
     }
 
-    public void removeMetadata(String metadataKey, Plugin plugin) {
+    public void removeMetadata(final String metadataKey, final Plugin plugin) {
         server.getPlayerMetadata().removeMetadata(this, metadataKey, plugin);
     }
 }

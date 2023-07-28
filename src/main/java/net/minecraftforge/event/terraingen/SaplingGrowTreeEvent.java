@@ -19,7 +19,7 @@ public class SaplingGrowTreeEvent extends WorldEvent
     public final int z;
     public final Random rand;
     
-    public SaplingGrowTreeEvent(World world, Random rand, int x, int y, int z)
+    public SaplingGrowTreeEvent(final World world, final Random rand, final int x, final int y, final int z)
     {
         super(world);
         this.rand = rand;

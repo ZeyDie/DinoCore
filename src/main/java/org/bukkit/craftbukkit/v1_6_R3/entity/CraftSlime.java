@@ -7,7 +7,7 @@ import org.bukkit.entity.Slime;
 
 public class CraftSlime extends CraftLivingEntity implements Slime {
 
-    public CraftSlime(CraftServer server, net.minecraft.entity.monster.EntitySlime entity) {
+    public CraftSlime(final CraftServer server, final net.minecraft.entity.monster.EntitySlime entity) {
         super(server, entity);
     }
 
@@ -15,7 +15,7 @@ public class CraftSlime extends CraftLivingEntity implements Slime {
         return getHandle().getSlimeSize();
     }
 
-    public void setSize(int size) {
+    public void setSize(final int size) {
         getHandle().setSlimeSize(size);
     }
 

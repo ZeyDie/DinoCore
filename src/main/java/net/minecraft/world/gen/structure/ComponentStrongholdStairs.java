@@ -13,7 +13,7 @@ public class ComponentStrongholdStairs extends ComponentStronghold
 
     public ComponentStrongholdStairs() {}
 
-    public ComponentStrongholdStairs(int par1, Random par2Random, int par3, int par4)
+    public ComponentStrongholdStairs(final int par1, final Random par2Random, final int par3, final int par4)
     {
         super(par1);
         this.field_75024_a = true;
@@ -31,7 +31,7 @@ public class ComponentStrongholdStairs extends ComponentStronghold
         }
     }
 
-    public ComponentStrongholdStairs(int par1, Random par2Random, StructureBoundingBox par3StructureBoundingBox, int par4)
+    public ComponentStrongholdStairs(final int par1, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox, final int par4)
     {
         super(par1);
         this.field_75024_a = false;
@@ -40,13 +40,13 @@ public class ComponentStrongholdStairs extends ComponentStronghold
         this.boundingBox = par3StructureBoundingBox;
     }
 
-    protected void func_143012_a(NBTTagCompound par1NBTTagCompound)
+    protected void func_143012_a(final NBTTagCompound par1NBTTagCompound)
     {
         super.func_143012_a(par1NBTTagCompound);
         par1NBTTagCompound.setBoolean("Source", this.field_75024_a);
     }
 
-    protected void func_143011_b(NBTTagCompound par1NBTTagCompound)
+    protected void func_143011_b(final NBTTagCompound par1NBTTagCompound)
     {
         super.func_143011_b(par1NBTTagCompound);
         this.field_75024_a = par1NBTTagCompound.getBoolean("Source");
@@ -55,7 +55,7 @@ public class ComponentStrongholdStairs extends ComponentStronghold
     /**
      * Initiates construction of the Structure Component picked, at the current Location of StructGen
      */
-    public void buildComponent(StructureComponent par1StructureComponent, List par2List, Random par3Random)
+    public void buildComponent(final StructureComponent par1StructureComponent, final List par2List, final Random par3Random)
     {
         if (this.field_75024_a)
         {
@@ -68,9 +68,9 @@ public class ComponentStrongholdStairs extends ComponentStronghold
     /**
      * performs some checks, then gives out a fresh Stairs component
      */
-    public static ComponentStrongholdStairs getStrongholdStairsComponent(List par0List, Random par1Random, int par2, int par3, int par4, int par5, int par6)
+    public static ComponentStrongholdStairs getStrongholdStairsComponent(final List par0List, final Random par1Random, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
-        StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(par2, par3, par4, -1, -7, 0, 5, 11, 5, par5);
+        final StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(par2, par3, par4, -1, -7, 0, 5, 11, 5, par5);
         return canStrongholdGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(par0List, structureboundingbox) == null ? new ComponentStrongholdStairs(par6, par1Random, structureboundingbox, par5) : null;
     }
 
@@ -78,7 +78,7 @@ public class ComponentStrongholdStairs extends ComponentStronghold
      * second Part of Structure generating, this for example places Spiderwebs, Mob Spawners, it closes Mineshafts at
      * the end, it adds Fences...
      */
-    public boolean addComponentParts(World par1World, Random par2Random, StructureBoundingBox par3StructureBoundingBox)
+    public boolean addComponentParts(final World par1World, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox)
     {
         if (this.isLiquidInStructureBoundingBox(par1World, par3StructureBoundingBox))
         {

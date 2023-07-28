@@ -19,7 +19,7 @@ abstract class ComponentScatteredFeature extends StructureComponent
 
     public ComponentScatteredFeature() {}
 
-    protected ComponentScatteredFeature(Random par1Random, int par2, int par3, int par4, int par5, int par6, int par7)
+    protected ComponentScatteredFeature(final Random par1Random, final int par2, final int par3, final int par4, final int par5, final int par6, final int par7)
     {
         super(0);
         this.scatteredFeatureSizeX = par5;
@@ -38,7 +38,7 @@ abstract class ComponentScatteredFeature extends StructureComponent
         }
     }
 
-    protected void func_143012_a(NBTTagCompound par1NBTTagCompound)
+    protected void func_143012_a(final NBTTagCompound par1NBTTagCompound)
     {
         par1NBTTagCompound.setInteger("Width", this.scatteredFeatureSizeX);
         par1NBTTagCompound.setInteger("Height", this.scatteredFeatureSizeY);
@@ -46,7 +46,7 @@ abstract class ComponentScatteredFeature extends StructureComponent
         par1NBTTagCompound.setInteger("HPos", this.field_74936_d);
     }
 
-    protected void func_143011_b(NBTTagCompound par1NBTTagCompound)
+    protected void func_143011_b(final NBTTagCompound par1NBTTagCompound)
     {
         this.scatteredFeatureSizeX = par1NBTTagCompound.getInteger("Width");
         this.scatteredFeatureSizeY = par1NBTTagCompound.getInteger("Height");
@@ -54,7 +54,7 @@ abstract class ComponentScatteredFeature extends StructureComponent
         this.field_74936_d = par1NBTTagCompound.getInteger("HPos");
     }
 
-    protected boolean func_74935_a(World par1World, StructureBoundingBox par2StructureBoundingBox, int par3)
+    protected boolean func_74935_a(final World par1World, final StructureBoundingBox par2StructureBoundingBox, final int par3)
     {
         if (this.field_74936_d >= 0)
         {

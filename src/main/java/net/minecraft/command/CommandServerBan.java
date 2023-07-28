@@ -21,7 +21,7 @@ public class CommandServerBan extends CommandBase
         return 3;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.ban.usage";
     }
@@ -29,17 +29,17 @@ public class CommandServerBan extends CommandBase
     /**
      * Returns true if the given command sender is allowed to use this command.
      */
-    public boolean canCommandSenderUseCommand(ICommandSender par1ICommandSender)
+    public boolean canCommandSenderUseCommand(final ICommandSender par1ICommandSender)
     {
         return MinecraftServer.getServer().getConfigurationManager().getBannedPlayers().isListActive() && super.canCommandSenderUseCommand(par1ICommandSender);
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
-        if (par2ArrayOfStr.length >= 1 && par2ArrayOfStr[0].length() > 0)
+        if (par2ArrayOfStr.length >= 1 && !par2ArrayOfStr[0].isEmpty())
         {
-            EntityPlayerMP entityplayermp = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(par2ArrayOfStr[0]);
-            BanEntry banentry = new BanEntry(par2ArrayOfStr[0]);
+            final EntityPlayerMP entityplayermp = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(par2ArrayOfStr[0]);
+            final BanEntry banentry = new BanEntry(par2ArrayOfStr[0]);
             banentry.setBannedBy(par1ICommandSender.getCommandSenderName());
 
             if (par2ArrayOfStr.length >= 2)
@@ -65,7 +65,7 @@ public class CommandServerBan extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public List addTabCompletionOptions(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         return par2ArrayOfStr.length >= 1 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, MinecraftServer.getServer().getAllUsernames()) : null;
     }

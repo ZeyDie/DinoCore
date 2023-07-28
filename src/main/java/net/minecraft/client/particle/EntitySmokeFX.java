@@ -10,12 +10,12 @@ public class EntitySmokeFX extends EntityFX
 {
     float smokeParticleScale;
 
-    public EntitySmokeFX(World par1World, double par2, double par4, double par6, double par8, double par10, double par12)
+    public EntitySmokeFX(final World par1World, final double par2, final double par4, final double par6, final double par8, final double par10, final double par12)
     {
         this(par1World, par2, par4, par6, par8, par10, par12, 1.0F);
     }
 
-    public EntitySmokeFX(World par1World, double par2, double par4, double par6, double par8, double par10, double par12, float par14)
+    public EntitySmokeFX(final World par1World, final double par2, final double par4, final double par6, final double par8, final double par10, final double par12, final float par14)
     {
         super(par1World, par2, par4, par6, 0.0D, 0.0D, 0.0D);
         this.motionX *= 0.10000000149011612D;
@@ -33,7 +33,7 @@ public class EntitySmokeFX extends EntityFX
         this.noClip = false;
     }
 
-    public void renderParticle(Tessellator par1Tessellator, float par2, float par3, float par4, float par5, float par6, float par7)
+    public void renderParticle(final Tessellator par1Tessellator, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7)
     {
         float f6 = ((float)this.particleAge + par2) / (float)this.particleMaxAge * 32.0F;
 

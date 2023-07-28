@@ -12,7 +12,7 @@ public class Dispenser extends FurnaceAndDispenser {
         super(Material.DISPENSER);
     }
 
-    public Dispenser(BlockFace direction) {
+    public Dispenser(final BlockFace direction) {
         this();
         setFacingDirection(direction);
     }
@@ -48,8 +48,8 @@ public class Dispenser extends FurnaceAndDispenser {
         super(type, data);
     }
 
-    public void setFacingDirection(BlockFace face) {
-        byte data;
+    public void setFacingDirection(final BlockFace face) {
+        final byte data;
 
         switch (face) {
             case DOWN:
@@ -81,7 +81,7 @@ public class Dispenser extends FurnaceAndDispenser {
     }
 
     public BlockFace getFacing() {
-        int data = getData() & 0x7;
+        final int data = getData() & 0x7;
 
         switch (data) {
             case 0x0:

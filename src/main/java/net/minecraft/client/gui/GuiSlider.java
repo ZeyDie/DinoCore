@@ -18,7 +18,7 @@ public class GuiSlider extends GuiButton
     /** Additional ID for this slider control. */
     private EnumOptions idFloat;
 
-    public GuiSlider(int par1, int par2, int par3, EnumOptions par4EnumOptions, String par5Str, float par6)
+    public GuiSlider(final int par1, final int par2, final int par3, final EnumOptions par4EnumOptions, final String par5Str, final float par6)
     {
         super(par1, par2, par3, 150, 20, par5Str);
         this.idFloat = par4EnumOptions;
@@ -29,7 +29,7 @@ public class GuiSlider extends GuiButton
      * Returns 0 if the button is disabled, 1 if the mouse is NOT hovering over this button and 2 if it IS hovering over
      * this button.
      */
-    protected int getHoverState(boolean par1)
+    protected int getHoverState(final boolean par1)
     {
         return 0;
     }
@@ -37,7 +37,7 @@ public class GuiSlider extends GuiButton
     /**
      * Fired when the mouse button is dragged. Equivalent of MouseListener.mouseDragged(MouseEvent e).
      */
-    protected void mouseDragged(Minecraft par1Minecraft, int par2, int par3)
+    protected void mouseDragged(final Minecraft par1Minecraft, final int par2, final int par3)
     {
         if (this.drawButton)
         {
@@ -69,7 +69,7 @@ public class GuiSlider extends GuiButton
      * Returns true if the mouse has been pressed on this control. Equivalent of MouseListener.mousePressed(MouseEvent
      * e).
      */
-    public boolean mousePressed(Minecraft par1Minecraft, int par2, int par3)
+    public boolean mousePressed(final Minecraft par1Minecraft, final int par2, final int par3)
     {
         if (super.mousePressed(par1Minecraft, par2, par3))
         {
@@ -99,7 +99,7 @@ public class GuiSlider extends GuiButton
     /**
      * Fired when the mouse button is released. Equivalent of MouseListener.mouseReleased(MouseEvent e).
      */
-    public void mouseReleased(int par1, int par2)
+    public void mouseReleased(final int par1, final int par2)
     {
         this.dragging = false;
     }

@@ -20,7 +20,7 @@ public class CertificateHelper {
 
     private static final String HEXES = "0123456789abcdef";
 
-    public static String getFingerprint(Certificate certificate)
+    public static String getFingerprint(final Certificate certificate)
     {
         if (certificate == null)
         {
@@ -28,34 +28,34 @@ public class CertificateHelper {
         }
         try
         {
-            MessageDigest md = MessageDigest.getInstance("SHA-1");
-            byte[] der = certificate.getEncoded();
+            final MessageDigest md = MessageDigest.getInstance("SHA-1");
+            final byte[] der = certificate.getEncoded();
             md.update(der);
-            byte[] digest = md.digest();
+            final byte[] digest = md.digest();
             return hexify(digest);
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             return null;
         }
     }
 
-    public static String getFingerprint(ByteBuffer buffer)
+    public static String getFingerprint(final ByteBuffer buffer)
     {
         try
         {
-            MessageDigest digest = MessageDigest.getInstance("SHA-1");
+            final MessageDigest digest = MessageDigest.getInstance("SHA-1");
             digest.update(buffer);
-            byte[] chksum = digest.digest();
+            final byte[] chksum = digest.digest();
             return hexify(chksum);
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             return null;
         }
     }
 
-    private static String hexify(byte[] chksum)
+    private static String hexify(final byte[] chksum)
     {
         final StringBuilder hex = new StringBuilder( 2 * chksum.length );
         for ( final byte b : chksum ) {

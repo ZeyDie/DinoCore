@@ -26,7 +26,7 @@ public class PlayerDropsEvent extends LivingDropsEvent
      * @param source The source of the damage which is killing the player.
      * @param drops List of all drops entering the world.
      */
-    public PlayerDropsEvent(EntityPlayer entity, DamageSource source, ArrayList<EntityItem> drops, boolean recentlyHit)
+    public PlayerDropsEvent(final EntityPlayer entity, final DamageSource source, final ArrayList<EntityItem> drops, final boolean recentlyHit)
     {
         super(entity, source, drops, 
             (source.getEntity() instanceof EntityPlayer) ? 

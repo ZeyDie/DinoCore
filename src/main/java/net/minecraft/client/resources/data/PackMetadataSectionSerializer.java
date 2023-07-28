@@ -9,17 +9,17 @@ import java.lang.reflect.Type;
 @SideOnly(Side.CLIENT)
 public class PackMetadataSectionSerializer extends BaseMetadataSectionSerializer implements JsonSerializer
 {
-    public PackMetadataSection func_110489_a(JsonElement par1JsonElement, Type par2Type, JsonDeserializationContext par3JsonDeserializationContext)
+    public PackMetadataSection func_110489_a(final JsonElement par1JsonElement, final Type par2Type, final JsonDeserializationContext par3JsonDeserializationContext)
     {
-        JsonObject jsonobject = par1JsonElement.getAsJsonObject();
-        String s = this.func_110486_a(jsonobject.get("description"), "description", (String)null, 1, Integer.MAX_VALUE);
-        int i = this.func_110485_a(jsonobject.get("pack_format"), "pack_format", (Integer)null, 1, Integer.MAX_VALUE);
+        final JsonObject jsonobject = par1JsonElement.getAsJsonObject();
+        final String s = this.func_110486_a(jsonobject.get("description"), "description", (String)null, 1, Integer.MAX_VALUE);
+        final int i = this.func_110485_a(jsonobject.get("pack_format"), "pack_format", (Integer)null, 1, Integer.MAX_VALUE);
         return new PackMetadataSection(s, i);
     }
 
-    public JsonElement func_110488_a(PackMetadataSection par1PackMetadataSection, Type par2Type, JsonSerializationContext par3JsonSerializationContext)
+    public JsonElement func_110488_a(final PackMetadataSection par1PackMetadataSection, final Type par2Type, final JsonSerializationContext par3JsonSerializationContext)
     {
-        JsonObject jsonobject = new JsonObject();
+        final JsonObject jsonobject = new JsonObject();
         jsonobject.addProperty("pack_format", Integer.valueOf(par1PackMetadataSection.getPackFormat()));
         jsonobject.addProperty("description", par1PackMetadataSection.getPackDescription());
         return jsonobject;
@@ -33,12 +33,12 @@ public class PackMetadataSectionSerializer extends BaseMetadataSectionSerializer
         return "pack";
     }
 
-    public Object deserialize(JsonElement par1JsonElement, Type par2Type, JsonDeserializationContext par3JsonDeserializationContext)
+    public Object deserialize(final JsonElement par1JsonElement, final Type par2Type, final JsonDeserializationContext par3JsonDeserializationContext)
     {
         return this.func_110489_a(par1JsonElement, par2Type, par3JsonDeserializationContext);
     }
 
-    public JsonElement serialize(Object par1Obj, Type par2Type, JsonSerializationContext par3JsonSerializationContext)
+    public JsonElement serialize(final Object par1Obj, final Type par2Type, final JsonSerializationContext par3JsonSerializationContext)
     {
         return this.func_110488_a((PackMetadataSection)par1Obj, par2Type, par3JsonSerializationContext);
     }

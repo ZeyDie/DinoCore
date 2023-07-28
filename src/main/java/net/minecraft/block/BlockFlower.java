@@ -14,16 +14,16 @@ import static net.minecraftforge.common.EnumPlantType.*;
 
 public class BlockFlower extends Block implements IPlantable
 {
-    protected BlockFlower(int par1, Material par2Material)
+    protected BlockFlower(final int par1, final Material par2Material)
     {
         super(par1, par2Material);
         this.setTickRandomly(true);
-        float f = 0.2F;
+        final float f = 0.2F;
         this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 3.0F, 0.5F + f);
         this.setCreativeTab(CreativeTabs.tabDecorations);
     }
 
-    protected BlockFlower(int par1)
+    protected BlockFlower(final int par1)
     {
         this(par1, Material.plants);
     }
@@ -31,7 +31,7 @@ public class BlockFlower extends Block implements IPlantable
     /**
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
      */
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
+    public boolean canPlaceBlockAt(final World par1World, final int par2, final int par3, final int par4)
     {
         return super.canPlaceBlockAt(par1World, par2, par3, par4) && canBlockStay(par1World, par2, par3, par4);
     }
@@ -40,7 +40,7 @@ public class BlockFlower extends Block implements IPlantable
      * Gets passed in the blockID of the block below and supposed to return true if its allowed to grow on the type of
      * blockID passed in. Args: blockID
      */
-    protected boolean canThisPlantGrowOnThisBlockID(int par1)
+    protected boolean canThisPlantGrowOnThisBlockID(final int par1)
     {
         return par1 == Block.grass.blockID || par1 == Block.dirt.blockID || par1 == Block.tilledField.blockID;
     }
@@ -49,7 +49,7 @@ public class BlockFlower extends Block implements IPlantable
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         super.onNeighborBlockChange(par1World, par2, par3, par4, par5);
         this.checkFlowerChange(par1World, par2, par3, par4);
@@ -58,12 +58,12 @@ public class BlockFlower extends Block implements IPlantable
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         this.checkFlowerChange(par1World, par2, par3, par4);
     }
 
-    protected final void checkFlowerChange(World par1World, int par2, int par3, int par4)
+    protected final void checkFlowerChange(final World par1World, final int par2, final int par3, final int par4)
     {
         if (!this.canBlockStay(par1World, par2, par3, par4))
         {
@@ -75,9 +75,9 @@ public class BlockFlower extends Block implements IPlantable
     /**
      * Can this block stay at this position.  Similar to canPlaceBlockAt except gets checked often with plants.
      */
-    public boolean canBlockStay(World par1World, int par2, int par3, int par4)
+    public boolean canBlockStay(final World par1World, final int par2, final int par3, final int par4)
     {
-        Block soil = blocksList[par1World.getBlockId(par2, par3 - 1, par4)];
+        final Block soil = blocksList[par1World.getBlockId(par2, par3 - 1, par4)];
         return (par1World.getFullBlockLightValue(par2, par3, par4) >= 8 || par1World.canBlockSeeTheSky(par2, par3, par4)) && 
                 (soil != null && soil.canSustainPlant(par1World, par2, par3 - 1, par4, ForgeDirection.UP, this));
     }
@@ -86,7 +86,7 @@ public class BlockFlower extends Block implements IPlantable
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4)
     {
         return null;
     }
@@ -117,7 +117,7 @@ public class BlockFlower extends Block implements IPlantable
     }
 
     @Override
-    public EnumPlantType getPlantType(World world, int x, int y, int z)
+    public EnumPlantType getPlantType(final World world, final int x, final int y, final int z)
     {
         if (blockID == crops.blockID        ) return Crop;
         if (blockID == deadBush.blockID     ) return Desert;
@@ -133,13 +133,13 @@ public class BlockFlower extends Block implements IPlantable
     }
 
     @Override
-    public int getPlantID(World world, int x, int y, int z)
+    public int getPlantID(final World world, final int x, final int y, final int z)
     {
         return blockID;
     }
 
     @Override
-    public int getPlantMetadata(World world, int x, int y, int z)
+    public int getPlantMetadata(final World world, final int x, final int y, final int z)
     {
         return world.getBlockMetadata(x, y, z);
     }

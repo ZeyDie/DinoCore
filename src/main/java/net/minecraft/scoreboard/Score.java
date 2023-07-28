@@ -11,14 +11,14 @@ public class Score
     private final String field_96654_d;
     private int field_96655_e;
 
-    public Score(Scoreboard par1Scoreboard, ScoreObjective par2ScoreObjective, String par3Str)
+    public Score(final Scoreboard par1Scoreboard, final ScoreObjective par2ScoreObjective, final String par3Str)
     {
         this.theScoreboard = par1Scoreboard;
         this.theScoreObjective = par2ScoreObjective;
         this.field_96654_d = par3Str;
     }
 
-    public void func_96649_a(int par1)
+    public void func_96649_a(final int par1)
     {
         if (this.theScoreObjective.getCriteria().isReadOnly())
         {
@@ -30,7 +30,7 @@ public class Score
         }
     }
 
-    public void func_96646_b(int par1)
+    public void func_96646_b(final int par1)
     {
         if (this.theScoreObjective.getCriteria().isReadOnly())
         {
@@ -59,9 +59,9 @@ public class Score
         return this.field_96655_e;
     }
 
-    public void func_96647_c(int par1)
+    public void func_96647_c(final int par1)
     {
-        int j = this.field_96655_e;
+        final int j = this.field_96655_e;
         this.field_96655_e = par1;
 
         if (j != par1)
@@ -85,7 +85,7 @@ public class Score
         return this.theScoreboard;
     }
 
-    public void func_96651_a(List par1List)
+    public void func_96651_a(final List par1List)
     {
         this.func_96647_c(this.theScoreObjective.getCriteria().func_96635_a(par1List));
     }

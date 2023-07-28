@@ -4,9 +4,10 @@ import java.io.DataInput;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 public class ProTracker {
-	public static boolean is_mod( byte[] header_1084_bytes ) {
+	public static boolean is_mod(final byte[] header_1084_bytes ) {
 		boolean is_mod;
 		is_mod = false;
 		if( calculate_num_channels( header_1084_bytes ) > 0 ) {
@@ -15,11 +16,17 @@ public class ProTracker {
 		return is_mod;
 	}
 
-	public static Module load_mod( byte[] header_1084_bytes, DataInput data_input ) throws IOException {
-		int num_channels, channel_idx, panning;
-		int sequence_length, restart_idx, sequence_idx;
-		int num_patterns, pattern_idx, instrument_idx;
-		Module module;
+	public static Module load_mod(final byte[] header_1084_bytes, final DataInput data_input ) throws IOException {
+		final int num_channels;
+        int channel_idx;
+        int panning;
+        final int sequence_length;
+        int restart_idx;
+        int sequence_idx;
+        final int num_patterns;
+        int pattern_idx;
+        int instrument_idx;
+        final Module module;
 		num_channels = calculate_num_channels( header_1084_bytes );
 		if( num_channels < 1 ) {
 			throw new IllegalArgumentException( "ProTracker: Unrecognised module format!" );
@@ -61,7 +68,7 @@ public class ProTracker {
 		return module;
 	}
 
-	private static int calculate_num_patterns( byte[] module_header ) {
+	private static int calculate_num_patterns(final byte[] module_header ) {
 		int num_patterns, order_entry, pattern_idx;
 		num_patterns = 0;
 		for( pattern_idx = 0; pattern_idx < 128; pattern_idx++ ) {
@@ -73,8 +80,8 @@ public class ProTracker {
 		return num_patterns;
 	}
 	
-	private static int calculate_num_channels( byte[] module_header ) {
-		int num_channels;
+	private static int calculate_num_channels(final byte[] module_header ) {
+		final int num_channels;
 		switch( ( module_header[ 1082 ] << 8 ) | module_header[ 1083 ] ) {
 			case 0x4b2e: /* M.K. */
 			case 0x4b21: /* M!K! */
@@ -96,12 +103,13 @@ public class ProTracker {
 		return num_channels;
 	}
 
-	private static Pattern read_mod_pattern( DataInput data_input, int num_channels ) throws IOException {
+	private static Pattern read_mod_pattern(final DataInput data_input, final int num_channels ) throws IOException {
 		int input_idx, output_idx;
 		int period, instrument, effect, effect_param;
-		Pattern pattern;
-		byte[] input_pattern_data, output_pattern_data;
-		pattern = new Pattern();
+		final Pattern pattern;
+		final byte[] input_pattern_data;
+        final byte[] output_pattern_data;
+        pattern = new Pattern();
 		pattern.num_rows = 64;
 		input_pattern_data = new byte[ 64 * num_channels * 4 ];
 		output_pattern_data = new byte[ 64 * num_channels * 5 ];
@@ -151,13 +159,17 @@ public class ProTracker {
 		return pattern;
 	}
 
-	private static Instrument read_mod_instrument( byte[] mod_header, int idx, DataInput data_input ) throws IOException  {
-		int header_offset, sample_data_length;
-		int loop_start, loop_length, sample_idx, fine_tune;
-		Instrument instrument;
-		Sample sample;
-		byte[] raw_sample_data;
-		short[] sample_data;
+	private static Instrument read_mod_instrument(final byte[] mod_header, final int idx, final DataInput data_input ) throws IOException  {
+		final int header_offset;
+        final int sample_data_length;
+        final int loop_start;
+        int loop_length;
+        int sample_idx;
+        int fine_tune;
+        final Instrument instrument;
+		final Sample sample;
+		final byte[] raw_sample_data;
+		final short[] sample_data;
 		header_offset = ( idx - 1 ) * 30 + 20;
 		instrument = new Instrument();
 		instrument.name = ascii_text( mod_header, header_offset, 22 );
@@ -178,7 +190,7 @@ public class ProTracker {
 		sample_data = new short[ sample_data_length ];
 		try {
 			data_input.readFully( raw_sample_data );
-		} catch( EOFException e ) {
+		} catch( final EOFException e ) {
 			System.out.println( "ProTracker: Instrument " + idx + " has samples missing." );
 		}
 		for( sample_idx = 0; sample_idx < raw_sample_data.length; sample_idx++ ) {
@@ -190,9 +202,10 @@ public class ProTracker {
 		return instrument;
 	}
 	
-	private static byte to_key( int period ) {
-		int oct, key;
-		if( period < 32 ) {
+	private static byte to_key(final int period ) {
+		final int oct;
+        int key;
+        if( period < 32 ) {
 			key = 0;
 		} else {
 			oct = LogTable.log_2( 7256 ) - LogTable.log_2( period );
@@ -207,16 +220,16 @@ public class ProTracker {
 		return ( byte ) key;
 	}
 
-	private static int unsigned_short_be( byte[] buf, int offset ) {
+	private static int unsigned_short_be(final byte[] buf, final int offset ) {
 		int value;
 		value = ( buf[ offset ] & 0xFF ) << 8;
 		value = value | ( buf[ offset + 1 ] & 0xFF );
 		return value;
 	}
 	
-	private static String ascii_text( byte[] buffer, int offset, int length ) {
+	private static String ascii_text(final byte[] buffer, final int offset, final int length ) {
 		int idx, chr;
-		byte[] string_buffer;
+		final byte[] string_buffer;
 		String string;
 		string_buffer = new byte[ length ];
 		for( idx = 0; idx < length; idx++ ) {
@@ -226,12 +239,8 @@ public class ProTracker {
 			}
 			string_buffer[ idx ] = ( byte ) chr;
 		}
-		try {
-			string = new String( string_buffer, 0, length, "ISO-8859-1" );
-		} catch( UnsupportedEncodingException e ) {
-			string = "";
-		}
-		return string;
+        string = new String( string_buffer, 0, length, StandardCharsets.ISO_8859_1);
+        return string;
 	}
 }
 

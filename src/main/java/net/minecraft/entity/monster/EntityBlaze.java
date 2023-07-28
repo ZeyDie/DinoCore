@@ -20,7 +20,7 @@ public class EntityBlaze extends EntityMob
     private int heightOffsetUpdateTime;
     private int field_70846_g;
 
-    public EntityBlaze(World par1World)
+    public EntityBlaze(final World par1World)
     {
         super(par1World);
         this.isImmuneToFire = true;
@@ -64,7 +64,7 @@ public class EntityBlaze extends EntityMob
     }
 
     @SideOnly(Side.CLIENT)
-    public int getBrightnessForRender(float par1)
+    public int getBrightnessForRender(final float par1)
     {
         return 15728880;
     }
@@ -72,7 +72,7 @@ public class EntityBlaze extends EntityMob
     /**
      * Gets how bright this entity is.
      */
-    public float getBrightness(float par1)
+    public float getBrightness(final float par1)
     {
         return 1.0F;
     }
@@ -125,7 +125,7 @@ public class EntityBlaze extends EntityMob
     /**
      * Basic mob attack. Default to touch of death in EntityCreature. Overridden by each mob to define their attack.
      */
-    protected void attackEntity(Entity par1Entity, float par2)
+    protected void attackEntity(final Entity par1Entity, final float par2)
     {
         if (this.attackTime <= 0 && par2 < 2.0F && par1Entity.boundingBox.maxY > this.boundingBox.minY && par1Entity.boundingBox.minY < this.boundingBox.maxY)
         {
@@ -134,9 +134,9 @@ public class EntityBlaze extends EntityMob
         }
         else if (par2 < 30.0F)
         {
-            double d0 = par1Entity.posX - this.posX;
-            double d1 = par1Entity.boundingBox.minY + (double)(par1Entity.height / 2.0F) - (this.posY + (double)(this.height / 2.0F));
-            double d2 = par1Entity.posZ - this.posZ;
+            final double d0 = par1Entity.posX - this.posX;
+            final double d1 = par1Entity.boundingBox.minY + (double)(par1Entity.height / 2.0F) - (this.posY + (double)(this.height / 2.0F));
+            final double d2 = par1Entity.posZ - this.posZ;
 
             if (this.attackTime == 0)
             {
@@ -160,12 +160,12 @@ public class EntityBlaze extends EntityMob
 
                 if (this.field_70846_g > 1)
                 {
-                    float f1 = MathHelper.sqrt_float(par2) * 0.5F;
+                    final float f1 = MathHelper.sqrt_float(par2) * 0.5F;
                     this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1009, (int)this.posX, (int)this.posY, (int)this.posZ, 0);
 
                     for (int i = 0; i < 1; ++i)
                     {
-                        EntitySmallFireball entitysmallfireball = new EntitySmallFireball(this.worldObj, this, d0 + this.rand.nextGaussian() * (double)f1, d1, d2 + this.rand.nextGaussian() * (double)f1);
+                        final EntitySmallFireball entitysmallfireball = new EntitySmallFireball(this.worldObj, this, d0 + this.rand.nextGaussian() * (double)f1, d1, d2 + this.rand.nextGaussian() * (double)f1);
                         entitysmallfireball.posY = this.posY + (double)(this.height / 2.0F) + 0.5D;
                         this.worldObj.spawnEntityInWorld(entitysmallfireball);
                     }
@@ -180,7 +180,7 @@ public class EntityBlaze extends EntityMob
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float par1) {}
+    protected void fall(final float par1) {}
 
     /**
      * Returns the item ID for the item the mob drops on death.
@@ -202,11 +202,11 @@ public class EntityBlaze extends EntityMob
      * Drop 0-2 items of this living's type. @param par1 - Whether this entity has recently been hit by a player. @param
      * par2 - Level of Looting used to kill this mob.
      */
-    protected void dropFewItems(boolean par1, int par2)
+    protected void dropFewItems(final boolean par1, final int par2)
     {
         if (par1)
         {
-            int j = this.rand.nextInt(2 + par2);
+            final int j = this.rand.nextInt(2 + par2);
 
             for (int k = 0; k < j; ++k)
             {
@@ -220,7 +220,7 @@ public class EntityBlaze extends EntityMob
         return (this.dataWatcher.getWatchableObjectByte(16) & 1) != 0;
     }
 
-    public void func_70844_e(boolean par1)
+    public void func_70844_e(final boolean par1)
     {
         byte b0 = this.dataWatcher.getWatchableObjectByte(16);
 

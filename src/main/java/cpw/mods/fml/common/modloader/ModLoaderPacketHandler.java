@@ -22,13 +22,13 @@ public class ModLoaderPacketHandler implements IPacketHandler
 {
     private BaseModProxy mod;
 
-    public ModLoaderPacketHandler(BaseModProxy mod)
+    public ModLoaderPacketHandler(final BaseModProxy mod)
     {
         this.mod = mod;
     }
 
     @Override
-    public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player)
+    public void onPacketData(final INetworkManager manager, final Packet250CustomPayload packet, final Player player)
     {
         if (player instanceof EntityPlayerMP)
         {

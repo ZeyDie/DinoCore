@@ -27,14 +27,14 @@ public class InventoryCraftResult implements IInventory
     }
 
     // Don't need a transaction; the InventoryCrafting keeps track of it for us
-    public void onOpen(CraftHumanEntity who) {}
-    public void onClose(CraftHumanEntity who) {}
+    public void onOpen(final CraftHumanEntity who) {}
+    public void onClose(final CraftHumanEntity who) {}
     public java.util.List<HumanEntity> getViewers()
     {
         return new java.util.ArrayList<HumanEntity>();
     }
 
-    public void setMaxStackSize(int size)
+    public void setMaxStackSize(final int size)
     {
         maxStack = size;
     }
@@ -53,7 +53,7 @@ public class InventoryCraftResult implements IInventory
     /**
      * Returns the stack in slot i
      */
-    public ItemStack getStackInSlot(int par1)
+    public ItemStack getStackInSlot(final int par1)
     {
         return this.stackResult[0];
     }
@@ -79,11 +79,11 @@ public class InventoryCraftResult implements IInventory
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
      * new stack.
      */
-    public ItemStack decrStackSize(int par1, int par2)
+    public ItemStack decrStackSize(final int par1, final int par2)
     {
         if (this.stackResult[0] != null)
         {
-            ItemStack itemstack = this.stackResult[0];
+            final ItemStack itemstack = this.stackResult[0];
             this.stackResult[0] = null;
             return itemstack;
         }
@@ -97,11 +97,11 @@ public class InventoryCraftResult implements IInventory
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      */
-    public ItemStack getStackInSlotOnClosing(int par1)
+    public ItemStack getStackInSlotOnClosing(final int par1)
     {
         if (this.stackResult[0] != null)
         {
-            ItemStack itemstack = this.stackResult[0];
+            final ItemStack itemstack = this.stackResult[0];
             this.stackResult[0] = null;
             return itemstack;
         }
@@ -114,7 +114,7 @@ public class InventoryCraftResult implements IInventory
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
-    public void setInventorySlotContents(int par1, ItemStack par2ItemStack)
+    public void setInventorySlotContents(final int par1, final ItemStack par2ItemStack)
     {
         this.stackResult[0] = par2ItemStack;
     }
@@ -136,7 +136,7 @@ public class InventoryCraftResult implements IInventory
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
+    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer)
     {
         return true;
     }
@@ -148,7 +148,7 @@ public class InventoryCraftResult implements IInventory
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack)
+    public boolean isItemValidForSlot(final int par1, final ItemStack par2ItemStack)
     {
         return true;
     }

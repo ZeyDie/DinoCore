@@ -7,7 +7,7 @@ public class CallableIsServerModded implements Callable
     /** Reference to the MinecraftServer object. */
     final MinecraftServer mcServer;
 
-    public CallableIsServerModded(MinecraftServer par1MinecraftServer)
+    public CallableIsServerModded(final MinecraftServer par1MinecraftServer)
     {
         this.mcServer = par1MinecraftServer;
     }

@@ -53,7 +53,7 @@ public class AccessTransformer implements IClassTransformer
         public boolean markFinal = false;
         protected boolean modifyClassVisibility;
 
-        private void setTargetAccess(String name)
+        private void setTargetAccess(final String name)
         {
             if (name.startsWith("public")) targetAccess = ACC_PUBLIC;
             else if (name.startsWith("private")) targetAccess = ACC_PRIVATE;
@@ -78,15 +78,15 @@ public class AccessTransformer implements IClassTransformer
     {
         this("fml_at.cfg");
     }
-    protected AccessTransformer(String rulesFile) throws IOException
+    protected AccessTransformer(final String rulesFile) throws IOException
     {
         readMapFile(rulesFile);
     }
 
-    private void readMapFile(String rulesFile) throws IOException
+    private void readMapFile(final String rulesFile) throws IOException
     {
-        File file = new File(rulesFile);
-        URL rulesResource;
+        final File file = new File(rulesFile);
+        final URL rulesResource;
         if (file.exists())
         {
             rulesResource = file.toURI().toURL();
@@ -104,29 +104,29 @@ public class AccessTransformer implements IClassTransformer
             }
 
             @Override
-            public boolean processLine(String input) throws IOException
+            public boolean processLine(final String input) throws IOException
             {
-                String line = Iterables.getFirst(Splitter.on('#').limit(2).split(input), "").trim();
-                if (line.length()==0)
+                final String line = Iterables.getFirst(Splitter.on('#').limit(2).split(input), "").trim();
+                if (line.isEmpty())
                 {
                     return true;
                 }
-                List<String> parts = Lists.newArrayList(Splitter.on(" ").trimResults().split(line));
+                final List<String> parts = Lists.newArrayList(Splitter.on(" ").trimResults().split(line));
                 if (parts.size()>2)
                 {
                     throw new RuntimeException("Invalid config file line "+ input);
                 }
-                Modifier m = new Modifier();
+                final Modifier m = new Modifier();
                 m.setTargetAccess(parts.get(0));
-                List<String> descriptor = Lists.newArrayList(Splitter.on(".").trimResults().split(parts.get(1)));
+                final List<String> descriptor = Lists.newArrayList(Splitter.on(".").trimResults().split(parts.get(1)));
                 if (descriptor.size() == 1)
                 {
                     m.modifyClassVisibility = true;
                 }
                 else
                 {
-                    String nameReference = descriptor.get(1);
-                    int parenIdx = nameReference.indexOf('(');
+                    final String nameReference = descriptor.get(1);
+                    final int parenIdx = nameReference.indexOf('(');
                     if (parenIdx>0)
                     {
                         m.desc = nameReference.substring(parenIdx);
@@ -145,10 +145,10 @@ public class AccessTransformer implements IClassTransformer
     }
 
     @Override
-    public byte[] transform(String name, String transformedName, byte[] bytes)
+    public byte[] transform(final String name, final String transformedName, final byte[] bytes)
     {
         if (bytes == null) { return null; }
-        boolean makeAllPublic = FMLDeobfuscatingRemapper.INSTANCE.isRemappedClass(name);
+        final boolean makeAllPublic = FMLDeobfuscatingRemapper.INSTANCE.isRemappedClass(name);
 
         if (DEBUG)
         {
@@ -156,8 +156,8 @@ public class AccessTransformer implements IClassTransformer
         }
         if (!makeAllPublic && !modifiers.containsKey(name)) { return bytes; }
 
-        ClassNode classNode = new ClassNode();
-        ClassReader classReader = new ClassReader(bytes);
+        final ClassNode classNode = new ClassNode();
+        final ClassReader classReader = new ClassReader(bytes);
         classReader.accept(classNode, 0);
 
         if (makeAllPublic)
@@ -184,8 +184,8 @@ public class AccessTransformer implements IClassTransformer
             }
         }
 
-        Collection<Modifier> mods = modifiers.get(name);
-        for (Modifier m : mods)
+        final Collection<Modifier> mods = modifiers.get(name);
+        for (final Modifier m : mods)
         {
             if (m.modifyClassVisibility)
             {
@@ -198,7 +198,7 @@ public class AccessTransformer implements IClassTransformer
             }
             if (m.desc.isEmpty())
             {
-                for (FieldNode n : (List<FieldNode>) classNode.fields)
+                for (final FieldNode n : (List<FieldNode>) classNode.fields)
                 {
                     if (n.name.equals(m.name) || m.name.equals("*"))
                     {
@@ -217,7 +217,7 @@ public class AccessTransformer implements IClassTransformer
             }
             else
             {
-                for (MethodNode n : (List<MethodNode>) classNode.methods)
+                for (final MethodNode n : (List<MethodNode>) classNode.methods)
                 {
                     if ((n.name.equals(m.name) && n.desc.equals(m.desc)) || m.name.equals("*"))
                     {
@@ -236,20 +236,20 @@ public class AccessTransformer implements IClassTransformer
             }
         }
 
-        ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        final ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         classNode.accept(writer);
         return writer.toByteArray();
     }
 
-    private String toBinary(int num)
+    private String toBinary(final int num)
     {
         return String.format("%16s", Integer.toBinaryString(num)).replace(' ', '0');
     }
 
-    private int getFixedAccess(int access, Modifier target)
+    private int getFixedAccess(final int access, final Modifier target)
     {
         target.oldAccess = access;
-        int t = target.targetAccess;
+        final int t = target.targetAccess;
         int ret = (access & ~7);
 
         switch (access & 7)
@@ -286,7 +286,7 @@ public class AccessTransformer implements IClassTransformer
         return ret;
     }
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         if (args.length < 2)
         {
@@ -295,7 +295,7 @@ public class AccessTransformer implements IClassTransformer
         }
 
         boolean hasTransformer = false;
-        AccessTransformer[] trans = new AccessTransformer[args.length - 1];
+        final AccessTransformer[] trans = new AccessTransformer[args.length - 1];
         for (int x = 1; x < args.length; x++)
         {
             try
@@ -303,7 +303,7 @@ public class AccessTransformer implements IClassTransformer
                 trans[x - 1] = new AccessTransformer(args[x]);
                 hasTransformer = true;
             }
-            catch (IOException e)
+            catch (final IOException e)
             {
                 System.out.println("Could not read Transformer Map: " + args[x]);
                 e.printStackTrace();
@@ -316,8 +316,8 @@ public class AccessTransformer implements IClassTransformer
             System.exit(1);
         }
 
-        File orig = new File(args[0]);
-        File temp = new File(args[0] + ".ATBack");
+        final File orig = new File(args[0]);
+        final File temp = new File(args[0] + ".ATBack");
         if (!orig.exists() && !temp.exists())
         {
             System.out.println("Could not find target jar: " + orig);
@@ -334,7 +334,7 @@ public class AccessTransformer implements IClassTransformer
         {
             processJar(temp, orig, trans);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             e.printStackTrace();
             System.exit(1);
@@ -346,7 +346,7 @@ public class AccessTransformer implements IClassTransformer
         }
     }
 
-    private static void processJar(File inFile, File outFile, AccessTransformer[] transformers) throws IOException
+    private static void processJar(final File inFile, final File outFile, final AccessTransformer[] transformers) throws IOException
     {
         ZipInputStream inJar = null;
         ZipOutputStream outJar = null;
@@ -357,7 +357,7 @@ public class AccessTransformer implements IClassTransformer
             {
                 inJar = new ZipInputStream(new BufferedInputStream(new FileInputStream(inFile)));
             }
-            catch (FileNotFoundException e)
+            catch (final FileNotFoundException e)
             {
                 throw new FileNotFoundException("Could not open input file: " + e.getMessage());
             }
@@ -366,7 +366,7 @@ public class AccessTransformer implements IClassTransformer
             {
                 outJar = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(outFile)));
             }
-            catch (FileNotFoundException e)
+            catch (final FileNotFoundException e)
             {
                 throw new FileNotFoundException("Could not open output file: " + e.getMessage());
             }
@@ -380,8 +380,8 @@ public class AccessTransformer implements IClassTransformer
                     continue;
                 }
 
-                byte[] data = new byte[4096];
-                ByteArrayOutputStream entryBuffer = new ByteArrayOutputStream();
+                final byte[] data = new byte[4096];
+                final ByteArrayOutputStream entryBuffer = new ByteArrayOutputStream();
 
                 int len;
                 do
@@ -396,22 +396,22 @@ public class AccessTransformer implements IClassTransformer
 
                 byte[] entryData = entryBuffer.toByteArray();
 
-                String entryName = entry.getName();
+                final String entryName = entry.getName();
 
                 if (entryName.endsWith(".class") && !entryName.startsWith("."))
                 {
-                    ClassNode cls = new ClassNode();
-                    ClassReader rdr = new ClassReader(entryData);
+                    final ClassNode cls = new ClassNode();
+                    final ClassReader rdr = new ClassReader(entryData);
                     rdr.accept(cls, 0);
-                    String name = cls.name.replace('/', '.').replace('\\', '.');
+                    final String name = cls.name.replace('/', '.').replace('\\', '.');
 
-                    for (AccessTransformer trans : transformers)
+                    for (final AccessTransformer trans : transformers)
                     {
                         entryData = trans.transform(name, name, entryData);
                     }
                 }
 
-                ZipEntry newEntry = new ZipEntry(entryName);
+                final ZipEntry newEntry = new ZipEntry(entryName);
                 outJar.putNextEntry(newEntry);
                 outJar.write(entryData);
             }
@@ -424,7 +424,7 @@ public class AccessTransformer implements IClassTransformer
                 {
                     outJar.close();
                 }
-                catch (IOException e)
+                catch (final IOException e)
                 {
                 }
             }
@@ -435,15 +435,15 @@ public class AccessTransformer implements IClassTransformer
                 {
                     inJar.close();
                 }
-                catch (IOException e)
+                catch (final IOException e)
                 {
                 }
             }
         }
     }
-    public void ensurePublicAccessFor(String modClazzName)
+    public void ensurePublicAccessFor(final String modClazzName)
     {
-        Modifier m = new Modifier();
+        final Modifier m = new Modifier();
         m.setTargetAccess("public");
         m.modifyClassVisibility = true;
         modifiers.put(modClazzName, m);

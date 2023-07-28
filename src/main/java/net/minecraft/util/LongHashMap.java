@@ -24,7 +24,7 @@ public class LongHashMap
     /**
      * returns the hashed key given the original key
      */
-    private static int getHashedKey(long par0)
+    private static int getHashedKey(final long par0)
     {
         return hash((int)(par0 ^ par0 >>> 32));
     }
@@ -34,14 +34,15 @@ public class LongHashMap
      */
     private static int hash(int par0)
     {
-        par0 ^= par0 >>> 20 ^ par0 >>> 12;
-        return par0 ^ par0 >>> 7 ^ par0 >>> 4;
+        int par01 = par0;
+        par01 ^= par01 >>> 20 ^ par01 >>> 12;
+        return par01 ^ par01 >>> 7 ^ par01 >>> 4;
     }
 
     /**
      * gets the index in the hash given the array length and the hashed key
      */
-    private static int getHashIndex(int par0, int par1)
+    private static int getHashIndex(final int par0, final int par1)
     {
         return par0 & par1 - 1;
     }
@@ -54,9 +55,9 @@ public class LongHashMap
     /**
      * get the value from the map given the key
      */
-    public Object getValueByKey(long par1)
+    public Object getValueByKey(final long par1)
     {
-        int j = getHashedKey(par1);
+        final int j = getHashedKey(par1);
 
         for (LongHashMapEntry longhashmapentry = this.hashArray[getHashIndex(j, this.hashArray.length)]; longhashmapentry != null; longhashmapentry = longhashmapentry.nextEntry)
         {
@@ -69,14 +70,14 @@ public class LongHashMap
         return null;
     }
 
-    public boolean containsItem(long par1)
+    public boolean containsItem(final long par1)
     {
         return this.getEntry(par1) != null;
     }
 
-    final LongHashMapEntry getEntry(long par1)
+    final LongHashMapEntry getEntry(final long par1)
     {
-        int j = getHashedKey(par1);
+        final int j = getHashedKey(par1);
 
         for (LongHashMapEntry longhashmapentry = this.hashArray[getHashIndex(j, this.hashArray.length)]; longhashmapentry != null; longhashmapentry = longhashmapentry.nextEntry)
         {
@@ -92,10 +93,10 @@ public class LongHashMap
     /**
      * Add a key-value pair.
      */
-    public void add(long par1, Object par3Obj)
+    public void add(final long par1, final Object par3Obj)
     {
-        int j = getHashedKey(par1);
-        int k = getHashIndex(j, this.hashArray.length);
+        final int j = getHashedKey(par1);
+        final int k = getHashIndex(j, this.hashArray.length);
 
         for (LongHashMapEntry longhashmapentry = this.hashArray[k]; longhashmapentry != null; longhashmapentry = longhashmapentry.nextEntry)
         {
@@ -113,10 +114,10 @@ public class LongHashMap
     /**
      * resizes the table
      */
-    private void resizeTable(int par1)
+    private void resizeTable(final int par1)
     {
-        LongHashMapEntry[] alonghashmapentry = this.hashArray;
-        int j = alonghashmapentry.length;
+        final LongHashMapEntry[] alonghashmapentry = this.hashArray;
+        final int j = alonghashmapentry.length;
 
         if (j == 1073741824)
         {
@@ -124,7 +125,7 @@ public class LongHashMap
         }
         else
         {
-            LongHashMapEntry[] alonghashmapentry1 = new LongHashMapEntry[par1];
+            final LongHashMapEntry[] alonghashmapentry1 = new LongHashMapEntry[par1];
             this.copyHashTableTo(alonghashmapentry1);
             this.hashArray = alonghashmapentry1;
             this.capacity = (int)((float)par1 * this.percentUseable);
@@ -134,10 +135,10 @@ public class LongHashMap
     /**
      * copies the hash table to the specified array
      */
-    private void copyHashTableTo(LongHashMapEntry[] par1ArrayOfLongHashMapEntry)
+    private void copyHashTableTo(final LongHashMapEntry[] par1ArrayOfLongHashMapEntry)
     {
-        LongHashMapEntry[] alonghashmapentry1 = this.hashArray;
-        int i = par1ArrayOfLongHashMapEntry.length;
+        final LongHashMapEntry[] alonghashmapentry1 = this.hashArray;
+        final int i = par1ArrayOfLongHashMapEntry.length;
 
         for (int j = 0; j < alonghashmapentry1.length; ++j)
         {
@@ -151,7 +152,7 @@ public class LongHashMap
                 do
                 {
                     longhashmapentry1 = longhashmapentry.nextEntry;
-                    int k = getHashIndex(longhashmapentry.hash, i);
+                    final int k = getHashIndex(longhashmapentry.hash, i);
                     longhashmapentry.nextEntry = par1ArrayOfLongHashMapEntry[k];
                     par1ArrayOfLongHashMapEntry[k] = longhashmapentry;
                     longhashmapentry = longhashmapentry1;
@@ -164,19 +165,19 @@ public class LongHashMap
     /**
      * calls the removeKey method and returns removed object
      */
-    public Object remove(long par1)
+    public Object remove(final long par1)
     {
-        LongHashMapEntry longhashmapentry = this.removeKey(par1);
+        final LongHashMapEntry longhashmapentry = this.removeKey(par1);
         return longhashmapentry == null ? null : longhashmapentry.value;
     }
 
     /**
      * removes the key from the hash linked list
      */
-    final LongHashMapEntry removeKey(long par1)
+    final LongHashMapEntry removeKey(final long par1)
     {
-        int j = getHashedKey(par1);
-        int k = getHashIndex(j, this.hashArray.length);
+        final int j = getHashedKey(par1);
+        final int k = getHashIndex(j, this.hashArray.length);
         LongHashMapEntry longhashmapentry = this.hashArray[k];
         LongHashMapEntry longhashmapentry1;
         LongHashMapEntry longhashmapentry2;
@@ -211,9 +212,9 @@ public class LongHashMap
     /**
      * creates the key in the hash table
      */
-    private void createKey(int par1, long par2, Object par4Obj, int par5)
+    private void createKey(final int par1, final long par2, final Object par4Obj, final int par5)
     {
-        LongHashMapEntry longhashmapentry = this.hashArray[par5];
+        final LongHashMapEntry longhashmapentry = this.hashArray[par5];
         this.hashArray[par5] = new LongHashMapEntry(par1, par2, par4Obj, longhashmapentry);
 
         if (this.numHashElements++ >= this.capacity)
@@ -225,7 +226,7 @@ public class LongHashMap
     /**
      * public method to get the hashed key(hashCode)
      */
-    static int getHashCode(long par0)
+    static int getHashCode(final long par0)
     {
         return getHashedKey(par0);
     }

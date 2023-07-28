@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CommandDifficulty extends CommandBase
 {
-    private static final String[] difficulties = new String[] {"options.difficulty.peaceful", "options.difficulty.easy", "options.difficulty.normal", "options.difficulty.hard"};
+    private static final String[] difficulties = {"options.difficulty.peaceful", "options.difficulty.easy", "options.difficulty.normal", "options.difficulty.hard"};
 
     public String getCommandName()
     {
@@ -22,16 +22,16 @@ public class CommandDifficulty extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.difficulty.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         if (par2ArrayOfStr.length > 0)
         {
-            int i = this.getDifficultyForName(par1ICommandSender, par2ArrayOfStr[0]);
+            final int i = this.getDifficultyForName(par1ICommandSender, par2ArrayOfStr[0]);
             MinecraftServer.getServer().setDifficultyForAllWorlds(i);
             notifyAdmins(par1ICommandSender, "commands.difficulty.success", new Object[] {ChatMessageComponent.createFromTranslationKey(difficulties[i])});
         }
@@ -44,7 +44,7 @@ public class CommandDifficulty extends CommandBase
     /**
      * Return the difficulty value for the specified string.
      */
-    protected int getDifficultyForName(ICommandSender par1ICommandSender, String par2Str)
+    protected int getDifficultyForName(final ICommandSender par1ICommandSender, final String par2Str)
     {
         return !par2Str.equalsIgnoreCase("peaceful") && !par2Str.equalsIgnoreCase("p") ? (!par2Str.equalsIgnoreCase("easy") && !par2Str.equalsIgnoreCase("e") ? (!par2Str.equalsIgnoreCase("normal") && !par2Str.equalsIgnoreCase("n") ? (!par2Str.equalsIgnoreCase("hard") && !par2Str.equalsIgnoreCase("h") ? parseIntBounded(par1ICommandSender, par2Str, 0, 3) : 3) : 2) : 1) : 0;
     }
@@ -52,7 +52,7 @@ public class CommandDifficulty extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public List addTabCompletionOptions(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         return par2ArrayOfStr.length == 1 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, new String[] {"peaceful", "easy", "normal", "hard"}): null;
     }

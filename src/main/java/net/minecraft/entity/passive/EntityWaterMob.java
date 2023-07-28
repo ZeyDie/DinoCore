@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 
 public abstract class EntityWaterMob extends EntityCreature implements IAnimals
 {
-    public EntityWaterMob(World par1World)
+    public EntityWaterMob(final World par1World)
     {
         super(par1World);
     }
@@ -44,7 +44,7 @@ public abstract class EntityWaterMob extends EntityCreature implements IAnimals
     /**
      * Get the experience points the entity currently has.
      */
-    protected int getExperiencePoints(EntityPlayer par1EntityPlayer)
+    protected int getExperiencePoints(final EntityPlayer par1EntityPlayer)
     {
         return 1 + this.worldObj.rand.nextInt(3);
     }

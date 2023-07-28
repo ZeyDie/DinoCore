@@ -14,7 +14,7 @@ public class Packet22Collect extends Packet
 
     public Packet22Collect() {}
 
-    public Packet22Collect(int par1, int par2)
+    public Packet22Collect(final int par1, final int par2)
     {
         this.collectedEntityId = par1;
         this.collectorEntityId = par2;
@@ -23,7 +23,7 @@ public class Packet22Collect extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.collectedEntityId = par1DataInput.readInt();
         this.collectorEntityId = par1DataInput.readInt();
@@ -32,7 +32,7 @@ public class Packet22Collect extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.collectedEntityId);
         par1DataOutput.writeInt(this.collectorEntityId);
@@ -41,7 +41,7 @@ public class Packet22Collect extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleCollect(this);
     }

@@ -5,7 +5,7 @@ import net.minecraft.world.IBlockAccess;
 
 public class BlockPoweredOre extends BlockOreStorage
 {
-    public BlockPoweredOre(int par1)
+    public BlockPoweredOre(final int par1)
     {
         super(par1);
         this.setCreativeTab(CreativeTabs.tabRedstone);
@@ -24,7 +24,7 @@ public class BlockPoweredOre extends BlockOreStorage
      * returns true, standard redstone propagation rules will apply instead and this will not be called. Args: World, X,
      * Y, Z, side. Note that the side is reversed - eg it is 1 (up) when checking the bottom of the block.
      */
-    public int isProvidingWeakPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public int isProvidingWeakPower(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
         return 15;
     }

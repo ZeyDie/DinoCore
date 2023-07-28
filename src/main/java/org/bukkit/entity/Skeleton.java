@@ -30,12 +30,12 @@ public interface Skeleton extends Monster {
         private final int id;
 
         static {
-            for (SkeletonType type : values()) {
+            for (final SkeletonType type : values()) {
                 types[type.getId()] = type;
             }
         }
 
-        private SkeletonType(int id) {
+        private SkeletonType(final int id) {
             this.id = id;
         }
 
@@ -58,7 +58,7 @@ public interface Skeleton extends Monster {
          * @deprecated Magic value
          */
         @Deprecated
-        public static SkeletonType getType(int id) {
+        public static SkeletonType getType(final int id) {
             return (id >= types.length) ? null : types[id];
         }
     }

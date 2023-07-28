@@ -17,8 +17,8 @@ import java.util.List;
 public class ClearCommand extends VanillaCommand {
     private static List<String> materials;
     static {
-        ArrayList<String> materialList = new ArrayList<String>();
-        for (Material material : Material.values()) {
+        final ArrayList<String> materialList = new ArrayList<String>();
+        for (final Material material : Material.values()) {
             materialList.add(material.name());
         }
         Collections.sort(materialList);
@@ -33,7 +33,7 @@ public class ClearCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
 
         Player player = null;
@@ -44,10 +44,10 @@ public class ClearCommand extends VanillaCommand {
         }
 
         if (player != null) {
-            int id;
+            final int id;
 
             if (args.length > 1 && !(args[1].equals("-1"))) {
-                Material material = Material.matchMaterial(args[1]);
+                final Material material = Material.matchMaterial(args[1]);
                 if (material == null) {
                     sender.sendMessage(ChatColor.RED + "There's no item called " + args[1]);
                     return false;
@@ -58,8 +58,8 @@ public class ClearCommand extends VanillaCommand {
                 id = -1;
             }
 
-            int data = args.length >= 3 ? getInteger(sender, args[2], 0) : -1;
-            int count = player.getInventory().clear(id, data);
+            final int data = args.length >= 3 ? getInteger(sender, args[2], 0) : -1;
+            final int count = player.getInventory().clear(id, data);
 
             Command.broadcastCommandMessage(sender, "Cleared the inventory of " + player.getDisplayName() + ", removing " + count + " items");
         } else if (args.length == 0) {
@@ -72,7 +72,7 @@ public class ClearCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) throws IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");
@@ -94,7 +94,7 @@ public class ClearCommand extends VanillaCommand {
             }
 
             for ( ; i < size; i++) {
-                String material = materials.get(i);
+                final String material = materials.get(i);
                 if (StringUtil.startsWithIgnoreCase(material, arg)) {
                     if (completion == null) {
                         completion = new ArrayList<String>();

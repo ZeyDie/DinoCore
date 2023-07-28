@@ -13,7 +13,7 @@ public class GuiOptions extends GuiScreen
     /**
      * An array of options that can be changed directly from the options GUI.
      */
-    private static final EnumOptions[] relevantOptions = new EnumOptions[] {EnumOptions.MUSIC, EnumOptions.SOUND, EnumOptions.INVERT_MOUSE, EnumOptions.SENSITIVITY, EnumOptions.FOV, EnumOptions.DIFFICULTY, EnumOptions.TOUCHSCREEN};
+    private static final EnumOptions[] relevantOptions = {EnumOptions.MUSIC, EnumOptions.SOUND, EnumOptions.INVERT_MOUSE, EnumOptions.SENSITIVITY, EnumOptions.FOV, EnumOptions.DIFFICULTY, EnumOptions.TOUCHSCREEN};
 
     /**
      * A reference to the screen object that created this. Used for navigating between screens.
@@ -26,7 +26,7 @@ public class GuiOptions extends GuiScreen
     /** The title string that is displayed in the top-center of the screen. */
     protected String screenTitle = "Options";
 
-    public GuiOptions(GuiScreen par1GuiScreen, GameSettings par2GameSettings)
+    public GuiOptions(final GuiScreen par1GuiScreen, final GameSettings par2GameSettings)
     {
         this.parentScreen = par1GuiScreen;
         this.options = par2GameSettings;
@@ -39,12 +39,12 @@ public class GuiOptions extends GuiScreen
     {
         int i = 0;
         this.screenTitle = I18n.getString("options.title");
-        EnumOptions[] aenumoptions = relevantOptions;
-        int j = aenumoptions.length;
+        final EnumOptions[] aenumoptions = relevantOptions;
+        final int j = aenumoptions.length;
 
         for (int k = 0; k < j; ++k)
         {
-            EnumOptions enumoptions = aenumoptions[k];
+            final EnumOptions enumoptions = aenumoptions[k];
 
             if (enumoptions.getEnumFloat())
             {
@@ -52,7 +52,7 @@ public class GuiOptions extends GuiScreen
             }
             else
             {
-                GuiSmallButton guismallbutton = new GuiSmallButton(enumoptions.returnEnumOrdinal(), this.width / 2 - 155 + i % 2 * 160, this.height / 6 - 12 + 24 * (i >> 1), enumoptions, this.options.getKeyBinding(enumoptions));
+                final GuiSmallButton guismallbutton = new GuiSmallButton(enumoptions.returnEnumOrdinal(), this.width / 2 - 155 + i % 2 * 160, this.height / 6 - 12 + 24 * (i >> 1), enumoptions, this.options.getKeyBinding(enumoptions));
 
                 if (enumoptions == EnumOptions.DIFFICULTY && this.mc.theWorld != null && this.mc.theWorld.getWorldInfo().isHardcoreModeEnabled())
                 {
@@ -78,7 +78,7 @@ public class GuiOptions extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
@@ -135,7 +135,7 @@ public class GuiOptions extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 15, 16777215);

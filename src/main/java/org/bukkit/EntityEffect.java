@@ -79,7 +79,7 @@ public enum EntityEffect {
 
 
     static {
-        for (EntityEffect entityEffect : values()) {
+        for (final EntityEffect entityEffect : values()) {
             BY_DATA.put(entityEffect.data, entityEffect);
         }
     }

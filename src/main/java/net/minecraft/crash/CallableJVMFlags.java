@@ -11,7 +11,7 @@ class CallableJVMFlags implements Callable
     /** Reference to the CrashReport object. */
     final CrashReport theCrashReport;
 
-    CallableJVMFlags(CrashReport par1CrashReport)
+    CallableJVMFlags(final CrashReport par1CrashReport)
     {
         this.theCrashReport = par1CrashReport;
     }
@@ -21,15 +21,15 @@ class CallableJVMFlags implements Callable
      */
     public String getJVMFlagsAsString()
     {
-        RuntimeMXBean runtimemxbean = ManagementFactory.getRuntimeMXBean();
-        List list = runtimemxbean.getInputArguments();
+        final RuntimeMXBean runtimemxbean = ManagementFactory.getRuntimeMXBean();
+        final List list = runtimemxbean.getInputArguments();
         int i = 0;
-        StringBuilder stringbuilder = new StringBuilder();
-        Iterator iterator = list.iterator();
+        final StringBuilder stringbuilder = new StringBuilder();
+        final Iterator iterator = list.iterator();
 
         while (iterator.hasNext())
         {
-            String s = (String)iterator.next();
+            final String s = (String)iterator.next();
 
             if (s.startsWith("-X"))
             {

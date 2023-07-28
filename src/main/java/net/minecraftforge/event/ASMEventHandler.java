@@ -23,7 +23,7 @@ public class ASMEventHandler implements IEventListener
     private final IEventListener handler;
     private final ForgeSubscribe subInfo;
     private final String         package_; // Cauldron - mobius
-    public ASMEventHandler(Object target, Method method) throws Exception
+    public ASMEventHandler(final Object target, final Method method) throws Exception
     {
         package_ = method.getDeclaringClass().getCanonicalName(); // Cauldron - mobius
         handler = (IEventListener)createWrapper(method).getConstructor(Object.class).newInstance(target);
@@ -31,7 +31,7 @@ public class ASMEventHandler implements IEventListener
     }
 
     @Override
-    public void invoke(Event event)
+    public void invoke(final Event event)
     {
         if (handler != null)
         {
@@ -51,20 +51,20 @@ public class ASMEventHandler implements IEventListener
         return subInfo.priority();
     }
     
-    public Class<?> createWrapper(Method callback)
+    public Class<?> createWrapper(final Method callback)
     {
         if (cache.containsKey(callback))
         {
             return cache.get(callback);
         }
 
-        ClassWriter cw = new ClassWriter(0);
+        final ClassWriter cw = new ClassWriter(0);
         MethodVisitor mv;
         
-        String name = getUniqueName(callback);
-        String desc = name.replace('.',  '/');
-        String instType = Type.getInternalName(callback.getDeclaringClass());
-        String eventType = Type.getInternalName(callback.getParameterTypes()[0]);
+        final String name = getUniqueName(callback);
+        final String desc = name.replace('.',  '/');
+        final String instType = Type.getInternalName(callback.getDeclaringClass());
+        final String eventType = Type.getInternalName(callback.getParameterTypes()[0]);
         
         /*
         System.out.println("Name:     " + name);
@@ -106,12 +106,12 @@ public class ASMEventHandler implements IEventListener
             mv.visitEnd();
         }
         cw.visitEnd();
-        Class<?> ret = LOADER.define(name, cw.toByteArray());
+        final Class<?> ret = LOADER.define(name, cw.toByteArray());
         cache.put(callback, ret);
         return ret;
     }
     
-    private String getUniqueName(Method callback)
+    private String getUniqueName(final Method callback)
     {
         return String.format("%s_%d_%s_%s_%s", getClass().getName(), IDs++, 
                 callback.getDeclaringClass().getSimpleName(), 
@@ -126,7 +126,7 @@ public class ASMEventHandler implements IEventListener
             super(ASMClassLoader.class.getClassLoader());
         }
         
-        public Class<?> define(String name, byte[] data)
+        public Class<?> define(final String name, final byte[] data)
         {
             return defineClass(name, data, 0, data.length);
         }

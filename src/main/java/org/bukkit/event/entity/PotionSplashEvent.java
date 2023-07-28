@@ -54,8 +54,8 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
      * @param entity Which entity to get intensity for
      * @return intensity relative to maximum effect; 0.0: not affected; 1.0: fully hit by potion effects
      */
-    public double getIntensity(LivingEntity entity) {
-        Double intensity = affectedEntities.get(entity);
+    public double getIntensity(final LivingEntity entity) {
+        final Double intensity = affectedEntities.get(entity);
         return intensity != null ? intensity : 0.0;
     }
 
@@ -65,7 +65,7 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
      * @param entity For which entity to define a new intensity
      * @param intensity relative to maximum effect
      */
-    public void setIntensity(LivingEntity entity, double intensity) {
+    public void setIntensity(final LivingEntity entity, final double intensity) {
         Validate.notNull(entity, "You must specify a valid entity.");
         if (intensity <= 0.0) {
             affectedEntities.remove(entity);
@@ -78,7 +78,7 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         cancelled = cancel;
     }
 

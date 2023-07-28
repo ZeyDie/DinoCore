@@ -14,31 +14,31 @@ import java.util.Random;
 public class FishingInterface implements Fishing {
 
     @Override
-    public void addFish(WeightedRandomFishable fish) {
+    public void addFish(final WeightedRandomFishable fish) {
     }
 
     @Override
-    public void addJunk(WeightedRandomFishable fish) {
+    public void addJunk(final WeightedRandomFishable fish) {
     }
 
     @Override
-    public void addTreasure(WeightedRandomFishable fish) {
+    public void addTreasure(final WeightedRandomFishable fish) {
     }
 
     @Override
-    public void removeMatchingFish(Predicate<WeightedRandomFishable> test) {
+    public void removeMatchingFish(final Predicate<WeightedRandomFishable> test) {
     }
 
     @Override
-    public void removeMatchingJunk(Predicate<WeightedRandomFishable> test) {
+    public void removeMatchingJunk(final Predicate<WeightedRandomFishable> test) {
     }
 
     @Override
-    public void removeMatchingTreasure(Predicate<WeightedRandomFishable> test) {
+    public void removeMatchingTreasure(final Predicate<WeightedRandomFishable> test) {
     }
 
     @Override
-    public ItemStack getRandomFishable(Random rand, float baseChance, int fishingLuckEnchantmentLevel, int fishingSpeedEnchantmentLevel) {
+    public ItemStack getRandomFishable(final Random rand, final float baseChance, final int fishingLuckEnchantmentLevel, final int fishingSpeedEnchantmentLevel) {
         if (rand.nextDouble() < baseChance) {
             return new ItemStack(Material.RAW_FISH);
         } else {

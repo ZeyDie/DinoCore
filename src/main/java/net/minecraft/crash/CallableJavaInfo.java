@@ -7,7 +7,7 @@ class CallableJavaInfo implements Callable
     /** Reference to the CrashReport object. */
     final CrashReport theCrashReport;
 
-    CallableJavaInfo(CrashReport par1CrashReport)
+    CallableJavaInfo(final CrashReport par1CrashReport)
     {
         this.theCrashReport = par1CrashReport;
     }

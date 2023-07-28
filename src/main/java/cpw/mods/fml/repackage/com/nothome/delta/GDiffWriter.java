@@ -66,7 +66,7 @@ public class GDiffWriter implements DiffWriter {
     /**
      * Constructs a new GDiffWriter.
      */
-    public GDiffWriter(DataOutputStream os) throws IOException {
+    public GDiffWriter(final DataOutputStream os) throws IOException {
         this.output = os;
         // write magic string "d1 ff d1 ff 04"
         output.writeByte(0xd1);
@@ -79,11 +79,11 @@ public class GDiffWriter implements DiffWriter {
     /**
      * Constructs a new GDiffWriter.
      */
-    public GDiffWriter(OutputStream output) throws IOException {
+    public GDiffWriter(final OutputStream output) throws IOException {
         this(new DataOutputStream(output));
     }
 
-    public void addCopy(long offset, int length) throws IOException {
+    public void addCopy(final long offset, final int length) throws IOException {
         writeBuf();
         
         //output debug data        
@@ -130,7 +130,7 @@ public class GDiffWriter implements DiffWriter {
     /**
      * Adds a data byte.
      */
-    public void addData(byte b) throws IOException {
+    public void addData(final byte b) throws IOException {
         buf.write(b);
         if (buf.size() >= CHUNK_SIZE)
             writeBuf();

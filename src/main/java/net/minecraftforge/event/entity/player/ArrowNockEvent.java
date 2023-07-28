@@ -9,7 +9,7 @@ public class ArrowNockEvent extends PlayerEvent
 {
     public ItemStack result;
     
-    public ArrowNockEvent(EntityPlayer player, ItemStack result)
+    public ArrowNockEvent(final EntityPlayer player, final ItemStack result)
     {
         super(player);
         this.result = result;

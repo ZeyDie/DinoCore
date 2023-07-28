@@ -94,10 +94,10 @@ class CraftMetaItem implements ItemMeta, Repairable {
                     .build();
 
             final ImmutableMap.Builder<String, Constructor<? extends CraftMetaItem>> classConstructorBuilder = ImmutableMap.builder();
-            for (Map.Entry<Class<? extends CraftMetaItem>, String> mapping : classMap.entrySet()) {
+            for (final Map.Entry<Class<? extends CraftMetaItem>, String> mapping : classMap.entrySet()) {
                 try {
                     classConstructorBuilder.put(mapping.getValue(), mapping.getKey().getDeclaredConstructor(Map.class));
-                } catch (NoSuchMethodException e) {
+                } catch (final NoSuchMethodException e) {
                     throw new AssertionError(e);
                 }
             }
@@ -107,11 +107,11 @@ class CraftMetaItem implements ItemMeta, Repairable {
         private SerializableMeta() {
         }
 
-        public static ItemMeta deserialize(Map<String, Object> map) throws Throwable {
+        public static ItemMeta deserialize(final Map<String, Object> map) throws Throwable {
             Validate.notNull(map, "Cannot deserialize null map");
 
-            String type = getString(map, TYPE_FIELD, false);
-            Constructor<? extends CraftMetaItem> constructor = constructorMap.get(type);
+            final String type = getString(map, TYPE_FIELD, false);
+            final Constructor<? extends CraftMetaItem> constructor = constructorMap.get(type);
 
             if (constructor == null) {
                 throw new IllegalArgumentException(type + " is not a valid " + TYPE_FIELD);
@@ -132,16 +132,16 @@ class CraftMetaItem implements ItemMeta, Repairable {
             throw new AssertionError();
         }
 
-        static String getString(Map<?, ?> map, Object field, boolean nullable) {
+        static String getString(final Map<?, ?> map, final Object field, final boolean nullable) {
             return getObject(String.class, map, field, nullable);
         }
 
-        static boolean getBoolean(Map<?, ?> map, Object field) {
-            Boolean value = getObject(Boolean.class, map, field, true);
+        static boolean getBoolean(final Map<?, ?> map, final Object field) {
+            final Boolean value = getObject(Boolean.class, map, field, true);
             return value != null && value;
         }
 
-        static <T> T getObject(Class<T> clazz, Map<?, ?> map, Object field, boolean nullable) {
+        static <T> T getObject(final Class<T> clazz, final Map<?, ?> map, final Object field, final boolean nullable) {
             final Object object = map.get(field);
 
             if (clazz.isInstance(object)) {
@@ -188,7 +188,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
     private int repairCost;
     private final net.minecraft.nbt.NBTTagList attributes;
 
-    CraftMetaItem(CraftMetaItem meta) {
+    CraftMetaItem(final CraftMetaItem meta) {
         if (meta == null) {
             attributes = null;
             return;
@@ -208,20 +208,20 @@ class CraftMetaItem implements ItemMeta, Repairable {
         this.attributes = meta.attributes;
     }
 
-    CraftMetaItem(net.minecraft.nbt.NBTTagCompound tag) {
+    CraftMetaItem(final net.minecraft.nbt.NBTTagCompound tag) {
         if (tag.hasKey(DISPLAY.NBT)) {
-            net.minecraft.nbt.NBTTagCompound display = tag.getCompoundTag(DISPLAY.NBT);
+            final net.minecraft.nbt.NBTTagCompound display = tag.getCompoundTag(DISPLAY.NBT);
 
             if (display.hasKey(NAME.NBT)) {
                 displayName = display.getString(NAME.NBT);
             }
 
             if (display.hasKey(LORE.NBT)) {
-                net.minecraft.nbt.NBTTagList list = display.getTagList(LORE.NBT);
+                final net.minecraft.nbt.NBTTagList list = display.getTagList(LORE.NBT);
                 lore = new ArrayList<String>(list.tagCount());
 
                 for (int index = 0; index < list.tagCount(); index++) {
-                    String line = ((net.minecraft.nbt.NBTTagString) list.tagAt(index)).data;
+                    final String line = ((net.minecraft.nbt.NBTTagString) list.tagAt(index)).data;
                     lore.add(line);
                 }
             }
@@ -236,13 +236,13 @@ class CraftMetaItem implements ItemMeta, Repairable {
 
         if (tag.getTag(ATTRIBUTES.NBT) instanceof net.minecraft.nbt.NBTTagList) {
             net.minecraft.nbt.NBTTagList save = null;
-            net.minecraft.nbt.NBTTagList nbttaglist = tag.getTagList(ATTRIBUTES.NBT);
+            final net.minecraft.nbt.NBTTagList nbttaglist = tag.getTagList(ATTRIBUTES.NBT);
 
             for (int i = 0; i < nbttaglist.tagCount(); ++i) {
                 if (!(nbttaglist.tagAt(i) instanceof net.minecraft.nbt.NBTTagCompound)) {
                     continue;
                 }
-                net.minecraft.nbt.NBTTagCompound nbttagcompound = (net.minecraft.nbt.NBTTagCompound) nbttaglist.tagAt(i);
+                final net.minecraft.nbt.NBTTagCompound nbttagcompound = (net.minecraft.nbt.NBTTagCompound) nbttaglist.tagAt(i);
 
                 if (!(nbttagcompound.getTag(ATTRIBUTES_UUID_HIGH.NBT) instanceof net.minecraft.nbt.NBTTagLong)) {
                     continue;
@@ -267,7 +267,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
                     save = new net.minecraft.nbt.NBTTagList(ATTRIBUTES.NBT);
                 }
 
-                net.minecraft.nbt.NBTTagCompound entry = new net.minecraft.nbt.NBTTagCompound();
+                final net.minecraft.nbt.NBTTagCompound entry = new net.minecraft.nbt.NBTTagCompound();
                 entry.setTag(ATTRIBUTES_UUID_HIGH.NBT, nbttagcompound.getTag(ATTRIBUTES_UUID_HIGH.NBT));
                 entry.setTag(ATTRIBUTES_UUID_LOW.NBT, nbttagcompound.getTag(ATTRIBUTES_UUID_LOW.NBT));
                 entry.setTag(ATTRIBUTES_IDENTIFIER.NBT, nbttagcompound.getTag(ATTRIBUTES_IDENTIFIER.NBT));
@@ -283,17 +283,17 @@ class CraftMetaItem implements ItemMeta, Repairable {
         }
     }
 
-    static Map<Enchantment, Integer> buildEnchantments(net.minecraft.nbt.NBTTagCompound tag, ItemMetaKey key) {
+    static Map<Enchantment, Integer> buildEnchantments(final net.minecraft.nbt.NBTTagCompound tag, final ItemMetaKey key) {
         if (!tag.hasKey(key.NBT)) {
             return null;
         }
 
-        net.minecraft.nbt.NBTTagList ench = tag.getTagList(key.NBT);
-        Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>(ench.tagCount());
+        final net.minecraft.nbt.NBTTagList ench = tag.getTagList(key.NBT);
+        final Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>(ench.tagCount());
 
         for (int i = 0; i < ench.tagCount(); i++) {
-            int id = 0xffff & ((net.minecraft.nbt.NBTTagCompound) ench.tagAt(i)).getShort(ENCHANTMENTS_ID.NBT);
-            int level = 0xffff & ((net.minecraft.nbt.NBTTagCompound) ench.tagAt(i)).getShort(ENCHANTMENTS_LVL.NBT);
+            final int id = 0xffff & ((net.minecraft.nbt.NBTTagCompound) ench.tagAt(i)).getShort(ENCHANTMENTS_ID.NBT);
+            final int level = 0xffff & ((net.minecraft.nbt.NBTTagCompound) ench.tagAt(i)).getShort(ENCHANTMENTS_LVL.NBT);
 
             enchantments.put(Enchantment.getById(id), level);
         }
@@ -301,17 +301,17 @@ class CraftMetaItem implements ItemMeta, Repairable {
         return enchantments;
     }
 
-    CraftMetaItem(Map<String, Object> map) {
+    CraftMetaItem(final Map<String, Object> map) {
         setDisplayName(SerializableMeta.getString(map, NAME.BUKKIT, true));
 
-        Iterable<?> lore = SerializableMeta.getObject(Iterable.class, map, LORE.BUKKIT, true);
+        final Iterable<?> lore = SerializableMeta.getObject(Iterable.class, map, LORE.BUKKIT, true);
         if (lore != null) {
             safelyAdd(lore, this.lore = new ArrayList<String>(), Integer.MAX_VALUE);
         }
 
         enchantments = buildEnchantments(map, ENCHANTMENTS);
 
-        Integer repairCost = SerializableMeta.getObject(Integer.class, map, REPAIR.BUKKIT, true);
+        final Integer repairCost = SerializableMeta.getObject(Integer.class, map, REPAIR.BUKKIT, true);
         if (repairCost != null) {
             setRepairCost(repairCost);
         }
@@ -319,15 +319,15 @@ class CraftMetaItem implements ItemMeta, Repairable {
         attributes = null;
     }
 
-    static Map<Enchantment, Integer> buildEnchantments(Map<String, Object> map, ItemMetaKey key) {
-        Map<?, ?> ench = SerializableMeta.getObject(Map.class, map, key.BUKKIT, true);
+    static Map<Enchantment, Integer> buildEnchantments(final Map<String, Object> map, final ItemMetaKey key) {
+        final Map<?, ?> ench = SerializableMeta.getObject(Map.class, map, key.BUKKIT, true);
         if (ench == null) {
             return null;
         }
 
-        Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>(ench.size());
-        for (Map.Entry<?, ?> entry : ench.entrySet()) {
-            Enchantment enchantment = Enchantment.getByName(entry.getKey().toString());
+        final Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>(ench.size());
+        for (final Map.Entry<?, ?> entry : ench.entrySet()) {
+            final Enchantment enchantment = Enchantment.getByName(entry.getKey().toString());
 
             if ((enchantment != null) && (entry.getValue() instanceof Integer)) {
                 enchantments.put(enchantment, (Integer) entry.getValue());
@@ -338,7 +338,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
     }
 
     @Overridden
-    void applyToItem(net.minecraft.nbt.NBTTagCompound itemTag) {
+    void applyToItem(final net.minecraft.nbt.NBTTagCompound itemTag) {
         if (hasDisplayName()) {
             setDisplayTag(itemTag, NAME.NBT, new net.minecraft.nbt.NBTTagString(NAME.NBT, displayName));
         }
@@ -358,28 +358,28 @@ class CraftMetaItem implements ItemMeta, Repairable {
         }
     }
 
-    static net.minecraft.nbt.NBTTagList createStringList(List<String> list, ItemMetaKey key) {
+    static net.minecraft.nbt.NBTTagList createStringList(final List<String> list, final ItemMetaKey key) {
         if (list == null || list.isEmpty()) {
             return null;
         }
 
-        net.minecraft.nbt.NBTTagList tagList = new net.minecraft.nbt.NBTTagList(key.NBT);
-        for (String value : list) {
+        final net.minecraft.nbt.NBTTagList tagList = new net.minecraft.nbt.NBTTagList(key.NBT);
+        for (final String value : list) {
             tagList.appendTag(new net.minecraft.nbt.NBTTagString("", value));
         }
 
         return tagList;
     }
 
-    static void applyEnchantments(Map<Enchantment, Integer> enchantments, net.minecraft.nbt.NBTTagCompound tag, ItemMetaKey key) {
-        if (enchantments == null || enchantments.size() == 0) {
+    static void applyEnchantments(final Map<Enchantment, Integer> enchantments, final net.minecraft.nbt.NBTTagCompound tag, final ItemMetaKey key) {
+        if (enchantments == null || enchantments.isEmpty()) {
             return;
         }
 
-        net.minecraft.nbt.NBTTagList list = new net.minecraft.nbt.NBTTagList(key.NBT);
+        final net.minecraft.nbt.NBTTagList list = new net.minecraft.nbt.NBTTagList(key.NBT);
 
-        for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-            net.minecraft.nbt.NBTTagCompound subtag = new net.minecraft.nbt.NBTTagCompound();
+        for (final Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+            final net.minecraft.nbt.NBTTagCompound subtag = new net.minecraft.nbt.NBTTagCompound();
 
             subtag.setShort(ENCHANTMENTS_ID.NBT, (short) entry.getKey().getId());
             subtag.setShort(ENCHANTMENTS_LVL.NBT, entry.getValue().shortValue());
@@ -390,7 +390,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
         tag.setTag(key.NBT, list);
     }
 
-    void setDisplayTag(net.minecraft.nbt.NBTTagCompound tag, String key, net.minecraft.nbt.NBTBase value) {
+    void setDisplayTag(final net.minecraft.nbt.NBTTagCompound tag, final String key, final net.minecraft.nbt.NBTBase value) {
         final net.minecraft.nbt.NBTTagCompound display = tag.getCompoundTag(DISPLAY.NBT);
 
         if (!tag.hasKey(DISPLAY.NBT)) {
@@ -401,7 +401,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
     }
 
     @Overridden
-    boolean applicableTo(Material type) {
+    boolean applicableTo(final Material type) {
         return type != Material.AIR;
     }
 
@@ -414,7 +414,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
         return displayName;
     }
 
-    public final void setDisplayName(String name) {
+    public final void setDisplayName(final String name) {
         this.displayName = name;
     }
 
@@ -434,12 +434,12 @@ class CraftMetaItem implements ItemMeta, Repairable {
         return repairCost > 0;
     }
 
-    public boolean hasEnchant(Enchantment ench) {
+    public boolean hasEnchant(final Enchantment ench) {
         return hasEnchants() && enchantments.containsKey(ench);
     }
 
-    public int getEnchantLevel(Enchantment ench) {
-        Integer level = hasEnchants() ? enchantments.get(ench) : null;
+    public int getEnchantLevel(final Enchantment ench) {
+        final Integer level = hasEnchants() ? enchantments.get(ench) : null;
         if (level == null) {
             return 0;
         }
@@ -450,19 +450,19 @@ class CraftMetaItem implements ItemMeta, Repairable {
         return hasEnchants() ? ImmutableMap.copyOf(enchantments) : ImmutableMap.<Enchantment, Integer>of();
     }
 
-    public boolean addEnchant(Enchantment ench, int level, boolean ignoreRestrictions) {
+    public boolean addEnchant(final Enchantment ench, final int level, final boolean ignoreRestrictions) {
         if (enchantments == null) {
             enchantments = new HashMap<Enchantment, Integer>(4);
         }
 
         if (ignoreRestrictions || level >= ench.getStartLevel() && level <= ench.getMaxLevel()) {
-            Integer old = enchantments.put(ench, level);
+            final Integer old = enchantments.put(ench, level);
             return old == null || old != level;
         }
         return false;
     }
 
-    public boolean removeEnchant(Enchantment ench) {
+    public boolean removeEnchant(final Enchantment ench) {
         return hasEnchants() && enchantments.remove(ench) != null;
     }
 
@@ -470,7 +470,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
         return !(enchantments == null || enchantments.isEmpty());
     }
 
-    public boolean hasConflictingEnchant(Enchantment ench) {
+    public boolean hasConflictingEnchant(final Enchantment ench) {
         return checkConflictingEnchants(enchantments, ench);
     }
 
@@ -478,7 +478,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
         return this.lore == null ? null : new ArrayList<String>(this.lore);
     }
 
-    public void setLore(List<String> lore) { // too tired to think if .clone is better
+    public void setLore(final List<String> lore) { // too tired to think if .clone is better
         if (lore == null) {
             this.lore = null;
         } else {
@@ -495,12 +495,12 @@ class CraftMetaItem implements ItemMeta, Repairable {
         return repairCost;
     }
 
-    public void setRepairCost(int cost) { // TODO: Does this have limits?
+    public void setRepairCost(final int cost) { // TODO: Does this have limits?
         repairCost = cost;
     }
 
     @Override
-    public final boolean equals(Object object) {
+    public final boolean equals(final Object object) {
         if (object == null) {
             return false;
         }
@@ -519,7 +519,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
      * Checking your own internals is redundant if you are not common, as notUncommon is meant for checking those 'not common' variables.
      */
     @Overridden
-    boolean equalsCommon(CraftMetaItem that) {
+    boolean equalsCommon(final CraftMetaItem that) {
         return ((this.hasDisplayName() ? that.hasDisplayName() && this.displayName.equals(that.displayName) : !that.hasDisplayName()))
                 && (this.hasEnchants() ? that.hasEnchants() && this.enchantments.equals(that.enchantments) : !that.hasEnchants())
                 && (this.hasLore() ? that.hasLore() && this.lore.equals(that.lore) : !that.hasLore())
@@ -533,7 +533,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
      * Empty uncommon parts implies the NBT data would be equivalent if both were applied to an item
      */
     @Overridden
-    boolean notUncommon(CraftMetaItem meta) {
+    boolean notUncommon(final CraftMetaItem meta) {
         return true;
     }
 
@@ -557,7 +557,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
     @Override
     public CraftMetaItem clone() {
         try {
-            CraftMetaItem clone = (CraftMetaItem) super.clone();
+            final CraftMetaItem clone = (CraftMetaItem) super.clone();
             if (this.lore != null) {
                 clone.lore = new ArrayList<String>(this.lore);
             }
@@ -565,20 +565,20 @@ class CraftMetaItem implements ItemMeta, Repairable {
                 clone.enchantments = new HashMap<Enchantment, Integer>(this.enchantments);
             }
             return clone;
-        } catch (CloneNotSupportedException e) {
+        } catch (final CloneNotSupportedException e) {
             throw new Error(e);
         }
     }
 
     public final Map<String, Object> serialize() {
-        ImmutableMap.Builder<String, Object> map = ImmutableMap.builder();
+        final ImmutableMap.Builder<String, Object> map = ImmutableMap.builder();
         map.put(SerializableMeta.TYPE_FIELD, SerializableMeta.classMap.get(getClass()));
         serialize(map);
         return map.build();
     }
 
     @Overridden
-    ImmutableMap.Builder<String, Object> serialize(ImmutableMap.Builder<String, Object> builder) {
+    ImmutableMap.Builder<String, Object> serialize(final ImmutableMap.Builder<String, Object> builder) {
         if (hasDisplayName()) {
             builder.put(NAME.BUKKIT, displayName);
         }
@@ -596,25 +596,25 @@ class CraftMetaItem implements ItemMeta, Repairable {
         return builder;
     }
 
-    static void serializeEnchantments(Map<Enchantment, Integer> enchantments, ImmutableMap.Builder<String, Object> builder, ItemMetaKey key) {
+    static void serializeEnchantments(final Map<Enchantment, Integer> enchantments, final ImmutableMap.Builder<String, Object> builder, final ItemMetaKey key) {
         if (enchantments == null || enchantments.isEmpty()) {
             return;
         }
 
-        ImmutableMap.Builder<String, Integer> enchants = ImmutableMap.builder();
-        for (Map.Entry<? extends Enchantment, Integer> enchant : enchantments.entrySet()) {
+        final ImmutableMap.Builder<String, Integer> enchants = ImmutableMap.builder();
+        for (final Map.Entry<? extends Enchantment, Integer> enchant : enchantments.entrySet()) {
             enchants.put(enchant.getKey().getName(), enchant.getValue());
         }
 
         builder.put(key.BUKKIT, enchants.build());
     }
 
-    static void safelyAdd(Iterable<?> addFrom, Collection<String> addTo, int maxItemLength) {
+    static void safelyAdd(final Iterable<?> addFrom, final Collection<String> addTo, final int maxItemLength) {
         if (addFrom == null) {
             return;
         }
 
-        for (Object object : addFrom) {
+        for (final Object object : addFrom) {
             if (!(object instanceof String)) {
                 if (object != null) {
                     throw new IllegalArgumentException(addFrom + " cannot contain non-string " + object.getClass().getName());
@@ -633,12 +633,12 @@ class CraftMetaItem implements ItemMeta, Repairable {
         }
     }
 
-    static boolean checkConflictingEnchants(Map<Enchantment, Integer> enchantments, Enchantment ench) {
+    static boolean checkConflictingEnchants(final Map<Enchantment, Integer> enchantments, final Enchantment ench) {
         if (enchantments == null || enchantments.isEmpty()) {
             return false;
         }
 
-        for (Enchantment enchant : enchantments.keySet()) {
+        for (final Enchantment enchant : enchantments.keySet()) {
             if (enchant.conflictsWith(ench)) {
                 return true;
             }

@@ -16,22 +16,22 @@ public class AntiXray
     // Used to select a random replacement ore
     private byte[] replacementOres;
 
-    public AntiXray(SpigotWorldConfig config)
+    public AntiXray(final SpigotWorldConfig config)
     {
         // Set all listed blocks as true to be obfuscated
-        for ( int id : config.blocks )
+        for ( final int id : config.blocks )
         {
             obfuscateBlocks[id] = true;
         }
 
         // For every block
-        TByteSet blocks = new TByteHashSet();
+        final TByteSet blocks = new TByteHashSet();
         for ( int i = 0; i < obfuscateBlocks.length; i++ )
         {
             // If we are obfuscating it
             if ( obfuscateBlocks[i] )
             {
-                Block block = Block.blocksList[i];
+                final Block block = Block.blocksList[i];
                 // Check it exists and is not a tile entity
                 if ( block != null && !block.hasTileEntity() /* isTileEntity */ )
                 {
@@ -48,7 +48,7 @@ public class AntiXray
      * Starts the timings handler, then updates all blocks within the set radius
      * of the given coordinate, revealing them if they are hidden ores.
      */
-    public void updateNearbyBlocks(World world, int x, int y, int z)
+    public void updateNearbyBlocks(final World world, final int x, final int y, final int z)
     {
         if ( world.spigotConfig.antiXray )
         {
@@ -62,7 +62,7 @@ public class AntiXray
      * Starts the timings handler, and then removes all non exposed ores from
      * the chunk buffer.
      */
-    public void obfuscateSync(int chunkX, int chunkY, int bitmask, byte[] buffer, World world)
+    public void obfuscateSync(final int chunkX, final int chunkY, final int bitmask, final byte[] buffer, final World world)
     {
         if ( world.spigotConfig.antiXray )
         {
@@ -75,21 +75,21 @@ public class AntiXray
     /**
      * Removes all non exposed ores from the chunk buffer.
      */
-    public void obfuscate(int chunkX, int chunkY, int bitmask, byte[] buffer, World world)
+    public void obfuscate(final int chunkX, final int chunkY, final int bitmask, final byte[] buffer, final World world)
     {
         // If the world is marked as obfuscated
         if ( world.spigotConfig.antiXray )
         {
             // Initial radius to search around for air
-            int initialRadius = 1;
+            final int initialRadius = 1;
             // Which block in the buffer we are looking at, anywhere from 0 to 16^4
             int index = 0;
             // The iterator marking which random ore we should use next
             int randomOre = 0;
 
             // Chunk corner X and Z blocks
-            int startX = chunkX << 4;
-            int startZ = chunkY << 4;
+            final int startX = chunkX << 4;
+            final int startZ = chunkY << 4;
 
             // Chunks can have up to 16 sections
             for ( int i = 0; i < 16; i++ )
@@ -111,7 +111,7 @@ public class AntiXray
                                 }
                                 // Grab the block ID in the buffer.
                                 // TODO: extended IDs are not yet supported
-                                int blockId = buffer[index] & 0xFF;
+                                final int blockId = buffer[index] & 0xFF;
                                 // Check if the block should be obfuscated
                                 if ( obfuscateBlocks[blockId] )
                                 {
@@ -150,13 +150,13 @@ public class AntiXray
         }
     }
 
-    private void updateNearbyBlocks(World world, int x, int y, int z, int radius, boolean updateSelf)
+    private void updateNearbyBlocks(final World world, final int x, final int y, final int z, final int radius, final boolean updateSelf)
     {
         // If the block in question is loaded
         if ( world.blockExists( x, y, z ) )
         {
             // Get block id
-            int id = world.getBlockId( x, y, z );
+            final int id = world.getBlockId( x, y, z );
 
             // See if it needs update
             if ( updateSelf && obfuscateBlocks[id] )
@@ -178,7 +178,7 @@ public class AntiXray
         }
     }
 
-    private static boolean isLoaded(World world, int x, int y, int z, int radius)
+    private static boolean isLoaded(final World world, final int x, final int y, final int z, final int radius)
     {
         return world.blockExists( x, y, z )
                 || ( radius > 0
@@ -190,7 +190,7 @@ public class AntiXray
                 || isLoaded( world, x, y, z - 1, radius - 1 ) ) );
     }
 
-    private static boolean hasTransparentBlockAdjacent(World world, int x, int y, int z, int radius)
+    private static boolean hasTransparentBlockAdjacent(final World world, final int x, final int y, final int z, final int radius)
     {
         return !Block.isNormalCube( world.getBlockId( x, y, z ) ) /* isSolidBlock */
                 || ( radius > 0

@@ -14,7 +14,7 @@ public class PermissionAttachment {
     private final Permissible permissible;
     private final Plugin plugin;
 
-    public PermissionAttachment(Plugin plugin, Permissible Permissible) {
+    public PermissionAttachment(final Plugin plugin, final Permissible Permissible) {
         if (plugin == null) {
             throw new IllegalArgumentException("Plugin cannot be null");
         } else if (!plugin.isEnabled()) {
@@ -39,7 +39,7 @@ public class PermissionAttachment {
      *
      * @param ex Object to be called when this is removed
      */
-    public void setRemovalCallback(PermissionRemovedExecutor ex) {
+    public void setRemovalCallback(final PermissionRemovedExecutor ex) {
         removed = ex;
     }
 
@@ -78,7 +78,7 @@ public class PermissionAttachment {
      * @param name Name of the permission
      * @param value New value of the permission
      */
-    public void setPermission(String name, boolean value) {
+    public void setPermission(final String name, final boolean value) {
         permissions.put(name.toLowerCase(), value);
         permissible.recalculatePermissions();
     }
@@ -89,7 +89,7 @@ public class PermissionAttachment {
      * @param perm Permission to set
      * @param value New value of the permission
      */
-    public void setPermission(Permission perm, boolean value) {
+    public void setPermission(final Permission perm, final boolean value) {
         setPermission(perm.getName(), value);
     }
 
@@ -100,7 +100,7 @@ public class PermissionAttachment {
      *
      * @param name Name of the permission to remove
      */
-    public void unsetPermission(String name) {
+    public void unsetPermission(final String name) {
         permissions.remove(name.toLowerCase());
         permissible.recalculatePermissions();
     }
@@ -112,7 +112,7 @@ public class PermissionAttachment {
      *
      * @param perm Permission to remove
      */
-    public void unsetPermission(Permission perm) {
+    public void unsetPermission(final Permission perm) {
         unsetPermission(perm.getName());
     }
 
@@ -125,7 +125,7 @@ public class PermissionAttachment {
         try {
             permissible.removeAttachment(this);
             return true;
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             return false;
         }
     }

@@ -17,38 +17,39 @@ public class Packet3Chat extends Packet
         this.isServer = true;
     }
 
-    public Packet3Chat(ChatMessageComponent par1ChatMessageComponent)
+    public Packet3Chat(final ChatMessageComponent par1ChatMessageComponent)
     {
         this(par1ChatMessageComponent.toJson());
     }
 
-    public Packet3Chat(ChatMessageComponent par1ChatMessageComponent, boolean par2)
+    public Packet3Chat(final ChatMessageComponent par1ChatMessageComponent, final boolean par2)
     {
         this(par1ChatMessageComponent.toJson(), par2);
     }
 
-    public Packet3Chat(String par1Str)
+    public Packet3Chat(final String par1Str)
     {
         this(par1Str, true);
     }
 
-    public Packet3Chat(String par1Str, boolean par2)
+    public Packet3Chat(String par1Str, final boolean par2)
     {
+        String par1Str1 = par1Str;
         this.isServer = true;
 
-        if (par1Str.length() > 32767)
+        if (par1Str1.length() > 32767)
         {
-            par1Str = par1Str.substring(0, 32767);
+            par1Str1 = par1Str1.substring(0, 32767);
         }
 
-        this.message = par1Str;
+        this.message = par1Str1;
         this.isServer = par2;
     }
 
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.message = readString(par1DataInput, 32767);
     }
@@ -56,7 +57,7 @@ public class Packet3Chat extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         writeString(this.message, par1DataOutput);
     }
@@ -64,7 +65,7 @@ public class Packet3Chat extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleChat(this);
     }

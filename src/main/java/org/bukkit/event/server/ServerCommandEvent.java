@@ -30,7 +30,7 @@ public class ServerCommandEvent extends ServerEvent {
      *
      * @param message New message that the server will execute
      */
-    public void setCommand(String message) {
+    public void setCommand(final String message) {
         this.command = message;
     }
 

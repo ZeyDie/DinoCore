@@ -16,7 +16,7 @@ class GuiBeaconButton extends GuiButton
     private final int field_82258_m;
     private boolean field_82256_n;
 
-    protected GuiBeaconButton(int par1, int par2, int par3, ResourceLocation par4ResourceLocation, int par5, int par6)
+    protected GuiBeaconButton(final int par1, final int par2, final int par3, final ResourceLocation par4ResourceLocation, final int par5, final int par6)
     {
         super(par1, par2, par3, 22, 22, "");
         this.buttonTexture = par4ResourceLocation;
@@ -27,14 +27,14 @@ class GuiBeaconButton extends GuiButton
     /**
      * Draws this button to the screen.
      */
-    public void drawButton(Minecraft par1Minecraft, int par2, int par3)
+    public void drawButton(final Minecraft par1Minecraft, final int par2, final int par3)
     {
         if (this.drawButton)
         {
             par1Minecraft.getTextureManager().bindTexture(GuiBeacon.getBeaconGuiTextures());
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.field_82253_i = par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height;
-            short short1 = 219;
+            final short short1 = 219;
             int k = 0;
 
             if (!this.enabled)
@@ -66,7 +66,7 @@ class GuiBeaconButton extends GuiButton
         return this.field_82256_n;
     }
 
-    public void func_82254_b(boolean par1)
+    public void func_82254_b(final boolean par1)
     {
         this.field_82256_n = par1;
     }

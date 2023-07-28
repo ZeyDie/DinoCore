@@ -31,7 +31,7 @@ public final class NettyEncryptingDecoder extends ByteToMessageDecoder {
     ) {
         try {
             paramList.add(this.translator.writeIndex(paramChannelHandlerContext, paramByteBuf));
-        } catch (ShortBufferException e) {
+        } catch (final ShortBufferException e) {
             e.printStackTrace();
         }
     }

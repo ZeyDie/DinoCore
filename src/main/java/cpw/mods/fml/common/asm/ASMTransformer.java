@@ -23,17 +23,17 @@ import org.objectweb.asm.tree.ClassNode;
 public class ASMTransformer implements IClassTransformer
 {
     @Override
-    public byte[] transform(String name,String transformedName, byte[] bytes)
+    public byte[] transform(final String name, final String transformedName, final byte[] bytes)
     {
         if ("net.minecraft.src.Block".equals(name))
         {
-            ClassReader cr = new ClassReader(bytes);
+            final ClassReader cr = new ClassReader(bytes);
 
             //TODO ZeyCodeReplace ASM4 on ASM5
-            ClassNode cn = new ClassNode(Opcodes.ASM5);
+            final ClassNode cn = new ClassNode(Opcodes.ASM5);
             cr.accept(cn, ClassReader.EXPAND_FRAMES);
             cn.interfaces.add(Type.getInternalName(BlockProxy.class));
-            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+            final ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
             cn.accept(cw);
             return cw.toByteArray();
         }

@@ -20,7 +20,7 @@ public class NpcMerchant implements IMerchant
     /** The MerchantRecipeList instance. */
     private MerchantRecipeList recipeList;
 
-    public NpcMerchant(EntityPlayer par1EntityPlayer)
+    public NpcMerchant(final EntityPlayer par1EntityPlayer)
     {
         this.customer = par1EntityPlayer;
         this.theMerchantInventory = new InventoryMerchant(par1EntityPlayer, this);
@@ -31,19 +31,19 @@ public class NpcMerchant implements IMerchant
         return this.customer;
     }
 
-    public void setCustomer(EntityPlayer par1EntityPlayer) {}
+    public void setCustomer(final EntityPlayer par1EntityPlayer) {}
 
-    public MerchantRecipeList getRecipes(EntityPlayer par1EntityPlayer)
+    public MerchantRecipeList getRecipes(final EntityPlayer par1EntityPlayer)
     {
         return this.recipeList;
     }
 
-    public void setRecipes(MerchantRecipeList par1MerchantRecipeList)
+    public void setRecipes(final MerchantRecipeList par1MerchantRecipeList)
     {
         this.recipeList = par1MerchantRecipeList;
     }
 
-    public void useRecipe(MerchantRecipe par1MerchantRecipe) {}
+    public void useRecipe(final MerchantRecipe par1MerchantRecipe) {}
 
-    public void func_110297_a_(ItemStack par1ItemStack) {}
+    public void func_110297_a_(final ItemStack par1ItemStack) {}
 }

@@ -218,7 +218,7 @@ public class CraftSound {
         set(PISTON_RETRACT, "tile.piston.in");
     }
 
-    private static void set(Sound sound, String key) {
+    private static void set(final Sound sound, final String key) {
         sounds[sound.ordinal()] = key;
     }
 

@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class BlockSnow extends Block
 {
-    protected BlockSnow(int par1)
+    protected BlockSnow(final int par1)
     {
         super(par1, Material.snow);
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.125F, 1.0F);
@@ -31,7 +31,7 @@ public class BlockSnow extends Block
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.blockIcon = par1IconRegister.registerIcon("snow");
     }
@@ -40,10 +40,10 @@ public class BlockSnow extends Block
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4)
     {
-        int l = par1World.getBlockMetadata(par2, par3, par4) & 7;
-        float f = 0.125F;
+        final int l = par1World.getBlockMetadata(par2, par3, par4) & 7;
+        final float f = 0.125F;
         return AxisAlignedBB.getAABBPool().getAABB((double)par2 + this.minX, (double)par3 + this.minY, (double)par4 + this.minZ, (double)par2 + this.maxX, (double)((float)par3 + (float)l * f), (double)par4 + this.maxZ);
     }
 
@@ -75,7 +75,7 @@ public class BlockSnow extends Block
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         this.setBlockBoundsForSnowDepth(par1IBlockAccess.getBlockMetadata(par2, par3, par4));
     }
@@ -83,20 +83,20 @@ public class BlockSnow extends Block
     /**
      * calls setBlockBounds based on the depth of the snow. Int is any values 0x0-0x7, usually this blocks metadata.
      */
-    protected void setBlockBoundsForSnowDepth(int par1)
+    protected void setBlockBoundsForSnowDepth(final int par1)
     {
-        int j = par1 & 7;
-        float f = (float)(2 * (1 + j)) / 16.0F;
+        final int j = par1 & 7;
+        final float f = (float)(2 * (1 + j)) / 16.0F;
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, f, 1.0F);
     }
 
     /**
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
      */
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
+    public boolean canPlaceBlockAt(final World par1World, final int par2, final int par3, final int par4)
     {
-        int l = par1World.getBlockId(par2, par3 - 1, par4);        
-        Block block = Block.blocksList[l];
+        final int l = par1World.getBlockId(par2, par3 - 1, par4);
+        final Block block = Block.blocksList[l];
         if (block == null) return false;
         if (block == this && (par1World.getBlockMetadata(par2, par3 - 1, par4) & 7) == 7) return true;
         if (!block.isLeaves(par1World, par2, par3 - 1, par4) && !Block.blocksList[l].isOpaqueCube()) return false;
@@ -107,7 +107,7 @@ public class BlockSnow extends Block
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         this.canSnowStay(par1World, par2, par3, par4);
     }
@@ -115,7 +115,7 @@ public class BlockSnow extends Block
     /**
      * Checks if this snow block can stay at this location.
      */
-    private boolean canSnowStay(World par1World, int par2, int par3, int par4)
+    private boolean canSnowStay(final World par1World, final int par2, final int par3, final int par4)
     {
         if (!this.canPlaceBlockAt(par1World, par2, par3, par4))
         {
@@ -132,7 +132,7 @@ public class BlockSnow extends Block
      * Called when the player destroys a block with an item that can harvest it. (i, j, k) are the coordinates of the
      * block and l is the block's subtype/damage.
      */
-    public void harvestBlock(World par1World, EntityPlayer par2EntityPlayer, int par3, int par4, int par5, int par6)
+    public void harvestBlock(final World par1World, final EntityPlayer par2EntityPlayer, final int par3, final int par4, final int par5, final int par6)
     {
         super.harvestBlock(par1World, par2EntityPlayer, par3, par4, par5, par6);
         par1World.setBlockToAir(par3, par4, par5);
@@ -141,7 +141,7 @@ public class BlockSnow extends Block
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return Item.snowball.itemID;
     }
@@ -149,7 +149,7 @@ public class BlockSnow extends Block
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random par1Random)
+    public int quantityDropped(final Random par1Random)
     {
         return 1;
     }
@@ -157,7 +157,7 @@ public class BlockSnow extends Block
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (par1World.getSavedLightValue(EnumSkyBlock.Block, par2, par3, par4) > 11)
         {
@@ -177,13 +177,13 @@ public class BlockSnow extends Block
      * Returns true if the given side of this block type should be rendered, if the adjacent block is at the given
      * coordinates.  Args: blockAccess, x, y, z, side
      */
-    public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public boolean shouldSideBeRendered(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
         return par5 == 1 ? true : super.shouldSideBeRendered(par1IBlockAccess, par2, par3, par4, par5);
     }
 
     @Override
-    public int quantityDropped(int meta, int fortune, Random random)
+    public int quantityDropped(final int meta, final int fortune, final Random random)
     {
         return (meta & 7) + 1;
     }
@@ -199,9 +199,9 @@ public class BlockSnow extends Block
      * @return True if the block is replaceable by another block
      */
     @Override
-    public boolean isBlockReplaceable(World world, int x, int y, int z)
+    public boolean isBlockReplaceable(final World world, final int x, final int y, final int z)
     {
-        int meta = world.getBlockMetadata(x, y, z);
+        final int meta = world.getBlockMetadata(x, y, z);
         return (meta >= 7 ? false : blockMaterial.isReplaceable());
     }
 }

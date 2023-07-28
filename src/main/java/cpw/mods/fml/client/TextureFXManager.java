@@ -30,7 +30,7 @@ public class TextureFXManager
 
 //    private TextureHelper helper;
 
-    void setClient(Minecraft client)
+    void setClient(final Minecraft client)
     {
         this.client = client;
     }
@@ -53,13 +53,13 @@ public class TextureFXManager
         return INSTANCE;
     }
 
-    public void fixTransparency(BufferedImage loadedImage, String textureName)
+    public void fixTransparency(final BufferedImage loadedImage, final String textureName)
     {
         if (textureName.matches("^/mob/.*_eyes.*.png$"))
         {
             for (int x = 0; x < loadedImage.getWidth(); x++) {
                 for (int y = 0; y < loadedImage.getHeight(); y++) {
-                    int argb = loadedImage.getRGB(x, y);
+                    final int argb = loadedImage.getRGB(x, y);
                     if ((argb & 0xff000000) == 0 && argb != 0) {
                         loadedImage.setRGB(x, y, 0);
                     }
@@ -67,18 +67,18 @@ public class TextureFXManager
             }
         }
     }
-    public void bindTextureToName(String name, int index)
+    public void bindTextureToName(final String name, final int index)
     {
-        TextureHolder holder = new TextureHolder();
+        final TextureHolder holder = new TextureHolder();
         holder.textureId = index;
         holder.textureName = name;
         texturesById.put(index,holder);
         texturesByName.put(name,holder);
     }
 
-    public void setTextureDimensions(int index, int j, int k)
+    public void setTextureDimensions(final int index, final int j, final int k)
     {
-        TextureHolder holder = texturesById.get(index);
+        final TextureHolder holder = texturesById.get(index);
         if (holder == null)
         {
             return;
@@ -94,7 +94,7 @@ public class TextureFXManager
         private int y;
     }
 
-    public Dimension getTextureDimensions(String texture)
+    public Dimension getTextureDimensions(final String texture)
     {
         return texturesByName.containsKey(texture) ? new Dimension(texturesByName.get(texture).x, texturesByName.get(texture).y) : new Dimension(1,1);
     }

@@ -29,7 +29,7 @@ public class PlayerExpChangeEvent extends PlayerEvent {
      *
      * @param amount The amount of experience to set
      */
-    public void setAmount(int amount) {
+    public void setAmount(final int amount) {
         exp = amount;
     }
 

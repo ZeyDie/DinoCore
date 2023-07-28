@@ -11,7 +11,7 @@ public class VillageDoorInfo
     public boolean isDetachedFromVillageFlag;
     private int doorOpeningRestrictionCounter;
 
-    public VillageDoorInfo(int par1, int par2, int par3, int par4, int par5, int par6)
+    public VillageDoorInfo(final int par1, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
         this.posX = par1;
         this.posY = par2;
@@ -24,11 +24,11 @@ public class VillageDoorInfo
     /**
      * Returns the squared distance between this door and the given coordinate.
      */
-    public int getDistanceSquared(int par1, int par2, int par3)
+    public int getDistanceSquared(final int par1, final int par2, final int par3)
     {
-        int l = par1 - this.posX;
-        int i1 = par2 - this.posY;
-        int j1 = par3 - this.posZ;
+        final int l = par1 - this.posX;
+        final int i1 = par2 - this.posY;
+        final int j1 = par3 - this.posZ;
         return l * l + i1 * i1 + j1 * j1;
     }
 
@@ -36,11 +36,11 @@ public class VillageDoorInfo
      * Get the square of the distance from a location 2 blocks away from the door considered 'inside' and the given
      * arguments
      */
-    public int getInsideDistanceSquare(int par1, int par2, int par3)
+    public int getInsideDistanceSquare(final int par1, final int par2, final int par3)
     {
-        int l = par1 - this.posX - this.insideDirectionX;
-        int i1 = par2 - this.posY;
-        int j1 = par3 - this.posZ - this.insideDirectionZ;
+        final int l = par1 - this.posX - this.insideDirectionX;
+        final int i1 = par2 - this.posY;
+        final int j1 = par3 - this.posZ - this.insideDirectionZ;
         return l * l + i1 * i1 + j1 * j1;
     }
 
@@ -59,10 +59,10 @@ public class VillageDoorInfo
         return this.posZ + this.insideDirectionZ;
     }
 
-    public boolean isInside(int par1, int par2)
+    public boolean isInside(final int par1, final int par2)
     {
-        int k = par1 - this.posX;
-        int l = par2 - this.posZ;
+        final int k = par1 - this.posX;
+        final int l = par2 - this.posZ;
         return k * this.insideDirectionX + l * this.insideDirectionZ >= 0;
     }
 

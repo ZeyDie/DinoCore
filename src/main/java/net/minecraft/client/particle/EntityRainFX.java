@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 @SideOnly(Side.CLIENT)
 public class EntityRainFX extends EntityFX
 {
-    public EntityRainFX(World par1World, double par2, double par4, double par6)
+    public EntityRainFX(final World par1World, final double par2, final double par4, final double par6)
     {
         super(par1World, par2, par4, par6, 0.0D, 0.0D, 0.0D);
         this.motionX *= 0.30000001192092896D;
@@ -55,11 +55,11 @@ public class EntityRainFX extends EntityFX
             this.motionZ *= 0.699999988079071D;
         }
 
-        Material material = this.worldObj.getBlockMaterial(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ));
+        final Material material = this.worldObj.getBlockMaterial(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ));
 
         if (material.isLiquid() || material.isSolid())
         {
-            double d0 = (double)((float)(MathHelper.floor_double(this.posY) + 1) - BlockFluid.getFluidHeightPercent(this.worldObj.getBlockMetadata(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ))));
+            final double d0 = (double)((float)(MathHelper.floor_double(this.posY) + 1) - BlockFluid.getFluidHeightPercent(this.worldObj.getBlockMetadata(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ))));
 
             if (this.posY < d0)
             {

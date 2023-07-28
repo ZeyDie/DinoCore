@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 public class ItemGlassBottle extends Item
 {
-    public ItemGlassBottle(int par1)
+    public ItemGlassBottle(final int par1)
     {
         super(par1);
         this.setCreativeTab(CreativeTabs.tabBrewing);
@@ -24,7 +24,7 @@ public class ItemGlassBottle extends Item
     /**
      * Gets an icon index based on an item's damage value
      */
-    public Icon getIconFromDamage(int par1)
+    public Icon getIconFromDamage(final int par1)
     {
         return Item.potion.getIconFromDamage(0);
     }
@@ -32,9 +32,9 @@ public class ItemGlassBottle extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
-        MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, true);
+        final MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, true);
 
         if (movingobjectposition == null)
         {
@@ -44,9 +44,9 @@ public class ItemGlassBottle extends Item
         {
             if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE)
             {
-                int i = movingobjectposition.blockX;
-                int j = movingobjectposition.blockY;
-                int k = movingobjectposition.blockZ;
+                final int i = movingobjectposition.blockX;
+                final int j = movingobjectposition.blockY;
+                final int k = movingobjectposition.blockZ;
 
                 if (!par2World.canMineBlock(par3EntityPlayer, i, j, k))
                 {
@@ -79,5 +79,5 @@ public class ItemGlassBottle extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister) {}
+    public void registerIcons(final IconRegister par1IconRegister) {}
 }

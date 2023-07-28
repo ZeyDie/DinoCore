@@ -21,18 +21,18 @@ public class ResourcePackRepository
     private List repositoryEntriesAll = Lists.newArrayList();
     private List repositoryEntries = Lists.newArrayList();
 
-    public ResourcePackRepository(File par1File, ResourcePack par2ResourcePack, MetadataSerializer par3MetadataSerializer, GameSettings par4GameSettings)
+    public ResourcePackRepository(final File par1File, final ResourcePack par2ResourcePack, final MetadataSerializer par3MetadataSerializer, final GameSettings par4GameSettings)
     {
         this.dirResourcepacks = par1File;
         this.rprDefaultResourcePack = par2ResourcePack;
         this.rprMetadataSerializer = par3MetadataSerializer;
         this.fixDirResourcepacks();
         this.updateRepositoryEntriesAll();
-        Iterator iterator = this.repositoryEntriesAll.iterator();
+        final Iterator iterator = this.repositoryEntriesAll.iterator();
 
         while (iterator.hasNext())
         {
-            ResourcePackRepositoryEntry resourcepackrepositoryentry = (ResourcePackRepositoryEntry)iterator.next();
+            final ResourcePackRepositoryEntry resourcepackrepositoryentry = (ResourcePackRepositoryEntry)iterator.next();
 
             if (resourcepackrepositoryentry.getResourcePackName().equals(par4GameSettings.skin))
             {
@@ -57,13 +57,13 @@ public class ResourcePackRepository
 
     public void updateRepositoryEntriesAll()
     {
-        ArrayList arraylist = Lists.newArrayList();
+        final ArrayList arraylist = Lists.newArrayList();
         Iterator iterator = this.getResourcePackFiles().iterator();
 
         while (iterator.hasNext())
         {
-            File file1 = (File)iterator.next();
-            ResourcePackRepositoryEntry resourcepackrepositoryentry = new ResourcePackRepositoryEntry(this, file1, (ResourcePackRepositoryFilter)null);
+            final File file1 = (File)iterator.next();
+            final ResourcePackRepositoryEntry resourcepackrepositoryentry = new ResourcePackRepositoryEntry(this, file1, (ResourcePackRepositoryFilter)null);
 
             if (!this.repositoryEntriesAll.contains(resourcepackrepositoryentry))
             {
@@ -72,7 +72,7 @@ public class ResourcePackRepository
                     resourcepackrepositoryentry.updateResourcePack();
                     arraylist.add(resourcepackrepositoryentry);
                 }
-                catch (Exception exception)
+                catch (final Exception exception)
                 {
                     arraylist.remove(resourcepackrepositoryentry);
                 }
@@ -88,7 +88,7 @@ public class ResourcePackRepository
 
         while (iterator.hasNext())
         {
-            ResourcePackRepositoryEntry resourcepackrepositoryentry1 = (ResourcePackRepositoryEntry)iterator.next();
+            final ResourcePackRepositoryEntry resourcepackrepositoryentry1 = (ResourcePackRepositoryEntry)iterator.next();
             resourcepackrepositoryentry1.closeResourcePack();
         }
 
@@ -110,7 +110,7 @@ public class ResourcePackRepository
         return this.repositoryEntries.isEmpty() ? "Default" : ((ResourcePackRepositoryEntry)this.repositoryEntries.get(0)).getResourcePackName();
     }
 
-    public void setRepositoryEntries(ResourcePackRepositoryEntry ... par1ArrayOfResourcePackRepositoryEntry)
+    public void setRepositoryEntries(final ResourcePackRepositoryEntry ... par1ArrayOfResourcePackRepositoryEntry)
     {
         this.repositoryEntries.clear();
         Collections.addAll(this.repositoryEntries, par1ArrayOfResourcePackRepositoryEntry);

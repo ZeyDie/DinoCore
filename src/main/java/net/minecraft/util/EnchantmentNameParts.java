@@ -22,7 +22,7 @@ public class EnchantmentNameParts
      */
     public String generateRandomEnchantName()
     {
-        int i = this.rand.nextInt(2) + 3;
+        final int i = this.rand.nextInt(2) + 3;
         String s = "";
 
         for (int j = 0; j < i; ++j)
@@ -41,7 +41,7 @@ public class EnchantmentNameParts
     /**
      * Sets the seed for the enchant name RNG.
      */
-    public void setRandSeed(long par1)
+    public void setRandSeed(final long par1)
     {
         this.rand.setSeed(par1);
     }

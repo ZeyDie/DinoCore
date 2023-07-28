@@ -9,7 +9,7 @@ public class EntityAIOwnerHurtByTarget extends EntityAITarget
     EntityLivingBase theOwnerAttacker;
     private int field_142051_e;
 
-    public EntityAIOwnerHurtByTarget(EntityTameable par1EntityTameable)
+    public EntityAIOwnerHurtByTarget(final EntityTameable par1EntityTameable)
     {
         super(par1EntityTameable, false);
         this.theDefendingTameable = par1EntityTameable;
@@ -27,7 +27,7 @@ public class EntityAIOwnerHurtByTarget extends EntityAITarget
         }
         else
         {
-            EntityLivingBase entitylivingbase = this.theDefendingTameable.func_130012_q();
+            final EntityLivingBase entitylivingbase = this.theDefendingTameable.func_130012_q();
 
             if (entitylivingbase == null)
             {
@@ -36,7 +36,7 @@ public class EntityAIOwnerHurtByTarget extends EntityAITarget
             else
             {
                 this.theOwnerAttacker = entitylivingbase.getAITarget();
-                int i = entitylivingbase.func_142015_aE();
+                final int i = entitylivingbase.func_142015_aE();
                 return i != this.field_142051_e && this.isSuitableTarget(this.theOwnerAttacker, false) && this.theDefendingTameable.func_142018_a(this.theOwnerAttacker, entitylivingbase);
             }
         }
@@ -48,7 +48,7 @@ public class EntityAIOwnerHurtByTarget extends EntityAITarget
     public void startExecuting()
     {
         this.taskOwner.setAttackTarget(this.theOwnerAttacker);
-        EntityLivingBase entitylivingbase = this.theDefendingTameable.func_130012_q();
+        final EntityLivingBase entitylivingbase = this.theDefendingTameable.func_130012_q();
 
         if (entitylivingbase != null)
         {

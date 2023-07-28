@@ -8,12 +8,12 @@ class TileEntityMobSpawnerLogic extends MobSpawnerBaseLogic
     /** The mob spawner we deal with */
     final TileEntityMobSpawner mobSpawnerEntity;
 
-    TileEntityMobSpawnerLogic(TileEntityMobSpawner par1TileEntityMobSpawner)
+    TileEntityMobSpawnerLogic(final TileEntityMobSpawner par1TileEntityMobSpawner)
     {
         this.mobSpawnerEntity = par1TileEntityMobSpawner;
     }
 
-    public void func_98267_a(int par1)
+    public void func_98267_a(final int par1)
     {
         this.mobSpawnerEntity.worldObj.addBlockEvent(this.mobSpawnerEntity.xCoord, this.mobSpawnerEntity.yCoord, this.mobSpawnerEntity.zCoord, Block.mobSpawner.blockID, par1, 0);
     }
@@ -38,7 +38,7 @@ class TileEntityMobSpawnerLogic extends MobSpawnerBaseLogic
         return this.mobSpawnerEntity.zCoord;
     }
 
-    public void setRandomMinecart(WeightedRandomMinecart par1WeightedRandomMinecart)
+    public void setRandomMinecart(final WeightedRandomMinecart par1WeightedRandomMinecart)
     {
         super.setRandomMinecart(par1WeightedRandomMinecart);
 

@@ -11,7 +11,7 @@ public final class PluginMessageListenerRegistration {
     private final String channel;
     private final PluginMessageListener listener;
 
-    public PluginMessageListenerRegistration(Messenger messenger, Plugin plugin, String channel, PluginMessageListener listener) {
+    public PluginMessageListenerRegistration(final Messenger messenger, final Plugin plugin, final String channel, final PluginMessageListener listener) {
         if (messenger == null) {
             throw new IllegalArgumentException("Messenger cannot be null!");
         }
@@ -68,7 +68,7 @@ public final class PluginMessageListenerRegistration {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }

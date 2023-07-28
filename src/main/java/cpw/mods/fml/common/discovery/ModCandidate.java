@@ -37,11 +37,11 @@ public class ModCandidate
     private List<String> packages = Lists.newArrayList();
     private ASMDataTable table;
 
-    public ModCandidate(File classPathRoot, File modContainer, ContainerType sourceType)
+    public ModCandidate(final File classPathRoot, final File modContainer, final ContainerType sourceType)
     {
         this(classPathRoot, modContainer, sourceType, false, false);
     }
-    public ModCandidate(File classPathRoot, File modContainer, ContainerType sourceType, boolean isMinecraft, boolean classpath)
+    public ModCandidate(final File classPathRoot, final File modContainer, final ContainerType sourceType, final boolean isMinecraft, final boolean classpath)
     {
         this.classPathRoot = classPathRoot;
         this.modContainer = modContainer;
@@ -64,7 +64,7 @@ public class ModCandidate
     {
         return sourceType;
     }
-    public List<ModContainer> explore(ASMDataTable table)
+    public List<ModContainer> explore(final ASMDataTable table)
     {
         this.table = table;
         this.mods = sourceType.findMods(this, table);
@@ -76,15 +76,15 @@ public class ModCandidate
         return this.mods;
     }
 
-    public void addClassEntry(String name)
+    public void addClassEntry(final String name)
     {
         String className = name.substring(0, name.lastIndexOf('.')); // strip the .class
         foundClasses.add(className.replace('.', '/'));
         className = className.replace('/','.');
-        int pkgIdx = className.lastIndexOf('.');
+        final int pkgIdx = className.lastIndexOf('.');
         if (pkgIdx > -1)
         {
-            String pkg = className.substring(0,pkgIdx);
+            final String pkg = className.substring(0,pkgIdx);
             packages.add(pkg);
             this.table.registerPackage(this,pkg);
         }
@@ -94,7 +94,7 @@ public class ModCandidate
     {
         return classpath;
     }
-    public void rememberBaseModType(String className)
+    public void rememberBaseModType(final String className)
     {
         baseModTypes.add(className);
     }
@@ -106,7 +106,7 @@ public class ModCandidate
     {
         return isMinecraft;
     }
-    public void rememberModCandidateType(ASMModParser modParser)
+    public void rememberModCandidateType(final ASMModParser modParser)
     {
         baseModCandidateTypes.add(modParser);
     }

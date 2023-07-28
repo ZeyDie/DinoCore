@@ -17,7 +17,7 @@ public class Packet205ClientCommand extends Packet
     public Packet205ClientCommand() {}
 
     @SideOnly(Side.CLIENT)
-    public Packet205ClientCommand(int par1)
+    public Packet205ClientCommand(final int par1)
     {
         this.forceRespawn = par1;
     }
@@ -25,7 +25,7 @@ public class Packet205ClientCommand extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.forceRespawn = par1DataInput.readByte();
     }
@@ -33,7 +33,7 @@ public class Packet205ClientCommand extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeByte(this.forceRespawn & 255);
     }
@@ -41,7 +41,7 @@ public class Packet205ClientCommand extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleClientCommand(this);
     }

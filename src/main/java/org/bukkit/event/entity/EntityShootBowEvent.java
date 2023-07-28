@@ -52,7 +52,7 @@ public class EntityShootBowEvent extends EntityEvent implements Cancellable {
      *
      * @param projectile the new projectile
      */
-    public void setProjectile(Entity projectile) {
+    public void setProjectile(final Entity projectile) {
         this.projectile = projectile;
     }
 
@@ -69,7 +69,7 @@ public class EntityShootBowEvent extends EntityEvent implements Cancellable {
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         cancelled = cancel;
     }
 

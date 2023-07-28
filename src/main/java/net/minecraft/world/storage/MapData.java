@@ -45,7 +45,7 @@ public class MapData extends WorldSavedData
     private UUID uniqueId = null;
     // CraftBukkit end
 
-    public MapData(String par1Str)
+    public MapData(final String par1Str)
     {
         super(par1Str);
         // CraftBukkit start
@@ -57,11 +57,11 @@ public class MapData extends WorldSavedData
     /**
      * reads in data from the NBTTagCompound into this MapDataBase
      */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         // CraftBukkit start
-        NBTBase dimTag = par1NBTTagCompound.getTag("dimension");
-        int dimension = (dimTag instanceof NBTTagByte) ? ((NBTTagByte) dimTag).data : ((NBTTagInt) dimTag).data;
+        final NBTBase dimTag = par1NBTTagCompound.getTag("dimension");
+        final int dimension = (dimTag instanceof NBTTagByte) ? ((NBTTagByte) dimTag).data : ((NBTTagInt) dimTag).data;
 
         this.xCenter = par1NBTTagCompound.getInteger("xCenter");
         this.zCenter = par1NBTTagCompound.getInteger("zCenter");
@@ -77,8 +77,8 @@ public class MapData extends WorldSavedData
             this.scale = 4;
         }
 
-        short short1 = par1NBTTagCompound.getShort("width");
-        short short2 = par1NBTTagCompound.getShort("height");
+        final short short1 = par1NBTTagCompound.getShort("width");
+        final short short2 = par1NBTTagCompound.getShort("height");
 
         if (short1 == 128 && short2 == 128)
         {
@@ -86,20 +86,20 @@ public class MapData extends WorldSavedData
         }
         else
         {
-            byte[] abyte = par1NBTTagCompound.getByteArray("colors");
+            final byte[] abyte = par1NBTTagCompound.getByteArray("colors");
             this.colors = new byte[16384];
-            int i = (128 - short1) / 2;
-            int j = (128 - short2) / 2;
+            final int i = (128 - short1) / 2;
+            final int j = (128 - short2) / 2;
 
             for (int k = 0; k < short2; ++k)
             {
-                int l = k + j;
+                final int l = k + j;
 
                 if (l >= 0 || l < 128)
                 {
                     for (int i1 = 0; i1 < short1; ++i1)
                     {
-                        int j1 = i1 + i;
+                        final int j1 = i1 + i;
 
                         if (j1 >= 0 || j1 < 128)
                         {
@@ -114,7 +114,7 @@ public class MapData extends WorldSavedData
     /**
      * write data to NBTTagCompound from this MapDataBase, similar to Entities and TileEntities
      */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         par1NBTTagCompound.setInteger("dimension", this.dimension);
         par1NBTTagCompound.setInteger("xCenter", this.xCenter);
@@ -128,11 +128,11 @@ public class MapData extends WorldSavedData
     /**
      * Adds the player passed to the list of visible players and checks to see which players are visible
      */
-    public void updateVisiblePlayers(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack)
+    public void updateVisiblePlayers(final EntityPlayer par1EntityPlayer, final ItemStack par2ItemStack)
     {
         if (!this.playersHashMap.containsKey(par1EntityPlayer))
         {
-            MapInfo mapinfo = new MapInfo(this, par1EntityPlayer);
+            final MapInfo mapinfo = new MapInfo(this, par1EntityPlayer);
             this.playersHashMap.put(par1EntityPlayer, mapinfo);
             this.playersArrayList.add(mapinfo);
         }
@@ -144,7 +144,7 @@ public class MapData extends WorldSavedData
 
         for (int i = 0; i < this.playersArrayList.size(); ++i)
         {
-            MapInfo mapinfo1 = (MapInfo)this.playersArrayList.get(i);
+            final MapInfo mapinfo1 = (MapInfo)this.playersArrayList.get(i);
 
             if (!mapinfo1.entityplayerObj.isDead && (mapinfo1.entityplayerObj.inventory.hasItemStack(par2ItemStack) || par2ItemStack.isOnItemFrame()))
             {
@@ -166,24 +166,26 @@ public class MapData extends WorldSavedData
         }
     }
 
-    private void func_82567_a(int par1, World par2World, String par3Str, double par4, double par6, double par8)
+    private void func_82567_a(int par1, final World par2World, final String par3Str, final double par4, final double par6, double par8)
     {
-        int j = 1 << this.scale;
-        float f = (float)(par4 - (double)this.xCenter) / (float)j;
-        float f1 = (float)(par6 - (double)this.zCenter) / (float)j;
+        double par81 = par8;
+        int par11 = par1;
+        final int j = 1 << this.scale;
+        final float f = (float)(par4 - (double)this.xCenter) / (float)j;
+        final float f1 = (float)(par6 - (double)this.zCenter) / (float)j;
         byte b0 = (byte)((int)((double)(f * 2.0F) + 0.5D));
         byte b1 = (byte)((int)((double)(f1 * 2.0F) + 0.5D));
-        byte b2 = 63;
+        final byte b2 = 63;
         byte b3;
 
         if (f >= (float)(-b2) && f1 >= (float)(-b2) && f <= (float)b2 && f1 <= (float)b2)
         {
-            par8 += par8 < 0.0D ? -8.0D : 8.0D;
-            b3 = (byte)((int)(par8 * 16.0D / 360.0D));
+            par81 += par81 < 0.0D ? -8.0D : 8.0D;
+            b3 = (byte)((int)(par81 * 16.0D / 360.0D));
 
-            if (par2World.provider.shouldMapSpin(par3Str, par4, par6, par8))
+            if (par2World.provider.shouldMapSpin(par3Str, par4, par6, par81))
             {
-                int k = (int)(par2World.getWorldInfo().getWorldTime() / 10L);
+                final int k = (int)(par2World.getWorldInfo().getWorldTime() / 10L);
                 b3 = (byte)(k * k * 34187121 + k * 121 >> 15 & 15);
             }
         }
@@ -195,7 +197,7 @@ public class MapData extends WorldSavedData
                 return;
             }
 
-            par1 = 6;
+            par11 = 6;
             b3 = 0;
 
             if (f <= (float)(-b2))
@@ -219,15 +221,15 @@ public class MapData extends WorldSavedData
             }
         }
 
-        this.playersVisibleOnMap.put(par3Str, new MapCoord(this, (byte)par1, b0, b1, b3));
+        this.playersVisibleOnMap.put(par3Str, new MapCoord(this, (byte) par11, b0, b1, b3));
     }
 
     /**
      * Get byte array of packet data to send to players on map for updating map data
      */
-    public byte[] getUpdatePacketData(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public byte[] getUpdatePacketData(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
-        MapInfo mapinfo = (MapInfo)this.playersHashMap.get(par3EntityPlayer);
+        final MapInfo mapinfo = (MapInfo)this.playersHashMap.get(par3EntityPlayer);
         return mapinfo == null ? null : mapinfo.getPlayersOnMap(par1ItemStack);
     }
 
@@ -235,13 +237,13 @@ public class MapData extends WorldSavedData
      * Marks a vertical range of pixels as being modified so they will be resent to clients. Parameters: X, lowest Y,
      * highest Y
      */
-    public void setColumnDirty(int par1, int par2, int par3)
+    public void setColumnDirty(final int par1, final int par2, final int par3)
     {
         super.markDirty();
 
         for (int l = 0; l < this.playersArrayList.size(); ++l)
         {
-            MapInfo mapinfo = (MapInfo)this.playersArrayList.get(l);
+            final MapInfo mapinfo = (MapInfo)this.playersArrayList.get(l);
 
             if (mapinfo.field_76209_b[par1] < 0 || mapinfo.field_76209_b[par1] > par2)
             {
@@ -260,14 +262,14 @@ public class MapData extends WorldSavedData
     /**
      * Updates the client's map with information from other players in MP
      */
-    public void updateMPMapData(byte[] par1ArrayOfByte)
+    public void updateMPMapData(final byte[] par1ArrayOfByte)
     {
         int i;
 
         if (par1ArrayOfByte[0] == 0)
         {
             i = par1ArrayOfByte[1] & 255;
-            int j = par1ArrayOfByte[2] & 255;
+            final int j = par1ArrayOfByte[2] & 255;
 
             for (int k = 0; k < par1ArrayOfByte.length - 3; ++k)
             {
@@ -282,10 +284,10 @@ public class MapData extends WorldSavedData
 
             for (i = 0; i < (par1ArrayOfByte.length - 1) / 3; ++i)
             {
-                byte b0 = (byte)(par1ArrayOfByte[i * 3 + 1] >> 4);
-                byte b1 = par1ArrayOfByte[i * 3 + 2];
-                byte b2 = par1ArrayOfByte[i * 3 + 3];
-                byte b3 = (byte)(par1ArrayOfByte[i * 3 + 1] & 15);
+                final byte b0 = (byte)(par1ArrayOfByte[i * 3 + 1] >> 4);
+                final byte b1 = par1ArrayOfByte[i * 3 + 2];
+                final byte b2 = par1ArrayOfByte[i * 3 + 3];
+                final byte b3 = (byte)(par1ArrayOfByte[i * 3 + 1] & 15);
                 this.playersVisibleOnMap.put("icon-" + i, new MapCoord(this, b0, b1, b2, b3));
             }
         }
@@ -295,7 +297,7 @@ public class MapData extends WorldSavedData
         }
     }
 
-    public MapInfo func_82568_a(EntityPlayer par1EntityPlayer)
+    public MapInfo func_82568_a(final EntityPlayer par1EntityPlayer)
     {
         MapInfo mapinfo = (MapInfo)this.playersHashMap.get(par1EntityPlayer);
 

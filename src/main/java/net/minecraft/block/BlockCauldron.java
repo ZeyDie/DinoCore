@@ -28,7 +28,7 @@ public class BlockCauldron extends Block
     @SideOnly(Side.CLIENT)
     private Icon cauldronBottomIcon;
 
-    public BlockCauldron(int par1)
+    public BlockCauldron(final int par1)
     {
         super(par1, Material.iron);
     }
@@ -38,7 +38,7 @@ public class BlockCauldron extends Block
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
         return par1 == 1 ? this.cauldronTopIcon : (par1 == 0 ? this.cauldronBottomIcon : this.blockIcon);
     }
@@ -49,7 +49,7 @@ public class BlockCauldron extends Block
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.field_94378_a = par1IconRegister.registerIcon(this.getTextureName() + "_" + "inner");
         this.cauldronTopIcon = par1IconRegister.registerIcon(this.getTextureName() + "_top");
@@ -61,11 +61,11 @@ public class BlockCauldron extends Block
      * Adds all intersecting collision boxes to a list. (Be sure to only add boxes to the list if they intersect the
      * mask.) Parameters: World, X, Y, Z, mask, list, colliding entity
      */
-    public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity)
+    public void addCollisionBoxesToList(final World par1World, final int par2, final int par3, final int par4, final AxisAlignedBB par5AxisAlignedBB, final List par6List, final Entity par7Entity)
     {
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.3125F, 1.0F);
         super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
-        float f = 0.125F;
+        final float f = 0.125F;
         this.setBlockBounds(0.0F, 0.0F, 0.0F, f, 1.0F, 1.0F);
         super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, f);
@@ -78,7 +78,7 @@ public class BlockCauldron extends Block
     }
 
     @SideOnly(Side.CLIENT)
-    public static Icon getCauldronIcon(String par0Str)
+    public static Icon getCauldronIcon(final String par0Str)
     {
         return par0Str.equals("inner") ? Block.cauldron.field_94378_a : (par0Str.equals("bottom") ? Block.cauldron.cauldronBottomIcon : null);
     }
@@ -119,7 +119,7 @@ public class BlockCauldron extends Block
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9)
     {
         if (par1World.isRemote)
         {
@@ -127,7 +127,7 @@ public class BlockCauldron extends Block
         }
         else
         {
-            ItemStack itemstack = par5EntityPlayer.inventory.getCurrentItem();
+            final ItemStack itemstack = par5EntityPlayer.inventory.getCurrentItem();
 
             if (itemstack == null)
             {
@@ -135,8 +135,8 @@ public class BlockCauldron extends Block
             }
             else
             {
-                int i1 = par1World.getBlockMetadata(par2, par3, par4);
-                int j1 = func_111045_h_(i1);
+                final int i1 = par1World.getBlockMetadata(par2, par3, par4);
+                final int j1 = func_111045_h_(i1);
 
                 if (itemstack.itemID == Item.bucketWater.itemID)
                 {
@@ -159,7 +159,7 @@ public class BlockCauldron extends Block
                     {
                         if (j1 > 0)
                         {
-                            ItemStack itemstack1 = new ItemStack(Item.potion, 1, 0);
+                            final ItemStack itemstack1 = new ItemStack(Item.potion, 1, 0);
 
                             if (!par5EntityPlayer.inventory.addItemStackToInventory(itemstack1))
                             {
@@ -183,7 +183,7 @@ public class BlockCauldron extends Block
                     }
                     else if (j1 > 0 && itemstack.getItem() instanceof ItemArmor && ((ItemArmor)itemstack.getItem()).getArmorMaterial() == EnumArmorMaterial.CLOTH)
                     {
-                        ItemArmor itemarmor = (ItemArmor)itemstack.getItem();
+                        final ItemArmor itemarmor = (ItemArmor)itemstack.getItem();
                         itemarmor.removeColor(itemstack);
                         par1World.setBlockMetadataWithNotify(par2, par3, par4, j1 - 1, 2);
                         par1World.func_96440_m(par2, par3, par4, this.blockID);
@@ -199,11 +199,11 @@ public class BlockCauldron extends Block
     /**
      * currently only used by BlockCauldron to incrament meta-data during rain
      */
-    public void fillWithRain(World par1World, int par2, int par3, int par4)
+    public void fillWithRain(final World par1World, final int par2, final int par3, final int par4)
     {
         if (par1World.rand.nextInt(20) == 1)
         {
-            int l = par1World.getBlockMetadata(par2, par3, par4);
+            final int l = par1World.getBlockMetadata(par2, par3, par4);
 
             if (l < 3)
             {
@@ -215,7 +215,7 @@ public class BlockCauldron extends Block
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return Item.cauldron.itemID;
     }
@@ -225,7 +225,7 @@ public class BlockCauldron extends Block
     /**
      * only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
      */
-    public int idPicked(World par1World, int par2, int par3, int par4)
+    public int idPicked(final World par1World, final int par2, final int par3, final int par4)
     {
         return Item.cauldron.itemID;
     }
@@ -243,13 +243,13 @@ public class BlockCauldron extends Block
      * If hasComparatorInputOverride returns true, the return value from this is used instead of the redstone signal
      * strength when this block inputs to a comparator.
      */
-    public int getComparatorInputOverride(World par1World, int par2, int par3, int par4, int par5)
+    public int getComparatorInputOverride(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
-        int i1 = par1World.getBlockMetadata(par2, par3, par4);
+        final int i1 = par1World.getBlockMetadata(par2, par3, par4);
         return func_111045_h_(i1);
     }
 
-    public static int func_111045_h_(int par0)
+    public static int func_111045_h_(final int par0)
     {
         return par0;
     }

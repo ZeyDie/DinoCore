@@ -9,21 +9,21 @@ import java.util.Iterator;
 
 public class MessageComponentSerializer implements JsonDeserializer, JsonSerializer
 {
-    public ChatMessageComponent deserializeComponent(JsonElement par1JsonElement, Type par2Type, JsonDeserializationContext par3JsonDeserializationContext)
+    public ChatMessageComponent deserializeComponent(final JsonElement par1JsonElement, final Type par2Type, final JsonDeserializationContext par3JsonDeserializationContext)
     {
-        ChatMessageComponent chatmessagecomponent = new ChatMessageComponent();
-        JsonObject jsonobject = (JsonObject)par1JsonElement;
-        JsonElement jsonelement1 = jsonobject.get("text");
-        JsonElement jsonelement2 = jsonobject.get("translate");
-        JsonElement jsonelement3 = jsonobject.get("color");
-        JsonElement jsonelement4 = jsonobject.get("bold");
-        JsonElement jsonelement5 = jsonobject.get("italic");
-        JsonElement jsonelement6 = jsonobject.get("underlined");
-        JsonElement jsonelement7 = jsonobject.get("obfuscated");
+        final ChatMessageComponent chatmessagecomponent = new ChatMessageComponent();
+        final JsonObject jsonobject = (JsonObject)par1JsonElement;
+        final JsonElement jsonelement1 = jsonobject.get("text");
+        final JsonElement jsonelement2 = jsonobject.get("translate");
+        final JsonElement jsonelement3 = jsonobject.get("color");
+        final JsonElement jsonelement4 = jsonobject.get("bold");
+        final JsonElement jsonelement5 = jsonobject.get("italic");
+        final JsonElement jsonelement6 = jsonobject.get("underlined");
+        final JsonElement jsonelement7 = jsonobject.get("obfuscated");
 
         if (jsonelement3 != null && jsonelement3.isJsonPrimitive())
         {
-            EnumChatFormatting enumchatformatting = EnumChatFormatting.func_96300_b(jsonelement3.getAsString());
+            final EnumChatFormatting enumchatformatting = EnumChatFormatting.func_96300_b(jsonelement3.getAsString());
 
             if (enumchatformatting == null || !enumchatformatting.isColor())
             {
@@ -57,12 +57,12 @@ public class MessageComponentSerializer implements JsonDeserializer, JsonSeriali
         {
             if (jsonelement1.isJsonArray())
             {
-                JsonArray jsonarray = jsonelement1.getAsJsonArray();
-                Iterator iterator = jsonarray.iterator();
+                final JsonArray jsonarray = jsonelement1.getAsJsonArray();
+                final Iterator iterator = jsonarray.iterator();
 
                 while (iterator.hasNext())
                 {
-                    JsonElement jsonelement8 = (JsonElement)iterator.next();
+                    final JsonElement jsonelement8 = (JsonElement)iterator.next();
 
                     if (jsonelement8.isJsonPrimitive())
                     {
@@ -81,18 +81,18 @@ public class MessageComponentSerializer implements JsonDeserializer, JsonSeriali
         }
         else if (jsonelement2 != null && jsonelement2.isJsonPrimitive())
         {
-            JsonElement jsonelement9 = jsonobject.get("using");
+            final JsonElement jsonelement9 = jsonobject.get("using");
 
             if (jsonelement9 != null)
             {
                 if (jsonelement9.isJsonArray())
                 {
-                    ArrayList arraylist = Lists.newArrayList();
-                    Iterator iterator1 = jsonelement9.getAsJsonArray().iterator();
+                    final ArrayList arraylist = Lists.newArrayList();
+                    final Iterator iterator1 = jsonelement9.getAsJsonArray().iterator();
 
                     while (iterator1.hasNext())
                     {
-                        JsonElement jsonelement10 = (JsonElement)iterator1.next();
+                        final JsonElement jsonelement10 = (JsonElement)iterator1.next();
 
                         if (jsonelement10.isJsonPrimitive())
                         {
@@ -120,9 +120,9 @@ public class MessageComponentSerializer implements JsonDeserializer, JsonSeriali
         return chatmessagecomponent;
     }
 
-    public JsonElement serializeComponent(ChatMessageComponent par1ChatMessageComponent, Type par2Type, JsonSerializationContext par3JsonSerializationContext)
+    public JsonElement serializeComponent(final ChatMessageComponent par1ChatMessageComponent, final Type par2Type, final JsonSerializationContext par3JsonSerializationContext)
     {
-        JsonObject jsonobject = new JsonObject();
+        final JsonObject jsonobject = new JsonObject();
 
         if (par1ChatMessageComponent.getColor() != null)
         {
@@ -170,14 +170,14 @@ public class MessageComponentSerializer implements JsonDeserializer, JsonSeriali
         return jsonobject;
     }
 
-    private JsonArray serializeComponentChildren(ChatMessageComponent par1ChatMessageComponent, Type par2Type, JsonSerializationContext par3JsonSerializationContext)
+    private JsonArray serializeComponentChildren(final ChatMessageComponent par1ChatMessageComponent, final Type par2Type, final JsonSerializationContext par3JsonSerializationContext)
     {
-        JsonArray jsonarray = new JsonArray();
-        Iterator iterator = par1ChatMessageComponent.getSubComponents().iterator();
+        final JsonArray jsonarray = new JsonArray();
+        final Iterator iterator = par1ChatMessageComponent.getSubComponents().iterator();
 
         while (iterator.hasNext())
         {
-            ChatMessageComponent chatmessagecomponent1 = (ChatMessageComponent)iterator.next();
+            final ChatMessageComponent chatmessagecomponent1 = (ChatMessageComponent)iterator.next();
 
             if (chatmessagecomponent1.getText() != null)
             {
@@ -192,12 +192,12 @@ public class MessageComponentSerializer implements JsonDeserializer, JsonSeriali
         return jsonarray;
     }
 
-    public Object deserialize(JsonElement par1JsonElement, Type par2Type, JsonDeserializationContext par3JsonDeserializationContext)
+    public Object deserialize(final JsonElement par1JsonElement, final Type par2Type, final JsonDeserializationContext par3JsonDeserializationContext)
     {
         return this.deserializeComponent(par1JsonElement, par2Type, par3JsonDeserializationContext);
     }
 
-    public JsonElement serialize(Object par1Obj, Type par2Type, JsonSerializationContext par3JsonSerializationContext)
+    public JsonElement serialize(final Object par1Obj, final Type par2Type, final JsonSerializationContext par3JsonSerializationContext)
     {
         return this.serializeComponent((ChatMessageComponent)par1Obj, par2Type, par3JsonSerializationContext);
     }

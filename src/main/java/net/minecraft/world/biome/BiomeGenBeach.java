@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 
 public class BiomeGenBeach extends BiomeGenBase
 {
-    public BiomeGenBeach(int par1)
+    public BiomeGenBeach(final int par1)
     {
         super(par1);
         this.spawnableCreatureList.clear();

@@ -15,7 +15,7 @@ public class EntityTeleportEvent extends EntityEvent implements Cancellable {
     private Location from;
     private Location to;
 
-    public EntityTeleportEvent(Entity what, Location from, Location to) {
+    public EntityTeleportEvent(final Entity what, final Location from, final Location to) {
         super(what);
         this.from = from;
         this.to = to;
@@ -26,7 +26,7 @@ public class EntityTeleportEvent extends EntityEvent implements Cancellable {
         return cancel;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 
@@ -44,7 +44,7 @@ public class EntityTeleportEvent extends EntityEvent implements Cancellable {
      *
      * @param from New location this entity moved from
      */
-    public void setFrom(Location from) {
+    public void setFrom(final Location from) {
         this.from = from;
     }
 
@@ -62,7 +62,7 @@ public class EntityTeleportEvent extends EntityEvent implements Cancellable {
      *
      * @param to New Location this entity moved to
      */
-    public void setTo(Location to) {
+    public void setTo(final Location to) {
         this.to = to;
     }
 

@@ -68,15 +68,15 @@ public class GuiAchievements extends GuiScreen
     private GuiSmallButton button;
     private LinkedList<Achievement> minecraftAchievements = new LinkedList<Achievement>();
 
-    public GuiAchievements(StatFileWriter par1StatFileWriter)
+    public GuiAchievements(final StatFileWriter par1StatFileWriter)
     {
         this.statFileWriter = par1StatFileWriter;
-        short short1 = 141;
-        short short2 = 141;
+        final short short1 = 141;
+        final short short2 = 141;
         this.field_74117_m = this.guiMapX = this.field_74124_q = (double)(AchievementList.openInventory.displayColumn * 24 - short1 / 2 - 12);
         this.field_74115_n = this.guiMapY = this.field_74123_r = (double)(AchievementList.openInventory.displayRow * 24 - short2 / 2);
         minecraftAchievements.clear();
-        for (Object achievement : AchievementList.achievementList)
+        for (final Object achievement : AchievementList.achievementList)
         {
             if (!AchievementPage.isAchievementInPages((Achievement)achievement))
             {
@@ -98,7 +98,7 @@ public class GuiAchievements extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.id == 1)
         {
@@ -122,7 +122,7 @@ public class GuiAchievements extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         if (par2 == this.mc.gameSettings.keyBindInventory.keyCode)
         {
@@ -138,14 +138,14 @@ public class GuiAchievements extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         if (Mouse.isButtonDown(0))
         {
-            int k = (this.width - this.achievementsPaneWidth) / 2;
-            int l = (this.height - this.achievementsPaneHeight) / 2;
-            int i1 = k + 8;
-            int j1 = l + 17;
+            final int k = (this.width - this.achievementsPaneWidth) / 2;
+            final int l = (this.height - this.achievementsPaneHeight) / 2;
+            final int i1 = k + 8;
+            final int j1 = l + 17;
 
             if ((this.isMouseButtonDown == 0 || this.isMouseButtonDown == 1) && par1 >= i1 && par1 < i1 + 224 && par2 >= j1 && par2 < j1 + 155)
             {
@@ -206,8 +206,8 @@ public class GuiAchievements extends GuiScreen
     {
         this.field_74117_m = this.guiMapX;
         this.field_74115_n = this.guiMapY;
-        double d0 = this.field_74124_q - this.guiMapX;
-        double d1 = this.field_74123_r - this.guiMapY;
+        final double d0 = this.field_74124_q - this.guiMapX;
+        final double d1 = this.field_74123_r - this.guiMapY;
 
         if (d0 * d0 + d1 * d1 < 4.0D)
         {
@@ -226,12 +226,12 @@ public class GuiAchievements extends GuiScreen
      */
     protected void drawTitle()
     {
-        int i = (this.width - this.achievementsPaneWidth) / 2;
-        int j = (this.height - this.achievementsPaneHeight) / 2;
+        final int i = (this.width - this.achievementsPaneWidth) / 2;
+        final int j = (this.height - this.achievementsPaneHeight) / 2;
         this.fontRenderer.drawString("Achievements", i + 15, j + 5, 4210752);
     }
 
-    protected void genAchievementBackground(int par1, int par2, float par3)
+    protected void genAchievementBackground(final int par1, final int par2, final float par3)
     {
         int k = MathHelper.floor_double(this.field_74117_m + (this.guiMapX - this.field_74117_m) * (double)par3);
         int l = MathHelper.floor_double(this.field_74115_n + (this.guiMapY - this.field_74115_n) * (double)par3);
@@ -256,10 +256,10 @@ public class GuiAchievements extends GuiScreen
             l = guiMapRight - 1;
         }
 
-        int i1 = (this.width - this.achievementsPaneWidth) / 2;
-        int j1 = (this.height - this.achievementsPaneHeight) / 2;
-        int k1 = i1 + 16;
-        int l1 = j1 + 17;
+        final int i1 = (this.width - this.achievementsPaneWidth) / 2;
+        final int j1 = (this.height - this.achievementsPaneHeight) / 2;
+        final int k1 = i1 + 16;
+        final int l1 = j1 + 17;
         this.zLevel = 0.0F;
         GL11.glDepthFunc(GL11.GL_GEQUAL);
         GL11.glPushMatrix();
@@ -268,23 +268,23 @@ public class GuiAchievements extends GuiScreen
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glEnable(GL11.GL_COLOR_MATERIAL);
-        int i2 = k + 288 >> 4;
-        int j2 = l + 288 >> 4;
-        int k2 = (k + 288) % 16;
-        int l2 = (l + 288) % 16;
-        boolean flag = true;
-        boolean flag1 = true;
-        boolean flag2 = true;
-        boolean flag3 = true;
-        boolean flag4 = true;
-        Random random = new Random();
+        final int i2 = k + 288 >> 4;
+        final int j2 = l + 288 >> 4;
+        final int k2 = (k + 288) % 16;
+        final int l2 = (l + 288) % 16;
+        final boolean flag = true;
+        final boolean flag1 = true;
+        final boolean flag2 = true;
+        final boolean flag3 = true;
+        final boolean flag4 = true;
+        final Random random = new Random();
         int i3;
         int j3;
         int k3;
 
         for (i3 = 0; i3 * 16 - l2 < 155; ++i3)
         {
-            float f1 = 0.6F - (float)(j2 + i3) / 25.0F * 0.3F;
+            final float f1 = 0.6F - (float)(j2 + i3) / 25.0F * 0.3F;
             GL11.glColor4f(f1, f1, f1, 1.0F);
 
             for (k3 = 0; k3 * 16 - k2 < 224; ++k3)
@@ -341,10 +341,10 @@ public class GuiAchievements extends GuiScreen
         int i4;
         int j4;
 
-        List<Achievement> achievementList = (currentPage == -1 ? minecraftAchievements : AchievementPage.getAchievementPage(currentPage).getAchievements());
+        final List<Achievement> achievementList = (currentPage == -1 ? minecraftAchievements : AchievementPage.getAchievementPage(currentPage).getAchievements());
         for (i3 = 0; i3 < achievementList.size(); ++i3)
         {
-            Achievement achievement = achievementList.get(i3);
+            final Achievement achievement = achievementList.get(i3);
 
             if (achievement.parentAchievement != null && achievementList.contains(achievement.parentAchievement))
             {
@@ -352,8 +352,8 @@ public class GuiAchievements extends GuiScreen
                 j3 = achievement.displayRow * 24 - l + 11 + l1;
                 j4 = achievement.parentAchievement.displayColumn * 24 - k + 11 + k1;
                 l3 = achievement.parentAchievement.displayRow * 24 - l + 11 + l1;
-                boolean flag5 = this.statFileWriter.hasAchievementUnlocked(achievement);
-                boolean flag6 = this.statFileWriter.canUnlockAchievement(achievement);
+                final boolean flag5 = this.statFileWriter.hasAchievementUnlocked(achievement);
+                final boolean flag6 = this.statFileWriter.canUnlockAchievement(achievement);
                 i4 = Math.sin((double)(Minecraft.getSystemTime() % 600L) / 600.0D * Math.PI * 2.0D) > 0.6D ? 255 : 130;
                 int k4 = -16777216;
 
@@ -372,7 +372,7 @@ public class GuiAchievements extends GuiScreen
         }
 
         Achievement achievement1 = null;
-        RenderItem renderitem = new RenderItem();
+        final RenderItem renderitem = new RenderItem();
         RenderHelper.enableGUIStandardItemLighting();
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
@@ -382,13 +382,13 @@ public class GuiAchievements extends GuiScreen
 
         for (k3 = 0; k3 < achievementList.size(); ++k3)
         {
-            Achievement achievement2 = (Achievement)achievementList.get(k3);
+            final Achievement achievement2 = (Achievement)achievementList.get(k3);
             j4 = achievement2.displayColumn * 24 - k;
             l3 = achievement2.displayRow * 24 - l;
 
             if (j4 >= -24 && l3 >= -24 && j4 <= 224 && l3 <= 155)
             {
-                float f2;
+                final float f2;
 
                 if (this.statFileWriter.hasAchievementUnlocked(achievement2))
                 {
@@ -421,7 +421,7 @@ public class GuiAchievements extends GuiScreen
 
                 if (!this.statFileWriter.canUnlockAchievement(achievement2))
                 {
-                    float f3 = 0.1F;
+                    final float f3 = 0.1F;
                     GL11.glColor4f(f3, f3, f3, 1.0F);
                     renderitem.renderWithColor = false;
                 }
@@ -459,8 +459,8 @@ public class GuiAchievements extends GuiScreen
 
         if (achievement1 != null)
         {
-            String s = I18n.getString(achievement1.getName());
-            String s1 = achievement1.getDescription();
+            final String s = I18n.getString(achievement1.getName());
+            final String s1 = achievement1.getDescription();
             j4 = par1 + 12;
             l3 = par2 - 4;
 
@@ -485,7 +485,7 @@ public class GuiAchievements extends GuiScreen
             else
             {
                 i5 = Math.max(this.fontRenderer.getStringWidth(s), 120);
-                String s2 = I18n.getStringParams("achievement.requires", new Object[] {I18n.getString(achievement1.parentAchievement.getName())});
+                final String s2 = I18n.getStringParams("achievement.requires", new Object[] {I18n.getString(achievement1.parentAchievement.getName())});
                 i4 = this.fontRenderer.splitStringWidth(s2, i5);
                 this.drawGradientRect(j4 - 3, l3 - 3, j4 + i5 + 3, l3 + i4 + 12 + 3, -1073741824, -1073741824);
                 this.fontRenderer.drawSplitString(s2, j4, l3 + 12, i5, -9416624);

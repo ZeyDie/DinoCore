@@ -14,7 +14,7 @@ public class Packet18Animation extends Packet
 
     public Packet18Animation() {}
 
-    public Packet18Animation(Entity par1Entity, int par2)
+    public Packet18Animation(final Entity par1Entity, final int par2)
     {
         this.entityId = par1Entity.entityId;
         this.animate = par2;
@@ -23,7 +23,7 @@ public class Packet18Animation extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.entityId = par1DataInput.readInt();
         this.animate = par1DataInput.readByte();
@@ -32,7 +32,7 @@ public class Packet18Animation extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.entityId);
         par1DataOutput.writeByte(this.animate);
@@ -41,7 +41,7 @@ public class Packet18Animation extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleAnimation(this);
     }

@@ -10,7 +10,7 @@ public class Packet44UpdateAttributesSnapshot
 
     final Packet44UpdateAttributes field_142045_a;
 
-    public Packet44UpdateAttributesSnapshot(Packet44UpdateAttributes par1Packet44UpdateAttributes, String par2Str, double par3, Collection par5Collection)
+    public Packet44UpdateAttributesSnapshot(final Packet44UpdateAttributes par1Packet44UpdateAttributes, final String par2Str, final double par3, final Collection par5Collection)
     {
         this.field_142045_a = par1Packet44UpdateAttributes;
         this.field_142043_b = par2Str;

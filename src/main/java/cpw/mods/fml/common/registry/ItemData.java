@@ -37,7 +37,7 @@ public class ItemData {
     private String forcedModId;
     private String forcedName;
 
-    public ItemData(Item item, ModContainer mc)
+    public ItemData(final Item item, final ModContainer mc)
     {
         this.itemId = item.itemID;
         if (item.getClass().equals(ItemBlock.class))
@@ -56,7 +56,7 @@ public class ItemData {
         this.ordinal = modOrdinals.get(mc.getModId()).add(itemType, 1);
     }
 
-    public ItemData(NBTTagCompound tag)
+    public ItemData(final NBTTagCompound tag)
     {
         this.modId = tag.getString("ModId");
         this.itemType = tag.getString("ItemType");
@@ -88,7 +88,7 @@ public class ItemData {
 
     public NBTTagCompound toNBT()
     {
-        NBTTagCompound tag = new NBTTagCompound();
+        final NBTTagCompound tag = new NBTTagCompound();
         tag.setString("ModId", modId);
         tag.setString("ItemType", itemType);
         tag.setInteger("ItemId", itemId);
@@ -111,14 +111,14 @@ public class ItemData {
     }
 
     @Override
-    public boolean equals(Object obj)
+    public boolean equals(final Object obj)
     {
         try
         {
-            ItemData other = (ItemData) obj;
+            final ItemData other = (ItemData) obj;
             return Objects.equal(getModId(), other.getModId()) && Objects.equal(getItemType(), other.getItemType()) && Objects.equal(itemId, other.itemId) && ( isOveridden() || Objects.equal(ordinal, other.ordinal));
         }
-        catch (ClassCastException cce)
+        catch (final ClassCastException cce)
         {
             return false;
         }
@@ -130,7 +130,7 @@ public class ItemData {
         return String.format("Item %d, Type %s, owned by %s, ordinal %d, name %s, claimedModId %s", itemId, itemType, modId, ordinal, forcedName, forcedModId);
     }
 
-    public boolean mayDifferByOrdinal(ItemData rightValue)
+    public boolean mayDifferByOrdinal(final ItemData rightValue)
     {
         return Objects.equal(getItemType(), rightValue.getItemType()) && Objects.equal(getModId(), rightValue.getModId());
     }
@@ -140,7 +140,7 @@ public class ItemData {
         return forcedName != null;
     }
 
-    public void setName(String name, String modId)
+    public void setName(final String name, final String modId)
     {
         if (name == null)
         {

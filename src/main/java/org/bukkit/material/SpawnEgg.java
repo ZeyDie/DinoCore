@@ -17,7 +17,7 @@ public class SpawnEgg extends MaterialData {
      * @deprecated Magic value
      */
     @Deprecated
-    public SpawnEgg(int type, byte data){
+    public SpawnEgg(final int type, final byte data){
         super(type, data);
     }
 
@@ -26,11 +26,11 @@ public class SpawnEgg extends MaterialData {
      * @deprecated Magic value
      */
     @Deprecated
-    public SpawnEgg(byte data) {
+    public SpawnEgg(final byte data) {
         super(Material.MONSTER_EGG, data);
     }
 
-    public SpawnEgg(EntityType type) {
+    public SpawnEgg(final EntityType type) {
         this();
         setSpawnedType(type);
     }
@@ -49,7 +49,7 @@ public class SpawnEgg extends MaterialData {
      *
      * @param type The entity type.
      */
-    public void setSpawnedType(EntityType type) {
+    public void setSpawnedType(final EntityType type) {
         setData((byte) type.getTypeId());
     }
 

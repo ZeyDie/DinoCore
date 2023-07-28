@@ -42,22 +42,22 @@ public class TechneModel extends ModelBase implements IModelCustom {
     private int textureName;
     private boolean textureNameSet = false;
 
-    public TechneModel(String fileName, URL resource) throws ModelFormatException
+    public TechneModel(final String fileName, final URL resource) throws ModelFormatException
     {
         this.fileName = fileName;
         loadTechneModel(resource);
     }
     
-    private void loadTechneModel(URL fileURL) throws ModelFormatException
+    private void loadTechneModel(final URL fileURL) throws ModelFormatException
     {
         try
         {
-            ZipInputStream zipInput = new ZipInputStream(fileURL.openStream());
+            final ZipInputStream zipInput = new ZipInputStream(fileURL.openStream());
             
             ZipEntry entry;
             while ((entry = zipInput.getNextEntry()) != null)
             {
-                byte[] data = new byte[(int) entry.getSize()];
+                final byte[] data = new byte[(int) entry.getSize()];
                 // For some reason, using read(byte[]) makes reading stall upon reaching a 0x1E byte
                 int i = 0;
                 while (zipInput.available() > 0 && i < data.length)
@@ -67,51 +67,51 @@ public class TechneModel extends ModelBase implements IModelCustom {
                 zipContents.put(entry.getName(), data);
             }
             
-            byte[] modelXml = zipContents.get("model.xml");
+            final byte[] modelXml = zipContents.get("model.xml");
             if (modelXml == null)
             {
                 throw new ModelFormatException("Model " + fileName + " contains no model.xml file");
             }
             
-            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            Document document = documentBuilder.parse(new ByteArrayInputStream(modelXml));
+            final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            final Document document = documentBuilder.parse(new ByteArrayInputStream(modelXml));
             
-            NodeList nodeListTechne = document.getElementsByTagName("Techne");
+            final NodeList nodeListTechne = document.getElementsByTagName("Techne");
             if (nodeListTechne.getLength() < 1)
             {
                 throw new ModelFormatException("Model " + fileName + " contains no Techne tag");
             }
             
-            NodeList nodeListModel = document.getElementsByTagName("Model");
+            final NodeList nodeListModel = document.getElementsByTagName("Model");
             if (nodeListModel.getLength() < 1)
             {
                 throw new ModelFormatException("Model " + fileName + " contains no Model tag");
             }
             
-            NamedNodeMap modelAttributes = nodeListModel.item(0).getAttributes();
+            final NamedNodeMap modelAttributes = nodeListModel.item(0).getAttributes();
             if (modelAttributes == null)
             {
                 throw new ModelFormatException("Model " + fileName + " contains a Model tag with no attributes");
             }
             
-            Node modelTexture = modelAttributes.getNamedItem("texture");
+            final Node modelTexture = modelAttributes.getNamedItem("texture");
             if (modelTexture != null)
             {
                 texture = modelTexture.getTextContent();
             }
             
-            NodeList shapes = document.getElementsByTagName("Shape");
+            final NodeList shapes = document.getElementsByTagName("Shape");
             for (int i = 0; i < shapes.getLength(); i++)
             {
-                Node shape = shapes.item(i);
-                NamedNodeMap shapeAttributes = shape.getAttributes();
+                final Node shape = shapes.item(i);
+                final NamedNodeMap shapeAttributes = shape.getAttributes();
                 if (shapeAttributes == null)
                 {
                     throw new ModelFormatException("Shape #" + (i + 1) + " in " + fileName + " has no attributes");
                 }
                 
-                Node name = shapeAttributes.getNamedItem("name");
+                final Node name = shapeAttributes.getNamedItem("name");
                 String shapeName = null;
                 if (name != null)
                 {
@@ -123,7 +123,7 @@ public class TechneModel extends ModelBase implements IModelCustom {
                 }
                 
                 String shapeType = null;
-                Node type = shapeAttributes.getNamedItem("type");
+                final Node type = shapeAttributes.getNamedItem("type");
                 if (type != null)
                 {
                     shapeType = type.getNodeValue();
@@ -143,12 +143,12 @@ public class TechneModel extends ModelBase implements IModelCustom {
                     String[] size = new String[3];
                     String[] textureOffset = new String[2];
                     
-                    NodeList shapeChildren = shape.getChildNodes();
+                    final NodeList shapeChildren = shape.getChildNodes();
                     for (int j = 0; j < shapeChildren.getLength(); j++)
                     {
-                        Node shapeChild = shapeChildren.item(j);
+                        final Node shapeChild = shapeChildren.item(j);
                         
-                        String shapeChildName = shapeChild.getNodeName();
+                        final String shapeChildName = shapeChild.getNodeName();
                         String shapeChildValue = shapeChild.getTextContent();
                         if (shapeChildValue != null)
                         {
@@ -182,7 +182,7 @@ public class TechneModel extends ModelBase implements IModelCustom {
                     }
                     
                     // That's what the ModelBase subclassing is needed for
-                    ModelRenderer cube = new ModelRenderer(this, Integer.parseInt(textureOffset[0]), Integer.parseInt(textureOffset[1]));
+                    final ModelRenderer cube = new ModelRenderer(this, Integer.parseInt(textureOffset[0]), Integer.parseInt(textureOffset[1]));
                     cube.mirror = mirrored;
                     cube.addBox(Float.parseFloat(offset[0]), Float.parseFloat(offset[1]), Float.parseFloat(offset[2]), Integer.parseInt(size[0]), Integer.parseInt(size[1]), Integer.parseInt(size[2]));
                     cube.setRotationPoint(Float.parseFloat(position[0]), Float.parseFloat(position[1]) - 23.4F, Float.parseFloat(position[2]));
@@ -193,26 +193,26 @@ public class TechneModel extends ModelBase implements IModelCustom {
 
                     parts.put(shapeName, cube);
                 }
-                catch (NumberFormatException e)
+                catch (final NumberFormatException e)
                 {
                     FMLLog.warning("Model shape [" + shapeName + "] in " + fileName + " contains malformed integers within its data, ignoring");
                     e.printStackTrace();
                 }
             }
         }
-        catch (ZipException e)
+        catch (final ZipException e)
         {
             throw new ModelFormatException("Model " + fileName + " is not a valid zip file");
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             throw new ModelFormatException("Model " + fileName + " could not be read", e);
         }
-        catch (ParserConfigurationException e)
+        catch (final ParserConfigurationException e)
         {
             // hush
         }
-        catch (SAXException e)
+        catch (final SAXException e)
         {
             throw new ModelFormatException("Model " + fileName + " contains invalid XML", e);
         }
@@ -267,16 +267,16 @@ public class TechneModel extends ModelBase implements IModelCustom {
     {
         bindTexture();
         
-        for (ModelRenderer part : parts.values())
+        for (final ModelRenderer part : parts.values())
         {
             part.renderWithRotation(1.0F);
         }
     }
 
     @Override
-    public void renderPart(String partName)
+    public void renderPart(final String partName)
     {        
-        ModelRenderer part = parts.get(partName);
+        final ModelRenderer part = parts.get(partName);
         if (part != null)
         {
             bindTexture();
@@ -286,12 +286,12 @@ public class TechneModel extends ModelBase implements IModelCustom {
     }
 
     @Override
-    public void renderOnly(String... groupNames)
+    public void renderOnly(final String... groupNames)
     {
         bindTexture();
-        for (ModelRenderer part : parts.values())
+        for (final ModelRenderer part : parts.values())
         {
-            for (String groupName : groupNames)
+            for (final String groupName : groupNames)
             {
                 if (groupName.equalsIgnoreCase(part.boxName))
                 {
@@ -302,12 +302,12 @@ public class TechneModel extends ModelBase implements IModelCustom {
     }
 
     @Override
-    public void renderAllExcept(String... excludedGroupNames)
+    public void renderAllExcept(final String... excludedGroupNames)
     {
-        for (ModelRenderer part : parts.values())
+        for (final ModelRenderer part : parts.values())
         {
             boolean skipPart=false;
-            for (String excludedGroupName : excludedGroupNames)
+            for (final String excludedGroupName : excludedGroupNames)
             {
                 if (excludedGroupName.equalsIgnoreCase(part.boxName))
                 {

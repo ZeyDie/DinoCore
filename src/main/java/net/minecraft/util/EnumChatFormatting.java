@@ -40,12 +40,12 @@ public enum EnumChatFormatting
     private final boolean field_96303_A;
     private final String field_96304_B;
 
-    private EnumChatFormatting(char par3)
+    private EnumChatFormatting(final char par3)
     {
         this(par3, false);
     }
 
-    private EnumChatFormatting(char par3, boolean par4)
+    private EnumChatFormatting(final char par3, final boolean par4)
     {
         this.field_96329_z = par3;
         this.field_96303_A = par4;
@@ -81,25 +81,25 @@ public enum EnumChatFormatting
     }
 
     @SideOnly(Side.CLIENT)
-    public static String func_110646_a(String par0Str)
+    public static String func_110646_a(final String par0Str)
     {
         return par0Str == null ? null : field_96330_y.matcher(par0Str).replaceAll("");
     }
 
-    public static EnumChatFormatting func_96300_b(String par0Str)
+    public static EnumChatFormatting func_96300_b(final String par0Str)
     {
         return par0Str == null ? null : (EnumChatFormatting)field_96331_x.get(par0Str.toLowerCase());
     }
 
-    public static Collection func_96296_a(boolean par0, boolean par1)
+    public static Collection func_96296_a(final boolean par0, final boolean par1)
     {
-        ArrayList arraylist = new ArrayList();
-        EnumChatFormatting[] aenumchatformatting = values();
-        int i = aenumchatformatting.length;
+        final ArrayList arraylist = new ArrayList();
+        final EnumChatFormatting[] aenumchatformatting = values();
+        final int i = aenumchatformatting.length;
 
         for (int var2 = 0; var2 < i; ++var2)
         {
-            EnumChatFormatting enumchatformatting = aenumchatformatting[var2];
+            final EnumChatFormatting enumchatformatting = aenumchatformatting[var2];
 
             if ((!enumchatformatting.isColor() || par0) && (!enumchatformatting.func_96301_b() || par1))
             {
@@ -111,12 +111,12 @@ public enum EnumChatFormatting
     }
 
     static {
-        EnumChatFormatting[] var0 = values();
-        int var1 = var0.length;
+        final EnumChatFormatting[] var0 = values();
+        final int var1 = var0.length;
 
         for (int var2 = 0; var2 < var1; ++var2)
         {
-            EnumChatFormatting var3 = var0[var2];
+            final EnumChatFormatting var3 = var0[var2];
             field_96321_w.put(Character.valueOf(var3.func_96298_a()), var3);
             field_96331_x.put(var3.func_96297_d(), var3);
         }

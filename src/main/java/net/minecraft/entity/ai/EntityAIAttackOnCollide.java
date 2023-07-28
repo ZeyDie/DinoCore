@@ -37,13 +37,13 @@ public class EntityAIAttackOnCollide extends EntityAIBase
     // Spigot end
     private int failedPathFindingPenalty;
 
-    public EntityAIAttackOnCollide(EntityCreature par1EntityCreature, Class par2Class, double par3, boolean par5)
+    public EntityAIAttackOnCollide(final EntityCreature par1EntityCreature, final Class par2Class, final double par3, final boolean par5)
     {
         this(par1EntityCreature, par3, par5);
         this.classTarget = par2Class;
     }
 
-    public EntityAIAttackOnCollide(EntityCreature par1EntityCreature, double par2, boolean par4)
+    public EntityAIAttackOnCollide(final EntityCreature par1EntityCreature, final double par2, final boolean par4)
     {
         this.attacker = par1EntityCreature;
         this.worldObj = par1EntityCreature.worldObj;
@@ -57,7 +57,7 @@ public class EntityAIAttackOnCollide extends EntityAIBase
      */
     public boolean shouldExecute()
     {
-        EntityLivingBase entitylivingbase = this.attacker.getAttackTarget();
+        final EntityLivingBase entitylivingbase = this.attacker.getAttackTarget();
 
         if (entitylivingbase == null)
         {
@@ -91,9 +91,9 @@ public class EntityAIAttackOnCollide extends EntityAIBase
      */
     public boolean continueExecuting()
     {
-        EntityLivingBase entitylivingbase = this.attacker.getAttackTarget();
+        final EntityLivingBase entitylivingbase = this.attacker.getAttackTarget();
         // CraftBukkit start
-        EntityTargetEvent.TargetReason reason = this.attacker.getAttackTarget() == null ? EntityTargetEvent.TargetReason.FORGOT_TARGET : EntityTargetEvent.TargetReason.TARGET_DIED;
+        final EntityTargetEvent.TargetReason reason = this.attacker.getAttackTarget() == null ? EntityTargetEvent.TargetReason.FORGOT_TARGET : EntityTargetEvent.TargetReason.TARGET_DIED;
 
         if (this.attacker.getAttackTarget() == null || (this.attacker.getAttackTarget() != null && !this.attacker.getAttackTarget().isEntityAlive()))
         {
@@ -126,18 +126,18 @@ public class EntityAIAttackOnCollide extends EntityAIBase
      */
     public void updateTask()
     {
-        EntityLivingBase entitylivingbase = this.attacker.getAttackTarget();
+        final EntityLivingBase entitylivingbase = this.attacker.getAttackTarget();
         this.attacker.getLookHelper().setLookPositionWithEntity(entitylivingbase, 30.0F, 30.0F);
-        double goalDistanceSq = this.attacker.getDistanceSq(entitylivingbase.posX, entitylivingbase.boundingBox.minY, entitylivingbase.posZ); // Spigot
+        final double goalDistanceSq = this.attacker.getDistanceSq(entitylivingbase.posX, entitylivingbase.boundingBox.minY, entitylivingbase.posZ); // Spigot
 
         if ((this.longMemory || this.attacker.getEntitySenses().canSee(entitylivingbase)) && --this.field_75445_i <= 0)
         {
             // Spigot start
-            double targetMovement = entitylivingbase.getDistanceSq(this.pathX, this.pathY, this.pathZ);
+            final double targetMovement = entitylivingbase.getDistanceSq(this.pathX, this.pathY, this.pathZ);
             // If this is true, then we are re-pathing
             if (this.field_75445_i <= 0 && targetMovement >= 1.0D || this.field_75445_i <= 0 && this.attacker.getRNG().nextInt(200) == 0) /* EntityCreature random instance */
             {
-                net.minecraft.entity.ai.attributes.AttributeInstance rangeAttr = this.attacker.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.followRange);
+                final net.minecraft.entity.ai.attributes.AttributeInstance rangeAttr = this.attacker.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.followRange);
                 double origRange = rangeAttr.getAttributeValue();
 
                 if (this.failedPathFindingPenalty > 0)
@@ -200,7 +200,7 @@ public class EntityAIAttackOnCollide extends EntityAIBase
         }
         // Spigot end
         this.attackTick = Math.max(this.attackTick - 1, 0);
-        double d0 = (double)(this.attacker.width * 2.0F * this.attacker.width * 2.0F + entitylivingbase.width);
+        final double d0 = (double)(this.attacker.width * 2.0F * this.attacker.width * 2.0F + entitylivingbase.width);
 
         if (goalDistanceSq <= d0 && this.attackTick <= 0) // Spigot
         {

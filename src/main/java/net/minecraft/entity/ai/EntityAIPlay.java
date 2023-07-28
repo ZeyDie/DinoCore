@@ -14,7 +14,7 @@ public class EntityAIPlay extends EntityAIBase
     private double field_75261_c;
     private int playTime;
 
-    public EntityAIPlay(EntityVillager par1EntityVillager, double par2)
+    public EntityAIPlay(final EntityVillager par1EntityVillager, final double par2)
     {
         this.villagerObj = par1EntityVillager;
         this.field_75261_c = par2;
@@ -36,17 +36,17 @@ public class EntityAIPlay extends EntityAIBase
         }
         else
         {
-            List list = this.villagerObj.worldObj.getEntitiesWithinAABB(EntityVillager.class, this.villagerObj.boundingBox.expand(6.0D, 3.0D, 6.0D));
+            final List list = this.villagerObj.worldObj.getEntitiesWithinAABB(EntityVillager.class, this.villagerObj.boundingBox.expand(6.0D, 3.0D, 6.0D));
             double d0 = Double.MAX_VALUE;
-            Iterator iterator = list.iterator();
+            final Iterator iterator = list.iterator();
 
             while (iterator.hasNext())
             {
-                EntityVillager entityvillager = (EntityVillager)iterator.next();
+                final EntityVillager entityvillager = (EntityVillager)iterator.next();
 
                 if (entityvillager != this.villagerObj && !entityvillager.isPlaying() && entityvillager.getGrowingAge() < 0)
                 {
-                    double d1 = entityvillager.getDistanceSqToEntity(this.villagerObj);
+                    final double d1 = entityvillager.getDistanceSqToEntity(this.villagerObj);
 
                     if (d1 <= d0)
                     {
@@ -58,7 +58,7 @@ public class EntityAIPlay extends EntityAIBase
 
             if (this.targetVillager == null)
             {
-                Vec3 vec3 = RandomPositionGenerator.findRandomTarget(this.villagerObj, 16, 3);
+                final Vec3 vec3 = RandomPositionGenerator.findRandomTarget(this.villagerObj, 16, 3);
 
                 if (vec3 == null)
                 {
@@ -116,7 +116,7 @@ public class EntityAIPlay extends EntityAIBase
         }
         else if (this.villagerObj.getNavigator().noPath())
         {
-            Vec3 vec3 = RandomPositionGenerator.findRandomTarget(this.villagerObj, 16, 3);
+            final Vec3 vec3 = RandomPositionGenerator.findRandomTarget(this.villagerObj, 16, 3);
 
             if (vec3 == null)
             {

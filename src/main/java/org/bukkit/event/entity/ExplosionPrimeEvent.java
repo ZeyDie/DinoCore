@@ -29,7 +29,7 @@ public class ExplosionPrimeEvent extends EntityEvent implements Cancellable {
         return cancel;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 
@@ -47,7 +47,7 @@ public class ExplosionPrimeEvent extends EntityEvent implements Cancellable {
      *
      * @param radius the radius of the explosion
      */
-    public void setRadius(float radius) {
+    public void setRadius(final float radius) {
         this.radius = radius;
     }
 
@@ -65,7 +65,7 @@ public class ExplosionPrimeEvent extends EntityEvent implements Cancellable {
      *
      * @param fire true if you want this explosion to create fire
      */
-    public void setFire(boolean fire) {
+    public void setFire(final boolean fire) {
         this.fire = fire;
     }
 

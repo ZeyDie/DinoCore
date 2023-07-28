@@ -21,8 +21,8 @@ import java.util.Random;
 
 public class BlockLeaves extends BlockLeavesBase implements IShearable
 {
-    public static final String[] LEAF_TYPES = new String[] {"oak", "spruce", "birch", "jungle"};
-    public static final String[][] field_94396_b = new String[][] {{"leaves_oak", "leaves_spruce", "leaves_birch", "leaves_jungle"}, {"leaves_oak_opaque", "leaves_spruce_opaque", "leaves_birch_opaque", "leaves_jungle_opaque"}};
+    public static final String[] LEAF_TYPES = {"oak", "spruce", "birch", "jungle"};
+    public static final String[][] field_94396_b = {{"leaves_oak", "leaves_spruce", "leaves_birch", "leaves_jungle"}, {"leaves_oak_opaque", "leaves_spruce_opaque", "leaves_birch_opaque", "leaves_jungle_opaque"}};
     @SideOnly(Side.CLIENT)
 
     /** 1 for fast graphic. 0 for fancy graphics. used in iconArray. */
@@ -30,7 +30,7 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
     private Icon[][] iconArray = new Icon[2][];
     int[] adjacentTreeBlocks;
 
-    protected BlockLeaves(int par1)
+    protected BlockLeaves(final int par1)
     {
         super(par1, Material.leaves, false);
         this.setTickRandomly(true);
@@ -40,8 +40,8 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
     @SideOnly(Side.CLIENT)
     public int getBlockColor()
     {
-        double d0 = 0.5D;
-        double d1 = 1.0D;
+        final double d0 = 0.5D;
+        final double d1 = 1.0D;
         return ColorizerFoliage.getFoliageColor(d0, d1);
     }
 
@@ -50,7 +50,7 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
     /**
      * Returns the color this block should be rendered. Used by leaves.
      */
-    public int getRenderColor(int par1)
+    public int getRenderColor(final int par1)
     {
         return (par1 & 3) == 1 ? ColorizerFoliage.getFoliageColorPine() : ((par1 & 3) == 2 ? ColorizerFoliage.getFoliageColorBirch() : ColorizerFoliage.getFoliageColorBasic());
     }
@@ -61,9 +61,9 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
      * Returns a integer with hex for 0xrrggbb with this color multiplied against the blocks color. Note only called
      * when first determining what to render.
      */
-    public int colorMultiplier(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public int colorMultiplier(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
-        int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
+        final int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
 
         if ((l & 3) == 1)
         {
@@ -83,7 +83,7 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
             {
                 for (int i2 = -1; i2 <= 1; ++i2)
                 {
-                    int j2 = par1IBlockAccess.getBiomeGenForCoords(par2 + i2, par4 + l1).getBiomeFoliageColor();
+                    final int j2 = par1IBlockAccess.getBiomeGenForCoords(par2 + i2, par4 + l1).getBiomeFoliageColor();
                     i1 += (j2 & 16711680) >> 16;
                     j1 += (j2 & 65280) >> 8;
                     k1 += j2 & 255;
@@ -99,10 +99,10 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
      * different metadata value, but before the new metadata value is set. Args: World, x, y, z, old block ID, old
      * metadata
      */
-    public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    public void breakBlock(final World par1World, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
-        byte b0 = 1;
-        int j1 = b0 + 1;
+        final byte b0 = 1;
+        final int j1 = b0 + 1;
 
         if (par1World.checkChunksExist(par2 - j1, par3 - j1, par4 - j1, par2 + j1, par3 + j1, par4 + j1))
         {
@@ -112,7 +112,7 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
                 {
                     for (int i2 = -b0; i2 <= b0; ++i2)
                     {
-                        int j2 = par1World.getBlockId(par2 + k1, par3 + l1, par4 + i2);
+                        final int j2 = par1World.getBlockId(par2 + k1, par3 + l1, par4 + i2);
 
                         if (Block.blocksList[j2] != null)
                         {
@@ -127,19 +127,19 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (!par1World.isRemote)
         {
-            int l = par1World.getBlockMetadata(par2, par3, par4);
+            final int l = par1World.getBlockMetadata(par2, par3, par4);
 
             if ((l & 8) != 0 && (l & 4) == 0)
             {
-                byte b0 = 4;
-                int i1 = b0 + 1;
-                byte b1 = 32;
-                int j1 = b1 * b1;
-                int k1 = b1 / 2;
+                final byte b0 = 4;
+                final int i1 = b0 + 1;
+                final byte b1 = 32;
+                final int j1 = b1 * b1;
+                final int k1 = b1 / 2;
 
                 if (this.adjacentTreeBlocks == null)
                 {
@@ -162,7 +162,7 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
                             {
                                 k2 = par1World.getBlockId(par2 + l1, par3 + i2, par4 + j2);
 
-                                Block block = Block.blocksList[k2];
+                                final Block block = Block.blocksList[k2];
 
                                 if (block != null && block.canSustainLeaves(par1World, par2 + l1, par3 + i2, par4 + j2))
                                 {
@@ -245,21 +245,21 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void randomDisplayTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (par1World.canLightningStrikeAt(par2, par3 + 1, par4) && !par1World.doesBlockHaveSolidTopSurface(par2, par3 - 1, par4) && par5Random.nextInt(15) == 1)
         {
-            double d0 = (double)((float)par2 + par5Random.nextFloat());
-            double d1 = (double)par3 - 0.05D;
-            double d2 = (double)((float)par4 + par5Random.nextFloat());
+            final double d0 = (double)((float)par2 + par5Random.nextFloat());
+            final double d1 = (double)par3 - 0.05D;
+            final double d2 = (double)((float)par4 + par5Random.nextFloat());
             par1World.spawnParticle("dripWater", d0, d1, d2, 0.0D, 0.0D, 0.0D);
         }
     }
 
-    private void removeLeaves(World par1World, int par2, int par3, int par4)
+    private void removeLeaves(final World par1World, final int par2, final int par3, final int par4)
     {
         // CraftBukkit start
-        LeavesDecayEvent event = new LeavesDecayEvent(par1World.getWorld().getBlockAt(par2, par3, par4));
+        final LeavesDecayEvent event = new LeavesDecayEvent(par1World.getWorld().getBlockAt(par2, par3, par4));
         par1World.getServer().getPluginManager().callEvent(event);
 
         if (event.isCancelled())
@@ -274,7 +274,7 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random par1Random)
+    public int quantityDropped(final Random par1Random)
     {
         return par1Random.nextInt(20) == 0 ? 1 : 0;
     }
@@ -282,7 +282,7 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return Block.sapling.blockID;
     }
@@ -290,7 +290,7 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
     /**
      * Drops the block items with a specified chance of dropping the specified items
      */
-    public void dropBlockAsItemWithChance(World par1World, int par2, int par3, int par4, int par5, float par6, int par7)
+    public void dropBlockAsItemWithChance(final World par1World, final int par2, final int par3, final int par4, final int par5, final float par6, final int par7)
     {
         if (!par1World.isRemote)
         {
@@ -313,7 +313,7 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
 
             if (par1World.rand.nextInt(j1) == 0)
             {
-                int k1 = this.idDropped(par5, par1World.rand, par7);
+                final int k1 = this.idDropped(par5, par1World.rand, par7);
                 this.dropBlockAsItem_do(par1World, par2, par3, par4, new ItemStack(k1, 1, this.damageDropped(par5)));
             }
 
@@ -340,7 +340,7 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
      * Called when the player destroys a block with an item that can harvest it. (i, j, k) are the coordinates of the
      * block and l is the block's subtype/damage.
      */
-    public void harvestBlock(World par1World, EntityPlayer par2EntityPlayer, int par3, int par4, int par5, int par6)
+    public void harvestBlock(final World par1World, final EntityPlayer par2EntityPlayer, final int par3, final int par4, final int par5, final int par6)
     {
         super.harvestBlock(par1World, par2EntityPlayer, par3, par4, par5, par6);
     }
@@ -348,7 +348,7 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
     /**
      * Determines the damage on the item the block drops. Used in cloth and wood.
      */
-    public int damageDropped(int par1)
+    public int damageDropped(final int par1)
     {
         return par1 & 3;
     }
@@ -367,7 +367,7 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
         return (par2 & 3) == 1 ? this.iconArray[this.iconType][1] : ((par2 & 3) == 3 ? this.iconArray[this.iconType][3] : ((par2 & 3) == 2 ? this.iconArray[this.iconType][2] : this.iconArray[this.iconType][0]));
     }
@@ -377,7 +377,7 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
     /**
      * Pass true to draw this block using fancy graphics, or false for fast graphics.
      */
-    public void setGraphicsLevel(boolean par1)
+    public void setGraphicsLevel(final boolean par1)
     {
         this.graphicsLevel = par1;
         this.iconType = par1 ? 0 : 1;
@@ -388,7 +388,7 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
     /**
      * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
      */
-    public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubBlocks(final int par1, final CreativeTabs par2CreativeTabs, final List par3List)
     {
         par3List.add(new ItemStack(par1, 1, 0));
         par3List.add(new ItemStack(par1, 1, 1));
@@ -400,7 +400,7 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
      * Returns an item stack containing a single instance of the current block type. 'i' is the block's subtype/damage
      * and is ignored for blocks which do not support subtypes. Blocks which cannot be harvested should return null.
      */
-    protected ItemStack createStackedBlock(int par1)
+    protected ItemStack createStackedBlock(final int par1)
     {
         return new ItemStack(this.blockID, 1, par1 & 3);
     }
@@ -411,7 +411,7 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         for (int i = 0; i < field_94396_b.length; ++i)
         {
@@ -425,27 +425,27 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
     }
 
     @Override
-    public boolean isShearable(ItemStack item, World world, int x, int y, int z)
+    public boolean isShearable(final ItemStack item, final World world, final int x, final int y, final int z)
     {
         return true;
     }
 
     @Override
-    public ArrayList<ItemStack> onSheared(ItemStack item, World world, int x, int y, int z, int fortune)
+    public ArrayList<ItemStack> onSheared(final ItemStack item, final World world, final int x, final int y, final int z, final int fortune)
     {
-        ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+        final ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
         ret.add(new ItemStack(this, 1, world.getBlockMetadata(x, y, z) & 3));
         return ret;
     }
 
     @Override
-    public void beginLeavesDecay(World world, int x, int y, int z)
+    public void beginLeavesDecay(final World world, final int x, final int y, final int z)
     {
         world.setBlockMetadataWithNotify(x, y, z, world.getBlockMetadata(x, y, z) | 8, 4);
     }
 
     @Override
-    public boolean isLeaves(World world, int x, int y, int z)
+    public boolean isLeaves(final World world, final int x, final int y, final int z)
     {
         return true;
     }

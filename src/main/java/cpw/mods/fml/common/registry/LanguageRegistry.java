@@ -41,15 +41,15 @@ public class LanguageRegistry
         return INSTANCE;
     }
 
-    public String getStringLocalization(String key)
+    public String getStringLocalization(final String key)
     {
         return getStringLocalization(key, FMLCommonHandler.instance().getCurrentLanguage());
     }
 
-    public String getStringLocalization(String key, String lang)
+    public String getStringLocalization(final String key, final String lang)
     {
         String localizedString = "";
-        Properties langPack = modLanguageData.get(lang);
+        final Properties langPack = modLanguageData.get(lang);
 
         if (langPack != null) {
             if (langPack.getProperty(key) != null) {
@@ -60,11 +60,11 @@ public class LanguageRegistry
         return localizedString;
     }
 
-    public void addStringLocalization(String key, String value)
+    public void addStringLocalization(final String key, final String value)
     {
         addStringLocalization(key, "en_US", value);
     }
-    public void addStringLocalization(String key, String lang, String value)
+    public void addStringLocalization(final String key, final String lang, final String value)
     {
         Properties langPack=modLanguageData.get(lang);
         if (langPack==null) {
@@ -74,11 +74,11 @@ public class LanguageRegistry
         langPack.put(key,value);
     }
 
-    public void addStringLocalization(Properties langPackAdditions) {
+    public void addStringLocalization(final Properties langPackAdditions) {
         addStringLocalization(langPackAdditions, "en_US");
     }
 
-    public void addStringLocalization(Properties langPackAdditions, String lang) {
+    public void addStringLocalization(final Properties langPackAdditions, final String lang) {
         Properties langPack = modLanguageData.get(lang);
         if (langPack == null) {
             langPack = new Properties();
@@ -97,7 +97,7 @@ public class LanguageRegistry
     }
 
 
-    public void addNameForObject(Object objectToName, String lang, String name)
+    public void addNameForObject(final Object objectToName, final String lang, final String name)
     {
         String objectName;
         if (objectToName instanceof Item) {
@@ -113,34 +113,34 @@ public class LanguageRegistry
         addStringLocalization(objectName, lang, name);
     }
 
-    public static void addName(Object objectToName, String name)
+    public static void addName(final Object objectToName, final String name)
     {
         instance().addNameForObject(objectToName, "en_US", name);
     }
 
-    public void loadLanguageTable(Map field_135032_a, String lang)
+    public void loadLanguageTable(final Map field_135032_a, final String lang)
     {
-        Properties usPack=modLanguageData.get("en_US");
+        final Properties usPack=modLanguageData.get("en_US");
         if (usPack!=null) {
             field_135032_a.putAll(usPack);
         }
-        Properties langPack=modLanguageData.get(lang);
+        final Properties langPack=modLanguageData.get(lang);
         if (langPack==null) {
             return;
         }
         field_135032_a.putAll(langPack);
     }
 
-    public void loadLocalization(String localizationFile, String lang, boolean isXML)
+    public void loadLocalization(final String localizationFile, final String lang, final boolean isXML)
     {
-        URL urlResource = this.getClass().getResource(localizationFile);
+        final URL urlResource = this.getClass().getResource(localizationFile);
         if (urlResource != null)
         {
             loadLocalization(urlResource, lang, isXML);
         }
         else
         {
-            ModContainer activeModContainer = Loader.instance().activeModContainer();
+            final ModContainer activeModContainer = Loader.instance().activeModContainer();
             if (activeModContainer!=null)
             {
                 FMLLog.log(activeModContainer.getModId(), Level.SEVERE, "The language resource %s cannot be located on the classpath. This is a programming error.", localizationFile);
@@ -152,10 +152,10 @@ public class LanguageRegistry
         }
     }
 
-    public void loadLocalization(URL localizationFile, String lang, boolean isXML)
+    public void loadLocalization(final URL localizationFile, final String lang, final boolean isXML)
     {
         InputStream langStream = null;
-        Properties langPack = new Properties();
+        final Properties langPack = new Properties();
 
         try    {
             langStream = localizationFile.openStream();
@@ -169,7 +169,7 @@ public class LanguageRegistry
 
             addStringLocalization(langPack, lang);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             FMLLog.log(Level.SEVERE, e, "Unable to load localization from file %s", localizationFile);
         }
         finally    {
@@ -178,7 +178,7 @@ public class LanguageRegistry
                     langStream.close();
                 }
             }
-            catch (IOException ex) {
+            catch (final IOException ex) {
                 // HUSH
             }
         }

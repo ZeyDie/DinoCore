@@ -26,13 +26,13 @@ public class HelpCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
 
-        String command;
+        final String command;
         int pageNumber;
-        int pageHeight;
-        int pageWidth;
+        final int pageHeight;
+        final int pageWidth;
 
         if (args.length == 0) {
             command = "";
@@ -41,7 +41,7 @@ public class HelpCommand extends VanillaCommand {
             command = StringUtils.join(ArrayUtils.subarray(args, 0, args.length - 1), " ");
             try {
                 pageNumber = NumberUtils.createInteger(args[args.length - 1]);
-            } catch (NumberFormatException exception) {
+            } catch (final NumberFormatException exception) {
                 pageNumber = 1;
             }
             if (pageNumber <= 0) {
@@ -60,7 +60,7 @@ public class HelpCommand extends VanillaCommand {
             pageWidth = ChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH;
         }
 
-        HelpMap helpMap = Bukkit.getServer().getHelpMap();
+        final HelpMap helpMap = Bukkit.getServer().getHelpMap();
         HelpTopic topic = helpMap.getHelpTopic(command);
 
         if (topic == null) {
@@ -76,9 +76,9 @@ public class HelpCommand extends VanillaCommand {
             return true;
         }
 
-        ChatPaginator.ChatPage page = ChatPaginator.paginate(topic.getFullText(sender), pageNumber, pageWidth, pageHeight);
+        final ChatPaginator.ChatPage page = ChatPaginator.paginate(topic.getFullText(sender), pageNumber, pageWidth, pageHeight);
 
-        StringBuilder header = new StringBuilder();
+        final StringBuilder header = new StringBuilder();
         header.append(ChatColor.YELLOW);
         header.append("--------- ");
         header.append(ChatColor.WHITE);
@@ -104,21 +104,21 @@ public class HelpCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean matches(String input) {
+    public boolean matches(final String input) {
         return input.equalsIgnoreCase("help") || input.equalsIgnoreCase("?");
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");
 
         if (args.length == 1) {
-            List<String> matchedTopics = new ArrayList<String>();
-            String searchString = args[0];
-            for (HelpTopic topic : Bukkit.getServer().getHelpMap().getHelpTopics()) {
-                String trimmedTopic = topic.getName().startsWith("/") ? topic.getName().substring(1) : topic.getName();
+            final List<String> matchedTopics = new ArrayList<String>();
+            final String searchString = args[0];
+            for (final HelpTopic topic : Bukkit.getServer().getHelpMap().getHelpTopics()) {
+                final String trimmedTopic = topic.getName().startsWith("/") ? topic.getName().substring(1) : topic.getName();
 
                 if (trimmedTopic.startsWith(searchString)) {
                     matchedTopics.add(trimmedTopic);
@@ -130,31 +130,32 @@ public class HelpCommand extends VanillaCommand {
     }
 
     protected HelpTopic findPossibleMatches(String searchString) {
-        int maxDistance = (searchString.length() / 5) + 3;
-        Set<HelpTopic> possibleMatches = new TreeSet<HelpTopic>(HelpTopicComparator.helpTopicComparatorInstance());
+        String searchString1 = searchString;
+        final int maxDistance = (searchString1.length() / 5) + 3;
+        final Set<HelpTopic> possibleMatches = new TreeSet<HelpTopic>(HelpTopicComparator.helpTopicComparatorInstance());
 
-        if (searchString.startsWith("/")) {
-            searchString = searchString.substring(1);
+        if (searchString1.startsWith("/")) {
+            searchString1 = searchString1.substring(1);
         }
 
-        for (HelpTopic topic : Bukkit.getServer().getHelpMap().getHelpTopics()) {
-            String trimmedTopic = topic.getName().startsWith("/") ? topic.getName().substring(1) : topic.getName();
+        for (final HelpTopic topic : Bukkit.getServer().getHelpMap().getHelpTopics()) {
+            final String trimmedTopic = topic.getName().startsWith("/") ? topic.getName().substring(1) : topic.getName();
 
-            if (trimmedTopic.length() < searchString.length()) {
+            if (trimmedTopic.length() < searchString1.length()) {
                 continue;
             }
 
-            if (Character.toLowerCase(trimmedTopic.charAt(0)) != Character.toLowerCase(searchString.charAt(0))) {
+            if (Character.toLowerCase(trimmedTopic.charAt(0)) != Character.toLowerCase(searchString1.charAt(0))) {
                 continue;
             }
 
-            if (damerauLevenshteinDistance(searchString, trimmedTopic.substring(0, searchString.length())) < maxDistance) {
+            if (damerauLevenshteinDistance(searchString1, trimmedTopic.substring(0, searchString1.length())) < maxDistance) {
                 possibleMatches.add(topic);
             }
         }
 
-        if (possibleMatches.size() > 0) {
-            return new IndexHelpTopic("Search", null, null, possibleMatches, "Search for: " + searchString);
+        if (!possibleMatches.isEmpty()) {
+            return new IndexHelpTopic("Search", null, null, possibleMatches, "Search for: " + searchString1);
         } else {
             return null;
         }
@@ -169,7 +170,7 @@ public class HelpCommand extends VanillaCommand {
      * @return The number of substitutions, deletions, insertions, and
      * transpositions required to get from s1 to s2.
      */
-    protected static int damerauLevenshteinDistance(String s1, String s2) {
+    protected static int damerauLevenshteinDistance(final String s1, final String s2) {
         if (s1 == null && s2 == null) {
             return 0;
         }
@@ -180,11 +181,11 @@ public class HelpCommand extends VanillaCommand {
             return s2.length();
         }
 
-        int s1Len = s1.length();
-        int s2Len = s2.length();
-        int[][] H = new int[s1Len + 2][s2Len + 2];
+        final int s1Len = s1.length();
+        final int s2Len = s2.length();
+        final int[][] H = new int[s1Len + 2][s2Len + 2];
 
-        int INF = s1Len + s2Len;
+        final int INF = s1Len + s2Len;
         H[0][0] = INF;
         for (int i = 0; i <= s1Len; i++) {
             H[i + 1][1] = i;
@@ -195,8 +196,8 @@ public class HelpCommand extends VanillaCommand {
             H[0][j + 1] = INF;
         }
 
-        Map<Character, Integer> sd = new HashMap<Character, Integer>();
-        for (char Letter : (s1 + s2).toCharArray()) {
+        final Map<Character, Integer> sd = new HashMap<Character, Integer>();
+        for (final char Letter : (s1 + s2).toCharArray()) {
             if (!sd.containsKey(Letter)) {
                 sd.put(Letter, 0);
             }
@@ -205,8 +206,8 @@ public class HelpCommand extends VanillaCommand {
         for (int i = 1; i <= s1Len; i++) {
             int DB = 0;
             for (int j = 1; j <= s2Len; j++) {
-                int i1 = sd.get(s2.charAt(j - 1));
-                int j1 = DB;
+                final int i1 = sd.get(s2.charAt(j - 1));
+                final int j1 = DB;
 
                 if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
                     H[i + 1][j + 1] = H[i][j];

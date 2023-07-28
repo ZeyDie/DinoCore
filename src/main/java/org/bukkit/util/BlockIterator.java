@@ -49,11 +49,11 @@ public class BlockIterator implements Iterator<Block> {
      * @param maxDistance This is the maximum distance in blocks for the trace. Setting this value above 140 may lead to problems with unloaded chunks. A value of 0 indicates no limit
      *
      */
-    public BlockIterator(World world, Vector start, Vector direction, double yOffset, int maxDistance) {
+    public BlockIterator(final World world, final Vector start, final Vector direction, final double yOffset, final int maxDistance) {
         this.world = world;
         this.maxDistance = maxDistance;
 
-        Vector startClone = start.clone();
+        final Vector startClone = start.clone();
 
         startClone.setY(startClone.getY() + yOffset);
 
@@ -67,7 +67,7 @@ public class BlockIterator implements Iterator<Block> {
         double secondPosition = 0;
         double thirdPosition = 0;
 
-        Block startBlock = this.world.getBlockAt(floor(startClone.getX()), floor(startClone.getY()), floor(startClone.getZ()));
+        final Block startBlock = this.world.getBlockAt(floor(startClone.getX()), floor(startClone.getY()), floor(startClone.getZ()));
 
         if (getXLength(direction) > mainDirection) {
             mainFace = getXFace(direction);
@@ -111,9 +111,9 @@ public class BlockIterator implements Iterator<Block> {
 
         // trace line backwards to find intercept with plane perpendicular to the main axis
 
-        double d = mainPosition / mainDirection; // how far to hit face behind
-        double secondd = secondPosition - secondDirection * d;
-        double thirdd = thirdPosition - thirdDirection * d;
+        final double d = mainPosition / mainDirection; // how far to hit face behind
+        final double secondd = secondPosition - secondDirection * d;
+        final double thirdd = thirdPosition - thirdDirection * d;
 
         // Guarantee that the ray will pass though the start block.
         // It is possible that it would miss due to rounding
@@ -173,47 +173,47 @@ public class BlockIterator implements Iterator<Block> {
 
     }
 
-    private boolean blockEquals(Block a, Block b) {
+    private boolean blockEquals(final Block a, final Block b) {
         return a.getX() == b.getX() && a.getY() == b.getY() && a.getZ() == b.getZ();
     }
 
-    private BlockFace getXFace(Vector direction) {
+    private BlockFace getXFace(final Vector direction) {
         return ((direction.getX() > 0) ? BlockFace.EAST : BlockFace.WEST);
     }
 
-    private BlockFace getYFace(Vector direction) {
+    private BlockFace getYFace(final Vector direction) {
         return ((direction.getY() > 0) ? BlockFace.UP : BlockFace.DOWN);
     }
 
-    private BlockFace getZFace(Vector direction) {
+    private BlockFace getZFace(final Vector direction) {
         return ((direction.getZ() > 0) ? BlockFace.SOUTH : BlockFace.NORTH);
     }
 
-    private double getXLength(Vector direction) {
+    private double getXLength(final Vector direction) {
         return Math.abs(direction.getX());
     }
 
-    private double getYLength(Vector direction) {
+    private double getYLength(final Vector direction) {
         return Math.abs(direction.getY());
     }
 
-    private double getZLength(Vector direction) {
+    private double getZLength(final Vector direction) {
         return Math.abs(direction.getZ());
     }
 
-    private double getPosition(double direction, double position, int blockPosition) {
+    private double getPosition(final double direction, final double position, final int blockPosition) {
         return direction > 0 ? (position - blockPosition) : (blockPosition + 1 - position);
     }
 
-    private double getXPosition(Vector direction, Vector position, Block block) {
+    private double getXPosition(final Vector direction, final Vector position, final Block block) {
         return getPosition(direction.getX(), position.getX(), block.getX());
     }
 
-    private double getYPosition(Vector direction, Vector position, Block block) {
+    private double getYPosition(final Vector direction, final Vector position, final Block block) {
         return getPosition(direction.getY(), position.getY(), block.getY());
     }
 
-    private double getZPosition(Vector direction, Vector position, Block block) {
+    private double getZPosition(final Vector direction, final Vector position, final Block block) {
         return getPosition(direction.getZ(), position.getZ(), block.getZ());
     }
 
@@ -224,7 +224,7 @@ public class BlockIterator implements Iterator<Block> {
      * @param yOffset The trace begins vertically offset from the start vector by this value
      * @param maxDistance This is the maximum distance in blocks for the trace. Setting this value above 140 may lead to problems with unloaded chunks. A value of 0 indicates no limit
      */
-    public BlockIterator(Location loc, double yOffset, int maxDistance) {
+    public BlockIterator(final Location loc, final double yOffset, final int maxDistance) {
         this(loc.getWorld(), loc.toVector(), loc.getDirection(), yOffset, maxDistance);
     }
 
@@ -235,7 +235,7 @@ public class BlockIterator implements Iterator<Block> {
      * @param yOffset The trace begins vertically offset from the start vector by this value
      */
 
-    public BlockIterator(Location loc, double yOffset) {
+    public BlockIterator(final Location loc, final double yOffset) {
         this(loc.getWorld(), loc.toVector(), loc.getDirection(), yOffset, 0);
     }
 
@@ -245,8 +245,8 @@ public class BlockIterator implements Iterator<Block> {
      * @param loc The location for the start of the ray trace
      */
 
-    public BlockIterator(Location loc) {
-        this(loc, 0D);
+    public BlockIterator(final Location loc) {
+        this(loc, 0.0D);
     }
 
     /**
@@ -256,7 +256,7 @@ public class BlockIterator implements Iterator<Block> {
      * @param maxDistance This is the maximum distance in blocks for the trace. Setting this value above 140 may lead to problems with unloaded chunks. A value of 0 indicates no limit
      */
 
-    public BlockIterator(LivingEntity entity, int maxDistance) {
+    public BlockIterator(final LivingEntity entity, final int maxDistance) {
         this(entity.getLocation(), entity.getEyeHeight(), maxDistance);
     }
 
@@ -266,7 +266,7 @@ public class BlockIterator implements Iterator<Block> {
      * @param entity Information from the entity is used to set up the trace
      */
 
-    public BlockIterator(LivingEntity entity) {
+    public BlockIterator(final LivingEntity entity) {
         this(entity, 0);
     }
 

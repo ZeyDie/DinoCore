@@ -41,26 +41,26 @@ public class ModClassLoader extends URLClassLoader
     private static final List<String> STANDARD_LIBRARIES = ImmutableList.of("jinput.jar", "lwjgl.jar", "lwjgl_util.jar");
     private LaunchClassLoader mainClassLoader;
 
-    public ModClassLoader(ClassLoader parent) {
+    public ModClassLoader(final ClassLoader parent) {
         super(new URL[0], null);
         this.mainClassLoader = (LaunchClassLoader)parent;
     }
 
-    public void addFile(File modFile) throws MalformedURLException
+    public void addFile(final File modFile) throws MalformedURLException
     {
-        URL url = modFile.toURI().toURL();
+        final URL url = modFile.toURI().toURL();
         mainClassLoader.addURL(url);
     }
 
     @Override
-    public Class<?> loadClass(String name) throws ClassNotFoundException
+    public Class<?> loadClass(final String name) throws ClassNotFoundException
     {
         return mainClassLoader.loadClass(name);
     }
 
     public File[] getParentSources() {
-        List<URL> urls=mainClassLoader.getSources();
-        File[] sources=new File[urls.size()];
+        final List<URL> urls=mainClassLoader.getSources();
+        final File[] sources=new File[urls.size()];
         try
         {
             for (int i = 0; i<urls.size(); i++)
@@ -69,7 +69,7 @@ public class ModClassLoader extends URLClassLoader
             }
             return sources;
         }
-        catch (URISyntaxException e)
+        catch (final URISyntaxException e)
         {
             FMLLog.log(Level.SEVERE, e, "Unable to process our input to locate the minecraft code");
             throw new LoaderException(e);
@@ -81,10 +81,10 @@ public class ModClassLoader extends URLClassLoader
         return STANDARD_LIBRARIES;
     }
 
-    public Class<? extends BaseModProxy> loadBaseModClass(String modClazzName) throws Exception
+    public Class<? extends BaseModProxy> loadBaseModClass(final String modClazzName) throws Exception
     {
         AccessTransformer accessTransformer = null;
-        for (IClassTransformer transformer : mainClassLoader.getTransformers())
+        for (final IClassTransformer transformer : mainClassLoader.getTransformers())
         {
             if (transformer instanceof AccessTransformer)
             {
@@ -101,16 +101,16 @@ public class ModClassLoader extends URLClassLoader
         return (Class<? extends BaseModProxy>) Class.forName(modClazzName, true, this);
     }
 
-    public void clearNegativeCacheFor(Set<String> classList)
+    public void clearNegativeCacheFor(final Set<String> classList)
     {
         mainClassLoader.clearNegativeEntries(classList);
     }
 
-    public ModAPITransformer addModAPITransformer(ASMDataTable dataTable)
+    public ModAPITransformer addModAPITransformer(final ASMDataTable dataTable)
     {
         mainClassLoader.registerTransformer("cpw.mods.fml.common.asm.transformers.ModAPITransformer");
-        List<IClassTransformer> transformers = mainClassLoader.getTransformers();
-        ModAPITransformer modAPI = (ModAPITransformer) transformers.get(transformers.size()-1);
+        final List<IClassTransformer> transformers = mainClassLoader.getTransformers();
+        final ModAPITransformer modAPI = (ModAPITransformer) transformers.get(transformers.size()-1);
         modAPI.initTable(dataTable);
         return modAPI;
     }

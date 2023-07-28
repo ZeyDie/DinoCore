@@ -30,12 +30,12 @@ public class InventoryMerchant implements IInventory
         return this.theInventory;
     }
 
-    public void onOpen(CraftHumanEntity who)
+    public void onOpen(final CraftHumanEntity who)
     {
         transaction.add(who);
     }
 
-    public void onClose(CraftHumanEntity who)
+    public void onClose(final CraftHumanEntity who)
     {
         transaction.remove(who);
     }
@@ -45,7 +45,7 @@ public class InventoryMerchant implements IInventory
         return transaction;
     }
 
-    public void setMaxStackSize(int i)
+    public void setMaxStackSize(final int i)
     {
         maxStack = i;
     }
@@ -56,7 +56,7 @@ public class InventoryMerchant implements IInventory
     }
     // CraftBukkit end
 
-    public InventoryMerchant(EntityPlayer par1EntityPlayer, IMerchant par2IMerchant)
+    public InventoryMerchant(final EntityPlayer par1EntityPlayer, final IMerchant par2IMerchant)
     {
         this.thePlayer = par1EntityPlayer;
         this.theMerchant = par2IMerchant;
@@ -73,7 +73,7 @@ public class InventoryMerchant implements IInventory
     /**
      * Returns the stack in slot i
      */
-    public ItemStack getStackInSlot(int par1)
+    public ItemStack getStackInSlot(final int par1)
     {
         return this.theInventory[par1];
     }
@@ -82,11 +82,11 @@ public class InventoryMerchant implements IInventory
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
      * new stack.
      */
-    public ItemStack decrStackSize(int par1, int par2)
+    public ItemStack decrStackSize(final int par1, final int par2)
     {
         if (this.theInventory[par1] != null)
         {
-            ItemStack itemstack;
+            final ItemStack itemstack;
 
             if (par1 == 2)
             {
@@ -132,7 +132,7 @@ public class InventoryMerchant implements IInventory
     /**
      * if par1 slot has changed, does resetRecipeAndSlots need to be called?
      */
-    private boolean inventoryResetNeededOnSlotChange(int par1)
+    private boolean inventoryResetNeededOnSlotChange(final int par1)
     {
         return par1 == 0 || par1 == 1;
     }
@@ -141,11 +141,11 @@ public class InventoryMerchant implements IInventory
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      */
-    public ItemStack getStackInSlotOnClosing(int par1)
+    public ItemStack getStackInSlotOnClosing(final int par1)
     {
         if (this.theInventory[par1] != null)
         {
-            ItemStack itemstack = this.theInventory[par1];
+            final ItemStack itemstack = this.theInventory[par1];
             this.theInventory[par1] = null;
             return itemstack;
         }
@@ -158,7 +158,7 @@ public class InventoryMerchant implements IInventory
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
-    public void setInventorySlotContents(int par1, ItemStack par2ItemStack)
+    public void setInventorySlotContents(final int par1, final ItemStack par2ItemStack)
     {
         this.theInventory[par1] = par2ItemStack;
 
@@ -202,7 +202,7 @@ public class InventoryMerchant implements IInventory
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
+    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer)
     {
         return this.theMerchant.getCustomer() == par1EntityPlayer;
     }
@@ -214,7 +214,7 @@ public class InventoryMerchant implements IInventory
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack)
+    public boolean isItemValidForSlot(final int par1, final ItemStack par2ItemStack)
     {
         return true;
     }
@@ -245,7 +245,7 @@ public class InventoryMerchant implements IInventory
         }
         else
         {
-            MerchantRecipeList merchantrecipelist = this.theMerchant.getRecipes(this.thePlayer);
+            final MerchantRecipeList merchantrecipelist = this.theMerchant.getRecipes(this.thePlayer);
 
             if (merchantrecipelist != null)
             {
@@ -285,7 +285,7 @@ public class InventoryMerchant implements IInventory
         return this.currentRecipe;
     }
 
-    public void setCurrentRecipeIndex(int par1)
+    public void setCurrentRecipeIndex(final int par1)
     {
         this.currentRecipeIndex = par1;
         this.resetRecipeAndSlots();

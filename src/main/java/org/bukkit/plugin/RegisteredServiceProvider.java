@@ -12,7 +12,7 @@ public class RegisteredServiceProvider<T> implements Comparable<RegisteredServic
     private T provider;
     private ServicePriority priority;
 
-    public RegisteredServiceProvider(Class<T> service, T provider, ServicePriority priority, Plugin plugin) {
+    public RegisteredServiceProvider(final Class<T> service, final T provider, final ServicePriority priority, final Plugin plugin) {
 
         this.service = service;
         this.plugin = plugin;
@@ -36,7 +36,7 @@ public class RegisteredServiceProvider<T> implements Comparable<RegisteredServic
         return priority;
     }
 
-    public int compareTo(RegisteredServiceProvider<?> other) {
+    public int compareTo(final RegisteredServiceProvider<?> other) {
         if (priority.ordinal() == other.getPriority().ordinal()) {
             return 0;
         } else {

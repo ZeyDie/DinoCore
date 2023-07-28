@@ -6,7 +6,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.minecart.SpawnerMinecart;
 
 final class CraftMinecartMobSpawner extends CraftMinecart implements SpawnerMinecart {
-    CraftMinecartMobSpawner(CraftServer server, net.minecraft.entity.ai.EntityMinecartMobSpawner entity) {
+    CraftMinecartMobSpawner(final CraftServer server, final net.minecraft.entity.ai.EntityMinecartMobSpawner entity) {
         super(server, entity);
     }
 

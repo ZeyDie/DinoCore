@@ -6,7 +6,7 @@ class CallableServerType implements Callable
 {
     final DedicatedServer theDedicatedServer;
 
-    CallableServerType(DedicatedServer par1DedicatedServer)
+    CallableServerType(final DedicatedServer par1DedicatedServer)
     {
         this.theDedicatedServer = par1DedicatedServer;
     }

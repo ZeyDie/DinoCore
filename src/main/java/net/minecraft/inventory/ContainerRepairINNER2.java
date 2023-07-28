@@ -17,7 +17,7 @@ class ContainerRepairINNER2 extends Slot
 
     final ContainerRepair repairContainer;
 
-    ContainerRepairINNER2(ContainerRepair par1ContainerRepair, IInventory par2IInventory, int par3, int par4, int par5, World par6World, int par7, int par8, int par9)
+    ContainerRepairINNER2(final ContainerRepair par1ContainerRepair, final IInventory par2IInventory, final int par3, final int par4, final int par5, final World par6World, final int par7, final int par8, final int par9)
     {
         super(par2IInventory, par3, par4, par5);
         this.repairContainer = par1ContainerRepair;
@@ -30,7 +30,7 @@ class ContainerRepairINNER2 extends Slot
     /**
      * Check if the stack is a valid item for this slot. Always true beside for the armor slots.
      */
-    public boolean isItemValid(ItemStack par1ItemStack)
+    public boolean isItemValid(final ItemStack par1ItemStack)
     {
         return false;
     }
@@ -38,12 +38,12 @@ class ContainerRepairINNER2 extends Slot
     /**
      * Return whether this slot's stack can be taken from this slot.
      */
-    public boolean canTakeStack(EntityPlayer par1EntityPlayer)
+    public boolean canTakeStack(final EntityPlayer par1EntityPlayer)
     {
         return (par1EntityPlayer.capabilities.isCreativeMode || par1EntityPlayer.experienceLevel >= this.repairContainer.maximumCost) && this.repairContainer.maximumCost > 0 && this.getHasStack();
     }
 
-    public void onPickupFromSlot(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack)
+    public void onPickupFromSlot(final EntityPlayer par1EntityPlayer, final ItemStack par2ItemStack)
     {
         if (!par1EntityPlayer.capabilities.isCreativeMode)
         {
@@ -54,7 +54,7 @@ class ContainerRepairINNER2 extends Slot
 
         if (ContainerRepair.getStackSizeUsedInRepair(this.repairContainer) > 0)
         {
-            ItemStack itemstack1 = ContainerRepair.getRepairInputInventory(this.repairContainer).getStackInSlot(1);
+            final ItemStack itemstack1 = ContainerRepair.getRepairInputInventory(this.repairContainer).getStackInSlot(1);
 
             if (itemstack1 != null && itemstack1.stackSize > ContainerRepair.getStackSizeUsedInRepair(this.repairContainer))
             {
@@ -75,8 +75,8 @@ class ContainerRepairINNER2 extends Slot
 
         if (!par1EntityPlayer.capabilities.isCreativeMode && !this.field_135071_a.isRemote && this.field_135071_a.getBlockId(this.field_135069_b, this.field_135070_c, this.field_135067_d) == Block.anvil.blockID && par1EntityPlayer.getRNG().nextFloat() < 0.12F)
         {
-            int i = this.field_135071_a.getBlockMetadata(this.field_135069_b, this.field_135070_c, this.field_135067_d);
-            int j = i & 3;
+            final int i = this.field_135071_a.getBlockMetadata(this.field_135069_b, this.field_135070_c, this.field_135067_d);
+            final int j = i & 3;
             int k = i >> 2;
             ++k;
 

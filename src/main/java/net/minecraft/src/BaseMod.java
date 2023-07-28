@@ -53,10 +53,10 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
     // CALLBACK MECHANISMS
 
     @Deprecated
-    public final boolean doTickInGame(TickType tick, boolean tickEnd, Object... data)
+    public final boolean doTickInGame(final TickType tick, final boolean tickEnd, final Object... data)
     {
-        Minecraft mc = FMLClientHandler.instance().getClient();
-        boolean hasWorld = mc.theWorld != null;
+        final Minecraft mc = FMLClientHandler.instance().getClient();
+        final boolean hasWorld = mc.theWorld != null;
         // World and render ticks
         if (tickEnd && ( tick==TickType.RENDER || tick==TickType.CLIENT ) && hasWorld) {
             return onTickInGame((Float) data[0], mc);
@@ -65,11 +65,11 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
     }
 
     @Deprecated
-    public final boolean doTickInGUI(TickType tick, boolean tickEnd, Object... data)
+    public final boolean doTickInGUI(final TickType tick, final boolean tickEnd, final Object... data)
     {
-        Minecraft mc = FMLClientHandler.instance().getClient();
+        final Minecraft mc = FMLClientHandler.instance().getClient();
 
-        boolean hasWorld = mc.theWorld != null;
+        final boolean hasWorld = mc.theWorld != null;
 
         if (tickEnd && ( tick==TickType.RENDER || ( tick==TickType.CLIENT && hasWorld))) {
             return onTickInGUI((Float) data[0], mc, mc.currentScreen);
@@ -186,14 +186,14 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      * @param metadata
      */
     @Deprecated
-    public int addFuel(int id, int metadata)
+    public int addFuel(final int id, final int metadata)
     {
         return 0;
     }
 
     @SideOnly(CLIENT)
     @Deprecated
-    public void addRenderer(Map<Class<? extends Entity>, Render> renderers)
+    public void addRenderer(final Map<Class<? extends Entity>, Render> renderers)
     {
     }
 
@@ -206,7 +206,7 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      * @param chunkZ
      */
     @Deprecated
-    public void generateNether(World world, Random random, int chunkX, int chunkZ)
+    public void generateNether(final World world, final Random random, final int chunkX, final int chunkZ)
     {
     }
 
@@ -219,7 +219,7 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      * @param chunkZ
      */
     @Deprecated
-    public void generateSurface(World world, Random random, int chunkX, int chunkZ)
+    public void generateSurface(final World world, final Random random, final int chunkX, final int chunkZ)
     {
     }
 
@@ -233,7 +233,7 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      */
     @Deprecated
     @SideOnly(CLIENT)
-    public GuiContainer getContainerGUI(EntityClientPlayerMP player, int containerID, int x, int y, int z)
+    public GuiContainer getContainerGUI(final EntityClientPlayerMP player, final int containerID, final int x, final int y, final int z)
     {
         return null;
     }
@@ -264,7 +264,7 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
 
     @SideOnly(CLIENT)
     @Deprecated
-    public void keyboardEvent(KeyBinding event)
+    public void keyboardEvent(final KeyBinding event)
     {
 
     }
@@ -290,7 +290,7 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      * @param item
      */
     @Deprecated
-    public void onItemPickup(EntityPlayer player, ItemStack item)
+    public void onItemPickup(final EntityPlayer player, final ItemStack item)
     {
     }
 
@@ -303,20 +303,20 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      */
     @Deprecated
     @SideOnly(CLIENT)
-    public boolean onTickInGame(float time, Minecraft minecraftInstance)
+    public boolean onTickInGame(final float time, final Minecraft minecraftInstance)
     {
         return false;
     }
 
     @Deprecated
-    public boolean onTickInGame(MinecraftServer minecraftServer)
+    public boolean onTickInGame(final MinecraftServer minecraftServer)
     {
         return false;
     }
 
     @Deprecated
     @SideOnly(CLIENT)
-    public boolean onTickInGUI(float tick, Minecraft game, GuiScreen gui)
+    public boolean onTickInGUI(final float tick, final Minecraft game, final GuiScreen gui)
     {
         return false;
     }
@@ -329,7 +329,7 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      */
     @Override
     @Deprecated
-    public void clientChat(String text)
+    public void clientChat(final String text)
     {
     }
 
@@ -339,7 +339,7 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      */
     @SideOnly(CLIENT)
     @Deprecated
-    public void clientConnect(NetClientHandler handler)
+    public void clientConnect(final NetClientHandler handler)
     {
 
     }
@@ -350,7 +350,7 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      */
     @SideOnly(CLIENT)
     @Deprecated
-    public void clientDisconnect(NetClientHandler handler)
+    public void clientDisconnect(final NetClientHandler handler)
     {
 
     }
@@ -363,27 +363,27 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      */
     @Override
     @Deprecated
-    public void receiveCustomPacket(Packet250CustomPayload packet)
+    public void receiveCustomPacket(final Packet250CustomPayload packet)
     {
     }
 
     @SideOnly(CLIENT)
     @Deprecated
-    public void registerAnimation(Minecraft game)
-    {
-
-    }
-
-    @SideOnly(CLIENT)
-    @Deprecated
-    public void renderInvBlock(RenderBlocks renderer, Block block, int metadata, int modelID)
+    public void registerAnimation(final Minecraft game)
     {
 
     }
 
     @SideOnly(CLIENT)
     @Deprecated
-    public boolean renderWorldBlock(RenderBlocks renderer, IBlockAccess world, int x, int y, int z, Block block, int modelID)
+    public void renderInvBlock(final RenderBlocks renderer, final Block block, final int metadata, final int modelID)
+    {
+
+    }
+
+    @SideOnly(CLIENT)
+    @Deprecated
+    public boolean renderWorldBlock(final RenderBlocks renderer, final IBlockAccess world, final int x, final int y, final int z, final Block block, final int modelID)
     {
         return false;
 
@@ -393,13 +393,13 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      */
     @Override
     @Deprecated
-    public void serverConnect(NetHandler handler) {
+    public void serverConnect(final NetHandler handler) {
 
     }
 
     @Override
     @Deprecated
-    public void serverCustomPayload(NetServerHandler handler, Packet250CustomPayload packet)
+    public void serverCustomPayload(final NetServerHandler handler, final Packet250CustomPayload packet)
     {
 
     }
@@ -420,7 +420,7 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      * @param matrix
      */
     @Deprecated
-    public void takenFromCrafting(EntityPlayer player, ItemStack item, IInventory matrix)
+    public void takenFromCrafting(final EntityPlayer player, final ItemStack item, final IInventory matrix)
     {
     }
 
@@ -431,7 +431,7 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      * @param item
      */
     @Deprecated
-    public void takenFromFurnace(EntityPlayer player, ItemStack item)
+    public void takenFromFurnace(final EntityPlayer player, final ItemStack item)
     {
     }
 
@@ -449,7 +449,7 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      */
     @Override
     @Deprecated
-    public void serverChat(NetServerHandler source, String message)
+    public void serverChat(final NetServerHandler source, final String message)
     {
     }
     /**
@@ -461,7 +461,7 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      */
     @Override
     @Deprecated
-    public void onClientLogin(EntityPlayer player)
+    public void onClientLogin(final EntityPlayer player)
     {
     }
 
@@ -472,7 +472,7 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      */
     @Override
     @Deprecated
-    public void onClientLogout(INetworkManager mgr)
+    public void onClientLogout(final INetworkManager mgr)
     {
 
     }
@@ -482,14 +482,14 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      */
     @SideOnly(CLIENT)
     @Deprecated
-    public Entity spawnEntity(int entityId, World world, double scaledX, double scaledY, double scaledZ)
+    public Entity spawnEntity(final int entityId, final World world, final double scaledX, final double scaledY, final double scaledZ)
     {
         return null;
     }
 
     @SideOnly(CLIENT)
     @Deprecated
-    public void clientCustomPayload(NetClientHandler handler, Packet250CustomPayload packet)
+    public void clientCustomPayload(final NetClientHandler handler, final Packet250CustomPayload packet)
     {
 
     }

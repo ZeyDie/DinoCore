@@ -18,7 +18,7 @@ public class EntityAIFollowOwner extends EntityAIBase
     float minDist;
     private boolean field_75344_i;
 
-    public EntityAIFollowOwner(EntityTameable par1EntityTameable, double par2, float par4, float par5)
+    public EntityAIFollowOwner(final EntityTameable par1EntityTameable, final double par2, final float par4, final float par5)
     {
         this.thePet = par1EntityTameable;
         this.theWorld = par1EntityTameable.worldObj;
@@ -34,7 +34,7 @@ public class EntityAIFollowOwner extends EntityAIBase
      */
     public boolean shouldExecute()
     {
-        EntityLivingBase entitylivingbase = this.thePet.func_130012_q();
+        final EntityLivingBase entitylivingbase = this.thePet.func_130012_q();
 
         if (entitylivingbase == null)
         {
@@ -102,9 +102,9 @@ public class EntityAIFollowOwner extends EntityAIBase
                     {
                         if (this.thePet.getDistanceSqToEntity(this.theOwner) >= 144.0D)
                         {
-                            int i = MathHelper.floor_double(this.theOwner.posX) - 2;
-                            int j = MathHelper.floor_double(this.theOwner.posZ) - 2;
-                            int k = MathHelper.floor_double(this.theOwner.boundingBox.minY);
+                            final int i = MathHelper.floor_double(this.theOwner.posX) - 2;
+                            final int j = MathHelper.floor_double(this.theOwner.posZ) - 2;
+                            final int k = MathHelper.floor_double(this.theOwner.boundingBox.minY);
 
                             for (int l = 0; l <= 4; ++l)
                             {

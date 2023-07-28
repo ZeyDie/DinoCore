@@ -5,22 +5,30 @@ import java.io.DataInput;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 public class FastTracker2 {
-	public static boolean is_xm( byte[] header_60_bytes ) {
-		String xm_identifier;
+	public static boolean is_xm(final byte[] header_60_bytes ) {
+		final String xm_identifier;
 		xm_identifier = ascii_text( header_60_bytes, 0, 17 );
 		return xm_identifier.equals( "Extended Module: " );
 	}
 
-	public static Module load_xm( byte[] header_60_bytes, DataInput data_input ) throws IOException {
-		int xm_version, song_header_length, sequence_length;
-		int num_channels, num_patterns, num_instruments, xm_flags, idx;
-		byte[] structure_header, song_header;
-		boolean delta_env;
-		String tracker_name;
+	public static Module load_xm(final byte[] header_60_bytes, final DataInput data_input ) throws IOException {
+		final int xm_version;
+        int song_header_length;
+        final int sequence_length;
+        final int num_channels;
+        int num_patterns;
+        int num_instruments;
+        final int xm_flags;
+        int idx;
+        final byte[] structure_header;
+        final byte[] song_header;
+        final boolean delta_env;
+		final String tracker_name;
 		Instrument instrument;
-		Module module;
+		final Module module;
 		if( !is_xm( header_60_bytes ) ) {
 			throw new IllegalArgumentException( "Not an XM file!" );
 		}
@@ -65,17 +73,22 @@ public class FastTracker2 {
 			try {
 				instrument = read_xm_instrument( data_input, delta_env );
 				module.set_instrument( idx, instrument );
-			} catch( EOFException e ) {
+			} catch( final EOFException e ) {
 				System.out.println( "Instrument " + idx + " is missing!" );
 			}
 		}
 		return module;
 	}
 
-	private static Pattern read_xm_pattern( DataInput data_input, int num_channels ) throws IOException {
-		int pattern_header_length, packing_type, num_rows, pattern_data_length;
-		byte[] structure_header, pattern_header, pattern_data;
-		Pattern pattern;
+	private static Pattern read_xm_pattern(final DataInput data_input, final int num_channels ) throws IOException {
+		final int pattern_header_length;
+        int packing_type;
+        int num_rows;
+        final int pattern_data_length;
+        final byte[] structure_header;
+        byte[] pattern_header;
+        final byte[] pattern_data;
+        final Pattern pattern;
 		structure_header = new byte[ 4 ];
 		data_input.readFully( structure_header );
 		pattern_header_length = int_le( structure_header, 0 );
@@ -94,11 +107,15 @@ public class FastTracker2 {
 		return pattern;
 	}
 	
-	private static Instrument read_xm_instrument( DataInput data_input, boolean delta_env ) throws IOException {
-		int instrument_header_length, num_samples, idx;
-		int env_tick, env_ampl, env_num_points, flags;
-		byte[] structure_header, instrument_header, sample_headers;
-		Instrument instrument;
+	private static Instrument read_xm_instrument(final DataInput data_input, final boolean delta_env ) throws IOException {
+		final int instrument_header_length;
+        final int num_samples;
+        int idx;
+        int env_tick, env_ampl, env_num_points, flags;
+		final byte[] structure_header;
+        byte[] instrument_header;
+        final byte[] sample_headers;
+        final Instrument instrument;
 		Envelope envelope;
 		structure_header = new byte[ 4 ];
 		data_input.readFully( structure_header );
@@ -157,14 +174,22 @@ public class FastTracker2 {
 		return instrument;
 	}
 
-	private static Sample read_xm_sample( byte[] sample_headers, int sample_idx, DataInput data_input ) throws IOException {
-		int header_offset, sample_length, loop_start, loop_length;
-		int flags, in_idx, out_idx, sam, last_sam;
-		int fine_tune, relative_note;
-		boolean sixteen_bit, ping_pong;
-		byte[] raw_sample_data;
-		short[] decoded_sample_data;
-		Sample sample;
+	private static Sample read_xm_sample(final byte[] sample_headers, final int sample_idx, final DataInput data_input ) throws IOException {
+		final int header_offset;
+        int sample_length;
+        final int loop_start;
+        int loop_length;
+        final int flags;
+        int in_idx;
+        int out_idx;
+        int sam;
+        int last_sam;
+        int fine_tune, relative_note;
+		final boolean sixteen_bit;
+        final boolean ping_pong;
+        final byte[] raw_sample_data;
+		final short[] decoded_sample_data;
+		final Sample sample;
 		header_offset = sample_idx * 40;
 		sample = new Sample();
 		sample_length = int_le( sample_headers, header_offset );		
@@ -188,7 +213,7 @@ public class FastTracker2 {
 		raw_sample_data = new byte[ sample_length ];
 		try {
 			data_input.readFully( raw_sample_data );
-		} catch( EOFException e ) {
+		} catch( final EOFException e ) {
 			System.out.println( "Sample has been truncated!" );
 		}
 		in_idx = 0;
@@ -220,14 +245,14 @@ public class FastTracker2 {
 		return sample;
 	}
 
-	private static int unsigned_short_le( byte[] buffer, int offset ) {
+	private static int unsigned_short_le(final byte[] buffer, final int offset ) {
 		int value;
 		value = buffer[ offset ] & 0xFF;
 		value = value | ( ( buffer[ offset + 1 ] & 0xFF ) << 8 );
 		return value;
 	}
 
-	private static int int_le( byte[] buffer, int offset ) {
+	private static int int_le(final byte[] buffer, final int offset ) {
 		int value;
 		value = buffer[ offset ] & 0xFF;
 		value = value | ( ( buffer[ offset + 1 ] & 0xFF ) << 8 );
@@ -236,9 +261,9 @@ public class FastTracker2 {
 		return value;
 	}
 	
-	private static String ascii_text( byte[] buffer, int offset, int length ) {
+	private static String ascii_text(final byte[] buffer, final int offset, final int length ) {
 		int idx, chr;
-		byte[] string_buffer;
+		final byte[] string_buffer;
 		String string;
 		string_buffer = new byte[ length ];
 		for( idx = 0; idx < length; idx++ ) {
@@ -248,12 +273,8 @@ public class FastTracker2 {
 			}
 			string_buffer[ idx ] = ( byte ) chr;
 		}
-		try {
-			string = new String( string_buffer, 0, length, "ISO-8859-1" );
-		} catch( UnsupportedEncodingException e ) {
-			string = "";
-		}
-		return string;
+        string = new String( string_buffer, 0, length, StandardCharsets.ISO_8859_1);
+        return string;
 	}
 }
 

@@ -24,7 +24,7 @@ public class GuiDupesFound extends GuiErrorScreen
 
     private DuplicateModsFoundException dupes;
 
-    public GuiDupesFound(DuplicateModsFoundException dupes)
+    public GuiDupesFound(final DuplicateModsFoundException dupes)
     {
         super(null,null);
         this.dupes = dupes;
@@ -44,7 +44,7 @@ public class GuiDupesFound extends GuiErrorScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         int offset = Math.max(85 - dupes.dupes.size() * 10, 10);
@@ -54,7 +54,7 @@ public class GuiDupesFound extends GuiErrorScreen
         offset+=10;
         this.drawCenteredString(this.fontRenderer, "Mod Id : File name", this.width / 2, offset, 0xFFFFFF);
         offset+=5;
-        for (Entry<ModContainer, File> mc : dupes.dupes.entries())
+        for (final Entry<ModContainer, File> mc : dupes.dupes.entries())
         {
             offset+=10;
             this.drawCenteredString(this.fontRenderer, String.format("%s : %s", mc.getKey().getModId(), mc.getValue().getName()), this.width / 2, offset, 0xEEEEEE);

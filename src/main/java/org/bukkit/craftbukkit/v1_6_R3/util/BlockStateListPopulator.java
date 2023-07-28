@@ -10,23 +10,23 @@ public class BlockStateListPopulator {
     private final World world;
     private final List<BlockState> list;
 
-    public BlockStateListPopulator(World world) {
+    public BlockStateListPopulator(final World world) {
         this(world, new ArrayList<BlockState>());
     }
 
-    public BlockStateListPopulator(World world, List<BlockState> list) {
+    public BlockStateListPopulator(final World world, final List<BlockState> list) {
         this.world = world;
         this.list = list;
     }
 
-    public void setTypeId(int x, int y, int z, int type) {
-        BlockState state = world.getBlockAt(x, y, z).getState();
+    public void setTypeId(final int x, final int y, final int z, final int type) {
+        final BlockState state = world.getBlockAt(x, y, z).getState();
         state.setTypeId(type);
         list.add(state);
     }
 
     public void updateList() {
-        for (BlockState state : list) {
+        for (final BlockState state : list) {
             state.update(true);
         }
     }

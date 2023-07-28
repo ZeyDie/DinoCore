@@ -19,7 +19,7 @@ public class EntityBat extends EntityAmbientCreature
      */
     private ChunkCoordinates currentFlightTarget;
 
-    public EntityBat(World par1World)
+    public EntityBat(final World par1World)
     {
         super(par1World);
         this.setSize(0.5F, 0.9F);
@@ -80,7 +80,7 @@ public class EntityBat extends EntityAmbientCreature
         return false;
     }
 
-    protected void collideWithEntity(Entity par1Entity) {}
+    protected void collideWithEntity(final Entity par1Entity) {}
 
     //TODO ZoomCodeReplace protected on public
     public void collideWithNearbyEntities() {}
@@ -96,9 +96,9 @@ public class EntityBat extends EntityAmbientCreature
         return (this.dataWatcher.getWatchableObjectByte(16) & 1) != 0;
     }
 
-    public void setIsBatHanging(boolean par1)
+    public void setIsBatHanging(final boolean par1)
     {
-        byte b0 = this.dataWatcher.getWatchableObjectByte(16);
+        final byte b0 = this.dataWatcher.getWatchableObjectByte(16);
 
         if (par1)
         {
@@ -175,14 +175,14 @@ public class EntityBat extends EntityAmbientCreature
                 this.currentFlightTarget = new ChunkCoordinates((int)this.posX + this.rand.nextInt(7) - this.rand.nextInt(7), (int)this.posY + this.rand.nextInt(6) - 2, (int)this.posZ + this.rand.nextInt(7) - this.rand.nextInt(7));
             }
 
-            double d0 = (double)this.currentFlightTarget.posX + 0.5D - this.posX;
-            double d1 = (double)this.currentFlightTarget.posY + 0.1D - this.posY;
-            double d2 = (double)this.currentFlightTarget.posZ + 0.5D - this.posZ;
+            final double d0 = (double)this.currentFlightTarget.posX + 0.5D - this.posX;
+            final double d1 = (double)this.currentFlightTarget.posY + 0.1D - this.posY;
+            final double d2 = (double)this.currentFlightTarget.posZ + 0.5D - this.posZ;
             this.motionX += (Math.signum(d0) * 0.5D - this.motionX) * 0.10000000149011612D;
             this.motionY += (Math.signum(d1) * 0.699999988079071D - this.motionY) * 0.10000000149011612D;
             this.motionZ += (Math.signum(d2) * 0.5D - this.motionZ) * 0.10000000149011612D;
-            float f = (float)(Math.atan2(this.motionZ, this.motionX) * 180.0D / Math.PI) - 90.0F;
-            float f1 = MathHelper.wrapAngleTo180_float(f - this.rotationYaw);
+            final float f = (float)(Math.atan2(this.motionZ, this.motionX) * 180.0D / Math.PI) - 90.0F;
+            final float f1 = MathHelper.wrapAngleTo180_float(f - this.rotationYaw);
             this.moveForward = 0.5F;
             this.rotationYaw += f1;
 
@@ -205,13 +205,13 @@ public class EntityBat extends EntityAmbientCreature
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float par1) {}
+    protected void fall(final float par1) {}
 
     /**
      * Takes in the distance the entity has fallen this tick and whether its on the ground to update the fall distance
      * and deal fall damage if landing on the ground.  Args: distanceFallenThisTick, onGround
      */
-    protected void updateFallState(double par1, boolean par3) {}
+    protected void updateFallState(final double par1, final boolean par3) {}
 
     /**
      * Return whether this entity should NOT trigger a pressure plate or a tripwire.
@@ -224,7 +224,7 @@ public class EntityBat extends EntityAmbientCreature
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2)
     {
         if (this.isEntityInvulnerable())
         {
@@ -244,7 +244,7 @@ public class EntityBat extends EntityAmbientCreature
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.dataWatcher.updateObject(16, Byte.valueOf(par1NBTTagCompound.getByte("BatFlags")));
@@ -253,7 +253,7 @@ public class EntityBat extends EntityAmbientCreature
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setByte("BatFlags", this.dataWatcher.getWatchableObjectByte(16));
@@ -264,7 +264,7 @@ public class EntityBat extends EntityAmbientCreature
      */
     public boolean getCanSpawnHere()
     {
-        int i = MathHelper.floor_double(this.boundingBox.minY);
+        final int i = MathHelper.floor_double(this.boundingBox.minY);
 
         if (i >= 63)
         {
@@ -272,11 +272,11 @@ public class EntityBat extends EntityAmbientCreature
         }
         else
         {
-            int j = MathHelper.floor_double(this.posX);
-            int k = MathHelper.floor_double(this.posZ);
-            int l = this.worldObj.getBlockLightValue(j, i, k);
+            final int j = MathHelper.floor_double(this.posX);
+            final int k = MathHelper.floor_double(this.posZ);
+            final int l = this.worldObj.getBlockLightValue(j, i, k);
             byte b0 = 4;
-            Calendar calendar = this.worldObj.getCurrentDate();
+            final Calendar calendar = this.worldObj.getCurrentDate();
 
             if ((calendar.get(2) + 1 != 10 || calendar.get(5) < 20) && (calendar.get(2) + 1 != 11 || calendar.get(5) > 3))
             {

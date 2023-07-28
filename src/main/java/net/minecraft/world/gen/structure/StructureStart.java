@@ -18,7 +18,7 @@ public abstract class StructureStart
 
     public StructureStart() {}
 
-    public StructureStart(int par1, int par2)
+    public StructureStart(final int par1, final int par2)
     {
         this.field_143024_c = par1;
         this.field_143023_d = par2;
@@ -37,13 +37,13 @@ public abstract class StructureStart
     /**
      * Keeps iterating Structure Pieces and spawning them until the checks tell it to stop
      */
-    public void generateStructure(World par1World, Random par2Random, StructureBoundingBox par3StructureBoundingBox)
+    public void generateStructure(final World par1World, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox)
     {
-        Iterator iterator = this.components.iterator();
+        final Iterator iterator = this.components.iterator();
 
         while (iterator.hasNext())
         {
-            StructureComponent structurecomponent = (StructureComponent)iterator.next();
+            final StructureComponent structurecomponent = (StructureComponent)iterator.next();
 
             // Cauldron - validate structurecomponent
             if ((structurecomponent == null || structurecomponent.getBoundingBox() == null) || (structurecomponent.getBoundingBox().intersectsWith(par3StructureBoundingBox) && !structurecomponent.addComponentParts(par1World, par2Random, par3StructureBoundingBox)))
@@ -59,33 +59,33 @@ public abstract class StructureStart
     protected void updateBoundingBox()
     {
         this.boundingBox = StructureBoundingBox.getNewBoundingBox();
-        Iterator iterator = this.components.iterator();
+        final Iterator iterator = this.components.iterator();
 
         while (iterator.hasNext())
         {
-            StructureComponent structurecomponent = (StructureComponent)iterator.next();
+            final StructureComponent structurecomponent = (StructureComponent)iterator.next();
             this.boundingBox.expandTo(structurecomponent.getBoundingBox());
         }
     }
 
-    public NBTTagCompound func_143021_a(int par1, int par2)
+    public NBTTagCompound func_143021_a(final int par1, final int par2)
     {
         if (MapGenStructureIO.func_143033_a(this) == null)
         {
             throw new RuntimeException("StructureStart \"" + this.getClass().getName() + "\" missing ID Mapping, Modder see MapGenStructureIO");
         }
 
-        NBTTagCompound nbttagcompound = new NBTTagCompound();
+        final NBTTagCompound nbttagcompound = new NBTTagCompound();
         nbttagcompound.setString("id", MapGenStructureIO.func_143033_a(this));
         nbttagcompound.setInteger("ChunkX", par1);
         nbttagcompound.setInteger("ChunkZ", par2);
         nbttagcompound.setTag("BB", this.boundingBox.func_143047_a("BB"));
-        NBTTagList nbttaglist = new NBTTagList("Children");
-        Iterator iterator = this.components.iterator();
+        final NBTTagList nbttaglist = new NBTTagList("Children");
+        final Iterator iterator = this.components.iterator();
 
         while (iterator.hasNext())
         {
-            StructureComponent structurecomponent = (StructureComponent)iterator.next();
+            final StructureComponent structurecomponent = (StructureComponent)iterator.next();
             nbttaglist.appendTag(structurecomponent.func_143010_b());
         }
 
@@ -94,9 +94,9 @@ public abstract class StructureStart
         return nbttagcompound;
     }
 
-    public void func_143022_a(NBTTagCompound par1NBTTagCompound) {}
+    public void func_143022_a(final NBTTagCompound par1NBTTagCompound) {}
 
-    public void func_143020_a(World par1World, NBTTagCompound par2NBTTagCompound)
+    public void func_143020_a(final World par1World, final NBTTagCompound par2NBTTagCompound)
     {
         this.field_143024_c = par2NBTTagCompound.getInteger("ChunkX");
         this.field_143023_d = par2NBTTagCompound.getInteger("ChunkZ");
@@ -106,7 +106,7 @@ public abstract class StructureStart
             this.boundingBox = new StructureBoundingBox(par2NBTTagCompound.getIntArray("BB"));
         }
 
-        NBTTagList nbttaglist = par2NBTTagCompound.getTagList("Children");
+        final NBTTagList nbttaglist = par2NBTTagCompound.getTagList("Children");
 
         for (int i = 0; i < nbttaglist.tagCount(); ++i)
         {
@@ -116,14 +116,14 @@ public abstract class StructureStart
         this.func_143017_b(par2NBTTagCompound);
     }
 
-    public void func_143017_b(NBTTagCompound par1NBTTagCompound) {}
+    public void func_143017_b(final NBTTagCompound par1NBTTagCompound) {}
 
     /**
      * offsets the structure Bounding Boxes up to a certain height, typically 63 - 10
      */
-    protected void markAvailableHeight(World par1World, Random par2Random, int par3)
+    protected void markAvailableHeight(final World par1World, final Random par2Random, final int par3)
     {
-        int j = 63 - par3;
+        final int j = 63 - par3;
         int k = this.boundingBox.getYSize() + 1;
 
         if (k < j)
@@ -131,22 +131,22 @@ public abstract class StructureStart
             k += par2Random.nextInt(j - k);
         }
 
-        int l = k - this.boundingBox.maxY;
+        final int l = k - this.boundingBox.maxY;
         this.boundingBox.offset(0, l, 0);
-        Iterator iterator = this.components.iterator();
+        final Iterator iterator = this.components.iterator();
 
         while (iterator.hasNext())
         {
-            StructureComponent structurecomponent = (StructureComponent)iterator.next();
+            final StructureComponent structurecomponent = (StructureComponent)iterator.next();
             structurecomponent.getBoundingBox().offset(0, l, 0);
         }
     }
 
-    protected void setRandomHeight(World par1World, Random par2Random, int par3, int par4)
+    protected void setRandomHeight(final World par1World, final Random par2Random, final int par3, final int par4)
     {
-        int k = par4 - par3 + 1 - this.boundingBox.getYSize();
-        boolean flag = true;
-        int l;
+        final int k = par4 - par3 + 1 - this.boundingBox.getYSize();
+        final boolean flag = true;
+        final int l;
 
         if (k > 1)
         {
@@ -157,13 +157,13 @@ public abstract class StructureStart
             l = par3;
         }
 
-        int i1 = l - this.boundingBox.minY;
+        final int i1 = l - this.boundingBox.minY;
         this.boundingBox.offset(0, i1, 0);
-        Iterator iterator = this.components.iterator();
+        final Iterator iterator = this.components.iterator();
 
         while (iterator.hasNext())
         {
-            StructureComponent structurecomponent = (StructureComponent)iterator.next();
+            final StructureComponent structurecomponent = (StructureComponent)iterator.next();
             structurecomponent.getBoundingBox().offset(0, i1, 0);
         }
     }

@@ -14,27 +14,27 @@ public class TellCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length < 2)  {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
 
-        Player player = Bukkit.getPlayerExact(args[0]);
+        final Player player = Bukkit.getPlayerExact(args[0]);
 
         // If a player is hidden from the sender pretend they are offline
         if (player == null || (sender instanceof Player && !((Player) sender).canSee(player))) {
             sender.sendMessage("There's no player by that name online.");
         } else {
-            StringBuilder message = new StringBuilder();
+            final StringBuilder message = new StringBuilder();
 
             for (int i = 1; i < args.length; i++) {
                 if (i > 1) message.append(" ");
                 message.append(args[i]);
             }
 
-            String result = ChatColor.GRAY + sender.getName() + " whispers " + message;
+            final String result = ChatColor.GRAY + sender.getName() + " whispers " + message;
 
             sender.sendMessage("[" + sender.getName() + "->" + player.getName() + "] " + message);
             player.sendMessage(result);
@@ -44,7 +44,7 @@ public class TellCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean matches(String input) {
+    public boolean matches(final String input) {
         return input.equalsIgnoreCase("tell") || input.equalsIgnoreCase("w") || input.equalsIgnoreCase("msg");
     }
 }

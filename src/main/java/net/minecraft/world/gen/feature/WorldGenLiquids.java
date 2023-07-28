@@ -10,12 +10,12 @@ public class WorldGenLiquids extends WorldGenerator
     /** The ID of the liquid block used in this liquid generator. */
     private int liquidBlockId;
 
-    public WorldGenLiquids(int par1)
+    public WorldGenLiquids(final int par1)
     {
         this.liquidBlockId = par1;
     }
 
-    public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
+    public boolean generate(final World par1World, final Random par2Random, final int par3, final int par4, final int par5)
     {
         if (par1World.getBlockId(par3, par4 + 1, par5) != Block.stone.blockID)
         {

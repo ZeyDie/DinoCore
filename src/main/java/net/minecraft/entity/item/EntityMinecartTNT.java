@@ -14,12 +14,12 @@ public class EntityMinecartTNT extends EntityMinecart
 {
     private int minecartTNTFuse = -1;
 
-    public EntityMinecartTNT(World par1World)
+    public EntityMinecartTNT(final World par1World)
     {
         super(par1World);
     }
 
-    public EntityMinecartTNT(World par1World, double par2, double par4, double par6)
+    public EntityMinecartTNT(final World par1World, final double par2, final double par4, final double par6)
     {
         super(par1World, par2, par4, par6);
     }
@@ -53,7 +53,7 @@ public class EntityMinecartTNT extends EntityMinecart
 
         if (this.isCollidedHorizontally)
         {
-            double d0 = this.motionX * this.motionX + this.motionZ * this.motionZ;
+            final double d0 = this.motionX * this.motionX + this.motionZ * this.motionZ;
 
             if (d0 >= 0.009999999776482582D)
             {
@@ -62,10 +62,10 @@ public class EntityMinecartTNT extends EntityMinecart
         }
     }
 
-    public void killMinecart(DamageSource par1DamageSource)
+    public void killMinecart(final DamageSource par1DamageSource)
     {
         super.killMinecart(par1DamageSource);
-        double d0 = this.motionX * this.motionX + this.motionZ * this.motionZ;
+        final double d0 = this.motionX * this.motionX + this.motionZ * this.motionZ;
 
         if (!par1DamageSource.isExplosion())
         {
@@ -81,7 +81,7 @@ public class EntityMinecartTNT extends EntityMinecart
     /**
      * Makes the minecart explode.
      */
-    protected void explodeCart(double par1)
+    protected void explodeCart(final double par1)
     {
         if (!this.worldObj.isRemote)
         {
@@ -100,11 +100,11 @@ public class EntityMinecartTNT extends EntityMinecart
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float par1)
+    protected void fall(final float par1)
     {
         if (par1 >= 3.0F)
         {
-            float f1 = par1 / 10.0F;
+            final float f1 = par1 / 10.0F;
             this.explodeCart((double)(f1 * f1));
         }
 
@@ -114,7 +114,7 @@ public class EntityMinecartTNT extends EntityMinecart
     /**
      * Called every tick the minecart is on an activator rail.
      */
-    public void onActivatorRailPass(int par1, int par2, int par3, boolean par4)
+    public void onActivatorRailPass(final int par1, final int par2, final int par3, final boolean par4)
     {
         if (par4 && this.minecartTNTFuse < 0)
         {
@@ -123,7 +123,7 @@ public class EntityMinecartTNT extends EntityMinecart
     }
 
     @SideOnly(Side.CLIENT)
-    public void handleHealthUpdate(byte par1)
+    public void handleHealthUpdate(final byte par1)
     {
         if (par1 == 10)
         {
@@ -167,12 +167,12 @@ public class EntityMinecartTNT extends EntityMinecart
      * Gets a block's resistance to this entity's explosion. Used to make rails immune to TNT minecarts' explosions and
      * Wither skulls more destructive.
      */
-    public float getBlockExplosionResistance(Explosion par1Explosion, World par2World, int par3, int par4, int par5, Block par6Block)
+    public float getBlockExplosionResistance(final Explosion par1Explosion, final World par2World, final int par3, final int par4, final int par5, final Block par6Block)
     {
         return this.isIgnited() && (BlockRailBase.isRailBlock(par6Block.blockID) || BlockRailBase.isRailBlockAt(par2World, par3, par4 + 1, par5)) ? 0.0F : super.getBlockExplosionResistance(par1Explosion, par2World, par3, par4, par5, par6Block);
     }
 
-    public boolean shouldExplodeBlock(Explosion par1Explosion, World par2World, int par3, int par4, int par5, int par6, float par7)
+    public boolean shouldExplodeBlock(final Explosion par1Explosion, final World par2World, final int par3, final int par4, final int par5, final int par6, final float par7)
     {
         return this.isIgnited() && (BlockRailBase.isRailBlock(par6) || BlockRailBase.isRailBlockAt(par2World, par3, par4 + 1, par5)) ? false : super.shouldExplodeBlock(par1Explosion, par2World, par3, par4, par5, par6, par7);
     }
@@ -180,7 +180,7 @@ public class EntityMinecartTNT extends EntityMinecart
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    protected void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    protected void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
 
@@ -193,7 +193,7 @@ public class EntityMinecartTNT extends EntityMinecart
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    protected void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    protected void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setInteger("TNTFuse", this.minecartTNTFuse);

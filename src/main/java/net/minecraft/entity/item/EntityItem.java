@@ -42,7 +42,7 @@ public class EntityItem extends Entity
      */
     public int lifespan = 6000;
 
-    public EntityItem(World par1World, double par2, double par4, double par6)
+    public EntityItem(final World par1World, final double par2, final double par4, final double par6)
     {
         super(par1World);
         this.age = 0;
@@ -60,7 +60,7 @@ public class EntityItem extends Entity
         }
     }
 
-    public EntityItem(World par1World, double par2, double par4, double par6, ItemStack par8ItemStack)
+    public EntityItem(final World par1World, final double par2, final double par4, final double par6, final ItemStack par8ItemStack)
     {
         this(par1World, par2, par4, par6);
         // CraftBukkit start - Can't set null items in the datawatcher
@@ -82,7 +82,7 @@ public class EntityItem extends Entity
         return false;
     }
 
-    public EntityItem(World par1World)
+    public EntityItem(final World par1World)
     {
         super(par1World);
         this.age = 0;
@@ -102,7 +102,7 @@ public class EntityItem extends Entity
      */
     public void onUpdate()
     {
-        ItemStack stack = this.getDataWatcher().getWatchableObjectItemStack(10);
+        final ItemStack stack = this.getDataWatcher().getWatchableObjectItemStack(10);
         if (stack != null && stack.getItem() != null)
         {
             if (stack.getItem().onEntityItemUpdate(this))
@@ -113,13 +113,13 @@ public class EntityItem extends Entity
 
         super.onUpdate();
         // CraftBukkit start - Use wall time for pickup and despawn timers
-        int elapsedTicks = MinecraftServer.currentTick - this.lastTick;
+        final int elapsedTicks = MinecraftServer.currentTick - this.lastTick;
         this.delayBeforeCanPickup -= elapsedTicks;
         this.age += elapsedTicks;
         this.lastTick = MinecraftServer.currentTick;
         // CraftBukkit end
 
-        boolean forceUpdate = this.ticksExisted > 0 && this.ticksExisted % 25 == 0; // Cauldron - optimize item tick updates
+        final boolean forceUpdate = this.ticksExisted > 0 && this.ticksExisted % 25 == 0; // Cauldron - optimize item tick updates
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
@@ -130,7 +130,7 @@ public class EntityItem extends Entity
         }
         // Cauldron end
         this.moveEntity(this.motionX, this.motionY, this.motionZ);
-        boolean flag = (int)this.prevPosX != (int)this.posX || (int)this.prevPosY != (int)this.posY || (int)this.prevPosZ != (int)this.posZ;
+        final boolean flag = (int)this.prevPosX != (int)this.posX || (int)this.prevPosY != (int)this.posY || (int)this.prevPosZ != (int)this.posZ;
 
         if ((flag && this.ticksExisted % 5 == 0) || forceUpdate) // Cauldron - if forced
         {
@@ -153,7 +153,7 @@ public class EntityItem extends Entity
         if (this.onGround)
         {
             f = 0.58800006F;
-            int i = this.worldObj.getBlockId(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1, MathHelper.floor_double(this.posZ));
+            final int i = this.worldObj.getBlockId(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1, MathHelper.floor_double(this.posZ));
 
             if (i > 0)
             {
@@ -172,7 +172,7 @@ public class EntityItem extends Entity
 
         // ++this.age; // CraftBukkit - Moved up (base age on wall time)
 
-        ItemStack item = getDataWatcher().getWatchableObjectItemStack(10);
+        final ItemStack item = getDataWatcher().getWatchableObjectItemStack(10);
         
         if (!this.worldObj.isRemote && this.age >= lifespan - 1) // Cauldron adjust for age being off by one when it is first dropped
         {
@@ -185,7 +185,7 @@ public class EntityItem extends Entity
             // CraftBukkit end
             if (item != null)
             {   
-                ItemExpireEvent event = new ItemExpireEvent(this, (item.getItem() == null ? this.worldObj.spigotConfig.itemDespawnRate : item.getItem().getEntityLifespan(item, worldObj))); // Spigot
+                final ItemExpireEvent event = new ItemExpireEvent(this, (item.getItem() == null ? this.worldObj.spigotConfig.itemDespawnRate : item.getItem().getEntityLifespan(item, worldObj))); // Spigot
                 if (MinecraftForge.EVENT_BUS.post(event))
                 {
                     lifespan += event.extraLife;
@@ -213,13 +213,13 @@ public class EntityItem extends Entity
     private void searchForOtherItemsNearby()
     {
         // Spigot start
-        double radius = worldObj.spigotConfig.itemMerge;
-        Iterator iterator = this.worldObj.getEntitiesWithinAABB(EntityItem.class, this.boundingBox.expand(radius, radius, radius)).iterator();
+        final double radius = worldObj.spigotConfig.itemMerge;
+        final Iterator iterator = this.worldObj.getEntitiesWithinAABB(EntityItem.class, this.boundingBox.expand(radius, radius, radius)).iterator();
         // Spigot end
         
         while (iterator.hasNext())
         {
-            EntityItem entityitem = (EntityItem)iterator.next();
+            final EntityItem entityitem = (EntityItem)iterator.next();
             this.combineItems(entityitem);
         }
     }
@@ -228,7 +228,7 @@ public class EntityItem extends Entity
      * Tries to merge this item with the item passed as the parameter. Returns true if successful. Either this item or
      * the other item will  be removed from the world.
      */
-    public boolean combineItems(EntityItem par1EntityItem)
+    public boolean combineItems(final EntityItem par1EntityItem)
     {
         if (par1EntityItem == this)
         {
@@ -236,8 +236,8 @@ public class EntityItem extends Entity
         }
         else if (par1EntityItem.isEntityAlive() && this.isEntityAlive())
         {
-            ItemStack itemstack = this.getEntityItem();
-            ItemStack itemstack1 = par1EntityItem.getEntityItem();
+            final ItemStack itemstack = this.getEntityItem();
+            final ItemStack itemstack1 = par1EntityItem.getEntityItem();
 
             if (itemstack1.getItem() != itemstack.getItem())
             {
@@ -300,7 +300,7 @@ public class EntityItem extends Entity
      * Will deal the specified amount of damage to the entity if the entity isn't immune to fire damage. Args:
      * amountDamage
      */
-    protected void dealFireDamage(int par1)
+    protected void dealFireDamage(final int par1)
     {
         this.attackEntityFrom(DamageSource.inFire, (float)par1);
     }
@@ -308,7 +308,7 @@ public class EntityItem extends Entity
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2)
     {
         if (this.isEntityInvulnerable())
         {
@@ -335,7 +335,7 @@ public class EntityItem extends Entity
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         par1NBTTagCompound.setShort("Health", (short)((byte)this.health));
         par1NBTTagCompound.setShort("Age", (short)this.age);
@@ -350,15 +350,15 @@ public class EntityItem extends Entity
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         this.health = par1NBTTagCompound.getShort("Health") & 255;
         this.age = par1NBTTagCompound.getShort("Age");
-        NBTTagCompound nbttagcompound1 = par1NBTTagCompound.getCompoundTag("Item");
+        final NBTTagCompound nbttagcompound1 = par1NBTTagCompound.getCompoundTag("Item");
         // CraftBukkit start
         if (nbttagcompound1 != null)
         {
-            ItemStack itemstack = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+            final ItemStack itemstack = ItemStack.loadItemStackFromNBT(nbttagcompound1);
             if (itemstack != null)
             {
                 this.setEntityItemStack(itemstack);
@@ -374,7 +374,7 @@ public class EntityItem extends Entity
         }
         // CraftBukkit end
 
-        ItemStack item = getDataWatcher().getWatchableObjectItemStack(10);
+        final ItemStack item = getDataWatcher().getWatchableObjectItemStack(10);
 
         if (item == null || item.stackSize <= 0)
         {
@@ -390,7 +390,7 @@ public class EntityItem extends Entity
     /**
      * Called by a player entity when they collide with an entity
      */
-    public void onCollideWithPlayer(EntityPlayer par1EntityPlayer)
+    public void onCollideWithPlayer(final EntityPlayer par1EntityPlayer)
     {
         if (!this.worldObj.isRemote)
         {
@@ -399,25 +399,25 @@ public class EntityItem extends Entity
                 return;
             }
 
-            EntityItemPickupEvent event = new EntityItemPickupEvent(par1EntityPlayer, this);
+            final EntityItemPickupEvent event = new EntityItemPickupEvent(par1EntityPlayer, this);
 
             if (MinecraftForge.EVENT_BUS.post(event))
             {
                 return;
             }
 
-            ItemStack itemstack = this.getEntityItem();
-            int i = itemstack.stackSize;
+            final ItemStack itemstack = this.getEntityItem();
+            final int i = itemstack.stackSize;
 
             // CraftBukkit start
-            int canHold = par1EntityPlayer.inventory.canHold(itemstack);
-            int remaining = itemstack.stackSize - canHold;
+            final int canHold = par1EntityPlayer.inventory.canHold(itemstack);
+            final int remaining = itemstack.stackSize - canHold;
 
             if (this.delayBeforeCanPickup <= 0 && canHold > 0)
             {
                 itemstack.stackSize = canHold;
                 // Cauldron start - rename to cbEvent to fix naming collision
-                PlayerPickupItemEvent cbEvent = new PlayerPickupItemEvent((org.bukkit.entity.Player) par1EntityPlayer.getBukkitEntity(), (org.bukkit.entity.Item) this.getBukkitEntity(), remaining);
+                final PlayerPickupItemEvent cbEvent = new PlayerPickupItemEvent((org.bukkit.entity.Player) par1EntityPlayer.getBukkitEntity(), (org.bukkit.entity.Item) this.getBukkitEntity(), remaining);
                 //cbEvent.setCancelled(!par1EntityPlayer.canPickUpLoot); TODO
                 this.worldObj.getServer().getPluginManager().callEvent(cbEvent);
                 itemstack.stackSize = canHold + remaining;
@@ -488,7 +488,7 @@ public class EntityItem extends Entity
     /**
      * Teleports the entity to another dimension. Params: Dimension number to teleport to
      */
-    public void travelToDimension(int par1)
+    public void travelToDimension(final int par1)
     {
         super.travelToDimension(par1);
 
@@ -504,7 +504,7 @@ public class EntityItem extends Entity
      */
     public ItemStack getEntityItem()
     {
-        ItemStack itemstack = this.getDataWatcher().getWatchableObjectItemStack(10);
+        final ItemStack itemstack = this.getDataWatcher().getWatchableObjectItemStack(10);
 
         if (itemstack == null)
         {
@@ -524,7 +524,7 @@ public class EntityItem extends Entity
     /**
      * Sets the ItemStack for this entity
      */
-    public void setEntityItemStack(ItemStack par1ItemStack)
+    public void setEntityItemStack(final ItemStack par1ItemStack)
     {
         this.getDataWatcher().updateObject(10, par1ItemStack);
         this.getDataWatcher().setObjectWatched(10);

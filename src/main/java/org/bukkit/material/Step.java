@@ -78,7 +78,7 @@ public class Step extends TexturedMaterial {
      *
      * @param inv - true if step is inverted (top half), false if step is normal (bottom half)
      */
-    public void setInverted(boolean inv) {
+    public void setInverted(final boolean inv) {
         int dat = getData() & 0x7;
         if (inv) {
             dat |= 0x8;
@@ -102,7 +102,7 @@ public class Step extends TexturedMaterial {
      */
     @Deprecated
     @Override
-    protected void setTextureIndex(int idx) {
+    protected void setTextureIndex(final int idx) {
         setData((byte) ((getData() & 0x8) | idx));
     }
 

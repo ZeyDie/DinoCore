@@ -17,14 +17,14 @@ public class CraftSkull extends CraftBlockState implements Skull {
     public CraftSkull(final Block block) {
         super(block);
 
-        CraftWorld world = (CraftWorld) block.getWorld();
+        final CraftWorld world = (CraftWorld) block.getWorld();
         skull = (net.minecraft.tileentity.TileEntitySkull) world.getTileEntityAt(getX(), getY(), getZ());
         player = skull.getExtraType();
         skullType = getSkullType(skull.getSkullType());
         rotation = (byte) skull.getRotation();
     }
 
-    static SkullType getSkullType(int id) {
+    static SkullType getSkullType(final int id) {
         switch (id) {
             case 0:
                 return SkullType.SKELETON;
@@ -41,7 +41,7 @@ public class CraftSkull extends CraftBlockState implements Skull {
         }
     }
 
-    static int getSkullType(SkullType type) {
+    static int getSkullType(final SkullType type) {
         switch(type) {
             case SKELETON:
                 return 0;
@@ -58,7 +58,7 @@ public class CraftSkull extends CraftBlockState implements Skull {
         }
     }
 
-    static byte getBlockFace(BlockFace rotation) {
+    static byte getBlockFace(final BlockFace rotation) {
         switch (rotation) {
             case NORTH:
                 return 0;
@@ -97,7 +97,7 @@ public class CraftSkull extends CraftBlockState implements Skull {
         }
     }
 
-    static BlockFace getBlockFace(byte rotation) {
+    static BlockFace getBlockFace(final byte rotation) {
         switch (rotation) {
             case 0:
                 return BlockFace.NORTH;
@@ -144,7 +144,7 @@ public class CraftSkull extends CraftBlockState implements Skull {
         return player;
     }
 
-    public boolean setOwner(String name) {
+    public boolean setOwner(final String name) {
         if (name == null || name.length() > MAX_OWNER_LENGTH) {
             return false;
         }
@@ -161,7 +161,7 @@ public class CraftSkull extends CraftBlockState implements Skull {
     	return getBlockFace(rotation);
     }
 
-    public void setRotation(BlockFace rotation) {
+    public void setRotation(final BlockFace rotation) {
         this.rotation = getBlockFace(rotation);
     }
 
@@ -169,7 +169,7 @@ public class CraftSkull extends CraftBlockState implements Skull {
         return skullType;
     }
 
-    public void setSkullType(SkullType skullType) {
+    public void setSkullType(final SkullType skullType) {
         this.skullType = skullType;
 
         if (skullType != SkullType.PLAYER) {
@@ -178,8 +178,8 @@ public class CraftSkull extends CraftBlockState implements Skull {
     }
 
     @Override
-    public boolean update(boolean force, boolean applyPhysics) {
-        boolean result = super.update(force, applyPhysics);
+    public boolean update(final boolean force, final boolean applyPhysics) {
+        final boolean result = super.update(force, applyPhysics);
 
         if (result) {
             skull.setSkullType(getSkullType(skullType), player);

@@ -9,7 +9,7 @@ class DedicatedServerCommandThread extends Thread
 {
     final DedicatedServer server;
 
-    DedicatedServerCommandThread(DedicatedServer par1DedicatedServer)
+    DedicatedServerCommandThread(final DedicatedServer par1DedicatedServer)
     {
         super("Command Reader");
         this.server = par1DedicatedServer;
@@ -24,7 +24,7 @@ class DedicatedServerCommandThread extends Thread
         }
 
         // CraftBukkit end
-        jline.console.ConsoleReader bufferedreader = this.server.reader; // CraftBukkit
+        final jline.console.ConsoleReader bufferedreader = this.server.reader; // CraftBukkit
         String s;
 
         try
@@ -49,7 +49,7 @@ class DedicatedServerCommandThread extends Thread
                 // CraftBukkit end
             }
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             // CraftBukkit
             java.util.logging.Logger.getLogger("").log(java.util.logging.Level.SEVERE, null, ioexception);

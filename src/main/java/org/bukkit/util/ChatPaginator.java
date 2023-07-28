@@ -2,6 +2,7 @@ package org.bukkit.util;
 
 import org.bukkit.ChatColor;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class ChatPaginator {
      * @param pageNumber The page number to fetch.
      * @return A single chat page.
      */
-    public static ChatPage paginate(String unpaginatedString, int pageNumber) {
+    public static ChatPage paginate(final String unpaginatedString, final int pageNumber) {
         return  paginate(unpaginatedString, pageNumber, GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH, CLOSED_CHAT_PAGE_HEIGHT);
     }
 
@@ -37,15 +38,15 @@ public class ChatPaginator {
      * @param pageHeight The desired number of lines in a page.
      * @return A single chat page.
      */
-    public static ChatPage paginate(String unpaginatedString, int pageNumber, int lineLength, int pageHeight) {
-        String[] lines = wordWrap(unpaginatedString, lineLength);
+    public static ChatPage paginate(final String unpaginatedString, final int pageNumber, final int lineLength, final int pageHeight) {
+        final String[] lines = wordWrap(unpaginatedString, lineLength);
 
-        int totalPages = lines.length / pageHeight + (lines.length % pageHeight == 0 ? 0 : 1);
-        int actualPageNumber = pageNumber <= totalPages ? pageNumber : totalPages;
+        final int totalPages = lines.length / pageHeight + (lines.length % pageHeight == 0 ? 0 : 1);
+        final int actualPageNumber = pageNumber <= totalPages ? pageNumber : totalPages;
 
-        int from = (actualPageNumber - 1) * pageHeight;
-        int to = from + pageHeight <= lines.length  ? from + pageHeight : lines.length;
-        String[] selectedLines = Java15Compat.Arrays_copyOfRange(lines, from, to);
+        final int from = (actualPageNumber - 1) * pageHeight;
+        final int to = from + pageHeight <= lines.length  ? from + pageHeight : lines.length;
+        final String[] selectedLines = Java15Compat.Arrays_copyOfRange(lines, from, to);
 
         return new ChatPage(selectedLines, actualPageNumber, totalPages);
     }
@@ -58,7 +59,7 @@ public class ChatPaginator {
      * @param lineLength The length of a line of text.
      * @return An array of word-wrapped lines.
      */
-    public static String[] wordWrap(String rawString, int lineLength) {
+    public static String[] wordWrap(final String rawString, final int lineLength) {
         // A null string is a single line
         if (rawString == null) {
             return new String[] {""};
@@ -69,14 +70,14 @@ public class ChatPaginator {
             return new String[] {rawString};
         }
 
-        char[] rawChars = (rawString + ' ').toCharArray(); // add a trailing space to trigger pagination
+        final char[] rawChars = (rawString + ' ').toCharArray(); // add a trailing space to trigger pagination
         StringBuilder word = new StringBuilder();
         StringBuilder line = new StringBuilder();
-        List<String> lines = new LinkedList<String>();
+        final List<String> lines = new LinkedList<String>();
         int lineColorChars = 0;
 
         for (int i = 0; i < rawChars.length; i++) {
-            char c = rawChars[i];
+            final char c = rawChars[i];
 
             // skip chat color modifiers
             if (c == ChatColor.COLOR_CHAR) {
@@ -88,16 +89,14 @@ public class ChatPaginator {
 
             if (c == ' ' || c == '\n') {
                 if (line.length() == 0 && word.length() > lineLength) { // special case: extremely long word begins a line
-                    for (String partialWord : word.toString().split("(?<=\\G.{" + lineLength + "})")) {
-                        lines.add(partialWord);
-                    }
+                    lines.addAll(Arrays.asList(word.toString().split("(?<=\\G.{" + lineLength + "})")));
                 } else if (line.length() + word.length() - lineColorChars == lineLength) { // Line exactly the correct length...newline
                     line.append(word);
                     lines.add(line.toString());
                     line = new StringBuilder();
                     lineColorChars = 0;
                 } else if (line.length() + 1 + word.length() - lineColorChars > lineLength) { // Line too long...break the line
-                    for (String partialWord : word.toString().split("(?<=\\G.{" + lineLength + "})")) {
+                    for (final String partialWord : word.toString().split("(?<=\\G.{" + lineLength + "})")) {
                         lines.add(line.toString());
                         line = new StringBuilder(partialWord);
                     }
@@ -124,20 +123,20 @@ public class ChatPaginator {
         }
 
         // Iterate over the wrapped lines, applying the last color from one line to the beginning of the next
-        if (lines.get(0).length() == 0 || lines.get(0).charAt(0) != ChatColor.COLOR_CHAR) {
+        if (lines.get(0).isEmpty() || lines.get(0).charAt(0) != ChatColor.COLOR_CHAR) {
             lines.set(0, ChatColor.WHITE + lines.get(0));
         }
         for (int i = 1; i < lines.size(); i++) {
             final String pLine = lines.get(i-1);
             final String subLine = lines.get(i);
 
-            char color = pLine.charAt(pLine.lastIndexOf(ChatColor.COLOR_CHAR) + 1);
-            if (subLine.length() == 0 || subLine.charAt(0) != ChatColor.COLOR_CHAR) {
+            final char color = pLine.charAt(pLine.lastIndexOf(ChatColor.COLOR_CHAR) + 1);
+            if (subLine.isEmpty() || subLine.charAt(0) != ChatColor.COLOR_CHAR) {
                 lines.set(i, ChatColor.getByChar(color) + subLine);
             }
         }
 
-        return lines.toArray(new String[lines.size()]);
+        return lines.toArray(new String[0]);
     }
 
     public static class ChatPage {
@@ -146,7 +145,7 @@ public class ChatPaginator {
         private int pageNumber;
         private int totalPages;
 
-        public ChatPage(String[] lines, int pageNumber, int totalPages) {
+        public ChatPage(final String[] lines, final int pageNumber, final int totalPages) {
             this.lines = lines;
             this.pageNumber = pageNumber;
             this.totalPages = totalPages;

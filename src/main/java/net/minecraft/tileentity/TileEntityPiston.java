@@ -31,7 +31,7 @@ public class TileEntityPiston extends TileEntity
 
     public TileEntityPiston() {}
 
-    public TileEntityPiston(int par1, int par2, int par3, boolean par4, boolean par5)
+    public TileEntityPiston(final int par1, final int par2, final int par3, final boolean par4, final boolean par5)
     {
         this.storedBlockID = par1;
         this.storedMetadata = par2;
@@ -81,39 +81,41 @@ public class TileEntityPiston extends TileEntity
      */
     public float getProgress(float par1)
     {
-        if (par1 > 1.0F)
+        float par11 = par1;
+        if (par11 > 1.0F)
         {
-            par1 = 1.0F;
+            par11 = 1.0F;
         }
 
-        return this.lastProgress + (this.progress - this.lastProgress) * par1;
+        return this.lastProgress + (this.progress - this.lastProgress) * par11;
     }
 
-    private void updatePushedObjects(float par1, float par2)
+    private void updatePushedObjects(float par1, final float par2)
     {
+        float par11 = par1;
         if (this.extending)
         {
-            par1 = 1.0F - par1;
+            par11 = 1.0F - par11;
         }
         else
         {
-            --par1;
+            --par11;
         }
 
-        AxisAlignedBB axisalignedbb = Block.pistonMoving.getAxisAlignedBB(this.worldObj, this.xCoord, this.yCoord, this.zCoord, this.storedBlockID, par1, this.storedOrientation);
+        final AxisAlignedBB axisalignedbb = Block.pistonMoving.getAxisAlignedBB(this.worldObj, this.xCoord, this.yCoord, this.zCoord, this.storedBlockID, par11, this.storedOrientation);
 
         if (axisalignedbb != null)
         {
-            List list = this.worldObj.getEntitiesWithinAABBExcludingEntity((Entity)null, axisalignedbb);
+            final List list = this.worldObj.getEntitiesWithinAABBExcludingEntity((Entity)null, axisalignedbb);
 
             if (!list.isEmpty())
             {
                 this.pushedObjects.addAll(list);
-                Iterator iterator = this.pushedObjects.iterator();
+                final Iterator iterator = this.pushedObjects.iterator();
 
                 while (iterator.hasNext())
                 {
-                    Entity entity = (Entity)iterator.next();
+                    final Entity entity = (Entity)iterator.next();
                     entity.moveEntity((double)(par2 * (float)Facing.offsetsXForSide[this.storedOrientation]), (double)(par2 * (float)Facing.offsetsYForSide[this.storedOrientation]), (double)(par2 * (float)Facing.offsetsZForSide[this.storedOrientation]));
                 }
 
@@ -123,19 +125,19 @@ public class TileEntityPiston extends TileEntity
     }
 
     @SideOnly(Side.CLIENT)
-    public float getOffsetX(float par1)
+    public float getOffsetX(final float par1)
     {
         return this.extending ? (this.getProgress(par1) - 1.0F) * (float)Facing.offsetsXForSide[this.storedOrientation] : (1.0F - this.getProgress(par1)) * (float)Facing.offsetsXForSide[this.storedOrientation];
     }
 
     @SideOnly(Side.CLIENT)
-    public float getOffsetY(float par1)
+    public float getOffsetY(final float par1)
     {
         return this.extending ? (this.getProgress(par1) - 1.0F) * (float)Facing.offsetsYForSide[this.storedOrientation] : (1.0F - this.getProgress(par1)) * (float)Facing.offsetsYForSide[this.storedOrientation];
     }
 
     @SideOnly(Side.CLIENT)
-    public float getOffsetZ(float par1)
+    public float getOffsetZ(final float par1)
     {
         return this.extending ? (this.getProgress(par1) - 1.0F) * (float)Facing.offsetsZForSide[this.storedOrientation] : (1.0F - this.getProgress(par1)) * (float)Facing.offsetsZForSide[this.storedOrientation];
     }
@@ -203,7 +205,7 @@ public class TileEntityPiston extends TileEntity
     /**
      * Reads a tile entity from NBT.
      */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
         this.storedBlockID = par1NBTTagCompound.getInteger("blockId");
@@ -216,7 +218,7 @@ public class TileEntityPiston extends TileEntity
     /**
      * Writes a tile entity to NBT.
      */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setInteger("blockId", this.storedBlockID);

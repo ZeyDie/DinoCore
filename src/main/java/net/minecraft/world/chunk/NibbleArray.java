@@ -104,7 +104,7 @@ public class NibbleArray
         }
         else
         {
-            byte[] rslt;
+            final byte[] rslt;
     
             if (this.length == LEN2K)    // All current uses are 2k long, but be safe
             {
@@ -125,7 +125,7 @@ public class NibbleArray
     }
     
     // Copy byte representation of array to given offset in given byte array
-    public int copyToByteArray(byte[] dest, int off)
+    public int copyToByteArray(final byte[] dest, final int off)
     {
         if (this.data == null)
         {
@@ -140,7 +140,7 @@ public class NibbleArray
     }
     
     // Resize array to given byte length
-    public void resizeArray(int len)
+    public void resizeArray(final int len)
     {
         if (this.data == null)
         {
@@ -148,14 +148,14 @@ public class NibbleArray
         }
         else if (this.data.length != len)
         {
-            byte[] newa = new byte[len];
+            final byte[] newa = new byte[len];
             System.arraycopy(this.data, 0, newa, 0, ((this.data.length > len) ? len : this.data.length));
             this.data = newa;
         }
     }
     // Spigot end
 
-    public NibbleArray(int par1, int par2)
+    public NibbleArray(final int par1, final int par2)
     {
         // Spigot start
         //this.data = new byte[par1 >> 1];
@@ -167,7 +167,7 @@ public class NibbleArray
         this.depthBitsPlusFour = par2 + 4;
     }
 
-    public NibbleArray(byte[] par1ArrayOfByte, int par2)
+    public NibbleArray(final byte[] par1ArrayOfByte, final int par2)
     {
         this.data = par1ArrayOfByte;
         this.depthBits = par2;
@@ -178,23 +178,23 @@ public class NibbleArray
     /**
      * Returns the nibble of data corresponding to the passed in x, y, z. y is at most 6 bits, z is at most 4.
      */
-    public int get(int par1, int par2, int par3)
+    public int get(final int par1, final int par2, final int par3)
     {
         if (this.data == null)
         {
             return this.trivialValue;    // Spigot
         }
 
-        int l = par2 << this.depthBitsPlusFour | par3 << this.depthBits | par1;
-        int i1 = l >> 1;
-        int j1 = l & 1;
+        final int l = par2 << this.depthBitsPlusFour | par3 << this.depthBits | par1;
+        final int i1 = l >> 1;
+        final int j1 = l & 1;
         return j1 == 0 ? this.data[i1] & 15 : this.data[i1] >> 4 & 15;
     }
 
     /**
      * Arguments are x, y, z, val. Sets the nibble of data at x << 11 | z << 7 | y to val.
      */
-    public void set(int par1, int par2, int par3, int par4)
+    public void set(final int par1, final int par2, final int par3, final int par4)
     {
         // Spigot start
         if (this.data == null)
@@ -215,9 +215,9 @@ public class NibbleArray
         }
 
         // Spigot end
-        int i1 = par2 << this.depthBitsPlusFour | par3 << this.depthBits | par1;
-        int j1 = i1 >> 1;
-        int k1 = i1 & 1;
+        final int i1 = par2 << this.depthBitsPlusFour | par3 << this.depthBits | par1;
+        final int j1 = i1 >> 1;
+        final int k1 = i1 & 1;
 
         if (k1 == 0)
         {

@@ -2,7 +2,7 @@ package net.minecraft.block.material;
 
 final class MaterialWeb extends Material
 {
-    MaterialWeb(MapColor par1MapColor)
+    MaterialWeb(final MapColor par1MapColor)
     {
         super(par1MapColor);
     }

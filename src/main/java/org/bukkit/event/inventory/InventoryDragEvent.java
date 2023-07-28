@@ -61,7 +61,7 @@ public class InventoryDragEvent extends InventoryInteractEvent {
     private final ItemStack oldCursor;
     private ItemStack newCursor;
 
-    public InventoryDragEvent(InventoryView what, ItemStack newCursor, ItemStack oldCursor, boolean right, Map<Integer, ItemStack> slots) {
+    public InventoryDragEvent(final InventoryView what, final ItemStack newCursor, final ItemStack oldCursor, final boolean right, final Map<Integer, ItemStack> slots) {
         super(what);
 
         Validate.notNull(oldCursor);
@@ -71,8 +71,8 @@ public class InventoryDragEvent extends InventoryInteractEvent {
         this.newCursor = newCursor;
         this.oldCursor = oldCursor;
         this.addedItems = slots;
-        ImmutableSet.Builder<Integer> b = ImmutableSet.builder();
-        for (Integer slot : slots.keySet()) {
+        final ImmutableSet.Builder<Integer> b = ImmutableSet.builder();
+        for (final Integer slot : slots.keySet()) {
             b.add(what.convertSlot(slot));
         }
         this.containerSlots = b.build();
@@ -125,7 +125,7 @@ public class InventoryDragEvent extends InventoryInteractEvent {
      *
      * @param newCursor the new cursor ItemStack
      */
-    public void setCursor(ItemStack newCursor) {
+    public void setCursor(final ItemStack newCursor) {
         this.newCursor = newCursor;
     }
 

@@ -14,7 +14,7 @@ public class DemoWorldManager extends ItemInWorldManager
     private int field_73104_e;
     private int field_73102_f;
 
-    public DemoWorldManager(World par1World)
+    public DemoWorldManager(final World par1World)
     {
         super(par1World);
     }
@@ -23,8 +23,8 @@ public class DemoWorldManager extends ItemInWorldManager
     {
         super.updateBlockRemoving();
         ++this.field_73102_f;
-        long i = this.theWorld.getTotalWorldTime();
-        long j = i / 24000L + 1L;
+        final long i = this.theWorld.getTotalWorldTime();
+        final long j = i / 24000L + 1L;
 
         if (!this.field_73105_c && this.field_73102_f > 20)
         {
@@ -83,7 +83,7 @@ public class DemoWorldManager extends ItemInWorldManager
      * if not creative, it calls destroyBlockInWorldPartially untill the block is broken first. par4 is the specific
      * side. tryHarvestBlock can also be the result of this call
      */
-    public void onBlockClicked(int par1, int par2, int par3, int par4)
+    public void onBlockClicked(final int par1, final int par2, final int par3, final int par4)
     {
         if (this.demoTimeExpired)
         {
@@ -95,7 +95,7 @@ public class DemoWorldManager extends ItemInWorldManager
         }
     }
 
-    public void uncheckedTryHarvestBlock(int par1, int par2, int par3)
+    public void uncheckedTryHarvestBlock(final int par1, final int par2, final int par3)
     {
         if (!this.demoTimeExpired)
         {
@@ -106,7 +106,7 @@ public class DemoWorldManager extends ItemInWorldManager
     /**
      * Attempts to harvest a block at the given coordinate
      */
-    public boolean tryHarvestBlock(int par1, int par2, int par3)
+    public boolean tryHarvestBlock(final int par1, final int par2, final int par3)
     {
         return this.demoTimeExpired ? false : super.tryHarvestBlock(par1, par2, par3);
     }
@@ -114,7 +114,7 @@ public class DemoWorldManager extends ItemInWorldManager
     /**
      * Attempts to right-click use an item by the given EntityPlayer in the given World
      */
-    public boolean tryUseItem(EntityPlayer par1EntityPlayer, World par2World, ItemStack par3ItemStack)
+    public boolean tryUseItem(final EntityPlayer par1EntityPlayer, final World par2World, final ItemStack par3ItemStack)
     {
         if (this.demoTimeExpired)
         {
@@ -131,7 +131,7 @@ public class DemoWorldManager extends ItemInWorldManager
      * Activate the clicked on block, otherwise use the held item. Args: player, world, itemStack, x, y, z, side,
      * xOffset, yOffset, zOffset
      */
-    public boolean activateBlockOrUseItem(EntityPlayer par1EntityPlayer, World par2World, ItemStack par3ItemStack, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean activateBlockOrUseItem(final EntityPlayer par1EntityPlayer, final World par2World, final ItemStack par3ItemStack, final int par4, final int par5, final int par6, final int par7, final float par8, final float par9, final float par10)
     {
         if (this.demoTimeExpired)
         {

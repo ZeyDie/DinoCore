@@ -5,7 +5,7 @@ import org.bukkit.inventory.AnvilInventory;
 public class CraftInventoryAnvil extends CraftInventory implements AnvilInventory {
     private final net.minecraft.inventory.IInventory resultInventory;
 
-    public CraftInventoryAnvil(net.minecraft.inventory.IInventory inventory, net.minecraft.inventory.IInventory resultInventory) {
+    public CraftInventoryAnvil(final net.minecraft.inventory.IInventory inventory, final net.minecraft.inventory.IInventory resultInventory) {
         super(inventory);
         this.resultInventory = resultInventory;
     }

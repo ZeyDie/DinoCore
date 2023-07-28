@@ -22,7 +22,7 @@ public class WorldCreator {
      *
      * @param name Name of the world that will be created
      */
-    public WorldCreator(String name) {
+    public WorldCreator(final String name) {
         if (name == null) {
             throw new IllegalArgumentException("World name cannot be null");
         }
@@ -37,7 +37,7 @@ public class WorldCreator {
      * @param world World to copy options from
      * @return This object, for chaining
      */
-    public WorldCreator copy(World world) {
+    public WorldCreator copy(final World world) {
         if (world == null) {
             throw new IllegalArgumentException("World cannot be null");
         }
@@ -55,7 +55,7 @@ public class WorldCreator {
      * @param creator World creator to copy options from
      * @return This object, for chaining
      */
-    public WorldCreator copy(WorldCreator creator) {
+    public WorldCreator copy(final WorldCreator creator) {
         if (creator == null) {
             throw new IllegalArgumentException("Creator cannot be null");
         }
@@ -91,7 +91,7 @@ public class WorldCreator {
      * @param seed World seed
      * @return This object, for chaining
      */
-    public WorldCreator seed(long seed) {
+    public WorldCreator seed(final long seed) {
         this.seed = seed;
 
         return this;
@@ -112,7 +112,7 @@ public class WorldCreator {
      * @param env World environment
      * @return This object, for chaining
      */
-    public WorldCreator environment(World.Environment env) {
+    public WorldCreator environment(final World.Environment env) {
         this.environment = env;
 
         return this;
@@ -133,7 +133,7 @@ public class WorldCreator {
      * @param type World type
      * @return This object, for chaining
      */
-    public WorldCreator type(WorldType type) {
+    public WorldCreator type(final WorldType type) {
         this.type = type;
 
         return this;
@@ -160,7 +160,7 @@ public class WorldCreator {
      * @param generator Chunk generator
      * @return This object, for chaining
      */
-    public WorldCreator generator(ChunkGenerator generator) {
+    public WorldCreator generator(final ChunkGenerator generator) {
         this.generator = generator;
 
         return this;
@@ -178,7 +178,7 @@ public class WorldCreator {
      * @param generator Name of the generator to use, in "plugin:id" notation
      * @return This object, for chaining
      */
-    public WorldCreator generator(String generator) {
+    public WorldCreator generator(final String generator) {
         this.generator = getGeneratorForName(name, generator, Bukkit.getConsoleSender());
 
         return this;
@@ -197,7 +197,7 @@ public class WorldCreator {
      * @param output {@link CommandSender} that will receive any error messages
      * @return This object, for chaining
      */
-    public WorldCreator generator(String generator, CommandSender output) {
+    public WorldCreator generator(final String generator, final CommandSender output) {
         this.generator = getGeneratorForName(name, generator, output);
 
         return this;
@@ -209,7 +209,7 @@ public class WorldCreator {
      * @param generate Whether to generate structures
      * @return This object, for chaining
      */
-    public WorldCreator generateStructures(boolean generate) {
+    public WorldCreator generateStructures(final boolean generate) {
         this.generateStructures = generate;
 
         return this;
@@ -242,7 +242,7 @@ public class WorldCreator {
      * @param name Name of the world to load or create
      * @return Resulting WorldCreator
      */
-    public static WorldCreator name(String name) {
+    public static WorldCreator name(final String name) {
         return new WorldCreator(name);
     }
 
@@ -261,26 +261,27 @@ public class WorldCreator {
      * @param output Where to output if errors are present
      * @return Resulting generator, or null
      */
-    public static ChunkGenerator getGeneratorForName(String world, String name, CommandSender output) {
+    public static ChunkGenerator getGeneratorForName(final String world, final String name, CommandSender output) {
+        CommandSender output1 = output;
         ChunkGenerator result = null;
 
         if (world == null) {
             throw new IllegalArgumentException("World name must be specified");
         }
 
-        if (output == null) {
-            output = Bukkit.getConsoleSender();
+        if (output1 == null) {
+            output1 = Bukkit.getConsoleSender();
         }
 
         if (name != null) {
-            String[] split = name.split(":", 2);
-            String id = (split.length > 1) ? split[1] : null;
-            Plugin plugin = Bukkit.getPluginManager().getPlugin(split[0]);
+            final String[] split = name.split(":", 2);
+            final String id = (split.length > 1) ? split[1] : null;
+            final Plugin plugin = Bukkit.getPluginManager().getPlugin(split[0]);
 
             if (plugin == null) {
-                output.sendMessage("Could not set generator for world '" + world + "': Plugin '" + split[0] + "' does not exist");
+                output1.sendMessage("Could not set generator for world '" + world + "': Plugin '" + split[0] + "' does not exist");
             } else if (!plugin.isEnabled()) {
-                output.sendMessage("Could not set generator for world '" + world + "': Plugin '" + plugin.getDescription().getFullName() + "' is not enabled");
+                output1.sendMessage("Could not set generator for world '" + world + "': Plugin '" + plugin.getDescription().getFullName() + "' is not enabled");
             } else {
                 result = plugin.getDefaultWorldGenerator(world, id);
             }

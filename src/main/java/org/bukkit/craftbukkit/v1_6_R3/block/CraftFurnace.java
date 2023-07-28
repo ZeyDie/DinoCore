@@ -20,8 +20,8 @@ public class CraftFurnace extends CraftBlockState implements Furnace {
     }
 
     @Override
-    public boolean update(boolean force, boolean applyPhysics) {
-        boolean result = super.update(force, applyPhysics);
+    public boolean update(final boolean force, final boolean applyPhysics) {
+        final boolean result = super.update(force, applyPhysics);
 
         if (result) {
             furnace.onInventoryChanged();
@@ -34,7 +34,7 @@ public class CraftFurnace extends CraftBlockState implements Furnace {
         return (short) furnace.furnaceBurnTime;
     }
 
-    public void setBurnTime(short burnTime) {
+    public void setBurnTime(final short burnTime) {
         furnace.furnaceBurnTime = burnTime;
     }
 
@@ -42,7 +42,7 @@ public class CraftFurnace extends CraftBlockState implements Furnace {
         return (short) furnace.furnaceCookTime;
     }
 
-    public void setCookTime(short cookTime) {
+    public void setCookTime(final short cookTime) {
         furnace.furnaceCookTime = cookTime;
     }
 }

@@ -8,7 +8,7 @@ class CallableCrashMemoryReport implements Callable
 {
     final CrashReport theCrashReport;
 
-    CallableCrashMemoryReport(CrashReport par1CrashReport)
+    CallableCrashMemoryReport(final CrashReport par1CrashReport)
     {
         this.theCrashReport = par1CrashReport;
     }
@@ -18,12 +18,12 @@ class CallableCrashMemoryReport implements Callable
      */
     public String getMemoryReport()
     {
-        int i = AxisAlignedBB.getAABBPool().getlistAABBsize();
-        int j = 56 * i;
-        int k = j / 1024 / 1024;
-        int l = AxisAlignedBB.getAABBPool().getnextPoolIndex();
-        int i1 = 56 * l;
-        int j1 = i1 / 1024 / 1024;
+        final int i = AxisAlignedBB.getAABBPool().getlistAABBsize();
+        final int j = 56 * i;
+        final int k = j / 1024 / 1024;
+        final int l = AxisAlignedBB.getAABBPool().getnextPoolIndex();
+        final int i1 = 56 * l;
+        final int j1 = i1 / 1024 / 1024;
         return i + " (" + j + " bytes; " + k + " MB) allocated, " + l + " (" + i1 + " bytes; " + j1 + " MB) used";
     }
 

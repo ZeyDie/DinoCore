@@ -19,7 +19,7 @@ class SlotArmor extends Slot
      */
     final ContainerPlayer parent;
 
-    SlotArmor(ContainerPlayer par1ContainerPlayer, IInventory par2IInventory, int par3, int par4, int par5, int par6)
+    SlotArmor(final ContainerPlayer par1ContainerPlayer, final IInventory par2IInventory, final int par3, final int par4, final int par5, final int par6)
     {
         super(par2IInventory, par3, par4, par5);
         this.parent = par1ContainerPlayer;
@@ -38,9 +38,9 @@ class SlotArmor extends Slot
     /**
      * Check if the stack is a valid item for this slot. Always true beside for the armor slots.
      */
-    public boolean isItemValid(ItemStack par1ItemStack)
+    public boolean isItemValid(final ItemStack par1ItemStack)
     {
-        Item item = (par1ItemStack == null ? null : par1ItemStack.getItem());
+        final Item item = (par1ItemStack == null ? null : par1ItemStack.getItem());
         return item != null && item.isValidArmor(par1ItemStack, armorType, parent.thePlayer);
     }
 

@@ -18,7 +18,7 @@ public class ComponentMineshaftRoom extends StructureComponent
 
     public ComponentMineshaftRoom() {}
 
-    public ComponentMineshaftRoom(int par1, Random par2Random, int par3, int par4)
+    public ComponentMineshaftRoom(final int par1, final Random par2Random, final int par3, final int par4)
     {
         super(par1);
         this.boundingBox = new StructureBoundingBox(par3, 50, par4, par3 + 7 + par2Random.nextInt(6), 54 + par2Random.nextInt(6), par4 + 7 + par2Random.nextInt(6));
@@ -27,9 +27,9 @@ public class ComponentMineshaftRoom extends StructureComponent
     /**
      * Initiates construction of the Structure Component picked, at the current Location of StructGen
      */
-    public void buildComponent(StructureComponent par1StructureComponent, List par2List, Random par3Random)
+    public void buildComponent(final StructureComponent par1StructureComponent, final List par2List, final Random par3Random)
     {
-        int i = this.getComponentType();
+        final int i = this.getComponentType();
         int j = this.boundingBox.getYSize() - 3 - 1;
 
         if (j <= 0)
@@ -118,7 +118,7 @@ public class ComponentMineshaftRoom extends StructureComponent
      * second Part of Structure generating, this for example places Spiderwebs, Mob Spawners, it closes Mineshafts at
      * the end, it adds Fences...
      */
-    public boolean addComponentParts(World par1World, Random par2Random, StructureBoundingBox par3StructureBoundingBox)
+    public boolean addComponentParts(final World par1World, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox)
     {
         if (this.isLiquidInStructureBoundingBox(par1World, par3StructureBoundingBox))
         {
@@ -128,11 +128,11 @@ public class ComponentMineshaftRoom extends StructureComponent
         {
             this.fillWithBlocks(par1World, par3StructureBoundingBox, this.boundingBox.minX, this.boundingBox.minY, this.boundingBox.minZ, this.boundingBox.maxX, this.boundingBox.minY, this.boundingBox.maxZ, Block.dirt.blockID, 0, true);
             this.fillWithBlocks(par1World, par3StructureBoundingBox, this.boundingBox.minX, this.boundingBox.minY + 1, this.boundingBox.minZ, this.boundingBox.maxX, Math.min(this.boundingBox.minY + 3, this.boundingBox.maxY), this.boundingBox.maxZ, 0, 0, false);
-            Iterator iterator = this.roomsLinkedToTheRoom.iterator();
+            final Iterator iterator = this.roomsLinkedToTheRoom.iterator();
 
             while (iterator.hasNext())
             {
-                StructureBoundingBox structureboundingbox1 = (StructureBoundingBox)iterator.next();
+                final StructureBoundingBox structureboundingbox1 = (StructureBoundingBox)iterator.next();
                 this.fillWithBlocks(par1World, par3StructureBoundingBox, structureboundingbox1.minX, structureboundingbox1.maxY - 2, structureboundingbox1.minZ, structureboundingbox1.maxX, structureboundingbox1.maxY, structureboundingbox1.maxZ, 0, 0, false);
             }
 
@@ -141,23 +141,23 @@ public class ComponentMineshaftRoom extends StructureComponent
         }
     }
 
-    protected void func_143012_a(NBTTagCompound par1NBTTagCompound)
+    protected void func_143012_a(final NBTTagCompound par1NBTTagCompound)
     {
-        NBTTagList nbttaglist = new NBTTagList("Entrances");
-        Iterator iterator = this.roomsLinkedToTheRoom.iterator();
+        final NBTTagList nbttaglist = new NBTTagList("Entrances");
+        final Iterator iterator = this.roomsLinkedToTheRoom.iterator();
 
         while (iterator.hasNext())
         {
-            StructureBoundingBox structureboundingbox = (StructureBoundingBox)iterator.next();
+            final StructureBoundingBox structureboundingbox = (StructureBoundingBox)iterator.next();
             nbttaglist.appendTag(structureboundingbox.func_143047_a(""));
         }
 
         par1NBTTagCompound.setTag("Entrances", nbttaglist);
     }
 
-    protected void func_143011_b(NBTTagCompound par1NBTTagCompound)
+    protected void func_143011_b(final NBTTagCompound par1NBTTagCompound)
     {
-        NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Entrances");
+        final NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Entrances");
 
         for (int i = 0; i < nbttaglist.tagCount(); ++i)
         {

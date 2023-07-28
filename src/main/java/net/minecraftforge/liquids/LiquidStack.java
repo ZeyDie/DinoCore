@@ -27,18 +27,18 @@ public class LiquidStack
     public final int itemMeta;
     public NBTTagCompound extra;
 
-    public LiquidStack(int itemID,  int amount) { this(itemID,        amount, 0); }
-    public LiquidStack(Item item,   int amount) { this(item.itemID,   amount, 0); }
-    public LiquidStack(Block block, int amount) { this(block.blockID, amount, 0); }
+    public LiquidStack(final int itemID, final int amount) { this(itemID,        amount, 0); }
+    public LiquidStack(final Item item, final int amount) { this(item.itemID,   amount, 0); }
+    public LiquidStack(final Block block, final int amount) { this(block.blockID, amount, 0); }
 
-    public LiquidStack(int itemID, int amount, int itemDamage)
+    public LiquidStack(final int itemID, final int amount, final int itemDamage)
     {
         this.itemID = itemID;
         this.amount = amount;
         this.itemMeta = itemDamage;
     }
 
-    public LiquidStack(int itemID, int amount, int itemDamage, NBTTagCompound nbt)
+    public LiquidStack(final int itemID, final int amount, final int itemDamage, final NBTTagCompound nbt)
     {
         this(itemID, amount, itemDamage);
         if (nbt != null)
@@ -47,12 +47,12 @@ public class LiquidStack
         }
     }
 
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
+    public NBTTagCompound writeToNBT(final NBTTagCompound nbt)
     {
         nbt.setInteger("Amount", amount);
         nbt.setShort("Id", (short)itemID);
         nbt.setShort("Meta", (short)itemMeta);
-        String name = LiquidDictionary.findLiquidName(this);
+        final String name = LiquidDictionary.findLiquidName(this);
         if(name != null)
         {
             nbt.setString("LiquidName", name);
@@ -76,7 +76,7 @@ public class LiquidStack
      * @param other
      * @return true if this LiquidStack contains the same liquid as the one passed in.
      */
-    public boolean isLiquidEqual(LiquidStack other)
+    public boolean isLiquidEqual(final LiquidStack other)
     {
         return other != null && itemID == other.itemID && itemMeta == other.itemMeta && (extra == null ? other.extra == null : extra.equals(other.extra));
     }
@@ -85,7 +85,7 @@ public class LiquidStack
      * @param other
      * @return true if this LiquidStack contains the other liquid (liquids are equal and amount >= other.amount).
      */
-    public boolean containsLiquid(LiquidStack other)
+    public boolean containsLiquid(final LiquidStack other)
     {
         return isLiquidEqual(other) && amount >= other.amount;
     }
@@ -94,7 +94,7 @@ public class LiquidStack
      * @param other ItemStack containing liquids.
      * @return true if this LiquidStack contains the same liquid as the one passed in.
      */
-    public boolean isLiquidEqual(ItemStack other)
+    public boolean isLiquidEqual(final ItemStack other)
     {
         if (other == null)
         {
@@ -114,7 +114,7 @@ public class LiquidStack
      */
     public ItemStack asItemStack()
     {
-        ItemStack stack = new ItemStack(itemID, 1, itemMeta);
+        final ItemStack stack = new ItemStack(itemID, 1, itemMeta);
         if (extra != null)
         {
             stack.stackTagCompound = (NBTTagCompound)extra.copy();
@@ -128,16 +128,16 @@ public class LiquidStack
      * @param nbt
      * @return the liquid stack
      */
-    public static LiquidStack loadLiquidStackFromNBT(NBTTagCompound nbt)
+    public static LiquidStack loadLiquidStackFromNBT(final NBTTagCompound nbt)
     {
         if (nbt == null)
         {
             return null;
         }
-        String liquidName = nbt.getString("LiquidName");
+        final String liquidName = nbt.getString("LiquidName");
         int itemID = nbt.getShort("Id");
         int itemMeta = nbt.getShort("Meta");
-        LiquidStack liquid = LiquidDictionary.getCanonicalLiquid(liquidName);
+        final LiquidStack liquid = LiquidDictionary.getCanonicalLiquid(liquidName);
         if(liquid != null) {
             itemID = liquid.itemID;
             itemMeta = liquid.itemMeta;
@@ -147,8 +147,8 @@ public class LiquidStack
         {
             return null;
         }
-        int amount = nbt.getInteger("Amount");
-        LiquidStack liquidstack = new LiquidStack(itemID, amount, itemMeta);
+        final int amount = nbt.getInteger("Amount");
+        final LiquidStack liquidstack = new LiquidStack(itemID, amount, itemMeta);
         if (nbt.hasKey("extra"))
         {
             liquidstack.extra = nbt.getCompoundTag("extra");
@@ -179,7 +179,7 @@ public class LiquidStack
      * @param textureSheet
      * @return the liquid stack
      */
-    public LiquidStack setTextureSheet(String textureSheet)
+    public LiquidStack setTextureSheet(final String textureSheet)
     {
         this.textureSheet = textureSheet;
         return this;
@@ -219,7 +219,7 @@ public class LiquidStack
      * @return The liquid stack
      */
     @SideOnly(CLIENT)
-    public LiquidStack setRenderingIcon(Icon icon)
+    public LiquidStack setRenderingIcon(final Icon icon)
     {
         this.renderingIcon = icon;
         return this;
@@ -232,11 +232,11 @@ public class LiquidStack
     }
 
     @Override
-    public final boolean equals(Object ob)
+    public final boolean equals(final Object ob)
     {
         if (ob instanceof LiquidStack)
         {
-            LiquidStack ls = (LiquidStack)ob;
+            final LiquidStack ls = (LiquidStack)ob;
             return ls.itemID == itemID && ls.itemMeta == itemMeta && (extra == null ? ls.extra == null : extra.equals(ls.extra));
         }
         return false;

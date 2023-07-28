@@ -22,7 +22,7 @@ public class EntityOtherPlayerMP extends AbstractClientPlayer
     private double otherPlayerMPYaw;
     private double otherPlayerMPPitch;
 
-    public EntityOtherPlayerMP(World par1World, String par2Str)
+    public EntityOtherPlayerMP(final World par1World, final String par2Str)
     {
         super(par1World, par2Str);
         this.yOffset = 0.0F;
@@ -43,7 +43,7 @@ public class EntityOtherPlayerMP extends AbstractClientPlayer
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2)
     {
         return true;
     }
@@ -52,7 +52,7 @@ public class EntityOtherPlayerMP extends AbstractClientPlayer
      * Sets the position and rotation. Only difference from the other one is no bounding on the rotation. Args: posX,
      * posY, posZ, yaw, pitch
      */
-    public void setPositionAndRotation2(double par1, double par3, double par5, float par7, float par8, int par9)
+    public void setPositionAndRotation2(final double par1, final double par3, final double par5, final float par7, final float par8, final int par9)
     {
         this.otherPlayerMPX = par1;
         this.otherPlayerMPY = par3;
@@ -70,8 +70,8 @@ public class EntityOtherPlayerMP extends AbstractClientPlayer
         this.field_71082_cx = 0.0F;
         super.onUpdate();
         this.prevLimbSwingAmount = this.limbSwingAmount;
-        double d0 = this.posX - this.prevPosX;
-        double d1 = this.posZ - this.prevPosZ;
+        final double d0 = this.posX - this.prevPosX;
+        final double d1 = this.posZ - this.prevPosZ;
         float f = MathHelper.sqrt_double(d0 * d0 + d1 * d1) * 4.0F;
 
         if (f > 1.0F)
@@ -84,7 +84,7 @@ public class EntityOtherPlayerMP extends AbstractClientPlayer
 
         if (!this.isItemInUse && this.isEating() && this.inventory.mainInventory[this.inventory.currentItem] != null)
         {
-            ItemStack itemstack = this.inventory.mainInventory[this.inventory.currentItem];
+            final ItemStack itemstack = this.inventory.mainInventory[this.inventory.currentItem];
             this.setItemInUse(this.inventory.mainInventory[this.inventory.currentItem], Item.itemsList[itemstack.itemID].getMaxItemUseDuration(itemstack));
             this.isItemInUse = true;
         }
@@ -110,9 +110,9 @@ public class EntityOtherPlayerMP extends AbstractClientPlayer
 
         if (this.otherPlayerMPPosRotationIncrements > 0)
         {
-            double d0 = this.posX + (this.otherPlayerMPX - this.posX) / (double)this.otherPlayerMPPosRotationIncrements;
-            double d1 = this.posY + (this.otherPlayerMPY - this.posY) / (double)this.otherPlayerMPPosRotationIncrements;
-            double d2 = this.posZ + (this.otherPlayerMPZ - this.posZ) / (double)this.otherPlayerMPPosRotationIncrements;
+            final double d0 = this.posX + (this.otherPlayerMPX - this.posX) / (double)this.otherPlayerMPPosRotationIncrements;
+            final double d1 = this.posY + (this.otherPlayerMPY - this.posY) / (double)this.otherPlayerMPPosRotationIncrements;
+            final double d2 = this.posZ + (this.otherPlayerMPZ - this.posZ) / (double)this.otherPlayerMPPosRotationIncrements;
             double d3;
 
             for (d3 = this.otherPlayerMPYaw - (double)this.rotationYaw; d3 < -180.0D; d3 += 360.0D)
@@ -158,7 +158,7 @@ public class EntityOtherPlayerMP extends AbstractClientPlayer
     /**
      * Sets the held item, or an armor slot. Slot 0 is held item. Slot 1-4 is armor. Params: Item, slot
      */
-    public void setCurrentItemOrArmor(int par1, ItemStack par2ItemStack)
+    public void setCurrentItemOrArmor(final int par1, final ItemStack par2ItemStack)
     {
         if (par1 == 0)
         {
@@ -176,7 +176,7 @@ public class EntityOtherPlayerMP extends AbstractClientPlayer
         return 1.82F;
     }
 
-    public void sendChatToPlayer(ChatMessageComponent par1ChatMessageComponent)
+    public void sendChatToPlayer(final ChatMessageComponent par1ChatMessageComponent)
     {
         Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(par1ChatMessageComponent.toStringWithFormatting(true));
     }
@@ -184,7 +184,7 @@ public class EntityOtherPlayerMP extends AbstractClientPlayer
     /**
      * Returns true if the command sender is allowed to use the given command.
      */
-    public boolean canCommandSenderUseCommand(int par1, String par2Str)
+    public boolean canCommandSenderUseCommand(final int par1, final String par2Str)
     {
         return false;
     }

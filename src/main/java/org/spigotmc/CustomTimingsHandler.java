@@ -25,12 +25,12 @@ public class CustomTimingsHandler
     private long curTickTotal = 0;
     private long violations = 0;
 
-    public CustomTimingsHandler(String name)
+    public CustomTimingsHandler(final String name)
     {
         this( name, null );
     }
 
-    public CustomTimingsHandler(String name, CustomTimingsHandler parent)
+    public CustomTimingsHandler(final String name, final CustomTimingsHandler parent)
     {
         this.name = name;
         this.parent = parent;
@@ -42,25 +42,25 @@ public class CustomTimingsHandler
      *
      * @param printStream
      */
-    public static void printTimings(PrintStream printStream)
+    public static void printTimings(final PrintStream printStream)
     {
         printStream.println( "Minecraft" );
-        for ( CustomTimingsHandler timings : HANDLERS )
+        for ( final CustomTimingsHandler timings : HANDLERS )
         {
-            long time = timings.totalTime;
-            long count = timings.count;
+            final long time = timings.totalTime;
+            final long count = timings.count;
             if ( count == 0 )
             {
                 continue;
             }
-            long avg = time / count;
+            final long avg = time / count;
 
             printStream.println( "    " + timings.name + " Time: " + time + " Count: " + count + " Avg: " + avg + " Violations: " + timings.violations );
         }
         printStream.println( "# Version " + Bukkit.getVersion() );
         int entities = 0;
         int livingEntities = 0;
-        for ( World world : Bukkit.getWorlds() )
+        for ( final World world : Bukkit.getWorlds() )
         {
             entities += world.getEntities().size();
             livingEntities += world.getLivingEntities().size();
@@ -76,7 +76,7 @@ public class CustomTimingsHandler
     {
         if ( Bukkit.getPluginManager().useTimings() )
         {
-            for ( CustomTimingsHandler timings : HANDLERS )
+            for ( final CustomTimingsHandler timings : HANDLERS )
             {
                 timings.reset();
             }
@@ -92,7 +92,7 @@ public class CustomTimingsHandler
     {
         if ( Bukkit.getPluginManager().useTimings() )
         {
-            for ( CustomTimingsHandler timings : HANDLERS )
+            for ( final CustomTimingsHandler timings : HANDLERS )
             {
                 if ( timings.curTickTotal > 50000000 )
                 {
@@ -131,7 +131,7 @@ public class CustomTimingsHandler
             {
                 return;
             }
-            long diff = System.nanoTime() - start;
+            final long diff = System.nanoTime() - start;
             totalTime += diff;
             curTickTotal += diff;
             count++;

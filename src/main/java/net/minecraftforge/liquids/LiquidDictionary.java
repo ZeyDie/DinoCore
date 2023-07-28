@@ -31,13 +31,13 @@ public abstract class LiquidDictionary
      * @param liquid the liquid to use if one doesn't exist
      * @return the matching liquid stack
      */
-    public static LiquidStack getOrCreateLiquid(String name, LiquidStack liquid)
+    public static LiquidStack getOrCreateLiquid(final String name, final LiquidStack liquid)
     {
         if (liquid == null)
         {
             throw new NullPointerException("You cannot register a null LiquidStack");
         }
-        LiquidStack existing = liquids.get(name);
+        final LiquidStack existing = liquids.get(name);
         if(existing != null) {
             return existing.copy();
         }
@@ -57,7 +57,7 @@ public abstract class LiquidDictionary
      * @param amount the amout of liquid
      * @return a liquidstack for the requested liquid
      */
-    public static LiquidStack getLiquid(String name, int amount)
+    public static LiquidStack getLiquid(final String name, final int amount)
     {
         LiquidStack liquid = liquids.get(name);
         if(liquid == null)
@@ -68,7 +68,7 @@ public abstract class LiquidDictionary
         return liquid;
     }
 
-    public static LiquidStack getCanonicalLiquid(String name)
+    public static LiquidStack getCanonicalLiquid(final String name)
     {
         return liquids.get(name);
     }
@@ -90,7 +90,7 @@ public abstract class LiquidDictionary
         public final String Name;
         public final LiquidStack Liquid;
 
-        public LiquidRegisterEvent(String name, LiquidStack liquid)
+        public LiquidRegisterEvent(final String name, final LiquidStack liquid)
         {
             this.Name = name;
             this.Liquid = liquid.copy();
@@ -103,7 +103,7 @@ public abstract class LiquidDictionary
         getOrCreateLiquid("Lava", new LiquidStack(Block.lavaStill, LiquidContainerRegistry.BUCKET_VOLUME));
     }
 
-    public static String findLiquidName(LiquidStack reference)
+    public static String findLiquidName(final LiquidStack reference)
     {
         if (reference != null)
         {
@@ -115,7 +115,7 @@ public abstract class LiquidDictionary
         }
     }
 
-    public static LiquidStack getCanonicalLiquid(LiquidStack liquidStack)
+    public static LiquidStack getCanonicalLiquid(final LiquidStack liquidStack)
     {
         return liquids.get(liquids.inverse().get(liquidStack));
     }

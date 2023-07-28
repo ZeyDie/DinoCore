@@ -33,17 +33,17 @@ public class RenderVillager extends RenderLiving
     /**
      * Determines wether Villager Render pass or not.
      */
-    protected int shouldVillagerRenderPass(EntityVillager par1EntityVillager, int par2, float par3)
+    protected int shouldVillagerRenderPass(final EntityVillager par1EntityVillager, final int par2, final float par3)
     {
         return -1;
     }
 
-    public void renderVillager(EntityVillager par1EntityVillager, double par2, double par4, double par6, float par8, float par9)
+    public void renderVillager(final EntityVillager par1EntityVillager, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         super.doRenderLiving(par1EntityVillager, par2, par4, par6, par8, par9);
     }
 
-    protected ResourceLocation func_110902_a(EntityVillager par1EntityVillager)
+    protected ResourceLocation func_110902_a(final EntityVillager par1EntityVillager)
     {
         switch (par1EntityVillager.getProfession())
         {
@@ -62,12 +62,12 @@ public class RenderVillager extends RenderLiving
         }
     }
 
-    protected void renderVillagerEquipedItems(EntityVillager par1EntityVillager, float par2)
+    protected void renderVillagerEquipedItems(final EntityVillager par1EntityVillager, final float par2)
     {
         super.renderEquippedItems(par1EntityVillager, par2);
     }
 
-    protected void preRenderVillager(EntityVillager par1EntityVillager, float par2)
+    protected void preRenderVillager(final EntityVillager par1EntityVillager, final float par2)
     {
         float f1 = 0.9375F;
 
@@ -84,7 +84,7 @@ public class RenderVillager extends RenderLiving
         GL11.glScalef(f1, f1, f1);
     }
 
-    public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9)
+    public void doRenderLiving(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.renderVillager((EntityVillager)par1EntityLiving, par2, par4, par6, par8, par9);
     }
@@ -93,7 +93,7 @@ public class RenderVillager extends RenderLiving
      * Allows the render to do any OpenGL state modifications necessary before the model is rendered. Args:
      * entityLiving, partialTickTime
      */
-    protected void preRenderCallback(EntityLivingBase par1EntityLivingBase, float par2)
+    protected void preRenderCallback(final EntityLivingBase par1EntityLivingBase, final float par2)
     {
         this.preRenderVillager((EntityVillager)par1EntityLivingBase, par2);
     }
@@ -101,17 +101,17 @@ public class RenderVillager extends RenderLiving
     /**
      * Queries whether should render the specified pass or not.
      */
-    protected int shouldRenderPass(EntityLivingBase par1EntityLivingBase, int par2, float par3)
+    protected int shouldRenderPass(final EntityLivingBase par1EntityLivingBase, final int par2, final float par3)
     {
         return this.shouldVillagerRenderPass((EntityVillager)par1EntityLivingBase, par2, par3);
     }
 
-    protected void renderEquippedItems(EntityLivingBase par1EntityLivingBase, float par2)
+    protected void renderEquippedItems(final EntityLivingBase par1EntityLivingBase, final float par2)
     {
         this.renderVillagerEquipedItems((EntityVillager)par1EntityLivingBase, par2);
     }
 
-    public void renderPlayer(EntityLivingBase par1EntityLivingBase, double par2, double par4, double par6, float par8, float par9)
+    public void renderPlayer(final EntityLivingBase par1EntityLivingBase, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.renderVillager((EntityVillager)par1EntityLivingBase, par2, par4, par6, par8, par9);
     }
@@ -119,7 +119,7 @@ public class RenderVillager extends RenderLiving
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.func_110902_a((EntityVillager)par1Entity);
     }
@@ -130,7 +130,7 @@ public class RenderVillager extends RenderLiving
      * (Render<T extends Entity) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.renderVillager((EntityVillager)par1Entity, par2, par4, par6, par8, par9);
     }

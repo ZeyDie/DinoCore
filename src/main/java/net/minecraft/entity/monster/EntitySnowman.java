@@ -20,7 +20,7 @@ import org.bukkit.event.block.EntityBlockFormEvent;
 
 public class EntitySnowman extends EntityGolem implements IRangedAttackMob
 {
-    public EntitySnowman(World par1World)
+    public EntitySnowman(final World par1World)
     {
         super(par1World);
         this.setSize(0.4F, 1.8F);
@@ -71,15 +71,15 @@ public class EntitySnowman extends EntityGolem implements IRangedAttackMob
         for (i = 0; i < 4; ++i)
         {
             j = MathHelper.floor_double(this.posX + (double)((float)(i % 2 * 2 - 1) * 0.25F));
-            int k = MathHelper.floor_double(this.posY);
-            int l = MathHelper.floor_double(this.posZ + (double)((float)(i / 2 % 2 * 2 - 1) * 0.25F));
+            final int k = MathHelper.floor_double(this.posY);
+            final int l = MathHelper.floor_double(this.posZ + (double)((float)(i / 2 % 2 * 2 - 1) * 0.25F));
 
             if (this.worldObj.getBlockId(j, k, l) == 0 && this.worldObj.getBiomeGenForCoords(j, l).getFloatTemperature() < 0.8F && Block.snow.canPlaceBlockAt(this.worldObj, j, k, l))
             {
                 // CraftBukkit start
-                org.bukkit.block.BlockState blockState = this.worldObj.getWorld().getBlockAt(j, k, l).getState();
+                final org.bukkit.block.BlockState blockState = this.worldObj.getWorld().getBlockAt(j, k, l).getState();
                 blockState.setTypeId(Block.snow.blockID);
-                EntityBlockFormEvent event = new EntityBlockFormEvent(this.getBukkitEntity(), blockState.getBlock(), blockState);
+                final EntityBlockFormEvent event = new EntityBlockFormEvent(this.getBukkitEntity(), blockState.getBlock(), blockState);
                 this.worldObj.getServer().getPluginManager().callEvent(event);
 
                 if (!event.isCancelled())
@@ -104,9 +104,9 @@ public class EntitySnowman extends EntityGolem implements IRangedAttackMob
      * Drop 0-2 items of this living's type. @param par1 - Whether this entity has recently been hit by a player. @param
      * par2 - Level of Looting used to kill this mob.
      */
-    protected void dropFewItems(boolean par1, int par2)
+    protected void dropFewItems(final boolean par1, final int par2)
     {
-        int j = this.rand.nextInt(16);
+        final int j = this.rand.nextInt(16);
 
         for (int k = 0; k < j; ++k)
         {
@@ -117,13 +117,13 @@ public class EntitySnowman extends EntityGolem implements IRangedAttackMob
     /**
      * Attack the specified entity using a ranged attack.
      */
-    public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLivingBase, float par2)
+    public void attackEntityWithRangedAttack(final EntityLivingBase par1EntityLivingBase, final float par2)
     {
-        EntitySnowball entitysnowball = new EntitySnowball(this.worldObj, this);
-        double d0 = par1EntityLivingBase.posX - this.posX;
-        double d1 = par1EntityLivingBase.posY + (double)par1EntityLivingBase.getEyeHeight() - 1.100000023841858D - entitysnowball.posY;
-        double d2 = par1EntityLivingBase.posZ - this.posZ;
-        float f1 = MathHelper.sqrt_double(d0 * d0 + d2 * d2) * 0.2F;
+        final EntitySnowball entitysnowball = new EntitySnowball(this.worldObj, this);
+        final double d0 = par1EntityLivingBase.posX - this.posX;
+        final double d1 = par1EntityLivingBase.posY + (double)par1EntityLivingBase.getEyeHeight() - 1.100000023841858D - entitysnowball.posY;
+        final double d2 = par1EntityLivingBase.posZ - this.posZ;
+        final float f1 = MathHelper.sqrt_double(d0 * d0 + d2 * d2) * 0.2F;
         entitysnowball.setThrowableHeading(d0, d1 + (double)f1, d2, 1.6F, 12.0F);
         this.playSound("random.bow", 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
         this.worldObj.spawnEntityInWorld(entitysnowball);

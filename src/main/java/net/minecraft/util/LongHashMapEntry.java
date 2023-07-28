@@ -14,7 +14,7 @@ class LongHashMapEntry
     LongHashMapEntry nextEntry;
     final int hash;
 
-    LongHashMapEntry(int par1, long par2, Object par4Obj, LongHashMapEntry par5LongHashMapEntry)
+    LongHashMapEntry(final int par1, final long par2, final Object par4Obj, final LongHashMapEntry par5LongHashMapEntry)
     {
         this.value = par4Obj;
         this.nextEntry = par5LongHashMapEntry;
@@ -32,7 +32,7 @@ class LongHashMapEntry
         return this.value;
     }
 
-    public final boolean equals(Object par1Obj)
+    public final boolean equals(final Object par1Obj)
     {
         if (!(par1Obj instanceof LongHashMapEntry))
         {
@@ -40,14 +40,14 @@ class LongHashMapEntry
         }
         else
         {
-            LongHashMapEntry longhashmapentry = (LongHashMapEntry)par1Obj;
-            Long olong = Long.valueOf(this.getKey());
-            Long olong1 = Long.valueOf(longhashmapentry.getKey());
+            final LongHashMapEntry longhashmapentry = (LongHashMapEntry)par1Obj;
+            final Long olong = Long.valueOf(this.getKey());
+            final Long olong1 = Long.valueOf(longhashmapentry.getKey());
 
             if (olong == olong1 || olong != null && olong.equals(olong1))
             {
-                Object object1 = this.getValue();
-                Object object2 = longhashmapentry.getValue();
+                final Object object1 = this.getValue();
+                final Object object2 = longhashmapentry.getValue();
 
                 if (object1 == object2 || object1 != null && object1.equals(object2))
                 {

@@ -10,7 +10,7 @@ class CallableScreenName implements Callable
 {
     final EntityRenderer entityRender;
 
-    CallableScreenName(EntityRenderer par1EntityRenderer)
+    CallableScreenName(final EntityRenderer par1EntityRenderer)
     {
         this.entityRender = par1EntityRenderer;
     }

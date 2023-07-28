@@ -9,22 +9,22 @@ import java.util.Map.Entry;
 
 public class PluginCommandYamlParser {
 
-    public static List<Command> parse(Plugin plugin) {
-        List<Command> pluginCmds = new ArrayList<Command>();
+    public static List<Command> parse(final Plugin plugin) {
+        final List<Command> pluginCmds = new ArrayList<Command>();
 
-        Map<String, Map<String, Object>> map = plugin.getDescription().getCommands();
+        final Map<String, Map<String, Object>> map = plugin.getDescription().getCommands();
 
         if (map == null) {
             return pluginCmds;
         }
 
-        for (Entry<String, Map<String, Object>> entry : map.entrySet()) {
-            Command newCmd = new PluginCommand(entry.getKey(), plugin);
-            Object description = entry.getValue().get("description");
-            Object usage = entry.getValue().get("usage");
-            Object aliases = entry.getValue().get("aliases");
-            Object permission = entry.getValue().get("permission");
-            Object permissionMessage = entry.getValue().get("permission-message");
+        for (final Entry<String, Map<String, Object>> entry : map.entrySet()) {
+            final Command newCmd = new PluginCommand(entry.getKey(), plugin);
+            final Object description = entry.getValue().get("description");
+            final Object usage = entry.getValue().get("usage");
+            final Object aliases = entry.getValue().get("aliases");
+            final Object permission = entry.getValue().get("permission");
+            final Object permissionMessage = entry.getValue().get("permission-message");
 
             if (description != null) {
                 newCmd.setDescription(description.toString());
@@ -35,10 +35,10 @@ public class PluginCommandYamlParser {
             }
 
             if (aliases != null) {
-                List<String> aliasList = new ArrayList<String>();
+                final List<String> aliasList = new ArrayList<String>();
 
                 if (aliases instanceof List) {
-                    for (Object o : (List<?>) aliases) {
+                    for (final Object o : (List<?>) aliases) {
                         aliasList.add(o.toString());
                     }
                 } else {

@@ -16,7 +16,7 @@ public class EntitySenses
     /** Cache of entities which we cannot see */
     List unseenEntities = new ArrayList();
 
-    public EntitySenses(EntityLiving par1EntityLiving)
+    public EntitySenses(final EntityLiving par1EntityLiving)
     {
         this.entityObj = par1EntityLiving;
     }
@@ -33,7 +33,7 @@ public class EntitySenses
     /**
      * Checks, whether 'our' entity can see the entity given as argument (true) or not (false), caching the result.
      */
-    public boolean canSee(Entity par1Entity)
+    public boolean canSee(final Entity par1Entity)
     {
         if (this.seenEntities.contains(par1Entity))
         {
@@ -46,7 +46,7 @@ public class EntitySenses
         else
         {
             this.entityObj.worldObj.theProfiler.startSection("canSee");
-            boolean flag = this.entityObj.canEntityBeSeen(par1Entity);
+            final boolean flag = this.entityObj.canEntityBeSeen(par1Entity);
             this.entityObj.worldObj.theProfiler.endSection();
 
             if (flag)

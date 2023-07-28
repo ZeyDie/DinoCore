@@ -7,7 +7,7 @@ class CallableLvl3 implements Callable
     /** Reference to the World object. */
     final World theWorld;
 
-    CallableLvl3(World par1World)
+    CallableLvl3(final World par1World)
     {
         this.theWorld = par1World;
     }

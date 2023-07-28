@@ -36,7 +36,7 @@ public class PlayerCommandPreprocessEvent extends PlayerEvent implements Cancell
         return cancel;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 
@@ -57,7 +57,7 @@ public class PlayerCommandPreprocessEvent extends PlayerEvent implements Cancell
      * @param command New message that the player will send
      * @throws IllegalArgumentException if command is null or empty
      */
-    public void setMessage(String command) throws IllegalArgumentException {
+    public void setMessage(final String command) throws IllegalArgumentException {
         Validate.notNull(command, "Command cannot be null");
         Validate.notEmpty(command, "Command cannot be empty");
         this.message = command;
@@ -96,7 +96,7 @@ public class PlayerCommandPreprocessEvent extends PlayerEvent implements Cancell
         // Oh for a better way to do this!
         try {
             String.format(format, player, message);
-        } catch (RuntimeException ex) {
+        } catch (final RuntimeException ex) {
             ex.fillInStackTrace();
             throw ex;
         }

@@ -15,22 +15,22 @@ public class CraftSimpleCommandMap extends SimpleCommandMap {
     private static final Pattern PATTERN_ON_SPACE = Pattern.compile(" ", Pattern.LITERAL);
     private ICommandSender vanillaConsoleSender; // Cauldron
 
-    public CraftSimpleCommandMap(Server server) {
+    public CraftSimpleCommandMap(final Server server) {
         super(server);
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean dispatch(CommandSender sender, String commandLine) throws CommandException {
-        String[] args = PATTERN_ON_SPACE.split(commandLine);
+    public boolean dispatch(final CommandSender sender, final String commandLine) throws CommandException {
+        final String[] args = PATTERN_ON_SPACE.split(commandLine);
 
         if (args.length == 0) {
             return false;
         }
 
-        String sentCommandLabel = args[0].toLowerCase();
-        Command target = getCommand(sentCommandLabel);
+        final String sentCommandLabel = args[0].toLowerCase();
+        final Command target = getCommand(sentCommandLabel);
 
         if (target == null) {
             return false;
@@ -51,9 +51,9 @@ public class CraftSimpleCommandMap extends SimpleCommandMap {
                 // Note: we don't return the result of target.execute as thats success / failure, we return handled (true) or not handled (false)
                 target.execute(sender, sentCommandLabel, Arrays_copyOfRange(args, 1, args.length));
             }
-        } catch (CommandException ex) {
+        } catch (final CommandException ex) {
             throw ex;
-        } catch (Throwable ex) {
+        } catch (final Throwable ex) {
             throw new CommandException("Unhandled exception executing '" + commandLine + "' in " + target, ex);
         }
 
@@ -62,7 +62,7 @@ public class CraftSimpleCommandMap extends SimpleCommandMap {
     }
 
     // Cauldron start - sets the vanilla console sender
-    public void setVanillaConsoleSender(ICommandSender console)
+    public void setVanillaConsoleSender(final ICommandSender console)
     {
         this.vanillaConsoleSender = console;
     }

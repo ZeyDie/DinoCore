@@ -19,12 +19,12 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements Hop
     private boolean isBlocked = true;
     private int transferTicker = -1;
 
-    public EntityMinecartHopper(World par1World)
+    public EntityMinecartHopper(final World par1World)
     {
         super(par1World);
     }
 
-    public EntityMinecartHopper(World par1World, double par2, double par4, double par6)
+    public EntityMinecartHopper(final World par1World, final double par2, final double par4, final double par6)
     {
         super(par1World, par2, par4, par6);
     }
@@ -55,7 +55,7 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements Hop
     /**
      * First layer of player interaction
      */
-    public boolean interactFirst(EntityPlayer par1EntityPlayer)
+    public boolean interactFirst(final EntityPlayer par1EntityPlayer)
     {
         if(MinecraftForge.EVENT_BUS.post(new MinecartInteractEvent(this, par1EntityPlayer))) 
         {
@@ -72,9 +72,9 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements Hop
     /**
      * Called every tick the minecart is on an activator rail.
      */
-    public void onActivatorRailPass(int par1, int par2, int par3, boolean par4)
+    public void onActivatorRailPass(final int par1, final int par2, final int par3, final boolean par4)
     {
-        boolean flag1 = !par4;
+        final boolean flag1 = !par4;
 
         if (flag1 != this.getBlocked())
         {
@@ -93,7 +93,7 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements Hop
     /**
      * Set whether this hopper minecart is being blocked by an activator rail.
      */
-    public void setBlocked(boolean par1)
+    public void setBlocked(final boolean par1)
     {
         this.isBlocked = par1;
     }
@@ -162,9 +162,9 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements Hop
         }
         else
         {
-            List list = this.worldObj.selectEntitiesWithinAABB(EntityItem.class, this.boundingBox.expand(0.25D, 0.0D, 0.25D), IEntitySelector.selectAnything);
+            final List list = this.worldObj.selectEntitiesWithinAABB(EntityItem.class, this.boundingBox.expand(0.25D, 0.0D, 0.25D), IEntitySelector.selectAnything);
 
-            if (list.size() > 0)
+            if (!list.isEmpty())
             {
                 TileEntityHopper.insertStackFromEntity(this, (EntityItem)list.get(0));
             }
@@ -173,7 +173,7 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements Hop
         }
     }
 
-    public void killMinecart(DamageSource par1DamageSource)
+    public void killMinecart(final DamageSource par1DamageSource)
     {
         super.killMinecart(par1DamageSource);
         this.dropItemWithOffset(Block.hopperBlock.blockID, 1, 0.0F);
@@ -182,7 +182,7 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements Hop
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    protected void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    protected void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setInteger("TransferCooldown", this.transferTicker);
@@ -191,7 +191,7 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements Hop
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    protected void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    protected void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.transferTicker = par1NBTTagCompound.getInteger("TransferCooldown");
@@ -200,7 +200,7 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements Hop
     /**
      * Sets the transfer ticker, used to determine the delay between transfers.
      */
-    public void setTransferTicker(int par1)
+    public void setTransferTicker(final int par1)
     {
         this.transferTicker = par1;
     }

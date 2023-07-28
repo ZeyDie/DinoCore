@@ -24,13 +24,13 @@ public class TimeCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (args.length < 2) {
             sender.sendMessage(ChatColor.RED + "Incorrect usage. Correct usage:\n" + usageMessage);
             return false;
         }
 
-        int value;
+        final int value;
 
         if (args[0].equals("set")) {
             if (!sender.hasPermission("bukkit.command.time.set")) {
@@ -46,7 +46,7 @@ public class TimeCommand extends VanillaCommand {
                 value = getInteger(sender, args[1], 0);
             }
 
-            for (World world : Bukkit.getWorlds()) {
+            for (final World world : Bukkit.getWorlds()) {
                 world.setTime(value);
             }
 
@@ -59,7 +59,7 @@ public class TimeCommand extends VanillaCommand {
 
             value = getInteger(sender, args[1], 0);
 
-            for (World world : Bukkit.getWorlds()) {
+            for (final World world : Bukkit.getWorlds()) {
                 world.setFullTime(world.getFullTime() + value);
             }
 
@@ -72,7 +72,7 @@ public class TimeCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");

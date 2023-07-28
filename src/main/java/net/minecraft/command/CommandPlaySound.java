@@ -18,12 +18,12 @@ public class CommandPlaySound extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.playsound.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         if (par2ArrayOfStr.length < 2)
         {
@@ -31,10 +31,10 @@ public class CommandPlaySound extends CommandBase
         }
         else
         {
-            byte b0 = 0;
+            final byte b0 = 0;
             int i = b0 + 1;
-            String s = par2ArrayOfStr[b0];
-            EntityPlayerMP entityplayermp = getPlayer(par1ICommandSender, par2ArrayOfStr[i++]);
+            final String s = par2ArrayOfStr[b0];
+            final EntityPlayerMP entityplayermp = getPlayer(par1ICommandSender, par2ArrayOfStr[i++]);
             double d0 = (double)entityplayermp.getPlayerCoordinates().posX;
             double d1 = (double)entityplayermp.getPlayerCoordinates().posY;
             double d2 = (double)entityplayermp.getPlayerCoordinates().posZ;
@@ -72,8 +72,8 @@ public class CommandPlaySound extends CommandBase
                 d5 = func_110661_a(par1ICommandSender, par2ArrayOfStr[i++], 0.0D, 1.0D);
             }
 
-            double d6 = d3 > 1.0D ? d3 * 16.0D : 16.0D;
-            double d7 = entityplayermp.getDistance(d0, d1, d2);
+            final double d6 = d3 > 1.0D ? d3 * 16.0D : 16.0D;
+            final double d7 = entityplayermp.getDistance(d0, d1, d2);
 
             if (d7 > d6)
             {
@@ -82,10 +82,10 @@ public class CommandPlaySound extends CommandBase
                     throw new CommandException("commands.playsound.playerTooFar", new Object[] {entityplayermp.getEntityName()});
                 }
 
-                double d8 = d0 - entityplayermp.posX;
-                double d9 = d1 - entityplayermp.posY;
-                double d10 = d2 - entityplayermp.posZ;
-                double d11 = Math.sqrt(d8 * d8 + d9 * d9 + d10 * d10);
+                final double d8 = d0 - entityplayermp.posX;
+                final double d9 = d1 - entityplayermp.posY;
+                final double d10 = d2 - entityplayermp.posZ;
+                final double d11 = Math.sqrt(d8 * d8 + d9 * d9 + d10 * d10);
                 double d12 = entityplayermp.posX;
                 double d13 = entityplayermp.posY;
                 double d14 = entityplayermp.posZ;
@@ -111,7 +111,7 @@ public class CommandPlaySound extends CommandBase
     /**
      * Return whether the specified command parameter index is a username parameter.
      */
-    public boolean isUsernameIndex(String[] par1ArrayOfStr, int par2)
+    public boolean isUsernameIndex(final String[] par1ArrayOfStr, final int par2)
     {
         return par2 == 1;
     }

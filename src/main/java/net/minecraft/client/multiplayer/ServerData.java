@@ -35,7 +35,7 @@ public class ServerData
     /** Whether to hide the IP address for this server. */
     private boolean hideAddress;
 
-    public ServerData(String par1Str, String par2Str)
+    public ServerData(final String par1Str, final String par2Str)
     {
         this.serverName = par1Str;
         this.serverIP = par2Str;
@@ -46,7 +46,7 @@ public class ServerData
      */
     public NBTTagCompound getNBTCompound()
     {
-        NBTTagCompound nbttagcompound = new NBTTagCompound();
+        final NBTTagCompound nbttagcompound = new NBTTagCompound();
         nbttagcompound.setString("name", this.serverName);
         nbttagcompound.setString("ip", this.serverIP);
         nbttagcompound.setBoolean("hideAddress", this.hideAddress);
@@ -59,7 +59,7 @@ public class ServerData
         return nbttagcompound;
     }
 
-    public void setAcceptsTextures(boolean par1)
+    public void setAcceptsTextures(final boolean par1)
     {
         this.acceptsTextures = par1;
         this.field_78842_g = false;
@@ -70,7 +70,7 @@ public class ServerData
         return this.hideAddress;
     }
 
-    public void setHideAddress(boolean par1)
+    public void setHideAddress(final boolean par1)
     {
         this.hideAddress = par1;
     }
@@ -78,9 +78,9 @@ public class ServerData
     /**
      * Takes an NBTTagCompound with 'name' and 'ip' keys, returns a ServerData instance.
      */
-    public static ServerData getServerDataFromNBTCompound(NBTTagCompound par0NBTTagCompound)
+    public static ServerData getServerDataFromNBTCompound(final NBTTagCompound par0NBTTagCompound)
     {
-        ServerData serverdata = new ServerData(par0NBTTagCompound.getString("name"), par0NBTTagCompound.getString("ip"));
+        final ServerData serverdata = new ServerData(par0NBTTagCompound.getString("name"), par0NBTTagCompound.getString("ip"));
         serverdata.hideAddress = par0NBTTagCompound.getBoolean("hideAddress");
 
         if (par0NBTTagCompound.hasKey("acceptTextures"))

@@ -9,25 +9,25 @@ public class CraftShapedRecipe extends ShapedRecipe implements CraftRecipe {
     // TODO: Could eventually use this to add a matches() method or some such
     private net.minecraft.item.crafting.ShapedRecipes recipe;
 
-    public CraftShapedRecipe(ItemStack result) {
+    public CraftShapedRecipe(final ItemStack result) {
         super(result);
     }
 
-    public CraftShapedRecipe(ItemStack result, net.minecraft.item.crafting.ShapedRecipes recipe) {
+    public CraftShapedRecipe(final ItemStack result, final net.minecraft.item.crafting.ShapedRecipes recipe) {
         this(result);
         this.recipe = recipe;
     }
 
-    public static CraftShapedRecipe fromBukkitRecipe(ShapedRecipe recipe) {
+    public static CraftShapedRecipe fromBukkitRecipe(final ShapedRecipe recipe) {
         if (recipe instanceof CraftShapedRecipe) {
             return (CraftShapedRecipe) recipe;
         }
-        CraftShapedRecipe ret = new CraftShapedRecipe(recipe.getResult());
-        String[] shape = recipe.getShape();
+        final CraftShapedRecipe ret = new CraftShapedRecipe(recipe.getResult());
+        final String[] shape = recipe.getShape();
         ret.shape(shape);
-        Map<Character, ItemStack> ingredientMap = recipe.getIngredientMap();
-        for (char c : ingredientMap.keySet()) {
-            ItemStack stack = ingredientMap.get(c);
+        final Map<Character, ItemStack> ingredientMap = recipe.getIngredientMap();
+        for (final char c : ingredientMap.keySet()) {
+            final ItemStack stack = ingredientMap.get(c);
             if (stack != null) {
                 ret.setIngredient(c, stack.getType(), stack.getDurability());
             }
@@ -36,9 +36,9 @@ public class CraftShapedRecipe extends ShapedRecipe implements CraftRecipe {
     }
 
     public void addToCraftingManager() {
-        Object[] data;
-        String[] shape = this.getShape();
-        Map<Character, ItemStack> ingred = this.getIngredientMap();
+        final Object[] data;
+        final String[] shape = this.getShape();
+        final Map<Character, ItemStack> ingred = this.getIngredientMap();
         int datalen = shape.length;
         datalen += ingred.size() * 2;
         int i = 0;
@@ -46,13 +46,13 @@ public class CraftShapedRecipe extends ShapedRecipe implements CraftRecipe {
         for (; i < shape.length; i++) {
             data[i] = shape[i];
         }
-        for (char c : ingred.keySet()) {
-            ItemStack mdata = ingred.get(c);
+        for (final char c : ingred.keySet()) {
+            final ItemStack mdata = ingred.get(c);
             if (mdata == null) continue;
             data[i] = c;
             i++;
-            int id = mdata.getTypeId();
-            short dmg = mdata.getDurability();
+            final int id = mdata.getTypeId();
+            final short dmg = mdata.getDurability();
             data[i] = new net.minecraft.item.ItemStack(id, 1, dmg);
             i++;
         }

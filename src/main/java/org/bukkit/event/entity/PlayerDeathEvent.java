@@ -41,7 +41,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      *
      * @param deathMessage Message to appear to other players on the server.
      */
-    public void setDeathMessage(String deathMessage) {
+    public void setDeathMessage(final String deathMessage) {
         this.deathMessage = deathMessage;
     }
 
@@ -74,7 +74,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      *
      * @param exp New EXP of the respawned player
      */
-    public void setNewExp(int exp) {
+    public void setNewExp(final int exp) {
         newExp = exp;
     }
 
@@ -92,7 +92,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      *
      * @param level New Level of the respawned player
      */
-    public void setNewLevel(int level) {
+    public void setNewLevel(final int level) {
         newLevel = level;
     }
 
@@ -110,7 +110,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      *
      * @param totalExp New Total EXP of the respawned player
      */
-    public void setNewTotalExp(int totalExp) {
+    public void setNewTotalExp(final int totalExp) {
         newTotalExp = totalExp;
     }
 
@@ -132,7 +132,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      *
      * @param keepLevel True to keep all current value levels
      */
-    public void setKeepLevel(boolean keepLevel) {
+    public void setKeepLevel(final boolean keepLevel) {
         this.keepLevel = keepLevel;
     }
 }

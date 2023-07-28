@@ -21,7 +21,7 @@ public class ShapelessRecipes implements IRecipe
     /** Is a List of ItemStack that composes the recipe. */
     public final List recipeItems;
 
-    public ShapelessRecipes(ItemStack par1ItemStack, List par2List)
+    public ShapelessRecipes(final ItemStack par1ItemStack, final List par2List)
     {
         this.recipeOutput = par1ItemStack;
         this.recipeItems = par2List;
@@ -31,10 +31,10 @@ public class ShapelessRecipes implements IRecipe
     @SuppressWarnings("unchecked")
     public org.bukkit.inventory.ShapelessRecipe toBukkitRecipe()
     {
-        CraftItemStack result = CraftItemStack.asCraftMirror(this.recipeOutput);
-        CraftShapelessRecipe recipe = new CraftShapelessRecipe(result, this);
+        final CraftItemStack result = CraftItemStack.asCraftMirror(this.recipeOutput);
+        final CraftShapelessRecipe recipe = new CraftShapelessRecipe(result, this);
 
-        for (ItemStack stack : (List<ItemStack>) this.recipeItems)
+        for (final ItemStack stack : (List<ItemStack>) this.recipeItems)
         {
             if (stack != null)
             {
@@ -54,24 +54,24 @@ public class ShapelessRecipes implements IRecipe
     /**
      * Used to check if a recipe matches current crafting inventory
      */
-    public boolean matches(InventoryCrafting par1InventoryCrafting, World par2World)
+    public boolean matches(final InventoryCrafting par1InventoryCrafting, final World par2World)
     {
-        ArrayList arraylist = new ArrayList(this.recipeItems);
+        final ArrayList arraylist = new ArrayList(this.recipeItems);
 
         for (int i = 0; i < 3; ++i)
         {
             for (int j = 0; j < 3; ++j)
             {
-                ItemStack itemstack = par1InventoryCrafting.getStackInRowAndColumn(j, i);
+                final ItemStack itemstack = par1InventoryCrafting.getStackInRowAndColumn(j, i);
 
                 if (itemstack != null)
                 {
                     boolean flag = false;
-                    Iterator iterator = arraylist.iterator();
+                    final Iterator iterator = arraylist.iterator();
 
                     while (iterator.hasNext())
                     {
-                        ItemStack itemstack1 = (ItemStack)iterator.next();
+                        final ItemStack itemstack1 = (ItemStack)iterator.next();
 
                         if (itemstack.itemID == itemstack1.itemID && (itemstack1.getItemDamage() == 32767 || itemstack.getItemDamage() == itemstack1.getItemDamage()))
                         {
@@ -95,7 +95,7 @@ public class ShapelessRecipes implements IRecipe
     /**
      * Returns an Item that is the result of this recipe
      */
-    public ItemStack getCraftingResult(InventoryCrafting par1InventoryCrafting)
+    public ItemStack getCraftingResult(final InventoryCrafting par1InventoryCrafting)
     {
         return this.recipeOutput.copy();
     }

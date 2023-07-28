@@ -22,7 +22,7 @@ public class GuiScreenResetWorld extends ScreenWithCallback
     private WorldTemplate field_110359_q;
     private GuiButton field_96154_o;
 
-    public GuiScreenResetWorld(GuiScreen par1GuiScreen, McoServer par2McoServer)
+    public GuiScreenResetWorld(final GuiScreen par1GuiScreen, final McoServer par2McoServer)
     {
         this.field_96152_a = par1GuiScreen;
         this.field_96150_b = par2McoServer;
@@ -74,7 +74,7 @@ public class GuiScreenResetWorld extends ScreenWithCallback
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         this.field_96151_c.textboxKeyTyped(par1, par2);
 
@@ -87,7 +87,7 @@ public class GuiScreenResetWorld extends ScreenWithCallback
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
@@ -97,8 +97,8 @@ public class GuiScreenResetWorld extends ScreenWithCallback
             }
             else if (par1GuiButton.id == 1)
             {
-                String s = I18n.getString("mco.configure.world.reset.question.line1");
-                String s1 = I18n.getString("mco.configure.world.reset.question.line2");
+                final String s = I18n.getString("mco.configure.world.reset.question.line1");
+                final String s1 = I18n.getString("mco.configure.world.reset.question.line2");
                 this.mc.displayGuiScreen(new GuiScreenConfirmation(this, GuiScreenConfirmationType.Warning, s, s1, 1));
             }
             else if (par1GuiButton.id == field_110360_p)
@@ -108,7 +108,7 @@ public class GuiScreenResetWorld extends ScreenWithCallback
         }
     }
 
-    public void confirmClicked(boolean par1, int par2)
+    public void confirmClicked(final boolean par1, final int par2)
     {
         if (par1 && par2 == 1)
         {
@@ -122,8 +122,8 @@ public class GuiScreenResetWorld extends ScreenWithCallback
 
     private void func_140006_g()
     {
-        TaskResetWorld taskresetworld = new TaskResetWorld(this, this.field_96150_b.field_96408_a, this.field_96151_c.getText(), this.field_110359_q);
-        GuiScreenLongRunningTask guiscreenlongrunningtask = new GuiScreenLongRunningTask(this.mc, this.field_96152_a, taskresetworld);
+        final TaskResetWorld taskresetworld = new TaskResetWorld(this, this.field_96150_b.field_96408_a, this.field_96151_c.getText(), this.field_110359_q);
+        final GuiScreenLongRunningTask guiscreenlongrunningtask = new GuiScreenLongRunningTask(this.mc, this.field_96152_a, taskresetworld);
         guiscreenlongrunningtask.func_98117_g();
         this.mc.displayGuiScreen(guiscreenlongrunningtask);
     }
@@ -131,7 +131,7 @@ public class GuiScreenResetWorld extends ScreenWithCallback
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int par1, int par2, int par3)
+    protected void mouseClicked(final int par1, final int par2, final int par3)
     {
         super.mouseClicked(par1, par2, par3);
         this.field_96151_c.mouseClicked(par1, par2, par3);
@@ -140,7 +140,7 @@ public class GuiScreenResetWorld extends ScreenWithCallback
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRenderer, I18n.getString("mco.reset.world.title"), this.width / 2, 17, 16777215);
@@ -150,32 +150,32 @@ public class GuiScreenResetWorld extends ScreenWithCallback
         super.drawScreen(par1, par2, par3);
     }
 
-    void func_110358_a(WorldTemplate par1WorldTemplate)
+    void func_110358_a(final WorldTemplate par1WorldTemplate)
     {
         this.field_110359_q = par1WorldTemplate;
     }
 
-    void func_110354_a(Object par1Obj)
+    void func_110354_a(final Object par1Obj)
     {
         this.func_110358_a((WorldTemplate)par1Obj);
     }
 
-    static GuiScreen func_96148_a(GuiScreenResetWorld par0GuiScreenResetWorld)
+    static GuiScreen func_96148_a(final GuiScreenResetWorld par0GuiScreenResetWorld)
     {
         return par0GuiScreenResetWorld.field_96152_a;
     }
 
-    static Minecraft func_96147_b(GuiScreenResetWorld par0GuiScreenResetWorld)
+    static Minecraft func_96147_b(final GuiScreenResetWorld par0GuiScreenResetWorld)
     {
         return par0GuiScreenResetWorld.mc;
     }
 
-    static Minecraft func_130025_c(GuiScreenResetWorld par0GuiScreenResetWorld)
+    static Minecraft func_130025_c(final GuiScreenResetWorld par0GuiScreenResetWorld)
     {
         return par0GuiScreenResetWorld.mc;
     }
 
-    static Minecraft func_130024_d(GuiScreenResetWorld par0GuiScreenResetWorld)
+    static Minecraft func_130024_d(final GuiScreenResetWorld par0GuiScreenResetWorld)
     {
         return par0GuiScreenResetWorld.mc;
     }

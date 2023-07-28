@@ -11,10 +11,12 @@ public class Session
 
     public Session(String par1Str, String par2Str)
     {
-        if (par1Str == null || par1Str.isEmpty())
+        String par1Str1 = par1Str;
+        String par2Str1 = par2Str;
+        if (par1Str1 == null || par1Str1.isEmpty())
         {
-            par1Str = "MissingName";
-            par2Str = "NotValid";
+            par1Str1 = "MissingName";
+            par2Str1 = "NotValid";
             System.out.println("=========================================================");
             System.out.println("Warning the username was not set for this session, typically");
             System.out.println("this means you installed Forge incorrectly. We have set your");
@@ -24,8 +26,8 @@ public class Session
             System.out.println("=========================================================");
             
         }
-        this.username = par1Str;
-        this.sessionId = par2Str;
+        this.username = par1Str1;
+        this.sessionId = par2Str1;
     }
 
     public String getUsername()

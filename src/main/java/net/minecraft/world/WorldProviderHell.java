@@ -26,7 +26,7 @@ public class WorldProviderHell extends WorldProvider
     /**
      * Return Vec3D with biome specific fog color
      */
-    public Vec3 getFogColor(float par1, float par2)
+    public Vec3 getFogColor(final float par1, final float par2)
     {
         return this.worldObj.getWorldVec3Pool().getVecFromPool(0.20000000298023224D, 0.029999999329447746D, 0.029999999329447746D);
     }
@@ -36,11 +36,11 @@ public class WorldProviderHell extends WorldProvider
      */
     protected void generateLightBrightnessTable()
     {
-        float f = 0.1F;
+        final float f = 0.1F;
 
         for (int i = 0; i <= 15; ++i)
         {
-            float f1 = 1.0F - (float)i / 15.0F;
+            final float f1 = 1.0F - (float)i / 15.0F;
             this.lightBrightnessTable[i] = (1.0F - f1) / (f1 * 3.0F + 1.0F) * (1.0F - f) + f;
         }
     }
@@ -64,7 +64,7 @@ public class WorldProviderHell extends WorldProvider
     /**
      * Will check if the x, z position specified is alright to be set as the map spawn point
      */
-    public boolean canCoordinateBeSpawn(int par1, int par2)
+    public boolean canCoordinateBeSpawn(final int par1, final int par2)
     {
         return false;
     }
@@ -72,7 +72,7 @@ public class WorldProviderHell extends WorldProvider
     /**
      * Calculates the angle of sun and moon in the sky relative to a specified time (usually worldTime)
      */
-    public float calculateCelestialAngle(long par1, float par3)
+    public float calculateCelestialAngle(final long par1, final float par3)
     {
         return 0.5F;
     }
@@ -90,7 +90,7 @@ public class WorldProviderHell extends WorldProvider
     /**
      * Returns true if the given X,Z coordinate should show environmental fog.
      */
-    public boolean doesXZShowFog(int par1, int par2)
+    public boolean doesXZShowFog(final int par1, final int par2)
     {
         return true;
     }

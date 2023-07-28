@@ -90,7 +90,7 @@ public class Delta {
      *
      * @param size
      */
-    public void setChunkSize(int size) {
+    public void setChunkSize(final int size) {
         if (size <= 0)
             throw new IllegalArgumentException("Invalid size");
         S = size;
@@ -99,7 +99,7 @@ public class Delta {
     /**
      * Compares the source bytes with target bytes, writing to output.
      */
-    public void compute(byte source[], byte target[], OutputStream output)
+    public void compute(final byte[] source, final byte[] target, final OutputStream output)
     throws IOException {
         compute(new ByteBufferSeekableSource(source),
                 new ByteArrayInputStream(target),
@@ -109,9 +109,9 @@ public class Delta {
     /**
      * Compares the source bytes with target bytes, returning output.
      */
-    public byte[] compute(byte source[], byte target[])
+    public byte[] compute(final byte[] source, final byte[] target)
     throws IOException {
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
         compute(source, target, os);
         return os.toByteArray();
     }
@@ -119,8 +119,8 @@ public class Delta {
     /**
      * Compares the source bytes with target input, writing to output.
      */
-    public void compute(byte[] sourceBytes, InputStream inputStream,
-            DiffWriter diffWriter) throws IOException
+    public void compute(final byte[] sourceBytes, final InputStream inputStream,
+                        final DiffWriter diffWriter) throws IOException
     {
         compute(new ByteBufferSeekableSource(sourceBytes),
                 inputStream, diffWriter);
@@ -131,10 +131,10 @@ public class Delta {
      *
      * @param output will be closed
      */
-    public void compute(File sourceFile, File targetFile, DiffWriter output)
+    public void compute(final File sourceFile, final File targetFile, final DiffWriter output)
     throws IOException {
-        RandomAccessFileSeekableSource source = new RandomAccessFileSeekableSource(new RandomAccessFile(sourceFile, "r"));
-        InputStream is = new BufferedInputStream(new FileInputStream(targetFile));
+        final RandomAccessFileSeekableSource source = new RandomAccessFileSeekableSource(new RandomAccessFile(sourceFile, "r"));
+        final InputStream is = new BufferedInputStream(new FileInputStream(targetFile));
         try {
             compute(source, is, output);
         } finally {
@@ -148,7 +148,7 @@ public class Delta {
      *
      * @param output will be closed
      */
-    public void compute(SeekableSource seekSource, InputStream targetIS, DiffWriter output)
+    public void compute(final SeekableSource seekSource, final InputStream targetIS, final DiffWriter output)
     throws IOException {
 
         if (debug) {
@@ -163,13 +163,13 @@ public class Delta {
 
         while (!target.eof()) {
             debug("!target.eof()");
-            int index = target.find(source);
+            final int index = target.find(source);
             if (index != -1) {
                 if (debug)
                     debug("found hash " + index);
-                long offset = (long)index * S;
+                final long offset = (long)index * S;
                 source.seek(offset);
-                int match = target.longestMatch(source);
+                final int match = target.longestMatch(source);
                 if (match >= S) {
                     if (debug)
                         debug("output.addCopy("+offset+","+match+")");
@@ -187,7 +187,7 @@ public class Delta {
     }
 
     private void addData() throws IOException {
-        int i = target.read();
+        final int i = target.read();
         if (debug)
             debug("addData " + Integer.toHexString(i));
         if (i == -1)
@@ -200,13 +200,13 @@ public class Delta {
         private Checksum checksum;
         private SeekableSource source;
 
-        public SourceState(SeekableSource source) throws IOException {
+        public SourceState(final SeekableSource source) throws IOException {
             checksum = new Checksum(source, S);
             this.source = source;
             source.seek(0);
         }
 
-        public void seek(long index) throws IOException {
+        public void seek(final long index) throws IOException {
             source.seek(index);
         }
 
@@ -233,7 +233,7 @@ public class Delta {
         private boolean hashReset = true;
         private boolean eof;
 
-        TargetState(InputStream targetIS) throws IOException {
+        TargetState(final InputStream targetIS) throws IOException {
             c = Channels.newChannel(targetIS);
             tbuf.limit(0);
         }
@@ -245,7 +245,7 @@ public class Delta {
         /**
          * Returns the index of the next N bytes of the stream.
          */
-        public int find(SourceState source) throws IOException {
+        public int find(final SourceState source) throws IOException {
             if (eof)
                 return -1;
             sbuf.clear();
@@ -254,7 +254,7 @@ public class Delta {
                 debug("hashReset");
                 while (tbuf.remaining() < S) {
                     tbuf.compact();
-                    int read = c.read(tbuf);
+                    final int read = c.read(tbuf);
                     tbuf.flip();
                     if (read == -1) {
                         debug("target ending");
@@ -285,9 +285,9 @@ public class Delta {
                     return -1;
                 }
             }
-            byte b = tbuf.get();
+            final byte b = tbuf.get();
             if (tbuf.remaining() >= S) {
-                byte nchar = tbuf.get( tbuf.position() + S -1 );
+                final byte nchar = tbuf.get( tbuf.position() + S -1 );
                 hash = Checksum.incrementChecksum(hash, b, nchar, S);
             } else {
                 debug("out of char");
@@ -298,14 +298,14 @@ public class Delta {
         /**
          * Returns the longest match length at the source location.
          */
-        public int longestMatch(SourceState source) throws IOException {
+        public int longestMatch(final SourceState source) throws IOException {
             debug("longestMatch");
             int match = 0;
             hashReset = true;
             while (true) {
                 if (!sbuf.hasRemaining()) {
                     sbuf.clear();
-                    int read = source.source.read(sbuf);
+                    final int read = source.source.read(sbuf);
                     sbuf.flip();
                     if (read == -1)
                         return match;
@@ -354,23 +354,23 @@ public class Delta {
 
         private String dump() { return dump(tbuf); }
 
-        private String dump(ByteBuffer bb) {
+        private String dump(final ByteBuffer bb) {
             return getTextDump(bb);
         }
 
-        private void append(StringBuffer sb, int value) {
-            char b1 = (char)((value >> 4) & 0x0F);
-            char b2 = (char)((value) & 0x0F);
+        private void append(final StringBuffer sb, final int value) {
+            final char b1 = (char)((value >> 4) & 0x0F);
+            final char b2 = (char)((value) & 0x0F);
             sb.append( Character.forDigit(b1, 16) );
             sb.append( Character.forDigit(b2, 16) );
         }
 
-        public String getTextDump(ByteBuffer bb)
+        public String getTextDump(final ByteBuffer bb)
         {
-            StringBuffer sb = new StringBuffer(bb.remaining() * 2);
+            final StringBuffer sb = new StringBuffer(bb.remaining() * 2);
             bb.mark();
             while (bb.hasRemaining()) {
-                int val = bb.get();
+                final int val = bb.get();
                 if (val > 32 && val < 127)
                     sb.append(" ").append((char)val);
                 else
@@ -385,7 +385,7 @@ public class Delta {
     /**
      * Creates a patch using file names.
      */
-    public static void main(String argv[]) throws Exception {
+    public static void main(final String[] argv) throws Exception {
         if (argv.length != 3) {
             System.err.println("usage Delta [-d] source target [output]");
             System.err.println("either -d or an output filename must be specified.");
@@ -419,7 +419,7 @@ public class Delta {
             return;
         }
 
-        Delta d = new Delta();
+        final Delta d = new Delta();
         d.compute(sourceFile, targetFile, output);
 
         output.flush();
@@ -428,7 +428,7 @@ public class Delta {
             System.out.println("finished generating delta");
     }
 
-    private void debug(String s) {
+    private void debug(final String s) {
         if (debug)
             System.err.println(s);
     }

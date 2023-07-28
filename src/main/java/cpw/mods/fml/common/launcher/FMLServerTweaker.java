@@ -11,7 +11,7 @@ public class FMLServerTweaker extends FMLTweaker {
     }
 
     @Override
-    public void injectIntoClassLoader(LaunchClassLoader classLoader)
+    public void injectIntoClassLoader(final LaunchClassLoader classLoader)
     {
         classLoader.addTransformerExclusion("cpw.mods.fml.repackage.");
         classLoader.addTransformerExclusion("cpw.mods.fml.relauncher.");

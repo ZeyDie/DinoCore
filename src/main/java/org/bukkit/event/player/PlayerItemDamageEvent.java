@@ -12,7 +12,7 @@ public class PlayerItemDamageEvent extends PlayerEvent implements Cancellable {
     private int damage;
     private boolean cancelled = false;
 
-    public PlayerItemDamageEvent(Player player, ItemStack what, int damage) {
+    public PlayerItemDamageEvent(final Player player, final ItemStack what, final int damage) {
         super(player);
         this.item = what;
         this.damage = damage;
@@ -31,7 +31,7 @@ public class PlayerItemDamageEvent extends PlayerEvent implements Cancellable {
         return damage;
     }
 
-    public void setDamage(int damage) {
+    public void setDamage(final int damage) {
         this.damage = damage;
     }
 
@@ -39,7 +39,7 @@ public class PlayerItemDamageEvent extends PlayerEvent implements Cancellable {
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancelled = cancel;
     }
 

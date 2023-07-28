@@ -7,7 +7,7 @@ public class ReportedException extends RuntimeException
     /** Instance of CrashReport. */
     private final CrashReport theReportedExceptionCrashReport;
 
-    public ReportedException(CrashReport par1CrashReport)
+    public ReportedException(final CrashReport par1CrashReport)
     {
         this.theReportedExceptionCrashReport = par1CrashReport;
     }

@@ -40,7 +40,7 @@ public class ChunkProviderClient implements IChunkProvider
     /** Reference to the World object. */
     private World worldObj;
 
-    public ChunkProviderClient(World par1World)
+    public ChunkProviderClient(final World par1World)
     {
         this.blankChunk = new EmptyChunk(par1World, 0, 0);
         this.worldObj = par1World;
@@ -49,7 +49,7 @@ public class ChunkProviderClient implements IChunkProvider
     /**
      * Checks to see if a chunk exists at x, y
      */
-    public boolean chunkExists(int par1, int par2)
+    public boolean chunkExists(final int par1, final int par2)
     {
         return true;
     }
@@ -58,9 +58,9 @@ public class ChunkProviderClient implements IChunkProvider
      * Unload chunk from ChunkProviderClient's hashmap. Called in response to a Packet50PreChunk with its mode field set
      * to false
      */
-    public void unloadChunk(int par1, int par2)
+    public void unloadChunk(final int par1, final int par2)
     {
-        Chunk chunk = this.provideChunk(par1, par2);
+        final Chunk chunk = this.provideChunk(par1, par2);
 
         if (!chunk.isEmpty())
         {
@@ -74,9 +74,9 @@ public class ChunkProviderClient implements IChunkProvider
     /**
      * loads or generates the chunk at the chunk location specified
      */
-    public Chunk loadChunk(int par1, int par2)
+    public Chunk loadChunk(final int par1, final int par2)
     {
-        Chunk chunk = new Chunk(this.worldObj, par1, par2);
+        final Chunk chunk = new Chunk(this.worldObj, par1, par2);
         this.chunkMapping.add(ChunkCoordIntPair.chunkXZ2Int(par1, par2), chunk);
         MinecraftForge.EVENT_BUS.post(new ChunkEvent.Load(chunk));
         chunk.isChunkLoaded = true;
@@ -87,9 +87,9 @@ public class ChunkProviderClient implements IChunkProvider
      * Will return back a chunk, if it doesn't exist and its not a MP client it will generates all the blocks for the
      * specified chunk from the map seed and chunk seed
      */
-    public Chunk provideChunk(int par1, int par2)
+    public Chunk provideChunk(final int par1, final int par2)
     {
-        Chunk chunk = (Chunk)this.chunkMapping.getValueByKey(ChunkCoordIntPair.chunkXZ2Int(par1, par2));
+        final Chunk chunk = (Chunk)this.chunkMapping.getValueByKey(ChunkCoordIntPair.chunkXZ2Int(par1, par2));
         return chunk == null ? this.blankChunk : chunk;
     }
 
@@ -97,7 +97,7 @@ public class ChunkProviderClient implements IChunkProvider
      * Two modes of operation: if passed true, save all Chunks in one go.  If passed false, save up to two chunks.
      * Return true if all chunks have been saved.
      */
-    public boolean saveChunks(boolean par1, IProgressUpdate par2IProgressUpdate)
+    public boolean saveChunks(final boolean par1, final IProgressUpdate par2IProgressUpdate)
     {
         return true;
     }
@@ -127,7 +127,7 @@ public class ChunkProviderClient implements IChunkProvider
     /**
      * Populates chunk with ores etc etc
      */
-    public void populate(IChunkProvider par1IChunkProvider, int par2, int par3) {}
+    public void populate(final IChunkProvider par1IChunkProvider, final int par2, final int par3) {}
 
     /**
      * Converts the instance data to a readable string.
@@ -140,7 +140,7 @@ public class ChunkProviderClient implements IChunkProvider
     /**
      * Returns a list of creatures of the specified type that can spawn at the given location.
      */
-    public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int par2, int par3, int par4)
+    public List getPossibleCreatures(final EnumCreatureType par1EnumCreatureType, final int par2, final int par3, final int par4)
     {
         return null;
     }
@@ -148,7 +148,7 @@ public class ChunkProviderClient implements IChunkProvider
     /**
      * Returns the location of the closest structure of the specified type. If not found returns null.
      */
-    public ChunkPosition findClosestStructure(World par1World, String par2Str, int par3, int par4, int par5)
+    public ChunkPosition findClosestStructure(final World par1World, final String par2Str, final int par3, final int par4, final int par5)
     {
         return null;
     }
@@ -158,5 +158,5 @@ public class ChunkProviderClient implements IChunkProvider
         return this.chunkListing.size();
     }
 
-    public void recreateStructures(int par1, int par2) {}
+    public void recreateStructures(final int par1, final int par2) {}
 }

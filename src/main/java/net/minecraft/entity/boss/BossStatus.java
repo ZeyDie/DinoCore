@@ -11,7 +11,7 @@ public final class BossStatus
     public static String bossName;
     public static boolean field_82825_d;
 
-    public static void setBossStatus(IBossDisplayData par0IBossDisplayData, boolean par1)
+    public static void setBossStatus(final IBossDisplayData par0IBossDisplayData, final boolean par1)
     {
         healthScale = par0IBossDisplayData.getHealth() / par0IBossDisplayData.getMaxHealth();
         statusBarLength = 100;

@@ -11,7 +11,7 @@ public class EntityEggInfo
     /** Color of the egg spots */
     public int secondaryColor;
 
-    public EntityEggInfo(int par1, int par2, int par3)
+    public EntityEggInfo(final int par1, final int par2, final int par3)
     {
         this.spawnedID = par1;
         this.primaryColor = par2;

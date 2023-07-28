@@ -27,7 +27,7 @@ public enum EnumCreatureType
     /** Whether this creature type is an animal. */
     private final boolean isAnimal;
 
-    private EnumCreatureType(Class par3Class, int par4, Material par5Material, boolean par6, boolean par7)
+    private EnumCreatureType(final Class par3Class, final int par4, final Material par5Material, final boolean par6, final boolean par7)
     {
         this.creatureClass = par3Class;
         this.maxNumberOfCreature = par4;

@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class BlockFlowerPot extends Block
 {
-    public BlockFlowerPot(int par1)
+    public BlockFlowerPot(final int par1)
     {
         super(par1, Material.circuits);
         this.setBlockBoundsForItemRender();
@@ -23,8 +23,8 @@ public class BlockFlowerPot extends Block
      */
     public void setBlockBoundsForItemRender()
     {
-        float f = 0.375F;
-        float f1 = f / 2.0F;
+        final float f = 0.375F;
+        final float f1 = f / 2.0F;
         this.setBlockBounds(0.5F - f1, 0.0F, 0.5F - f1, 0.5F + f1, f, 0.5F + f1);
     }
 
@@ -56,9 +56,9 @@ public class BlockFlowerPot extends Block
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9)
     {
-        ItemStack itemstack = par5EntityPlayer.inventory.getCurrentItem();
+        final ItemStack itemstack = par5EntityPlayer.inventory.getCurrentItem();
 
         if (itemstack == null)
         {
@@ -70,7 +70,7 @@ public class BlockFlowerPot extends Block
         }
         else
         {
-            int i1 = getMetaForPlant(itemstack);
+            final int i1 = getMetaForPlant(itemstack);
 
             if (i1 > 0)
             {
@@ -95,18 +95,18 @@ public class BlockFlowerPot extends Block
     /**
      * only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
      */
-    public int idPicked(World par1World, int par2, int par3, int par4)
+    public int idPicked(final World par1World, final int par2, final int par3, final int par4)
     {
-        ItemStack itemstack = getPlantForMeta(par1World.getBlockMetadata(par2, par3, par4));
+        final ItemStack itemstack = getPlantForMeta(par1World.getBlockMetadata(par2, par3, par4));
         return itemstack == null ? Item.flowerPot.itemID : itemstack.itemID;
     }
 
     /**
      * Get the block's damage value (for use with pick block).
      */
-    public int getDamageValue(World par1World, int par2, int par3, int par4)
+    public int getDamageValue(final World par1World, final int par2, final int par3, final int par4)
     {
-        ItemStack itemstack = getPlantForMeta(par1World.getBlockMetadata(par2, par3, par4));
+        final ItemStack itemstack = getPlantForMeta(par1World.getBlockMetadata(par2, par3, par4));
         return itemstack == null ? Item.flowerPot.itemID : itemstack.getItemDamage();
     }
 
@@ -123,7 +123,7 @@ public class BlockFlowerPot extends Block
     /**
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
      */
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
+    public boolean canPlaceBlockAt(final World par1World, final int par2, final int par3, final int par4)
     {
         return super.canPlaceBlockAt(par1World, par2, par3, par4) && par1World.doesBlockHaveSolidTopSurface(par2, par3 - 1, par4);
     }
@@ -132,7 +132,7 @@ public class BlockFlowerPot extends Block
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         if (!par1World.doesBlockHaveSolidTopSurface(par2, par3 - 1, par4))
         {
@@ -144,13 +144,13 @@ public class BlockFlowerPot extends Block
     /**
      * Drops the block items with a specified chance of dropping the specified items
      */
-    public void dropBlockAsItemWithChance(World par1World, int par2, int par3, int par4, int par5, float par6, int par7)
+    public void dropBlockAsItemWithChance(final World par1World, final int par2, final int par3, final int par4, final int par5, final float par6, final int par7)
     {
         super.dropBlockAsItemWithChance(par1World, par2, par3, par4, par5, par6, par7);
 
         if (par5 > 0)
         {
-            ItemStack itemstack = getPlantForMeta(par5);
+            final ItemStack itemstack = getPlantForMeta(par5);
 
             if (itemstack != null)
             {
@@ -162,7 +162,7 @@ public class BlockFlowerPot extends Block
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return Item.flowerPot.itemID;
     }
@@ -170,7 +170,7 @@ public class BlockFlowerPot extends Block
     /**
      * Return the item associated with the specified flower pot metadata value.
      */
-    public static ItemStack getPlantForMeta(int par0)
+    public static ItemStack getPlantForMeta(final int par0)
     {
         switch (par0)
         {
@@ -204,9 +204,9 @@ public class BlockFlowerPot extends Block
     /**
      * Return the flower pot metadata value associated with the specified item.
      */
-    public static int getMetaForPlant(ItemStack par0ItemStack)
+    public static int getMetaForPlant(final ItemStack par0ItemStack)
     {
-        int i = par0ItemStack.getItem().itemID;
+        final int i = par0ItemStack.getItem().itemID;
 
         if (i == Block.plantRed.blockID)
         {

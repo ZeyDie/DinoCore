@@ -7,7 +7,7 @@ import net.minecraftforge.event.entity.EntityEvent;
 public class LivingEvent extends EntityEvent
 {
     public final EntityLivingBase entityLiving;
-    public LivingEvent(EntityLivingBase entity)
+    public LivingEvent(final EntityLivingBase entity)
     {
         super(entity);
         entityLiving = entity;
@@ -16,11 +16,11 @@ public class LivingEvent extends EntityEvent
     @Cancelable
     public static class LivingUpdateEvent extends LivingEvent
     {
-        public LivingUpdateEvent(EntityLivingBase e){ super(e); }
+        public LivingUpdateEvent(final EntityLivingBase e){ super(e); }
     }
 
     public static class LivingJumpEvent extends LivingEvent
     {
-        public LivingJumpEvent(EntityLivingBase e){ super(e); }
+        public LivingJumpEvent(final EntityLivingBase e){ super(e); }
     }
 }

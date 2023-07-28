@@ -16,7 +16,7 @@ public class FMLFolderResourcePack extends FolderResourcePack {
 
     private ModContainer container;
 
-    public FMLFolderResourcePack(ModContainer container)
+    public FMLFolderResourcePack(final ModContainer container)
     {
         super(container.getSource());
         this.container = container;
@@ -28,13 +28,13 @@ public class FMLFolderResourcePack extends FolderResourcePack {
         return "FMLFileResourcePack:"+container.getName();
     }
     @Override
-    protected InputStream getInputStreamByName(String resourceName) throws IOException
+    protected InputStream getInputStreamByName(final String resourceName) throws IOException
     {
         try
         {
             return super.getInputStreamByName(resourceName);
         }
-        catch (IOException ioe)
+        catch (final IOException ioe)
         {
             if ("pack.mcmeta".equals(resourceName))
             {

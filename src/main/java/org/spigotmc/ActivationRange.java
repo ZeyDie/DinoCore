@@ -50,8 +50,8 @@ public class ActivationRange {
      * @param entity
      * @return group id
      */
-    public static byte initializeEntityActivationType(Entity entity) {
-        Chunk chunk = null;
+    public static byte initializeEntityActivationType(final Entity entity) {
+        final Chunk chunk = null;
         // Cauldron start - account for entities that dont extend EntityMob, EntityAmbientCreature, EntityCreature
         if (entity instanceof EntityMob || entity instanceof EntitySlime || entity.isCreatureType(EnumCreatureType.monster, false)) // Cauldron - account for entities that dont extend EntityMob
         {
@@ -72,18 +72,19 @@ public class ActivationRange {
      * @param world
      * @return boolean If it should always tick.
      */
-    public static boolean initializeEntityActivationState(Entity entity, SpigotWorldConfig config) {
+    public static boolean initializeEntityActivationState(final Entity entity, SpigotWorldConfig config) {
         // Cauldron start - another fix for Proxy Worlds
-        if (config == null && DimensionManager.getWorld(0) != null) {
-            config = DimensionManager.getWorld(0).spigotConfig;
+        SpigotWorldConfig config1 = config;
+        if (config1 == null && DimensionManager.getWorld(0) != null) {
+            config1 = DimensionManager.getWorld(0).spigotConfig;
         } else {
             return true;
         }
         // Cauldron end
 
-        if ((entity.activationType == 3 && config.miscActivationRange == 0)
-                || (entity.activationType == 2 && config.animalActivationRange == 0)
-                || (entity.activationType == 1 && config.monsterActivationRange == 0)
+        if ((entity.activationType == 3 && config1.miscActivationRange == 0)
+                || (entity.activationType == 2 && config1.animalActivationRange == 0)
+                || (entity.activationType == 1 && config1.monsterActivationRange == 0)
                 || (entity instanceof EntityPlayer && !(entity instanceof FakePlayer)) // Cauldron
                 || entity instanceof EntityThrowable
                 || entity instanceof EntityDragon
@@ -115,7 +116,7 @@ public class ActivationRange {
      * @param y
      * @param z
      */
-    public static void growBB(AxisAlignedBB target, AxisAlignedBB source, int x, int y, int z) {
+    public static void growBB(final AxisAlignedBB target, final AxisAlignedBB source, final int x, final int y, final int z) {
         target.minX = source.minX - x;
         target.minY = source.minY - y;
         target.minZ = source.minZ - z;
@@ -130,7 +131,7 @@ public class ActivationRange {
      *
      * @param world
      */
-    public static void activateEntities(World world) {
+    public static void activateEntities(final World world) {
         SpigotTimings.entityActivationCheckTimer.startTiming();
         final int miscActivationRange = world.spigotConfig.miscActivationRange;
         final int animalActivationRange = world.spigotConfig.animalActivationRange;
@@ -140,7 +141,7 @@ public class ActivationRange {
         maxRange = Math.max(maxRange, miscActivationRange);
         maxRange = Math.min((world.spigotConfig.viewDistance << 4) - 8, maxRange);
 
-        for (Entity player : new ArrayList<Entity>(world.playerEntities)) {
+        for (final Entity player : new ArrayList<Entity>(world.playerEntities)) {
 
             player.activatedTick = MinecraftServer.currentTick;
             growBB(maxBB, player.boundingBox, maxRange, 256, maxRange);
@@ -148,10 +149,10 @@ public class ActivationRange {
             growBB(animalBB, player.boundingBox, animalActivationRange, 256, animalActivationRange);
             growBB(monsterBB, player.boundingBox, monsterActivationRange, 256, monsterActivationRange);
 
-            int i = MathHelper.floor_double(maxBB.minX / 16.0D);
-            int j = MathHelper.floor_double(maxBB.maxX / 16.0D);
-            int k = MathHelper.floor_double(maxBB.minZ / 16.0D);
-            int l = MathHelper.floor_double(maxBB.maxZ / 16.0D);
+            final int i = MathHelper.floor_double(maxBB.minX / 16.0D);
+            final int j = MathHelper.floor_double(maxBB.maxX / 16.0D);
+            final int k = MathHelper.floor_double(maxBB.minZ / 16.0D);
+            final int l = MathHelper.floor_double(maxBB.maxZ / 16.0D);
 
             for (int i1 = i; i1 <= j; ++i1) {
                 for (int j1 = k; j1 <= l; ++j1) {
@@ -169,9 +170,9 @@ public class ActivationRange {
      *
      * @param chunk
      */
-    private static void activateChunkEntities(Chunk chunk) {
-        for (List<Entity> slice : chunk.entityLists) {
-            for (Entity entity : slice) {
+    private static void activateChunkEntities(final Chunk chunk) {
+        for (final List<Entity> slice : chunk.entityLists) {
+            for (final Entity entity : slice) {
 
                 //TODO ZoomCodeStart
                 if (entity == null) continue;
@@ -211,7 +212,7 @@ public class ActivationRange {
      * @param entity
      * @return
      */
-    public static boolean checkEntityImmunities(Entity entity) {
+    public static boolean checkEntityImmunities(final Entity entity) {
         // quick checks.
         if (entity.inWater /* isInWater */ || entity.fire > 0) {
             return true;
@@ -226,8 +227,8 @@ public class ActivationRange {
         }
         // special cases.
         if (entity instanceof EntityLiving) {
-            EntityLiving living = (EntityLiving) entity;
-            if (living.attackTime > 0 || living.hurtTime > 0 || living.activePotionsMap.size() > 0) {
+            final EntityLiving living = (EntityLiving) entity;
+            if (living.attackTime > 0 || living.hurtTime > 0 || !living.activePotionsMap.isEmpty()) {
                 return true;
             }
             if (entity instanceof EntityCreature && ((EntityCreature) entity).entityToAttack != null) {
@@ -237,7 +238,7 @@ public class ActivationRange {
                 return true;
             }
             if (entity instanceof EntityAnimal) {
-                EntityAnimal animal = (EntityAnimal) entity;
+                final EntityAnimal animal = (EntityAnimal) entity;
                 if (animal.isChild() || animal.isInLove() /*love*/) {
                     return true;
                 }
@@ -255,7 +256,7 @@ public class ActivationRange {
      * @param entity
      * @return
      */
-    public static boolean checkIfActive(Entity entity) {
+    public static boolean checkIfActive(final Entity entity) {
         SpigotTimings.checkIfActiveTimer.startTiming();
 
         boolean isActive = entity.activatedTick >= MinecraftServer.currentTick || entity.defaultActivationState;
@@ -277,8 +278,8 @@ public class ActivationRange {
 
         // Cauldron - we check for entities in forced chunks in World.updateEntityWithOptionalForce
         // Make sure not on edge of unloaded chunk
-        int x = MathHelper.floor_double(entity.posX);
-        int z = MathHelper.floor_double(entity.posZ);
+        final int x = MathHelper.floor_double(entity.posX);
+        final int z = MathHelper.floor_double(entity.posZ);
         if (isActive && !entity.worldObj.doChunksNearChunkExist(x, 0, z, 16)) {
             isActive = false;
         }

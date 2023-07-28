@@ -49,7 +49,7 @@ public class BlockDamageEvent extends BlockEvent implements Cancellable {
      *
      * @param bool true if you want the block to instantly break when damaged by the player
      */
-    public void setInstaBreak(boolean bool) {
+    public void setInstaBreak(final boolean bool) {
         this.instaBreak = bool;
     }
 
@@ -66,7 +66,7 @@ public class BlockDamageEvent extends BlockEvent implements Cancellable {
         return cancel;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 

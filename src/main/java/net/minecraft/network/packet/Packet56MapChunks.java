@@ -55,8 +55,8 @@ public class Packet56MapChunks extends Packet {
     public Packet56MapChunks() {
     }
 
-    public Packet56MapChunks(List par1List) {
-        int i = par1List.size();
+    public Packet56MapChunks(final List par1List) {
+        final int i = par1List.size();
         this.chunkPostX = new int[i];
         this.chunkPosZ = new int[i];
         this.field_73590_a = new int[i];
@@ -66,8 +66,8 @@ public class Packet56MapChunks extends Packet {
         int j = 0;
 
         for (int k = 0; k < i; ++k) {
-            Chunk chunk = (Chunk) par1List.get(k);
-            Packet51MapChunkData packet51mapchunkdata = Packet51MapChunk.getMapChunkData(chunk, true, 65535);
+            final Chunk chunk = (Chunk) par1List.get(k);
+            final Packet51MapChunkData packet51mapchunkdata = Packet51MapChunk.getMapChunkData(chunk, true, 65535);
             // Spigot start
             world = chunk.worldObj;
             /*
@@ -128,7 +128,7 @@ public class Packet56MapChunks extends Packet {
         }
         // Spigot end
 
-        Deflater deflater = localDeflater.get();
+        final Deflater deflater = localDeflater.get();
         deflater.reset();
         deflater.setInput(this.chunkDataNotCompressed);
         deflater.finish();
@@ -141,9 +141,9 @@ public class Packet56MapChunks extends Packet {
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException   // CraftBukkit - throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException   // CraftBukkit - throws IOException
     {
-        short short1 = par1DataInput.readShort();
+        final short short1 = par1DataInput.readShort();
         this.dataLength = par1DataInput.readInt();
         this.skyLightSent = par1DataInput.readBoolean();
         this.chunkPostX = new int[short1];
@@ -157,13 +157,13 @@ public class Packet56MapChunks extends Packet {
         }
 
         par1DataInput.readFully(chunkDataNotCompressed, 0, this.dataLength);
-        byte[] abyte = new byte[196864 * short1];
-        Inflater inflater = new Inflater();
+        final byte[] abyte = new byte[196864 * short1];
+        final Inflater inflater = new Inflater();
         inflater.setInput(chunkDataNotCompressed, 0, this.dataLength);
 
         try {
             inflater.inflate(abyte);
-        } catch (DataFormatException dataformatexception) {
+        } catch (final DataFormatException dataformatexception) {
             throw new IOException("Bad compressed data format");
         } finally {
             inflater.end();
@@ -201,7 +201,7 @@ public class Packet56MapChunks extends Packet {
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException   // CraftBukkit - throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException   // CraftBukkit - throws IOException
     {
         compress(); // CraftBukkit
         par1DataOutput.writeShort(this.chunkPostX.length);
@@ -220,7 +220,7 @@ public class Packet56MapChunks extends Packet {
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler) {
+    public void processPacket(final NetHandler par1NetHandler) {
         par1NetHandler.handleMapChunks(this);
     }
 
@@ -232,12 +232,12 @@ public class Packet56MapChunks extends Packet {
     }
 
     @SideOnly(Side.CLIENT)
-    public int getChunkPosX(int par1) {
+    public int getChunkPosX(final int par1) {
         return this.chunkPostX[par1];
     }
 
     @SideOnly(Side.CLIENT)
-    public int getChunkPosZ(int par1) {
+    public int getChunkPosZ(final int par1) {
         return this.chunkPosZ[par1];
     }
 
@@ -246,7 +246,7 @@ public class Packet56MapChunks extends Packet {
     }
 
     @SideOnly(Side.CLIENT)
-    public byte[] getChunkCompressedData(int par1) {
+    public byte[] getChunkCompressedData(final int par1) {
         return this.field_73584_f[par1];
     }
 }

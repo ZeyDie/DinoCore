@@ -15,7 +15,7 @@ public class BlockMelon extends Block
     @SideOnly(Side.CLIENT)
     private Icon theIcon;
 
-    protected BlockMelon(int par1)
+    protected BlockMelon(final int par1)
     {
         super(par1, Material.pumpkin);
         this.setCreativeTab(CreativeTabs.tabBlock);
@@ -26,7 +26,7 @@ public class BlockMelon extends Block
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
         return par1 != 1 && par1 != 0 ? this.blockIcon : this.theIcon;
     }
@@ -34,7 +34,7 @@ public class BlockMelon extends Block
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return Item.melon.itemID;
     }
@@ -42,7 +42,7 @@ public class BlockMelon extends Block
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random par1Random)
+    public int quantityDropped(final Random par1Random)
     {
         return 3 + par1Random.nextInt(5);
     }
@@ -50,7 +50,7 @@ public class BlockMelon extends Block
     /**
      * Returns the usual quantity dropped by the block plus a bonus of 1 to 'i' (inclusive).
      */
-    public int quantityDroppedWithBonus(int par1, Random par2Random)
+    public int quantityDroppedWithBonus(final int par1, final Random par2Random)
     {
         int j = this.quantityDropped(par2Random) + par2Random.nextInt(1 + par1);
 
@@ -68,7 +68,7 @@ public class BlockMelon extends Block
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.blockIcon = par1IconRegister.registerIcon(this.getTextureName() + "_side");
         this.theIcon = par1IconRegister.registerIcon(this.getTextureName() + "_top");

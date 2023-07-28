@@ -9,7 +9,7 @@ public class WatchableObject
     private Object watchedObject;
     private boolean watched;
 
-    public WatchableObject(int par1, int par2, Object par3Obj)
+    public WatchableObject(final int par1, final int par2, final Object par3Obj)
     {
         this.dataValueId = par2;
         this.watchedObject = par3Obj;
@@ -22,7 +22,7 @@ public class WatchableObject
         return this.dataValueId;
     }
 
-    public void setObject(Object par1Obj)
+    public void setObject(final Object par1Obj)
     {
         this.watchedObject = par1Obj;
     }
@@ -42,7 +42,7 @@ public class WatchableObject
         return this.watched;
     }
 
-    public void setWatched(boolean par1)
+    public void setWatched(final boolean par1)
     {
         this.watched = par1;
     }
@@ -50,7 +50,7 @@ public class WatchableObject
     /**
      * Set whether the specified watchable object is being watched.
      */
-    static boolean setWatchableObjectWatched(WatchableObject par0WatchableObject, boolean par1)
+    static boolean setWatchableObjectWatched(final WatchableObject par0WatchableObject, final boolean par1)
     {
         return par0WatchableObject.watched = par1;
     }

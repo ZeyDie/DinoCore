@@ -45,7 +45,7 @@ public class EntityZombie extends EntityMob
     private int conversionTime;
     private int lastTick = MinecraftServer.currentTick; // CraftBukkit
 
-    public EntityZombie(World par1World)
+    public EntityZombie(final World par1World)
     {
         super(par1World);
         this.getNavigator().setBreakDoors(true);
@@ -115,13 +115,13 @@ public class EntityZombie extends EntityMob
     /**
      * Set whether this zombie is a child.
      */
-    public void setChild(boolean par1)
+    public void setChild(final boolean par1)
     {
         this.getDataWatcher().updateObject(12, Byte.valueOf((byte)(par1 ? 1 : 0)));
 
         if (this.worldObj != null && !this.worldObj.isRemote)
         {
-            AttributeInstance attributeinstance = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
+            final AttributeInstance attributeinstance = this.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
             attributeinstance.removeModifier(babySpeedBoostModifier);
 
             if (par1)
@@ -142,7 +142,7 @@ public class EntityZombie extends EntityMob
     /**
      * Set whether this zombie is a villager.
      */
-    public void setVillager(boolean par1)
+    public void setVillager(final boolean par1)
     {
         this.getDataWatcher().updateObject(13, Byte.valueOf((byte)(par1 ? 1 : 0)));
     }
@@ -155,12 +155,12 @@ public class EntityZombie extends EntityMob
     {
         if (this.worldObj.isDaytime() && !this.worldObj.isRemote && !this.isChild())
         {
-            float f = this.getBrightness(1.0F);
+            final float f = this.getBrightness(1.0F);
 
             if (f > 0.5F && this.rand.nextFloat() * 30.0F < (f - 0.4F) * 2.0F && this.worldObj.canBlockSeeTheSky(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ)))
             {
                 boolean flag = true;
-                ItemStack itemstack = this.getCurrentItemOrArmor(4);
+                final ItemStack itemstack = this.getCurrentItemOrArmor(4);
 
                 if (itemstack != null)
                 {
@@ -181,7 +181,7 @@ public class EntityZombie extends EntityMob
                 if (flag)
                 {
                     // CraftBukkit start
-                    EntityCombustEvent event = new EntityCombustEvent(this.getBukkitEntity(), 8);
+                    final EntityCombustEvent event = new EntityCombustEvent(this.getBukkitEntity(), 8);
                     this.worldObj.getServer().getPluginManager().callEvent(event);
 
                     if (!event.isCancelled())
@@ -199,7 +199,7 @@ public class EntityZombie extends EntityMob
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2)
     {
         if (!super.attackEntityFrom(par1DamageSource, par2))
         {
@@ -219,11 +219,11 @@ public class EntityZombie extends EntityMob
                 entitylivingbase = (EntityLivingBase)par1DamageSource.getEntity();
             }
 
-            int i = MathHelper.floor_double(this.posX);
-            int j = MathHelper.floor_double(this.posY);
-            int k = MathHelper.floor_double(this.posZ);
+            final int i = MathHelper.floor_double(this.posX);
+            final int j = MathHelper.floor_double(this.posY);
+            final int k = MathHelper.floor_double(this.posZ);
 
-            SummonAidEvent summonAid = ForgeEventFactory.fireZombieSummonAid(this, worldObj, i, j, k, entitylivingbase, this.getEntityAttribute(field_110186_bp).getAttributeValue());
+            final SummonAidEvent summonAid = ForgeEventFactory.fireZombieSummonAid(this, worldObj, i, j, k, entitylivingbase, this.getEntityAttribute(field_110186_bp).getAttributeValue());
             
             if (summonAid.getResult() == Result.DENY)
             {
@@ -231,7 +231,7 @@ public class EntityZombie extends EntityMob
             }
             else if (summonAid.getResult() == Result.ALLOW || entitylivingbase != null && this.worldObj.difficultySetting >= 3 && (double)this.rand.nextFloat() < this.getEntityAttribute(field_110186_bp).getAttributeValue())
             {
-                EntityZombie entityzombie;
+                final EntityZombie entityzombie;
                 if (summonAid.customSummonedAid != null && summonAid.getResult() == Result.ALLOW)
                 {
                     entityzombie = summonAid.customSummonedAid;
@@ -243,9 +243,9 @@ public class EntityZombie extends EntityMob
                 
                 for (int l = 0; l < 50; ++l)
                 {
-                    int i1 = i + MathHelper.getRandomIntegerInRange(this.rand, 7, 40) * MathHelper.getRandomIntegerInRange(this.rand, -1, 1);
-                    int j1 = j + MathHelper.getRandomIntegerInRange(this.rand, 7, 40) * MathHelper.getRandomIntegerInRange(this.rand, -1, 1);
-                    int k1 = k + MathHelper.getRandomIntegerInRange(this.rand, 7, 40) * MathHelper.getRandomIntegerInRange(this.rand, -1, 1);
+                    final int i1 = i + MathHelper.getRandomIntegerInRange(this.rand, 7, 40) * MathHelper.getRandomIntegerInRange(this.rand, -1, 1);
+                    final int j1 = j + MathHelper.getRandomIntegerInRange(this.rand, 7, 40) * MathHelper.getRandomIntegerInRange(this.rand, -1, 1);
+                    final int k1 = k + MathHelper.getRandomIntegerInRange(this.rand, 7, 40) * MathHelper.getRandomIntegerInRange(this.rand, -1, 1);
 
                     if (this.worldObj.doesBlockHaveSolidTopSurface(i1, j1 - 1, k1) && this.worldObj.getBlockLightValue(i1, j1, k1) < 10)
                     {
@@ -277,7 +277,7 @@ public class EntityZombie extends EntityMob
         {
             int i = this.getConversionTimeBoost();
             // CraftBukkit start - Use wall time instead of ticks for villager conversion
-            int elapsedTicks = MinecraftServer.currentTick - this.lastTick;
+            final int elapsedTicks = MinecraftServer.currentTick - this.lastTick;
             this.lastTick = MinecraftServer.currentTick;
             i *= elapsedTicks;
             // CraftBukkit end
@@ -292,14 +292,14 @@ public class EntityZombie extends EntityMob
         super.onUpdate();
     }
 
-    public boolean attackEntityAsMob(Entity par1Entity)
+    public boolean attackEntityAsMob(final Entity par1Entity)
     {
-        boolean flag = super.attackEntityAsMob(par1Entity);
+        final boolean flag = super.attackEntityAsMob(par1Entity);
 
         if (flag && this.getHeldItem() == null && this.isBurning() && this.rand.nextFloat() < (float)this.worldObj.difficultySetting * 0.3F)
         {
             // CraftBukkit start
-            EntityCombustByEntityEvent event = new EntityCombustByEntityEvent(this.getBukkitEntity(), par1Entity.getBukkitEntity(), 2 * this.worldObj.difficultySetting);
+            final EntityCombustByEntityEvent event = new EntityCombustByEntityEvent(this.getBukkitEntity(), par1Entity.getBukkitEntity(), 2 * this.worldObj.difficultySetting);
             this.worldObj.getServer().getPluginManager().callEvent(event);
 
             if (!event.isCancelled())
@@ -339,7 +339,7 @@ public class EntityZombie extends EntityMob
     /**
      * Plays step sound at given x, y, z for the entity
      */
-    protected void playStepSound(int par1, int par2, int par3, int par4)
+    protected void playStepSound(final int par1, final int par2, final int par3, final int par4)
     {
         this.playSound("mob.zombie.step", 0.15F, 1.0F);
     }
@@ -360,7 +360,7 @@ public class EntityZombie extends EntityMob
         return EnumCreatureAttribute.UNDEAD;
     }
 
-    protected void dropRareDrop(int par1)
+    protected void dropRareDrop(final int par1)
     {
         switch (this.rand.nextInt(3))
         {
@@ -384,7 +384,7 @@ public class EntityZombie extends EntityMob
 
         if (this.rand.nextFloat() < (this.worldObj.difficultySetting == 3 ? 0.05F : 0.01F))
         {
-            int i = this.rand.nextInt(3);
+            final int i = this.rand.nextInt(3);
 
             if (i == 0)
             {
@@ -400,7 +400,7 @@ public class EntityZombie extends EntityMob
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
 
@@ -420,7 +420,7 @@ public class EntityZombie extends EntityMob
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
 
@@ -443,7 +443,7 @@ public class EntityZombie extends EntityMob
     /**
      * This method gets called when the entity kills another one.
      */
-    public void onKillEntity(EntityLivingBase par1EntityLivingBase)
+    public void onKillEntity(final EntityLivingBase par1EntityLivingBase)
     {
         super.onKillEntity(par1EntityLivingBase);
 
@@ -454,7 +454,7 @@ public class EntityZombie extends EntityMob
                 return;
             }
 
-            EntityZombie entityzombie = new EntityZombie(this.worldObj);
+            final EntityZombie entityzombie = new EntityZombie(this.worldObj);
             entityzombie.copyLocationAndAnglesFrom(par1EntityLivingBase);
             this.worldObj.removeEntity(par1EntityLivingBase);
             entityzombie.onSpawnWithEgg((EntityLivingData)null);
@@ -470,10 +470,10 @@ public class EntityZombie extends EntityMob
         }
     }
 
-    public EntityLivingData onSpawnWithEgg(EntityLivingData par1EntityLivingData)
+    public EntityLivingData onSpawnWithEgg(final EntityLivingData par1EntityLivingData)
     {
         Object par1EntityLivingData1 = super.onSpawnWithEgg(par1EntityLivingData);
-        float f = this.worldObj.getLocationTensionFactor(this.posX, this.posY, this.posZ);
+        final float f = this.worldObj.getLocationTensionFactor(this.posX, this.posY, this.posZ);
         this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * f);
 
         if (par1EntityLivingData1 == null)
@@ -483,7 +483,7 @@ public class EntityZombie extends EntityMob
 
         if (par1EntityLivingData1 instanceof EntityZombieGroupData)
         {
-            EntityZombieGroupData entityzombiegroupdata = (EntityZombieGroupData)par1EntityLivingData1;
+            final EntityZombieGroupData entityzombiegroupdata = (EntityZombieGroupData)par1EntityLivingData1;
 
             if (entityzombiegroupdata.field_142046_b)
             {
@@ -501,7 +501,7 @@ public class EntityZombie extends EntityMob
 
         if (this.getCurrentItemOrArmor(4) == null)
         {
-            Calendar calendar = this.worldObj.getCurrentDate();
+            final Calendar calendar = this.worldObj.getCurrentDate();
 
             if (calendar.get(2) + 1 == 10 && calendar.get(5) == 31 && this.rand.nextFloat() < 0.25F)
             {
@@ -525,9 +525,9 @@ public class EntityZombie extends EntityMob
     /**
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
-    public boolean interact(EntityPlayer par1EntityPlayer)
+    public boolean interact(final EntityPlayer par1EntityPlayer)
     {
-        ItemStack itemstack = par1EntityPlayer.getCurrentEquippedItem();
+        final ItemStack itemstack = par1EntityPlayer.getCurrentEquippedItem();
 
         if (itemstack != null && itemstack.getItem() == Item.appleGold && itemstack.getItemDamage() == 0 && this.isVillager() && this.isPotionActive(Potion.weakness))
         {
@@ -558,7 +558,7 @@ public class EntityZombie extends EntityMob
      * Starts converting this zombie into a villager. The zombie converts into a villager after the specified time in
      * ticks.
      */
-    protected void startConversion(int par1)
+    protected void startConversion(final int par1)
     {
         this.conversionTime = par1;
         this.getDataWatcher().updateObject(14, Byte.valueOf((byte)1));
@@ -568,7 +568,7 @@ public class EntityZombie extends EntityMob
     }
 
     @SideOnly(Side.CLIENT)
-    public void handleHealthUpdate(byte par1)
+    public void handleHealthUpdate(final byte par1)
     {
         if (par1 == 16)
         {
@@ -601,7 +601,7 @@ public class EntityZombie extends EntityMob
      */
     protected void convertToVillager()
     {
-        EntityVillager entityvillager = new EntityVillager(this.worldObj);
+        final EntityVillager entityvillager = new EntityVillager(this.worldObj);
         entityvillager.copyLocationAndAnglesFrom(this);
         entityvillager.onSpawnWithEgg((EntityLivingData)null);
         entityvillager.func_82187_q();
@@ -634,7 +634,7 @@ public class EntityZombie extends EntityMob
                 {
                     for (int i1 = (int)this.posZ - 4; i1 < (int)this.posZ + 4 && j < 14; ++i1)
                     {
-                        int j1 = this.worldObj.getBlockId(k, l, i1);
+                        final int j1 = this.worldObj.getBlockId(k, l, i1);
 
                         if (j1 == Block.fenceIron.blockID || j1 == Block.bed.blockID)
                         {

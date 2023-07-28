@@ -11,7 +11,7 @@ public class Packet29DestroyEntity extends Packet
 
     public Packet29DestroyEntity() {}
 
-    public Packet29DestroyEntity(int ... par1ArrayOfInteger)
+    public Packet29DestroyEntity(final int ... par1ArrayOfInteger)
     {
         this.entityId = par1ArrayOfInteger;
     }
@@ -19,7 +19,7 @@ public class Packet29DestroyEntity extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.entityId = new int[par1DataInput.readByte()];
 
@@ -32,7 +32,7 @@ public class Packet29DestroyEntity extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeByte(this.entityId.length);
 
@@ -45,7 +45,7 @@ public class Packet29DestroyEntity extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleDestroyEntity(this);
     }

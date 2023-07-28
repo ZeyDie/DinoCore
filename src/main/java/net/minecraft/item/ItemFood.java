@@ -38,7 +38,7 @@ public class ItemFood extends Item
     /** probably of the set potion effect occurring */
     private float potionEffectProbability;
 
-    public ItemFood(int par1, int par2, float par3, boolean par4)
+    public ItemFood(final int par1, final int par2, final float par3, final boolean par4)
     {
         super(par1);
         this.itemUseDuration = 32;
@@ -48,17 +48,17 @@ public class ItemFood extends Item
         this.setCreativeTab(CreativeTabs.tabFood);
     }
 
-    public ItemFood(int par1, int par2, boolean par3)
+    public ItemFood(final int par1, final int par2, final boolean par3)
     {
         this(par1, par2, 0.6F, par3);
     }
 
-    public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onEaten(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         --par1ItemStack.stackSize;
         // CraftBukkit start
-        int oldFoodLevel = par3EntityPlayer.getFoodStats().foodLevel;
-        org.bukkit.event.entity.FoodLevelChangeEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callFoodLevelChangeEvent(par3EntityPlayer, this.getHealAmount() + oldFoodLevel);
+        final int oldFoodLevel = par3EntityPlayer.getFoodStats().foodLevel;
+        final org.bukkit.event.entity.FoodLevelChangeEvent event = org.bukkit.craftbukkit.v1_6_R3.event.CraftEventFactory.callFoodLevelChangeEvent(par3EntityPlayer, this.getHealAmount() + oldFoodLevel);
 
         if (!event.isCancelled())
         {
@@ -72,7 +72,7 @@ public class ItemFood extends Item
         return par1ItemStack;
     }
 
-    protected void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    protected void onFoodEaten(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         if (!par2World.isRemote && this.potionId > 0 && par2World.rand.nextFloat() < this.potionEffectProbability)
         {
@@ -83,7 +83,7 @@ public class ItemFood extends Item
     /**
      * How long it takes to use or consume an item
      */
-    public int getMaxItemUseDuration(ItemStack par1ItemStack)
+    public int getMaxItemUseDuration(final ItemStack par1ItemStack)
     {
         return 32;
     }
@@ -91,7 +91,7 @@ public class ItemFood extends Item
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    public EnumAction getItemUseAction(ItemStack par1ItemStack)
+    public EnumAction getItemUseAction(final ItemStack par1ItemStack)
     {
         return EnumAction.eat;
     }
@@ -99,7 +99,7 @@ public class ItemFood extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         if (par3EntityPlayer.canEat(this.alwaysEdible))
         {
@@ -134,7 +134,7 @@ public class ItemFood extends Item
      * sets a potion effect on the item. Args: int potionId, int duration (will be multiplied by 20), int amplifier,
      * float probability of effect happening
      */
-    public ItemFood setPotionEffect(int par1, int par2, int par3, float par4)
+    public ItemFood setPotionEffect(final int par1, final int par2, final int par3, final float par4)
     {
         this.potionId = par1;
         this.potionDuration = par2;

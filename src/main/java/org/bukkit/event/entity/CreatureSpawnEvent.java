@@ -19,7 +19,7 @@ public class CreatureSpawnEvent extends EntitySpawnEvent {
     }
 
     @Deprecated
-    public CreatureSpawnEvent(Entity spawnee, CreatureType type, Location loc, SpawnReason reason) {
+    public CreatureSpawnEvent(final Entity spawnee, final CreatureType type, final Location loc, final SpawnReason reason) {
         super(spawnee);
         spawnReason = reason;
     }

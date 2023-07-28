@@ -17,7 +17,7 @@ public class ItemSword extends Item
     private float weaponDamage;
     private final EnumToolMaterial toolMaterial;
 
-    public ItemSword(int par1, EnumToolMaterial par2EnumToolMaterial)
+    public ItemSword(final int par1, final EnumToolMaterial par2EnumToolMaterial)
     {
         super(par1);
         this.toolMaterial = par2EnumToolMaterial;
@@ -36,7 +36,7 @@ public class ItemSword extends Item
      * Returns the strength of the stack against a given block. 1.0F base, (Quality+1)*2 if correct blocktype, 1.5F if
      * sword
      */
-    public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block)
+    public float getStrVsBlock(final ItemStack par1ItemStack, final Block par2Block)
     {
         if (par2Block.blockID == Block.web.blockID)
         {
@@ -44,7 +44,7 @@ public class ItemSword extends Item
         }
         else
         {
-            Material material = par2Block.blockMaterial;
+            final Material material = par2Block.blockMaterial;
             return material != Material.plants && material != Material.vine && material != Material.coral && material != Material.leaves && material != Material.pumpkin ? 1.0F : 1.5F;
         }
     }
@@ -53,13 +53,13 @@ public class ItemSword extends Item
      * Current implementations of this method in child classes do not use the entry argument beside ev. They just raise
      * the damage on the stack.
      */
-    public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase)
+    public boolean hitEntity(final ItemStack par1ItemStack, final EntityLivingBase par2EntityLivingBase, final EntityLivingBase par3EntityLivingBase)
     {
         par1ItemStack.damageItem(1, par3EntityLivingBase);
         return true;
     }
 
-    public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, int par3, int par4, int par5, int par6, EntityLivingBase par7EntityLivingBase)
+    public boolean onBlockDestroyed(final ItemStack par1ItemStack, final World par2World, final int par3, final int par4, final int par5, final int par6, final EntityLivingBase par7EntityLivingBase)
     {
         if ((double)Block.blocksList[par3].getBlockHardness(par2World, par4, par5, par6) != 0.0D)
         {
@@ -82,7 +82,7 @@ public class ItemSword extends Item
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    public EnumAction getItemUseAction(ItemStack par1ItemStack)
+    public EnumAction getItemUseAction(final ItemStack par1ItemStack)
     {
         return EnumAction.block;
     }
@@ -90,7 +90,7 @@ public class ItemSword extends Item
     /**
      * How long it takes to use or consume an item
      */
-    public int getMaxItemUseDuration(ItemStack par1ItemStack)
+    public int getMaxItemUseDuration(final ItemStack par1ItemStack)
     {
         return 72000;
     }
@@ -98,7 +98,7 @@ public class ItemSword extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
         par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
         return par1ItemStack;
@@ -107,7 +107,7 @@ public class ItemSword extends Item
     /**
      * Returns if the item (tool) can harvest results from the block type.
      */
-    public boolean canHarvestBlock(Block par1Block)
+    public boolean canHarvestBlock(final Block par1Block)
     {
         return par1Block.blockID == Block.web.blockID;
     }
@@ -131,7 +131,7 @@ public class ItemSword extends Item
     /**
      * Return whether this item is repairable in an anvil.
      */
-    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
+    public boolean getIsRepairable(final ItemStack par1ItemStack, final ItemStack par2ItemStack)
     {
         return this.toolMaterial.getToolCraftingMaterial() == par2ItemStack.itemID ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
     }
@@ -141,7 +141,7 @@ public class ItemSword extends Item
      */
     public Multimap getItemAttributeModifiers()
     {
-        Multimap multimap = super.getItemAttributeModifiers();
+        final Multimap multimap = super.getItemAttributeModifiers();
         multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Weapon modifier", (double)this.weaponDamage, 0));
         return multimap;
     }

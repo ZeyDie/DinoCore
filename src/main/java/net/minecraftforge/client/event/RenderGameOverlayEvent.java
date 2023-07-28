@@ -35,7 +35,7 @@ public class RenderGameOverlayEvent extends Event
     public final int mouseY;
     public final ElementType type;
 
-    public RenderGameOverlayEvent(float partialTicks, ScaledResolution resolution, int mouseX, int mouseY)
+    public RenderGameOverlayEvent(final float partialTicks, final ScaledResolution resolution, final int mouseX, final int mouseY)
     {
         this.partialTicks = partialTicks;
         this.resolution = resolution;
@@ -44,7 +44,7 @@ public class RenderGameOverlayEvent extends Event
         this.type = null;
     }
 
-    private RenderGameOverlayEvent(RenderGameOverlayEvent parent, ElementType type)
+    private RenderGameOverlayEvent(final RenderGameOverlayEvent parent, final ElementType type)
     {
         this.partialTicks = parent.partialTicks;
         this.resolution = parent.resolution;
@@ -55,7 +55,7 @@ public class RenderGameOverlayEvent extends Event
 
     public static class Pre extends RenderGameOverlayEvent
     {
-        public Pre(RenderGameOverlayEvent parent, ElementType type)
+        public Pre(final RenderGameOverlayEvent parent, final ElementType type)
         {
             super(parent, type);
         }
@@ -63,7 +63,7 @@ public class RenderGameOverlayEvent extends Event
 
     public static class Post extends RenderGameOverlayEvent
     {
-        public Post(RenderGameOverlayEvent parent, ElementType type)
+        public Post(final RenderGameOverlayEvent parent, final ElementType type)
         {
             super(parent, type);
         }
@@ -74,7 +74,7 @@ public class RenderGameOverlayEvent extends Event
     {
         public final ArrayList<String> left;
         public final ArrayList<String> right;
-        public Text(RenderGameOverlayEvent parent, ArrayList<String> left, ArrayList<String> right)
+        public Text(final RenderGameOverlayEvent parent, final ArrayList<String> left, final ArrayList<String> right)
         {
             super(parent, ElementType.TEXT);
             this.left = left;
@@ -87,7 +87,7 @@ public class RenderGameOverlayEvent extends Event
         public int posX;
         public int posY;
 
-        public Chat(RenderGameOverlayEvent parent, int posX, int posY)
+        public Chat(final RenderGameOverlayEvent parent, final int posX, final int posY)
         {
             super(parent, ElementType.CHAT);
             this.posX = posX;

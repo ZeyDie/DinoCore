@@ -23,7 +23,7 @@ public class GuiScreenMcoWorldTemplate extends GuiScreen
     private int field_110397_e = -1;
     private GuiButton field_110400_p;
 
-    public GuiScreenMcoWorldTemplate(ScreenWithCallback par1ScreenWithCallback, WorldTemplate par2WorldTemplate)
+    public GuiScreenMcoWorldTemplate(final ScreenWithCallback par1ScreenWithCallback, final WorldTemplate par2WorldTemplate)
     {
         this.field_110401_a = par1ScreenWithCallback;
         this.field_110398_b = par2WorldTemplate;
@@ -58,7 +58,7 @@ public class GuiScreenMcoWorldTemplate extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
@@ -90,7 +90,7 @@ public class GuiScreenMcoWorldTemplate extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.field_110396_d.drawScreen(par1, par2, par3);
@@ -98,67 +98,67 @@ public class GuiScreenMcoWorldTemplate extends GuiScreen
         super.drawScreen(par1, par2, par3);
     }
 
-    static Minecraft func_110382_a(GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
+    static Minecraft func_110382_a(final GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
     {
         return par0GuiScreenMcoWorldTemplate.mc;
     }
 
-    static List func_110388_a(GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate, List par1List)
+    static List func_110388_a(final GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate, final List par1List)
     {
         return par0GuiScreenMcoWorldTemplate.field_110399_c = par1List;
     }
 
-    static Minecraft func_110392_b(GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
+    static Minecraft func_110392_b(final GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
     {
         return par0GuiScreenMcoWorldTemplate.mc;
     }
 
-    static Minecraft func_130066_c(GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
+    static Minecraft func_130066_c(final GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
     {
         return par0GuiScreenMcoWorldTemplate.mc;
     }
 
-    static List func_110395_c(GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
+    static List func_110395_c(final GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
     {
         return par0GuiScreenMcoWorldTemplate.field_110399_c;
     }
 
-    static int func_130064_a(GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate, int par1)
+    static int func_130064_a(final GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate, final int par1)
     {
         return par0GuiScreenMcoWorldTemplate.field_110397_e = par1;
     }
 
-    static WorldTemplate func_130065_a(GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate, WorldTemplate par1WorldTemplate)
+    static WorldTemplate func_130065_a(final GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate, final WorldTemplate par1WorldTemplate)
     {
         return par0GuiScreenMcoWorldTemplate.field_110398_b = par1WorldTemplate;
     }
 
-    static WorldTemplate func_130067_e(GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
+    static WorldTemplate func_130067_e(final GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
     {
         return par0GuiScreenMcoWorldTemplate.field_110398_b;
     }
 
-    static int func_130062_f(GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
+    static int func_130062_f(final GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
     {
         return par0GuiScreenMcoWorldTemplate.field_110397_e;
     }
 
-    static FontRenderer func_110389_g(GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
+    static FontRenderer func_110389_g(final GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
     {
         return par0GuiScreenMcoWorldTemplate.fontRenderer;
     }
 
-    static FontRenderer func_110387_h(GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
+    static FontRenderer func_110387_h(final GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
     {
         return par0GuiScreenMcoWorldTemplate.fontRenderer;
     }
 
-    static FontRenderer func_110384_i(GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
+    static FontRenderer func_110384_i(final GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
     {
         return par0GuiScreenMcoWorldTemplate.fontRenderer;
     }
 
-    static FontRenderer func_130063_j(GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
+    static FontRenderer func_130063_j(final GuiScreenMcoWorldTemplate par0GuiScreenMcoWorldTemplate)
     {
         return par0GuiScreenMcoWorldTemplate.fontRenderer;
     }

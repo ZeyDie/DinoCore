@@ -11,13 +11,13 @@ public class BiomeGenHills extends BiomeGenBase
 {
     private WorldGenerator theWorldGenerator;
 
-    protected BiomeGenHills(int par1)
+    protected BiomeGenHills(final int par1)
     {
         super(par1);
         this.theWorldGenerator = new WorldGenMinable(Block.silverfish.blockID, 8);
     }
 
-    public void decorate(World par1World, Random par2Random, int par3, int par4)
+    public void decorate(final World par1World, final Random par2Random, final int par3, final int par4)
     {
         super.decorate(par1World, par2Random, par3, par4);
         int k = 3 + par2Random.nextInt(6);
@@ -29,8 +29,8 @@ public class BiomeGenHills extends BiomeGenBase
         {
             i1 = par3 + par2Random.nextInt(16);
             j1 = par2Random.nextInt(28) + 4;
-            int k1 = par4 + par2Random.nextInt(16);
-            int l1 = par1World.getBlockId(i1, j1, k1);
+            final int k1 = par4 + par2Random.nextInt(16);
+            final int l1 = par1World.getBlockId(i1, j1, k1);
 
             if (l1 == Block.stone.blockID)
             {

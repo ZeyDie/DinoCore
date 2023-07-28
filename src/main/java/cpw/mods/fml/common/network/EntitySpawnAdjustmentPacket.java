@@ -33,9 +33,9 @@ public class EntitySpawnAdjustmentPacket extends FMLPacket
     public int serverZ;
 
     @Override
-    public byte[] generatePacket(Object... data)
+    public byte[] generatePacket(final Object... data)
     {
-        ByteArrayDataOutput dat = ByteStreams.newDataOutput();
+        final ByteArrayDataOutput dat = ByteStreams.newDataOutput();
         dat.writeInt((Integer) data[0]);
         dat.writeInt((Integer) data[1]);
         dat.writeInt((Integer) data[2]);
@@ -44,9 +44,9 @@ public class EntitySpawnAdjustmentPacket extends FMLPacket
     }
 
     @Override
-    public FMLPacket consumePacket(byte[] data)
+    public FMLPacket consumePacket(final byte[] data)
     {
-        ByteArrayDataInput dat = ByteStreams.newDataInput(data);
+        final ByteArrayDataInput dat = ByteStreams.newDataInput(data);
         entityId = dat.readInt();
         serverX = dat.readInt();
         serverY = dat.readInt();
@@ -55,7 +55,7 @@ public class EntitySpawnAdjustmentPacket extends FMLPacket
     }
 
     @Override
-    public void execute(INetworkManager network, FMLNetworkHandler handler, NetHandler netHandler, String userName)
+    public void execute(final INetworkManager network, final FMLNetworkHandler handler, final NetHandler netHandler, final String userName)
     {
         FMLCommonHandler.instance().adjustEntityLocationOnClient(this);
     }

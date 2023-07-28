@@ -14,34 +14,34 @@ import net.minecraft.world.World;
 //Preliminary, simple Fake Player class 
 public class FakePlayer extends EntityPlayerMP
 {
-    public FakePlayer(World world, String name)
+    public FakePlayer(final World world, final String name)
     {
         super(FMLCommonHandler.instance().getMinecraftServerInstance(), world, name, new ItemInWorldManager(world));
     }
 
-    public void sendChatToPlayer(String s){}
-    public boolean canCommandSenderUseCommand(int i, String s){ return false; }
+    public void sendChatToPlayer(final String s){}
+    public boolean canCommandSenderUseCommand(final int i, final String s){ return false; }
     public ChunkCoordinates getPlayerCoordinates()
     {
         return new ChunkCoordinates(0,0,0);
     }
 
     @Override
-    public void sendChatToPlayer(ChatMessageComponent chatmessagecomponent){}
+    public void sendChatToPlayer(final ChatMessageComponent chatmessagecomponent){}
     @Override
-    public void addStat(StatBase par1StatBase, int par2){}
+    public void addStat(final StatBase par1StatBase, final int par2){}
     @Override
-    public void openGui(Object mod, int modGuiId, World world, int x, int y, int z){}
+    public void openGui(final Object mod, final int modGuiId, final World world, final int x, final int y, final int z){}
     @Override 
     public boolean isEntityInvulnerable(){ return true; }
     @Override
-    public boolean canAttackPlayer(EntityPlayer player){ return false; }
+    public boolean canAttackPlayer(final EntityPlayer player){ return false; }
     @Override
-    public void onDeath(DamageSource source){ return; }
+    public void onDeath(final DamageSource source){ return; }
     @Override
     public void onUpdate(){ return; }
     @Override
-    public void travelToDimension(int dim){ return; }
+    public void travelToDimension(final int dim){ return; }
     @Override
-    public void updateClientInfo(Packet204ClientInfo pkt){ return; }
+    public void updateClientInfo(final Packet204ClientInfo pkt){ return; }
 }

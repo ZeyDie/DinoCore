@@ -27,7 +27,7 @@ public class FillBucketEvent extends PlayerEvent
 
     public ItemStack result;
 
-    public FillBucketEvent(EntityPlayer player, ItemStack current, World world, MovingObjectPosition target)
+    public FillBucketEvent(final EntityPlayer player, final ItemStack current, final World world, final MovingObjectPosition target)
     {
         super(player);
         this.current = current;

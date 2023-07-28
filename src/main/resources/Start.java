@@ -10,26 +10,27 @@ public class Start
 {
     public static void main(String[] args) throws Exception
     {
+        String[] args1 = args;
         int userIndex = -1;
         int passIndex = -1;
         int sessIndex = -1;
         int versIndex = -1;
 
-        for (int x = 0; x < args.length; x++)
+        for (int x = 0; x < args1.length; x++)
         {
-            if (args[x].equals("--username"))
+            if (args1[x].equals("--username"))
             {
                 userIndex = x + 1;
             }
-            else if (args[x].equals("--password"))
+            else if (args1[x].equals("--password"))
             {
                 passIndex = x + 1;
             }
-            else if (args[x].equals("--session"))
+            else if (args1[x].equals("--session"))
             {
                 sessIndex = x + 1;
             }
-            else if (args[x].equals("--version"))
+            else if (args1[x].equals("--version"))
             {
                 versIndex = x + 1;
             }
@@ -37,35 +38,35 @@ public class Start
 
         if (userIndex != 0 - 1 && passIndex != -1 && sessIndex == -1)
         {
-            String[] session = getSession(args[userIndex], args[passIndex]);
+            final String[] session = getSession(args1[userIndex], args1[passIndex]);
 
             if (session != null)
             {
-                args[userIndex] = session[0];
-                args = concat(args, new String[] {"--session", session[1]});
+                args1[userIndex] = session[0];
+                args1 = concat(args1, new String[] {"--session", session[1]});
             }
         }
 
         if (passIndex != -1)
         {
-            args[passIndex - 1] = "no_password_for_joo";
-            args[passIndex] = "no_password_for_joo";
+            args1[passIndex - 1] = "no_password_for_joo";
+            args1[passIndex] = "no_password_for_joo";
         }
 
         if (versIndex == -1)
         {
-            args = concat(args, new String[] { "--version", "fml_mcp" });
+            args1 = concat(args1, new String[] { "--version", "fml_mcp" });
         }
 
-        Main.main(args);
+        Main.main(args1);
     }
 
-    private static String[] getSession(String username, String password) throws UnsupportedEncodingException
+    private static String[] getSession(final String username, final String password) throws UnsupportedEncodingException
     {
-        String parameters = "http://login.minecraft.net/?user=" + URLEncoder.encode(username, "UTF-8") +
+        final String parameters = "http://login.minecraft.net/?user=" + URLEncoder.encode(username, "UTF-8") +
                             "&password=" + URLEncoder.encode(password, "UTF-8") +
                             "&version=" + 13;
-        String result = openUrl(parameters);
+        final String result = openUrl(parameters);
 
         if (result == null)
         {
@@ -79,18 +80,18 @@ public class Start
             return null;
         }
 
-        String[] values = result.split(":");
+        final String[] values = result.split(":");
         return new String[] { values[2].trim(), values[3].trim() };
     }
 
-    private static String openUrl(String addr)
+    private static String openUrl(final String addr)
     {
         try
         {
-            URL url = new URL(addr);
-            java.io.InputStream is;
+            final URL url = new URL(addr);
+            final java.io.InputStream is;
             is = url.openConnection().getInputStream();
-            java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(is));
+            final java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(is));
             String buf = "";
             String line = null;
 
@@ -102,7 +103,7 @@ public class Start
             reader.close();
             return buf;
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             e.printStackTrace();
         }
@@ -110,9 +111,9 @@ public class Start
         return null;
     }
 
-    private static <T> T[] concat(T[] first, T[] second)
+    private static <T> T[] concat(final T[] first, final T[] second)
     {
-        T[] result = Arrays.copyOf(first, first.length + second.length);
+        final T[] result = Arrays.copyOf(first, first.length + second.length);
         System.arraycopy(second, 0, result, first.length, second.length);
         return result;
     }

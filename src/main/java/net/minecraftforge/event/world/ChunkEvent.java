@@ -6,7 +6,7 @@ public class ChunkEvent extends WorldEvent
 {
     private final Chunk chunk;
     
-    public ChunkEvent(Chunk chunk)
+    public ChunkEvent(final Chunk chunk)
     {
         super(chunk.worldObj);
         this.chunk = chunk;
@@ -19,7 +19,7 @@ public class ChunkEvent extends WorldEvent
     
     public static class Load extends ChunkEvent
     {
-        public Load(Chunk chunk)
+        public Load(final Chunk chunk)
         {
             super(chunk);
         }
@@ -27,7 +27,7 @@ public class ChunkEvent extends WorldEvent
 
     public static class Unload extends ChunkEvent
     {
-        public Unload(Chunk chunk)
+        public Unload(final Chunk chunk)
         {
             super(chunk);
         }

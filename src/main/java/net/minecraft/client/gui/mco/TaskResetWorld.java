@@ -17,7 +17,7 @@ class TaskResetWorld extends TaskLongRunning
 
     final GuiScreenResetWorld field_96592_a;
 
-    public TaskResetWorld(GuiScreenResetWorld par1GuiScreenResetWorld, long par2, String par4Str, WorldTemplate par5WorldTemplate)
+    public TaskResetWorld(final GuiScreenResetWorld par1GuiScreenResetWorld, final long par2, final String par4Str, final WorldTemplate par5WorldTemplate)
     {
         this.field_96592_a = par1GuiScreenResetWorld;
         this.field_96591_c = par2;
@@ -27,8 +27,8 @@ class TaskResetWorld extends TaskLongRunning
 
     public void run()
     {
-        McoClient mcoclient = new McoClient(this.getMinecraft().getSession());
-        String s = I18n.getString("mco.reset.world.resetting.screen.title");
+        final McoClient mcoclient = new McoClient(this.getMinecraft().getSession());
+        final String s = I18n.getString("mco.reset.world.resetting.screen.title");
         this.setMessage(s);
 
         try
@@ -44,12 +44,12 @@ class TaskResetWorld extends TaskLongRunning
 
             GuiScreenResetWorld.func_96147_b(this.field_96592_a).displayGuiScreen(GuiScreenResetWorld.func_96148_a(this.field_96592_a));
         }
-        catch (ExceptionMcoService exceptionmcoservice)
+        catch (final ExceptionMcoService exceptionmcoservice)
         {
             GuiScreenResetWorld.func_130025_c(this.field_96592_a).getLogAgent().logSevere(exceptionmcoservice.toString());
             this.setFailedMessage(exceptionmcoservice.toString());
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             GuiScreenResetWorld.func_130024_d(this.field_96592_a).getLogAgent().logWarning("Realms: ");
             this.setFailedMessage(exception.toString());

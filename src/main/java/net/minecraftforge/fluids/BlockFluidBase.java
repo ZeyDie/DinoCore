@@ -35,7 +35,7 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
     protected Map<Integer, Boolean> displacementIds = new HashMap<Integer, Boolean>();
 
     protected int quantaPerBlock = 8;
-    protected float quantaPerBlockFloat = 8F;
+    protected float quantaPerBlockFloat = 8.0F;
     protected int density = 1;
     protected int densityDir = -1;
 	protected int temperature = 295;
@@ -46,7 +46,7 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
 
     protected final String fluidName;
 
-    public BlockFluidBase(int id, Fluid fluid, Material material)
+    public BlockFluidBase(final int id, final Fluid fluid, final Material material)
     {
         super(id, material);
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
@@ -66,21 +66,23 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
 
     public BlockFluidBase setQuantaPerBlock(int quantaPerBlock)
     {
-        if (quantaPerBlock > 16 || quantaPerBlock < 1) quantaPerBlock = 8;
-        this.quantaPerBlock = quantaPerBlock;
-        this.quantaPerBlockFloat = quantaPerBlock;
+        int quantaPerBlock1 = quantaPerBlock;
+        if (quantaPerBlock1 > 16 || quantaPerBlock1 < 1) quantaPerBlock1 = 8;
+        this.quantaPerBlock = quantaPerBlock1;
+        this.quantaPerBlockFloat = quantaPerBlock1;
         return this;
     }
 
     public BlockFluidBase setDensity(int density)
     {
-        if (density == 0) density = 1;
-        this.density = density;
-        this.densityDir = density > 0 ? -1 : 1;
+        int density1 = density;
+        if (density1 == 0) density1 = 1;
+        this.density = density1;
+        this.densityDir = density1 > 0 ? -1 : 1;
         return this;
     }
 
-    public BlockFluidBase setTemperature(int temperature)
+    public BlockFluidBase setTemperature(final int temperature)
     {
         this.temperature = temperature;
         return this;
@@ -88,18 +90,19 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
 
     public BlockFluidBase setTickRate(int tickRate)
     {
-        if (tickRate <= 0) tickRate = 20;
-        this.tickRate = tickRate;
+        int tickRate1 = tickRate;
+        if (tickRate1 <= 0) tickRate1 = 20;
+        this.tickRate = tickRate1;
         return this;
     }
 
-    public BlockFluidBase setRenderPass(int renderPass)
+    public BlockFluidBase setRenderPass(final int renderPass)
     {
         this.renderPass = renderPass;
         return this;
     }
 
-    public BlockFluidBase setMaxScaledLight(int maxScaledLight)
+    public BlockFluidBase setMaxScaledLight(final int maxScaledLight)
     {
         this.maxScaledLight = maxScaledLight;
         return this;
@@ -108,11 +111,11 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
     /**
      * Returns true if the block at (x, y, z) is displaceable. Does not displace the block.
      */
-    public boolean canDisplace(IBlockAccess world, int x, int y, int z)
+    public boolean canDisplace(final IBlockAccess world, final int x, final int y, final int z)
     {
         if (world.isAirBlock(x, y, z)) return true;
 
-        int bId = world.getBlockId(x, y, z);
+        final int bId = world.getBlockId(x, y, z);
 
         if (bId == blockID)
         {
@@ -124,13 +127,13 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
             return displacementIds.get(bId);
         }
 
-        Material material = Block.blocksList[bId].blockMaterial;
+        final Material material = Block.blocksList[bId].blockMaterial;
         if (material.blocksMovement() || material == Material.portal)
         {
             return false;
         }
 
-        int density = getDensity(world, x, y, z);
+        final int density = getDensity(world, x, y, z);
         if (density == Integer.MAX_VALUE) 
         {
         	 return true;
@@ -149,14 +152,14 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
     /**
      * Attempt to displace the block at (x, y, z), return true if it was displaced.
      */
-    public boolean displaceIfPossible(World world, int x, int y, int z)
+    public boolean displaceIfPossible(final World world, final int x, final int y, final int z)
     {
         if (world.isAirBlock(x, y, z))
         {
             return true;
         }
 
-        int bId = world.getBlockId(x, y, z);
+        final int bId = world.getBlockId(x, y, z);
         if (bId == blockID)
         {
             return false;
@@ -172,13 +175,13 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
             return false;
         }
 
-        Material material = Block.blocksList[bId].blockMaterial;
+        final Material material = Block.blocksList[bId].blockMaterial;
         if (material.blocksMovement() || material == Material.portal)
         {
             return false;
         }
 
-        int density = getDensity(world, x, y, z);
+        final int density = getDensity(world, x, y, z);
         if (density == Integer.MAX_VALUE) 
         {
         	 Block.blocksList[bId].dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
@@ -204,13 +207,13 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
 
     /* BLOCK FUNCTIONS */
     @Override
-    public void onBlockAdded(World world, int x, int y, int z)
+    public void onBlockAdded(final World world, final int x, final int y, final int z)
     {
         world.scheduleBlockUpdate(x, y, z, blockID, tickRate);
     }
 
     @Override
-    public void onNeighborBlockChange(World world, int x, int y, int z, int blockId)
+    public void onNeighborBlockChange(final World world, final int x, final int y, final int z, final int blockId)
     {
         world.scheduleBlockUpdate(x, y, z, blockID, tickRate);
     }
@@ -223,53 +226,53 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
     }
 
     @Override
-    public boolean getBlocksMovement(IBlockAccess world, int x, int y, int z)
+    public boolean getBlocksMovement(final IBlockAccess world, final int x, final int y, final int z)
     {
         return true;
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World world, final int x, final int y, final int z)
     {
         return null;
     }
 
     @Override
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return 0;
     }
 
     @Override
-    public int quantityDropped(Random par1Random)
+    public int quantityDropped(final Random par1Random)
     {
         return 0;
     }
 
     @Override
-    public int tickRate(World world)
+    public int tickRate(final World world)
     {
         return tickRate;
     }
 
     @Override
-    public void velocityToAddToEntity(World world, int x, int y, int z, Entity entity, Vec3 vec)
+    public void velocityToAddToEntity(final World world, final int x, final int y, final int z, final Entity entity, final Vec3 vec)
     {
         if (densityDir > 0) return;
-        Vec3 vec_flow = this.getFlowVector(world, x, y, z);
+        final Vec3 vec_flow = this.getFlowVector(world, x, y, z);
         vec.xCoord += vec_flow.xCoord * (quantaPerBlock * 4);
         vec.yCoord += vec_flow.yCoord * (quantaPerBlock * 4);
         vec.zCoord += vec_flow.zCoord * (quantaPerBlock * 4);
     }
 
     @Override
-    public int getLightValue(IBlockAccess world, int x, int y, int z)
+    public int getLightValue(final IBlockAccess world, final int x, final int y, final int z)
     {
         if (maxScaledLight == 0)
         {
             return super.getLightValue(world, x, y, z);
         }
-        int data = world.getBlockMetadata(x, y, z);
+        final int data = world.getBlockMetadata(x, y, z);
         return (int) (data / quantaPerBlockFloat * maxScaledLight);
     }
 
@@ -292,22 +295,22 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
     }
 
     @Override
-    public float getBlockBrightness(IBlockAccess world, int x, int y, int z)
+    public float getBlockBrightness(final IBlockAccess world, final int x, final int y, final int z)
     {
-        float lightThis = world.getLightBrightness(x, y, z);
-        float lightUp = world.getLightBrightness(x, y + 1, z);
+        final float lightThis = world.getLightBrightness(x, y, z);
+        final float lightUp = world.getLightBrightness(x, y + 1, z);
         return lightThis > lightUp ? lightThis : lightUp;
     }
 
     @Override
-    public int getMixedBrightnessForBlock(IBlockAccess world, int x, int y, int z)
+    public int getMixedBrightnessForBlock(final IBlockAccess world, final int x, final int y, final int z)
     {
-        int lightThis     = world.getLightBrightnessForSkyBlocks(x, y, z, 0);
-        int lightUp       = world.getLightBrightnessForSkyBlocks(x, y + 1, z, 0);
-        int lightThisBase = lightThis & 255;
-        int lightUpBase   = lightUp & 255;
-        int lightThisExt  = lightThis >> 16 & 255;
-        int lightUpExt    = lightUp >> 16 & 255;
+        final int lightThis     = world.getLightBrightnessForSkyBlocks(x, y, z, 0);
+        final int lightUp       = world.getLightBrightnessForSkyBlocks(x, y + 1, z, 0);
+        final int lightThisBase = lightThis & 255;
+        final int lightUpBase   = lightUp & 255;
+        final int lightThisExt  = lightThis >> 16 & 255;
+        final int lightUpExt    = lightUp >> 16 & 255;
         return (lightThisBase > lightUpBase ? lightThisBase : lightUpBase) |
                ((lightThisExt > lightUpExt ? lightThisExt : lightUpExt) << 16);
     }
@@ -319,20 +322,20 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
     }
 
     @Override
-    public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side)
+    public boolean shouldSideBeRendered(final IBlockAccess world, final int x, final int y, final int z, final int side)
     {
         if (world.getBlockId(x, y, z) != blockID)
         {
             return !world.isBlockOpaqueCube(x, y, z);
         }
-        Material mat = world.getBlockMaterial(x, y, z);
+        final Material mat = world.getBlockMaterial(x, y, z);
         return mat == this.blockMaterial ? false : super.shouldSideBeRendered(world, x, y, z, side);
     }
 
     /* FLUID FUNCTIONS */
-    public static final int getDensity(IBlockAccess world, int x, int y, int z)
+    public static final int getDensity(final IBlockAccess world, final int x, final int y, final int z)
     {
-        Block block = Block.blocksList[world.getBlockId(x, y, z)];
+        final Block block = Block.blocksList[world.getBlockId(x, y, z)];
         if (!(block instanceof BlockFluidBase))
         {
             return Integer.MAX_VALUE;
@@ -340,9 +343,9 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
         return ((BlockFluidBase)block).density;
     }
 	
-    public static final int getTemperature(IBlockAccess world, int x, int y, int z)
+    public static final int getTemperature(final IBlockAccess world, final int x, final int y, final int z)
     {
-        Block block = Block.blocksList[world.getBlockId(x, y, z)];
+        final Block block = Block.blocksList[world.getBlockId(x, y, z)];
         if (!(block instanceof BlockFluidBase))
         {
             return Integer.MAX_VALUE;
@@ -350,20 +353,20 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
         return ((BlockFluidBase)block).temperature;
     }
 
-    public static double getFlowDirection(IBlockAccess world, int x, int y, int z)
+    public static double getFlowDirection(final IBlockAccess world, final int x, final int y, final int z)
     {
-        Block block = Block.blocksList[world.getBlockId(x, y, z)];
+        final Block block = Block.blocksList[world.getBlockId(x, y, z)];
         if (!world.getBlockMaterial(x, y, z).isLiquid())
         {
             return -1000.0;
         }
-        Vec3 vec = ((BlockFluidBase) block).getFlowVector(world, x, y, z);
-        return vec.xCoord == 0.0D && vec.zCoord == 0.0D ? -1000.0D : Math.atan2(vec.zCoord, vec.xCoord) - Math.PI / 2D;
+        final Vec3 vec = ((BlockFluidBase) block).getFlowVector(world, x, y, z);
+        return vec.xCoord == 0.0D && vec.zCoord == 0.0D ? -1000.0D : Math.atan2(vec.zCoord, vec.xCoord) - Math.PI / 2.0D;
     }
 
-    public final int getQuantaValueBelow(IBlockAccess world, int x, int y, int z, int belowThis)
+    public final int getQuantaValueBelow(final IBlockAccess world, final int x, final int y, final int z, final int belowThis)
     {
-        int quantaRemaining = getQuantaValue(world, x, y, z);
+        final int quantaRemaining = getQuantaValue(world, x, y, z);
         if (quantaRemaining >= belowThis)
         {
             return -1;
@@ -371,9 +374,9 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
         return quantaRemaining;
     }
 
-    public final int getQuantaValueAbove(IBlockAccess world, int x, int y, int z, int aboveThis)
+    public final int getQuantaValueAbove(final IBlockAccess world, final int x, final int y, final int z, final int aboveThis)
     {
-        int quantaRemaining = getQuantaValue(world, x, y, z);
+        final int quantaRemaining = getQuantaValue(world, x, y, z);
         if (quantaRemaining <= aboveThis)
         {
             return -1;
@@ -381,16 +384,16 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
         return quantaRemaining;
     }
 
-    public final float getQuantaPercentage(IBlockAccess world, int x, int y, int z)
+    public final float getQuantaPercentage(final IBlockAccess world, final int x, final int y, final int z)
     {
-        int quantaRemaining = getQuantaValue(world, x, y, z);
+        final int quantaRemaining = getQuantaValue(world, x, y, z);
         return quantaRemaining / quantaPerBlockFloat;
     }
 
-    public Vec3 getFlowVector(IBlockAccess world, int x, int y, int z)
+    public Vec3 getFlowVector(final IBlockAccess world, final int x, final int y, final int z)
     {
         Vec3 vec = world.getWorldVec3Pool().getVecFromPool(0.0D, 0.0D, 0.0D);
-        int decay = quantaPerBlock - getQuantaValue(world, x, y, z);
+        final int decay = quantaPerBlock - getQuantaValue(world, x, y, z);
 
         for (int side = 0; side < 4; ++side)
         {
@@ -413,21 +416,21 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
                     otherDecay = quantaPerBlock - getQuantaValue(world, x2, y - 1, z2);
                     if (otherDecay >= 0)
                     {
-                        int power = otherDecay - (decay - quantaPerBlock);
+                        final int power = otherDecay - (decay - quantaPerBlock);
                         vec = vec.addVector((x2 - x) * power, (y - y) * power, (z2 - z) * power);
                     }
                 }
             }
             else if (otherDecay >= 0)
             {
-                int power = otherDecay - decay;
+                final int power = otherDecay - decay;
                 vec = vec.addVector((x2 - x) * power, (y - y) * power, (z2 - z) * power);
             }
         }
 
         if (world.getBlockId(x, y + 1, z) == blockID)
         {
-            boolean flag =
+            final boolean flag =
                 isBlockSolid(world, x,     y,     z - 1, 2) ||
                 isBlockSolid(world, x,     y,     z + 1, 3) ||
                 isBlockSolid(world, x - 1, y,     z,     4) ||
@@ -454,9 +457,9 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
     }
 
     @Override
-    public float getFilledPercentage(World world, int x, int y, int z)
+    public float getFilledPercentage(final World world, final int x, final int y, final int z)
     {
-        int quantaRemaining = getQuantaValue(world, x, y, z) + 1;
+        final int quantaRemaining = getQuantaValue(world, x, y, z) + 1;
         float remaining = quantaRemaining / quantaPerBlockFloat;
         if (remaining > 1) remaining = 1.0f;
         return remaining * (density > 0 ? 1 : -1);

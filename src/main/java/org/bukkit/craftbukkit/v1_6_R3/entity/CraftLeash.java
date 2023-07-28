@@ -6,7 +6,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LeashHitch;
 
 public class CraftLeash extends CraftHanging implements LeashHitch {
-    public CraftLeash(CraftServer server, net.minecraft.entity.EntityLeashKnot entity) {
+    public CraftLeash(final CraftServer server, final net.minecraft.entity.EntityLeashKnot entity) {
         super(server, entity);
     }
 

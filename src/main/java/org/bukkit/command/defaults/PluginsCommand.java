@@ -6,18 +6,19 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public class PluginsCommand extends BukkitCommand {
-    public PluginsCommand(String name) {
+    public PluginsCommand(final String name) {
         super(name);
         this.description = "Gets a list of plugins running on the server";
         this.usageMessage = "/plugins";
         this.setPermission("bukkit.command.plugins");
-        this.setAliases(Arrays.asList("pl"));
+        this.setAliases(Collections.singletonList("pl"));
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
 
         sender.sendMessage("Plugins " + getPluginList());
@@ -25,10 +26,10 @@ public class PluginsCommand extends BukkitCommand {
     }
 
     private String getPluginList() {
-        StringBuilder pluginList = new StringBuilder();
-        Plugin[] plugins = Bukkit.getPluginManager().getPlugins();
+        final StringBuilder pluginList = new StringBuilder();
+        final Plugin[] plugins = Bukkit.getPluginManager().getPlugins();
 
-        for (Plugin plugin : plugins) {
+        for (final Plugin plugin : plugins) {
             if (pluginList.length() > 0) {
                 pluginList.append(ChatColor.WHITE);
                 pluginList.append(", ");

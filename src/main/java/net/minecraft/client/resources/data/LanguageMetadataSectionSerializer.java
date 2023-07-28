@@ -17,11 +17,11 @@ import java.util.Map.Entry;
 @SideOnly(Side.CLIENT)
 public class LanguageMetadataSectionSerializer extends BaseMetadataSectionSerializer
 {
-    public LanguageMetadataSection func_135020_a(JsonElement par1JsonElement, Type par2Type, JsonDeserializationContext par3JsonDeserializationContext)
+    public LanguageMetadataSection func_135020_a(final JsonElement par1JsonElement, final Type par2Type, final JsonDeserializationContext par3JsonDeserializationContext)
     {
-        JsonObject jsonobject = par1JsonElement.getAsJsonObject();
-        HashSet hashset = Sets.newHashSet();
-        Iterator iterator = jsonobject.entrySet().iterator();
+        final JsonObject jsonobject = par1JsonElement.getAsJsonObject();
+        final HashSet hashset = Sets.newHashSet();
+        final Iterator iterator = jsonobject.entrySet().iterator();
         String s;
         String s1;
         String s2;
@@ -34,16 +34,16 @@ public class LanguageMetadataSectionSerializer extends BaseMetadataSectionSerial
                 return new LanguageMetadataSection(hashset);
             }
 
-            Entry entry = (Entry)iterator.next();
+            final Entry entry = (Entry)iterator.next();
             s = (String)entry.getKey();
-            JsonElement jsonelement1 = (JsonElement)entry.getValue();
+            final JsonElement jsonelement1 = (JsonElement)entry.getValue();
 
             if (!jsonelement1.isJsonObject())
             {
                 throw new JsonParseException("Invalid language->\'" + s + "\': expected object, was " + jsonelement1);
             }
 
-            JsonObject jsonobject1 = jsonelement1.getAsJsonObject();
+            final JsonObject jsonobject1 = jsonelement1.getAsJsonObject();
             s1 = this.func_110486_a(jsonobject1.get("region"), "region", "", 0, Integer.MAX_VALUE);
             s2 = this.func_110486_a(jsonobject1.get("name"), "name", "", 0, Integer.MAX_VALUE);
             flag = this.func_110484_a(jsonobject1.get("bidirectional"), "bidirectional", Boolean.valueOf(false));
@@ -71,7 +71,7 @@ public class LanguageMetadataSectionSerializer extends BaseMetadataSectionSerial
         return "language";
     }
 
-    public Object deserialize(JsonElement par1JsonElement, Type par2Type, JsonDeserializationContext par3JsonDeserializationContext)
+    public Object deserialize(final JsonElement par1JsonElement, final Type par2Type, final JsonDeserializationContext par3JsonDeserializationContext)
     {
         return this.func_135020_a(par1JsonElement, par2Type, par3JsonDeserializationContext);
     }

@@ -32,7 +32,7 @@ public class TopologicalSort
         private final Map<T, SortedSet<T>> graph = new HashMap<T, SortedSet<T>>();
         private List<T> orderedNodes = new ArrayList<T>();
 
-        public boolean addNode(T node)
+        public boolean addNode(final T node)
         {
             // Ignore nodes already added
             if (graph.containsKey(node))
@@ -43,14 +43,14 @@ public class TopologicalSort
             orderedNodes.add(node);
             graph.put(node, new TreeSet<T>(new Comparator<T>()
             {
-                public int compare(T o1, T o2) {
+                public int compare(final T o1, final T o2) {
                     return orderedNodes.indexOf(o1)-orderedNodes.indexOf(o2);
                 }
             }));
             return true;
         }
 
-        public void addEdge(T from, T to)
+        public void addEdge(final T from, final T to)
         {
             if (!(graph.containsKey(from) && graph.containsKey(to)))
             {
@@ -60,7 +60,7 @@ public class TopologicalSort
             graph.get(from).add(to);
         }
 
-        public void removeEdge(T from, T to)
+        public void removeEdge(final T from, final T to)
         {
             if (!(graph.containsKey(from) && graph.containsKey(to)))
             {
@@ -70,7 +70,7 @@ public class TopologicalSort
             graph.get(from).remove(to);
         }
 
-        public boolean edgeExists(T from, T to)
+        public boolean edgeExists(final T from, final T to)
         {
             if (!(graph.containsKey(from) && graph.containsKey(to)))
             {
@@ -80,7 +80,7 @@ public class TopologicalSort
             return graph.get(from).contains(to);
         }
 
-        public Set<T> edgesFrom(T from)
+        public Set<T> edgesFrom(final T from)
         {
             if (!graph.containsKey(from))
             {
@@ -119,15 +119,15 @@ public class TopologicalSort
      * @param graph
      * @return The sorted mods list.
      */
-    public static <T> List<T> topologicalSort(DirectedGraph<T> graph)
+    public static <T> List<T> topologicalSort(final DirectedGraph<T> graph)
     {
-        DirectedGraph<T> rGraph = reverse(graph);
-        List<T> sortedResult = new ArrayList<T>();
-        Set<T> visitedNodes = new HashSet<T>();
+        final DirectedGraph<T> rGraph = reverse(graph);
+        final List<T> sortedResult = new ArrayList<T>();
+        final Set<T> visitedNodes = new HashSet<T>();
         // A list of "fully explored" nodes. Leftovers in here indicate cycles in the graph
-        Set<T> expandedNodes = new HashSet<T>();
+        final Set<T> expandedNodes = new HashSet<T>();
 
-        for (T node : rGraph)
+        for (final T node : rGraph)
         {
             explore(node, rGraph, sortedResult, visitedNodes, expandedNodes);
         }
@@ -135,18 +135,18 @@ public class TopologicalSort
         return sortedResult;
     }
 
-    public static <T> DirectedGraph<T> reverse(DirectedGraph<T> graph)
+    public static <T> DirectedGraph<T> reverse(final DirectedGraph<T> graph)
     {
-        DirectedGraph<T> result = new DirectedGraph<T>();
+        final DirectedGraph<T> result = new DirectedGraph<T>();
 
-        for (T node : graph)
+        for (final T node : graph)
         {
             result.addNode(node);
         }
 
-        for (T from : graph)
+        for (final T from : graph)
         {
-            for (T to : graph.edgesFrom(from))
+            for (final T to : graph.edgesFrom(from))
             {
                 result.addEdge(to, from);
             }
@@ -155,7 +155,7 @@ public class TopologicalSort
         return result;
     }
 
-    public static <T> void explore(T node, DirectedGraph<T> graph, List<T> sortedResult, Set<T> visitedNodes, Set<T> expandedNodes)
+    public static <T> void explore(final T node, final DirectedGraph<T> graph, final List<T> sortedResult, final Set<T> visitedNodes, final Set<T> expandedNodes)
     {
         // Have we been here before?
         if (visitedNodes.contains(node))
@@ -172,7 +172,7 @@ public class TopologicalSort
             FMLLog.severe("Current sorted list : %s", sortedResult);
             FMLLog.severe("Visited set for this node : %s", visitedNodes);
             FMLLog.severe("Explored node set : %s", expandedNodes);
-            SetView<T> cycleList = Sets.difference(visitedNodes, expandedNodes);
+            final SetView<T> cycleList = Sets.difference(visitedNodes, expandedNodes);
             FMLLog.severe("Likely cycle is in : %s", cycleList);
             throw new ModSortingException("There was a cycle detected in the input graph, sorting is not possible", node, cycleList);
         }
@@ -181,7 +181,7 @@ public class TopologicalSort
         visitedNodes.add(node);
 
         // Recursively explore inbound edges
-        for (T inbound : graph.edgesFrom(node))
+        for (final T inbound : graph.edgesFrom(node))
         {
             explore(inbound, graph, sortedResult, visitedNodes, expandedNodes);
         }

@@ -14,13 +14,13 @@ import java.util.Random;
 
 public class WorldGenDungeons extends WorldGenerator
 {
-    public static final WeightedRandomChestContent[] field_111189_a = new WeightedRandomChestContent[] {new WeightedRandomChestContent(Item.saddle.itemID, 0, 1, 1, 10), new WeightedRandomChestContent(Item.ingotIron.itemID, 0, 1, 4, 10), new WeightedRandomChestContent(Item.bread.itemID, 0, 1, 1, 10), new WeightedRandomChestContent(Item.wheat.itemID, 0, 1, 4, 10), new WeightedRandomChestContent(Item.gunpowder.itemID, 0, 1, 4, 10), new WeightedRandomChestContent(Item.silk.itemID, 0, 1, 4, 10), new WeightedRandomChestContent(Item.bucketEmpty.itemID, 0, 1, 1, 10), new WeightedRandomChestContent(Item.appleGold.itemID, 0, 1, 1, 1), new WeightedRandomChestContent(Item.redstone.itemID, 0, 1, 4, 10), new WeightedRandomChestContent(Item.record13.itemID, 0, 1, 1, 10), new WeightedRandomChestContent(Item.recordCat.itemID, 0, 1, 1, 10), new WeightedRandomChestContent(Item.nameTag.itemID, 0, 1, 1, 10), new WeightedRandomChestContent(Item.horseArmorGold.itemID, 0, 1, 1, 2), new WeightedRandomChestContent(Item.horseArmorIron.itemID, 0, 1, 1, 5), new WeightedRandomChestContent(Item.horseArmorDiamond.itemID, 0, 1, 1, 1)};
+    public static final WeightedRandomChestContent[] field_111189_a = {new WeightedRandomChestContent(Item.saddle.itemID, 0, 1, 1, 10), new WeightedRandomChestContent(Item.ingotIron.itemID, 0, 1, 4, 10), new WeightedRandomChestContent(Item.bread.itemID, 0, 1, 1, 10), new WeightedRandomChestContent(Item.wheat.itemID, 0, 1, 4, 10), new WeightedRandomChestContent(Item.gunpowder.itemID, 0, 1, 4, 10), new WeightedRandomChestContent(Item.silk.itemID, 0, 1, 4, 10), new WeightedRandomChestContent(Item.bucketEmpty.itemID, 0, 1, 1, 10), new WeightedRandomChestContent(Item.appleGold.itemID, 0, 1, 1, 1), new WeightedRandomChestContent(Item.redstone.itemID, 0, 1, 4, 10), new WeightedRandomChestContent(Item.record13.itemID, 0, 1, 1, 10), new WeightedRandomChestContent(Item.recordCat.itemID, 0, 1, 1, 10), new WeightedRandomChestContent(Item.nameTag.itemID, 0, 1, 1, 10), new WeightedRandomChestContent(Item.horseArmorGold.itemID, 0, 1, 1, 2), new WeightedRandomChestContent(Item.horseArmorIron.itemID, 0, 1, 1, 5), new WeightedRandomChestContent(Item.horseArmorDiamond.itemID, 0, 1, 1, 1)};
 
-    public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
+    public boolean generate(final World par1World, final Random par2Random, final int par3, final int par4, final int par5)
     {
-        byte b0 = 3;
-        int l = par2Random.nextInt(2) + 2;
-        int i1 = par2Random.nextInt(2) + 2;
+        final byte b0 = 3;
+        final int l = par2Random.nextInt(2) + 2;
+        final int i1 = par2Random.nextInt(2) + 2;
         int j1 = 0;
         int k1;
         int l1;
@@ -32,7 +32,7 @@ public class WorldGenDungeons extends WorldGenerator
             {
                 for (i2 = par5 - i1 - 1; i2 <= par5 + i1 + 1; ++i2)
                 {
-                    Material material = par1World.getBlockMaterial(k1, l1, i2);
+                    final Material material = par1World.getBlockMaterial(k1, l1, i2);
 
                     if (l1 == par4 - 1 && !material.isSolid())
                     {
@@ -96,7 +96,7 @@ public class WorldGenDungeons extends WorldGenerator
                         label101:
                         {
                             i2 = par3 + par2Random.nextInt(l * 2 + 1) - l;
-                            int j2 = par5 + par2Random.nextInt(i1 * 2 + 1) - i1;
+                            final int j2 = par5 + par2Random.nextInt(i1 * 2 + 1) - i1;
 
                             if (par1World.isAirBlock(i2, par4, j2))
                             {
@@ -125,11 +125,11 @@ public class WorldGenDungeons extends WorldGenerator
                                 if (k2 == 1)
                                 {
                                     par1World.setBlock(i2, par4, j2, Block.chest.blockID, 0, 2);
-                                    TileEntityChest tileentitychest = (TileEntityChest)par1World.getBlockTileEntity(i2, par4, j2);
+                                    final TileEntityChest tileentitychest = (TileEntityChest)par1World.getBlockTileEntity(i2, par4, j2);
 
                                     if (tileentitychest != null)
                                     {
-                                        ChestGenHooks info = ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST);
+                                        final ChestGenHooks info = ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST);
                                         WeightedRandomChestContent.generateChestContents(par2Random, info.getItems(par2Random), tileentitychest, info.getCount(par2Random));
                                     }
 
@@ -148,7 +148,7 @@ public class WorldGenDungeons extends WorldGenerator
             }
 
             par1World.setBlock(par3, par4, par5, Block.mobSpawner.blockID, 0, 2);
-            TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)par1World.getBlockTileEntity(par3, par4, par5);
+            final TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)par1World.getBlockTileEntity(par3, par4, par5);
 
             if (tileentitymobspawner != null)
             {
@@ -170,7 +170,7 @@ public class WorldGenDungeons extends WorldGenerator
     /**
      * Randomly decides which spawner to use in a dungeon
      */
-    private String pickMobSpawner(Random par1Random)
+    private String pickMobSpawner(final Random par1Random)
     {
         return DungeonHooks.getRandomDungeonMob(par1Random);
     }

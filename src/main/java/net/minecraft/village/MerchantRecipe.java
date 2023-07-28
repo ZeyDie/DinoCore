@@ -25,12 +25,12 @@ public class MerchantRecipe
     /** Maximum times this trade can be used. */
     private int maxTradeUses;
 
-    public MerchantRecipe(NBTTagCompound par1NBTTagCompound)
+    public MerchantRecipe(final NBTTagCompound par1NBTTagCompound)
     {
         this.readFromTags(par1NBTTagCompound);
     }
 
-    public MerchantRecipe(ItemStack par1ItemStack, ItemStack par2ItemStack, ItemStack par3ItemStack)
+    public MerchantRecipe(final ItemStack par1ItemStack, final ItemStack par2ItemStack, final ItemStack par3ItemStack)
     {
         this.itemToBuy = par1ItemStack;
         this.secondItemToBuy = par2ItemStack;
@@ -38,12 +38,12 @@ public class MerchantRecipe
         this.maxTradeUses = 7;
     }
 
-    public MerchantRecipe(ItemStack par1ItemStack, ItemStack par2ItemStack)
+    public MerchantRecipe(final ItemStack par1ItemStack, final ItemStack par2ItemStack)
     {
         this(par1ItemStack, (ItemStack)null, par2ItemStack);
     }
 
-    public MerchantRecipe(ItemStack par1ItemStack, Item par2Item)
+    public MerchantRecipe(final ItemStack par1ItemStack, final Item par2Item)
     {
         this(par1ItemStack, new ItemStack(par2Item));
     }
@@ -83,7 +83,7 @@ public class MerchantRecipe
     /**
      * checks if both the first and second ItemToBuy IDs are the same
      */
-    public boolean hasSameIDsAs(MerchantRecipe par1MerchantRecipe)
+    public boolean hasSameIDsAs(final MerchantRecipe par1MerchantRecipe)
     {
         return this.itemToBuy.itemID == par1MerchantRecipe.itemToBuy.itemID && this.itemToSell.itemID == par1MerchantRecipe.itemToSell.itemID ? this.secondItemToBuy == null && par1MerchantRecipe.secondItemToBuy == null || this.secondItemToBuy != null && par1MerchantRecipe.secondItemToBuy != null && this.secondItemToBuy.itemID == par1MerchantRecipe.secondItemToBuy.itemID : false;
     }
@@ -91,7 +91,7 @@ public class MerchantRecipe
     /**
      * checks first and second ItemToBuy ID's and count. Calls hasSameIDs
      */
-    public boolean hasSameItemsAs(MerchantRecipe par1MerchantRecipe)
+    public boolean hasSameItemsAs(final MerchantRecipe par1MerchantRecipe)
     {
         return this.hasSameIDsAs(par1MerchantRecipe) && (this.itemToBuy.stackSize < par1MerchantRecipe.itemToBuy.stackSize || this.secondItemToBuy != null && this.secondItemToBuy.stackSize < par1MerchantRecipe.secondItemToBuy.stackSize);
     }
@@ -101,7 +101,7 @@ public class MerchantRecipe
         ++this.toolUses;
     }
 
-    public void func_82783_a(int par1)
+    public void func_82783_a(final int par1)
     {
         this.maxTradeUses += par1;
     }
@@ -117,11 +117,11 @@ public class MerchantRecipe
         this.toolUses = this.maxTradeUses;
     }
 
-    public void readFromTags(NBTTagCompound par1NBTTagCompound)
+    public void readFromTags(final NBTTagCompound par1NBTTagCompound)
     {
-        NBTTagCompound nbttagcompound1 = par1NBTTagCompound.getCompoundTag("buy");
+        final NBTTagCompound nbttagcompound1 = par1NBTTagCompound.getCompoundTag("buy");
         this.itemToBuy = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-        NBTTagCompound nbttagcompound2 = par1NBTTagCompound.getCompoundTag("sell");
+        final NBTTagCompound nbttagcompound2 = par1NBTTagCompound.getCompoundTag("sell");
         this.itemToSell = ItemStack.loadItemStackFromNBT(nbttagcompound2);
 
         if (par1NBTTagCompound.hasKey("buyB"))
@@ -146,7 +146,7 @@ public class MerchantRecipe
 
     public NBTTagCompound writeToTags()
     {
-        NBTTagCompound nbttagcompound = new NBTTagCompound();
+        final NBTTagCompound nbttagcompound = new NBTTagCompound();
         nbttagcompound.setCompoundTag("buy", this.itemToBuy.writeToNBT(new NBTTagCompound("buy")));
         nbttagcompound.setCompoundTag("sell", this.itemToSell.writeToNBT(new NBTTagCompound("sell")));
 

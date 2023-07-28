@@ -20,16 +20,16 @@ public class BukkitDLUpdaterService {
     private static final DateDeserializer dateDeserializer = new DateDeserializer();
     private final String host;
 
-    public BukkitDLUpdaterService(String host) {
+    public BukkitDLUpdaterService(final String host) {
         this.host = host;
     }
 
-    public ArtifactDetails getArtifact(String slug, String name) {
+    public ArtifactDetails getArtifact(final String slug, final String name) {
         try {
             return fetchArtifact(slug);
-        } catch (UnsupportedEncodingException ex) {
+        } catch (final UnsupportedEncodingException ex) {
             Logger.getLogger(BukkitDLUpdaterService.class.getName()).log(Level.WARNING, "Could not get " + name + ": " + ex.getClass().getSimpleName());
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             Logger.getLogger(BukkitDLUpdaterService.class.getName()).log(Level.WARNING, "Could not get " + name + ": " + ex.getClass().getSimpleName());
         }
 
@@ -40,15 +40,15 @@ public class BukkitDLUpdaterService {
          return "CraftBukkit/" + BukkitDLUpdaterService.class.getPackage().getImplementationVersion() + "/" + System.getProperty("java.version");
     }
 
-    public ArtifactDetails fetchArtifact(String slug) throws IOException {
-        URL url = new URL("http", host, API_PREFIX_ARTIFACT + slug + "/");
+    public ArtifactDetails fetchArtifact(final String slug) throws IOException {
+        final URL url = new URL("http", host, API_PREFIX_ARTIFACT + slug + "/");
         InputStreamReader reader = null;
 
         try {
-            URLConnection connection = url.openConnection();
+            final URLConnection connection = url.openConnection();
             connection.setRequestProperty("User-Agent", getUserAgent());
             reader = new InputStreamReader(connection.getInputStream());
-            Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, dateDeserializer).setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+            final Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, dateDeserializer).setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
             return gson.fromJson(reader, ArtifactDetails.class);
         } finally {
             if (reader != null) {
@@ -57,27 +57,27 @@ public class BukkitDLUpdaterService {
         }
     }
 
-    public ArtifactDetails.ChannelDetails getChannel(String slug, String name) {
+    public ArtifactDetails.ChannelDetails getChannel(final String slug, final String name) {
         try {
             return fetchChannel(slug);
-        } catch (UnsupportedEncodingException ex) {
+        } catch (final UnsupportedEncodingException ex) {
             Logger.getLogger(BukkitDLUpdaterService.class.getName()).log(Level.WARNING, "Could not get " + name + ": " + ex.getClass().getSimpleName());
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             Logger.getLogger(BukkitDLUpdaterService.class.getName()).log(Level.WARNING, "Could not get " + name + ": " + ex.getClass().getSimpleName());
         }
 
         return null;
     }
 
-    public ArtifactDetails.ChannelDetails fetchChannel(String slug) throws IOException {
-        URL url = new URL("http", host, API_PREFIX_CHANNEL + slug + "/");
+    public ArtifactDetails.ChannelDetails fetchChannel(final String slug) throws IOException {
+        final URL url = new URL("http", host, API_PREFIX_CHANNEL + slug + "/");
         InputStreamReader reader = null;
 
         try {
-            URLConnection connection = url.openConnection();
+            final URLConnection connection = url.openConnection();
             connection.setRequestProperty("User-Agent", getUserAgent());
             reader = new InputStreamReader(connection.getInputStream());
-            Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, dateDeserializer).setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+            final Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, dateDeserializer).setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
             return gson.fromJson(reader, ArtifactDetails.ChannelDetails.class);
         } finally {
@@ -90,10 +90,10 @@ public class BukkitDLUpdaterService {
     static class DateDeserializer implements JsonDeserializer<Date> {
         private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        public Date deserialize(JsonElement je, Type type, JsonDeserializationContext jdc) throws JsonParseException {
+        public Date deserialize(final JsonElement je, final Type type, final JsonDeserializationContext jdc) throws JsonParseException {
             try {
                 return format.parse(je.getAsString());
-            } catch (ParseException ex) {
+            } catch (final ParseException ex) {
                 throw new JsonParseException("Date is not formatted correctly", ex);
             }
         }

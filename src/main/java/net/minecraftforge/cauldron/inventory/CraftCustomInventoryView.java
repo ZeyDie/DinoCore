@@ -7,8 +7,8 @@ import org.bukkit.inventory.Inventory;
 
 public class CraftCustomInventoryView extends CraftInventoryView {
 
-    public CraftCustomInventoryView(HumanEntity player, Inventory viewing,
-            Container container) {
+    public CraftCustomInventoryView(final HumanEntity player, final Inventory viewing,
+                                    final Container container) {
         super(player, viewing, container);
         // TODO Auto-generated constructor stub
     }

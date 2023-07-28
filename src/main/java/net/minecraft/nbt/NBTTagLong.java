@@ -9,12 +9,12 @@ public class NBTTagLong extends NBTBase
     /** The long value for the tag. */
     public long data;
 
-    public NBTTagLong(String par1Str)
+    public NBTTagLong(final String par1Str)
     {
         super(par1Str);
     }
 
-    public NBTTagLong(String par1Str, long par2)
+    public NBTTagLong(final String par1Str, final long par2)
     {
         super(par1Str);
         this.data = par2;
@@ -23,7 +23,7 @@ public class NBTTagLong extends NBTBase
     /**
      * Write the actual data contents of the tag, implemented in NBT extension classes
      */
-    void write(DataOutput par1DataOutput) throws IOException
+    void write(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeLong(this.data);
     }
@@ -31,7 +31,7 @@ public class NBTTagLong extends NBTBase
     /**
      * Read the actual data contents of the tag, implemented in NBT extension classes
      */
-    void load(DataInput par1DataInput, int par2) throws IOException
+    void load(final DataInput par1DataInput, final int par2) throws IOException
     {
         this.data = par1DataInput.readLong();
     }
@@ -57,11 +57,11 @@ public class NBTTagLong extends NBTBase
         return new NBTTagLong(this.getName(), this.data);
     }
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         if (super.equals(par1Obj))
         {
-            NBTTagLong nbttaglong = (NBTTagLong)par1Obj;
+            final NBTTagLong nbttaglong = (NBTTagLong)par1Obj;
             return this.data == nbttaglong.data;
         }
         else

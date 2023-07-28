@@ -23,7 +23,7 @@ public class GuiModsMissingForServer extends GuiScreen
 {
     private ModMissingPacket modsMissing;
 
-    public GuiModsMissingForServer(ModMissingPacket modsMissing)
+    public GuiModsMissingForServer(final ModMissingPacket modsMissing)
     {
         this.modsMissing = modsMissing;
     }
@@ -43,7 +43,7 @@ public class GuiModsMissingForServer extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled && par1GuiButton.id == 1)
         {
@@ -55,7 +55,7 @@ public class GuiModsMissingForServer extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         int offset = Math.max(85 - modsMissing.getModList().size() * 10, 10);
@@ -65,7 +65,7 @@ public class GuiModsMissingForServer extends GuiScreen
         offset += 10;
         this.drawCenteredString(this.fontRenderer, "They are required to play on this server", this.width / 2, offset, 0xFFFFFF);
         offset += 5;
-        for (ArtifactVersion v : modsMissing.getModList())
+        for (final ArtifactVersion v : modsMissing.getModList())
         {
             offset += 10;
             this.drawCenteredString(this.fontRenderer, String.format("%s : %s", v.getLabel(), v.getRangeString()), this.width / 2, offset, 0xEEEEEE);

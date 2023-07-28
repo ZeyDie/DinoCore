@@ -52,7 +52,7 @@ public class TileEntity
     /**
      * Adds a new two-way mapping between the class and its string name in both hashmaps.
      */
-    public static void addMapping(Class par0Class, String par1Str)
+    public static void addMapping(final Class par0Class, final String par1Str)
     {
         if (nameToClassMap.containsKey(par1Str))
         {
@@ -76,7 +76,7 @@ public class TileEntity
     /**
      * Sets the worldObj for this tileEntity.
      */
-    public void setWorldObj(World par1World)
+    public void setWorldObj(final World par1World)
     {
         this.worldObj = par1World;
     }
@@ -92,7 +92,7 @@ public class TileEntity
     /**
      * Reads a tile entity from NBT.
      */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         this.xCoord = par1NBTTagCompound.getInteger("x");
         this.yCoord = par1NBTTagCompound.getInteger("y");
@@ -102,9 +102,9 @@ public class TileEntity
     /**
      * Writes a tile entity to NBT.
      */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(final NBTTagCompound par1NBTTagCompound)
     {
-        String s = (String)classToNameMap.get(this.getClass());
+        final String s = (String)classToNameMap.get(this.getClass());
 
         if (s == null)
         {
@@ -128,7 +128,7 @@ public class TileEntity
     /**
      * Creates a new entity and loads its data from the specified NBT.
      */
-    public static TileEntity createAndLoadEntity(NBTTagCompound par0NBTTagCompound)
+    public static TileEntity createAndLoadEntity(final NBTTagCompound par0NBTTagCompound)
     {
         TileEntity tileentity = null;
 
@@ -143,7 +143,7 @@ public class TileEntity
                 tileentity = (TileEntity)oclass.newInstance();
             }
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             // Cauldron start - better debug
             FMLLog.log(Level.SEVERE, exception,
@@ -158,7 +158,7 @@ public class TileEntity
             {
                 tileentity.readFromNBT(par0NBTTagCompound);
             }
-            catch (Exception e)
+            catch (final Exception e)
             {
                 FMLLog.log(Level.SEVERE, e,
                         "A TileEntity %s(%s) has thrown an exception during loading, its state cannot be restored. Report this to the mod author",
@@ -207,11 +207,11 @@ public class TileEntity
     /**
      * Returns the square of the distance between this entity and the passed in coordinates.
      */
-    public double getDistanceFrom(double par1, double par3, double par5)
+    public double getDistanceFrom(final double par1, final double par3, final double par5)
     {
-        double d3 = (double)this.xCoord + 0.5D - par1;
-        double d4 = (double)this.yCoord + 0.5D - par3;
-        double d5 = (double)this.zCoord + 0.5D - par5;
+        final double d3 = (double)this.xCoord + 0.5D - par1;
+        final double d4 = (double)this.yCoord + 0.5D - par3;
+        final double d5 = (double)this.zCoord + 0.5D - par5;
         return d3 * d3 + d4 * d4 + d5 * d5;
     }
 
@@ -269,7 +269,7 @@ public class TileEntity
     /**
      * Called when a client event is received with the event number and argument, see World.sendClientEvent
      */
-    public boolean receiveClientEvent(int par1, int par2)
+    public boolean receiveClientEvent(final int par1, final int par2)
     {
         return false;
     }
@@ -284,7 +284,7 @@ public class TileEntity
         this.blockMetadata = -1;
     }
 
-    public void func_85027_a(CrashReportCategory par1CrashReportCategory)
+    public void func_85027_a(final CrashReportCategory par1CrashReportCategory)
     {
         par1CrashReportCategory.addCrashSectionCallable("Name", new CallableTileEntityName(this));
         CrashReportCategory.addBlockCrashInfo(par1CrashReportCategory, this.xCoord, this.yCoord, this.zCoord, this.getBlockType() == null ? 0 : this.getBlockType().blockID, this.getBlockMetadata()); // Cauldron - dont pass blocktype if null
@@ -323,7 +323,7 @@ public class TileEntity
     // CraftBukkit start
     public InventoryHolder getOwner()
     {
-        org.bukkit.block.BlockState state = worldObj.getWorld().getBlockAt(xCoord, yCoord, zCoord).getState();
+        final org.bukkit.block.BlockState state = worldObj.getWorld().getBlockAt(xCoord, yCoord, zCoord).getState();
 
         if (state instanceof InventoryHolder)
         {
@@ -353,7 +353,7 @@ public class TileEntity
      * @param net The NetworkManager the packet originated from
      * @param pkt The data packet
      */
-    public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt)
+    public void onDataPacket(final INetworkManager net, final Packet132TileEntityData pkt)
     {
     }
 
@@ -379,12 +379,12 @@ public class TileEntity
      * @param z Z Position
      * @return True to remove the old tile entity, false to keep it in tact {and create a new one if the new values specify to}
      */
-    public boolean shouldRefresh(int oldID, int newID, int oldMeta, int newMeta, World world, int x, int y, int z)
+    public boolean shouldRefresh(final int oldID, final int newID, final int oldMeta, final int newMeta, final World world, final int x, final int y, final int z)
     {
         return !isVanilla || (oldID != newID);
     }
 
-    public boolean shouldRenderInPass(int pass)
+    public boolean shouldRenderInPass(final int pass)
     {
         return pass == 0;
     }
@@ -404,7 +404,7 @@ public class TileEntity
     public AxisAlignedBB getRenderBoundingBox()
     {
         AxisAlignedBB bb = INFINITE_EXTENT_AABB;
-        Block type = getBlockType();
+        final Block type = getBlockType();
         if (type == Block.enchantmentTable)
         {
             bb = AxisAlignedBB.getAABBPool().getAABB(xCoord, yCoord, zCoord, xCoord + 1, yCoord + 1, zCoord + 1);
@@ -415,7 +415,7 @@ public class TileEntity
         }
         else if (type != null && type != Block.beacon)
         {
-            AxisAlignedBB cbb = getBlockType().getCollisionBoundingBoxFromPool(worldObj, xCoord, yCoord, zCoord);
+            final AxisAlignedBB cbb = getBlockType().getCollisionBoundingBoxFromPool(worldObj, xCoord, yCoord, zCoord);
             if (cbb != null)
             {
                 bb = cbb;

@@ -16,7 +16,7 @@ public class InvalidConfigurationException extends Exception {
      *
      * @param msg The details of the exception.
      */
-    public InvalidConfigurationException(String msg) {
+    public InvalidConfigurationException(final String msg) {
         super(msg);
     }
 
@@ -25,7 +25,7 @@ public class InvalidConfigurationException extends Exception {
      *
      * @param cause The cause of the exception.
      */
-    public InvalidConfigurationException(Throwable cause) {
+    public InvalidConfigurationException(final Throwable cause) {
         super(cause);
     }
 
@@ -35,7 +35,7 @@ public class InvalidConfigurationException extends Exception {
      * @param cause The cause of the exception.
      * @param msg The details of the exception.
      */
-    public InvalidConfigurationException(String msg, Throwable cause) {
+    public InvalidConfigurationException(final String msg, final Throwable cause) {
         super(msg, cause);
     }
 }

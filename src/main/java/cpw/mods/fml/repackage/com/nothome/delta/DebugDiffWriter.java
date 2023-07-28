@@ -40,19 +40,19 @@ public class DebugDiffWriter implements DiffWriter {
      */
     public DebugDiffWriter() {}
     
-    public void addCopy(long offset, int length) throws IOException {
+    public void addCopy(final long offset, final int length) throws IOException {
         if (os.size() > 0)
             writeBuf();
         System.err.println("COPY off: " + offset + ", len: " + length);
     }
     
-    public void addData(byte b) throws IOException {
+    public void addData(final byte b) throws IOException {
         os.write(b);
         writeBuf();
     }
     private void writeBuf() {
         System.err.print("DATA: ");
-        byte[] ba = os.toByteArray();
+        final byte[] ba = os.toByteArray();
         for (int ix = 0; ix < ba.length; ix++) {
             if (ba[ix] == '\n')
                 System.err.print("\\n");

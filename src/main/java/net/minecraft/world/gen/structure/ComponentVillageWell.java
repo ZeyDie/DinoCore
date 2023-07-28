@@ -10,7 +10,7 @@ public class ComponentVillageWell extends ComponentVillage
 {
     public ComponentVillageWell() {}
 
-    public ComponentVillageWell(ComponentVillageStartPiece par1ComponentVillageStartPiece, int par2, Random par3Random, int par4, int par5)
+    public ComponentVillageWell(final ComponentVillageStartPiece par1ComponentVillageStartPiece, final int par2, final Random par3Random, final int par4, final int par5)
     {
         super(par1ComponentVillageStartPiece, par2);
         this.coordBaseMode = par3Random.nextInt(4);
@@ -29,7 +29,7 @@ public class ComponentVillageWell extends ComponentVillage
     /**
      * Initiates construction of the Structure Component picked, at the current Location of StructGen
      */
-    public void buildComponent(StructureComponent par1StructureComponent, List par2List, Random par3Random)
+    public void buildComponent(final StructureComponent par1StructureComponent, final List par2List, final Random par3Random)
     {
         StructureVillagePieces.getNextStructureComponentVillagePath((ComponentVillageStartPiece)par1StructureComponent, par2List, par3Random, this.boundingBox.minX - 1, this.boundingBox.maxY - 4, this.boundingBox.minZ + 1, 1, this.getComponentType());
         StructureVillagePieces.getNextStructureComponentVillagePath((ComponentVillageStartPiece)par1StructureComponent, par2List, par3Random, this.boundingBox.maxX + 1, this.boundingBox.maxY - 4, this.boundingBox.minZ + 1, 3, this.getComponentType());
@@ -41,7 +41,7 @@ public class ComponentVillageWell extends ComponentVillage
      * second Part of Structure generating, this for example places Spiderwebs, Mob Spawners, it closes Mineshafts at
      * the end, it adds Fences...
      */
-    public boolean addComponentParts(World par1World, Random par2Random, StructureBoundingBox par3StructureBoundingBox)
+    public boolean addComponentParts(final World par1World, final Random par2Random, final StructureBoundingBox par3StructureBoundingBox)
     {
         if (this.field_143015_k < 0)
         {

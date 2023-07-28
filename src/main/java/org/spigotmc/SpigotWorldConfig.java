@@ -12,13 +12,13 @@ public class SpigotWorldConfig {
     private final YamlConfiguration config;
     private boolean verbose;
 
-    public SpigotWorldConfig(String worldName) {
+    public SpigotWorldConfig(final String worldName) {
         this.worldName = worldName;
         this.config = SpigotConfig.config;
         if (worldName.toLowerCase().contains("dummy")) return;
         try {
             init();
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             log("Something bad happened while trying init the spigot config for [" + worldName + "]");
             t.printStackTrace();
         }
@@ -32,37 +32,37 @@ public class SpigotWorldConfig {
         SpigotConfig.readConfig(SpigotWorldConfig.class, this);
     }
 
-    private void log(String s) {
+    private void log(final String s) {
         if (verbose) {
             Bukkit.getLogger().info(s);
         }
     }
 
-    private void set(String path, Object val) {
+    private void set(final String path, final Object val) {
         config.set("world-settings.default." + path, val);
     }
 
-    private boolean getBoolean(String path, boolean def) {
+    private boolean getBoolean(final String path, final boolean def) {
         config.addDefault("world-settings.default." + path, def);
         return config.getBoolean("world-settings." + worldName + "." + path, config.getBoolean("world-settings.default." + path));
     }
 
-    private double getDouble(String path, double def) {
+    private double getDouble(final String path, final double def) {
         config.addDefault("world-settings.default." + path, def);
         return config.getDouble("world-settings." + worldName + "." + path, config.getDouble("world-settings.default." + path));
     }
 
-    private int getInt(String path, int def) {
+    private int getInt(final String path, final int def) {
         config.addDefault("world-settings.default." + path, def);
         return config.getInt("world-settings." + worldName + "." + path, config.getInt("world-settings.default." + path));
     }
 
-    private <T> List getList(String path, T def) {
+    private <T> List getList(final String path, final T def) {
         config.addDefault("world-settings.default." + path, def);
         return (List<T>) config.getList("world-settings." + worldName + "." + path, config.getList("world-settings.default." + path));
     }
 
-    private String getString(String path, String def) {
+    private String getString(final String path, final String def) {
         config.addDefault("world-settings.default." + path, def);
         return config.getString("world-settings." + worldName + "." + path, config.getString("world-settings.default." + path));
     }

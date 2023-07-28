@@ -54,10 +54,10 @@ public class EntityBoat extends Entity
     /**
      * Applies a velocity to each of the entities pushing them away from each other. Args: entity
      */
-    public void applyEntityCollision(Entity entity)
+    public void applyEntityCollision(final Entity entity)
     {
-        org.bukkit.entity.Entity hitEntity = (entity == null) ? null : entity.getBukkitEntity();
-        VehicleEntityCollisionEvent event = new VehicleEntityCollisionEvent((Vehicle) this.getBukkitEntity(), hitEntity);
+        final org.bukkit.entity.Entity hitEntity = (entity == null) ? null : entity.getBukkitEntity();
+        final VehicleEntityCollisionEvent event = new VehicleEntityCollisionEvent((Vehicle) this.getBukkitEntity(), hitEntity);
         this.worldObj.getServer().getPluginManager().callEvent(event);
 
         if (event.isCancelled())
@@ -69,7 +69,7 @@ public class EntityBoat extends Entity
     }
     // CraftBukkit end
 
-    public EntityBoat(World par1World)
+    public EntityBoat(final World par1World)
     {
         super(par1World);
         this.field_70279_a = true;
@@ -99,7 +99,7 @@ public class EntityBoat extends Entity
      * Returns a boundingBox used to collide the entity with other entities and blocks. This enables the entity to be
      * pushable on contact, like boats or minecarts.
      */
-    public AxisAlignedBB getCollisionBox(Entity par1Entity)
+    public AxisAlignedBB getCollisionBox(final Entity par1Entity)
     {
         return par1Entity.boundingBox;
     }
@@ -120,7 +120,7 @@ public class EntityBoat extends Entity
         return true;
     }
 
-    public EntityBoat(World par1World, double par2, double par4, double par6)
+    public EntityBoat(final World par1World, final double par2, final double par4, final double par6)
     {
         this(par1World);
         this.setPosition(par2, par4 + (double)this.yOffset, par6);
@@ -144,7 +144,7 @@ public class EntityBoat extends Entity
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2)
     {
         if (this.isEntityInvulnerable())
         {
@@ -153,9 +153,9 @@ public class EntityBoat extends Entity
         else if (!this.worldObj.isRemote && !this.isDead)
         {
             // CraftBukkit start
-            Vehicle vehicle = (Vehicle) this.getBukkitEntity();
-            org.bukkit.entity.Entity attacker = (par1DamageSource.getEntity() == null) ? null : par1DamageSource.getEntity().getBukkitEntity();
-            VehicleDamageEvent event = new VehicleDamageEvent(vehicle, attacker, (double) par2);
+            final Vehicle vehicle = (Vehicle) this.getBukkitEntity();
+            final org.bukkit.entity.Entity attacker = (par1DamageSource.getEntity() == null) ? null : par1DamageSource.getEntity().getBukkitEntity();
+            final VehicleDamageEvent event = new VehicleDamageEvent(vehicle, attacker, (double) par2);
             this.worldObj.getServer().getPluginManager().callEvent(event);
 
             if (event.isCancelled())
@@ -169,17 +169,17 @@ public class EntityBoat extends Entity
             this.setTimeSinceHit(10);
             this.setDamageTaken(this.getDamageTaken() + par2 * 10.0F);
             this.setBeenAttacked();
-            boolean flag = par1DamageSource.getEntity() instanceof EntityPlayer && ((EntityPlayer)par1DamageSource.getEntity()).capabilities.isCreativeMode;
+            final boolean flag = par1DamageSource.getEntity() instanceof EntityPlayer && ((EntityPlayer)par1DamageSource.getEntity()).capabilities.isCreativeMode;
 
             if (flag || this.getDamageTaken() > 40.0F)
             {
                 // CraftBukkit start
-                VehicleDestroyEvent destroyEvent = new VehicleDestroyEvent(vehicle, attacker);
+                final VehicleDestroyEvent destroyEvent = new VehicleDestroyEvent(vehicle, attacker);
                 this.worldObj.getServer().getPluginManager().callEvent(destroyEvent);
 
                 if (destroyEvent.isCancelled())
                 {
-                    this.setDamageTaken(40F); // Maximize damage so this doesn't get triggered again right away
+                    this.setDamageTaken(40.0F); // Maximize damage so this doesn't get triggered again right away
                     return true;
                 }
                 // CraftBukkit end
@@ -230,7 +230,7 @@ public class EntityBoat extends Entity
      * Sets the position and rotation. Only difference from the other one is no bounding on the rotation. Args: posX,
      * posY, posZ, yaw, pitch
      */
-    public void setPositionAndRotation2(double par1, double par3, double par5, float par7, float par8, int par9)
+    public void setPositionAndRotation2(final double par1, final double par3, final double par5, final float par7, final float par8, final int par9)
     {
         if (this.field_70279_a)
         {
@@ -238,10 +238,10 @@ public class EntityBoat extends Entity
         }
         else
         {
-            double d3 = par1 - this.posX;
-            double d4 = par3 - this.posY;
-            double d5 = par5 - this.posZ;
-            double d6 = d3 * d3 + d4 * d4 + d5 * d5;
+            final double d3 = par1 - this.posX;
+            final double d4 = par3 - this.posY;
+            final double d5 = par5 - this.posZ;
+            final double d6 = d3 * d3 + d4 * d4 + d5 * d5;
 
             if (d6 <= 1.0D)
             {
@@ -266,7 +266,7 @@ public class EntityBoat extends Entity
     /**
      * Sets the velocity to the args. Args: x, y, z
      */
-    public void setVelocity(double par1, double par3, double par5)
+    public void setVelocity(final double par1, final double par3, final double par5)
     {
         this.velocityX = this.motionX = par1;
         this.velocityY = this.motionY = par3;
@@ -279,11 +279,11 @@ public class EntityBoat extends Entity
     public void onUpdate()
     {
         // CraftBukkit start
-        double prevX = this.posX;
-        double prevY = this.posY;
-        double prevZ = this.posZ;
-        float prevYaw = this.rotationYaw;
-        float prevPitch = this.rotationPitch;
+        final double prevX = this.posX;
+        final double prevY = this.posY;
+        final double prevZ = this.posZ;
+        final float prevYaw = this.rotationYaw;
+        final float prevPitch = this.rotationPitch;
         // CraftBukkit end
         super.onUpdate();
 
@@ -300,14 +300,14 @@ public class EntityBoat extends Entity
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
-        byte b0 = 5;
+        final byte b0 = 5;
         double d0 = 0.0D;
 
         for (int i = 0; i < b0; ++i)
         {
-            double d1 = this.boundingBox.minY + (this.boundingBox.maxY - this.boundingBox.minY) * (double)(i + 0) / (double)b0 - 0.125D;
-            double d2 = this.boundingBox.minY + (this.boundingBox.maxY - this.boundingBox.minY) * (double)(i + 1) / (double)b0 - 0.125D;
-            AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB(this.boundingBox.minX, d1, this.boundingBox.minZ, this.boundingBox.maxX, d2, this.boundingBox.maxZ);
+            final double d1 = this.boundingBox.minY + (this.boundingBox.maxY - this.boundingBox.minY) * (double)(i + 0) / (double)b0 - 0.125D;
+            final double d2 = this.boundingBox.minY + (this.boundingBox.maxY - this.boundingBox.minY) * (double)(i + 1) / (double)b0 - 0.125D;
+            final AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB(this.boundingBox.minX, d1, this.boundingBox.minZ, this.boundingBox.maxX, d2, this.boundingBox.maxZ);
 
             if (this.worldObj.isAABBInMaterial(axisalignedbb, Material.water))
             {
@@ -315,7 +315,7 @@ public class EntityBoat extends Entity
             }
         }
 
-        double d3 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
+        final double d3 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
         double d4;
         double d5;
 
@@ -326,10 +326,10 @@ public class EntityBoat extends Entity
 
             for (int j = 0; (double)j < 1.0D + d3 * 60.0D; ++j)
             {
-                double d6 = (double)(this.rand.nextFloat() * 2.0F - 1.0F);
-                double d7 = (double)(this.rand.nextInt(2) * 2 - 1) * 0.7D;
-                double d8;
-                double d9;
+                final double d6 = (double)(this.rand.nextFloat() * 2.0F - 1.0F);
+                final double d7 = (double)(this.rand.nextInt(2) * 2 - 1) * 0.7D;
+                final double d8;
+                final double d9;
 
                 if (this.rand.nextBoolean())
                 {
@@ -346,7 +346,7 @@ public class EntityBoat extends Entity
             }
         }
 
-        double d10;
+        final double d10;
         double d11;
 
         if (this.worldObj.isRemote && this.field_70279_a)
@@ -473,8 +473,8 @@ public class EntityBoat extends Entity
                 if (!this.worldObj.isRemote && !this.isDead)
                 {
                     // CraftBukkit start
-                    Vehicle vehicle = (Vehicle) this.getBukkitEntity();
-                    VehicleDestroyEvent destroyEvent = new VehicleDestroyEvent(vehicle, null);
+                    final Vehicle vehicle = (Vehicle) this.getBukkitEntity();
+                    final VehicleDestroyEvent destroyEvent = new VehicleDestroyEvent(vehicle, null);
                     this.worldObj.getServer().getPluginManager().callEvent(destroyEvent);
 
                     if (!destroyEvent.isCancelled())
@@ -528,16 +528,16 @@ public class EntityBoat extends Entity
             this.rotationYaw = (float)((double)this.rotationYaw + d12);
             this.setRotation(this.rotationYaw, this.rotationPitch);
             // CraftBukkit start
-            org.bukkit.Server server = this.worldObj.getServer();
-            org.bukkit.World bworld = this.worldObj.getWorld();
-            Location from = new Location(bworld, prevX, prevY, prevZ, prevYaw, prevPitch);
-            Location to = new Location(bworld, this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
-            Vehicle vehicle = (Vehicle) this.getBukkitEntity();
+            final org.bukkit.Server server = this.worldObj.getServer();
+            final org.bukkit.World bworld = this.worldObj.getWorld();
+            final Location from = new Location(bworld, prevX, prevY, prevZ, prevYaw, prevPitch);
+            final Location to = new Location(bworld, this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
+            final Vehicle vehicle = (Vehicle) this.getBukkitEntity();
             server.getPluginManager().callEvent(new org.bukkit.event.vehicle.VehicleUpdateEvent(vehicle));
 
             if (!from.equals(to))
             {
-                VehicleMoveEvent event = new VehicleMoveEvent(vehicle, from, to);
+                final VehicleMoveEvent event = new VehicleMoveEvent(vehicle, from, to);
                 server.getPluginManager().callEvent(event);
             }
 
@@ -545,14 +545,14 @@ public class EntityBoat extends Entity
 
             if (!this.worldObj.isRemote)
             {
-                List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(0.20000000298023224D, 0.0D, 0.20000000298023224D));
+                final List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(0.20000000298023224D, 0.0D, 0.20000000298023224D));
                 int l;
 
                 if (list != null && !list.isEmpty())
                 {
                     for (l = 0; l < list.size(); ++l)
                     {
-                        Entity entity = (Entity)list.get(l);
+                        final Entity entity = (Entity)list.get(l);
 
                         if (entity != this.riddenByEntity && entity.canBePushed() && entity instanceof EntityBoat)
                         {
@@ -563,13 +563,13 @@ public class EntityBoat extends Entity
 
                 for (l = 0; l < 4; ++l)
                 {
-                    int i1 = MathHelper.floor_double(this.posX + ((double)(l % 2) - 0.5D) * 0.8D);
-                    int j1 = MathHelper.floor_double(this.posZ + ((double)(l / 2) - 0.5D) * 0.8D);
+                    final int i1 = MathHelper.floor_double(this.posX + ((double)(l % 2) - 0.5D) * 0.8D);
+                    final int j1 = MathHelper.floor_double(this.posZ + ((double)(l / 2) - 0.5D) * 0.8D);
 
                     for (int k1 = 0; k1 < 2; ++k1)
                     {
-                        int l1 = MathHelper.floor_double(this.posY) + k1;
-                        int i2 = this.worldObj.getBlockId(i1, l1, j1);
+                        final int l1 = MathHelper.floor_double(this.posY) + k1;
+                        final int i2 = this.worldObj.getBlockId(i1, l1, j1);
 
                         if (i2 == Block.snow.blockID)
                         {
@@ -609,8 +609,8 @@ public class EntityBoat extends Entity
     {
         if (this.riddenByEntity != null)
         {
-            double d0 = Math.cos((double)this.rotationYaw * Math.PI / 180.0D) * 0.4D;
-            double d1 = Math.sin((double)this.rotationYaw * Math.PI / 180.0D) * 0.4D;
+            final double d0 = Math.cos((double)this.rotationYaw * Math.PI / 180.0D) * 0.4D;
+            final double d1 = Math.sin((double)this.rotationYaw * Math.PI / 180.0D) * 0.4D;
             this.riddenByEntity.setPosition(this.posX + d0, this.posY + this.getMountedYOffset() + this.riddenByEntity.getYOffset(), this.posZ + d1);
         }
     }
@@ -618,12 +618,12 @@ public class EntityBoat extends Entity
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    protected void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {}
+    protected void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound) {}
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    protected void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {}
+    protected void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound) {}
 
     @SideOnly(Side.CLIENT)
     public float getShadowSize()
@@ -634,7 +634,7 @@ public class EntityBoat extends Entity
     /**
      * First layer of player interaction
      */
-    public boolean interactFirst(EntityPlayer par1EntityPlayer)
+    public boolean interactFirst(final EntityPlayer par1EntityPlayer)
     {
         if (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayer && this.riddenByEntity != par1EntityPlayer)
         {
@@ -654,7 +654,7 @@ public class EntityBoat extends Entity
     /**
      * Sets the damage taken from the last hit.
      */
-    public void setDamageTaken(float par1)
+    public void setDamageTaken(final float par1)
     {
         this.dataWatcher.updateObject(19, Float.valueOf(par1));
     }
@@ -670,7 +670,7 @@ public class EntityBoat extends Entity
     /**
      * Sets the time to count down from since the last time entity was hit.
      */
-    public void setTimeSinceHit(int par1)
+    public void setTimeSinceHit(final int par1)
     {
         this.dataWatcher.updateObject(17, Integer.valueOf(par1));
     }
@@ -686,7 +686,7 @@ public class EntityBoat extends Entity
     /**
      * Sets the forward direction of the entity.
      */
-    public void setForwardDirection(int par1)
+    public void setForwardDirection(final int par1)
     {
         this.dataWatcher.updateObject(18, Integer.valueOf(par1));
     }
@@ -700,7 +700,7 @@ public class EntityBoat extends Entity
     }
 
     @SideOnly(Side.CLIENT)
-    public void func_70270_d(boolean par1)
+    public void func_70270_d(final boolean par1)
     {
         this.field_70279_a = par1;
     }

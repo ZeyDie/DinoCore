@@ -19,7 +19,7 @@ public final class MapCursor {
      * @deprecated Magic value
      */
     @Deprecated
-    public MapCursor(byte x, byte y, byte direction, byte type, boolean visible) {
+    public MapCursor(final byte x, final byte y, final byte direction, final byte type, final boolean visible) {
         this.x = x;
         this.y = y;
         setDirection(direction);
@@ -88,7 +88,7 @@ public final class MapCursor {
      *
      * @param x The X coordinate.
      */
-    public void setX(byte x) {
+    public void setX(final byte x) {
         this.x = x;
     }
 
@@ -97,7 +97,7 @@ public final class MapCursor {
      *
      * @param y The Y coordinate.
      */
-    public void setY(byte y) {
+    public void setY(final byte y) {
         this.y = y;
     }
 
@@ -106,7 +106,7 @@ public final class MapCursor {
      *
      * @param direction The facing of the cursor, from 0 to 15.
      */
-    public void setDirection(byte direction) {
+    public void setDirection(final byte direction) {
         if (direction < 0 || direction > 15) {
             throw new IllegalArgumentException("Direction must be in the range 0-15");
         }
@@ -118,7 +118,7 @@ public final class MapCursor {
      *
      * @param type The type (color/style) of the map cursor.
      */
-    public void setType(Type type) {
+    public void setType(final Type type) {
         setRawType(type.value);
     }
 
@@ -129,7 +129,7 @@ public final class MapCursor {
      * @deprecated Magic value
      */
     @Deprecated
-    public void setRawType(byte type) {
+    public void setRawType(final byte type) {
         if (type < 0 || type > 15) {
             throw new IllegalArgumentException("Type must be in the range 0-15");
         }
@@ -141,7 +141,7 @@ public final class MapCursor {
      *
      * @param visible True if visible.
      */
-    public void setVisible(boolean visible) {
+    public void setVisible(final boolean visible) {
         this.visible = visible;
     }
 
@@ -159,7 +159,7 @@ public final class MapCursor {
 
         private byte value;
 
-        private Type(int value) {
+        private Type(final int value) {
             this.value = (byte) value;
         }
 
@@ -177,8 +177,8 @@ public final class MapCursor {
          * @deprecated Magic value
          */
         @Deprecated
-        public static Type byValue(byte value) {
-            for (Type t : values()) {
+        public static Type byValue(final byte value) {
+            for (final Type t : values()) {
                 if (t.value == value) return t;
             }
             return null;

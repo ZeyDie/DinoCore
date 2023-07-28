@@ -21,7 +21,7 @@ public class PlayerOpenContainerEvent extends PlayerEvent
      * 
      */
 
-    public PlayerOpenContainerEvent(EntityPlayer player, Container openContainer)
+    public PlayerOpenContainerEvent(final EntityPlayer player, final Container openContainer)
     {
         super(player);
         this.canInteractWith = openContainer.canInteractWith(player);

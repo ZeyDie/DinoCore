@@ -49,7 +49,7 @@ public class BlockCanBuildEvent extends BlockEvent {
      *
      * @param cancel true if you want to allow the block to be built here despite Minecraft's default behaviour
      */
-    public void setBuildable(boolean cancel) {
+    public void setBuildable(final boolean cancel) {
         this.buildable = cancel;
     }
 

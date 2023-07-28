@@ -8,7 +8,7 @@ class CallableTagCompound2 implements Callable
 
     final NBTTagCompound theNBTTagCompound;
 
-    CallableTagCompound2(NBTTagCompound par1NBTTagCompound, int par2)
+    CallableTagCompound2(final NBTTagCompound par1NBTTagCompound, final int par2)
     {
         this.theNBTTagCompound = par1NBTTagCompound;
         this.field_82588_a = par2;

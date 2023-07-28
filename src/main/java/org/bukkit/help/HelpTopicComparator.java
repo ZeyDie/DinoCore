@@ -21,16 +21,16 @@ public class HelpTopicComparator implements Comparator<HelpTopic> {
     
     private HelpTopicComparator() {}
 
-    public int compare(HelpTopic lhs, HelpTopic rhs) {
+    public int compare(final HelpTopic lhs, final HelpTopic rhs) {
         return tnc.compare(lhs.getName(), rhs.getName());
     }
 
     public static class TopicNameComparator implements Comparator<String> {
         private TopicNameComparator(){}
         
-        public int compare(String lhs, String rhs) {
-            boolean lhsStartSlash = lhs.startsWith("/");
-            boolean rhsStartSlash = rhs.startsWith("/");
+        public int compare(final String lhs, final String rhs) {
+            final boolean lhsStartSlash = lhs.startsWith("/");
+            final boolean rhsStartSlash = rhs.startsWith("/");
             
             if (lhsStartSlash && !rhsStartSlash) {
                 return 1;

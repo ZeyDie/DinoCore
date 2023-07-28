@@ -7,12 +7,12 @@ import net.minecraftforge.event.entity.minecart.MinecartInteractEvent;
 
 public class EntityMinecartEmpty extends EntityMinecart
 {
-    public EntityMinecartEmpty(World par1World)
+    public EntityMinecartEmpty(final World par1World)
     {
         super(par1World);
     }
 
-    public EntityMinecartEmpty(World par1World, double par2, double par4, double par6)
+    public EntityMinecartEmpty(final World par1World, final double par2, final double par4, final double par6)
     {
         super(par1World, par2, par4, par6);
     }
@@ -20,7 +20,7 @@ public class EntityMinecartEmpty extends EntityMinecart
     /**
      * First layer of player interaction
      */
-    public boolean interactFirst(EntityPlayer par1EntityPlayer)
+    public boolean interactFirst(final EntityPlayer par1EntityPlayer)
     {
         if(MinecraftForge.EVENT_BUS.post(new MinecartInteractEvent(this, par1EntityPlayer))) 
         {

@@ -25,7 +25,7 @@ public abstract class RConThreadBase implements Runnable
     /** A list of registered ServerSockets */
     protected List serverSocketList = new ArrayList();
 
-    RConThreadBase(IServer par1IServer)
+    RConThreadBase(final IServer par1IServer)
     {
         this.server = par1IServer;
 
@@ -56,7 +56,7 @@ public abstract class RConThreadBase implements Runnable
     /**
      * Log debug message
      */
-    protected void logDebug(String par1Str)
+    protected void logDebug(final String par1Str)
     {
         this.server.logDebug(par1Str);
     }
@@ -64,7 +64,7 @@ public abstract class RConThreadBase implements Runnable
     /**
      * Log information message
      */
-    protected void logInfo(String par1Str)
+    protected void logInfo(final String par1Str)
     {
         this.server.logInfo(par1Str);
     }
@@ -72,7 +72,7 @@ public abstract class RConThreadBase implements Runnable
     /**
      * Log warning message
      */
-    protected void logWarning(String par1Str)
+    protected void logWarning(final String par1Str)
     {
         this.server.logWarning(par1Str);
     }
@@ -80,7 +80,7 @@ public abstract class RConThreadBase implements Runnable
     /**
      * Log severe error message
      */
-    protected void logSevere(String par1Str)
+    protected void logSevere(final String par1Str)
     {
         this.server.logSevere(par1Str);
     }
@@ -96,7 +96,7 @@ public abstract class RConThreadBase implements Runnable
     /**
      * Registers a DatagramSocket with this thread
      */
-    protected void registerSocket(DatagramSocket par1DatagramSocket)
+    protected void registerSocket(final DatagramSocket par1DatagramSocket)
     {
         this.logDebug("registerSocket: " + par1DatagramSocket);
         this.socketList.add(par1DatagramSocket);
@@ -105,7 +105,7 @@ public abstract class RConThreadBase implements Runnable
     /**
      * Closes the specified DatagramSocket
      */
-    protected boolean closeSocket(DatagramSocket par1DatagramSocket, boolean par2)
+    protected boolean closeSocket(final DatagramSocket par1DatagramSocket, final boolean par2)
     {
         this.logDebug("closeSocket: " + par1DatagramSocket);
 
@@ -135,7 +135,7 @@ public abstract class RConThreadBase implements Runnable
     /**
      * Closes the specified ServerSocket
      */
-    protected boolean closeServerSocket(ServerSocket par1ServerSocket)
+    protected boolean closeServerSocket(final ServerSocket par1ServerSocket)
     {
         return this.closeServerSocket_do(par1ServerSocket, true);
     }
@@ -143,7 +143,7 @@ public abstract class RConThreadBase implements Runnable
     /**
      * Closes the specified ServerSocket
      */
-    protected boolean closeServerSocket_do(ServerSocket par1ServerSocket, boolean par2)
+    protected boolean closeServerSocket_do(final ServerSocket par1ServerSocket, final boolean par2)
     {
         this.logDebug("closeSocket: " + par1ServerSocket);
 
@@ -163,7 +163,7 @@ public abstract class RConThreadBase implements Runnable
                     flag1 = true;
                 }
             }
-            catch (IOException ioexception)
+            catch (final IOException ioexception)
             {
                 this.logWarning("IO: " + ioexception.getMessage());
             }
@@ -188,14 +188,14 @@ public abstract class RConThreadBase implements Runnable
     /**
      * Closes all of the opened sockets
      */
-    protected void closeAllSockets_do(boolean par1)
+    protected void closeAllSockets_do(final boolean par1)
     {
         int i = 0;
         Iterator iterator = this.socketList.iterator();
 
         while (iterator.hasNext())
         {
-            DatagramSocket datagramsocket = (DatagramSocket)iterator.next();
+            final DatagramSocket datagramsocket = (DatagramSocket)iterator.next();
 
             if (this.closeSocket(datagramsocket, false))
             {
@@ -208,7 +208,7 @@ public abstract class RConThreadBase implements Runnable
 
         while (iterator.hasNext())
         {
-            ServerSocket serversocket = (ServerSocket)iterator.next();
+            final ServerSocket serversocket = (ServerSocket)iterator.next();
 
             if (this.closeServerSocket_do(serversocket, false))
             {

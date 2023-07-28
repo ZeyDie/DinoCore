@@ -11,7 +11,7 @@ public class GuiScreenClientOutdated extends GuiScreen
 {
     private final GuiScreen previousScreen;
 
-    public GuiScreenClientOutdated(GuiScreen par1GuiScreen)
+    public GuiScreenClientOutdated(final GuiScreen par1GuiScreen)
     {
         this.previousScreen = par1GuiScreen;
     }
@@ -28,11 +28,11 @@ public class GuiScreenClientOutdated extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
-        String s = I18n.getString("mco.client.outdated.title");
-        String s1 = I18n.getString("mco.client.outdated.msg");
+        final String s = I18n.getString("mco.client.outdated.title");
+        final String s1 = I18n.getString("mco.client.outdated.msg");
         this.drawCenteredString(this.fontRenderer, s, this.width / 2, this.height / 2 - 50, 16711680);
         this.drawCenteredString(this.fontRenderer, s1, this.width / 2, this.height / 2 - 30, 16777215);
         super.drawScreen(par1, par2, par3);
@@ -41,7 +41,7 @@ public class GuiScreenClientOutdated extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.id == 0)
         {
@@ -52,7 +52,7 @@ public class GuiScreenClientOutdated extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         if (par2 == 28 || par2 == 156)
         {

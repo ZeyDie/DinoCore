@@ -60,7 +60,7 @@ public class TileEntityChest extends TileEntity implements IInventory
     }
 
     @SideOnly(Side.CLIENT)
-    public TileEntityChest(int par1)
+    public TileEntityChest(final int par1)
     {
         this.cachedChestType = par1;
     }
@@ -74,12 +74,12 @@ public class TileEntityChest extends TileEntity implements IInventory
         return this.chestContents;
     }
 
-    public void onOpen(CraftHumanEntity who)
+    public void onOpen(final CraftHumanEntity who)
     {
         transaction.add(who);
     }
 
-    public void onClose(CraftHumanEntity who)
+    public void onClose(final CraftHumanEntity who)
     {
         transaction.remove(who);
     }
@@ -89,7 +89,7 @@ public class TileEntityChest extends TileEntity implements IInventory
         return transaction;
     }
 
-    public void setMaxStackSize(int size)
+    public void setMaxStackSize(final int size)
     {
         maxStack = size;
     }
@@ -106,7 +106,7 @@ public class TileEntityChest extends TileEntity implements IInventory
     /**
      * Returns the stack in slot i
      */
-    public ItemStack getStackInSlot(int par1)
+    public ItemStack getStackInSlot(final int par1)
     {
         return this.chestContents[par1];
     }
@@ -115,11 +115,11 @@ public class TileEntityChest extends TileEntity implements IInventory
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
      * new stack.
      */
-    public ItemStack decrStackSize(int par1, int par2)
+    public ItemStack decrStackSize(final int par1, final int par2)
     {
         if (this.chestContents[par1] != null)
         {
-            ItemStack itemstack;
+            final ItemStack itemstack;
 
             if (this.chestContents[par1].stackSize <= par2)
             {
@@ -151,11 +151,11 @@ public class TileEntityChest extends TileEntity implements IInventory
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      */
-    public ItemStack getStackInSlotOnClosing(int par1)
+    public ItemStack getStackInSlotOnClosing(final int par1)
     {
         if (this.chestContents[par1] != null)
         {
-            ItemStack itemstack = this.chestContents[par1];
+            final ItemStack itemstack = this.chestContents[par1];
             this.chestContents[par1] = null;
             return itemstack;
         }
@@ -168,7 +168,7 @@ public class TileEntityChest extends TileEntity implements IInventory
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
-    public void setInventorySlotContents(int par1, ItemStack par2ItemStack)
+    public void setInventorySlotContents(final int par1, final ItemStack par2ItemStack)
     {
         this.chestContents[par1] = par2ItemStack;
 
@@ -194,13 +194,13 @@ public class TileEntityChest extends TileEntity implements IInventory
      */
     public boolean isInvNameLocalized()
     {
-        return this.customName != null && this.customName.length() > 0;
+        return this.customName != null && !this.customName.isEmpty();
     }
 
     /**
      * Sets the custom display name to use when opening a GUI for this specific TileEntityChest.
      */
-    public void setChestGuiName(String par1Str)
+    public void setChestGuiName(final String par1Str)
     {
         this.customName = par1Str;
     }
@@ -208,10 +208,10 @@ public class TileEntityChest extends TileEntity implements IInventory
     /**
      * Reads a tile entity from NBT.
      */
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
-        NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
+        final NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
         this.chestContents = new ItemStack[this.getSizeInventory()];
 
         if (par1NBTTagCompound.hasKey("CustomName"))
@@ -221,8 +221,8 @@ public class TileEntityChest extends TileEntity implements IInventory
 
         for (int i = 0; i < nbttaglist.tagCount(); ++i)
         {
-            NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
-            int j = nbttagcompound1.getByte("Slot") & 255;
+            final NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
+            final int j = nbttagcompound1.getByte("Slot") & 255;
 
             if (j >= 0 && j < this.chestContents.length)
             {
@@ -234,16 +234,16 @@ public class TileEntityChest extends TileEntity implements IInventory
     /**
      * Writes a tile entity to NBT.
      */
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
-        NBTTagList nbttaglist = new NBTTagList();
+        final NBTTagList nbttaglist = new NBTTagList();
 
         for (int i = 0; i < this.chestContents.length; ++i)
         {
             if (this.chestContents[i] != null)
             {
-                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+                final NBTTagCompound nbttagcompound1 = new NBTTagCompound();
                 nbttagcompound1.setByte("Slot", (byte)i);
                 this.chestContents[i].writeToNBT(nbttagcompound1);
                 nbttaglist.appendTag(nbttagcompound1);
@@ -270,7 +270,7 @@ public class TileEntityChest extends TileEntity implements IInventory
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
+    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer)
     {
         if (this.worldObj == null)
         {
@@ -290,7 +290,7 @@ public class TileEntityChest extends TileEntity implements IInventory
         this.adjacentChestChecked = false;
     }
 
-    private void func_90009_a(TileEntityChest par1TileEntityChest, int par2)
+    private void func_90009_a(final TileEntityChest par1TileEntityChest, final int par2)
     {
         if (par1TileEntityChest.isInvalid())
         {
@@ -385,9 +385,9 @@ public class TileEntityChest extends TileEntity implements IInventory
         }
     }
 
-    private boolean func_94044_a(int par1, int par2, int par3)
+    private boolean func_94044_a(final int par1, final int par2, final int par3)
     {
-        Block block = Block.blocksList[this.worldObj.getBlockId(par1, par2, par3)];
+        final Block block = Block.blocksList[this.worldObj.getBlockId(par1, par2, par3)];
         return block != null && block instanceof BlockChest ? ((BlockChest)block).chestType == this.getChestType() : false;
     }
 
@@ -412,16 +412,16 @@ public class TileEntityChest extends TileEntity implements IInventory
         {
             this.numUsingPlayers = 0;
             f = 5.0F;
-            List list = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getAABBPool().getAABB((double)((float)this.xCoord - f), (double)((float)this.yCoord - f), (double)((float)this.zCoord - f), (double)((float)(this.xCoord + 1) + f), (double)((float)(this.yCoord + 1) + f), (double)((float)(this.zCoord + 1) + f)));
-            Iterator iterator = list.iterator();
+            final List list = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getAABBPool().getAABB((double)((float)this.xCoord - f), (double)((float)this.yCoord - f), (double)((float)this.zCoord - f), (double)((float)(this.xCoord + 1) + f), (double)((float)(this.yCoord + 1) + f), (double)((float)(this.zCoord + 1) + f)));
+            final Iterator iterator = list.iterator();
 
             while (iterator.hasNext())
             {
-                EntityPlayer entityplayer = (EntityPlayer)iterator.next();
+                final EntityPlayer entityplayer = (EntityPlayer)iterator.next();
 
                 if (entityplayer.openContainer instanceof ContainerChest)
                 {
-                    IInventory iinventory = ((ContainerChest)entityplayer.openContainer).getLowerChestInventory();
+                    final IInventory iinventory = ((ContainerChest)entityplayer.openContainer).getLowerChestInventory();
 
                     if (iinventory == this || iinventory instanceof InventoryLargeChest && ((InventoryLargeChest)iinventory).isPartOfLargeChest(this))
                     {
@@ -455,7 +455,7 @@ public class TileEntityChest extends TileEntity implements IInventory
 
         if (this.numUsingPlayers == 0 && this.lidAngle > 0.0F || this.numUsingPlayers > 0 && this.lidAngle < 1.0F)
         {
-            float f1 = this.lidAngle;
+            final float f1 = this.lidAngle;
 
             if (this.numUsingPlayers > 0)
             {
@@ -471,7 +471,7 @@ public class TileEntityChest extends TileEntity implements IInventory
                 this.lidAngle = 1.0F;
             }
 
-            float f2 = 0.5F;
+            final float f2 = 0.5F;
 
             if (this.lidAngle < f2 && f1 >= f2 && this.adjacentChestZNeg == null && this.adjacentChestXNeg == null)
             {
@@ -501,7 +501,7 @@ public class TileEntityChest extends TileEntity implements IInventory
     /**
      * Called when a client event is received with the event number and argument, see World.sendClientEvent
      */
-    public boolean receiveClientEvent(int par1, int par2)
+    public boolean receiveClientEvent(final int par1, final int par2)
     {
         if (par1 == 1)
         {
@@ -521,7 +521,7 @@ public class TileEntityChest extends TileEntity implements IInventory
             this.numUsingPlayers = 0;
         }
 
-        int oldPower = Math.max(0, Math.min(15, this.numUsingPlayers)); // CraftBukkit - Get power before new viewer is added
+        final int oldPower = Math.max(0, Math.min(15, this.numUsingPlayers)); // CraftBukkit - Get power before new viewer is added
         ++this.numUsingPlayers;
 
         if (this.worldObj == null)
@@ -534,7 +534,7 @@ public class TileEntityChest extends TileEntity implements IInventory
         // CraftBukkit start - Call redstone event
         if (this.getBlockType().blockID == Block.chestTrapped.blockID)
         {
-            int newPower = Math.max(0, Math.min(15, this.numUsingPlayers));
+            final int newPower = Math.max(0, Math.min(15, this.numUsingPlayers));
 
             if (oldPower != newPower)
             {
@@ -551,7 +551,7 @@ public class TileEntityChest extends TileEntity implements IInventory
     {
         if (this.getBlockType() != null && this.getBlockType() instanceof BlockChest)
         {
-            int oldPower = Math.max(0, Math.min(15, this.numUsingPlayers)); // CraftBukkit - Get power before new viewer is added
+            final int oldPower = Math.max(0, Math.min(15, this.numUsingPlayers)); // CraftBukkit - Get power before new viewer is added
             --this.numUsingPlayers;
 
             if (this.worldObj == null)
@@ -564,7 +564,7 @@ public class TileEntityChest extends TileEntity implements IInventory
             // CraftBukkit start - Call redstone event
             if (this.getBlockType().blockID == Block.chestTrapped.blockID)
             {
-                int newPower = Math.max(0, Math.min(15, this.numUsingPlayers));
+                final int newPower = Math.max(0, Math.min(15, this.numUsingPlayers));
 
                 if (oldPower != newPower)
                 {
@@ -581,7 +581,7 @@ public class TileEntityChest extends TileEntity implements IInventory
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack)
+    public boolean isItemValidForSlot(final int par1, final ItemStack par2ItemStack)
     {
         return true;
     }

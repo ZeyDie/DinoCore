@@ -9,7 +9,7 @@ public class EntityStruckByLightningEvent extends EntityEvent
 {
     public final EntityLightningBolt lightning;
 
-    public EntityStruckByLightningEvent(Entity entity, EntityLightningBolt lightning)
+    public EntityStruckByLightningEvent(final Entity entity, final EntityLightningBolt lightning)
     {
         super(entity);
         this.lightning = lightning;

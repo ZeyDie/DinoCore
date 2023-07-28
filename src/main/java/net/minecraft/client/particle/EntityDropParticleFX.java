@@ -16,7 +16,7 @@ public class EntityDropParticleFX extends EntityFX
     /** The height of the current bob */
     private int bobTimer;
 
-    public EntityDropParticleFX(World par1World, double par2, double par4, double par6, Material par8Material)
+    public EntityDropParticleFX(final World par1World, final double par2, final double par4, final double par6, final Material par8Material)
     {
         super(par1World, par2, par4, par6, 0.0D, 0.0D, 0.0D);
         this.motionX = this.motionY = this.motionZ = 0.0D;
@@ -43,7 +43,7 @@ public class EntityDropParticleFX extends EntityFX
         this.motionX = this.motionY = this.motionZ = 0.0D;
     }
 
-    public int getBrightnessForRender(float par1)
+    public int getBrightnessForRender(final float par1)
     {
         return this.materialType == Material.water ? super.getBrightnessForRender(par1) : 257;
     }
@@ -51,7 +51,7 @@ public class EntityDropParticleFX extends EntityFX
     /**
      * Gets how bright this entity is.
      */
-    public float getBrightness(float par1)
+    public float getBrightness(final float par1)
     {
         return this.materialType == Material.water ? super.getBrightness(par1) : 1.0F;
     }
@@ -118,11 +118,11 @@ public class EntityDropParticleFX extends EntityFX
             this.motionZ *= 0.699999988079071D;
         }
 
-        Material material = this.worldObj.getBlockMaterial(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ));
+        final Material material = this.worldObj.getBlockMaterial(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ));
 
         if (material.isLiquid() || material.isSolid())
         {
-            double d0 = (double)((float)(MathHelper.floor_double(this.posY) + 1) - BlockFluid.getFluidHeightPercent(this.worldObj.getBlockMetadata(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ))));
+            final double d0 = (double)((float)(MathHelper.floor_double(this.posY) + 1) - BlockFluid.getFluidHeightPercent(this.worldObj.getBlockMetadata(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ))));
 
             if (this.posY < d0)
             {

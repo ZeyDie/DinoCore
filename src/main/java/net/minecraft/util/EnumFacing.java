@@ -21,7 +21,7 @@ public enum EnumFacing
     /** List of all values in EnumFacing. Order is D-U-N-S-E-W. */
     private static final EnumFacing[] faceList = new EnumFacing[6];
 
-    private EnumFacing(int par3, int par4, int par5, int par6, int par7)
+    private EnumFacing(final int par3, final int par4, final int par5, final int par6, final int par7)
     {
         this.order_a = par3;
         this.order_b = par4;
@@ -54,18 +54,18 @@ public enum EnumFacing
     /**
      * Returns the facing that represents the block in front of it.
      */
-    public static EnumFacing getFront(int par0)
+    public static EnumFacing getFront(final int par0)
     {
         return faceList[par0 % faceList.length];
     }
 
     static {
-        EnumFacing[] var0 = values();
-        int var1 = var0.length;
+        final EnumFacing[] var0 = values();
+        final int var1 = var0.length;
 
         for (int var2 = 0; var2 < var1; ++var2)
         {
-            EnumFacing var3 = var0[var2];
+            final EnumFacing var3 = var0[var2];
             faceList[var3.order_a] = var3;
         }
     }

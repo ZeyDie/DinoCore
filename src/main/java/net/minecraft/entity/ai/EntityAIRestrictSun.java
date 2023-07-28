@@ -6,7 +6,7 @@ public class EntityAIRestrictSun extends EntityAIBase
 {
     private EntityCreature theEntity;
 
-    public EntityAIRestrictSun(EntityCreature par1EntityCreature)
+    public EntityAIRestrictSun(final EntityCreature par1EntityCreature)
     {
         this.theEntity = par1EntityCreature;
     }

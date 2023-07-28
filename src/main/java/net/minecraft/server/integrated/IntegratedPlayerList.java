@@ -17,7 +17,7 @@ public class IntegratedPlayerList extends ServerConfigurationManager
      */
     private NBTTagCompound hostPlayerData;
 
-    public IntegratedPlayerList(IntegratedServer par1IntegratedServer)
+    public IntegratedPlayerList(final IntegratedServer par1IntegratedServer)
     {
         super(par1IntegratedServer);
         this.viewDistance = 10;
@@ -26,7 +26,7 @@ public class IntegratedPlayerList extends ServerConfigurationManager
     /**
      * also stores the NBTTags if this is an intergratedPlayerList
      */
-    protected void writePlayerData(EntityPlayerMP par1EntityPlayerMP)
+    protected void writePlayerData(final EntityPlayerMP par1EntityPlayerMP)
     {
         if (par1EntityPlayerMP.getCommandSenderName().equals(this.getIntegratedServer().getServerOwner()))
         {
@@ -40,7 +40,7 @@ public class IntegratedPlayerList extends ServerConfigurationManager
     /**
      * checks ban-lists, then white-lists, then space for the server. Returns null on success, or an error message
      */
-    public String allowUserToConnect(SocketAddress par1SocketAddress, String par2Str)
+    public String allowUserToConnect(final SocketAddress par1SocketAddress, final String par2Str)
     {
         return par2Str.equalsIgnoreCase(this.getIntegratedServer().getServerOwner()) ? "That name is already taken." : super.allowUserToConnect(par1SocketAddress, par2Str);
     }

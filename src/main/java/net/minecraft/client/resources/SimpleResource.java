@@ -26,7 +26,7 @@ public class SimpleResource implements Resource
     private boolean mcmetaJsonChecked;
     private JsonObject mcmetaJson;
 
-    public SimpleResource(ResourceLocation par1ResourceLocation, InputStream par2InputStream, InputStream par3InputStream, MetadataSerializer par4MetadataSerializer)
+    public SimpleResource(final ResourceLocation par1ResourceLocation, final InputStream par2InputStream, final InputStream par3InputStream, final MetadataSerializer par4MetadataSerializer)
     {
         this.srResourceLocation = par1ResourceLocation;
         this.resourceInputStream = par2InputStream;
@@ -44,7 +44,7 @@ public class SimpleResource implements Resource
         return this.mcmetaInputStream != null;
     }
 
-    public MetadataSection getMetadata(String par1Str)
+    public MetadataSection getMetadata(final String par1Str)
     {
         if (!this.hasMetadata())
         {
@@ -79,7 +79,7 @@ public class SimpleResource implements Resource
         }
     }
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         if (this == par1Obj)
         {
@@ -87,7 +87,7 @@ public class SimpleResource implements Resource
         }
         else if (par1Obj instanceof SimpleResource)
         {
-            SimpleResource simpleresource = (SimpleResource)par1Obj;
+            final SimpleResource simpleresource = (SimpleResource)par1Obj;
             return this.srResourceLocation != null ? this.srResourceLocation.equals(simpleresource.srResourceLocation) : simpleresource.srResourceLocation == null;
         }
         else

@@ -29,7 +29,7 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         cancelled = cancel;
     }
 
@@ -57,7 +57,7 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
      *
      * @param damage The amount of damage caused by the event
      */
-    public void setDamage(double damage) {
+    public void setDamage(final double damage) {
         this.damage = damage;
     }
 
@@ -67,7 +67,7 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
      * under any circumstances.
      */
     @Deprecated
-    public void _INVALID_setDamage(int damage) {
+    public void _INVALID_setDamage(final int damage) {
         setDamage(damage);
     }
 

@@ -12,17 +12,17 @@ public class CraftTravelAgent extends net.minecraft.world.Teleporter implements 
     private int creationRadius = 16;
     private boolean canCreatePortal = true;
 
-    public CraftTravelAgent(net.minecraft.world.WorldServer worldserver) {
+    public CraftTravelAgent(final net.minecraft.world.WorldServer worldserver) {
         super(worldserver);
         if (DEFAULT == null && worldserver.provider.dimensionId == 0) {
             DEFAULT = this;
         }
     }
 
-    public Location findOrCreate(Location target) {
-        net.minecraft.world.WorldServer worldServer = ((CraftWorld) target.getWorld()).getHandle();
+    public Location findOrCreate(final Location target) {
+        final net.minecraft.world.WorldServer worldServer = ((CraftWorld) target.getWorld()).getHandle();
         // Cauldron start
-        boolean before = worldServer.theChunkProviderServer.loadChunkOnProvideRequest;
+        final boolean before = worldServer.theChunkProviderServer.loadChunkOnProvideRequest;
         worldServer.theChunkProviderServer.loadChunkOnProvideRequest = true;
         // Cauldron end
         Location found = this.findPortal(target);
@@ -38,18 +38,18 @@ public class CraftTravelAgent extends net.minecraft.world.Teleporter implements 
         return found;
     }
 
-    public Location findPortal(Location location) {
-        net.minecraft.world.Teleporter pta = ((CraftWorld) location.getWorld()).getHandle().getDefaultTeleporter(); // Should be getTravelAgent
-        net.minecraft.util.ChunkCoordinates found = pta.findPortal(location.getX(), location.getY(), location.getZ(), this.getSearchRadius());
+    public Location findPortal(final Location location) {
+        final net.minecraft.world.Teleporter pta = ((CraftWorld) location.getWorld()).getHandle().getDefaultTeleporter(); // Should be getTravelAgent
+        final net.minecraft.util.ChunkCoordinates found = pta.findPortal(location.getX(), location.getY(), location.getZ(), this.getSearchRadius());
         return found != null ? new Location(location.getWorld(), found.posX, found.posY, found.posZ, location.getYaw(), location.getPitch()) : null;
     }
 
-    public boolean createPortal(Location location) {
-        net.minecraft.world.Teleporter pta = ((CraftWorld) location.getWorld()).getHandle().getDefaultTeleporter();
+    public boolean createPortal(final Location location) {
+        final net.minecraft.world.Teleporter pta = ((CraftWorld) location.getWorld()).getHandle().getDefaultTeleporter();
         return pta.createPortal(location.getX(), location.getY(), location.getZ(), this.getCreationRadius());
     }
 
-    public TravelAgent setSearchRadius(int radius) {
+    public TravelAgent setSearchRadius(final int radius) {
         this.searchRadius = radius;
         return this;
     }
@@ -58,7 +58,7 @@ public class CraftTravelAgent extends net.minecraft.world.Teleporter implements 
         return this.searchRadius;
     }
 
-    public TravelAgent setCreationRadius(int radius) {
+    public TravelAgent setCreationRadius(final int radius) {
         this.creationRadius = radius < 2 ? 0 : radius;
         return this;
     }
@@ -71,7 +71,7 @@ public class CraftTravelAgent extends net.minecraft.world.Teleporter implements 
         return this.canCreatePortal;
     }
 
-    public void setCanCreatePortal(boolean create) {
+    public void setCanCreatePortal(final boolean create) {
         this.canCreatePortal = create;
     }
 }

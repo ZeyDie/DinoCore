@@ -10,7 +10,7 @@ public class EntityJoinWorldEvent extends EntityEvent
 
     public final World world;
 
-    public EntityJoinWorldEvent(Entity entity, World world)
+    public EntityJoinWorldEvent(final Entity entity, final World world)
     {
         super(entity);
         this.world = world;

@@ -50,12 +50,12 @@ public class Packet23VehicleSpawn extends Packet
 
     public Packet23VehicleSpawn() {}
 
-    public Packet23VehicleSpawn(Entity par1Entity, int par2)
+    public Packet23VehicleSpawn(final Entity par1Entity, final int par2)
     {
         this(par1Entity, par2, 0);
     }
 
-    public Packet23VehicleSpawn(Entity par1Entity, int par2, int par3)
+    public Packet23VehicleSpawn(final Entity par1Entity, final int par2, final int par3)
     {
         this.entityId = par1Entity.entityId;
         this.xPosition = MathHelper.floor_double(par1Entity.posX * 32.0D);
@@ -71,7 +71,7 @@ public class Packet23VehicleSpawn extends Packet
             double d0 = par1Entity.motionX;
             double d1 = par1Entity.motionY;
             double d2 = par1Entity.motionZ;
-            double d3 = 3.9D;
+            final double d3 = 3.9D;
 
             if (d0 < -d3)
             {
@@ -112,7 +112,7 @@ public class Packet23VehicleSpawn extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.entityId = par1DataInput.readInt();
         this.type = par1DataInput.readByte();
@@ -134,7 +134,7 @@ public class Packet23VehicleSpawn extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.entityId);
         par1DataOutput.writeByte(this.type);
@@ -156,7 +156,7 @@ public class Packet23VehicleSpawn extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleVehicleSpawn(this);
     }

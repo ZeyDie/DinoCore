@@ -58,7 +58,7 @@ public class CauldronConfig extends ConfigBase {
 
     /* ======================================================================== */
 
-    public CauldronConfig(String fileName, String commandName) {
+    public CauldronConfig(final String fileName, final String commandName) {
         super(fileName, commandName);
         init();
     }
@@ -103,8 +103,8 @@ public class CauldronConfig extends ConfigBase {
         try {
             config = YamlConfiguration.loadConfiguration(configFile);
             String header = HEADER + "\n";
-            for (Setting toggle : settings.values()) {
-                if (!toggle.description.equals(""))
+            for (final Setting toggle : settings.values()) {
+                if (!toggle.description.isEmpty())
                     header += "Setting: " + toggle.path + " Default: " + toggle.def + "   # " + toggle.description + "\n";
 
                 config.addDefault(toggle.path, toggle.def);
@@ -118,7 +118,7 @@ public class CauldronConfig extends ConfigBase {
 
             this.saveWorldConfigs();
             this.save();
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             MinecraftServer.getServer().logSevere("Could not load " + this.configFile);
             ex.printStackTrace();
         }

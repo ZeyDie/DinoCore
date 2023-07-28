@@ -9,12 +9,12 @@ public class NBTTagInt extends NBTBase
     /** The integer value for the tag. */
     public int data;
 
-    public NBTTagInt(String par1Str)
+    public NBTTagInt(final String par1Str)
     {
         super(par1Str);
     }
 
-    public NBTTagInt(String par1Str, int par2)
+    public NBTTagInt(final String par1Str, final int par2)
     {
         super(par1Str);
         this.data = par2;
@@ -23,7 +23,7 @@ public class NBTTagInt extends NBTBase
     /**
      * Write the actual data contents of the tag, implemented in NBT extension classes
      */
-    void write(DataOutput par1DataOutput) throws IOException
+    void write(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.data);
     }
@@ -31,7 +31,7 @@ public class NBTTagInt extends NBTBase
     /**
      * Read the actual data contents of the tag, implemented in NBT extension classes
      */
-    void load(DataInput par1DataInput, int par2) throws IOException
+    void load(final DataInput par1DataInput, final int par2) throws IOException
     {
         this.data = par1DataInput.readInt();
     }
@@ -57,11 +57,11 @@ public class NBTTagInt extends NBTBase
         return new NBTTagInt(this.getName(), this.data);
     }
 
-    public boolean equals(Object par1Obj)
+    public boolean equals(final Object par1Obj)
     {
         if (super.equals(par1Obj))
         {
-            NBTTagInt nbttagint = (NBTTagInt)par1Obj;
+            final NBTTagInt nbttagint = (NBTTagInt)par1Obj;
             return this.data == nbttagint.data;
         }
         else

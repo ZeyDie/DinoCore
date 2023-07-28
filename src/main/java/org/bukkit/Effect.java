@@ -226,25 +226,25 @@ public enum Effect {
     private static final Map<String, Effect> BY_NAME = Maps.newHashMap();
     private final String particleName;
 
-    private Effect(int id, Type type) {
+    private Effect(final int id, final Type type) {
         this(id,type,null);
     }
 
-    private Effect(int id, Type type, Class<?> data) {
+    private Effect(final int id, final Type type, final Class<?> data) {
         this.id = id;
         this.type = type;
         this.data = data;
         particleName = null;
     }
 
-    private Effect(String particleName, Type type, Class<?> data) {
+    private Effect(final String particleName, final Type type, final Class<?> data) {
         this.particleName = particleName;
         this.type = type;
         id = 0;
         this.data = data;
     }
 
-    private Effect(String particleName, Type type) {
+    private Effect(final String particleName, final Type type) {
         this.particleName = particleName;
         this.type = type;
         id = 0;
@@ -293,12 +293,12 @@ public enum Effect {
      * @deprecated Magic value
      */
     @Deprecated
-    public static Effect getById(int id) {
+    public static Effect getById(final int id) {
         return BY_ID.get(id);
     }
 
     static {
-        for (Effect effect : values()) {
+        for (final Effect effect : values()) {
             if (effect.type != Type.PARTICLE) {
                 BY_ID.put(effect.id, effect);
             }
@@ -311,12 +311,12 @@ public enum Effect {
      * @param name name of the Effect to return
      * @return Effect with the given name
      */
-    public static Effect getByName(String name) {
+    public static Effect getByName(final String name) {
         return BY_NAME.get(name);
     }
 
     static {
-        for (Effect effect : values()) {
+        for (final Effect effect : values()) {
             if (effect.type == Type.PARTICLE) {
                 BY_NAME.put(effect.particleName, effect);
             }

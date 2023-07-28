@@ -15,7 +15,7 @@ public class GuiDownloadTerrain extends GuiScreen
     /** Counts the number of screen updates. */
     private int updateCounter;
 
-    public GuiDownloadTerrain(NetClientHandler par1NetClientHandler)
+    public GuiDownloadTerrain(final NetClientHandler par1NetClientHandler)
     {
         this.netHandler = par1NetClientHandler;
     }
@@ -23,7 +23,7 @@ public class GuiDownloadTerrain extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2) {}
+    protected void keyTyped(final char par1, final int par2) {}
 
     /**
      * Adds the buttons (and other controls) to the screen in question.
@@ -54,7 +54,7 @@ public class GuiDownloadTerrain extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawBackground(0);
         this.drawCenteredString(this.fontRenderer, I18n.getString("multiplayer.downloadingTerrain"), this.width / 2, this.height / 2 - 50, 16777215);

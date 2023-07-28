@@ -8,7 +8,7 @@ class CallableConnectionName implements Callable
 
     final NetworkListenThread field_111200_b;
 
-    CallableConnectionName(NetworkListenThread par1NetworkListenThread, NetServerHandler par2NetServerHandler)
+    CallableConnectionName(final NetworkListenThread par1NetworkListenThread, final NetServerHandler par2NetServerHandler)
     {
         this.field_111200_b = par1NetworkListenThread;
         this.field_111201_a = par2NetServerHandler;

@@ -28,7 +28,7 @@ public class MapInfo
     /** reference in MapInfo to MapData object */
     final MapData mapDataObj;
 
-    public MapInfo(MapData par1MapData, EntityPlayer par2EntityPlayer)
+    public MapInfo(final MapData par1MapData, final EntityPlayer par2EntityPlayer)
     {
         this.mapDataObj = par1MapData;
         this.field_76209_b = new int[128];
@@ -46,9 +46,9 @@ public class MapInfo
      * returns a 1+players*3 array, of x,y, and color . the name of this function may be partially wrong, as there is a
      * second branch to the code here
      */
-    public byte[] getPlayersOnMap(ItemStack par1ItemStack)
+    public byte[] getPlayersOnMap(final ItemStack par1ItemStack)
     {
-        byte[] abyte;
+        final byte[] abyte;
 
         if (!this.field_82570_i)
         {
@@ -61,8 +61,8 @@ public class MapInfo
             int i;
             int j;
             // Spigot start
-            boolean custom = this.mapDataObj.mapView.renderers.size() > 1 || !(this.mapDataObj.mapView.renderers.get(0) instanceof org.bukkit.craftbukkit.v1_6_R3.map.CraftMapRenderer);
-            org.bukkit.craftbukkit.v1_6_R3.map.RenderData render = (custom) ? this.mapDataObj.mapView.render((org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer) entityplayerObj.getBukkitEntity()) : null; // CraftBukkit
+            final boolean custom = this.mapDataObj.mapView.renderers.size() > 1 || !(this.mapDataObj.mapView.renderers.get(0) instanceof org.bukkit.craftbukkit.v1_6_R3.map.CraftMapRenderer);
+            final org.bukkit.craftbukkit.v1_6_R3.map.RenderData render = (custom) ? this.mapDataObj.mapView.render((org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer) entityplayerObj.getBukkitEntity()) : null; // CraftBukkit
 
             if (--this.ticksUntilPlayerLocationMapUpdate < 0)
             {
@@ -74,16 +74,16 @@ public class MapInfo
                 // CraftBukkit start
 
                 // Spigot start
-                for (Iterator iterator = ((custom) ? render.cursors.iterator() : this.mapDataObj.playersVisibleOnMap.values().iterator()); iterator.hasNext(); ++i)
+                for (final Iterator iterator = ((custom) ? render.cursors.iterator() : this.mapDataObj.playersVisibleOnMap.values().iterator()); iterator.hasNext(); ++i)
                 {
-                    org.bukkit.map.MapCursor cursor = (custom) ? (org.bukkit.map.MapCursor) iterator.next() : null;
+                    final org.bukkit.map.MapCursor cursor = (custom) ? (org.bukkit.map.MapCursor) iterator.next() : null;
 
                     if (cursor != null && !cursor.isVisible())
                     {
                         continue;
                     }
 
-                    MapCoord deco = (custom) ? null : (MapCoord) iterator.next();
+                    final MapCoord deco = (custom) ? null : (MapCoord) iterator.next();
                     abyte[i * 3 + 1] = (byte)(((custom) ? cursor.getRawType() : deco.iconSize) << 4 | ((custom) ? cursor.getDirection() : deco.iconRotation) & 15);
                     abyte[i * 3 + 2] = (byte)((custom) ? cursor.getX() : deco.centerX);
                     abyte[i * 3 + 3] = (byte)((custom) ? cursor.getY() : deco.centerZ);
@@ -122,9 +122,9 @@ public class MapInfo
 
                 if (this.field_76209_b[i] >= 0)
                 {
-                    int l = this.field_76210_c[i] - this.field_76209_b[i] + 1;
+                    final int l = this.field_76210_c[i] - this.field_76209_b[i] + 1;
                     j = this.field_76209_b[i];
-                    byte[] abyte1 = new byte[l + 3];
+                    final byte[] abyte1 = new byte[l + 3];
                     abyte1[0] = 0;
                     abyte1[1] = (byte)i;
                     abyte1[2] = (byte)j;

@@ -27,12 +27,12 @@ public class TextureManager implements Tickable, ResourceManagerReloadListener
     private final Map mapTextureCounters = Maps.newHashMap();
     private ResourceManager theResourceManager;
 
-    public TextureManager(ResourceManager par1ResourceManager)
+    public TextureManager(final ResourceManager par1ResourceManager)
     {
         this.theResourceManager = par1ResourceManager;
     }
 
-    public void bindTexture(ResourceLocation par1ResourceLocation)
+    public void bindTexture(final ResourceLocation par1ResourceLocation)
     {
         Object object = (TextureObject)this.mapTextureObjects.get(par1ResourceLocation);
 
@@ -45,12 +45,12 @@ public class TextureManager implements Tickable, ResourceManagerReloadListener
         TextureUtil.bindTexture(((TextureObject)object).getGlTextureId());
     }
 
-    public ResourceLocation getResourceLocation(int par1)
+    public ResourceLocation getResourceLocation(final int par1)
     {
         return (ResourceLocation)this.mapResourceLocations.get(Integer.valueOf(par1));
     }
 
-    public boolean loadTextureMap(ResourceLocation par1ResourceLocation, TextureMap par2TextureMap)
+    public boolean loadTextureMap(final ResourceLocation par1ResourceLocation, final TextureMap par2TextureMap)
     {
         if (this.loadTickableTexture(par1ResourceLocation, par2TextureMap))
         {
@@ -63,7 +63,7 @@ public class TextureManager implements Tickable, ResourceManagerReloadListener
         }
     }
 
-    public boolean loadTickableTexture(ResourceLocation par1ResourceLocation, TickableTextureObject par2TickableTextureObject)
+    public boolean loadTickableTexture(final ResourceLocation par1ResourceLocation, final TickableTextureObject par2TickableTextureObject)
     {
         if (this.loadTexture(par1ResourceLocation, par2TickableTextureObject))
         {
@@ -76,40 +76,41 @@ public class TextureManager implements Tickable, ResourceManagerReloadListener
         }
     }
 
-    public boolean loadTexture(ResourceLocation par1ResourceLocation, TextureObject par2TextureObject)
+    public boolean loadTexture(final ResourceLocation par1ResourceLocation, TextureObject par2TextureObject)
     {
+        TextureObject par2TextureObject1 = par2TextureObject;
         boolean flag = true;
 
         try
         {
-            ((TextureObject)par2TextureObject).loadTexture(this.theResourceManager);
+            ((TextureObject) par2TextureObject1).loadTexture(this.theResourceManager);
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             Minecraft.getMinecraft().getLogAgent().logWarningException("Failed to load texture: " + par1ResourceLocation, ioexception);
-            par2TextureObject = TextureUtil.missingTexture;
-            this.mapTextureObjects.put(par1ResourceLocation, par2TextureObject);
+            par2TextureObject1 = TextureUtil.missingTexture;
+            this.mapTextureObjects.put(par1ResourceLocation, par2TextureObject1);
             flag = false;
         }
-        catch (Throwable throwable)
+        catch (final Throwable throwable)
         {
-            CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Registering texture");
-            CrashReportCategory crashreportcategory = crashreport.makeCategory("Resource location being registered");
+            final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Registering texture");
+            final CrashReportCategory crashreportcategory = crashreport.makeCategory("Resource location being registered");
             crashreportcategory.addCrashSection("Resource location", par1ResourceLocation);
-            crashreportcategory.addCrashSectionCallable("Texture object class", new TextureManagerINNER1(this, (TextureObject)par2TextureObject));
+            crashreportcategory.addCrashSectionCallable("Texture object class", new TextureManagerINNER1(this, (TextureObject) par2TextureObject1));
             throw new ReportedException(crashreport);
         }
 
-        this.mapTextureObjects.put(par1ResourceLocation, par2TextureObject);
+        this.mapTextureObjects.put(par1ResourceLocation, par2TextureObject1);
         return flag;
     }
 
-    public TextureObject getTexture(ResourceLocation par1ResourceLocation)
+    public TextureObject getTexture(final ResourceLocation par1ResourceLocation)
     {
         return (TextureObject)this.mapTextureObjects.get(par1ResourceLocation);
     }
 
-    public ResourceLocation getDynamicTextureLocation(String par1Str, DynamicTexture par2DynamicTexture)
+    public ResourceLocation getDynamicTextureLocation(final String par1Str, final DynamicTexture par2DynamicTexture)
     {
         Integer integer = (Integer)this.mapTextureCounters.get(par1Str);
 
@@ -123,29 +124,29 @@ public class TextureManager implements Tickable, ResourceManagerReloadListener
         }
 
         this.mapTextureCounters.put(par1Str, integer);
-        ResourceLocation resourcelocation = new ResourceLocation(String.format("dynamic/%s_%d", new Object[] {par1Str, integer}));
+        final ResourceLocation resourcelocation = new ResourceLocation(String.format("dynamic/%s_%d", new Object[] {par1Str, integer}));
         this.loadTexture(resourcelocation, par2DynamicTexture);
         return resourcelocation;
     }
 
     public void tick()
     {
-        Iterator iterator = this.listTickables.iterator();
+        final Iterator iterator = this.listTickables.iterator();
 
         while (iterator.hasNext())
         {
-            Tickable tickable = (Tickable)iterator.next();
+            final Tickable tickable = (Tickable)iterator.next();
             tickable.tick();
         }
     }
 
-    public void onResourceManagerReload(ResourceManager par1ResourceManager)
+    public void onResourceManagerReload(final ResourceManager par1ResourceManager)
     {
-        Iterator iterator = this.mapTextureObjects.entrySet().iterator();
+        final Iterator iterator = this.mapTextureObjects.entrySet().iterator();
 
         while (iterator.hasNext())
         {
-            Entry entry = (Entry)iterator.next();
+            final Entry entry = (Entry)iterator.next();
             this.loadTexture((ResourceLocation)entry.getKey(), (TextureObject)entry.getValue());
         }
     }

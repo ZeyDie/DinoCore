@@ -17,7 +17,7 @@ public class ModifiableAttributeInstance implements AttributeInstance
     private boolean field_111133_g = true;
     private double field_111139_h;
 
-    public ModifiableAttributeInstance(BaseAttributeMap par1BaseAttributeMap, Attribute par2Attribute)
+    public ModifiableAttributeInstance(final BaseAttributeMap par1BaseAttributeMap, final Attribute par2Attribute)
     {
         this.field_111138_a = par1BaseAttributeMap;
         this.field_111136_b = par2Attribute;
@@ -39,7 +39,7 @@ public class ModifiableAttributeInstance implements AttributeInstance
         return this.baseValue;
     }
 
-    public void setAttribute(double par1)
+    public void setAttribute(final double par1)
     {
         if (par1 != this.getBaseValue())
         {
@@ -48,14 +48,14 @@ public class ModifiableAttributeInstance implements AttributeInstance
         }
     }
 
-    public Collection func_111130_a(int par1)
+    public Collection func_111130_a(final int par1)
     {
         return (Collection)this.field_111137_c.get(Integer.valueOf(par1));
     }
 
     public Collection func_111122_c()
     {
-        HashSet hashset = new HashSet();
+        final HashSet hashset = new HashSet();
 
         for (int i = 0; i < 3; ++i)
         {
@@ -68,12 +68,12 @@ public class ModifiableAttributeInstance implements AttributeInstance
     /**
      * Returns attribute modifier, if any, by the given UUID
      */
-    public AttributeModifier getModifier(UUID par1UUID)
+    public AttributeModifier getModifier(final UUID par1UUID)
     {
         return (AttributeModifier)this.field_111135_e.get(par1UUID);
     }
 
-    public void applyModifier(AttributeModifier par1AttributeModifier)
+    public void applyModifier(final AttributeModifier par1AttributeModifier)
     {
         if (this.getModifier(par1AttributeModifier.getID()) != null)
         {
@@ -102,15 +102,15 @@ public class ModifiableAttributeInstance implements AttributeInstance
         this.field_111138_a.func_111149_a(this);
     }
 
-    public void removeModifier(AttributeModifier par1AttributeModifier)
+    public void removeModifier(final AttributeModifier par1AttributeModifier)
     {
         for (int i = 0; i < 3; ++i)
         {
-            Set set = (Set)this.field_111137_c.get(Integer.valueOf(i));
+            final Set set = (Set)this.field_111137_c.get(Integer.valueOf(i));
             set.remove(par1AttributeModifier);
         }
 
-        Set set1 = (Set)this.field_111134_d.get(par1AttributeModifier.getName());
+        final Set set1 = (Set)this.field_111134_d.get(par1AttributeModifier.getName());
 
         if (set1 != null)
         {
@@ -129,16 +129,16 @@ public class ModifiableAttributeInstance implements AttributeInstance
     @SideOnly(Side.CLIENT)
     public void func_142049_d()
     {
-        Collection collection = this.func_111122_c();
+        final Collection collection = this.func_111122_c();
 
         if (collection != null)
         {
-            ArrayList arraylist = new ArrayList(collection);
-            Iterator iterator = arraylist.iterator();
+            final ArrayList arraylist = new ArrayList(collection);
+            final Iterator iterator = arraylist.iterator();
 
             while (iterator.hasNext())
             {
-                AttributeModifier attributemodifier = (AttributeModifier)iterator.next();
+                final AttributeModifier attributemodifier = (AttributeModifier)iterator.next();
                 this.removeModifier(attributemodifier);
             }
         }
@@ -160,7 +160,7 @@ public class ModifiableAttributeInstance implements AttributeInstance
         double d0 = this.getBaseValue();
         AttributeModifier attributemodifier;
 
-        for (Iterator iterator = this.func_111130_a(0).iterator(); iterator.hasNext(); d0 += attributemodifier.getAmount())
+        for (final Iterator iterator = this.func_111130_a(0).iterator(); iterator.hasNext(); d0 += attributemodifier.getAmount())
         {
             attributemodifier = (AttributeModifier)iterator.next();
         }

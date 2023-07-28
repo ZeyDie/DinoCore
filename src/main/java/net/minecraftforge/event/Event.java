@@ -40,9 +40,9 @@ public class Event
         hasResult = hasAnnotation(HasResult.class);
     }
 
-    private boolean hasAnnotation(Class annotation)
+    private boolean hasAnnotation(final Class annotation)
     {
-        Class me = this.getClass();
+        final Class me = this.getClass();
         Map<Class, Boolean> list = annotationMap.get(me);
         if (list == null)
         {
@@ -50,7 +50,7 @@ public class Event
             annotationMap.put(me, list);
         }
 
-        Boolean cached = list.get(annotation);
+        final Boolean cached = list.get(annotation);
         if (cached != null)
         {
             return cached;
@@ -97,7 +97,7 @@ public class Event
      * 
      * @param cancel The new canceled value
      */
-    public void setCanceled(boolean cancel)
+    public void setCanceled(final boolean cancel)
     {
         if (!isCancelable())
         {
@@ -130,7 +130,7 @@ public class Event
      * 
      * @param value The new result
      */
-    public void setResult(Result value)
+    public void setResult(final Result value)
     {
         result = value;
     }

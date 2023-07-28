@@ -50,7 +50,7 @@ public class ForgeDummyContainer extends DummyModContainer implements WorldAcces
     public ForgeDummyContainer()
     {
         super(new ModMetadata());
-        ModMetadata meta = getMetadata();
+        final ModMetadata meta = getMetadata();
         meta.modId       = "Forge";
         meta.name        = "Minecraft Forge";
         meta.version     = String.format("%d.%d.%d.%d", majorVersion, minorVersion, revisionVersion, buildVersion);
@@ -65,12 +65,12 @@ public class ForgeDummyContainer extends DummyModContainer implements WorldAcces
         meta.logoFile    = "/forge_logo.png";
 
         Configuration config = null;
-        File cfgFile = new File(Loader.instance().getConfigDir(), "forge.cfg");
+        final File cfgFile = new File(Loader.instance().getConfigDir(), "forge.cfg");
         try
         {
             config = new Configuration(cfgFile);
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             System.out.println("Error loading forge.cfg, deleting file and resetting: ");
             e.printStackTrace();
@@ -83,7 +83,7 @@ public class ForgeDummyContainer extends DummyModContainer implements WorldAcces
         if (!config.isChild)
         {
             config.load();
-            Property enableGlobalCfg = config.get(Configuration.CATEGORY_GENERAL, "enableGlobalConfig", false);
+            final Property enableGlobalCfg = config.get(Configuration.CATEGORY_GENERAL, "enableGlobalConfig", false);
             if (enableGlobalCfg.getBoolean(false))
             {
                 Configuration.enableGlobalConfig();
@@ -157,14 +157,14 @@ public class ForgeDummyContainer extends DummyModContainer implements WorldAcces
     }
 
     @Override
-    public boolean registerBus(EventBus bus, LoadController controller)
+    public boolean registerBus(final EventBus bus, final LoadController controller)
     {
         bus.register(this);
         return true;
     }
 
     @Subscribe
-    public void modConstruction(FMLConstructionEvent evt)
+    public void modConstruction(final FMLConstructionEvent evt)
     {
         FMLLog.info("Registering Forge Packet Handler");
         try
@@ -172,27 +172,27 @@ public class ForgeDummyContainer extends DummyModContainer implements WorldAcces
             FMLNetworkHandler.instance().registerNetworkMod(new ForgeNetworkHandler(this));
             FMLLog.info("Succeeded registering Forge Packet Handler");
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             FMLLog.log(Level.SEVERE, e, "Failed to register packet handler for Forge");
         }
     }
 
     @Subscribe
-    public void preInit(FMLPreInitializationEvent evt)
+    public void preInit(final FMLPreInitializationEvent evt)
     {
         ForgeChunkManager.captureConfig(evt.getModConfigurationDirectory());
     }
 
     @Subscribe
-    public void postInit(FMLPostInitializationEvent evt)
+    public void postInit(final FMLPostInitializationEvent evt)
     {
         BiomeDictionary.registerAllBiomesAndGenerateEvents();
         ForgeChunkManager.loadConfiguration();
     }
 
     @Subscribe
-    public void onAvalible(FMLLoadCompleteEvent evt)
+    public void onAvalible(final FMLLoadCompleteEvent evt)
     {
         if (shouldSortRecipies)
         {
@@ -201,21 +201,21 @@ public class ForgeDummyContainer extends DummyModContainer implements WorldAcces
     }
 
     @Subscribe
-    public void serverStarting(FMLServerStartingEvent evt)
+    public void serverStarting(final FMLServerStartingEvent evt)
     {
         evt.registerServerCommand(new ForgeCommand(evt.getServer()));
     }
     @Override
-    public NBTTagCompound getDataForWriting(SaveHandler handler, WorldInfo info)
+    public NBTTagCompound getDataForWriting(final SaveHandler handler, final WorldInfo info)
     {
-        NBTTagCompound forgeData = new NBTTagCompound();
-        NBTTagCompound dimData = DimensionManager.saveDimensionDataMap();
+        final NBTTagCompound forgeData = new NBTTagCompound();
+        final NBTTagCompound dimData = DimensionManager.saveDimensionDataMap();
         forgeData.setCompoundTag("DimensionData", dimData);
         return forgeData;
     }
 
     @Override
-    public void readData(SaveHandler handler, WorldInfo info, Map<String, NBTBase> propertyMap, NBTTagCompound tag)
+    public void readData(final SaveHandler handler, final WorldInfo info, final Map<String, NBTBase> propertyMap, final NBTTagCompound tag)
     {
         if (tag.hasKey("DimensionData"))
         {

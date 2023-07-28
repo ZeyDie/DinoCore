@@ -4,7 +4,7 @@ package net.minecraft.network;
 public class TcpReaderThread extends Thread {
     final TcpConnection theTcpConnection;
 
-    public TcpReaderThread(TcpConnection par1TcpConnection, String par2Str) {
+    public TcpReaderThread(final TcpConnection par1TcpConnection, final String par2Str) {
         super(par2Str);
         this.theTcpConnection = par1TcpConnection;
     }
@@ -18,7 +18,7 @@ public class TcpReaderThread extends Thread {
                     if (!TcpConnection.readNetworkPacket(this.theTcpConnection)) {
                         try {
                             sleep(2L);
-                        } catch (InterruptedException interruptedexception) {
+                        } catch (final InterruptedException interruptedexception) {
                             ;
                         }
                     }

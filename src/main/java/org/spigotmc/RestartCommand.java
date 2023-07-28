@@ -12,7 +12,7 @@ import java.util.List;
 public class RestartCommand extends Command
 {
 
-    public RestartCommand(String name)
+    public RestartCommand(final String name)
     {
         super( name );
         this.description = "Restarts the server";
@@ -21,7 +21,7 @@ public class RestartCommand extends Command
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args)
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args)
     {
         if ( testPermission( sender ) )
         {
@@ -40,7 +40,7 @@ public class RestartCommand extends Command
                 System.out.println( "Attempting to restart with " + SpigotConfig.restartScript );
 
                 // Kick all players
-                for ( EntityPlayerMP p : (List< EntityPlayerMP>) MinecraftServer.getServer().getConfigurationManager().playerEntityList )
+                for ( final EntityPlayerMP p : (List< EntityPlayerMP>) MinecraftServer.getServer().getConfigurationManager().playerEntityList )
                 {
                     p.playerNetServerHandler.netManager.addToSendQueue( new Packet255KickDisconnect( "Server is restarting" ) );
                     p.playerNetServerHandler.netManager.serverShutdown();
@@ -49,7 +49,7 @@ public class RestartCommand extends Command
                 try
                 {
                     Thread.sleep( 100 );
-                } catch ( InterruptedException ex )
+                } catch ( final InterruptedException ex )
                 {
                 }
                 // Close the socket so we can rebind with the new process
@@ -59,7 +59,7 @@ public class RestartCommand extends Command
                 try
                 {
                     Thread.sleep( 100 );
-                } catch ( InterruptedException ex )
+                } catch ( final InterruptedException ex )
                 {
                 }
 
@@ -67,19 +67,19 @@ public class RestartCommand extends Command
                 try
                 {
                     MinecraftServer.getServer().stopServer();
-                } catch ( Throwable t )
+                } catch ( final Throwable t )
                 {
                 }
 
                 // This will be done AFTER the server has completely halted
-                Thread shutdownHook = new Thread()
+                final Thread shutdownHook = new Thread()
                 {
                     @Override
                     public void run()
                     {
                         try
                         {
-                            String os = System.getProperty( "os.name" ).toLowerCase();
+                            final String os = System.getProperty( "os.name" ).toLowerCase();
                             if ( os.contains( "win" ) )
                             {
                                 Runtime.getRuntime().exec( "cmd /c start " + file.getPath() );
@@ -90,7 +90,7 @@ public class RestartCommand extends Command
                                     "sh", file.getPath()
                                 } );
                             }
-                        } catch ( Exception e )
+                        } catch ( final Exception e )
                         {
                             e.printStackTrace();
                         }
@@ -104,7 +104,7 @@ public class RestartCommand extends Command
                 System.out.println( "Startup script '" + SpigotConfig.restartScript + "' does not exist! Stopping server." );
             }
             System.exit( 0 );
-        } catch ( Exception ex )
+        } catch ( final Exception ex )
         {
             ex.printStackTrace();
         }

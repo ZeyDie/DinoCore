@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class BiomeGenJungle extends BiomeGenBase
 {
-    public BiomeGenJungle(int par1)
+    public BiomeGenJungle(final int par1)
     {
         super(par1);
         this.theBiomeDecorator.treesPerChunk = 50;
@@ -23,7 +23,7 @@ public class BiomeGenJungle extends BiomeGenBase
     /**
      * Gets a WorldGen appropriate for this biome.
      */
-    public WorldGenerator getRandomWorldGenForTrees(Random par1Random)
+    public WorldGenerator getRandomWorldGenForTrees(final Random par1Random)
     {
         return (WorldGenerator)(par1Random.nextInt(10) == 0 ? this.worldGeneratorBigTree : (par1Random.nextInt(2) == 0 ? new WorldGenShrub(3, 0) : (par1Random.nextInt(3) == 0 ? new WorldGenHugeTrees(false, 10 + par1Random.nextInt(20), 3, 3) : new WorldGenTrees(false, 4 + par1Random.nextInt(7), 3, 3, true))));
     }
@@ -31,21 +31,21 @@ public class BiomeGenJungle extends BiomeGenBase
     /**
      * Gets a WorldGen appropriate for this biome.
      */
-    public WorldGenerator getRandomWorldGenForGrass(Random par1Random)
+    public WorldGenerator getRandomWorldGenForGrass(final Random par1Random)
     {
         return par1Random.nextInt(4) == 0 ? new WorldGenTallGrass(Block.tallGrass.blockID, 2) : new WorldGenTallGrass(Block.tallGrass.blockID, 1);
     }
 
-    public void decorate(World par1World, Random par2Random, int par3, int par4)
+    public void decorate(final World par1World, final Random par2Random, final int par3, final int par4)
     {
         super.decorate(par1World, par2Random, par3, par4);
-        WorldGenVines worldgenvines = new WorldGenVines();
+        final WorldGenVines worldgenvines = new WorldGenVines();
 
         for (int k = 0; k < 50; ++k)
         {
-            int l = par3 + par2Random.nextInt(16) + 8;
-            byte b0 = 64;
-            int i1 = par4 + par2Random.nextInt(16) + 8;
+            final int l = par3 + par2Random.nextInt(16) + 8;
+            final byte b0 = 64;
+            final int i1 = par4 + par2Random.nextInt(16) + 8;
             worldgenvines.generate(par1World, par2Random, l, b0, i1);
         }
     }

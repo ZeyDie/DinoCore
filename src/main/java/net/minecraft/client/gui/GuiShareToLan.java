@@ -24,7 +24,7 @@ public class GuiShareToLan extends GuiScreen
     /** True if 'Allow Cheats' is currently enabled */
     private boolean allowCommands;
 
-    public GuiShareToLan(GuiScreen par1GuiScreen)
+    public GuiShareToLan(final GuiScreen par1GuiScreen)
     {
         this.parentScreen = par1GuiScreen;
     }
@@ -60,7 +60,7 @@ public class GuiShareToLan extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.id == 102)
         {
@@ -91,8 +91,8 @@ public class GuiShareToLan extends GuiScreen
         else if (par1GuiButton.id == 101)
         {
             this.mc.displayGuiScreen((GuiScreen)null);
-            String s = this.mc.getIntegratedServer().shareToLAN(EnumGameType.getByName(this.gameMode), this.allowCommands);
-            ChatMessageComponent chatmessagecomponent;
+            final String s = this.mc.getIntegratedServer().shareToLAN(EnumGameType.getByName(this.gameMode), this.allowCommands);
+            final ChatMessageComponent chatmessagecomponent;
 
             if (s != null)
             {
@@ -110,7 +110,7 @@ public class GuiShareToLan extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRenderer, I18n.getString("lanServer.title"), this.width / 2, 50, 16777215);

@@ -20,7 +20,7 @@ public class EntitySilverfish extends EntityMob
      */
     private int allySummonCooldown;
 
-    public EntitySilverfish(World par1World)
+    public EntitySilverfish(final World par1World)
     {
         super(par1World);
         this.setSize(0.3F, 0.7F);
@@ -49,7 +49,7 @@ public class EntitySilverfish extends EntityMob
      */
     protected Entity findPlayerToAttack()
     {
-        double d0 = 8.0D;
+        final double d0 = 8.0D;
         return this.worldObj.getClosestVulnerablePlayerToEntity(this, d0);
     }
 
@@ -80,7 +80,7 @@ public class EntitySilverfish extends EntityMob
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2)
     {
         if (this.isEntityInvulnerable())
         {
@@ -100,7 +100,7 @@ public class EntitySilverfish extends EntityMob
     /**
      * Basic mob attack. Default to touch of death in EntityCreature. Overridden by each mob to define their attack.
      */
-    protected void attackEntity(Entity par1Entity, float par2)
+    protected void attackEntity(final Entity par1Entity, final float par2)
     {
         if (this.attackTime <= 0 && par2 < 1.2F && par1Entity.boundingBox.maxY > this.boundingBox.minY && par1Entity.boundingBox.minY < this.boundingBox.maxY)
         {
@@ -112,7 +112,7 @@ public class EntitySilverfish extends EntityMob
     /**
      * Plays step sound at given x, y, z for the entity
      */
-    protected void playStepSound(int par1, int par2, int par3, int par4)
+    protected void playStepSound(final int par1, final int par2, final int par3, final int par4)
     {
         this.playSound("mob.silverfish.step", 0.15F, 1.0F);
     }
@@ -163,7 +163,7 @@ public class EntitySilverfish extends EntityMob
                         {
                             for (int j1 = 0; !flag && j1 <= 10 && j1 >= -10; j1 = j1 <= 0 ? 1 - j1 : 0 - j1)
                             {
-                                int k1 = this.worldObj.getBlockId(i + i1, j + l, k + j1);
+                                final int k1 = this.worldObj.getBlockId(i + i1, j + l, k + j1);
 
                                 if (k1 == Block.silverfish.blockID)
                                 {
@@ -194,7 +194,7 @@ public class EntitySilverfish extends EntityMob
                 i = MathHelper.floor_double(this.posX);
                 j = MathHelper.floor_double(this.posY + 0.5D);
                 k = MathHelper.floor_double(this.posZ);
-                int i2 = this.rand.nextInt(6);
+                final int i2 = this.rand.nextInt(6);
                 l = this.worldObj.getBlockId(i + Facing.offsetsXForSide[i2], j + Facing.offsetsYForSide[i2], k + Facing.offsetsZForSide[i2]);
 
                 if (BlockSilverfish.getPosingIdByMetadata(l))
@@ -226,7 +226,7 @@ public class EntitySilverfish extends EntityMob
      * Takes a coordinate in and returns a weight to determine how likely this creature will try to path to the block.
      * Args: x, y, z
      */
-    public float getBlockPathWeight(int par1, int par2, int par3)
+    public float getBlockPathWeight(final int par1, final int par2, final int par3)
     {
         return this.worldObj.getBlockId(par1, par2 - 1, par3) == Block.stone.blockID ? 10.0F : super.getBlockPathWeight(par1, par2, par3);
     }
@@ -246,7 +246,7 @@ public class EntitySilverfish extends EntityMob
     {
         if (super.getCanSpawnHere())
         {
-            EntityPlayer entityplayer = this.worldObj.getClosestPlayerToEntity(this, 5.0D);
+            final EntityPlayer entityplayer = this.worldObj.getClosestPlayerToEntity(this, 5.0D);
             return entityplayer == null;
         }
         else

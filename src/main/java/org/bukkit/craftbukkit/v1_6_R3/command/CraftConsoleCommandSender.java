@@ -18,16 +18,16 @@ public class CraftConsoleCommandSender extends ServerCommandSender implements Co
         super();
     }
 
-    public void sendMessage(String message) {
+    public void sendMessage(final String message) {
         sendRawMessage(message);
     }
 
-    public void sendRawMessage(String message) {
+    public void sendRawMessage(final String message) {
         System.out.println(ChatColor.stripColor(message));
     }
 
-    public void sendMessage(String[] messages) {
-        for (String message : messages) {
+    public void sendMessage(final String[] messages) {
+        for (final String message : messages) {
             sendMessage(message);
         }
     }
@@ -40,23 +40,23 @@ public class CraftConsoleCommandSender extends ServerCommandSender implements Co
         return true;
     }
 
-    public void setOp(boolean value) {
+    public void setOp(final boolean value) {
         throw new UnsupportedOperationException("Cannot change operator status of server console");
     }
 
-    public boolean beginConversation(Conversation conversation) {
+    public boolean beginConversation(final Conversation conversation) {
         return conversationTracker.beginConversation(conversation);
     }
 
-    public void abandonConversation(Conversation conversation) {
+    public void abandonConversation(final Conversation conversation) {
         conversationTracker.abandonConversation(conversation, new ConversationAbandonedEvent(conversation, new ManuallyAbandonedConversationCanceller()));
     }
 
-    public void abandonConversation(Conversation conversation, ConversationAbandonedEvent details) {
+    public void abandonConversation(final Conversation conversation, final ConversationAbandonedEvent details) {
         conversationTracker.abandonConversation(conversation, details);
     }
 
-    public void acceptConversationInput(String input) {
+    public void acceptConversationInput(final String input) {
         conversationTracker.acceptConversationInput(input);
     }
 

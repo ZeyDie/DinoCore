@@ -7,7 +7,7 @@ public class EntityAIOpenDoor extends EntityAIDoorInteract
     boolean field_75361_i;
     int field_75360_j;
 
-    public EntityAIOpenDoor(EntityLiving par1EntityLiving, boolean par2)
+    public EntityAIOpenDoor(final EntityLiving par1EntityLiving, final boolean par2)
     {
         super(par1EntityLiving);
         this.theEntity = par1EntityLiving;

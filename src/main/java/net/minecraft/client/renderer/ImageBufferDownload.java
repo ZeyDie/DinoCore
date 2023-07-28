@@ -15,7 +15,7 @@ public class ImageBufferDownload implements IImageBuffer
     private int imageWidth;
     private int imageHeight;
 
-    public BufferedImage parseUserSkin(BufferedImage par1BufferedImage)
+    public BufferedImage parseUserSkin(final BufferedImage par1BufferedImage)
     {
         if (par1BufferedImage == null)
         {
@@ -25,8 +25,8 @@ public class ImageBufferDownload implements IImageBuffer
         {
             this.imageWidth = 64;
             this.imageHeight = 32;
-            BufferedImage bufferedimage1 = new BufferedImage(this.imageWidth, this.imageHeight, 2);
-            Graphics graphics = bufferedimage1.getGraphics();
+            final BufferedImage bufferedimage1 = new BufferedImage(this.imageWidth, this.imageHeight, 2);
+            final Graphics graphics = bufferedimage1.getGraphics();
             graphics.drawImage(par1BufferedImage, 0, 0, (ImageObserver)null);
             graphics.dispose();
             this.imageData = ((DataBufferInt)bufferedimage1.getRaster().getDataBuffer()).getData();
@@ -42,7 +42,7 @@ public class ImageBufferDownload implements IImageBuffer
      * layer of a skin around the head if it was saved all opaque; this would be redundant so it's assumed that the skin
      * maker is just using an image editor without an alpha channel)
      */
-    private void setAreaTransparent(int par1, int par2, int par3, int par4)
+    private void setAreaTransparent(final int par1, final int par2, final int par3, final int par4)
     {
         if (!this.hasTransparency(par1, par2, par3, par4))
         {
@@ -59,7 +59,7 @@ public class ImageBufferDownload implements IImageBuffer
     /**
      * Makes the given area of the image opaque
      */
-    private void setAreaOpaque(int par1, int par2, int par3, int par4)
+    private void setAreaOpaque(final int par1, final int par2, final int par3, final int par4)
     {
         for (int i1 = par1; i1 < par3; ++i1)
         {
@@ -73,13 +73,13 @@ public class ImageBufferDownload implements IImageBuffer
     /**
      * Returns true if the given area of the image contains transparent pixels
      */
-    private boolean hasTransparency(int par1, int par2, int par3, int par4)
+    private boolean hasTransparency(final int par1, final int par2, final int par3, final int par4)
     {
         for (int i1 = par1; i1 < par3; ++i1)
         {
             for (int j1 = par2; j1 < par4; ++j1)
             {
-                int k1 = this.imageData[i1 + j1 * this.imageWidth];
+                final int k1 = this.imageData[i1 + j1 * this.imageWidth];
 
                 if ((k1 >> 24 & 255) < 128)
                 {

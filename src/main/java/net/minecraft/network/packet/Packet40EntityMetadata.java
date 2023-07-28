@@ -16,7 +16,7 @@ public class Packet40EntityMetadata extends Packet
 
     public Packet40EntityMetadata() {}
 
-    public Packet40EntityMetadata(int par1, DataWatcher par2DataWatcher, boolean par3)
+    public Packet40EntityMetadata(final int par1, final DataWatcher par2DataWatcher, final boolean par3)
     {
         this.entityId = par1;
 
@@ -33,7 +33,7 @@ public class Packet40EntityMetadata extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.entityId = par1DataInput.readInt();
         this.metadata = DataWatcher.readWatchableObjects(par1DataInput);
@@ -42,7 +42,7 @@ public class Packet40EntityMetadata extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.entityId);
         DataWatcher.writeObjectsInListToStream(this.metadata, par1DataOutput);
@@ -51,7 +51,7 @@ public class Packet40EntityMetadata extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleEntityMetadata(this);
     }

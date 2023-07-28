@@ -46,7 +46,7 @@ public class TrapDoor extends SimpleAttachableMaterialData implements Openable {
         return ((getData() & 0x4) == 0x4);
     }
 
-    public void setOpen(boolean isOpen) {
+    public void setOpen(final boolean isOpen) {
         byte data = getData();
 
         if (isOpen) {
@@ -72,7 +72,7 @@ public class TrapDoor extends SimpleAttachableMaterialData implements Openable {
      *
      * @param inv - true if inverted (top half), false if normal (bottom half)
      */
-    public void setInverted(boolean inv) {
+    public void setInverted(final boolean inv) {
         int dat = getData() & 0x7;
         if (inv) {
             dat |= 0x8;
@@ -81,7 +81,7 @@ public class TrapDoor extends SimpleAttachableMaterialData implements Openable {
     }
 
     public BlockFace getAttachedFace() {
-        byte data = (byte) (getData() & 0x3);
+        final byte data = (byte) (getData() & 0x3);
 
         switch (data) {
             case 0x0:
@@ -101,7 +101,7 @@ public class TrapDoor extends SimpleAttachableMaterialData implements Openable {
 
     }
 
-    public void setFacingDirection(BlockFace face) {
+    public void setFacingDirection(final BlockFace face) {
         byte data = (byte) (getData() & 0xC);
 
         switch (face) {

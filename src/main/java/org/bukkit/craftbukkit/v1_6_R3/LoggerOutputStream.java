@@ -10,7 +10,7 @@ public class LoggerOutputStream extends ByteArrayOutputStream {
     private final Logger logger;
     private final Level level;
 
-    public LoggerOutputStream(Logger logger, Level level) {
+    public LoggerOutputStream(final Logger logger, final Level level) {
         super();
         this.logger = logger;
         this.level = level;
@@ -20,10 +20,10 @@ public class LoggerOutputStream extends ByteArrayOutputStream {
     public void flush() throws IOException {
         synchronized (this) {
             super.flush();
-            String record = this.toString();
+            final String record = this.toString();
             super.reset();
 
-            if ((record.length() > 0) && (!record.equals(separator))) {
+            if ((!record.isEmpty()) && (!record.equals(separator))) {
                 logger.logp(level, "", "", record);
             }
         }

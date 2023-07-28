@@ -40,7 +40,7 @@ class BlockTracker
 
     private int getNextBlockId()
     {
-        int idx = allocatedBlocks.nextSetBit(0);
+        final int idx = allocatedBlocks.nextSetBit(0);
         allocatedBlocks.clear(idx);
         return idx;
     }
@@ -48,11 +48,11 @@ class BlockTracker
     {
         return INSTANCE;
     }
-    public static void reserveBlockId(int id)
+    public static void reserveBlockId(final int id)
     {
         instance().doReserveId(id);
     }
-    private void doReserveId(int id)
+    private void doReserveId(final int id)
     {
         allocatedBlocks.clear(id);
     }

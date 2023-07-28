@@ -59,7 +59,7 @@ public class GuiMainMenu extends GuiScreen
     private static final ResourceLocation minecraftTitleTextures = new ResourceLocation("textures/gui/title/minecraft.png");
 
     /** An array of all the paths to the panorama pictures. */
-    private static final ResourceLocation[] titlePanoramaPaths = new ResourceLocation[] {new ResourceLocation("textures/gui/title/background/panorama_0.png"), new ResourceLocation("textures/gui/title/background/panorama_1.png"), new ResourceLocation("textures/gui/title/background/panorama_2.png"), new ResourceLocation("textures/gui/title/background/panorama_3.png"), new ResourceLocation("textures/gui/title/background/panorama_4.png"), new ResourceLocation("textures/gui/title/background/panorama_5.png")};
+    private static final ResourceLocation[] titlePanoramaPaths = {new ResourceLocation("textures/gui/title/background/panorama_0.png"), new ResourceLocation("textures/gui/title/background/panorama_1.png"), new ResourceLocation("textures/gui/title/background/panorama_2.png"), new ResourceLocation("textures/gui/title/background/panorama_3.png"), new ResourceLocation("textures/gui/title/background/panorama_4.png"), new ResourceLocation("textures/gui/title/background/panorama_5.png")};
     public static final String field_96138_a = "Please click " + EnumChatFormatting.UNDERLINE + "here" + EnumChatFormatting.RESET + " for more information.";
     private int field_92024_r;
     private int field_92023_s;
@@ -79,7 +79,7 @@ public class GuiMainMenu extends GuiScreen
 
         try
         {
-            ArrayList arraylist = new ArrayList();
+            final ArrayList arraylist = new ArrayList();
             bufferedreader = new BufferedReader(new InputStreamReader(Minecraft.getMinecraft().getResourceManager().getResource(splashTexts).getInputStream(), Charsets.UTF_8));
 
             while ((s = bufferedreader.readLine()) != null)
@@ -98,7 +98,7 @@ public class GuiMainMenu extends GuiScreen
             }
             while (this.splashText.hashCode() == 125780783);
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             ;
         }
@@ -110,7 +110,7 @@ public class GuiMainMenu extends GuiScreen
                 {
                     bufferedreader.close();
                 }
-                catch (IOException ioexception1)
+                catch (final IOException ioexception1)
                 {
                     ;
                 }
@@ -119,7 +119,7 @@ public class GuiMainMenu extends GuiScreen
 
         this.updateCounter = rand.nextFloat();
         this.field_92025_p = "";
-        String s1 = System.getProperty("os_architecture");
+        final String s1 = System.getProperty("os_architecture");
         s = System.getProperty("java_version");
 
         if ("ppc".equalsIgnoreCase(s1))
@@ -153,7 +153,7 @@ public class GuiMainMenu extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2) {}
+    protected void keyTyped(final char par1, final int par2) {}
 
     /**
      * Adds the buttons (and other controls) to the screen in question.
@@ -162,7 +162,7 @@ public class GuiMainMenu extends GuiScreen
     {
         this.viewportTexture = new DynamicTexture(256, 256);
         this.field_110351_G = this.mc.getTextureManager().getDynamicTextureLocation("background", this.viewportTexture);
-        Calendar calendar = Calendar.getInstance();
+        final Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
 
         if (calendar.get(2) + 1 == 11 && calendar.get(5) == 9)
@@ -186,8 +186,8 @@ public class GuiMainMenu extends GuiScreen
             this.splashText = "OOoooOOOoooo! Spooky!";
         }
 
-        boolean flag = true;
-        int i = this.height / 4 + 48;
+        final boolean flag = true;
+        final int i = this.height / 4 + 48;
 
         if (this.mc.isDemo())
         {
@@ -202,13 +202,13 @@ public class GuiMainMenu extends GuiScreen
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, i + 72 + 12, 98, 20, I18n.getString("menu.options")));
         this.buttonList.add(new GuiButton(4, this.width / 2 + 2, i + 72 + 12, 98, 20, I18n.getString("menu.quit")));
         this.buttonList.add(new GuiButtonLanguage(5, this.width / 2 - 124, i + 72 + 12));
-        Object object = this.field_104025_t;
+        final Object object = this.field_104025_t;
 
         synchronized (this.field_104025_t)
         {
             this.field_92023_s = this.fontRenderer.getStringWidth(this.field_92025_p);
             this.field_92024_r = this.fontRenderer.getStringWidth(field_96138_a);
-            int j = Math.max(this.field_92023_s, this.field_92024_r);
+            final int j = Math.max(this.field_92023_s, this.field_92024_r);
             this.field_92022_t = (this.width - j) / 2;
             this.field_92021_u = ((GuiButton)this.buttonList.get(0)).yPosition - 24;
             this.field_92020_v = this.field_92022_t + j;
@@ -242,7 +242,7 @@ public class GuiMainMenu extends GuiScreen
     /**
      * Adds Singleplayer and Multiplayer buttons on Main Menu for players who have bought the game.
      */
-    private void addSingleplayerMultiplayerButtons(int par1, int par2)
+    private void addSingleplayerMultiplayerButtons(final int par1, final int par2)
     {
         this.buttonList.add(new GuiButton(1, this.width / 2 - 100, par1, I18n.getString("menu.singleplayer")));
         this.buttonList.add(new GuiButton(2, this.width / 2 - 100, par1 + par2 * 1, I18n.getString("menu.multiplayer")));
@@ -260,12 +260,12 @@ public class GuiMainMenu extends GuiScreen
     /**
      * Adds Demo buttons on Main Menu for players who are playing Demo.
      */
-    private void addDemoButtons(int par1, int par2)
+    private void addDemoButtons(final int par1, final int par2)
     {
         this.buttonList.add(new GuiButton(11, this.width / 2 - 100, par1, I18n.getString("menu.playdemo")));
         this.buttonList.add(this.buttonResetDemo = new GuiButton(12, this.width / 2 - 100, par1 + par2 * 1, I18n.getString("menu.resetdemo")));
-        ISaveFormat isaveformat = this.mc.getSaveLoader();
-        WorldInfo worldinfo = isaveformat.getWorldInfo("Demo_World");
+        final ISaveFormat isaveformat = this.mc.getSaveLoader();
+        final WorldInfo worldinfo = isaveformat.getWorldInfo("Demo_World");
 
         if (worldinfo == null)
         {
@@ -276,7 +276,7 @@ public class GuiMainMenu extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.id == 0)
         {
@@ -320,12 +320,12 @@ public class GuiMainMenu extends GuiScreen
 
         if (par1GuiButton.id == 12)
         {
-            ISaveFormat isaveformat = this.mc.getSaveLoader();
-            WorldInfo worldinfo = isaveformat.getWorldInfo("Demo_World");
+            final ISaveFormat isaveformat = this.mc.getSaveLoader();
+            final WorldInfo worldinfo = isaveformat.getWorldInfo("Demo_World");
 
             if (worldinfo != null)
             {
-                GuiYesNo guiyesno = GuiSelectWorld.getDeleteWorldScreen(this, worldinfo.getWorldName(), 12);
+                final GuiYesNo guiyesno = GuiSelectWorld.getDeleteWorldScreen(this, worldinfo.getWorldName(), 12);
                 this.mc.displayGuiScreen(guiyesno);
             }
         }
@@ -333,7 +333,7 @@ public class GuiMainMenu extends GuiScreen
 
     private void func_140005_i()
     {
-        McoClient mcoclient = new McoClient(this.mc.getSession());
+        final McoClient mcoclient = new McoClient(this.mc.getSession());
 
         try
         {
@@ -346,21 +346,21 @@ public class GuiMainMenu extends GuiScreen
                 this.mc.displayGuiScreen(new GuiScreenOnlineServers(this));
             }
         }
-        catch (ExceptionMcoService exceptionmcoservice)
+        catch (final ExceptionMcoService exceptionmcoservice)
         {
             this.mc.getLogAgent().logSevere(exceptionmcoservice.toString());
         }
-        catch (IOException ioexception)
+        catch (final IOException ioexception)
         {
             this.mc.getLogAgent().logSevere(ioexception.getLocalizedMessage());
         }
     }
 
-    public void confirmClicked(boolean par1, int par2)
+    public void confirmClicked(final boolean par1, final int par2)
     {
         if (par1 && par2 == 12)
         {
-            ISaveFormat isaveformat = this.mc.getSaveLoader();
+            final ISaveFormat isaveformat = this.mc.getSaveLoader();
             isaveformat.flushCache();
             isaveformat.deleteWorldDirectory("Demo_World");
             this.mc.displayGuiScreen(this);
@@ -371,11 +371,11 @@ public class GuiMainMenu extends GuiScreen
             {
                 try
                 {
-                    Class oclass = Class.forName("java.awt.Desktop");
-                    Object object = oclass.getMethod("getDesktop", new Class[0]).invoke((Object)null, new Object[0]);
+                    final Class oclass = Class.forName("java.awt.Desktop");
+                    final Object object = oclass.getMethod("getDesktop", new Class[0]).invoke((Object)null, new Object[0]);
                     oclass.getMethod("browse", new Class[] {URI.class}).invoke(object, new Object[] {new URI(this.field_104024_v)});
                 }
-                catch (Throwable throwable)
+                catch (final Throwable throwable)
                 {
                     throwable.printStackTrace();
                 }
@@ -388,9 +388,9 @@ public class GuiMainMenu extends GuiScreen
     /**
      * Draws the main menu panorama
      */
-    private void drawPanorama(int par1, int par2, float par3)
+    private void drawPanorama(final int par1, final int par2, final float par3)
     {
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glPushMatrix();
         GL11.glLoadIdentity();
@@ -405,14 +405,14 @@ public class GuiMainMenu extends GuiScreen
         GL11.glDisable(GL11.GL_CULL_FACE);
         GL11.glDepthMask(false);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        byte b0 = 8;
+        final byte b0 = 8;
 
         for (int k = 0; k < b0 * b0; ++k)
         {
             GL11.glPushMatrix();
-            float f1 = ((float)(k % b0) / (float)b0 - 0.5F) / 64.0F;
-            float f2 = ((float)(k / b0) / (float)b0 - 0.5F) / 64.0F;
-            float f3 = 0.0F;
+            final float f1 = ((float)(k % b0) / (float)b0 - 0.5F) / 64.0F;
+            final float f2 = ((float)(k / b0) / (float)b0 - 0.5F) / 64.0F;
+            final float f3 = 0.0F;
             GL11.glTranslatef(f1, f2, f3);
             GL11.glRotatef(MathHelper.sin(((float)this.panoramaTimer + par3) / 400.0F) * 25.0F + 20.0F, 1.0F, 0.0F, 0.0F);
             GL11.glRotatef(-((float)this.panoramaTimer + par3) * 0.1F, 0.0F, 1.0F, 0.0F);
@@ -449,7 +449,7 @@ public class GuiMainMenu extends GuiScreen
                 this.mc.getTextureManager().bindTexture(titlePanoramaPaths[l]);
                 tessellator.startDrawingQuads();
                 tessellator.setColorRGBA_I(16777215, 255 / (k + 1));
-                float f4 = 0.0F;
+                final float f4 = 0.0F;
                 tessellator.addVertexWithUV(-1.0D, -1.0D, 1.0D, (double)(0.0F + f4), (double)(0.0F + f4));
                 tessellator.addVertexWithUV(1.0D, -1.0D, 1.0D, (double)(1.0F - f4), (double)(0.0F + f4));
                 tessellator.addVertexWithUV(1.0D, 1.0D, 1.0D, (double)(1.0F - f4), (double)(1.0F - f4));
@@ -477,23 +477,23 @@ public class GuiMainMenu extends GuiScreen
     /**
      * Rotate and blurs the skybox view in the main menu
      */
-    private void rotateAndBlurSkybox(float par1)
+    private void rotateAndBlurSkybox(final float par1)
     {
         this.mc.getTextureManager().bindTexture(this.field_110351_G);
         GL11.glCopyTexSubImage2D(GL11.GL_TEXTURE_2D, 0, 0, 0, 0, 0, 256, 256);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColorMask(true, true, true, false);
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
-        byte b0 = 3;
+        final byte b0 = 3;
 
         for (int i = 0; i < b0; ++i)
         {
             tessellator.setColorRGBA_F(1.0F, 1.0F, 1.0F, 1.0F / (float)(i + 1));
-            int j = this.width;
-            int k = this.height;
-            float f1 = (float)(i - b0 / 2) / 256.0F;
+            final int j = this.width;
+            final int k = this.height;
+            final float f1 = (float)(i - b0 / 2) / 256.0F;
             tessellator.addVertexWithUV((double)j, (double)k, (double)this.zLevel, (double)(0.0F + f1), 0.0D);
             tessellator.addVertexWithUV((double)j, 0.0D, (double)this.zLevel, (double)(1.0F + f1), 0.0D);
             tessellator.addVertexWithUV(0.0D, 0.0D, (double)this.zLevel, (double)(1.0F + f1), 1.0D);
@@ -507,7 +507,7 @@ public class GuiMainMenu extends GuiScreen
     /**
      * Renders the skybox in the main menu
      */
-    private void renderSkybox(int par1, int par2, float par3)
+    private void renderSkybox(final int par1, final int par2, final float par3)
     {
         GL11.glViewport(0, 0, 256, 256);
         this.drawPanorama(par1, par2, par3);
@@ -522,16 +522,16 @@ public class GuiMainMenu extends GuiScreen
         this.rotateAndBlurSkybox(par3);
         this.rotateAndBlurSkybox(par3);
         GL11.glViewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
-        Tessellator tessellator = Tessellator.instance;
+        final Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
-        float f1 = this.width > this.height ? 120.0F / (float)this.width : 120.0F / (float)this.height;
-        float f2 = (float)this.height * f1 / 256.0F;
-        float f3 = (float)this.width * f1 / 256.0F;
+        final float f1 = this.width > this.height ? 120.0F / (float)this.width : 120.0F / (float)this.height;
+        final float f2 = (float)this.height * f1 / 256.0F;
+        final float f3 = (float)this.width * f1 / 256.0F;
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
         tessellator.setColorRGBA_F(1.0F, 1.0F, 1.0F, 1.0F);
-        int k = this.width;
-        int l = this.height;
+        final int k = this.width;
+        final int l = this.height;
         tessellator.addVertexWithUV(0.0D, (double)l, (double)this.zLevel, (double)(0.5F - f2), (double)(0.5F + f3));
         tessellator.addVertexWithUV((double)k, (double)l, (double)this.zLevel, (double)(0.5F - f2), (double)(0.5F - f3));
         tessellator.addVertexWithUV((double)k, 0.0D, (double)this.zLevel, (double)(0.5F + f2), (double)(0.5F - f3));
@@ -542,13 +542,13 @@ public class GuiMainMenu extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.renderSkybox(par1, par2, par3);
-        Tessellator tessellator = Tessellator.instance;
-        short short1 = 274;
-        int k = this.width / 2 - short1 / 2;
-        byte b0 = 30;
+        final Tessellator tessellator = Tessellator.instance;
+        final short short1 = 274;
+        final int k = this.width / 2 - short1 / 2;
+        final byte b0 = 30;
         this.drawGradientRect(0, 0, this.width, this.height, -2130706433, 16777215);
         this.drawGradientRect(0, 0, this.width, this.height, 0, Integer.MIN_VALUE);
         this.mc.getTextureManager().bindTexture(minecraftTitleTextures);
@@ -584,20 +584,20 @@ public class GuiMainMenu extends GuiScreen
             s = s + " Demo";
         }
 
-        List<String> brandings = Lists.reverse(FMLCommonHandler.instance().getBrandings());
+        final List<String> brandings = Lists.reverse(FMLCommonHandler.instance().getBrandings());
         for (int i = 0; i < brandings.size(); i++)
         {
-            String brd = brandings.get(i);
+            final String brd = brandings.get(i);
             if (!Strings.isNullOrEmpty(brd))
             {
                 this.drawString(this.fontRenderer, brd, 2, this.height - ( 10 + i * (this.fontRenderer.FONT_HEIGHT + 1)), 16777215);
             }
         }
 
-        String s1 = "Copyright Mojang AB. Do not distribute!";
+        final String s1 = "Copyright Mojang AB. Do not distribute!";
         this.drawString(this.fontRenderer, s1, this.width - this.fontRenderer.getStringWidth(s1) - 2, this.height - 10, 16777215);
 
-        if (this.field_92025_p != null && this.field_92025_p.length() > 0)
+        if (this.field_92025_p != null && !this.field_92025_p.isEmpty())
         {
             drawRect(this.field_92022_t - 2, this.field_92021_u - 2, this.field_92020_v + 2, this.field_92019_w - 1, 1428160512);
             this.drawString(this.fontRenderer, this.field_92025_p, this.field_92022_t, this.field_92021_u, 16777215);
@@ -610,44 +610,44 @@ public class GuiMainMenu extends GuiScreen
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int par1, int par2, int par3)
+    protected void mouseClicked(final int par1, final int par2, final int par3)
     {
         super.mouseClicked(par1, par2, par3);
-        Object object = this.field_104025_t;
+        final Object object = this.field_104025_t;
 
         synchronized (this.field_104025_t)
         {
-            if (this.field_92025_p.length() > 0 && par1 >= this.field_92022_t && par1 <= this.field_92020_v && par2 >= this.field_92021_u && par2 <= this.field_92019_w)
+            if (!this.field_92025_p.isEmpty() && par1 >= this.field_92022_t && par1 <= this.field_92020_v && par2 >= this.field_92021_u && par2 <= this.field_92019_w)
             {
-                GuiConfirmOpenLink guiconfirmopenlink = new GuiConfirmOpenLink(this, this.field_104024_v, 13, true);
+                final GuiConfirmOpenLink guiconfirmopenlink = new GuiConfirmOpenLink(this, this.field_104024_v, 13, true);
                 guiconfirmopenlink.func_92026_h();
                 this.mc.displayGuiScreen(guiconfirmopenlink);
             }
         }
     }
 
-    static Minecraft func_110348_a(GuiMainMenu par0GuiMainMenu)
+    static Minecraft func_110348_a(final GuiMainMenu par0GuiMainMenu)
     {
         return par0GuiMainMenu.mc;
     }
 
-    static void func_130021_b(GuiMainMenu par0GuiMainMenu)
+    static void func_130021_b(final GuiMainMenu par0GuiMainMenu)
     {
         par0GuiMainMenu.func_130022_h();
     }
 
-    static boolean func_110349_a(boolean par0)
+    static boolean func_110349_a(final boolean par0)
     {
         field_96139_s = par0;
         return par0;
     }
 
-    static Minecraft func_130018_c(GuiMainMenu par0GuiMainMenu)
+    static Minecraft func_130018_c(final GuiMainMenu par0GuiMainMenu)
     {
         return par0GuiMainMenu.mc;
     }
 
-    static Minecraft func_130019_d(GuiMainMenu par0GuiMainMenu)
+    static Minecraft func_130019_d(final GuiMainMenu par0GuiMainMenu)
     {
         return par0GuiMainMenu.mc;
     }

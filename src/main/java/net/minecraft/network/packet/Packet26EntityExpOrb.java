@@ -20,7 +20,7 @@ public class Packet26EntityExpOrb extends Packet
 
     public Packet26EntityExpOrb() {}
 
-    public Packet26EntityExpOrb(EntityXPOrb par1EntityXPOrb)
+    public Packet26EntityExpOrb(final EntityXPOrb par1EntityXPOrb)
     {
         this.entityId = par1EntityXPOrb.entityId;
         this.posX = MathHelper.floor_double(par1EntityXPOrb.posX * 32.0D);
@@ -32,7 +32,7 @@ public class Packet26EntityExpOrb extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.entityId = par1DataInput.readInt();
         this.posX = par1DataInput.readInt();
@@ -44,7 +44,7 @@ public class Packet26EntityExpOrb extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.entityId);
         par1DataOutput.writeInt(this.posX);
@@ -56,7 +56,7 @@ public class Packet26EntityExpOrb extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleEntityExpOrb(this);
     }

@@ -10,7 +10,7 @@ class CallablePacketClass implements Callable
 
     final NetServerHandler theNetServerHandler;
 
-    CallablePacketClass(NetServerHandler par1NetServerHandler, Packet par2Packet)
+    CallablePacketClass(final NetServerHandler par1NetServerHandler, final Packet par2Packet)
     {
         this.theNetServerHandler = par1NetServerHandler;
         this.thePacket = par2Packet;

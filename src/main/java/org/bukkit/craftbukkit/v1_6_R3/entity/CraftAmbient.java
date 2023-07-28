@@ -5,7 +5,7 @@ import org.bukkit.entity.Ambient;
 import org.bukkit.entity.EntityType;
 
 public class CraftAmbient extends CraftLivingEntity implements Ambient {
-    public CraftAmbient(CraftServer server, net.minecraft.entity.passive.EntityAmbientCreature entity) {
+    public CraftAmbient(final CraftServer server, final net.minecraft.entity.passive.EntityAmbientCreature entity) {
         super(server, entity);
     }
 
@@ -21,7 +21,7 @@ public class CraftAmbient extends CraftLivingEntity implements Ambient {
 
     public EntityType getType() {
         // Cauldron start
-        EntityType type = EntityType.fromName(this.entityName);
+        final EntityType type = EntityType.fromName(this.entityName);
         if (type != null)
             return type;
         else return EntityType.UNKNOWN;

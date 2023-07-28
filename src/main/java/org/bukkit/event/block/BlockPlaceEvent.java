@@ -35,7 +35,7 @@ public class BlockPlaceEvent extends BlockEvent implements Cancellable {
         return cancel;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 
@@ -104,7 +104,7 @@ public class BlockPlaceEvent extends BlockEvent implements Cancellable {
      *
      * @param canBuild true if you want the player to be able to build
      */
-    public void setBuild(boolean canBuild) {
+    public void setBuild(final boolean canBuild) {
         this.canBuild = canBuild;
     }
 

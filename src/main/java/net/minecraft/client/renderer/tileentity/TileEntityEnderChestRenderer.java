@@ -20,7 +20,7 @@ public class TileEntityEnderChestRenderer extends TileEntitySpecialRenderer
     /**
      * Helps to render Ender Chest.
      */
-    public void renderEnderChest(TileEntityEnderChest par1TileEntityEnderChest, double par2, double par4, double par6, float par8)
+    public void renderEnderChest(final TileEntityEnderChest par1TileEntityEnderChest, final double par2, final double par4, final double par6, final float par8)
     {
         int i = 0;
 
@@ -70,7 +70,7 @@ public class TileEntityEnderChestRenderer extends TileEntitySpecialRenderer
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8)
+    public void renderTileEntityAt(final TileEntity par1TileEntity, final double par2, final double par4, final double par6, final float par8)
     {
         this.renderEnderChest((TileEntityEnderChest)par1TileEntity, par2, par4, par6, par8);
     }

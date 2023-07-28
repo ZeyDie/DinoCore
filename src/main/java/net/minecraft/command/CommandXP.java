@@ -20,12 +20,12 @@ public class CommandXP extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.xp.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         if (par2ArrayOfStr.length <= 0)
         {
@@ -34,7 +34,7 @@ public class CommandXP extends CommandBase
         else
         {
             String s = par2ArrayOfStr[0];
-            boolean flag = s.endsWith("l") || s.endsWith("L");
+            final boolean flag = s.endsWith("l") || s.endsWith("L");
 
             if (flag && s.length() > 1)
             {
@@ -42,14 +42,14 @@ public class CommandXP extends CommandBase
             }
 
             int i = parseInt(par1ICommandSender, s);
-            boolean flag1 = i < 0;
+            final boolean flag1 = i < 0;
 
             if (flag1)
             {
                 i *= -1;
             }
 
-            EntityPlayerMP entityplayermp;
+            final EntityPlayerMP entityplayermp;
 
             if (par2ArrayOfStr.length > 1)
             {
@@ -89,7 +89,7 @@ public class CommandXP extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public List addTabCompletionOptions(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         return par2ArrayOfStr.length == 2 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, this.getAllUsernames()) : null;
     }
@@ -102,7 +102,7 @@ public class CommandXP extends CommandBase
     /**
      * Return whether the specified command parameter index is a username parameter.
      */
-    public boolean isUsernameIndex(String[] par1ArrayOfStr, int par2)
+    public boolean isUsernameIndex(final String[] par1ArrayOfStr, final int par2)
     {
         return par2 == 1;
     }

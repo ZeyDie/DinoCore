@@ -8,17 +8,17 @@ import java.util.Random;
 
 public class WorldGenReed extends WorldGenerator
 {
-    public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
+    public boolean generate(final World par1World, final Random par2Random, final int par3, final int par4, final int par5)
     {
         for (int l = 0; l < 20; ++l)
         {
-            int i1 = par3 + par2Random.nextInt(4) - par2Random.nextInt(4);
-            int j1 = par4;
-            int k1 = par5 + par2Random.nextInt(4) - par2Random.nextInt(4);
+            final int i1 = par3 + par2Random.nextInt(4) - par2Random.nextInt(4);
+            final int j1 = par4;
+            final int k1 = par5 + par2Random.nextInt(4) - par2Random.nextInt(4);
 
             if (par1World.isAirBlock(i1, par4, k1) && (par1World.getBlockMaterial(i1 - 1, par4 - 1, k1) == Material.water || par1World.getBlockMaterial(i1 + 1, par4 - 1, k1) == Material.water || par1World.getBlockMaterial(i1, par4 - 1, k1 - 1) == Material.water || par1World.getBlockMaterial(i1, par4 - 1, k1 + 1) == Material.water))
             {
-                int l1 = 2 + par2Random.nextInt(par2Random.nextInt(3) + 1);
+                final int l1 = 2 + par2Random.nextInt(par2Random.nextInt(3) + 1);
 
                 for (int i2 = 0; i2 < l1; ++i2)
                 {

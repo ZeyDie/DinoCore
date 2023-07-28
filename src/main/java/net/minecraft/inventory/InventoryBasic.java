@@ -20,7 +20,7 @@ public class InventoryBasic implements IInventory   // CraftBukkit - abstract //
     private List field_70480_d;
     private boolean field_94051_e;
 
-    public InventoryBasic(String par1Str, boolean par2, int par3)
+    public InventoryBasic(final String par1Str, final boolean par2, final int par3)
     {
         this.inventoryTitle = par1Str;
         this.field_94051_e = par2;
@@ -28,7 +28,7 @@ public class InventoryBasic implements IInventory   // CraftBukkit - abstract //
         this.inventoryContents = new ItemStack[par3];
     }
 
-    public void func_110134_a(IInvBasic par1IInvBasic)
+    public void func_110134_a(final IInvBasic par1IInvBasic)
     {
         if (this.field_70480_d == null)
         {
@@ -38,7 +38,7 @@ public class InventoryBasic implements IInventory   // CraftBukkit - abstract //
         this.field_70480_d.add(par1IInvBasic);
     }
 
-    public void func_110132_b(IInvBasic par1IInvBasic)
+    public void func_110132_b(final IInvBasic par1IInvBasic)
     {
         this.field_70480_d.remove(par1IInvBasic);
     }
@@ -46,7 +46,7 @@ public class InventoryBasic implements IInventory   // CraftBukkit - abstract //
     /**
      * Returns the stack in slot i
      */
-    public ItemStack getStackInSlot(int par1)
+    public ItemStack getStackInSlot(final int par1)
     {
         return this.inventoryContents[par1];
     }
@@ -55,11 +55,11 @@ public class InventoryBasic implements IInventory   // CraftBukkit - abstract //
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
      * new stack.
      */
-    public ItemStack decrStackSize(int par1, int par2)
+    public ItemStack decrStackSize(final int par1, final int par2)
     {
         if (this.inventoryContents[par1] != null)
         {
-            ItemStack itemstack;
+            final ItemStack itemstack;
 
             if (this.inventoryContents[par1].stackSize <= par2)
             {
@@ -91,11 +91,11 @@ public class InventoryBasic implements IInventory   // CraftBukkit - abstract //
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      */
-    public ItemStack getStackInSlotOnClosing(int par1)
+    public ItemStack getStackInSlotOnClosing(final int par1)
     {
         if (this.inventoryContents[par1] != null)
         {
-            ItemStack itemstack = this.inventoryContents[par1];
+            final ItemStack itemstack = this.inventoryContents[par1];
             this.inventoryContents[par1] = null;
             return itemstack;
         }
@@ -108,7 +108,7 @@ public class InventoryBasic implements IInventory   // CraftBukkit - abstract //
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
-    public void setInventorySlotContents(int par1, ItemStack par2ItemStack)
+    public void setInventorySlotContents(final int par1, final ItemStack par2ItemStack)
     {
         this.inventoryContents[par1] = par2ItemStack;
 
@@ -145,7 +145,7 @@ public class InventoryBasic implements IInventory   // CraftBukkit - abstract //
         return this.field_94051_e;
     }
 
-    public void func_110133_a(String par1Str)
+    public void func_110133_a(final String par1Str)
     {
         this.field_94051_e = true;
         this.inventoryTitle = par1Str;
@@ -177,7 +177,7 @@ public class InventoryBasic implements IInventory   // CraftBukkit - abstract //
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
+    public boolean isUseableByPlayer(final EntityPlayer par1EntityPlayer)
     {
         return true;
     }
@@ -194,13 +194,13 @@ public class InventoryBasic implements IInventory   // CraftBukkit - abstract //
     }
 
     @Override
-    public void onOpen(CraftHumanEntity who) {
+    public void onOpen(final CraftHumanEntity who) {
         // TODO Auto-generated method stub
         
     }
 
     @Override
-    public void onClose(CraftHumanEntity who) {
+    public void onClose(final CraftHumanEntity who) {
         // TODO Auto-generated method stub
         
     }
@@ -218,7 +218,7 @@ public class InventoryBasic implements IInventory   // CraftBukkit - abstract //
     }
 
     @Override
-    public void setMaxStackSize(int size) {
+    public void setMaxStackSize(final int size) {
         // TODO Auto-generated method stub
         
     }
@@ -227,7 +227,7 @@ public class InventoryBasic implements IInventory   // CraftBukkit - abstract //
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack)
+    public boolean isItemValidForSlot(final int par1, final ItemStack par2ItemStack)
     {
         return true;
     }

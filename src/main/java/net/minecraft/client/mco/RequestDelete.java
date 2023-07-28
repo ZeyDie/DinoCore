@@ -6,7 +6,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RequestDelete extends Request
 {
-    public RequestDelete(String par1Str, int par2, int par3)
+    public RequestDelete(final String par1Str, final int par2, final int par3)
     {
         super(par1Str, par2, par3);
     }
@@ -20,7 +20,7 @@ public class RequestDelete extends Request
             this.field_96367_a.connect();
             return this;
         }
-        catch (Exception exception)
+        catch (final Exception exception)
         {
             throw new ExceptionMcoHttp("Failed URL: " + this.field_96365_b, exception);
         }

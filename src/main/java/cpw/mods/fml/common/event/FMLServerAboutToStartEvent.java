@@ -19,7 +19,7 @@ public class FMLServerAboutToStartEvent extends FMLStateEvent {
 
     private MinecraftServer server;
 
-    public FMLServerAboutToStartEvent(Object... data)
+    public FMLServerAboutToStartEvent(final Object... data)
     {
         super(data);
         this.server = (MinecraftServer) data[0];

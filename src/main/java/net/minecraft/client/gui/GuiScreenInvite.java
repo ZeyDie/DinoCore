@@ -23,7 +23,7 @@ public class GuiScreenInvite extends GuiScreen
     private String field_96226_p;
     private boolean field_96225_q;
 
-    public GuiScreenInvite(GuiScreen par1GuiScreen, GuiScreenConfigureWorld par2GuiScreenConfigureWorld, McoServer par3McoServer)
+    public GuiScreenInvite(final GuiScreen par1GuiScreen, final GuiScreenConfigureWorld par2GuiScreenConfigureWorld, final McoServer par3McoServer)
     {
         this.field_96224_c = par1GuiScreen;
         this.field_96222_d = par2GuiScreenConfigureWorld;
@@ -62,7 +62,7 @@ public class GuiScreenInvite extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
@@ -72,7 +72,7 @@ public class GuiScreenInvite extends GuiScreen
             }
             else if (par1GuiButton.id == 0)
             {
-                McoClient mcoclient = new McoClient(this.mc.getSession());
+                final McoClient mcoclient = new McoClient(this.mc.getSession());
 
                 if (this.field_96227_a.getText() == null || this.field_96227_a.getText().isEmpty())
                 {
@@ -81,7 +81,7 @@ public class GuiScreenInvite extends GuiScreen
 
                 try
                 {
-                    McoServer mcoserver = mcoclient.func_96387_b(this.field_96223_b.field_96408_a, this.field_96227_a.getText());
+                    final McoServer mcoserver = mcoclient.func_96387_b(this.field_96223_b.field_96408_a, this.field_96227_a.getText());
 
                     if (mcoserver != null)
                     {
@@ -93,12 +93,12 @@ public class GuiScreenInvite extends GuiScreen
                         this.func_101015_a(this.field_101016_p);
                     }
                 }
-                catch (ExceptionMcoService exceptionmcoservice)
+                catch (final ExceptionMcoService exceptionmcoservice)
                 {
                     this.mc.getLogAgent().logSevere(exceptionmcoservice.toString());
                     this.func_101015_a(exceptionmcoservice.field_96391_b);
                 }
-                catch (IOException ioexception)
+                catch (final IOException ioexception)
                 {
                     this.mc.getLogAgent().logWarning("Realms: could not parse response");
                     this.func_101015_a(this.field_101016_p);
@@ -107,7 +107,7 @@ public class GuiScreenInvite extends GuiScreen
         }
     }
 
-    private void func_101015_a(String par1Str)
+    private void func_101015_a(final String par1Str)
     {
         this.field_96225_q = true;
         this.field_96226_p = par1Str;
@@ -116,7 +116,7 @@ public class GuiScreenInvite extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         this.field_96227_a.textboxKeyTyped(par1, par2);
 
@@ -141,7 +141,7 @@ public class GuiScreenInvite extends GuiScreen
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int par1, int par2, int par3)
+    protected void mouseClicked(final int par1, final int par2, final int par3)
     {
         super.mouseClicked(par1, par2, par3);
         this.field_96227_a.mouseClicked(par1, par2, par3);
@@ -150,7 +150,7 @@ public class GuiScreenInvite extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.drawString(this.fontRenderer, I18n.getString("mco.configure.world.invite.profile.name"), this.width / 2 - 100, 53, 10526880);

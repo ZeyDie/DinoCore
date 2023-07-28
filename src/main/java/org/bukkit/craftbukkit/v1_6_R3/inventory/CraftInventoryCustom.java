@@ -11,15 +11,15 @@ import java.util.List;
 
 
 public class CraftInventoryCustom extends CraftInventory {
-    public CraftInventoryCustom(InventoryHolder owner, InventoryType type) {
+    public CraftInventoryCustom(final InventoryHolder owner, final InventoryType type) {
         super(new MinecraftInventory(owner, type));
     }
 
-    public CraftInventoryCustom(InventoryHolder owner, int size) {
+    public CraftInventoryCustom(final InventoryHolder owner, final int size) {
         super(new MinecraftInventory(owner, size));
     }
 
-    public CraftInventoryCustom(InventoryHolder owner, int size, String title) {
+    public CraftInventoryCustom(final InventoryHolder owner, final int size, final String title) {
         super(new MinecraftInventory(owner, size, title));
     }
 
@@ -31,16 +31,16 @@ public class CraftInventoryCustom extends CraftInventory {
         private InventoryType type;
         private final InventoryHolder owner;
 
-        public MinecraftInventory(InventoryHolder owner, InventoryType type) {
+        public MinecraftInventory(final InventoryHolder owner, final InventoryType type) {
             this(owner, type.getDefaultSize(), type.getDefaultTitle());
             this.type = type;
         }
 
-        public MinecraftInventory(InventoryHolder owner, int size) {
+        public MinecraftInventory(final InventoryHolder owner, final int size) {
             this(owner, size, "Chest");
         }
 
-        public MinecraftInventory(InventoryHolder owner, int size, String title) {
+        public MinecraftInventory(final InventoryHolder owner, final int size, final String title) {
             Validate.notNull(title, "Title cannot be null");
             Validate.isTrue(title.length() <= 32, "Title cannot be longer than 32 characters");
             this.items = new net.minecraft.item.ItemStack[size];
@@ -54,13 +54,13 @@ public class CraftInventoryCustom extends CraftInventory {
             return items.length;
         }
 
-        public net.minecraft.item.ItemStack getStackInSlot(int i) {
+        public net.minecraft.item.ItemStack getStackInSlot(final int i) {
             return items[i];
         }
 
-        public net.minecraft.item.ItemStack decrStackSize(int i, int j) {
-            net.minecraft.item.ItemStack stack = this.getStackInSlot(i);
-            net.minecraft.item.ItemStack result;
+        public net.minecraft.item.ItemStack decrStackSize(final int i, final int j) {
+            final net.minecraft.item.ItemStack stack = this.getStackInSlot(i);
+            final net.minecraft.item.ItemStack result;
             if (stack == null) return null;
             if (stack.stackSize <= j) {
                 this.setInventorySlotContents(i, null);
@@ -73,9 +73,9 @@ public class CraftInventoryCustom extends CraftInventory {
             return result;
         }
 
-        public net.minecraft.item.ItemStack getStackInSlotOnClosing(int i) {
-            net.minecraft.item.ItemStack stack = this.getStackInSlot(i);
-            net.minecraft.item.ItemStack result;
+        public net.minecraft.item.ItemStack getStackInSlotOnClosing(final int i) {
+            final net.minecraft.item.ItemStack stack = this.getStackInSlot(i);
+            final net.minecraft.item.ItemStack result;
             if (stack == null) return null;
             if (stack.stackSize <= 1) {
                 this.setInventorySlotContents(i, null);
@@ -87,7 +87,7 @@ public class CraftInventoryCustom extends CraftInventory {
             return result;
         }
 
-        public void setInventorySlotContents(int i, net.minecraft.item.ItemStack itemstack) {
+        public void setInventorySlotContents(final int i, final net.minecraft.item.ItemStack itemstack) {
             items[i] = itemstack;
             if (itemstack != null && this.getInventoryStackLimit() > 0 && itemstack.stackSize > this.getInventoryStackLimit()) {
                 itemstack.stackSize = this.getInventoryStackLimit();
@@ -102,13 +102,13 @@ public class CraftInventoryCustom extends CraftInventory {
             return maxStack;
         }
 
-        public void setMaxStackSize(int size) {
+        public void setMaxStackSize(final int size) {
             maxStack = size;
         }
 
         public void onInventoryChanged() {}
 
-        public boolean isUseableByPlayer(net.minecraft.entity.player.EntityPlayer entityhuman) {
+        public boolean isUseableByPlayer(final net.minecraft.entity.player.EntityPlayer entityhuman) {
             return true;
         }
 
@@ -116,11 +116,11 @@ public class CraftInventoryCustom extends CraftInventory {
             return items;
         }
 
-        public void onOpen(CraftHumanEntity who) {
+        public void onOpen(final CraftHumanEntity who) {
             viewers.add(who);
         }
 
-        public void onClose(CraftHumanEntity who) {
+        public void onClose(final CraftHumanEntity who) {
             viewers.remove(who);
         }
 
@@ -144,7 +144,7 @@ public class CraftInventoryCustom extends CraftInventory {
             return false;
         }
 
-        public boolean isItemValidForSlot(int i, net.minecraft.item.ItemStack itemstack) {
+        public boolean isItemValidForSlot(final int i, final net.minecraft.item.ItemStack itemstack) {
             return true;
         }
     }

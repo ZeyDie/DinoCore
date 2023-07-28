@@ -13,7 +13,7 @@ public class EntityAIDefendVillage extends EntityAITarget
      */
     EntityLivingBase villageAgressorTarget;
 
-    public EntityAIDefendVillage(EntityIronGolem par1EntityIronGolem)
+    public EntityAIDefendVillage(final EntityIronGolem par1EntityIronGolem)
     {
         super(par1EntityIronGolem, false, true);
         this.irongolem = par1EntityIronGolem;
@@ -25,7 +25,7 @@ public class EntityAIDefendVillage extends EntityAITarget
      */
     public boolean shouldExecute()
     {
-        Village village = this.irongolem.getVillage();
+        final Village village = this.irongolem.getVillage();
 
         if (village == null)
         {

@@ -14,7 +14,7 @@ public class ForgeCommand extends CommandBase {
 
     private MinecraftServer server;
 
-    public ForgeCommand(MinecraftServer server)
+    public ForgeCommand(final MinecraftServer server)
     {
         this.server = server;
     }
@@ -27,7 +27,7 @@ public class ForgeCommand extends CommandBase {
     }
 
     @Override
-    public String getCommandUsage(ICommandSender icommandsender)
+    public String getCommandUsage(final ICommandSender icommandsender)
     {
         return "commands.forge.usage";
     }
@@ -38,7 +38,7 @@ public class ForgeCommand extends CommandBase {
         return 2;
     }
     @Override
-    public void processCommand(ICommandSender sender, String[] args)
+    public void processCommand(final ICommandSender sender, final String[] args)
     {
         if (args.length == 0)
         {
@@ -66,14 +66,14 @@ public class ForgeCommand extends CommandBase {
         }
     }
 
-    private void handleTracking(ICommandSender sender, String[] args)
+    private void handleTracking(final ICommandSender sender, final String[] args)
     {
         if (args.length != 3)
         {
             throw new WrongUsageException("commands.forge.usage.tracking");
         }
-        String type = args[1];
-        int duration = parseIntBounded(sender, args[2], 1, 60);
+        final String type = args[1];
+        final int duration = parseIntBounded(sender, args[2], 1, 60);
 
         if ("te".equals(type))
         {
@@ -85,19 +85,19 @@ public class ForgeCommand extends CommandBase {
         }
     }
 
-    private void doTurnOnTileEntityTracking(ICommandSender sender, int duration)
+    private void doTurnOnTileEntityTracking(final ICommandSender sender, final int duration)
     {
         ForgeTimeTracker.tileEntityTrackingDuration = duration;
         ForgeTimeTracker.tileEntityTracking = true;
         sender.sendChatToPlayer(ChatMessageComponent.createFromTranslationWithSubstitutions("commands.forge.tracking.te.enabled", duration));
     }
 
-    private void doTPSLog(ICommandSender sender, String[] args)
+    private void doTPSLog(final ICommandSender sender, final String[] args)
     {
 
     }
 
-    private void displayTPS(ICommandSender sender, String[] args)
+    private void displayTPS(final ICommandSender sender, final String[] args)
     {
         int dim = 0;
         boolean summary = true;
@@ -108,28 +108,28 @@ public class ForgeCommand extends CommandBase {
         }
         if (summary)
         {
-            for (Integer dimId : DimensionManager.getIDs())
+            for (final Integer dimId : DimensionManager.getIDs())
             {
-                double worldTickTime = ForgeCommand.mean(this.server.worldTickTimes.get(dimId)) * 1.0E-6D;
-                double worldTPS = Math.min(1000.0/worldTickTime, 20);
+                final double worldTickTime = ForgeCommand.mean(this.server.worldTickTimes.get(dimId)) * 1.0E-6D;
+                final double worldTPS = Math.min(1000.0/worldTickTime, 20);
                 sender.sendChatToPlayer(ChatMessageComponent.createFromTranslationWithSubstitutions("commands.forge.tps.summary",String.format("Dim %d", dimId), timeFormatter.format(worldTickTime), timeFormatter.format(worldTPS)));
             }
-            double meanTickTime = ForgeCommand.mean(this.server.tickTimeArray) * 1.0E-6D;
-            double meanTPS = Math.min(1000.0/meanTickTime, 20);
+            final double meanTickTime = ForgeCommand.mean(this.server.tickTimeArray) * 1.0E-6D;
+            final double meanTPS = Math.min(1000.0/meanTickTime, 20);
             sender.sendChatToPlayer(ChatMessageComponent.createFromTranslationWithSubstitutions("commands.forge.tps.summary","Overall", timeFormatter.format(meanTickTime), timeFormatter.format(meanTPS)));
         }
         else
         {
-            double worldTickTime = ForgeCommand.mean(this.server.worldTickTimes.get(dim)) * 1.0E-6D;
-            double worldTPS = Math.min(1000.0/worldTickTime, 20);
+            final double worldTickTime = ForgeCommand.mean(this.server.worldTickTimes.get(dim)) * 1.0E-6D;
+            final double worldTPS = Math.min(1000.0/worldTickTime, 20);
             sender.sendChatToPlayer(ChatMessageComponent.createFromTranslationWithSubstitutions("commands.forge.tps.summary",String.format("Dim %d", dim), timeFormatter.format(worldTickTime), timeFormatter.format(worldTPS)));
         }
     }
 
-    private static long mean(long[] values)
+    private static long mean(final long[] values)
     {
         long sum = 0l;
-        for (long v : values)
+        for (final long v : values)
         {
             sum+=v;
         }

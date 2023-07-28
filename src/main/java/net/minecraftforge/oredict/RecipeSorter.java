@@ -30,7 +30,7 @@ public class RecipeSorter implements Comparator<IRecipe>
         List<String> before = Lists.newArrayList();
         List<String> after = Lists.newArrayList();
 
-        private SortEntry(String name, Class cls, Category cat, String deps)
+        private SortEntry(final String name, final Class cls, final Category cat, final String deps)
         {
             this.name = name;
             this.cls = cls;
@@ -38,10 +38,10 @@ public class RecipeSorter implements Comparator<IRecipe>
             parseDepends(deps);
         }
 
-        private void parseDepends(String deps)
+        private void parseDepends(final String deps)
         {
             if (deps.isEmpty()) return;
-            for (String dep : deps.split(" "))
+            for (final String dep : deps.split(" "))
             {
                 if (dep.startsWith("before:"))
                 {
@@ -61,17 +61,17 @@ public class RecipeSorter implements Comparator<IRecipe>
         @Override
         public String toString()
         {
-            StringBuilder buf = new StringBuilder();
+            final StringBuilder buf = new StringBuilder();
             buf.append("RecipeEntry(\"").append(name).append("\", ");
             buf.append(cat.name()).append(", ");
             buf.append(cls ==  null ? "" : cls.getName()).append(")");
 
-            if (before.size() > 0)
+            if (!before.isEmpty())
             {
                 buf.append(" Before: ").append(Joiner.on(", ").join(before));
             }
 
-            if (after.size() > 0)
+            if (!after.isEmpty())
             {
                 buf.append(" After: ").append(Joiner.on(", ").join(after));
             }
@@ -111,10 +111,10 @@ public class RecipeSorter implements Comparator<IRecipe>
     }
     
     @Override
-    public int compare(IRecipe r1, IRecipe r2)
+    public int compare(final IRecipe r1, final IRecipe r2)
     {
-        Category c1 = getCategory(r1);
-        Category c2 = getCategory(r2);
+        final Category c1 = getCategory(r1);
+        final Category c2 = getCategory(r2);
         if (c1 == SHAPELESS && c2 == SHAPED) return  1;
         if (c1 == SHAPED && c2 == SHAPELESS) return -1;
         if (r2.getRecipeSize() < r1.getRecipeSize()) return -1;
@@ -131,28 +131,28 @@ public class RecipeSorter implements Comparator<IRecipe>
         Collections.sort(CraftingManager.getInstance().getRecipeList(), INSTANCE);
     }
     
-    public static void register(String name, Class recipe, Category category, String dependancies)
+    public static void register(final String name, final Class recipe, final Category category, final String dependancies)
     {
         assert(category != UNKNOWN) : "Category must not be unknown!";
         isDirty = true;
 
-        SortEntry entry = new SortEntry(name, recipe, category, dependancies);
+        final SortEntry entry = new SortEntry(name, recipe, category, dependancies);
         entries.put(name, entry);
         setCategory(recipe, category);
     }
 
-    public static void setCategory(Class recipe, Category category)
+    public static void setCategory(final Class recipe, final Category category)
     {
         assert(category != UNKNOWN) : "Category must not be unknown!";
         categories.put(recipe, category);
     }
 
-    public static Category getCategory(IRecipe recipe)
+    public static Category getCategory(final IRecipe recipe)
     {
         return getCategory(recipe.getClass());
     }
 
-    public static Category getCategory(Class recipe)
+    public static Category getCategory(final Class recipe)
     {
         Class cls = recipe;
         Category ret = categories.get(cls);
@@ -174,7 +174,7 @@ public class RecipeSorter implements Comparator<IRecipe>
         return ret == null ? UNKNOWN : ret;
     }
 
-    private static int getPriority(IRecipe recipe)
+    private static int getPriority(final IRecipe recipe)
     {
         Class cls = recipe.getClass();
         Integer ret = priorities.get(cls);
@@ -206,23 +206,23 @@ public class RecipeSorter implements Comparator<IRecipe>
     {
         if (!isDirty) return;
         FMLLog.fine("Forge RecipeSorter Baking:");
-        DirectedGraph<SortEntry> sorter = new DirectedGraph<SortEntry>();
+        final DirectedGraph<SortEntry> sorter = new DirectedGraph<SortEntry>();
         sorter.addNode(before);
         sorter.addNode(after);
         sorter.addEdge(before, after);
 
-        for (Map.Entry<String, SortEntry> entry : entries.entrySet())
+        for (final Map.Entry<String, SortEntry> entry : entries.entrySet())
         {
             sorter.addNode(entry.getValue());
         }
 
-        for (Map.Entry<String, SortEntry> e : entries.entrySet())
+        for (final Map.Entry<String, SortEntry> e : entries.entrySet())
         {
-            SortEntry entry = e.getValue();
+            final SortEntry entry = e.getValue();
             boolean postAdded = false;
 
             sorter.addEdge(before, entry);
-            for (String dep : entry.after)
+            for (final String dep : entry.after)
             {
                 if (entries.containsKey(dep))
                 {
@@ -230,7 +230,7 @@ public class RecipeSorter implements Comparator<IRecipe>
                 }
             }
 
-            for (String dep : entry.before)
+            for (final String dep : entry.before)
             {
                 postAdded = true;
                 sorter.addEdge(entry, after);
@@ -247,9 +247,9 @@ public class RecipeSorter implements Comparator<IRecipe>
         }
 
 
-        List<SortEntry> sorted = TopologicalSort.topologicalSort(sorter);
+        final List<SortEntry> sorted = TopologicalSort.topologicalSort(sorter);
         int x = sorted.size();
-        for (SortEntry entry : sorted)
+        for (final SortEntry entry : sorted)
         {
             FMLLog.fine("  %d: %s", x, entry);
             priorities.put(entry.cls, x--);

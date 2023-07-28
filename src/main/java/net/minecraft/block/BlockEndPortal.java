@@ -22,7 +22,7 @@ public class BlockEndPortal extends BlockContainer
      */
     public static boolean bossDefeated;
 
-    protected BlockEndPortal(int par1, Material par2Material)
+    protected BlockEndPortal(final int par1, final Material par2Material)
     {
         super(par1, par2Material);
         this.setLightValue(1.0F);
@@ -31,7 +31,7 @@ public class BlockEndPortal extends BlockContainer
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World par1World)
+    public TileEntity createNewTileEntity(final World par1World)
     {
         return new TileEntityEndPortal();
     }
@@ -39,9 +39,9 @@ public class BlockEndPortal extends BlockContainer
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
-        float f = 0.0625F;
+        final float f = 0.0625F;
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, f, 1.0F);
     }
 
@@ -51,7 +51,7 @@ public class BlockEndPortal extends BlockContainer
      * Returns true if the given side of this block type should be rendered, if the adjacent block is at the given
      * coordinates.  Args: blockAccess, x, y, z, side
      */
-    public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public boolean shouldSideBeRendered(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
         return par5 != 0 ? false : super.shouldSideBeRendered(par1IBlockAccess, par2, par3, par4, par5);
     }
@@ -60,7 +60,7 @@ public class BlockEndPortal extends BlockContainer
      * Adds all intersecting collision boxes to a list. (Be sure to only add boxes to the list if they intersect the
      * mask.) Parameters: World, X, Y, Z, mask, list, colliding entity
      */
-    public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity) {}
+    public void addCollisionBoxesToList(final World par1World, final int par2, final int par3, final int par4, final AxisAlignedBB par5AxisAlignedBB, final List par6List, final Entity par7Entity) {}
 
     /**
      * Is this block (a) opaque and (b) a full 1m cube?  This determines whether or not to render the shared face of two
@@ -82,7 +82,7 @@ public class BlockEndPortal extends BlockContainer
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random par1Random)
+    public int quantityDropped(final Random par1Random)
     {
         return 0;
     }
@@ -90,12 +90,12 @@ public class BlockEndPortal extends BlockContainer
     /**
      * Triggered whenever an entity collides with this block (enters into the block). Args: world, x, y, z, entity
      */
-    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
+    public void onEntityCollidedWithBlock(final World par1World, final int par2, final int par3, final int par4, final Entity par5Entity)
     {
         if (par5Entity.ridingEntity == null && par5Entity.riddenByEntity == null && !par1World.isRemote)
         {
             // CraftBukkit start - Entity in portal
-            EntityPortalEnterEvent event = new EntityPortalEnterEvent(par5Entity.getBukkitEntity(), new org.bukkit.Location(par1World.getWorld(), par2, par3, par4));
+            final EntityPortalEnterEvent event = new EntityPortalEnterEvent(par5Entity.getBukkitEntity(), new org.bukkit.Location(par1World.getWorld(), par2, par3, par4));
             par1World.getServer().getPluginManager().callEvent(event);
             // CraftBukkit end
             par5Entity.travelToDimension(1);
@@ -107,14 +107,14 @@ public class BlockEndPortal extends BlockContainer
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void randomDisplayTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
-        double d0 = (double)((float)par2 + par5Random.nextFloat());
-        double d1 = (double)((float)par3 + 0.8F);
-        double d2 = (double)((float)par4 + par5Random.nextFloat());
-        double d3 = 0.0D;
-        double d4 = 0.0D;
-        double d5 = 0.0D;
+        final double d0 = (double)((float)par2 + par5Random.nextFloat());
+        final double d1 = (double)((float)par3 + 0.8F);
+        final double d2 = (double)((float)par4 + par5Random.nextFloat());
+        final double d3 = 0.0D;
+        final double d4 = 0.0D;
+        final double d5 = 0.0D;
         par1World.spawnParticle("smoke", d0, d1, d2, d3, d4, d5);
     }
 
@@ -129,7 +129,7 @@ public class BlockEndPortal extends BlockContainer
     /**
      * Called whenever the block is added into the world. Args: world, x, y, z
      */
-    public void onBlockAdded(World par1World, int par2, int par3, int par4)
+    public void onBlockAdded(final World par1World, final int par2, final int par3, final int par4)
     {
         if (!bossDefeated)
         {
@@ -145,7 +145,7 @@ public class BlockEndPortal extends BlockContainer
     /**
      * only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
      */
-    public int idPicked(World par1World, int par2, int par3, int par4)
+    public int idPicked(final World par1World, final int par2, final int par3, final int par4)
     {
         return 0;
     }
@@ -156,7 +156,7 @@ public class BlockEndPortal extends BlockContainer
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.blockIcon = par1IconRegister.registerIcon("portal");
     }

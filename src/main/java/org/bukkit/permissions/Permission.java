@@ -18,35 +18,35 @@ public class Permission {
     private PermissionDefault defaultValue = DEFAULT_PERMISSION;
     private String description;
 
-    public Permission(String name) {
+    public Permission(final String name) {
         this(name, null, null, null);
     }
 
-    public Permission(String name, String description) {
+    public Permission(final String name, final String description) {
         this(name, description, null, null);
     }
 
-    public Permission(String name, PermissionDefault defaultValue) {
+    public Permission(final String name, final PermissionDefault defaultValue) {
         this(name, null, defaultValue, null);
     }
 
-    public Permission(String name, String description, PermissionDefault defaultValue) {
+    public Permission(final String name, final String description, final PermissionDefault defaultValue) {
         this(name, description, defaultValue, null);
     }
 
-    public Permission(String name, Map<String, Boolean> children) {
+    public Permission(final String name, final Map<String, Boolean> children) {
         this(name, null, null, children);
     }
 
-    public Permission(String name, String description, Map<String, Boolean> children) {
+    public Permission(final String name, final String description, final Map<String, Boolean> children) {
         this(name, description, null, children);
     }
 
-    public Permission(String name, PermissionDefault defaultValue, Map<String, Boolean> children) {
+    public Permission(final String name, final PermissionDefault defaultValue, final Map<String, Boolean> children) {
         this(name, null, defaultValue, children);
     }
 
-    public Permission(String name, String description, PermissionDefault defaultValue, Map<String, Boolean> children) {
+    public Permission(final String name, final String description, final PermissionDefault defaultValue, final Map<String, Boolean> children) {
         this.name = name;
         this.description = (description == null) ? "" : description;
 
@@ -98,7 +98,7 @@ public class Permission {
      *
      * @param value The new default to set
      */
-    public void setDefault(PermissionDefault value) {
+    public void setDefault(final PermissionDefault value) {
         if (defaultValue == null) {
             throw new IllegalArgumentException("Default value cannot be null");
         }
@@ -123,7 +123,7 @@ public class Permission {
      *
      * @param value The new description to set
      */
-    public void setDescription(String value) {
+    public void setDescription(final String value) {
         if (value == null) {
             description = "";
         } else {
@@ -148,11 +148,11 @@ public class Permission {
      * This should be called after modifying the children, and is automatically called after modifying the default value
      */
     public void recalculatePermissibles() {
-        Set<Permissible> perms = getPermissibles();
+        final Set<Permissible> perms = getPermissibles();
 
         Bukkit.getServer().getPluginManager().recalculatePermissionDefaults(this);
 
-        for (Permissible p : perms) {
+        for (final Permissible p : perms) {
             p.recalculatePermissions();
         }
     }
@@ -166,9 +166,9 @@ public class Permission {
      * @param value The value to set this permission to
      * @return Parent permission it created or loaded
      */
-    public Permission addParent(String name, boolean value) {
-        PluginManager pm = Bukkit.getServer().getPluginManager();
-        String lname = name.toLowerCase();
+    public Permission addParent(final String name, final boolean value) {
+        final PluginManager pm = Bukkit.getServer().getPluginManager();
+        final String lname = name.toLowerCase();
 
         Permission perm = pm.getPermission(lname);
 
@@ -188,7 +188,7 @@ public class Permission {
      * @param perm Parent permission to register with
      * @param value The value to set this permission to
      */
-    public void addParent(Permission perm, boolean value) {
+    public void addParent(final Permission perm, final boolean value) {
         perm.getChildren().put(getName(), value);
         perm.recalculatePermissibles();
     }
@@ -206,13 +206,13 @@ public class Permission {
      * @param def Default permission value to use if missing
      * @return Permission object
      */
-    public static List<Permission> loadPermissions(Map<?, ?> data, String error, PermissionDefault def) {
-        List<Permission> result = new ArrayList<Permission>();
+    public static List<Permission> loadPermissions(final Map<?, ?> data, final String error, final PermissionDefault def) {
+        final List<Permission> result = new ArrayList<Permission>();
 
-        for (Map.Entry<?, ?> entry : data.entrySet()) {
+        for (final Map.Entry<?, ?> entry : data.entrySet()) {
             try {
                 result.add(Permission.loadPermission(entry.getKey().toString(), (Map<?, ?>) entry.getValue(), def, result));
-            } catch (Throwable ex) {
+            } catch (final Throwable ex) {
                 Bukkit.getServer().getLogger().log(Level.SEVERE, String.format(error, entry.getKey()), ex);
             }
         }
@@ -232,7 +232,7 @@ public class Permission {
      * @param data Map of keys
      * @return Permission object
      */
-    public static Permission loadPermission(String name, Map<String, Object> data) {
+    public static Permission loadPermission(final String name, final Map<String, Object> data) {
         return loadPermission(name, data, DEFAULT_PERMISSION, null);
     }
 
@@ -250,7 +250,8 @@ public class Permission {
      * @param output A list to append any created child-Permissions to, may be null
      * @return Permission object
      */
-    public static Permission loadPermission(String name, Map<?, ?> data, PermissionDefault def, List<Permission> output) {
+    public static Permission loadPermission(final String name, final Map<?, ?> data, PermissionDefault def, final List<Permission> output) {
+        PermissionDefault def1 = def;
         Validate.notNull(name, "Name cannot be null");
         Validate.notNull(data, "Data cannot be null");
 
@@ -258,25 +259,25 @@ public class Permission {
         Map<String, Boolean> children = null;
 
         if (data.get("default") != null) {
-            PermissionDefault value = PermissionDefault.getByName(data.get("default").toString());
+            final PermissionDefault value = PermissionDefault.getByName(data.get("default").toString());
             if (value != null) {
-                def = value;
+                def1 = value;
             } else {
                 throw new IllegalArgumentException("'default' key contained unknown value");
             }
         }
 
         if (data.get("children") != null) {
-            Object childrenNode = data.get("children");
+            final Object childrenNode = data.get("children");
             if (childrenNode instanceof Iterable) {
                 children = new LinkedHashMap<String, Boolean>();
-                for (Object child : (Iterable<?>) childrenNode) {
+                for (final Object child : (Iterable<?>) childrenNode) {
                     if (child != null) {
                         children.put(child.toString(), Boolean.TRUE);
                     }
                 }
             } else if (childrenNode instanceof Map) {
-                children = extractChildren((Map<?,?>) childrenNode, name, def, output);
+                children = extractChildren((Map<?,?>) childrenNode, name, def1, output);
             } else {
                 throw new IllegalArgumentException("'children' key is of wrong type");
             }
@@ -286,24 +287,24 @@ public class Permission {
             desc = data.get("description").toString();
         }
 
-        return new Permission(name, desc, def, children);
+        return new Permission(name, desc, def1, children);
     }
 
-    private static Map<String, Boolean> extractChildren(Map<?, ?> input, String name, PermissionDefault def, List<Permission> output) {
-        Map<String, Boolean> children = new LinkedHashMap<String, Boolean>();
+    private static Map<String, Boolean> extractChildren(final Map<?, ?> input, final String name, final PermissionDefault def, final List<Permission> output) {
+        final Map<String, Boolean> children = new LinkedHashMap<String, Boolean>();
 
-        for (Map.Entry<?, ?> entry : input.entrySet()) {
+        for (final Map.Entry<?, ?> entry : input.entrySet()) {
             if ((entry.getValue() instanceof Boolean)) {
                 children.put(entry.getKey().toString(), (Boolean) entry.getValue());
             } else if ((entry.getValue() instanceof Map)) {
                 try {
-                    Permission perm = loadPermission(entry.getKey().toString(), (Map<?, ?>) entry.getValue(), def, output);
+                    final Permission perm = loadPermission(entry.getKey().toString(), (Map<?, ?>) entry.getValue(), def, output);
                     children.put(perm.getName(), Boolean.TRUE);
 
                     if (output != null) {
                         output.add(perm);
                     }
-                } catch (Throwable ex) {
+                } catch (final Throwable ex) {
                     throw new IllegalArgumentException("Permission node '" + entry.getKey().toString() + "' in child of " + name + " is invalid", ex);
                 }
             } else {

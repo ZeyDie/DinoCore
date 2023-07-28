@@ -34,7 +34,7 @@ public class Teleporter
      */
     private final List destinationCoordinateKeys = new ArrayList();
 
-    public Teleporter(WorldServer par1WorldServer)
+    public Teleporter(final WorldServer par1WorldServer)
     {
         this.worldServerInstance = par1WorldServer;
         this.random = new Random(par1WorldServer.getSeed());
@@ -43,7 +43,7 @@ public class Teleporter
     /**
      * Place an entity in a nearby portal, creating one if necessary.
      */
-    public void placeInPortal(Entity par1Entity, double par2, double par4, double par6, float par8)
+    public void placeInPortal(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8)
     {
         if (this.worldServerInstance.provider.dimensionId != 1)
         {
@@ -56,21 +56,21 @@ public class Teleporter
         else
         {
             // CraftBukkit start - Modularize end portal creation
-            ChunkCoordinates created = this.createEndPortal(par2, par4, par6);
+            final ChunkCoordinates created = this.createEndPortal(par2, par4, par6);
             par1Entity.setLocationAndAngles((double) created.posX, (double) created.posY, (double) created.posZ, par1Entity.rotationYaw, 0.0F);
             par1Entity.motionX = par1Entity.motionY = par1Entity.motionZ = 0.0D;
         }
     }
 
     // Split out from original a(Entity, double, double, double, float) method in order to enable being called from createPortal
-    private ChunkCoordinates createEndPortal(double x, double y, double z)
+    private ChunkCoordinates createEndPortal(final double x, final double y, final double z)
     {
-        int i = MathHelper.floor_double(x);
-        int j = MathHelper.floor_double(y) - 1;
-        int k = MathHelper.floor_double(z);
+        final int i = MathHelper.floor_double(x);
+        final int j = MathHelper.floor_double(y) - 1;
+        final int k = MathHelper.floor_double(z);
         // CraftBukkit end
-        byte b0 = 1;
-        byte b1 = 0;
+        final byte b0 = 1;
+        final byte b1 = 0;
 
         for (int l = -2; l <= 2; ++l)
         {
@@ -78,10 +78,10 @@ public class Teleporter
             {
                 for (int j1 = -1; j1 < 3; ++j1)
                 {
-                    int k1 = i + i1 * b0 + l * b1;
-                    int l1 = j + j1;
-                    int i2 = k + i1 * b1 - l * b0;
-                    boolean flag = j1 < 0;
+                    final int k1 = i + i1 * b0 + l * b1;
+                    final int l1 = j + j1;
+                    final int i2 = k + i1 * b1 - l * b0;
+                    final boolean flag = j1 < 0;
                     this.worldServerInstance.setBlock(k1, l1, i2, flag ? Block.obsidian.blockID : 0);
                 }
             }
@@ -92,13 +92,13 @@ public class Teleporter
     }
 
     // use logic based on creation to verify end portal
-    private ChunkCoordinates findEndPortal(ChunkCoordinates portal)
+    private ChunkCoordinates findEndPortal(final ChunkCoordinates portal)
     {
-        int i = portal.posX;
-        int j = portal.posY - 1;
-        int k = portal.posZ;
-        byte b0 = 1;
-        byte b1 = 0;
+        final int i = portal.posX;
+        final int j = portal.posY - 1;
+        final int k = portal.posZ;
+        final byte b0 = 1;
+        final byte b1 = 0;
 
         for (int l = -2; l <= 2; ++l)
         {
@@ -106,10 +106,10 @@ public class Teleporter
             {
                 for (int j1 = -1; j1 < 3; ++j1)
                 {
-                    int k1 = i + i1 * b0 + l * b1;
-                    int l1 = j + j1;
-                    int i2 = k + i1 * b1 - l * b0;
-                    boolean flag = j1 < 0;
+                    final int k1 = i + i1 * b0 + l * b1;
+                    final int l1 = j + j1;
+                    final int i2 = k + i1 * b1 - l * b0;
+                    final boolean flag = j1 < 0;
 
                     if (this.worldServerInstance.getBlockId(k1, l1, i2) != (flag ? Block.obsidian.blockID : 0))
                     {
@@ -126,18 +126,18 @@ public class Teleporter
     /**
      * Place an entity in a nearby portal which already exists.
      */
-    public boolean placeInExistingPortal(Entity par1Entity, double par2, double par4, double par6, float par8)
+    public boolean placeInExistingPortal(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8)
     {
         // CraftBukkit start - Modularize portal search process and entity teleportation
-        ChunkCoordinates found = this.findPortal(par1Entity.posX, par1Entity.posY, par1Entity.posZ, 128);
+        final ChunkCoordinates found = this.findPortal(par1Entity.posX, par1Entity.posY, par1Entity.posZ, 128);
 
         if (found == null)
         {
             return false;
         }
 
-        Location exit = new Location(this.worldServerInstance.getWorld(), found.posX, found.posY, found.posZ, par8, par1Entity.rotationPitch);
-        Vector velocity = par1Entity.getBukkitEntity().getVelocity();
+        final Location exit = new Location(this.worldServerInstance.getWorld(), found.posX, found.posY, found.posZ, par8, par1Entity.rotationPitch);
+        final Vector velocity = par1Entity.getBukkitEntity().getVelocity();
         this.adjustExit(par1Entity, exit, velocity);
         par1Entity.setLocationAndAngles(exit.getX(), exit.getY(), exit.getZ(), exit.getYaw(), exit.getPitch());
 
@@ -149,7 +149,7 @@ public class Teleporter
         return true;
     }
 
-    public ChunkCoordinates findPortal(double x, double y, double z, int short1)
+    public ChunkCoordinates findPortal(final double x, final double y, final double z, final int short1)
     {
         if (this.worldServerInstance.getWorld().getEnvironment() == org.bukkit.World.Environment.THE_END)
         {
@@ -162,17 +162,17 @@ public class Teleporter
         int j = 0;
         int k = 0;
         // CraftBukkit start
-        int l = MathHelper.floor_double(x);
-        int i1 = MathHelper.floor_double(z);
+        final int l = MathHelper.floor_double(x);
+        final int i1 = MathHelper.floor_double(z);
         // CraftBukkit end
-        long j1 = ChunkCoordIntPair.chunkXZ2Int(l, i1);
+        final long j1 = ChunkCoordIntPair.chunkXZ2Int(l, i1);
         boolean flag = true;
         double d4;
         int k1;
 
         if (this.destinationCoordinateCache.containsItem(j1))
         {
-            PortalPosition portalposition = (PortalPosition)this.destinationCoordinateCache.getValueByKey(j1);
+            final PortalPosition portalposition = (PortalPosition)this.destinationCoordinateCache.getValueByKey(j1);
             d3 = 0.0D;
             i = portalposition.posX;
             j = portalposition.posY;
@@ -184,11 +184,11 @@ public class Teleporter
         {
             for (k1 = l - short1; k1 <= l + short1; ++k1)
             {
-                double d5 = (double) k1 + 0.5D - x; // CraftBukkit
+                final double d5 = (double) k1 + 0.5D - x; // CraftBukkit
 
                 for (int l1 = i1 - short1; l1 <= i1 + short1; ++l1)
                 {
-                    double d6 = (double) l1 + 0.5D - z; // CraftBukkit
+                    final double d6 = (double) l1 + 0.5D - z; // CraftBukkit
 
                     for (int i2 = this.worldServerInstance.getActualHeight() - 1; i2 >= 0; --i2)
                     {
@@ -200,7 +200,7 @@ public class Teleporter
                             }
 
                             d4 = (double) i2 + 0.5D - y; // CraftBukkit
-                            double d7 = d5 * d5 + d4 * d4 + d6 * d6;
+                            final double d7 = d5 * d5 + d4 * d4 + d6 * d6;
 
                             if (d3 < 0.0D || d7 < d3)
                             {
@@ -232,13 +232,13 @@ public class Teleporter
         }
     }
     // Entity repositioning logic split out from original b method and combined with repositioning logic for The End from original a method
-    public void adjustExit(Entity entity, Location position, Vector velocity)
+    public void adjustExit(final Entity entity, final Location position, final Vector velocity)
     {
-        Location from = position.clone();
-        Vector before = velocity.clone();
-        int i = position.getBlockX();
-        int j = position.getBlockY();
-        int k = position.getBlockZ();
+        final Location from = position.clone();
+        final Vector before = velocity.clone();
+        final int i = position.getBlockX();
+        final int j = position.getBlockY();
+        final int k = position.getBlockZ();
         float f = position.getYaw();
 
         if (this.worldServerInstance.getWorld().getEnvironment() == org.bukkit.World.Environment.THE_END)
@@ -253,10 +253,10 @@ public class Teleporter
         else
         {
             double d4;
-            int k1;
+            final int k1;
             // CraftBukkit end
             double d8 = (double)i + 0.5D;
-            double d9 = (double)j + 0.5D;
+            final double d9 = (double)j + 0.5D;
             d4 = (double)k + 0.5D;
             int j2 = -1;
 
@@ -280,7 +280,7 @@ public class Teleporter
                 j2 = 1;
             }
 
-            int k2 = entity.getTeleportDirection();
+            final int k2 = entity.getTeleportDirection();
 
             if (j2 > -1)
             {
@@ -302,7 +302,7 @@ public class Teleporter
                     l3 = Direction.offsetZ[l2];
                     k1 = i - k3;
                     d8 -= (double)k3;
-                    int i4 = k - l3;
+                    final int i4 = k - l3;
                     d4 -= (double)l3;
                     flag1 = !this.worldServerInstance.isAirBlock(k1 + i3 + k3, j, i4 + j3 + l3) || !this.worldServerInstance.isAirBlock(k1 + i3 + k3, j + 1, i4 + j3 + l3);
                     flag2 = !this.worldServerInstance.isAirBlock(k1 + i3, j, i4 + j3) || !this.worldServerInstance.isAirBlock(k1 + i3, j + 1, i4 + j3);
@@ -353,8 +353,8 @@ public class Teleporter
                 }
 
                 // CraftBukkit start
-                double d10 = velocity.getX();
-                double d11 = velocity.getZ();
+                final double d10 = velocity.getX();
+                final double d11 = velocity.getZ();
                 // CraftBukkit end
                 // CraftBukkit start - Adjust position and velocity instances instead of entity
                 velocity.setX(d10 * (double) f3 + d11 * (double) f6);
@@ -376,9 +376,9 @@ public class Teleporter
             position.setYaw(f);
         }
 
-        EntityPortalExitEvent event = new EntityPortalExitEvent(entity.getBukkitEntity(), from, position, before, velocity);
+        final EntityPortalExitEvent event = new EntityPortalExitEvent(entity.getBukkitEntity(), from, position, before, velocity);
         this.worldServerInstance.getServer().getPluginManager().callEvent(event);
-        Location to = event.getTo();
+        final Location to = event.getTo();
 
         if (event.isCancelled() || to == null || !entity.isEntityAlive())
         {
@@ -402,13 +402,13 @@ public class Teleporter
         // CraftBukkit end
     }
 
-    public boolean makePortal(Entity par1Entity)
+    public boolean makePortal(final Entity par1Entity)
     {
         // CraftBukkit start - Allow for portal creation to be based on coordinates instead of entity
         return this.createPortal(par1Entity.posX, par1Entity.posY, par1Entity.posZ, 16);
     }
 
-    public boolean createPortal(double x, double y, double z, int b0)
+    public boolean createPortal(final double x, final double y, final double z, final int b0)
     {
         if (this.worldServerInstance.getWorld().getEnvironment() == org.bukkit.World.Environment.THE_END)
         {
@@ -419,15 +419,15 @@ public class Teleporter
         // CraftBukkit end
         double d0 = -1.0D;
         // CraftBukkit start
-        int i = MathHelper.floor_double(x);
-        int j = MathHelper.floor_double(y);
-        int k = MathHelper.floor_double(z);
+        final int i = MathHelper.floor_double(x);
+        final int j = MathHelper.floor_double(y);
+        final int k = MathHelper.floor_double(z);
         // CraftBukkit end
         int l = i;
         int i1 = j;
         int j1 = k;
         int k1 = 0;
-        int l1 = this.random.nextInt(4);
+        final int l1 = this.random.nextInt(4);
         int i2;
         double d1;
         double d2;
@@ -481,7 +481,7 @@ public class Teleporter
                                     {
                                         k4 = i2 + (i4 - 1) * l2 + j3 * k3;
                                         j4 = k2 + l3;
-                                        int l4 = j2 + (i4 - 1) * k3 - j3 * l2;
+                                        final int l4 = j2 + (i4 - 1) * k3 - j3 * l2;
 
                                         if (l3 < 0 && !this.worldServerInstance.getBlockMaterial(k4, j4, l4).isSolid() || l3 >= 0 && !this.worldServerInstance.isAirBlock(k4, j4, l4))
                                         {
@@ -566,7 +566,7 @@ public class Teleporter
             }
         }
 
-        int i5 = l;
+        final int i5 = l;
         int j5 = i1;
         j2 = j1;
         int k5 = k1 % 2;
@@ -643,17 +643,17 @@ public class Teleporter
      * called periodically to remove out-of-date portal locations from the cache list. Argument par1 is a
      * WorldServer.getTotalWorldTime() value.
      */
-    public void removeStalePortalLocations(long par1)
+    public void removeStalePortalLocations(final long par1)
     {
         if (par1 % 100L == 0L)
         {
-            Iterator iterator = this.destinationCoordinateKeys.iterator();
-            long j = par1 - 600L;
+            final Iterator iterator = this.destinationCoordinateKeys.iterator();
+            final long j = par1 - 600L;
 
             while (iterator.hasNext())
             {
-                Long olong = (Long)iterator.next();
-                PortalPosition portalposition = (PortalPosition)this.destinationCoordinateCache.getValueByKey(olong.longValue());
+                final Long olong = (Long)iterator.next();
+                final PortalPosition portalposition = (PortalPosition)this.destinationCoordinateCache.getValueByKey(olong.longValue());
 
                 if (portalposition == null || portalposition.lastUpdateTime < j)
                 {

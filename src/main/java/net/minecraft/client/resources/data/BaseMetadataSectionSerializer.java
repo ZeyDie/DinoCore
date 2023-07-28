@@ -8,15 +8,15 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public abstract class BaseMetadataSectionSerializer implements MetadataSectionSerializer
 {
-    protected float func_110487_a(JsonElement par1JsonElement, String par2Str, Float par3, float par4, float par5)
+    protected float func_110487_a(final JsonElement par1JsonElement, String par2Str, final Float par3, final float par4, final float par5)
     {
-        par2Str = this.getSectionName() + "->" + par2Str;
+        String par2Str1 = this.getSectionName() + "->" + par2Str;
 
         if (par1JsonElement == null)
         {
             if (par3 == null)
             {
-                throw new JsonParseException("Missing " + par2Str + ": expected float");
+                throw new JsonParseException("Missing " + par2Str1 + ": expected float");
             }
             else
             {
@@ -25,43 +25,43 @@ public abstract class BaseMetadataSectionSerializer implements MetadataSectionSe
         }
         else if (!par1JsonElement.isJsonPrimitive())
         {
-            throw new JsonParseException("Invalid " + par2Str + ": expected float, was " + par1JsonElement);
+            throw new JsonParseException("Invalid " + par2Str1 + ": expected float, was " + par1JsonElement);
         }
         else
         {
             try
             {
-                float f2 = par1JsonElement.getAsFloat();
+                final float f2 = par1JsonElement.getAsFloat();
 
                 if (f2 < par4)
                 {
-                    throw new JsonParseException("Invalid " + par2Str + ": expected float >= " + par4 + ", was " + f2);
+                    throw new JsonParseException("Invalid " + par2Str1 + ": expected float >= " + par4 + ", was " + f2);
                 }
                 else if (f2 > par5)
                 {
-                    throw new JsonParseException("Invalid " + par2Str + ": expected float <= " + par5 + ", was " + f2);
+                    throw new JsonParseException("Invalid " + par2Str1 + ": expected float <= " + par5 + ", was " + f2);
                 }
                 else
                 {
                     return f2;
                 }
             }
-            catch (NumberFormatException numberformatexception)
+            catch (final NumberFormatException numberformatexception)
             {
-                throw new JsonParseException("Invalid " + par2Str + ": expected float, was " + par1JsonElement, numberformatexception);
+                throw new JsonParseException("Invalid " + par2Str1 + ": expected float, was " + par1JsonElement, numberformatexception);
             }
         }
     }
 
-    protected int func_110485_a(JsonElement par1JsonElement, String par2Str, Integer par3, int par4, int par5)
+    protected int func_110485_a(final JsonElement par1JsonElement, String par2Str, final Integer par3, final int par4, final int par5)
     {
-        par2Str = this.getSectionName() + "->" + par2Str;
+        String par2Str1 = this.getSectionName() + "->" + par2Str;
 
         if (par1JsonElement == null)
         {
             if (par3 == null)
             {
-                throw new JsonParseException("Missing " + par2Str + ": expected int");
+                throw new JsonParseException("Missing " + par2Str1 + ": expected int");
             }
             else
             {
@@ -70,43 +70,43 @@ public abstract class BaseMetadataSectionSerializer implements MetadataSectionSe
         }
         else if (!par1JsonElement.isJsonPrimitive())
         {
-            throw new JsonParseException("Invalid " + par2Str + ": expected int, was " + par1JsonElement);
+            throw new JsonParseException("Invalid " + par2Str1 + ": expected int, was " + par1JsonElement);
         }
         else
         {
             try
             {
-                int k = par1JsonElement.getAsInt();
+                final int k = par1JsonElement.getAsInt();
 
                 if (k < par4)
                 {
-                    throw new JsonParseException("Invalid " + par2Str + ": expected int >= " + par4 + ", was " + k);
+                    throw new JsonParseException("Invalid " + par2Str1 + ": expected int >= " + par4 + ", was " + k);
                 }
                 else if (k > par5)
                 {
-                    throw new JsonParseException("Invalid " + par2Str + ": expected int <= " + par5 + ", was " + k);
+                    throw new JsonParseException("Invalid " + par2Str1 + ": expected int <= " + par5 + ", was " + k);
                 }
                 else
                 {
                     return k;
                 }
             }
-            catch (NumberFormatException numberformatexception)
+            catch (final NumberFormatException numberformatexception)
             {
-                throw new JsonParseException("Invalid " + par2Str + ": expected int, was " + par1JsonElement, numberformatexception);
+                throw new JsonParseException("Invalid " + par2Str1 + ": expected int, was " + par1JsonElement, numberformatexception);
             }
         }
     }
 
-    protected String func_110486_a(JsonElement par1JsonElement, String par2Str, String par3Str, int par4, int par5)
+    protected String func_110486_a(final JsonElement par1JsonElement, String par2Str, final String par3Str, final int par4, final int par5)
     {
-        par2Str = this.getSectionName() + "->" + par2Str;
+        String par2Str1 = this.getSectionName() + "->" + par2Str;
 
         if (par1JsonElement == null)
         {
             if (par3Str == null)
             {
-                throw new JsonParseException("Missing " + par2Str + ": expected string");
+                throw new JsonParseException("Missing " + par2Str1 + ": expected string");
             }
             else
             {
@@ -115,19 +115,19 @@ public abstract class BaseMetadataSectionSerializer implements MetadataSectionSe
         }
         else if (!par1JsonElement.isJsonPrimitive())
         {
-            throw new JsonParseException("Invalid " + par2Str + ": expected string, was " + par1JsonElement);
+            throw new JsonParseException("Invalid " + par2Str1 + ": expected string, was " + par1JsonElement);
         }
         else
         {
-            String s2 = par1JsonElement.getAsString();
+            final String s2 = par1JsonElement.getAsString();
 
             if (s2.length() < par4)
             {
-                throw new JsonParseException("Invalid " + par2Str + ": expected string length >= " + par4 + ", was " + s2);
+                throw new JsonParseException("Invalid " + par2Str1 + ": expected string length >= " + par4 + ", was " + s2);
             }
             else if (s2.length() > par5)
             {
-                throw new JsonParseException("Invalid " + par2Str + ": expected string length <= " + par5 + ", was " + s2);
+                throw new JsonParseException("Invalid " + par2Str1 + ": expected string length <= " + par5 + ", was " + s2);
             }
             else
             {
@@ -136,15 +136,15 @@ public abstract class BaseMetadataSectionSerializer implements MetadataSectionSe
         }
     }
 
-    protected boolean func_110484_a(JsonElement par1JsonElement, String par2Str, Boolean par3)
+    protected boolean func_110484_a(final JsonElement par1JsonElement, String par2Str, final Boolean par3)
     {
-        par2Str = this.getSectionName() + "->" + par2Str;
+        String par2Str1 = this.getSectionName() + "->" + par2Str;
 
         if (par1JsonElement == null)
         {
             if (par3 == null)
             {
-                throw new JsonParseException("Missing " + par2Str + ": expected boolean");
+                throw new JsonParseException("Missing " + par2Str1 + ": expected boolean");
             }
             else
             {
@@ -153,11 +153,11 @@ public abstract class BaseMetadataSectionSerializer implements MetadataSectionSe
         }
         else if (!par1JsonElement.isJsonPrimitive())
         {
-            throw new JsonParseException("Invalid " + par2Str + ": expected boolean, was " + par1JsonElement);
+            throw new JsonParseException("Invalid " + par2Str1 + ": expected boolean, was " + par1JsonElement);
         }
         else
         {
-            boolean flag = par1JsonElement.getAsBoolean();
+            final boolean flag = par1JsonElement.getAsBoolean();
             return flag;
         }
     }

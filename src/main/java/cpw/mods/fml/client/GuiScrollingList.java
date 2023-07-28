@@ -44,7 +44,7 @@ public abstract class GuiScrollingList
     private boolean field_27262_q;
     private int field_27261_r;
 
-    public GuiScrollingList(Minecraft client, int width, int height, int top, int bottom, int left, int entryHeight)
+    public GuiScrollingList(final Minecraft client, final int width, final int height, final int top, final int bottom, final int left, final int entryHeight)
     {
         this.client = client;
         this.listWidth = width;
@@ -56,12 +56,12 @@ public abstract class GuiScrollingList
         this.right = width + this.left;
     }
 
-    public void func_27258_a(boolean p_27258_1_)
+    public void func_27258_a(final boolean p_27258_1_)
     {
         this.field_25123_p = p_27258_1_;
     }
 
-    protected void func_27259_a(boolean p_27259_1_, int p_27259_2_)
+    protected void func_27259_a(final boolean p_27259_1_, final int p_27259_2_)
     {
         this.field_27262_q = p_27259_1_;
         this.field_27261_r = p_27259_2_;
@@ -87,23 +87,23 @@ public abstract class GuiScrollingList
 
     protected abstract void drawSlot(int var1, int var2, int var3, int var4, Tessellator var5);
 
-    protected void func_27260_a(int p_27260_1_, int p_27260_2_, Tessellator p_27260_3_) {}
+    protected void func_27260_a(final int p_27260_1_, final int p_27260_2_, final Tessellator p_27260_3_) {}
 
-    protected void func_27255_a(int p_27255_1_, int p_27255_2_) {}
+    protected void func_27255_a(final int p_27255_1_, final int p_27255_2_) {}
 
-    protected void func_27257_b(int p_27257_1_, int p_27257_2_) {}
+    protected void func_27257_b(final int p_27257_1_, final int p_27257_2_) {}
 
-    public int func_27256_c(int p_27256_1_, int p_27256_2_)
+    public int func_27256_c(final int p_27256_1_, final int p_27256_2_)
 
     {
-        int var3 = this.left + 1;
-        int var4 = this.left + this.listWidth - 7;
-        int var5 = p_27256_2_ - this.top - this.field_27261_r + (int)this.scrollDistance - 4;
-        int var6 = var5 / this.slotHeight;
+        final int var3 = this.left + 1;
+        final int var4 = this.left + this.listWidth - 7;
+        final int var5 = p_27256_2_ - this.top - this.field_27261_r + (int)this.scrollDistance - 4;
+        final int var6 = var5 / this.slotHeight;
         return p_27256_1_ >= var3 && p_27256_1_ <= var4 && var6 >= 0 && var5 >= 0 && var6 < this.getSize() ? var6 : -1;
     }
 
-    public void registerScrollButtons(List p_22240_1_, int p_22240_2_, int p_22240_3_)
+    public void registerScrollButtons(final List p_22240_1_, final int p_22240_2_, final int p_22240_3_)
     {
         this.scrollUpActionId = p_22240_2_;
         this.scrollDownActionId = p_22240_3_;
@@ -129,7 +129,7 @@ public abstract class GuiScrollingList
         }
     }
 
-    public void actionPerformed(GuiButton button)
+    public void actionPerformed(final GuiButton button)
     {
         if (button.enabled)
         {
@@ -148,16 +148,16 @@ public abstract class GuiScrollingList
         }
     }
 
-    public void drawScreen(int mouseX, int mouseY, float p_22243_3_)
+    public void drawScreen(final int mouseX, final int mouseY, final float p_22243_3_)
     {
         this.mouseX = mouseX;
         this.mouseY = mouseY;
         this.drawBackground();
-        int listLength = this.getSize();
-        int scrollBarXStart = this.left + this.listWidth - 6;
-        int scrollBarXEnd = scrollBarXStart + 6;
-        int boxLeft = this.left;
-        int boxRight = scrollBarXStart-1;
+        final int listLength = this.getSize();
+        final int scrollBarXStart = this.left + this.listWidth - 6;
+        final int scrollBarXEnd = scrollBarXStart + 6;
+        final int boxLeft = this.left;
+        final int boxRight = scrollBarXStart-1;
         int var10;
         int var11;
         int var13;
@@ -176,7 +176,7 @@ public abstract class GuiScrollingList
 
                     if (mouseX >= boxLeft && mouseX <= boxRight && var11 >= 0 && var10 >= 0 && var11 < listLength)
                     {
-                        boolean var12 = var11 == this.selectedIndex && System.currentTimeMillis() - this.lastClickTime < 250L;
+                        final boolean var12 = var11 == this.selectedIndex && System.currentTimeMillis() - this.lastClickTime < 250L;
                         this.elementClicked(var11, var12);
                         this.selectedIndex = var11;
                         this.lastClickTime = System.currentTimeMillis();
@@ -263,10 +263,10 @@ public abstract class GuiScrollingList
         this.applyScrollLimits();
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_FOG);
-        Tessellator var18 = Tessellator.instance;
+        final Tessellator var18 = Tessellator.instance;
         this.client.renderEngine.bindTexture(Gui.optionsBackground);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        float var17 = 32.0F;
+        final float var17 = 32.0F;
         var18.startDrawingQuads();
         var18.setColorOpaque_I(2105376);
         var18.addVertexWithUV((double)this.left, (double)this.bottom, 0.0D, (double)((float)this.left / var17), (double)((float)(this.bottom + (int)this.scrollDistance) / var17));
@@ -294,7 +294,7 @@ public abstract class GuiScrollingList
                 if (this.field_25123_p && this.isSelected(var11))
                 {
                     var14 = boxLeft;
-                    int var15 = boxRight;
+                    final int var15 = boxRight;
                     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                     GL11.glDisable(GL11.GL_TEXTURE_2D);
                     var18.startDrawingQuads();
@@ -317,7 +317,7 @@ public abstract class GuiScrollingList
         }
 
         GL11.glDisable(GL11.GL_DEPTH_TEST);
-        byte var20 = 4;
+        final byte var20 = 4;
         this.overlayBackground(0, this.top, 255, 255);
         this.overlayBackground(this.bottom, this.listHeight, 255, 255);
         GL11.glEnable(GL11.GL_BLEND);
@@ -394,12 +394,12 @@ public abstract class GuiScrollingList
         GL11.glDisable(GL11.GL_BLEND);
     }
 
-    private void overlayBackground(int p_22239_1_, int p_22239_2_, int p_22239_3_, int p_22239_4_)
+    private void overlayBackground(final int p_22239_1_, final int p_22239_2_, final int p_22239_3_, final int p_22239_4_)
     {
-        Tessellator var5 = Tessellator.instance;
+        final Tessellator var5 = Tessellator.instance;
         this.client.renderEngine.bindTexture(Gui.optionsBackground);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        float var6 = 32.0F;
+        final float var6 = 32.0F;
         var5.startDrawingQuads();
         var5.setColorRGBA_I(4210752, p_22239_4_);
         var5.addVertexWithUV(0.0D, (double)p_22239_2_, 0.0D, 0.0D, (double)((float)p_22239_2_ / var6));

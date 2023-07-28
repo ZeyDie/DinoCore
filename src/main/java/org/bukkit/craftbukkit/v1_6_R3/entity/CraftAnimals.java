@@ -5,7 +5,7 @@ import org.bukkit.entity.Animals;
 
 public class CraftAnimals extends CraftAgeable implements Animals {
 
-    public CraftAnimals(CraftServer server, net.minecraft.entity.passive.EntityAnimal entity) {
+    public CraftAnimals(final CraftServer server, final net.minecraft.entity.passive.EntityAnimal entity) {
         super(server, entity);
     }
 

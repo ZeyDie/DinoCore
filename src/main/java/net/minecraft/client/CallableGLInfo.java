@@ -12,7 +12,7 @@ class CallableGLInfo implements Callable
     /** The Minecraft instance. */
     final Minecraft mc;
 
-    CallableGLInfo(Minecraft par1Minecraft)
+    CallableGLInfo(final Minecraft par1Minecraft)
     {
         this.mc = par1Minecraft;
     }

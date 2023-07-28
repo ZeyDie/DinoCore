@@ -19,14 +19,14 @@ public class MetadataSerializer
      */
     private Gson gson;
 
-    public void registerMetadataSectionType(MetadataSectionSerializer par1MetadataSectionSerializer, Class par2Class)
+    public void registerMetadataSectionType(final MetadataSectionSerializer par1MetadataSectionSerializer, final Class par2Class)
     {
         this.metadataSectionSerializerRegistry.putObject(par1MetadataSectionSerializer.getSectionName(), new MetadataSerializerRegistration(this, par1MetadataSectionSerializer, par2Class, (MetadataSerializerEmptyAnon)null));
         this.gsonBuilder.registerTypeAdapter(par2Class, par1MetadataSectionSerializer);
         this.gson = null;
     }
 
-    public MetadataSection parseMetadataSection(String par1Str, JsonObject par2JsonObject)
+    public MetadataSection parseMetadataSection(final String par1Str, final JsonObject par2JsonObject)
     {
         if (par1Str == null)
         {
@@ -42,7 +42,7 @@ public class MetadataSerializer
         }
         else
         {
-            MetadataSerializerRegistration metadataserializerregistration = (MetadataSerializerRegistration)this.metadataSectionSerializerRegistry.getObject(par1Str);
+            final MetadataSerializerRegistration metadataserializerregistration = (MetadataSerializerRegistration)this.metadataSectionSerializerRegistry.getObject(par1Str);
 
             if (metadataserializerregistration == null)
             {

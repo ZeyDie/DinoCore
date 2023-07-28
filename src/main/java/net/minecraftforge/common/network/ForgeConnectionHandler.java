@@ -14,40 +14,40 @@ import net.minecraftforge.fluids.FluidIdMapPacket;
 public class ForgeConnectionHandler implements IConnectionHandler {
 
     @Override
-    public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager)
+    public void playerLoggedIn(final Player player, final NetHandler netHandler, final INetworkManager manager)
     {
-        Packet250CustomPayload[] fluidPackets = ForgePacket.makePacketSet(new FluidIdMapPacket());
+        final Packet250CustomPayload[] fluidPackets = ForgePacket.makePacketSet(new FluidIdMapPacket());
         for (int i = 0; i < fluidPackets.length; i++) {
             PacketDispatcher.sendPacketToPlayer(fluidPackets[i], player);
         }
     }
 
     @Override
-    public String connectionReceived(NetLoginHandler netHandler, INetworkManager manager)
+    public String connectionReceived(final NetLoginHandler netHandler, final INetworkManager manager)
     {
         return null;
     }
 
     @Override
-    public void connectionOpened(NetHandler netClientHandler, String server, int port, INetworkManager manager)
+    public void connectionOpened(final NetHandler netClientHandler, final String server, final int port, final INetworkManager manager)
     {
 
     }
 
     @Override
-    public void connectionOpened(NetHandler netClientHandler, MinecraftServer server, INetworkManager manager)
+    public void connectionOpened(final NetHandler netClientHandler, final MinecraftServer server, final INetworkManager manager)
     {
 
     }
 
     @Override
-    public void connectionClosed(INetworkManager manager)
+    public void connectionClosed(final INetworkManager manager)
     {
 
     }
 
     @Override
-    public void clientLoggedIn(NetHandler clientHandler, INetworkManager manager, Packet1Login login)
+    public void clientLoggedIn(final NetHandler clientHandler, final INetworkManager manager, final Packet1Login login)
     {
 
     }

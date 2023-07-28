@@ -23,7 +23,7 @@ public class EntityItemPickupEvent extends PlayerEvent
     public final EntityItem item;
     private boolean handled = false;
 
-    public EntityItemPickupEvent(EntityPlayer player, EntityItem item)
+    public EntityItemPickupEvent(final EntityPlayer player, final EntityItem item)
     {
         super(player);
         this.item = item;

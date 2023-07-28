@@ -9,14 +9,14 @@ import java.util.Random;
 
 public class WorldGenForest extends WorldGenerator
 {
-    public WorldGenForest(boolean par1)
+    public WorldGenForest(final boolean par1)
     {
         super(par1);
     }
 
-    public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
+    public boolean generate(final World par1World, final Random par2Random, final int par3, final int par4, final int par5)
     {
-        int l = par2Random.nextInt(3) + 5;
+        final int l = par2Random.nextInt(3) + 5;
         boolean flag = true;
 
         if (par4 >= 1 && par4 + l + 1 <= 256)
@@ -48,7 +48,7 @@ public class WorldGenForest extends WorldGenerator
                         {
                             l1 = par1World.getBlockId(j1, i1, k1);
 
-                            Block block = Block.blocksList[l1];
+                            final Block block = Block.blocksList[l1];
 
                             if (block != null &&
                                !block.isAirBlock(par1World, j1, i1, k1) &&
@@ -72,8 +72,8 @@ public class WorldGenForest extends WorldGenerator
             else
             {
                 i1 = par1World.getBlockId(par3, par4 - 1, par5);
-                Block soil = Block.blocksList[i1];
-                boolean isValidSoil = soil != null && soil.canSustainPlant(par1World, par3, par4 - 1, par5, ForgeDirection.UP, (BlockSapling)Block.sapling);
+                final Block soil = Block.blocksList[i1];
+                final boolean isValidSoil = soil != null && soil.canSustainPlant(par1World, par3, par4 - 1, par5, ForgeDirection.UP, (BlockSapling)Block.sapling);
 
                 if (isValidSoil && par4 < 256 - l - 1)
                 {
@@ -87,16 +87,16 @@ public class WorldGenForest extends WorldGenerator
 
                         for (l1 = par3 - k1; l1 <= par3 + k1; ++l1)
                         {
-                            int j2 = l1 - par3;
+                            final int j2 = l1 - par3;
 
                             for (int k2 = par5 - k1; k2 <= par5 + k1; ++k2)
                             {
-                                int l2 = k2 - par5;
+                                final int l2 = k2 - par5;
 
                                 if (Math.abs(j2) != k1 || Math.abs(l2) != k1 || par2Random.nextInt(2) != 0 && j1 != 0)
                                 {
-                                    int i3 = par1World.getBlockId(l1, i2, k2);
-                                    Block block = Block.blocksList[i3];
+                                    final int i3 = par1World.getBlockId(l1, i2, k2);
+                                    final Block block = Block.blocksList[i3];
 
                                     if (block == null || block.canBeReplacedByLeaves(par1World, l1, i2, k2))
                                     {
@@ -111,7 +111,7 @@ public class WorldGenForest extends WorldGenerator
                     {
                         j1 = par1World.getBlockId(par3, par4 + i2, par5);
 
-                        Block block = Block.blocksList[j1];
+                        final Block block = Block.blocksList[j1];
 
                         if (block == null || 
                             block.isAirBlock(par1World, par3, par4 + i2, par5) || 

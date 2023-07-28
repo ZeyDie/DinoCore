@@ -8,7 +8,7 @@ public class MinecartUpdateEvent extends MinecartEvent
     public final float y;
     public final float z;
 
-    public MinecartUpdateEvent(EntityMinecart minecart, float x, float y, float z)
+    public MinecartUpdateEvent(final EntityMinecart minecart, final float x, final float y, final float z)
     {
         super(minecart);
         this.x = x;

@@ -25,7 +25,7 @@ public class ItemTossEvent extends ItemEvent
      * @param entityItem The EntityItem being tossed.
      * @param player The player tossing the item.
      */
-    public ItemTossEvent(EntityItem entityItem, EntityPlayer player)
+    public ItemTossEvent(final EntityItem entityItem, final EntityPlayer player)
     {
         super(entityItem);
         this.player = player;

@@ -13,7 +13,7 @@ class CallableIsModded implements Callable
     /** Reference to the IntegratedServer object. */
     final IntegratedServer theIntegratedServer;
 
-    CallableIsModded(IntegratedServer par1IntegratedServer)
+    CallableIsModded(final IntegratedServer par1IntegratedServer)
     {
         this.theIntegratedServer = par1IntegratedServer;
     }

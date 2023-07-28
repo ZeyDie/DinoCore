@@ -21,12 +21,12 @@ public class CommandServerTp extends CommandBase
         return 2;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.tp.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         if (par2ArrayOfStr.length < 1)
         {
@@ -34,7 +34,7 @@ public class CommandServerTp extends CommandBase
         }
         else
         {
-            EntityPlayerMP entityplayermp;
+            final EntityPlayerMP entityplayermp;
 
             if (par2ArrayOfStr.length != 2 && par2ArrayOfStr.length != 4)
             {
@@ -54,7 +54,7 @@ public class CommandServerTp extends CommandBase
             {
                 if (par2ArrayOfStr.length == 1 || par2ArrayOfStr.length == 2)
                 {
-                    EntityPlayerMP entityplayermp1 = getPlayer(par1ICommandSender, par2ArrayOfStr[par2ArrayOfStr.length - 1]);
+                    final EntityPlayerMP entityplayermp1 = getPlayer(par1ICommandSender, par2ArrayOfStr[par2ArrayOfStr.length - 1]);
 
                     if (entityplayermp1 == null)
                     {
@@ -75,9 +75,9 @@ public class CommandServerTp extends CommandBase
             else if (entityplayermp.worldObj != null)
             {
                 int i = par2ArrayOfStr.length - 3;
-                double d0 = func_110666_a(par1ICommandSender, entityplayermp.posX, par2ArrayOfStr[i++]);
-                double d1 = func_110665_a(par1ICommandSender, entityplayermp.posY, par2ArrayOfStr[i++], 0, 0);
-                double d2 = func_110666_a(par1ICommandSender, entityplayermp.posZ, par2ArrayOfStr[i++]);
+                final double d0 = func_110666_a(par1ICommandSender, entityplayermp.posX, par2ArrayOfStr[i++]);
+                final double d1 = func_110665_a(par1ICommandSender, entityplayermp.posY, par2ArrayOfStr[i++], 0, 0);
+                final double d2 = func_110666_a(par1ICommandSender, entityplayermp.posZ, par2ArrayOfStr[i++]);
                 entityplayermp.mountEntity((Entity)null);
                 entityplayermp.setPositionAndUpdate(d0, d1, d2);
                 notifyAdmins(par1ICommandSender, "commands.tp.success.coordinates", new Object[] {entityplayermp.getEntityName(), Double.valueOf(d0), Double.valueOf(d1), Double.valueOf(d2)});
@@ -88,7 +88,7 @@ public class CommandServerTp extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public List addTabCompletionOptions(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         return par2ArrayOfStr.length != 1 && par2ArrayOfStr.length != 2 ? null : getListOfStringsMatchingLastWord(par2ArrayOfStr, MinecraftServer.getServer().getAllUsernames());
     }
@@ -96,7 +96,7 @@ public class CommandServerTp extends CommandBase
     /**
      * Return whether the specified command parameter index is a username parameter.
      */
-    public boolean isUsernameIndex(String[] par1ArrayOfStr, int par2)
+    public boolean isUsernameIndex(final String[] par1ArrayOfStr, final int par2)
     {
         return par2 == 0;
     }

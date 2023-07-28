@@ -28,7 +28,7 @@ public final class WorldSettings
     private boolean bonusChestEnabled;
     private String field_82751_h;
 
-    public WorldSettings(long par1, EnumGameType par3EnumGameType, boolean par4, boolean par5, WorldType par6WorldType)
+    public WorldSettings(final long par1, final EnumGameType par3EnumGameType, final boolean par4, final boolean par5, final WorldType par6WorldType)
     {
         this.field_82751_h = "";
         this.seed = par1;
@@ -38,7 +38,7 @@ public final class WorldSettings
         this.terrainType = par6WorldType;
     }
 
-    public WorldSettings(WorldInfo par1WorldInfo)
+    public WorldSettings(final WorldInfo par1WorldInfo)
     {
         this(par1WorldInfo.getSeed(), par1WorldInfo.getGameType(), par1WorldInfo.isMapFeaturesEnabled(), par1WorldInfo.isHardcoreModeEnabled(), par1WorldInfo.getTerrainType());
     }
@@ -52,7 +52,7 @@ public final class WorldSettings
         return this;
     }
 
-    public WorldSettings func_82750_a(String par1Str)
+    public WorldSettings func_82750_a(final String par1Str)
     {
         this.field_82751_h = par1Str;
         return this;
@@ -125,7 +125,7 @@ public final class WorldSettings
     /**
      * Gets the GameType by ID
      */
-    public static EnumGameType getGameTypeById(int par0)
+    public static EnumGameType getGameTypeById(final int par0)
     {
         return EnumGameType.getByID(par0);
     }

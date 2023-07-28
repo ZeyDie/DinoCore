@@ -15,7 +15,7 @@ public class Packet39AttachEntity extends Packet
 
     public Packet39AttachEntity() {}
 
-    public Packet39AttachEntity(int par1, Entity par2Entity, Entity par3Entity)
+    public Packet39AttachEntity(final int par1, final Entity par2Entity, final Entity par3Entity)
     {
         this.attachState = par1;
         this.ridingEntityId = par2Entity.entityId;
@@ -33,7 +33,7 @@ public class Packet39AttachEntity extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.ridingEntityId = par1DataInput.readInt();
         this.vehicleEntityId = par1DataInput.readInt();
@@ -43,7 +43,7 @@ public class Packet39AttachEntity extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.ridingEntityId);
         par1DataOutput.writeInt(this.vehicleEntityId);
@@ -53,7 +53,7 @@ public class Packet39AttachEntity extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleAttachEntity(this);
     }
@@ -70,9 +70,9 @@ public class Packet39AttachEntity extends Packet
      * eg return packet30entity.entityId == entityId; WARNING : will throw if you compare a packet to a different packet
      * class
      */
-    public boolean containsSameEntityIDAs(Packet par1Packet)
+    public boolean containsSameEntityIDAs(final Packet par1Packet)
     {
-        Packet39AttachEntity packet39attachentity = (Packet39AttachEntity)par1Packet;
+        final Packet39AttachEntity packet39attachentity = (Packet39AttachEntity)par1Packet;
         return packet39attachentity.ridingEntityId == this.ridingEntityId;
     }
 }

@@ -13,19 +13,19 @@ public class CraftContainer extends net.minecraft.inventory.Container {
     private String cachedTitle;
     private final int cachedSize;
 
-    public CraftContainer(InventoryView view, int id) {
+    public CraftContainer(final InventoryView view, final int id) {
         this.view = view;
         this.windowId = id;
         // TODO: Do we need to check that it really is a CraftInventory?
-        net.minecraft.inventory.IInventory top = ((CraftInventory)view.getTopInventory()).getInventory();
-        net.minecraft.inventory.IInventory bottom = ((CraftInventory)view.getBottomInventory()).getInventory();
+        final net.minecraft.inventory.IInventory top = ((CraftInventory)view.getTopInventory()).getInventory();
+        final net.minecraft.inventory.IInventory bottom = ((CraftInventory)view.getBottomInventory()).getInventory();
         cachedType = view.getType();
         cachedTitle = view.getTitle();
         cachedSize = getSize();
         setupSlots(top, bottom);
     }
 
-    public CraftContainer(final Inventory inventory, final HumanEntity player, int id) {
+    public CraftContainer(final Inventory inventory, final HumanEntity player, final int id) {
         this(new InventoryView() {
             @Override
             public Inventory getTopInventory() {
@@ -63,35 +63,35 @@ public class CraftContainer extends net.minecraft.inventory.Container {
     /**
      * NotUsing because adding a player twice is an error
      */
-    public boolean isPlayerNotUsingContainer(net.minecraft.entity.player.EntityPlayer entityhuman) {
+    public boolean isPlayerNotUsingContainer(final net.minecraft.entity.player.EntityPlayer entityhuman) {
         if (cachedType == view.getType() && cachedSize == getSize() && cachedTitle.equals(view.getTitle())) {
             return true;
         }
         // If the window type has changed for some reason, update the player
         // This method will be called every tick or something, so it's
         // as good a place as any to put something like this.
-        boolean typeChanged = (cachedType != view.getType());
+        final boolean typeChanged = (cachedType != view.getType());
         cachedType = view.getType();
         cachedTitle = view.getTitle();
         if (view.getPlayer() instanceof CraftPlayer) {
-            CraftPlayer player = (CraftPlayer) view.getPlayer();
-            int type = getNotchInventoryType(cachedType);
-            net.minecraft.inventory.IInventory top = ((CraftInventory)view.getTopInventory()).getInventory();
-            net.minecraft.inventory.IInventory bottom = ((CraftInventory)view.getBottomInventory()).getInventory();
+            final CraftPlayer player = (CraftPlayer) view.getPlayer();
+            final int type = getNotchInventoryType(cachedType);
+            final net.minecraft.inventory.IInventory top = ((CraftInventory)view.getTopInventory()).getInventory();
+            final net.minecraft.inventory.IInventory bottom = ((CraftInventory)view.getBottomInventory()).getInventory();
             this.inventoryItemStacks.clear();
             this.inventorySlots.clear();
             if (typeChanged) {
                 setupSlots(top, bottom);
             }
-            int size = getSize();
+            final int size = getSize();
             player.getHandle().playerNetServerHandler.sendPacketToPlayer(new net.minecraft.network.packet.Packet100OpenWindow(this.windowId, type, cachedTitle, size, true));
             player.updateInventory();
         }
         return true;
     }
 
-    public static int getNotchInventoryType(InventoryType type) {
-        int typeID;
+    public static int getNotchInventoryType(final InventoryType type) {
+        final int typeID;
         switch(type) {
         case WORKBENCH:
             typeID = 1;
@@ -124,7 +124,7 @@ public class CraftContainer extends net.minecraft.inventory.Container {
         return typeID;
     }
 
-    private void setupSlots(net.minecraft.inventory.IInventory top, net.minecraft.inventory.IInventory bottom) {
+    private void setupSlots(final net.minecraft.inventory.IInventory top, final net.minecraft.inventory.IInventory bottom) {
         switch(cachedType) {
         case CREATIVE:
             break; // TODO: This should be an error?
@@ -154,12 +154,12 @@ public class CraftContainer extends net.minecraft.inventory.Container {
         }
     }
 
-    private void setupChest(net.minecraft.inventory.IInventory top, net.minecraft.inventory.IInventory bottom) {
-        int rows = top.getSizeInventory() / 9;
+    private void setupChest(final net.minecraft.inventory.IInventory top, final net.minecraft.inventory.IInventory bottom) {
+        final int rows = top.getSizeInventory() / 9;
         int row;
         int col;
         // This code copied from ContainerChest
-        int i = (rows - 4) * 18;
+        final int i = (rows - 4) * 18;
         for (row = 0; row < rows; ++row) {
             for (col = 0; col < 9; ++col) {
                 this.addSlotToContainer(new net.minecraft.inventory.Slot(top, col + row * 9, 8 + col * 18, 18 + row * 18));
@@ -178,7 +178,7 @@ public class CraftContainer extends net.minecraft.inventory.Container {
         // End copy from ContainerChest
     }
 
-    private void setupWorkbench(net.minecraft.inventory.IInventory top, net.minecraft.inventory.IInventory bottom) {
+    private void setupWorkbench(final net.minecraft.inventory.IInventory top, final net.minecraft.inventory.IInventory bottom) {
         // This code copied from ContainerWorkbench
         this.addSlotToContainer(new net.minecraft.inventory.Slot(top, 0, 124, 35));
 
@@ -203,7 +203,7 @@ public class CraftContainer extends net.minecraft.inventory.Container {
         // End copy from ContainerWorkbench
     }
 
-    private void setupFurnace(net.minecraft.inventory.IInventory top, net.minecraft.inventory.IInventory bottom) {
+    private void setupFurnace(final net.minecraft.inventory.IInventory top, final net.minecraft.inventory.IInventory bottom) {
         // This code copied from ContainerFurnace
         this.addSlotToContainer(new net.minecraft.inventory.Slot(top, 0, 56, 17));
         this.addSlotToContainer(new net.minecraft.inventory.Slot(top, 1, 56, 53));
@@ -224,7 +224,7 @@ public class CraftContainer extends net.minecraft.inventory.Container {
         // End copy from ContainerFurnace
     }
 
-    private void setupDispenser(net.minecraft.inventory.IInventory top, net.minecraft.inventory.IInventory bottom) {
+    private void setupDispenser(final net.minecraft.inventory.IInventory top, final net.minecraft.inventory.IInventory bottom) {
         // This code copied from ContainerDispenser
         int row;
         int col;
@@ -247,7 +247,7 @@ public class CraftContainer extends net.minecraft.inventory.Container {
         // End copy from ContainerDispenser
     }
 
-    private void setupEnchanting(net.minecraft.inventory.IInventory top, net.minecraft.inventory.IInventory bottom) {
+    private void setupEnchanting(final net.minecraft.inventory.IInventory top, final net.minecraft.inventory.IInventory bottom) {
         // This code copied from ContainerEnchantTable
         this.addSlotToContainer((new net.minecraft.inventory.Slot(top, 0, 25, 47)));
 
@@ -265,7 +265,7 @@ public class CraftContainer extends net.minecraft.inventory.Container {
         // End copy from ContainerEnchantTable
     }
 
-    private void setupBrewing(net.minecraft.inventory.IInventory top, net.minecraft.inventory.IInventory bottom) {
+    private void setupBrewing(final net.minecraft.inventory.IInventory top, final net.minecraft.inventory.IInventory bottom) {
         // This code copied from ContainerBrewingStand
         this.addSlotToContainer(new net.minecraft.inventory.Slot(top, 0, 56, 46));
         this.addSlotToContainer(new net.minecraft.inventory.Slot(top, 1, 79, 53));
@@ -286,9 +286,9 @@ public class CraftContainer extends net.minecraft.inventory.Container {
         // End copy from ContainerBrewingStand
     }
 
-    private void setupHopper(net.minecraft.inventory.IInventory top, net.minecraft.inventory.IInventory bottom) {
+    private void setupHopper(final net.minecraft.inventory.IInventory top, final net.minecraft.inventory.IInventory bottom) {
         // This code copied from ContainerHopper
-        byte b0 = 51;
+        final byte b0 = 51;
 
         int i;
 
@@ -308,7 +308,7 @@ public class CraftContainer extends net.minecraft.inventory.Container {
         // End copy from ContainerHopper
     }
 
-    public boolean canInteractWith(net.minecraft.entity.player.EntityPlayer entity) {
+    public boolean canInteractWith(final net.minecraft.entity.player.EntityPlayer entity) {
         return true;
     }
 }

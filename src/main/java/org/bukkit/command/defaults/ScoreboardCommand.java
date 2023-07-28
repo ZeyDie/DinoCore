@@ -58,10 +58,10 @@ public class ScoreboardCommand extends VanillaCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender))
             return true;
-        if (args.length < 1 || args[0].length() == 0) {
+        if (args.length < 1 || args[0].isEmpty()) {
             sender.sendMessage(ChatColor.RED + "Usage: /scoreboard <objectives|players|teams>");
             return false;
         }
@@ -74,13 +74,13 @@ public class ScoreboardCommand extends VanillaCommand {
                 return false;
             }
             if (args[1].equalsIgnoreCase("list")) {
-                Set<Objective> objectives = mainScoreboard.getObjectives();
+                final Set<Objective> objectives = mainScoreboard.getObjectives();
                 if (objectives.isEmpty()) {
                     sender.sendMessage(ChatColor.RED + "There are no objectives on the scoreboard");
                     return false;
                 }
                 sender.sendMessage(ChatColor.DARK_GREEN + "Showing " + objectives.size() + " objective(s) on scoreboard");
-                for (Objective objective : objectives) {
+                for (final Objective objective : objectives) {
                     sender.sendMessage("- " + objective.getName() + ": displays as '" + objective.getDisplayName() + "' and is type '" + objective.getCriteria() + "'");
                 }
             } else if (args[1].equalsIgnoreCase("add")) {
@@ -88,8 +88,8 @@ public class ScoreboardCommand extends VanillaCommand {
                     sender.sendMessage(ChatColor.RED + "/scoreboard objectives add <name> <criteriaType> [display name ...]");
                     return false;
                 }
-                String name = args[2];
-                String criteria = args[3];
+                final String name = args[2];
+                final String criteria = args[3];
 
                 if (criteria == null) {
                     sender.sendMessage(ChatColor.RED + "Invalid objective criteria type. Valid types are: " + stringCollectionToString(OBJECTIVES_CRITERIA));
@@ -106,8 +106,8 @@ public class ScoreboardCommand extends VanillaCommand {
                             return false;
                         }
                     }
-                    Objective objective = mainScoreboard.registerNewObjective(name, criteria);
-                    if (displayName != null && displayName.length() > 0) {
+                    final Objective objective = mainScoreboard.registerNewObjective(name, criteria);
+                    if (displayName != null && !displayName.isEmpty()) {
                         objective.setDisplayName(displayName);
                     }
                     sender.sendMessage("Added new objective '" + name + "' successfully");
@@ -117,8 +117,8 @@ public class ScoreboardCommand extends VanillaCommand {
                     sender.sendMessage(ChatColor.RED + "/scoreboard objectives remove <name>");
                     return false;
                 }
-                String name = args[2];
-                Objective objective = mainScoreboard.getObjective(name);
+                final String name = args[2];
+                final Objective objective = mainScoreboard.getObjective(name);
                 if (objective == null) {
                     sender.sendMessage(ChatColor.RED + "No objective was found by the name '" + name + "'");
                 } else {
@@ -130,14 +130,14 @@ public class ScoreboardCommand extends VanillaCommand {
                     sender.sendMessage(ChatColor.RED + "/scoreboard objectives setdisplay <slot> [objective]");
                     return false;
                 }
-                String slotName = args[2];
-                DisplaySlot slot = OBJECTIVES_DISPLAYSLOT.get(slotName);
+                final String slotName = args[2];
+                final DisplaySlot slot = OBJECTIVES_DISPLAYSLOT.get(slotName);
                 if (slot == null) {
                     sender.sendMessage(ChatColor.RED + "No such display slot '" + slotName + "'");
                 } else {
                     if (args.length == 4) {
-                        String objectiveName = args[3];
-                        Objective objective = mainScoreboard.getObjective(objectiveName);
+                        final String objectiveName = args[3];
+                        final Objective objective = mainScoreboard.getObjective(objectiveName);
                         if (objective == null) {
                             sender.sendMessage(ChatColor.RED + "No objective was found by the name '" + objectiveName + "'");
                             return false;
@@ -146,7 +146,7 @@ public class ScoreboardCommand extends VanillaCommand {
                         objective.setDisplaySlot(slot);
                         sender.sendMessage("Set the display objective in slot '" + slotName + "' to '" + objective.getName() + "'");
                     } else {
-                        Objective objective = mainScoreboard.getObjective(slot);
+                        final Objective objective = mainScoreboard.getObjective(slot);
                         if (objective != null) {
                             objective.setDisplaySlot(null);
                         }
@@ -170,8 +170,8 @@ public class ScoreboardCommand extends VanillaCommand {
                     }
                     return false;
                 }
-                String objectiveName = args[3];
-                Objective objective = mainScoreboard.getObjective(objectiveName);
+                final String objectiveName = args[3];
+                final Objective objective = mainScoreboard.getObjective(objectiveName);
                 if (objective == null) {
                     sender.sendMessage(ChatColor.RED + "No objective was found by the name '" + objectiveName + "'");
                     return false;
@@ -180,11 +180,11 @@ public class ScoreboardCommand extends VanillaCommand {
                     return false;
                 }
 
-                String valueString = args[4];
-                int value;
+                final String valueString = args[4];
+                final int value;
                 try {
                     value = Integer.parseInt(valueString);
-                } catch (NumberFormatException e) {
+                } catch (final NumberFormatException e) {
                     sender.sendMessage(ChatColor.RED + "'" + valueString + "' is not a valid number");
                     return false;
                 }
@@ -193,13 +193,13 @@ public class ScoreboardCommand extends VanillaCommand {
                     return false;
                 }
 
-                String playerName = args[2];
+                final String playerName = args[2];
                 if (playerName.length() > 16) {
                     sender.sendMessage(ChatColor.RED + "'" + playerName + "' is too long for a player name");
                     return false;
                 }
-                Score score = objective.getScore(Bukkit.getOfflinePlayer(playerName));
-                int newScore;
+                final Score score = objective.getScore(Bukkit.getOfflinePlayer(playerName));
+                final int newScore;
                 if (args[1].equalsIgnoreCase("set")) {
                     newScore = value;
                 } else if (args[1].equalsIgnoreCase("add")) {
@@ -214,7 +214,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     sender.sendMessage(ChatColor.RED + "/scoreboard players reset <player>");
                     return false;
                 }
-                String playerName = args[2];
+                final String playerName = args[2];
                 if (playerName.length() > 16) {
                     sender.sendMessage(ChatColor.RED + "'" + playerName + "' is too long for a player name");
                     return false;
@@ -227,7 +227,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     return false;
                 }
                 if (args.length == 2) {
-                    Set<OfflinePlayer> players = mainScoreboard.getPlayers();
+                    final Set<OfflinePlayer> players = mainScoreboard.getPlayers();
                     if (players.isEmpty()) {
                         sender.sendMessage(ChatColor.RED + "There are no tracked players on the scoreboard");
                     } else {
@@ -235,17 +235,17 @@ public class ScoreboardCommand extends VanillaCommand {
                         sender.sendMessage(offlinePlayerSetToString(players));
                     }
                 } else {
-                    String playerName = args[2];
+                    final String playerName = args[2];
                     if (playerName.length() > 16) {
                         sender.sendMessage(ChatColor.RED + "'" + playerName + "' is too long for a player name");
                         return false;
                     }
-                    Set<Score> scores = mainScoreboard.getScores(Bukkit.getOfflinePlayer(playerName));
+                    final Set<Score> scores = mainScoreboard.getScores(Bukkit.getOfflinePlayer(playerName));
                     if (scores.isEmpty()) {
                         sender.sendMessage(ChatColor.RED + "Player " + playerName + " has no scores recorded");
                     } else {
                         sender.sendMessage(ChatColor.DARK_GREEN + "Showing " + scores.size() + " tracked objective(s) for " + playerName);
-                        for (Score score : scores) {
+                        for (final Score score : scores) {
                             sender.sendMessage("- " + score.getObjective().getDisplayName() + ": " + score.getScore() + " (" + score.getObjective().getName() + ")");
                         }
                     }
@@ -258,22 +258,22 @@ public class ScoreboardCommand extends VanillaCommand {
             }
             if (args[1].equalsIgnoreCase("list")) {
                 if (args.length == 2) {
-                    Set<Team> teams = mainScoreboard.getTeams();
+                    final Set<Team> teams = mainScoreboard.getTeams();
                     if (teams.isEmpty()) {
                         sender.sendMessage(ChatColor.RED + "There are no teams registered on the scoreboard");
                     } else {
                         sender.sendMessage(ChatColor.DARK_GREEN + "Showing " + teams.size() + " teams on the scoreboard");
-                        for (Team team : teams) {
+                        for (final Team team : teams) {
                             sender.sendMessage("- " + team.getName() + ": '" + team.getDisplayName() + "' has " + team.getSize() + " players");
                         }
                     }
                 } else if (args.length == 3) {
-                    String teamName = args[2];
-                    Team team = mainScoreboard.getTeam(teamName);
+                    final String teamName = args[2];
+                    final Team team = mainScoreboard.getTeam(teamName);
                     if (team == null) {
                         sender.sendMessage(ChatColor.RED + "No team was found by the name '" + teamName + "'");
                     } else {
-                        Set<OfflinePlayer> players = team.getPlayers();
+                        final Set<OfflinePlayer> players = team.getPlayers();
                         if (players.isEmpty()) {
                             sender.sendMessage(ChatColor.RED + "Team " + team.getName() + " has no players");
                         } else {
@@ -290,7 +290,7 @@ public class ScoreboardCommand extends VanillaCommand {
                     sender.sendMessage(ChatColor.RED + "/scoreboard teams add <name> [display name ...]");
                     return false;
                 }
-                String name = args[2];
+                final String name = args[2];
                 if (name.length() > 16) {
                     sender.sendMessage(ChatColor.RED + "The name '" + name + "' is too long for a team, it can be at most 16 characters long");
                 } else if (mainScoreboard.getTeam(name) != null) {
@@ -304,8 +304,8 @@ public class ScoreboardCommand extends VanillaCommand {
                             return false;
                         }
                     }
-                    Team team = mainScoreboard.registerNewTeam(name);
-                    if (displayName != null && displayName.length() > 0) {
+                    final Team team = mainScoreboard.registerNewTeam(name);
+                    if (displayName != null && !displayName.isEmpty()) {
                         team.setDisplayName(displayName);
                     }
                     sender.sendMessage("Added new team '" + team.getName() + "' successfully");
@@ -315,8 +315,8 @@ public class ScoreboardCommand extends VanillaCommand {
                     sender.sendMessage(ChatColor.RED + "/scoreboard teams remove <name>");
                     return false;
                 }
-                String name = args[2];
-                Team team = mainScoreboard.getTeam(name);
+                final String name = args[2];
+                final Team team = mainScoreboard.getTeam(name);
                 if (team == null) {
                     sender.sendMessage(ChatColor.RED + "No team was found by the name '" + name + "'");
                 } else {
@@ -328,16 +328,16 @@ public class ScoreboardCommand extends VanillaCommand {
                     sender.sendMessage(ChatColor.RED + "/scoreboard teams clear <name>");
                     return false;
                 }
-                String name = args[2];
-                Team team = mainScoreboard.getTeam(name);
+                final String name = args[2];
+                final Team team = mainScoreboard.getTeam(name);
                 if (team == null) {
                     sender.sendMessage(ChatColor.RED + "No team was found by the name '" + name + "'");
                 } else {
-                    Set<OfflinePlayer> players = team.getPlayers();
+                    final Set<OfflinePlayer> players = team.getPlayers();
                     if (players.isEmpty()) {
                         sender.sendMessage(ChatColor.RED + "Team " + team.getName() + " is already empty, cannot remove nonexistant players");
                     } else {
-                        for (OfflinePlayer player : players) {
+                        for (final OfflinePlayer player : players) {
                             team.removePlayer(player);
                         }
                         sender.sendMessage("Removed all " + players.size() + " player(s) from team " + team.getName());
@@ -348,20 +348,20 @@ public class ScoreboardCommand extends VanillaCommand {
                     sender.sendMessage(ChatColor.RED + "/scoreboard teams join <team> [player...]");
                     return false;
                 }
-                String teamName = args[2];
-                Team team = mainScoreboard.getTeam(teamName);
+                final String teamName = args[2];
+                final Team team = mainScoreboard.getTeam(teamName);
                 if (team == null) {
                     sender.sendMessage(ChatColor.RED + "No team was found by the name '" + teamName + "'");
                 } else {
-                    Set<String> addedPlayers = new HashSet<String>();
+                    final Set<String> addedPlayers = new HashSet<String>();
                     if ((sender instanceof Player) && args.length == 3) {
                         team.addPlayer((Player) sender);
                         addedPlayers.add(sender.getName());
                     } else {
                         for (int i = 3; i < args.length; i++) {
-                            String playerName = args[i];
-                            OfflinePlayer offlinePlayer;
-                            Player player = Bukkit.getPlayerExact(playerName);
+                            final String playerName = args[i];
+                            final OfflinePlayer offlinePlayer;
+                            final Player player = Bukkit.getPlayerExact(playerName);
                             if (player != null) {
                                 offlinePlayer = player;
                             } else {
@@ -378,10 +378,10 @@ public class ScoreboardCommand extends VanillaCommand {
                     sender.sendMessage(ChatColor.RED + "/scoreboard teams leave [player...]");
                     return false;
                 }
-                Set<String> left = new HashSet<String>();
-                Set<String> noTeam = new HashSet<String>();
+                final Set<String> left = new HashSet<String>();
+                final Set<String> noTeam = new HashSet<String>();
                 if ((sender instanceof Player) && args.length == 2) {
-                    Team team = mainScoreboard.getPlayerTeam((Player) sender);
+                    final Team team = mainScoreboard.getPlayerTeam((Player) sender);
                     if (team != null) {
                         team.removePlayer((Player) sender);
                         left.add(sender.getName());
@@ -390,15 +390,15 @@ public class ScoreboardCommand extends VanillaCommand {
                     }
                 } else {
                     for (int i = 2; i < args.length; i++) {
-                        String playerName = args[i];
-                        OfflinePlayer offlinePlayer;
-                        Player player = Bukkit.getPlayerExact(playerName);
+                        final String playerName = args[i];
+                        final OfflinePlayer offlinePlayer;
+                        final Player player = Bukkit.getPlayerExact(playerName);
                         if (player != null) {
                             offlinePlayer = player;
                         } else {
                             offlinePlayer = Bukkit.getOfflinePlayer(playerName);
                         }
-                        Team team = mainScoreboard.getPlayerTeam(offlinePlayer);
+                        final Team team = mainScoreboard.getPlayerTeam(offlinePlayer);
                         if (team != null) {
                             team.removePlayer(offlinePlayer);
                             left.add(offlinePlayer.getName());
@@ -418,13 +418,13 @@ public class ScoreboardCommand extends VanillaCommand {
                     sender.sendMessage(ChatColor.RED + "/scoreboard teams option <team> <friendlyfire|color|seefriendlyinvisibles> <value>");
                     return false;
                 }
-                String teamName = args[2];
-                Team team = mainScoreboard.getTeam(teamName);
+                final String teamName = args[2];
+                final Team team = mainScoreboard.getTeam(teamName);
                 if (team == null) {
                     sender.sendMessage(ChatColor.RED + "No team was found by the name '" + teamName + "'");
                     return false;
                 }
-                String option = args[3].toLowerCase();
+                final String option = args[3].toLowerCase();
                 if (!option.equals("friendlyfire") && !option.equals("color") && !option.equals("seefriendlyinvisibles")) {
                     sender.sendMessage(ChatColor.RED + "/scoreboard teams option <team> <friendlyfire|color|seefriendlyinvisibles> <value>");
                     return false;
@@ -436,9 +436,9 @@ public class ScoreboardCommand extends VanillaCommand {
                         sender.sendMessage(ChatColor.RED + "Valid values for option " + option + " are: true and false");
                     }
                 } else {
-                    String value = args[4].toLowerCase();
+                    final String value = args[4].toLowerCase();
                     if (option.equals("color")) {
-                        ChatColor color = TEAMS_OPTION_COLOR.get(value);
+                        final ChatColor color = TEAMS_OPTION_COLOR.get(value);
                         if (color == null) {
                             sender.sendMessage(ChatColor.RED + "Valid values for option color are: " + stringCollectionToString(TEAMS_OPTION_COLOR.keySet()));
                             return false;
@@ -467,7 +467,7 @@ public class ScoreboardCommand extends VanillaCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+    public List<String> tabComplete(final CommandSender sender, final String alias, final String[] args) throws IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
         Validate.notNull(alias, "Alias cannot be null");
@@ -550,10 +550,10 @@ public class ScoreboardCommand extends VanillaCommand {
         return ImmutableList.of();
     }
 
-    private static String offlinePlayerSetToString(Set<OfflinePlayer> set) {
-        StringBuilder string = new StringBuilder();
+    private static String offlinePlayerSetToString(final Set<OfflinePlayer> set) {
+        final StringBuilder string = new StringBuilder();
         String lastValue = null;
-        for (OfflinePlayer value : set) {
+        for (final OfflinePlayer value : set) {
             string.append(lastValue = value.getName()).append(", ");
         }
         string.delete(string.length() - 2, Integer.MAX_VALUE);
@@ -564,10 +564,10 @@ public class ScoreboardCommand extends VanillaCommand {
 
     }
 
-    private static String stringCollectionToString(Collection<String> set) {
-        StringBuilder string = new StringBuilder();
+    private static String stringCollectionToString(final Collection<String> set) {
+        final StringBuilder string = new StringBuilder();
         String lastValue = null;
-        for (String value : set) {
+        for (final String value : set) {
             string.append(lastValue = value).append(", ");
         }
         string.delete(string.length() - 2, Integer.MAX_VALUE);
@@ -578,8 +578,8 @@ public class ScoreboardCommand extends VanillaCommand {
     }
 
     private List<String> getCurrentObjectives() {
-        List<String> list = new ArrayList<String>();
-        for (Objective objective : Bukkit.getScoreboardManager().getMainScoreboard().getObjectives()) {
+        final List<String> list = new ArrayList<String>();
+        for (final Objective objective : Bukkit.getScoreboardManager().getMainScoreboard().getObjectives()) {
             list.add(objective.getName());
         }
         Collections.sort(list, String.CASE_INSENSITIVE_ORDER);
@@ -587,8 +587,8 @@ public class ScoreboardCommand extends VanillaCommand {
     }
 
     private List<String> getCurrentPlayers() {
-        List<String> list = new ArrayList<String>();
-        for (OfflinePlayer player : Bukkit.getScoreboardManager().getMainScoreboard().getPlayers()) {
+        final List<String> list = new ArrayList<String>();
+        for (final OfflinePlayer player : Bukkit.getScoreboardManager().getMainScoreboard().getPlayers()) {
             list.add(player.getName());
         }
         Collections.sort(list, String.CASE_INSENSITIVE_ORDER);
@@ -596,8 +596,8 @@ public class ScoreboardCommand extends VanillaCommand {
     }
 
     private List<String> getCurrentTeams() {
-        List<String> list = new ArrayList<String>();
-        for (Team team : Bukkit.getScoreboardManager().getMainScoreboard().getTeams()) {
+        final List<String> list = new ArrayList<String>();
+        for (final Team team : Bukkit.getScoreboardManager().getMainScoreboard().getTeams()) {
             list.add(team.getName());
         }
         Collections.sort(list, String.CASE_INSENSITIVE_ORDER);

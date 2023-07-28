@@ -166,7 +166,7 @@ public class CraftingManager
     // CraftBukkit end
 
     // CraftBukkit - default -> public
-    public ShapedRecipes addRecipe(ItemStack par1ItemStack, Object ... par2ArrayOfObj)
+    public ShapedRecipes addRecipe(final ItemStack par1ItemStack, final Object ... par2ArrayOfObj)
     {
         String s = "";
         int i = 0;
@@ -175,11 +175,11 @@ public class CraftingManager
 
         if (par2ArrayOfObj[i] instanceof String[])
         {
-            String[] astring = (String[])((String[])par2ArrayOfObj[i++]);
+            final String[] astring = (String[])((String[])par2ArrayOfObj[i++]);
 
             for (int l = 0; l < astring.length; ++l)
             {
-                String s1 = astring[l];
+                final String s1 = astring[l];
                 ++k;
                 j = s1.length();
                 s = s + s1;
@@ -189,18 +189,18 @@ public class CraftingManager
         {
             while (par2ArrayOfObj[i] instanceof String)
             {
-                String s2 = (String)par2ArrayOfObj[i++];
+                final String s2 = (String)par2ArrayOfObj[i++];
                 ++k;
                 j = s2.length();
                 s = s + s2;
             }
         }
 
-        HashMap hashmap;
+        final HashMap hashmap;
 
         for (hashmap = new HashMap(); i < par2ArrayOfObj.length; i += 2)
         {
-            Character character = (Character)par2ArrayOfObj[i];
+            final Character character = (Character)par2ArrayOfObj[i];
             ItemStack itemstack1 = null;
 
             if (par2ArrayOfObj[i + 1] instanceof Item)
@@ -219,11 +219,11 @@ public class CraftingManager
             hashmap.put(character, itemstack1);
         }
 
-        ItemStack[] aitemstack = new ItemStack[j * k];
+        final ItemStack[] aitemstack = new ItemStack[j * k];
 
         for (int i1 = 0; i1 < j * k; ++i1)
         {
-            char c0 = s.charAt(i1);
+            final char c0 = s.charAt(i1);
 
             if (hashmap.containsKey(Character.valueOf(c0)))
             {
@@ -235,20 +235,20 @@ public class CraftingManager
             }
         }
 
-        ShapedRecipes shapedrecipes = new ShapedRecipes(j, k, aitemstack, par1ItemStack);
+        final ShapedRecipes shapedrecipes = new ShapedRecipes(j, k, aitemstack, par1ItemStack);
         this.recipes.add(shapedrecipes);
         return shapedrecipes;
     }
 
-    public void addShapelessRecipe(ItemStack par1ItemStack, Object ... par2ArrayOfObj)
+    public void addShapelessRecipe(final ItemStack par1ItemStack, final Object ... par2ArrayOfObj)
     {
-        ArrayList arraylist = new ArrayList();
-        Object[] aobject = par2ArrayOfObj;
-        int i = par2ArrayOfObj.length;
+        final ArrayList arraylist = new ArrayList();
+        final Object[] aobject = par2ArrayOfObj;
+        final int i = par2ArrayOfObj.length;
 
         for (int j = 0; j < i; ++j)
         {
-            Object object1 = aobject[j];
+            final Object object1 = aobject[j];
 
             if (object1 instanceof ItemStack)
             {
@@ -272,7 +272,7 @@ public class CraftingManager
         this.recipes.add(new ShapelessRecipes(par1ItemStack, arraylist));
     }
 
-    public ItemStack findMatchingRecipe(InventoryCrafting par1InventoryCrafting, World par2World)
+    public ItemStack findMatchingRecipe(final InventoryCrafting par1InventoryCrafting, final World par2World)
     {
         int i = 0;
         ItemStack itemstack = null;
@@ -281,7 +281,7 @@ public class CraftingManager
 
         for (j = 0; j < par1InventoryCrafting.getSizeInventory(); ++j)
         {
-            ItemStack itemstack2 = par1InventoryCrafting.getStackInSlot(j);
+            final ItemStack itemstack2 = par1InventoryCrafting.getStackInSlot(j);
 
             if (itemstack2 != null)
             {
@@ -301,10 +301,10 @@ public class CraftingManager
 
         if (i == 2 && itemstack.itemID == itemstack1.itemID && itemstack.stackSize == 1 && itemstack1.stackSize == 1 && Item.itemsList[itemstack.itemID].isRepairable())
         {
-            Item item = Item.itemsList[itemstack.itemID];
-            int k = item.getMaxDamage() - itemstack.getItemDamageForDisplay();
-            int l = item.getMaxDamage() - itemstack1.getItemDamageForDisplay();
-            int i1 = k + l + item.getMaxDamage() * 5 / 100;
+            final Item item = Item.itemsList[itemstack.itemID];
+            final int k = item.getMaxDamage() - itemstack.getItemDamageForDisplay();
+            final int l = item.getMaxDamage() - itemstack1.getItemDamageForDisplay();
+            final int i1 = k + l + item.getMaxDamage() * 5 / 100;
             int j1 = item.getMaxDamage() - i1;
 
             if (j1 < 0)
@@ -320,10 +320,10 @@ public class CraftingManager
             // Cauldron end
             // CraftBukkit start - Construct a dummy repair recipe
             ItemStack result = new ItemStack(itemstack.itemID, 1, j1);
-            List<ItemStack> ingredients = new ArrayList<ItemStack>();
+            final List<ItemStack> ingredients = new ArrayList<ItemStack>();
             ingredients.add(itemstack.copy());
             ingredients.add(itemstack1.copy());
-            ShapelessRecipes recipe = new ShapelessRecipes(result.copy(), ingredients);
+            final ShapelessRecipes recipe = new ShapelessRecipes(result.copy(), ingredients);
             par1InventoryCrafting.currentRecipe = recipe;
             result = CraftEventFactory.callPreCraftEvent(par1InventoryCrafting, result, lastCraftView, true);
             return result;
@@ -333,13 +333,13 @@ public class CraftingManager
         {
             for (j = 0; j < this.recipes.size(); ++j)
             {
-                IRecipe irecipe = (IRecipe)this.recipes.get(j);
+                final IRecipe irecipe = (IRecipe)this.recipes.get(j);
 
                 if (irecipe.matches(par1InventoryCrafting, par2World) && par1InventoryCrafting.resultInventory != null) // Cauldron - add null check for vanilla compatibility
                 {
                     // CraftBukkit start - INVENTORY_PRE_CRAFT event
                     par1InventoryCrafting.currentRecipe = irecipe;
-                    ItemStack result = irecipe.getCraftingResult(par1InventoryCrafting);
+                    final ItemStack result = irecipe.getCraftingResult(par1InventoryCrafting);
                     return CraftEventFactory.callPreCraftEvent(par1InventoryCrafting, result, lastCraftView, false);
                     // CraftBukkit end
                 }

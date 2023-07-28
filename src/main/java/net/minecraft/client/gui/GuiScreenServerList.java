@@ -16,7 +16,7 @@ public class GuiScreenServerList extends GuiScreen
     private final ServerData theServerData;
     private GuiTextField serverTextField;
 
-    public GuiScreenServerList(GuiScreen par1GuiScreen, ServerData par2ServerData)
+    public GuiScreenServerList(final GuiScreen par1GuiScreen, final ServerData par2ServerData)
     {
         this.guiScreen = par1GuiScreen;
         this.theServerData = par2ServerData;
@@ -43,7 +43,7 @@ public class GuiScreenServerList extends GuiScreen
         this.serverTextField.setMaxStringLength(128);
         this.serverTextField.setFocused(true);
         this.serverTextField.setText(this.mc.gameSettings.lastServer);
-        ((GuiButton)this.buttonList.get(0)).enabled = this.serverTextField.getText().length() > 0 && this.serverTextField.getText().split(":").length > 0;
+        ((GuiButton)this.buttonList.get(0)).enabled = !this.serverTextField.getText().isEmpty() && this.serverTextField.getText().split(":").length > 0;
     }
 
     /**
@@ -59,7 +59,7 @@ public class GuiScreenServerList extends GuiScreen
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
@@ -78,11 +78,11 @@ public class GuiScreenServerList extends GuiScreen
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         if (this.serverTextField.textboxKeyTyped(par1, par2))
         {
-            ((GuiButton)this.buttonList.get(0)).enabled = this.serverTextField.getText().length() > 0 && this.serverTextField.getText().split(":").length > 0;
+            ((GuiButton)this.buttonList.get(0)).enabled = !this.serverTextField.getText().isEmpty() && this.serverTextField.getText().split(":").length > 0;
         }
         else if (par2 == 28 || par2 == 156)
         {
@@ -93,7 +93,7 @@ public class GuiScreenServerList extends GuiScreen
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int par1, int par2, int par3)
+    protected void mouseClicked(final int par1, final int par2, final int par3)
     {
         super.mouseClicked(par1, par2, par3);
         this.serverTextField.mouseClicked(par1, par2, par3);
@@ -102,7 +102,7 @@ public class GuiScreenServerList extends GuiScreen
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRenderer, I18n.getString("selectServer.direct"), this.width / 2, 20, 16777215);

@@ -15,7 +15,7 @@ public class PathEntity
     /** The total length of the path */
     private int pathLength;
 
-    public PathEntity(PathPoint[] par1ArrayOfPathPoint)
+    public PathEntity(final PathPoint[] par1ArrayOfPathPoint)
     {
         this.points = par1ArrayOfPathPoint;
         this.pathLength = par1ArrayOfPathPoint.length;
@@ -48,7 +48,7 @@ public class PathEntity
     /**
      * return the PathPoint located at the specified PathIndex, usually the current one
      */
-    public PathPoint getPathPointFromIndex(int par1)
+    public PathPoint getPathPointFromIndex(final int par1)
     {
         return this.points[par1];
     }
@@ -58,7 +58,7 @@ public class PathEntity
         return this.pathLength;
     }
 
-    public void setCurrentPathLength(int par1)
+    public void setCurrentPathLength(final int par1)
     {
         this.pathLength = par1;
     }
@@ -68,7 +68,7 @@ public class PathEntity
         return this.currentPathIndex;
     }
 
-    public void setCurrentPathIndex(int par1)
+    public void setCurrentPathIndex(final int par1)
     {
         this.currentPathIndex = par1;
     }
@@ -76,14 +76,14 @@ public class PathEntity
     /**
      * Gets the vector of the PathPoint associated with the given index.
      */
-    public Vec3 getVectorFromIndex(Entity par1Entity, int par2) {
+    public Vec3 getVectorFromIndex(final Entity par1Entity, final int par2) {
         //todo sa1zer_ code start
-        boolean useSafeMod = MultiThreadSettings.getInstance().getSettings().getMobsSettings().isEnable();
+        final boolean useSafeMod = MultiThreadSettings.getInstance().getSettings().getMobsSettings().isEnable();
         if(useSafeMod) {
             try {
                 return vectorFromIndex(par1Entity, par2);
             }
-            catch (Throwable w) {
+            catch (final Throwable w) {
                 return null;
             }
         } else {
@@ -92,17 +92,17 @@ public class PathEntity
         //todo sa1zer_ code end
     }
 
-    private Vec3 vectorFromIndex(Entity par1Entity, int par2) {
-        double d0 = (double)this.points[par2].xCoord + (double)((int)(par1Entity.width + 1.0F)) * 0.5D;
-        double d1 = (double)this.points[par2].yCoord;
-        double d2 = (double)this.points[par2].zCoord + (double)((int)(par1Entity.width + 1.0F)) * 0.5D;
+    private Vec3 vectorFromIndex(final Entity par1Entity, final int par2) {
+        final double d0 = (double)this.points[par2].xCoord + (double)((int)(par1Entity.width + 1.0F)) * 0.5D;
+        final double d1 = (double)this.points[par2].yCoord;
+        final double d2 = (double)this.points[par2].zCoord + (double)((int)(par1Entity.width + 1.0F)) * 0.5D;
         return par1Entity.worldObj.getWorldVec3Pool().getVecFromPool(d0, d1, d2);
     }
 
     /**
      * returns the current PathEntity target node as Vec3D
      */
-    public Vec3 getPosition(Entity par1Entity)
+    public Vec3 getPosition(final Entity par1Entity)
     {
         return this.getVectorFromIndex(par1Entity, this.currentPathIndex);
     }
@@ -110,7 +110,7 @@ public class PathEntity
     /**
      * Returns true if the EntityPath are the same. Non instance related equals.
      */
-    public boolean isSamePath(PathEntity par1PathEntity)
+    public boolean isSamePath(final PathEntity par1PathEntity)
     {
         if (par1PathEntity == null)
         {
@@ -137,9 +137,9 @@ public class PathEntity
     /**
      * Returns true if the final PathPoint in the PathEntity is equal to Vec3D coords.
      */
-    public boolean isDestinationSame(Vec3 par1Vec3)
+    public boolean isDestinationSame(final Vec3 par1Vec3)
     {
-        PathPoint pathpoint = this.getFinalPathPoint();
+        final PathPoint pathpoint = this.getFinalPathPoint();
         return pathpoint == null ? false : pathpoint.xCoord == (int)par1Vec3.xCoord && pathpoint.zCoord == (int)par1Vec3.zCoord;
     }
 }

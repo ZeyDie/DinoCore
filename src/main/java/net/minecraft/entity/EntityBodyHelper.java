@@ -9,15 +9,15 @@ public class EntityBodyHelper
     private int field_75666_b;
     private float field_75667_c;
 
-    public EntityBodyHelper(EntityLivingBase par1EntityLivingBase)
+    public EntityBodyHelper(final EntityLivingBase par1EntityLivingBase)
     {
         this.theLiving = par1EntityLivingBase;
     }
 
     public void func_75664_a()
     {
-        double d0 = this.theLiving.posX - this.theLiving.prevPosX;
-        double d1 = this.theLiving.posZ - this.theLiving.prevPosZ;
+        final double d0 = this.theLiving.posX - this.theLiving.prevPosX;
+        final double d1 = this.theLiving.posZ - this.theLiving.prevPosZ;
 
         if (d0 * d0 + d1 * d1 > 2.500000277905201E-7D)
         {
@@ -38,7 +38,7 @@ public class EntityBodyHelper
             else
             {
                 ++this.field_75666_b;
-                boolean flag = true;
+                final boolean flag = true;
 
                 if (this.field_75666_b > 10)
                 {
@@ -50,7 +50,7 @@ public class EntityBodyHelper
         }
     }
 
-    private float func_75665_a(float par1, float par2, float par3)
+    private float func_75665_a(final float par1, final float par2, final float par3)
     {
         float f3 = MathHelper.wrapAngleTo180_float(par1 - par2);
 

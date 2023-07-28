@@ -28,9 +28,9 @@ public class ModContainerFactory
     public static ModContainerFactory instance() {
         return INSTANCE;
     }
-    public ModContainer build(ASMModParser modParser, File modSource, ModCandidate container)
+    public ModContainer build(final ASMModParser modParser, final File modSource, final ModCandidate container)
     {
-        String className = modParser.getASMType().getClassName();
+        final String className = modParser.getASMType().getClassName();
         if (modParser.isBaseMod(container.getRememberedBaseMods()) && modClass.matcher(className).find())
         {
             FMLLog.fine("Identified a BaseMod type mod %s", className);
@@ -55,7 +55,7 @@ public class ModContainerFactory
                     + "a new package. Go on. DO IT NOW!",className);
         }
 
-        for (ModAnnotation ann : modParser.getAnnotations())
+        for (final ModAnnotation ann : modParser.getAnnotations())
         {
             if (ann.getASMType().equals(Type.getType(Mod.class)))
             {

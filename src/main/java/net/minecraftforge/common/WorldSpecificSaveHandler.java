@@ -20,7 +20,7 @@ public class WorldSpecificSaveHandler implements ISaveHandler
     private ISaveHandler parent;
     private File dataDir;
 
-    public WorldSpecificSaveHandler(WorldServer world, ISaveHandler parent)
+    public WorldSpecificSaveHandler(final WorldServer world, final ISaveHandler parent)
     {
         this.world = world;
         this.parent = parent;
@@ -30,15 +30,15 @@ public class WorldSpecificSaveHandler implements ISaveHandler
 
     @Override public WorldInfo loadWorldInfo() { return parent.loadWorldInfo(); }
     @Override public void checkSessionLock() throws MinecraftException { parent.checkSessionLock(); }
-    @Override public IChunkLoader getChunkLoader(WorldProvider var1) { return parent.getChunkLoader(var1); }
-    @Override public void saveWorldInfoWithPlayer(WorldInfo var1, NBTTagCompound var2) { parent.saveWorldInfoWithPlayer(var1, var2); }
-    @Override public void saveWorldInfo(WorldInfo var1){ parent.saveWorldInfo(var1); }
+    @Override public IChunkLoader getChunkLoader(final WorldProvider var1) { return parent.getChunkLoader(var1); }
+    @Override public void saveWorldInfoWithPlayer(final WorldInfo var1, final NBTTagCompound var2) { parent.saveWorldInfoWithPlayer(var1, var2); }
+    @Override public void saveWorldInfo(final WorldInfo var1){ parent.saveWorldInfo(var1); }
     @Override public IPlayerFileData getSaveHandler() { return parent.getSaveHandler(); }
     @Override public void flush() { parent.flush(); }
     @Override public String getWorldDirectoryName() { return parent.getWorldDirectoryName(); }
 
     @Override
-    public File getMapFileFromName(String name)
+    public File getMapFileFromName(final String name)
     {
         return new File(dataDir, name + ".dat");
     }

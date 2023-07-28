@@ -22,7 +22,7 @@ public class EntityEnderEye extends Entity
     private int despawnTimer;
     private boolean shatterOrDrop;
 
-    public EntityEnderEye(World par1World)
+    public EntityEnderEye(final World par1World)
     {
         super(par1World);
         this.setSize(0.25F, 0.25F);
@@ -36,14 +36,14 @@ public class EntityEnderEye extends Entity
      * Checks if the entity is in range to render by using the past in distance and comparing it to its average edge
      * length * 64 * renderDistanceWeight Args: distance
      */
-    public boolean isInRangeToRenderDist(double par1)
+    public boolean isInRangeToRenderDist(final double par1)
     {
         double d1 = this.boundingBox.getAverageEdgeLength() * 4.0D;
         d1 *= 64.0D;
         return par1 < d1 * d1;
     }
 
-    public EntityEnderEye(World par1World, double par2, double par4, double par6)
+    public EntityEnderEye(final World par1World, final double par2, final double par4, final double par6)
     {
         super(par1World);
         this.despawnTimer = 0;
@@ -56,11 +56,11 @@ public class EntityEnderEye extends Entity
      * The location the eye should float/move towards. Currently used for moving towards the nearest stronghold. Args:
      * strongholdX, strongholdY, strongholdZ
      */
-    public void moveTowards(double par1, int par3, double par4)
+    public void moveTowards(final double par1, final int par3, final double par4)
     {
-        double d2 = par1 - this.posX;
-        double d3 = par4 - this.posZ;
-        float f = MathHelper.sqrt_double(d2 * d2 + d3 * d3);
+        final double d2 = par1 - this.posX;
+        final double d3 = par4 - this.posZ;
+        final float f = MathHelper.sqrt_double(d2 * d2 + d3 * d3);
 
         if (f > 12.0F)
         {
@@ -84,7 +84,7 @@ public class EntityEnderEye extends Entity
     /**
      * Sets the velocity to the args. Args: x, y, z
      */
-    public void setVelocity(double par1, double par3, double par5)
+    public void setVelocity(final double par1, final double par3, final double par5)
     {
         this.motionX = par1;
         this.motionY = par3;
@@ -92,7 +92,7 @@ public class EntityEnderEye extends Entity
 
         if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F)
         {
-            float f = MathHelper.sqrt_double(par1 * par1 + par5 * par5);
+            final float f = MathHelper.sqrt_double(par1 * par1 + par5 * par5);
             this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(par1, par5) * 180.0D / Math.PI);
             this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(par3, (double)f) * 180.0D / Math.PI);
         }
@@ -110,7 +110,7 @@ public class EntityEnderEye extends Entity
         this.posX += this.motionX;
         this.posY += this.motionY;
         this.posZ += this.motionZ;
-        float f = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+        final float f = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
         this.rotationYaw = (float)(Math.atan2(this.motionX, this.motionZ) * 180.0D / Math.PI);
 
         for (this.rotationPitch = (float)(Math.atan2(this.motionY, (double)f) * 180.0D / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F)
@@ -138,10 +138,10 @@ public class EntityEnderEye extends Entity
 
         if (!this.worldObj.isRemote)
         {
-            double d0 = this.targetX - this.posX;
-            double d1 = this.targetZ - this.posZ;
-            float f1 = (float)Math.sqrt(d0 * d0 + d1 * d1);
-            float f2 = (float)Math.atan2(d1, d0);
+            final double d0 = this.targetX - this.posX;
+            final double d1 = this.targetZ - this.posZ;
+            final float f1 = (float)Math.sqrt(d0 * d0 + d1 * d1);
+            final float f2 = (float)Math.atan2(d1, d0);
             double d2 = (double)f + (double)(f1 - f) * 0.0025D;
 
             if (f1 < 1.0F)
@@ -163,7 +163,7 @@ public class EntityEnderEye extends Entity
             }
         }
 
-        float f3 = 0.25F;
+        final float f3 = 0.25F;
 
         if (this.isInWater())
         {
@@ -201,12 +201,12 @@ public class EntityEnderEye extends Entity
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {}
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound) {}
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {}
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound) {}
 
     @SideOnly(Side.CLIENT)
     public float getShadowSize()
@@ -217,13 +217,13 @@ public class EntityEnderEye extends Entity
     /**
      * Gets how bright this entity is.
      */
-    public float getBrightness(float par1)
+    public float getBrightness(final float par1)
     {
         return 1.0F;
     }
 
     @SideOnly(Side.CLIENT)
-    public int getBrightnessForRender(float par1)
+    public int getBrightnessForRender(final float par1)
     {
         return 15728880;
     }

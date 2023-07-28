@@ -13,7 +13,7 @@ public class ItemCoal extends Item
     @SideOnly(Side.CLIENT)
     private Icon field_111220_a;
 
-    public ItemCoal(int par1)
+    public ItemCoal(final int par1)
     {
         super(par1);
         this.setHasSubtypes(true);
@@ -25,7 +25,7 @@ public class ItemCoal extends Item
      * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
      * different names based on their damage or NBT.
      */
-    public String getUnlocalizedName(ItemStack par1ItemStack)
+    public String getUnlocalizedName(final ItemStack par1ItemStack)
     {
         return par1ItemStack.getItemDamage() == 1 ? "item.charcoal" : "item.coal";
     }
@@ -35,7 +35,7 @@ public class ItemCoal extends Item
     /**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */
-    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubItems(final int par1, final CreativeTabs par2CreativeTabs, final List par3List)
     {
         par3List.add(new ItemStack(par1, 1, 0));
         par3List.add(new ItemStack(par1, 1, 1));
@@ -46,13 +46,13 @@ public class ItemCoal extends Item
     /**
      * Gets an icon index based on an item's damage value
      */
-    public Icon getIconFromDamage(int par1)
+    public Icon getIconFromDamage(final int par1)
     {
         return par1 == 1 ? this.field_111220_a : super.getIconFromDamage(par1);
     }
 
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         super.registerIcons(par1IconRegister);
         this.field_111220_a = par1IconRegister.registerIcon("charcoal");

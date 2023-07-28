@@ -60,7 +60,7 @@ public class ChunkProviderServer implements IChunkProvider
     public WorldServer worldObj;
     // CraftBukkit end
 
-    public ChunkProviderServer(WorldServer par1WorldServer, IChunkLoader par2IChunkLoader, IChunkProvider par3IChunkProvider)
+    public ChunkProviderServer(final WorldServer par1WorldServer, final IChunkLoader par2IChunkLoader, final IChunkProvider par3IChunkProvider)
     {
         this.initialTick = MinecraftServer.currentTick; // Cauldron keep track of when the loader was created
         this.defaultEmptyChunk = new EmptyChunk(par1WorldServer, 0, 0);
@@ -72,7 +72,7 @@ public class ChunkProviderServer implements IChunkProvider
     /**
      * Checks to see if a chunk exists at x, y
      */
-    public boolean chunkExists(int par1, int par2)
+    public boolean chunkExists(final int par1, final int par2)
     {
         return this.loadedChunkHashMap.containsKey(LongHash.toLong(par1, par2)); // CraftBukkit
     }
@@ -81,19 +81,19 @@ public class ChunkProviderServer implements IChunkProvider
      * marks chunk for unload by "unload100OldestChunks"  if there is no spawn point, or if the center of the chunk is
      * outside 200 blocks (x or z) of the spawn
      */
-    public void unloadChunksIfNotNearSpawn(int par1, int par2)
+    public void unloadChunksIfNotNearSpawn(final int par1, final int par2)
     {
         if (this.worldObj.provider.canRespawnHere() && DimensionManager.shouldLoadSpawn(this.worldObj.provider.dimensionId))
         {
-            ChunkCoordinates chunkcoordinates = this.worldObj.getSpawnPoint();
-            int k = par1 * 16 + 8 - chunkcoordinates.posX;
-            int l = par2 * 16 + 8 - chunkcoordinates.posZ;
-            short short1 = 128;
+            final ChunkCoordinates chunkcoordinates = this.worldObj.getSpawnPoint();
+            final int k = par1 * 16 + 8 - chunkcoordinates.posX;
+            final int l = par2 * 16 + 8 - chunkcoordinates.posZ;
+            final short short1 = 128;
 
             // CraftBukkit start
             if (k < -short1 || k > short1 || l < -short1 || l > short1)
             {
-                Chunk c = this.loadedChunkHashMap.get(LongHash.toLong(par1, par2));
+                final Chunk c = this.loadedChunkHashMap.get(LongHash.toLong(par1, par2));
                 this.chunksToUnload.add(par1, par2);
 
                 if (c != null)
@@ -107,7 +107,7 @@ public class ChunkProviderServer implements IChunkProvider
         else
         {
             // CraftBukkit start
-            Chunk c = this.loadedChunkHashMap.get(LongHash.toLong(par1, par2));
+            final Chunk c = this.loadedChunkHashMap.get(LongHash.toLong(par1, par2));
             this.chunksToUnload.add(par1, par2);
 
             if (c != null)
@@ -125,11 +125,11 @@ public class ChunkProviderServer implements IChunkProvider
     public void unloadAllChunks()
     {
         // Cauldron start -- use thread-safe method for iterating loaded chunks
-        Object[] chunks = this.loadedChunks.toArray();
+        final Object[] chunks = this.loadedChunks.toArray();
 
         for (int j = 0; j < chunks.length; ++j)
         {
-            Chunk chunk = (Chunk)chunks[j];
+            final Chunk chunk = (Chunk)chunks[j];
             //Cauldron end
             this.unloadChunksIfNotNearSpawn(chunk.xPosition, chunk.zPosition);
         }
@@ -140,16 +140,16 @@ public class ChunkProviderServer implements IChunkProvider
     /**
      * loads or generates the chunk at the chunk location specified
      */
-    public Chunk loadChunk(int par1, int par2)
+    public Chunk loadChunk(final int par1, final int par2)
     {
         return getChunkAt(par1, par2, null);
     }
 
-    public Chunk getChunkAt(int i, int j, Runnable runnable)
+    public Chunk getChunkAt(final int i, final int j, final Runnable runnable)
     {
         this.chunksToUnload.remove(i, j);
         Chunk chunk = (Chunk) this.loadedChunkHashMap.get(LongHash.toLong(i, j));
-        boolean newChunk = false;
+        final boolean newChunk = false;
         AnvilChunkLoader loader = null;
 
         if (this.currentChunkLoader instanceof AnvilChunkLoader)
@@ -186,7 +186,7 @@ public class ChunkProviderServer implements IChunkProvider
         return chunk;
     }
 
-    public Chunk originalGetChunkAt(int i, int j)
+    public Chunk originalGetChunkAt(final int i, final int j)
     {
         this.chunksToUnload.remove(i, j);
         Chunk chunk = (Chunk) this.loadedChunkHashMap.get(LongHash.toLong(i, j));
@@ -215,10 +215,10 @@ public class ChunkProviderServer implements IChunkProvider
                     {
                         chunk = this.currentChunkProvider.provideChunk(i, j);
                     }
-                    catch (Throwable throwable)
+                    catch (final Throwable throwable)
                     {
-                        CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Exception generating new chunk");
-                        CrashReportCategory crashreportcategory = crashreport.makeCategory("Chunk to be generated");
+                        final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Exception generating new chunk");
+                        final CrashReportCategory crashreportcategory = crashreport.makeCategory("Chunk to be generated");
                         crashreportcategory.addCrashSection("Location", String.format("%d,%d", new Object[] { Integer.valueOf(i), Integer.valueOf(j)}));
                         crashreportcategory.addCrashSection("Position hash", Long.valueOf(LongHash.toLong(i, j))); // CraftBukkit - Use LongHash
                         crashreportcategory.addCrashSection("Generator", this.currentChunkProvider.makeString());
@@ -237,7 +237,7 @@ public class ChunkProviderServer implements IChunkProvider
                 chunk.onChunkLoad();
             }
             // CraftBukkit start
-            Server server = this.worldObj.getServer();
+            final Server server = this.worldObj.getServer();
 
             if (server != null)
             {
@@ -261,7 +261,7 @@ public class ChunkProviderServer implements IChunkProvider
      * Will return back a chunk, if it doesn't exist and its not a MP client it will generates all the blocks for the
      * specified chunk from the map seed and chunk seed
      */
-    public Chunk provideChunk(int par1, int par2)
+    public Chunk provideChunk(final int par1, final int par2)
     {
         // CraftBukkit start
         Chunk chunk = (Chunk) this.loadedChunkHashMap.get(LongHash.toLong(par1, par2));
@@ -276,7 +276,7 @@ public class ChunkProviderServer implements IChunkProvider
         {
             this.worldObj.getWorldLogAgent().logSevere("Chunk (" + chunk.xPosition + ", " + chunk.zPosition + ") stored at  (" + par1 + ", " + par2 + ") in world '" + worldObj.getWorld().getName() + "'");
             this.worldObj.getWorldLogAgent().logSevere(chunk.getClass().getName());
-            Throwable ex = new Throwable();
+            final Throwable ex = new Throwable();
             ex.fillInStackTrace();
             ex.printStackTrace();
         }
@@ -288,7 +288,7 @@ public class ChunkProviderServer implements IChunkProvider
     /**
      * used by loadChunk, but catches any exceptions if the load fails.
      */
-    public Chunk safeLoadChunk(int par1, int par2)   // CraftBukkit - private -> public
+    public Chunk safeLoadChunk(final int par1, final int par2)   // CraftBukkit - private -> public
     {
         if (this.currentChunkLoader == null)
         {
@@ -300,7 +300,7 @@ public class ChunkProviderServer implements IChunkProvider
             {
                 CauldronHooks.logChunkLoad(this, "Safe Load", par1, par2, false);
 
-                Chunk chunk = this.currentChunkLoader.loadChunk(this.worldObj, par1, par2);
+                final Chunk chunk = this.currentChunkLoader.loadChunk(this.worldObj, par1, par2);
 
                 if (chunk != null)
                 {
@@ -317,7 +317,7 @@ public class ChunkProviderServer implements IChunkProvider
 
                 return chunk;
             }
-            catch (Exception exception)
+            catch (final Exception exception)
             {
                 exception.printStackTrace();
                 return null;
@@ -328,7 +328,7 @@ public class ChunkProviderServer implements IChunkProvider
     /**
      * used by saveChunks, but catches any exceptions if the save fails.
      */
-    public void safeSaveExtraChunkData(Chunk par1Chunk)   // CraftBukkit - private -> public
+    public void safeSaveExtraChunkData(final Chunk par1Chunk)   // CraftBukkit - private -> public
     {
         if (this.currentChunkLoader != null)
         {
@@ -336,7 +336,7 @@ public class ChunkProviderServer implements IChunkProvider
             {
                 this.currentChunkLoader.saveExtraChunkData(this.worldObj, par1Chunk);
             }
-            catch (Exception exception)
+            catch (final Exception exception)
             {
                 exception.printStackTrace();
             }
@@ -346,7 +346,7 @@ public class ChunkProviderServer implements IChunkProvider
     /**
      * used by saveChunks, but catches any exceptions if the save fails.
      */
-    public void safeSaveChunk(Chunk par1Chunk)   // CraftBukkit - private -> public
+    public void safeSaveChunk(final Chunk par1Chunk)   // CraftBukkit - private -> public
     {
         if (this.currentChunkLoader != null)
         {
@@ -355,7 +355,7 @@ public class ChunkProviderServer implements IChunkProvider
                 par1Chunk.lastSaveTime = this.worldObj.getTotalWorldTime();
                 this.currentChunkLoader.saveChunk(this.worldObj, par1Chunk);
             }
-            catch (Exception ioexception)     // CraftBukkit - IOException -> Exception
+            catch (final Exception ioexception)     // CraftBukkit - IOException -> Exception
             {
                 ioexception.printStackTrace();
                 // CraftBukkit start - Remove extra exception
@@ -371,9 +371,9 @@ public class ChunkProviderServer implements IChunkProvider
     /**
      * Populates chunk with ores etc etc
      */
-    public void populate(IChunkProvider par1IChunkProvider, int par2, int par3)
+    public void populate(final IChunkProvider par1IChunkProvider, final int par2, final int par3)
     {
-        Chunk chunk = this.provideChunk(par2, par3);
+        final Chunk chunk = this.provideChunk(par2, par3);
 
         if (!chunk.isTerrainPopulated)
         {
@@ -384,16 +384,16 @@ public class ChunkProviderServer implements IChunkProvider
                 this.currentChunkProvider.populate(par1IChunkProvider, par2, par3);
                 // CraftBukkit start
                 BlockSand.fallInstantly = true;
-                Random random = new Random();
+                final Random random = new Random();
                 random.setSeed(worldObj.getSeed());
-                long xRand = random.nextLong() / 2L * 2L + 1L;
-                long zRand = random.nextLong() / 2L * 2L + 1L;
+                final long xRand = random.nextLong() / 2L * 2L + 1L;
+                final long zRand = random.nextLong() / 2L * 2L + 1L;
                 random.setSeed((long) par2 * xRand + (long) par3 * zRand ^ worldObj.getSeed());
-                org.bukkit.World world = this.worldObj.getWorld();
+                final org.bukkit.World world = this.worldObj.getWorld();
 
                 if (world != null)
                 {
-                    for (org.bukkit.generator.BlockPopulator populator : world.getPopulators())
+                    for (final org.bukkit.generator.BlockPopulator populator : world.getPopulators())
                     {
                         populator.populate(world, random, chunk.bukkitChunk);
                     }
@@ -412,15 +412,15 @@ public class ChunkProviderServer implements IChunkProvider
      * Two modes of operation: if passed true, save all Chunks in one go.  If passed false, save up to two chunks.
      * Return true if all chunks have been saved.
      */
-    public boolean saveChunks(boolean par1, IProgressUpdate par2IProgressUpdate)
+    public boolean saveChunks(final boolean par1, final IProgressUpdate par2IProgressUpdate)
     {
         int i = 0;
         // Cauldron start -- use thread-safe method for iterating loaded chunks
-        Object[] chunks = this.loadedChunks.toArray();
+        final Object[] chunks = this.loadedChunks.toArray();
 
         for (int j = 0; j < chunks.length; ++j)
         {
-            Chunk chunk = (Chunk)chunks[j];
+            final Chunk chunk = (Chunk)chunks[j];
             //Cauldron end
             if (par1)
             {
@@ -465,26 +465,26 @@ public class ChunkProviderServer implements IChunkProvider
             // Cauldron start - remove any chunk that has a ticket associated with it
             if (!this.chunksToUnload.isEmpty())
             {
-                for (ChunkCoordIntPair forcedChunk : this.worldObj.getPersistentChunks().keys())
+                for (final ChunkCoordIntPair forcedChunk : this.worldObj.getPersistentChunks().keys())
                 {
                     this.chunksToUnload.remove(forcedChunk.chunkXPos, forcedChunk.chunkZPos);
                 }
             }
             // Cauldron end        
             // CraftBukkit start
-            Server server = this.worldObj.getServer();
+            final Server server = this.worldObj.getServer();
 
             for (int i = 0; i < 100 && !this.chunksToUnload.isEmpty(); i++)
             {
-                long chunkcoordinates = this.chunksToUnload.popFirst();
-                Chunk chunk = this.loadedChunkHashMap.get(chunkcoordinates);
+                final long chunkcoordinates = this.chunksToUnload.popFirst();
+                final Chunk chunk = this.loadedChunkHashMap.get(chunkcoordinates);
 
                 if (chunk == null)
                 {
                     continue;
                 }
 
-                ChunkUnloadEvent event = new ChunkUnloadEvent(chunk.bukkitChunk);
+                final ChunkUnloadEvent event = new ChunkUnloadEvent(chunk.bukkitChunk);
                 server.getPluginManager().callEvent(event);
 
                 if (!event.isCancelled())
@@ -499,7 +499,7 @@ public class ChunkProviderServer implements IChunkProvider
                     loadedChunks.remove(chunk); // Cauldron - vanilla compatibility   
                     ForgeChunkManager.putDormantChunk(chunkcoordinates, chunk);
 
-                    if (this.loadedChunkHashMap.size() == 0 && ForgeChunkManager.getPersistentChunksFor(this.worldObj).size() == 0 && !DimensionManager.shouldLoadSpawn(this.worldObj.provider.dimensionId))
+                    if (this.loadedChunkHashMap.isEmpty() && ForgeChunkManager.getPersistentChunksFor(this.worldObj).isEmpty() && !DimensionManager.shouldLoadSpawn(this.worldObj.provider.dimensionId))
                     {
                         DimensionManager.unloadWorld(this.worldObj.provider.dimensionId); // Cauldron - unload the dimension
                         return this.currentChunkProvider.unloadQueuedChunks();
@@ -537,7 +537,7 @@ public class ChunkProviderServer implements IChunkProvider
     /**
      * Returns a list of creatures of the specified type that can spawn at the given location.
      */
-    public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int par2, int par3, int par4)
+    public List getPossibleCreatures(final EnumCreatureType par1EnumCreatureType, final int par2, final int par3, final int par4)
     {
         return this.currentChunkProvider.getPossibleCreatures(par1EnumCreatureType, par2, par3, par4);
     }
@@ -545,7 +545,7 @@ public class ChunkProviderServer implements IChunkProvider
     /**
      * Returns the location of the closest structure of the specified type. If not found returns null.
      */
-    public ChunkPosition findClosestStructure(World par1World, String par2Str, int par3, int par4, int par5)
+    public ChunkPosition findClosestStructure(final World par1World, final String par2Str, final int par3, final int par4, final int par5)
     {
         return this.currentChunkProvider.findClosestStructure(par1World, par2Str, par3, par4, par5);
     }
@@ -555,7 +555,7 @@ public class ChunkProviderServer implements IChunkProvider
         return this.loadedChunkHashMap.values().size(); // CraftBukkit
     }
 
-    public void recreateStructures(int par1, int par2) {}
+    public void recreateStructures(final int par1, final int par2) {}
 
     // Cauldron start
     private boolean shouldLoadChunk()
@@ -566,9 +566,9 @@ public class ChunkProviderServer implements IChunkProvider
                 (MinecraftServer.currentTick - initialTick <= 100);
     }
 
-    public long lastAccessed(int x, int z)
+    public long lastAccessed(final int x, final int z)
     {
-        long chunkHash = LongHash.toLong(x, z); 
+        final long chunkHash = LongHash.toLong(x, z);
         if (!loadedChunkHashMap.containsKey(chunkHash)) return 0;
         return loadedChunkHashMap.get(chunkHash).lastAccessedTick;
     }

@@ -8,7 +8,7 @@ import net.minecraftforge.event.Cancelable;
 public class AttackEntityEvent extends PlayerEvent
 {
     public final Entity target;
-    public AttackEntityEvent(EntityPlayer player, Entity target)
+    public AttackEntityEvent(final EntityPlayer player, final Entity target)
     {
         super(player);
         this.target = target;

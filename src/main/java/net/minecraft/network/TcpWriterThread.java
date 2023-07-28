@@ -6,7 +6,7 @@ import java.io.IOException;
 public class TcpWriterThread extends Thread {
     final TcpConnection theTcpConnection;
 
-    public TcpWriterThread(TcpConnection par1TcpConnection, String par2Str) {
+    public TcpWriterThread(final TcpConnection par1TcpConnection, final String par2Str) {
         super(par2Str);
         this.theTcpConnection = par1TcpConnection;
     }
@@ -26,7 +26,7 @@ public class TcpWriterThread extends Thread {
                     if (flag && TcpConnection.getOutputStream(this.theTcpConnection) != null) {
                         TcpConnection.getOutputStream(this.theTcpConnection).flush();
                     }
-                } catch (IOException ioexception) {
+                } catch (final IOException ioexception) {
                     if (!TcpConnection.isTerminating(this.theTcpConnection)) {
                         TcpConnection.sendError(this.theTcpConnection, ioexception);
                     }
@@ -36,7 +36,7 @@ public class TcpWriterThread extends Thread {
 
                 try {
                     sleep(2L);
-                } catch (InterruptedException interruptedexception) {
+                } catch (final InterruptedException interruptedexception) {
                     ;
                 }
             }

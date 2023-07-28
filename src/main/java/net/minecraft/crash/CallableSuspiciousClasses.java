@@ -8,41 +8,41 @@ class CallableSuspiciousClasses implements Callable
 {
     final CrashReport theCrashReport;
 
-    CallableSuspiciousClasses(CrashReport par1CrashReport)
+    CallableSuspiciousClasses(final CrashReport par1CrashReport)
     {
         this.theCrashReport = par1CrashReport;
     }
 
     public String callSuspiciousClasses() throws SecurityException, NoSuchFieldException, IllegalAccessException, IllegalArgumentException
     {
-        StringBuilder stringbuilder = new StringBuilder();
-        ArrayList arraylist;
+        final StringBuilder stringbuilder = new StringBuilder();
+        final ArrayList arraylist;
 
         try
         {
-            Field field = ClassLoader.class.getDeclaredField("classes");
+            final Field field = ClassLoader.class.getDeclaredField("classes");
             field.setAccessible(true);
             arraylist = new ArrayList((Vector)field.get(CrashReport.class.getClassLoader()));
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
             return "";
         }
 
         boolean flag = true;
-        boolean flag1 = !CrashReport.class.getCanonicalName().equals("net.minecraft.CrashReport");
-        HashMap hashmap = new HashMap();
+        final boolean flag1 = !CrashReport.class.getCanonicalName().equals("net.minecraft.CrashReport");
+        final HashMap hashmap = new HashMap();
         String s = "";
         Collections.sort(arraylist, new ComparatorClassSorter(this));
-        Iterator iterator = arraylist.iterator();
+        final Iterator iterator = arraylist.iterator();
 
         while (iterator.hasNext())
         {
-            Class oclass = (Class)iterator.next();
+            final Class oclass = (Class)iterator.next();
 
             if (oclass != null)
             {
-                String s1 = oclass.getCanonicalName();
+                final String s1 = oclass.getCanonicalName();
 
                 if (s1 != null && !s1.startsWith("org.lwjgl.") && !s1.startsWith("paulscode.") && !s1.startsWith("org.bouncycastle.") && !s1.startsWith("argo.") && !s1.startsWith("com.jcraft.") && !s1.startsWith("com.fasterxml.") && !s1.startsWith("com.google.") && !s1.startsWith("joptsimple.") && !s1.startsWith("org.apache.") && !s1.equals("util.GLX"))
                 {
@@ -58,12 +58,12 @@ class CallableSuspiciousClasses implements Callable
                         continue;
                     }
 
-                    Package opackage = oclass.getPackage();
-                    String s2 = opackage == null ? "" : opackage.getName();
+                    final Package opackage = oclass.getPackage();
+                    final String s2 = opackage == null ? "" : opackage.getName();
 
                     if (hashmap.containsKey(s2))
                     {
-                        int i = ((Integer)hashmap.get(s2)).intValue();
+                        final int i = ((Integer)hashmap.get(s2)).intValue();
                         hashmap.put(s2, Integer.valueOf(i + 1));
 
                         if (i == 3)
@@ -88,7 +88,7 @@ class CallableSuspiciousClasses implements Callable
                         hashmap.put(s2, Integer.valueOf(1));
                     }
 
-                    if (!s.equals(s2) && s.length() > 0)
+                    if (!s.equals(s2) && !s.isEmpty())
                     {
                         stringbuilder.append("], ");
                     }

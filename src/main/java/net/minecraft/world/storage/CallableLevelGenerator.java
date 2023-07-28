@@ -6,7 +6,7 @@ class CallableLevelGenerator implements Callable
 {
     final WorldInfo worldInfoInstance;
 
-    CallableLevelGenerator(WorldInfo par1WorldInfo)
+    CallableLevelGenerator(final WorldInfo par1WorldInfo)
     {
         this.worldInfoInstance = par1WorldInfo;
     }

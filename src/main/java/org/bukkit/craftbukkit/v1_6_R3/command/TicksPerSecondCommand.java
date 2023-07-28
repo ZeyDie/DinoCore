@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 
 public class TicksPerSecondCommand extends Command {
 
-    public TicksPerSecondCommand(String name) {
+    public TicksPerSecondCommand(final String name) {
         super(name);
         this.description = "Gets the current ticks per second for the server";
         this.usageMessage = "/tps";
@@ -15,12 +15,12 @@ public class TicksPerSecondCommand extends Command {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String currentAlias, String[] args) {
+    public boolean execute(final CommandSender sender, final String currentAlias, final String[] args) {
         if (!testPermission(sender)) return true;
 
         //TODO ZeyCodeReplace 20 on MinecraftServer.getTPS()
-        double tps = Math.min(MinecraftServer.getTPS(),  Math.round(net.minecraft.server.MinecraftServer.currentTPS * 10) / 10.0);
-        ChatColor color;
+        final double tps = Math.min(MinecraftServer.getTPS(),  Math.round(net.minecraft.server.MinecraftServer.currentTPS * 10) / 10.0);
+        final ChatColor color;
         if (tps > 19.2D) {
             color = ChatColor.GREEN;
         } else if (tps > 17.4D) {

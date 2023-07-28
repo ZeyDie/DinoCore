@@ -23,7 +23,7 @@ public class EntityAIMate extends EntityAIBase
     /** The speed the creature moves at during mating behavior. */
     double moveSpeed;
 
-    public EntityAIMate(EntityAnimal par1EntityAnimal, double par2)
+    public EntityAIMate(final EntityAnimal par1EntityAnimal, final double par2)
     {
         this.theAnimal = par1EntityAnimal;
         this.theWorld = par1EntityAnimal.worldObj;
@@ -85,15 +85,15 @@ public class EntityAIMate extends EntityAIBase
      */
     private EntityAnimal getNearbyMate()
     {
-        float f = 8.0F;
-        List list = this.theWorld.getEntitiesWithinAABB(this.theAnimal.getClass(), this.theAnimal.boundingBox.expand((double)f, (double)f, (double)f));
+        final float f = 8.0F;
+        final List list = this.theWorld.getEntitiesWithinAABB(this.theAnimal.getClass(), this.theAnimal.boundingBox.expand((double)f, (double)f, (double)f));
         double d0 = Double.MAX_VALUE;
         EntityAnimal entityanimal = null;
-        Iterator iterator = list.iterator();
+        final Iterator iterator = list.iterator();
 
         while (iterator.hasNext())
         {
-            EntityAnimal entityanimal1 = (EntityAnimal)iterator.next();
+            final EntityAnimal entityanimal1 = (EntityAnimal)iterator.next();
 
             if (this.theAnimal.canMateWith(entityanimal1) && this.theAnimal.getDistanceSqToEntity(entityanimal1) < d0)
             {
@@ -110,7 +110,7 @@ public class EntityAIMate extends EntityAIBase
      */
     private void spawnBaby()
     {
-        EntityAgeable entityageable = this.theAnimal.createChild(this.targetMate);
+        final EntityAgeable entityageable = this.theAnimal.createChild(this.targetMate);
 
         if (entityageable != null)
         {
@@ -127,13 +127,13 @@ public class EntityAIMate extends EntityAIBase
             entityageable.setGrowingAge(-24000);
             entityageable.setLocationAndAngles(this.theAnimal.posX, this.theAnimal.posY, this.theAnimal.posZ, 0.0F, 0.0F);
             this.theWorld.addEntity(entityageable, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.BREEDING); // CraftBukkit - added SpawnReason
-            Random random = this.theAnimal.getRNG();
+            final Random random = this.theAnimal.getRNG();
 
             for (int i = 0; i < 7; ++i)
             {
-                double d0 = random.nextGaussian() * 0.02D;
-                double d1 = random.nextGaussian() * 0.02D;
-                double d2 = random.nextGaussian() * 0.02D;
+                final double d0 = random.nextGaussian() * 0.02D;
+                final double d1 = random.nextGaussian() * 0.02D;
+                final double d2 = random.nextGaussian() * 0.02D;
                 this.theWorld.spawnParticle("heart", this.theAnimal.posX + (double)(random.nextFloat() * this.theAnimal.width * 2.0F) - (double)this.theAnimal.width, this.theAnimal.posY + 0.5D + (double)(random.nextFloat() * this.theAnimal.height), this.theAnimal.posZ + (double)(random.nextFloat() * this.theAnimal.width * 2.0F) - (double)this.theAnimal.width, d0, d1, d2);
             }
 

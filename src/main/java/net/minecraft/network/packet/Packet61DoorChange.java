@@ -18,7 +18,7 @@ public class Packet61DoorChange extends Packet
 
     public Packet61DoorChange() {}
 
-    public Packet61DoorChange(int par1, int par2, int par3, int par4, int par5, boolean par6)
+    public Packet61DoorChange(final int par1, final int par2, final int par3, final int par4, final int par5, final boolean par6)
     {
         this.sfxID = par1;
         this.posX = par2;
@@ -31,7 +31,7 @@ public class Packet61DoorChange extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.sfxID = par1DataInput.readInt();
         this.posX = par1DataInput.readInt();
@@ -44,7 +44,7 @@ public class Packet61DoorChange extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeInt(this.sfxID);
         par1DataOutput.writeInt(this.posX);
@@ -57,7 +57,7 @@ public class Packet61DoorChange extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleDoorChange(this);
     }

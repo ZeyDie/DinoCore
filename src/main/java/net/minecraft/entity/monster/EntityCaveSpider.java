@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 
 public class EntityCaveSpider extends EntitySpider
 {
-    public EntityCaveSpider(World par1World)
+    public EntityCaveSpider(final World par1World)
     {
         super(par1World);
         this.setSize(0.7F, 0.5F);
@@ -22,7 +22,7 @@ public class EntityCaveSpider extends EntitySpider
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(12.0D);
     }
 
-    public boolean attackEntityAsMob(Entity par1Entity)
+    public boolean attackEntityAsMob(final Entity par1Entity)
     {
         if (super.attackEntityAsMob(par1Entity))
         {
@@ -56,7 +56,7 @@ public class EntityCaveSpider extends EntitySpider
         }
     }
 
-    public EntityLivingData onSpawnWithEgg(EntityLivingData par1EntityLivingData)
+    public EntityLivingData onSpawnWithEgg(final EntityLivingData par1EntityLivingData)
     {
         return par1EntityLivingData;
     }

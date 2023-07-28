@@ -13,18 +13,18 @@ public class EntityLargeFireball extends EntityFireball
 {
     public int field_92057_e = 1;
 
-    public EntityLargeFireball(World par1World)
+    public EntityLargeFireball(final World par1World)
     {
         super(par1World);
     }
 
     @SideOnly(Side.CLIENT)
-    public EntityLargeFireball(World par1World, double par2, double par4, double par6, double par8, double par10, double par12)
+    public EntityLargeFireball(final World par1World, final double par2, final double par4, final double par6, final double par8, final double par10, final double par12)
     {
         super(par1World, par2, par4, par6, par8, par10, par12);
     }
 
-    public EntityLargeFireball(World par1World, EntityLivingBase par2EntityLivingBase, double par3, double par5, double par7)
+    public EntityLargeFireball(final World par1World, final EntityLivingBase par2EntityLivingBase, final double par3, final double par5, final double par7)
     {
         super(par1World, par2EntityLivingBase, par3, par5, par7);
     }
@@ -32,7 +32,7 @@ public class EntityLargeFireball extends EntityFireball
     /**
      * Called when this EntityFireball hits a block or entity.
      */
-    protected void onImpact(MovingObjectPosition par1MovingObjectPosition)
+    protected void onImpact(final MovingObjectPosition par1MovingObjectPosition)
     {
         if (!this.worldObj.isRemote)
         {
@@ -42,7 +42,7 @@ public class EntityLargeFireball extends EntityFireball
             }
 
             // CraftBukkit start
-            ExplosionPrimeEvent event = new ExplosionPrimeEvent((org.bukkit.entity.Explosive) org.bukkit.craftbukkit.v1_6_R3.entity.CraftEntity.getEntity(this.worldObj.getServer(), this));
+            final ExplosionPrimeEvent event = new ExplosionPrimeEvent((org.bukkit.entity.Explosive) org.bukkit.craftbukkit.v1_6_R3.entity.CraftEntity.getEntity(this.worldObj.getServer(), this));
             this.worldObj.getServer().getPluginManager().callEvent(event);
 
             if (!event.isCancelled())
@@ -59,7 +59,7 @@ public class EntityLargeFireball extends EntityFireball
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setInteger("ExplosionPower", this.field_92057_e);
@@ -68,7 +68,7 @@ public class EntityLargeFireball extends EntityFireball
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
 

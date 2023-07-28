@@ -10,13 +10,13 @@ public class CraftInventoryDoubleChest extends CraftInventory implements DoubleC
     private final CraftInventory left;
     private final CraftInventory right;
 
-    public CraftInventoryDoubleChest(CraftInventory left, CraftInventory right) {
+    public CraftInventoryDoubleChest(final CraftInventory left, final CraftInventory right) {
         super(new net.minecraft.inventory.InventoryLargeChest("Large chest", left.getInventory(), right.getInventory()));
         this.left = left;
         this.right = right;
     }
 
-    public CraftInventoryDoubleChest(net.minecraft.inventory.InventoryLargeChest largeChest) {
+    public CraftInventoryDoubleChest(final net.minecraft.inventory.InventoryLargeChest largeChest) {
         super(largeChest);
         if (largeChest.upperChest instanceof net.minecraft.inventory.InventoryLargeChest) {
             left = new CraftInventoryDoubleChest((net.minecraft.inventory.InventoryLargeChest) largeChest.upperChest);
@@ -39,11 +39,12 @@ public class CraftInventoryDoubleChest extends CraftInventory implements DoubleC
     }
 
     @Override
-    public void setContents(ItemStack[] items) {
+    public void setContents(final ItemStack[] items) {
         if (getInventory().getContents().length < items.length) {
             throw new IllegalArgumentException("Invalid inventory size; expected " + getInventory().getContents().length + " or less");
         }
-        ItemStack[] leftItems = new ItemStack[left.getSize()], rightItems = new ItemStack[right.getSize()];
+        final ItemStack[] leftItems = new ItemStack[left.getSize()];
+        final ItemStack[] rightItems = new ItemStack[right.getSize()];
         System.arraycopy(items, 0, leftItems, 0, Math.min(left.getSize(),items.length));
         left.setContents(leftItems);
         if (items.length >= left.getSize()) {

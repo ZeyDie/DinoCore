@@ -11,7 +11,7 @@ class CallableLaunchedVersion implements Callable
     /** Reference to the Minecraft object. */
     final Minecraft mc;
 
-    CallableLaunchedVersion(Minecraft par1Minecraft)
+    CallableLaunchedVersion(final Minecraft par1Minecraft)
     {
         this.mc = par1Minecraft;
     }

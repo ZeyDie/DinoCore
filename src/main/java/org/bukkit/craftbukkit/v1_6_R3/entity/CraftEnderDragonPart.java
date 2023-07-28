@@ -7,7 +7,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.util.NumberConversions;
 
 public class CraftEnderDragonPart extends CraftComplexPart implements EnderDragonPart {
-    public CraftEnderDragonPart(CraftServer server, net.minecraft.entity.boss.EntityDragonPart entity) {
+    public CraftEnderDragonPart(final CraftServer server, final net.minecraft.entity.boss.EntityDragonPart entity) {
         super(server, entity);
     }
 
@@ -26,11 +26,11 @@ public class CraftEnderDragonPart extends CraftComplexPart implements EnderDrago
         return "CraftEnderDragonPart";
     }
 
-    public void damage(double amount) {
+    public void damage(final double amount) {
         getParent().damage(amount);
     }
 
-    public void damage(double amount, Entity source) {
+    public void damage(final double amount, final Entity source) {
         getParent().damage(amount, source);
     }
 
@@ -38,7 +38,7 @@ public class CraftEnderDragonPart extends CraftComplexPart implements EnderDrago
         return getParent().getHealth();
     }
 
-    public void setHealth(double health) {
+    public void setHealth(final double health) {
         getParent().setHealth(health);
     }
 
@@ -46,7 +46,7 @@ public class CraftEnderDragonPart extends CraftComplexPart implements EnderDrago
         return getParent().getMaxHealth();
     }
 
-    public void setMaxHealth(double health) {
+    public void setMaxHealth(final double health) {
         getParent().setMaxHealth(health);
     }
 
@@ -55,12 +55,12 @@ public class CraftEnderDragonPart extends CraftComplexPart implements EnderDrago
     }
 
     @Deprecated
-    public void _INVALID_damage(int amount) {
+    public void _INVALID_damage(final int amount) {
         damage(amount);
     }
 
     @Deprecated
-    public void _INVALID_damage(int amount, Entity source) {
+    public void _INVALID_damage(final int amount, final Entity source) {
         damage(amount, source);
     }
 
@@ -70,7 +70,7 @@ public class CraftEnderDragonPart extends CraftComplexPart implements EnderDrago
     }
 
     @Deprecated
-    public void _INVALID_setHealth(int health) {
+    public void _INVALID_setHealth(final int health) {
         setHealth(health);
     }
 
@@ -80,7 +80,7 @@ public class CraftEnderDragonPart extends CraftComplexPart implements EnderDrago
     }
 
     @Deprecated
-    public void _INVALID_setMaxHealth(int health) {
+    public void _INVALID_setMaxHealth(final int health) {
         setMaxHealth(health);
     }
 }

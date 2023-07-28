@@ -25,7 +25,7 @@ public class FMLFingerprintViolationEvent extends FMLEvent {
     public final File source;
     public final String expectedFingerprint;
 
-    public FMLFingerprintViolationEvent(boolean isDirectory, File source, ImmutableSet<String> fingerprints, String expectedFingerprint)
+    public FMLFingerprintViolationEvent(final boolean isDirectory, final File source, final ImmutableSet<String> fingerprints, final String expectedFingerprint)
     {
         super();
         this.isDirectory = isDirectory;

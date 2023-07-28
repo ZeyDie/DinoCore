@@ -11,7 +11,7 @@ public class EntityAITaskEntry
     /** The EntityAITasks object of which this is an entry. */
     final EntityAITasks tasks;
 
-    public EntityAITaskEntry(EntityAITasks par1EntityAITasks, int par2, EntityAIBase par3EntityAIBase)
+    public EntityAITaskEntry(final EntityAITasks par1EntityAITasks, final int par2, final EntityAIBase par3EntityAIBase)
     {
         this.tasks = par1EntityAITasks;
         this.priority = par2;

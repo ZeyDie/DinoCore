@@ -24,13 +24,13 @@ import java.util.List;
 public class ItemDye extends Item
 {
     /** List of dye color names */
-    public static final String[] dyeColorNames = new String[] {"black", "red", "green", "brown", "blue", "purple", "cyan", "silver", "gray", "pink", "lime", "yellow", "lightBlue", "magenta", "orange", "white"};
-    public static final String[] dyeItemNames = new String[] {"black", "red", "green", "brown", "blue", "purple", "cyan", "silver", "gray", "pink", "lime", "yellow", "light_blue", "magenta", "orange", "white"};
-    public static final int[] dyeColors = new int[] {1973019, 11743532, 3887386, 5320730, 2437522, 8073150, 2651799, 11250603, 4408131, 14188952, 4312372, 14602026, 6719955, 12801229, 15435844, 15790320};
+    public static final String[] dyeColorNames = {"black", "red", "green", "brown", "blue", "purple", "cyan", "silver", "gray", "pink", "lime", "yellow", "lightBlue", "magenta", "orange", "white"};
+    public static final String[] dyeItemNames = {"black", "red", "green", "brown", "blue", "purple", "cyan", "silver", "gray", "pink", "lime", "yellow", "light_blue", "magenta", "orange", "white"};
+    public static final int[] dyeColors = {1973019, 11743532, 3887386, 5320730, 2437522, 8073150, 2651799, 11250603, 4408131, 14188952, 4312372, 14602026, 6719955, 12801229, 15435844, 15790320};
     @SideOnly(Side.CLIENT)
     private Icon[] dyeIcons;
 
-    public ItemDye(int par1)
+    public ItemDye(final int par1)
     {
         super(par1);
         this.setHasSubtypes(true);
@@ -43,9 +43,9 @@ public class ItemDye extends Item
     /**
      * Gets an icon index based on an item's damage value
      */
-    public Icon getIconFromDamage(int par1)
+    public Icon getIconFromDamage(final int par1)
     {
-        int j = MathHelper.clamp_int(par1, 0, 15);
+        final int j = MathHelper.clamp_int(par1, 0, 15);
         return this.dyeIcons[j];
     }
 
@@ -53,9 +53,9 @@ public class ItemDye extends Item
      * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
      * different names based on their damage or NBT.
      */
-    public String getUnlocalizedName(ItemStack par1ItemStack)
+    public String getUnlocalizedName(final ItemStack par1ItemStack)
     {
-        int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, 15);
+        final int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, 15);
         return super.getUnlocalizedName() + "." + dyeColorNames[i];
     }
 
@@ -63,9 +63,11 @@ public class ItemDye extends Item
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final World par3World, int par4, final int par5, int par6, final int par7, final float par8, final float par9, final float par10)
     {
-        if (!par2EntityPlayer.canPlayerEdit(par4, par5, par6, par7, par1ItemStack))
+        int par61 = par6;
+        int par41 = par4;
+        if (!par2EntityPlayer.canPlayerEdit(par41, par5, par61, par7, par1ItemStack))
         {
             return false;
         }
@@ -73,11 +75,11 @@ public class ItemDye extends Item
         {
             if (par1ItemStack.getItemDamage() == 15)
             {
-                if (a(par1ItemStack, par3World, par4, par5, par6, par2EntityPlayer))   // CraftBukkit - pass entity for StructureGrowEvent
+                if (a(par1ItemStack, par3World, par41, par5, par61, par2EntityPlayer))   // CraftBukkit - pass entity for StructureGrowEvent
                 {
                     if (!par3World.isRemote)
                     {
-                        par3World.playAuxSFX(2005, par4, par5, par6, 0);
+                        par3World.playAuxSFX(2005, par41, par5, par61, 0);
                     }
 
                     return true;
@@ -85,8 +87,8 @@ public class ItemDye extends Item
             }
             else if (par1ItemStack.getItemDamage() == 3)
             {
-                int i1 = par3World.getBlockId(par4, par5, par6);
-                int j1 = par3World.getBlockMetadata(par4, par5, par6);
+                final int i1 = par3World.getBlockId(par41, par5, par61);
+                final int j1 = par3World.getBlockMetadata(par41, par5, par61);
 
                 if (i1 == Block.wood.blockID && BlockLog.limitToValidMetadata(j1) == 3)
                 {
@@ -102,28 +104,28 @@ public class ItemDye extends Item
 
                     if (par7 == 2)
                     {
-                        --par6;
+                        --par61;
                     }
 
                     if (par7 == 3)
                     {
-                        ++par6;
+                        ++par61;
                     }
 
                     if (par7 == 4)
                     {
-                        --par4;
+                        --par41;
                     }
 
                     if (par7 == 5)
                     {
-                        ++par4;
+                        ++par41;
                     }
 
-                    if (par3World.isAirBlock(par4, par5, par6))
+                    if (par3World.isAirBlock(par41, par5, par61))
                     {
-                        int k1 = Block.blocksList[Block.cocoaPlant.blockID].onBlockPlaced(par3World, par4, par5, par6, par7, par8, par9, par10, 0);
-                        par3World.setBlock(par4, par5, par6, Block.cocoaPlant.blockID, k1, 2);
+                        final int k1 = Block.blocksList[Block.cocoaPlant.blockID].onBlockPlaced(par3World, par41, par5, par61, par7, par8, par9, par10, 0);
+                        par3World.setBlock(par41, par5, par61, Block.cocoaPlant.blockID, k1, 2);
 
                         if (!par2EntityPlayer.capabilities.isCreativeMode)
                         {
@@ -141,22 +143,22 @@ public class ItemDye extends Item
 
 
     // Cauldron end - CB compatibility (TODO: add manual plugin mapping?)
-    public static boolean a(ItemStack itemstack, World world, int i, int j, int k, EntityPlayer entityplayer)
+    public static boolean a(final ItemStack itemstack, final World world, final int i, final int j, final int k, final EntityPlayer entityplayer)
     {
         return applyBonemeal(itemstack, world, i, j, k, entityplayer);
     }
     // Cauldron end
     
-    public static boolean func_96604_a(ItemStack par0ItemStack, World par1World, int par2, int par3, int par4)
+    public static boolean func_96604_a(final ItemStack par0ItemStack, final World par1World, final int par2, final int par3, final int par4)
     {
         return applyBonemeal(par0ItemStack, par1World, par2, par3, par4, FakePlayerFactory.getMinecraft(par1World));
     }
 
-    public static boolean applyBonemeal(ItemStack par0ItemStack, World par1World, int par2, int par3, int par4, EntityPlayer player)
+    public static boolean applyBonemeal(final ItemStack par0ItemStack, final World par1World, final int par2, final int par3, final int par4, final EntityPlayer player)
     {
-        int l = par1World.getBlockId(par2, par3, par4);
+        final int l = par1World.getBlockId(par2, par3, par4);
 
-        BonemealEvent event = new BonemealEvent(player, par1World, l, par2, par3, par4);
+        final BonemealEvent event = new BonemealEvent(player, par1World, l, par2, par3, par4);
         if (MinecraftForge.EVENT_BUS.post(event))
         {
             return false;
@@ -316,36 +318,37 @@ public class ItemDye extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public static void func_96603_a(World par0World, int par1, int par2, int par3, int par4)
+    public static void func_96603_a(final World par0World, final int par1, final int par2, final int par3, int par4)
     {
-        int i1 = par0World.getBlockId(par1, par2, par3);
+        int par41 = par4;
+        final int i1 = par0World.getBlockId(par1, par2, par3);
 
-        if (par4 == 0)
+        if (par41 == 0)
         {
-            par4 = 15;
+            par41 = 15;
         }
 
-        Block block = i1 > 0 && i1 < Block.blocksList.length ? Block.blocksList[i1] : null;
+        final Block block = i1 > 0 && i1 < Block.blocksList.length ? Block.blocksList[i1] : null;
 
         if (block != null)
         {
             block.setBlockBoundsBasedOnState(par0World, par1, par2, par3);
 
-            for (int j1 = 0; j1 < par4; ++j1)
+            for (int j1 = 0; j1 < par41; ++j1)
             {
-                double d0 = itemRand.nextGaussian() * 0.02D;
-                double d1 = itemRand.nextGaussian() * 0.02D;
-                double d2 = itemRand.nextGaussian() * 0.02D;
+                final double d0 = itemRand.nextGaussian() * 0.02D;
+                final double d1 = itemRand.nextGaussian() * 0.02D;
+                final double d2 = itemRand.nextGaussian() * 0.02D;
                 par0World.spawnParticle("happyVillager", (double)((float)par1 + itemRand.nextFloat()), (double)par2 + (double)itemRand.nextFloat() * block.getBlockBoundsMaxY(), (double)((float)par3 + itemRand.nextFloat()), d0, d1, d2);
             }
         }
         else
         {
-            for (int j1 = 0; j1 < par4; ++j1)
+            for (int j1 = 0; j1 < par41; ++j1)
             {
-                double d0 = itemRand.nextGaussian() * 0.02D;
-                double d1 = itemRand.nextGaussian() * 0.02D;
-                double d2 = itemRand.nextGaussian() * 0.02D;
+                final double d0 = itemRand.nextGaussian() * 0.02D;
+                final double d1 = itemRand.nextGaussian() * 0.02D;
+                final double d2 = itemRand.nextGaussian() * 0.02D;
                 par0World.spawnParticle("happyVillager", (double)((float)par1 + itemRand.nextFloat()), (double)par2 + (double)itemRand.nextFloat() * 1.0f, (double)((float)par3 + itemRand.nextFloat()), d0, d1, d2);
             }
         }
@@ -354,18 +357,18 @@ public class ItemDye extends Item
     /**
      * Returns true if the item can be used on the given entity, e.g. shears on sheep.
      */
-    public boolean itemInteractionForEntity(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, EntityLivingBase par3EntityLivingBase)
+    public boolean itemInteractionForEntity(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final EntityLivingBase par3EntityLivingBase)
     {
         if (par3EntityLivingBase instanceof EntitySheep)
         {
-            EntitySheep entitysheep = (EntitySheep)par3EntityLivingBase;
+            final EntitySheep entitysheep = (EntitySheep)par3EntityLivingBase;
             int i = BlockColored.getBlockFromDye(par1ItemStack.getItemDamage());
 
             if (!entitysheep.getSheared() && entitysheep.getFleeceColor() != i)
             {
                 // CraftBukkit start
-                byte bColor = (byte) i;
-                SheepDyeWoolEvent event = new SheepDyeWoolEvent((org.bukkit.entity.Sheep) entitysheep.getBukkitEntity(), org.bukkit.DyeColor.getByData(bColor));
+                final byte bColor = (byte) i;
+                final SheepDyeWoolEvent event = new SheepDyeWoolEvent((org.bukkit.entity.Sheep) entitysheep.getBukkitEntity(), org.bukkit.DyeColor.getByData(bColor));
                 entitysheep.worldObj.getServer().getPluginManager().callEvent(event);
 
                 if (event.isCancelled())
@@ -392,7 +395,7 @@ public class ItemDye extends Item
     /**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */
-    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubItems(final int par1, final CreativeTabs par2CreativeTabs, final List par3List)
     {
         for (int j = 0; j < 16; ++j)
         {
@@ -401,7 +404,7 @@ public class ItemDye extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.dyeIcons = new Icon[dyeItemNames.length];
 

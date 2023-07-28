@@ -16,14 +16,14 @@ public class TileFluidHandler extends TileEntity implements IFluidHandler
     protected FluidTank tank = new FluidTank(FluidContainerRegistry.BUCKET_VOLUME);
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
+    public void readFromNBT(final NBTTagCompound tag)
     {
         super.readFromNBT(tag);
         tank.writeToNBT(tag);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
+    public void writeToNBT(final NBTTagCompound tag)
     {
         super.writeToNBT(tag);
         tank.readFromNBT(tag);
@@ -31,13 +31,13 @@ public class TileFluidHandler extends TileEntity implements IFluidHandler
 
     /* IFluidHandler */
     @Override
-    public int fill(ForgeDirection from, FluidStack resource, boolean doFill)
+    public int fill(final ForgeDirection from, final FluidStack resource, final boolean doFill)
     {
         return tank.fill(resource, doFill);
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain)
+    public FluidStack drain(final ForgeDirection from, final FluidStack resource, final boolean doDrain)
     {
         if (resource == null || !resource.isFluidEqual(tank.getFluid()))
         {
@@ -47,25 +47,25 @@ public class TileFluidHandler extends TileEntity implements IFluidHandler
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain)
+    public FluidStack drain(final ForgeDirection from, final int maxDrain, final boolean doDrain)
     {
         return tank.drain(maxDrain, doDrain);
     }
 
     @Override
-    public boolean canFill(ForgeDirection from, Fluid fluid)
+    public boolean canFill(final ForgeDirection from, final Fluid fluid)
     {
         return true;
     }
 
     @Override
-    public boolean canDrain(ForgeDirection from, Fluid fluid)
+    public boolean canDrain(final ForgeDirection from, final Fluid fluid)
     {
         return true;
     }
 
     @Override
-    public FluidTankInfo[] getTankInfo(ForgeDirection from)
+    public FluidTankInfo[] getTankInfo(final ForgeDirection from)
     {
         return new FluidTankInfo[] { tank.getInfo() };
     }

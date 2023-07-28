@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 
 public class EntityMagmaCube extends EntitySlime
 {
-    public EntityMagmaCube(World par1World)
+    public EntityMagmaCube(final World par1World)
     {
         super(par1World);
         this.isImmuneToFire = true;
@@ -37,7 +37,7 @@ public class EntityMagmaCube extends EntitySlime
     }
 
     @SideOnly(Side.CLIENT)
-    public int getBrightnessForRender(float par1)
+    public int getBrightnessForRender(final float par1)
     {
         return 15728880;
     }
@@ -45,7 +45,7 @@ public class EntityMagmaCube extends EntitySlime
     /**
      * Gets how bright this entity is.
      */
-    public float getBrightness(float par1)
+    public float getBrightness(final float par1)
     {
         return 1.0F;
     }
@@ -75,9 +75,9 @@ public class EntityMagmaCube extends EntitySlime
      * Drop 0-2 items of this living's type. @param par1 - Whether this entity has recently been hit by a player. @param
      * par2 - Level of Looting used to kill this mob.
      */
-    protected void dropFewItems(boolean par1, int par2)
+    protected void dropFewItems(final boolean par1, final int par2)
     {
-        int j = this.getDropItemId();
+        final int j = this.getDropItemId();
 
         if (j > 0 && this.getSlimeSize() > 1)
         {
@@ -128,7 +128,7 @@ public class EntityMagmaCube extends EntitySlime
     /**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
-    protected void fall(float par1) {}
+    protected void fall(final float par1) {}
 
     /**
      * Indicates weather the slime is able to damage the player (based upon the slime's size)

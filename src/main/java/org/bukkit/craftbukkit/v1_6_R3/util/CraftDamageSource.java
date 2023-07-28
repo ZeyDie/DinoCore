@@ -4,7 +4,7 @@ package org.bukkit.craftbukkit.v1_6_R3.util;
 // Util class to create custom DamageSources.
 public final class CraftDamageSource extends net.minecraft.util.DamageSource {
     public static net.minecraft.util.DamageSource copyOf(final net.minecraft.util.DamageSource original) {
-        CraftDamageSource newSource = new CraftDamageSource(original.damageType);
+        final CraftDamageSource newSource = new CraftDamageSource(original.damageType);
 
         // Check ignoresArmor
         if (original.isUnblockable()) {
@@ -24,7 +24,7 @@ public final class CraftDamageSource extends net.minecraft.util.DamageSource {
         return newSource;
     }
 
-    private CraftDamageSource(String identifier) {
+    private CraftDamageSource(final String identifier) {
         super(identifier);
     }
 }

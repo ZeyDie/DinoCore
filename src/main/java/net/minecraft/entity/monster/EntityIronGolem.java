@@ -25,7 +25,7 @@ public class EntityIronGolem extends EntityGolem
     private int attackTimer;
     private int holdRoseTick;
 
-    public EntityIronGolem(World par1World)
+    public EntityIronGolem(final World par1World)
     {
         super(par1World);
         this.setSize(1.4F, 2.9F);
@@ -73,7 +73,7 @@ public class EntityIronGolem extends EntityGolem
             }
             else
             {
-                ChunkCoordinates chunkcoordinates = this.villageObj.getCenter();
+                final ChunkCoordinates chunkcoordinates = this.villageObj.getCenter();
                 this.setHomeArea(chunkcoordinates.posX, chunkcoordinates.posY, chunkcoordinates.posZ, (int)((float)this.villageObj.getVillageRadius() * 0.6F));
             }
         }
@@ -91,12 +91,12 @@ public class EntityIronGolem extends EntityGolem
     /**
      * Decrements the entity's air supply when underwater
      */
-    protected int decreaseAirSupply(int par1)
+    protected int decreaseAirSupply(final int par1)
     {
         return par1;
     }
 
-    protected void collideWithEntity(Entity par1Entity)
+    protected void collideWithEntity(final Entity par1Entity)
     {
         if (par1Entity instanceof IMob && this.getRNG().nextInt(20) == 0)
         {
@@ -126,10 +126,10 @@ public class EntityIronGolem extends EntityGolem
 
         if (this.motionX * this.motionX + this.motionZ * this.motionZ > 2.500000277905201E-7D && this.rand.nextInt(5) == 0)
         {
-            int i = MathHelper.floor_double(this.posX);
-            int j = MathHelper.floor_double(this.posY - 0.20000000298023224D - (double)this.yOffset);
-            int k = MathHelper.floor_double(this.posZ);
-            int l = this.worldObj.getBlockId(i, j, k);
+            final int i = MathHelper.floor_double(this.posX);
+            final int j = MathHelper.floor_double(this.posY - 0.20000000298023224D - (double)this.yOffset);
+            final int k = MathHelper.floor_double(this.posZ);
+            final int l = this.worldObj.getBlockId(i, j, k);
 
             if (l > 0)
             {
@@ -141,7 +141,7 @@ public class EntityIronGolem extends EntityGolem
     /**
      * Returns true if this entity can attack entities of the specified class.
      */
-    public boolean canAttackClass(Class par1Class)
+    public boolean canAttackClass(final Class par1Class)
     {
         return this.isPlayerCreated() && EntityPlayer.class.isAssignableFrom(par1Class) ? false : super.canAttackClass(par1Class);
     }
@@ -149,7 +149,7 @@ public class EntityIronGolem extends EntityGolem
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setBoolean("PlayerCreated", this.isPlayerCreated());
@@ -158,17 +158,17 @@ public class EntityIronGolem extends EntityGolem
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.setPlayerCreated(par1NBTTagCompound.getBoolean("PlayerCreated"));
     }
 
-    public boolean attackEntityAsMob(Entity par1Entity)
+    public boolean attackEntityAsMob(final Entity par1Entity)
     {
         this.attackTimer = 10;
         this.worldObj.setEntityState(this, (byte)4);
-        boolean flag = par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)(7 + this.rand.nextInt(15)));
+        final boolean flag = par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)(7 + this.rand.nextInt(15)));
 
         if (flag)
         {
@@ -180,7 +180,7 @@ public class EntityIronGolem extends EntityGolem
     }
 
     @SideOnly(Side.CLIENT)
-    public void handleHealthUpdate(byte par1)
+    public void handleHealthUpdate(final byte par1)
     {
         if (par1 == 4)
         {
@@ -208,7 +208,7 @@ public class EntityIronGolem extends EntityGolem
         return this.attackTimer;
     }
 
-    public void setHoldingRose(boolean par1)
+    public void setHoldingRose(final boolean par1)
     {
         this.holdRoseTick = par1 ? 400 : 0;
         this.worldObj.setEntityState(this, (byte)11);
@@ -241,7 +241,7 @@ public class EntityIronGolem extends EntityGolem
     /**
      * Plays step sound at given x, y, z for the entity
      */
-    protected void playStepSound(int par1, int par2, int par3, int par4)
+    protected void playStepSound(final int par1, final int par2, final int par3, final int par4)
     {
         this.playSound("mob.irongolem.walk", 1.0F, 1.0F);
     }
@@ -250,9 +250,9 @@ public class EntityIronGolem extends EntityGolem
      * Drop 0-2 items of this living's type. @param par1 - Whether this entity has recently been hit by a player. @param
      * par2 - Level of Looting used to kill this mob.
      */
-    protected void dropFewItems(boolean par1, int par2)
+    protected void dropFewItems(final boolean par1, final int par2)
     {
-        int j = this.rand.nextInt(3);
+        final int j = this.rand.nextInt(3);
         int k;
 
         for (k = 0; k < j; ++k)
@@ -278,9 +278,9 @@ public class EntityIronGolem extends EntityGolem
         return (this.dataWatcher.getWatchableObjectByte(16) & 1) != 0;
     }
 
-    public void setPlayerCreated(boolean par1)
+    public void setPlayerCreated(final boolean par1)
     {
-        byte b0 = this.dataWatcher.getWatchableObjectByte(16);
+        final byte b0 = this.dataWatcher.getWatchableObjectByte(16);
 
         if (par1)
         {
@@ -295,7 +295,7 @@ public class EntityIronGolem extends EntityGolem
     /**
      * Called when the mob's health reaches 0.
      */
-    public void onDeath(DamageSource par1DamageSource)
+    public void onDeath(final DamageSource par1DamageSource)
     {
         if (!this.isPlayerCreated() && this.attackingPlayer != null && this.villageObj != null)
         {

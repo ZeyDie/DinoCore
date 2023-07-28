@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 public class BlockBeacon extends BlockContainer
 {
-    public BlockBeacon(int par1)
+    public BlockBeacon(final int par1)
     {
         super(par1, Material.glass);
         this.setHardness(3.0F);
@@ -24,7 +24,7 @@ public class BlockBeacon extends BlockContainer
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World par1World)
+    public TileEntity createNewTileEntity(final World par1World)
     {
         return new TileEntityBeacon();
     }
@@ -32,7 +32,7 @@ public class BlockBeacon extends BlockContainer
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9)
     {
         if (par1World.isRemote)
         {
@@ -40,7 +40,7 @@ public class BlockBeacon extends BlockContainer
         }
         else
         {
-            TileEntityBeacon tileentitybeacon = (TileEntityBeacon)par1World.getBlockTileEntity(par2, par3, par4);
+            final TileEntityBeacon tileentitybeacon = (TileEntityBeacon)par1World.getBlockTileEntity(par2, par3, par4);
 
             if (tileentitybeacon != null)
             {
@@ -82,7 +82,7 @@ public class BlockBeacon extends BlockContainer
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         super.registerIcons(par1IconRegister);
     }
@@ -90,7 +90,7 @@ public class BlockBeacon extends BlockContainer
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
+    public void onBlockPlacedBy(final World par1World, final int par2, final int par3, final int par4, final EntityLivingBase par5EntityLivingBase, final ItemStack par6ItemStack)
     {
         super.onBlockPlacedBy(par1World, par2, par3, par4, par5EntityLivingBase, par6ItemStack);
 

@@ -42,7 +42,7 @@ public class GuiEnchantment extends GuiContainer
     ItemStack theItemStack;
     private String field_94079_C;
 
-    public GuiEnchantment(InventoryPlayer par1InventoryPlayer, World par2World, int par3, int par4, int par5, String par6Str)
+    public GuiEnchantment(final InventoryPlayer par1InventoryPlayer, final World par2World, final int par3, final int par4, final int par5, final String par6Str)
     {
         super(new ContainerEnchantment(par1InventoryPlayer, par2World, par3, par4, par5));
         this.containerEnchantment = (ContainerEnchantment)this.inventorySlots;
@@ -52,7 +52,7 @@ public class GuiEnchantment extends GuiContainer
     /**
      * Draw the foreground layer for the GuiContainer (everything in front of the items)
      */
-    protected void drawGuiContainerForegroundLayer(int par1, int par2)
+    protected void drawGuiContainerForegroundLayer(final int par1, final int par2)
     {
         this.fontRenderer.drawString(this.field_94079_C == null ? I18n.getString("container.enchant") : this.field_94079_C, 12, 5, 4210752);
         this.fontRenderer.drawString(I18n.getString("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
@@ -70,16 +70,16 @@ public class GuiEnchantment extends GuiContainer
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int par1, int par2, int par3)
+    protected void mouseClicked(final int par1, final int par2, final int par3)
     {
         super.mouseClicked(par1, par2, par3);
-        int l = (this.width - this.xSize) / 2;
-        int i1 = (this.height - this.ySize) / 2;
+        final int l = (this.width - this.xSize) / 2;
+        final int i1 = (this.height - this.ySize) / 2;
 
         for (int j1 = 0; j1 < 3; ++j1)
         {
-            int k1 = par1 - (l + 60);
-            int l1 = par2 - (i1 + 14 + 19 * j1);
+            final int k1 = par1 - (l + 60);
+            final int l1 = par2 - (i1 + 14 + 19 * j1);
 
             if (k1 >= 0 && l1 >= 0 && k1 < 108 && l1 < 19 && this.containerEnchantment.enchantItem(this.mc.thePlayer, j1))
             {
@@ -91,33 +91,33 @@ public class GuiEnchantment extends GuiContainer
     /**
      * Draw the background layer for the GuiContainer (everything behind the items)
      */
-    protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
+    protected void drawGuiContainerBackgroundLayer(final float par1, final int par2, final int par3)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(enchantingTableGuiTextures);
-        int k = (this.width - this.xSize) / 2;
-        int l = (this.height - this.ySize) / 2;
+        final int k = (this.width - this.xSize) / 2;
+        final int l = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
         GL11.glPushMatrix();
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glPushMatrix();
         GL11.glLoadIdentity();
-        ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+        final ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
         GL11.glViewport((scaledresolution.getScaledWidth() - 320) / 2 * scaledresolution.getScaleFactor(), (scaledresolution.getScaledHeight() - 240) / 2 * scaledresolution.getScaleFactor(), 320 * scaledresolution.getScaleFactor(), 240 * scaledresolution.getScaleFactor());
         GL11.glTranslatef(-0.34F, 0.23F, 0.0F);
         Project.gluPerspective(90.0F, 1.3333334F, 9.0F, 80.0F);
-        float f1 = 1.0F;
+        final float f1 = 1.0F;
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         GL11.glLoadIdentity();
         RenderHelper.enableStandardItemLighting();
         GL11.glTranslatef(0.0F, 3.3F, -16.0F);
         GL11.glScalef(f1, f1, f1);
-        float f2 = 5.0F;
+        final float f2 = 5.0F;
         GL11.glScalef(f2, f2, f2);
         GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(enchantingTableBookTextures);
         GL11.glRotatef(20.0F, 1.0F, 0.0F, 0.0F);
-        float f3 = this.field_74208_u + (this.field_74209_t - this.field_74208_u) * par1;
+        final float f3 = this.field_74208_u + (this.field_74209_t - this.field_74208_u) * par1;
         GL11.glTranslatef((1.0F - f3) * 0.2F, (1.0F - f3) * 0.1F, (1.0F - f3) * 0.25F);
         GL11.glRotatef(-(1.0F - f3) * 90.0F - 90.0F, 0.0F, 1.0F, 0.0F);
         GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);
@@ -161,10 +161,10 @@ public class GuiEnchantment extends GuiContainer
 
         for (int i1 = 0; i1 < 3; ++i1)
         {
-            String s = EnchantmentNameParts.instance.generateRandomEnchantName();
+            final String s = EnchantmentNameParts.instance.generateRandomEnchantName();
             this.zLevel = 0.0F;
             this.mc.getTextureManager().bindTexture(enchantingTableGuiTextures);
-            int j1 = this.containerEnchantment.enchantLevels[i1];
+            final int j1 = this.containerEnchantment.enchantLevels[i1];
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
             if (j1 == 0)
@@ -173,7 +173,7 @@ public class GuiEnchantment extends GuiContainer
             }
             else
             {
-                String s1 = "" + j1;
+                final String s1 = "" + j1;
                 FontRenderer fontrenderer = this.mc.standardGalacticFontRenderer;
                 int k1 = 6839882;
 
@@ -187,8 +187,8 @@ public class GuiEnchantment extends GuiContainer
                 }
                 else
                 {
-                    int l1 = par2 - (k + 60);
-                    int i2 = par3 - (l + 14 + 19 * i1);
+                    final int l1 = par2 - (k + 60);
+                    final int i2 = par3 - (l + 14 + 19 * i1);
 
                     if (l1 >= 0 && i2 >= 0 && l1 < 108 && i2 < 19)
                     {
@@ -211,7 +211,7 @@ public class GuiEnchantment extends GuiContainer
 
     public void func_74205_h()
     {
-        ItemStack itemstack = this.inventorySlots.getSlot(0).getStack();
+        final ItemStack itemstack = this.inventorySlots.getSlot(0).getStack();
 
         if (!ItemStack.areItemStacksEqual(itemstack, this.theItemStack))
         {
@@ -257,7 +257,7 @@ public class GuiEnchantment extends GuiContainer
         }
 
         float f = (this.field_74211_r - this.field_74213_p) * 0.4F;
-        float f1 = 0.2F;
+        final float f1 = 0.2F;
 
         if (f < -f1)
         {

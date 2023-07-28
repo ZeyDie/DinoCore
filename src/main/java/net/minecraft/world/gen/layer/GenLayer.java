@@ -25,19 +25,19 @@ public abstract class GenLayer
      * the first array item is a linked list of the bioms, the second is the zoom function, the third is the same as the
      * first.
      */
-    public static GenLayer[] initializeAllBiomeGenerators(long par0, WorldType par2WorldType)
+    public static GenLayer[] initializeAllBiomeGenerators(final long par0, final WorldType par2WorldType)
     {
-        GenLayerIsland genlayerisland = new GenLayerIsland(1L);
-        GenLayerFuzzyZoom genlayerfuzzyzoom = new GenLayerFuzzyZoom(2000L, genlayerisland);
+        final GenLayerIsland genlayerisland = new GenLayerIsland(1L);
+        final GenLayerFuzzyZoom genlayerfuzzyzoom = new GenLayerFuzzyZoom(2000L, genlayerisland);
         GenLayerAddIsland genlayeraddisland = new GenLayerAddIsland(1L, genlayerfuzzyzoom);
         GenLayerZoom genlayerzoom = new GenLayerZoom(2001L, genlayeraddisland);
         genlayeraddisland = new GenLayerAddIsland(2L, genlayerzoom);
-        GenLayerAddSnow genlayeraddsnow = new GenLayerAddSnow(2L, genlayeraddisland);
+        final GenLayerAddSnow genlayeraddsnow = new GenLayerAddSnow(2L, genlayeraddisland);
         genlayerzoom = new GenLayerZoom(2002L, genlayeraddsnow);
         genlayeraddisland = new GenLayerAddIsland(3L, genlayerzoom);
         genlayerzoom = new GenLayerZoom(2003L, genlayeraddisland);
         genlayeraddisland = new GenLayerAddIsland(4L, genlayerzoom);
-        GenLayerAddMushroomIsland genlayeraddmushroomisland = new GenLayerAddMushroomIsland(5L, genlayeraddisland);
+        final GenLayerAddMushroomIsland genlayeraddmushroomisland = new GenLayerAddMushroomIsland(5L, genlayeraddisland);
         byte b0 = 4;
 
         if (par2WorldType == WorldType.LARGE_BIOMES)
@@ -47,12 +47,12 @@ public abstract class GenLayer
         b0 = getModdedBiomeSize(par2WorldType, b0);
 
         GenLayer genlayer = GenLayerZoom.magnify(1000L, genlayeraddmushroomisland, 0);
-        GenLayerRiverInit genlayerriverinit = new GenLayerRiverInit(100L, genlayer);
+        final GenLayerRiverInit genlayerriverinit = new GenLayerRiverInit(100L, genlayer);
         genlayer = GenLayerZoom.magnify(1000L, genlayerriverinit, b0 + 2);
-        GenLayerRiver genlayerriver = new GenLayerRiver(1L, genlayer);
-        GenLayerSmooth genlayersmooth = new GenLayerSmooth(1000L, genlayerriver);
+        final GenLayerRiver genlayerriver = new GenLayerRiver(1L, genlayer);
+        final GenLayerSmooth genlayersmooth = new GenLayerSmooth(1000L, genlayerriver);
         GenLayer genlayer1 = GenLayerZoom.magnify(1000L, genlayeraddmushroomisland, 0);
-        GenLayerBiome genlayerbiome = new GenLayerBiome(200L, genlayer1, par2WorldType);
+        final GenLayerBiome genlayerbiome = new GenLayerBiome(200L, genlayer1, par2WorldType);
         genlayer1 = GenLayerZoom.magnify(1000L, genlayerbiome, 2);
         Object object = new GenLayerHills(1000L, genlayer1);
 
@@ -76,15 +76,15 @@ public abstract class GenLayer
             }
         }
 
-        GenLayerSmooth genlayersmooth1 = new GenLayerSmooth(1000L, (GenLayer)object);
-        GenLayerRiverMix genlayerrivermix = new GenLayerRiverMix(100L, genlayersmooth1, genlayersmooth);
-        GenLayerVoronoiZoom genlayervoronoizoom = new GenLayerVoronoiZoom(10L, genlayerrivermix);
+        final GenLayerSmooth genlayersmooth1 = new GenLayerSmooth(1000L, (GenLayer)object);
+        final GenLayerRiverMix genlayerrivermix = new GenLayerRiverMix(100L, genlayersmooth1, genlayersmooth);
+        final GenLayerVoronoiZoom genlayervoronoizoom = new GenLayerVoronoiZoom(10L, genlayerrivermix);
         genlayerrivermix.initWorldGenSeed(par0);
         genlayervoronoizoom.initWorldGenSeed(par0);
         return new GenLayer[] {genlayerrivermix, genlayervoronoizoom, genlayerrivermix};
     }
 
-    public GenLayer(long par1)
+    public GenLayer(final long par1)
     {
         this.baseSeed = par1;
         this.baseSeed *= this.baseSeed * 6364136223846793005L + 1442695040888963407L;
@@ -99,7 +99,7 @@ public abstract class GenLayer
      * Initialize layer's local worldGenSeed based on its own baseSeed and the world's global seed (passed in as an
      * argument).
      */
-    public void initWorldGenSeed(long par1)
+    public void initWorldGenSeed(final long par1)
     {
         this.worldGenSeed = par1;
 
@@ -119,7 +119,7 @@ public abstract class GenLayer
     /**
      * Initialize layer's current chunkSeed based on the local worldGenSeed and the (x,z) chunk coordinates.
      */
-    public void initChunkSeed(long par1, long par3)
+    public void initChunkSeed(final long par1, final long par3)
     {
         this.chunkSeed = this.worldGenSeed;
         this.chunkSeed *= this.chunkSeed * 6364136223846793005L + 1442695040888963407L;
@@ -135,7 +135,7 @@ public abstract class GenLayer
     /**
      * returns a LCG pseudo random number from [0, x). Args: int x
      */
-    protected int nextInt(int par1)
+    protected int nextInt(final int par1)
     {
         int j = (int)((this.chunkSeed >> 24) % (long)par1);
 
@@ -155,9 +155,9 @@ public abstract class GenLayer
      */
     public abstract int[] getInts(int i, int j, int k, int l);
 
-    public static byte getModdedBiomeSize(WorldType worldType, byte original)
+    public static byte getModdedBiomeSize(final WorldType worldType, final byte original)
     {
-        WorldTypeEvent.BiomeSize event = new WorldTypeEvent.BiomeSize(worldType, original);
+        final WorldTypeEvent.BiomeSize event = new WorldTypeEvent.BiomeSize(worldType, original);
         MinecraftForge.TERRAIN_GEN_BUS.post(event);
         return event.newSize;
     }

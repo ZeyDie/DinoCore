@@ -14,12 +14,12 @@ public class NBTTagEnd extends NBTBase
     /**
      * Read the actual data contents of the tag, implemented in NBT extension classes
      */
-    void load(DataInput par1DataInput, int par2) throws IOException {}
+    void load(final DataInput par1DataInput, final int par2) throws IOException {}
 
     /**
      * Write the actual data contents of the tag, implemented in NBT extension classes
      */
-    void write(DataOutput par1DataOutput) throws IOException {}
+    void write(final DataOutput par1DataOutput) throws IOException {}
 
     /**
      * Gets the type byte for the tag.

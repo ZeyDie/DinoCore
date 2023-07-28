@@ -8,7 +8,7 @@ public class WorldTypeEvent extends Event
 {
     public final WorldType worldType;
 
-    public WorldTypeEvent(WorldType worldType)
+    public WorldTypeEvent(final WorldType worldType)
     {
         this.worldType = worldType;
     }
@@ -18,7 +18,7 @@ public class WorldTypeEvent extends Event
         public final byte originalSize;
         public byte newSize;
         
-        public BiomeSize(WorldType worldType, byte original)
+        public BiomeSize(final WorldType worldType, final byte original)
         {
             super(worldType);
             originalSize = original;
@@ -32,7 +32,7 @@ public class WorldTypeEvent extends Event
         public final GenLayer[] originalBiomeGens;
         public GenLayer[] newBiomeGens;
         
-        public InitBiomeGens(WorldType worldType, long seed, GenLayer[] original)
+        public InitBiomeGens(final WorldType worldType, final long seed, final GenLayer[] original)
         {
             super(worldType);
             this.seed = seed;

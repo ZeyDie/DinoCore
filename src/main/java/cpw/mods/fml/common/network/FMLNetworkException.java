@@ -15,7 +15,7 @@ package cpw.mods.fml.common.network;
 public class FMLNetworkException extends RuntimeException
 {
 
-    public FMLNetworkException(Exception e)
+    public FMLNetworkException(final Exception e)
     {
         super(e);
     }

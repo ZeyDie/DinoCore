@@ -25,7 +25,7 @@ public class PlayerEggThrowEvent extends PlayerEvent {
     }
 
     @Deprecated
-    public PlayerEggThrowEvent(Player player, Egg egg, boolean hatching, byte numHatches, CreatureType hatchingType) {
+    public PlayerEggThrowEvent(final Player player, final Egg egg, final boolean hatching, final byte numHatches, final CreatureType hatchingType) {
         this(player, egg, hatching, numHatches, hatchingType.toEntityType());
     }
 
@@ -54,7 +54,7 @@ public class PlayerEggThrowEvent extends PlayerEvent {
      * @param hatching true if you want the egg to hatch
      *            false if you want it not to
      */
-    public void setHatching(boolean hatching) {
+    public void setHatching(final boolean hatching) {
         this.hatching = hatching;
     }
 
@@ -85,7 +85,7 @@ public class PlayerEggThrowEvent extends PlayerEvent {
      * @deprecated In favour of {@link #setHatchingType(EntityType)}.
      */
     @Deprecated
-    public void setHatchType(CreatureType hatchType) {
+    public void setHatchType(final CreatureType hatchType) {
         this.hatchType = hatchType.toEntityType();
     }
 
@@ -94,7 +94,7 @@ public class PlayerEggThrowEvent extends PlayerEvent {
      *
      * @param hatchType The type of the mob being hatched by the egg
      */
-    public void setHatchingType(EntityType hatchType) {
+    public void setHatchingType(final EntityType hatchType) {
         if(!hatchType.isSpawnable()) throw new IllegalArgumentException("Can't spawn that entity type from an egg!");
         this.hatchType = hatchType;
     }
@@ -121,7 +121,7 @@ public class PlayerEggThrowEvent extends PlayerEvent {
      *
      * @param numHatches The number of mobs coming out of the egg
      */
-    public void setNumHatches(byte numHatches) {
+    public void setNumHatches(final byte numHatches) {
         this.numHatches = numHatches;
     }
 

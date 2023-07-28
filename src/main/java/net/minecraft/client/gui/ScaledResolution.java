@@ -14,7 +14,7 @@ public class ScaledResolution
     private double scaledHeightD;
     private int scaleFactor;
 
-    public ScaledResolution(GameSettings par1GameSettings, int par2, int par3)
+    public ScaledResolution(final GameSettings par1GameSettings, final int par2, final int par3)
     {
         this.scaledWidth = par2;
         this.scaledHeight = par3;

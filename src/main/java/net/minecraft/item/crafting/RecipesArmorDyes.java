@@ -10,33 +10,34 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class RecipesArmorDyes extends ShapelessRecipes implements IRecipe   // CraftBukkit - added extends
 {
     // CraftBukkit start - Delegate to new parent class with bogus info
     public RecipesArmorDyes()
     {
-        super(new ItemStack(Item.helmetLeather, 0, 0), java.util.Arrays.asList(new ItemStack(Item.dyePowder, 0, 5)));
+        super(new ItemStack(Item.helmetLeather, 0, 0), Collections.singletonList(new ItemStack(Item.dyePowder, 0, 5)));
     }
     // CraftBukkit end
 
     /**
      * Used to check if a recipe matches current crafting inventory
      */
-    public boolean matches(InventoryCrafting par1InventoryCrafting, World par2World)
+    public boolean matches(final InventoryCrafting par1InventoryCrafting, final World par2World)
     {
         ItemStack itemstack = null;
-        ArrayList arraylist = new ArrayList();
+        final ArrayList arraylist = new ArrayList();
 
         for (int i = 0; i < par1InventoryCrafting.getSizeInventory(); ++i)
         {
-            ItemStack itemstack1 = par1InventoryCrafting.getStackInSlot(i);
+            final ItemStack itemstack1 = par1InventoryCrafting.getStackInSlot(i);
 
             if (itemstack1 != null)
             {
                 if (itemstack1.getItem() instanceof ItemArmor)
                 {
-                    ItemArmor itemarmor = (ItemArmor)itemstack1.getItem();
+                    final ItemArmor itemarmor = (ItemArmor)itemstack1.getItem();
 
                     if (itemarmor.getArmorMaterial() != EnumArmorMaterial.CLOTH || itemstack != null)
                     {
@@ -63,10 +64,10 @@ public class RecipesArmorDyes extends ShapelessRecipes implements IRecipe   // C
     /**
      * Returns an Item that is the result of this recipe
      */
-    public ItemStack getCraftingResult(InventoryCrafting par1InventoryCrafting)
+    public ItemStack getCraftingResult(final InventoryCrafting par1InventoryCrafting)
     {
         ItemStack itemstack = null;
-        int[] aint = new int[3];
+        final int[] aint = new int[3];
         int i = 0;
         int j = 0;
         ItemArmor itemarmor = null;
@@ -78,7 +79,7 @@ public class RecipesArmorDyes extends ShapelessRecipes implements IRecipe   // C
 
         for (k = 0; k < par1InventoryCrafting.getSizeInventory(); ++k)
         {
-            ItemStack itemstack1 = par1InventoryCrafting.getStackInSlot(k);
+            final ItemStack itemstack1 = par1InventoryCrafting.getStackInSlot(k);
 
             if (itemstack1 != null)
             {
@@ -99,7 +100,7 @@ public class RecipesArmorDyes extends ShapelessRecipes implements IRecipe   // C
                         l = itemarmor.getColor(itemstack);
                         f = (float)(l >> 16 & 255) / 255.0F;
                         f1 = (float)(l >> 8 & 255) / 255.0F;
-                        float f2 = (float)(l & 255) / 255.0F;
+                        final float f2 = (float)(l & 255) / 255.0F;
                         i = (int)((float)i + Math.max(f, Math.max(f1, f2)) * 255.0F);
                         aint[0] = (int)((float)aint[0] + f * 255.0F);
                         aint[1] = (int)((float)aint[1] + f1 * 255.0F);
@@ -114,9 +115,9 @@ public class RecipesArmorDyes extends ShapelessRecipes implements IRecipe   // C
                         return null;
                     }
 
-                    float[] afloat = EntitySheep.fleeceColorTable[BlockColored.getBlockFromDye(itemstack1.getItemDamage())];
-                    int j1 = (int)(afloat[0] * 255.0F);
-                    int k1 = (int)(afloat[1] * 255.0F);
+                    final float[] afloat = EntitySheep.fleeceColorTable[BlockColored.getBlockFromDye(itemstack1.getItemDamage())];
+                    final int j1 = (int)(afloat[0] * 255.0F);
+                    final int k1 = (int)(afloat[1] * 255.0F);
                     i1 = (int)(afloat[2] * 255.0F);
                     i += Math.max(j1, Math.max(k1, i1));
                     aint[0] += j1;

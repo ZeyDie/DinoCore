@@ -23,7 +23,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
         return cancel;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 
@@ -58,7 +58,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
      *
      * @param target The entity to target
      */
-    public void setTarget(Entity target) {
+    public void setTarget(final Entity target) {
         this.target = target;
     }
 

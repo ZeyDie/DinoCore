@@ -20,7 +20,7 @@ public class PrepareItemEnchantEvent extends InventoryEvent implements Cancellab
     private boolean cancelled;
     private final Player enchanter;
 
-    public PrepareItemEnchantEvent(final Player enchanter, InventoryView view, final Block table, final ItemStack item, final int[] levelsOffered, final int bonus) {
+    public PrepareItemEnchantEvent(final Player enchanter, final InventoryView view, final Block table, final ItemStack item, final int[] levelsOffered, final int bonus) {
         super(view);
         this.enchanter = enchanter;
         this.table = table;
@@ -79,7 +79,7 @@ public class PrepareItemEnchantEvent extends InventoryEvent implements Cancellab
         return cancelled;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancelled = cancel;
     }
 

@@ -20,16 +20,16 @@ final class DispenserBehaviorEmptyBucket extends BehaviorDefaultDispenseItem
     /**
      * Dispense the specified stack, play the dispense sound and spawn particles.
      */
-    public ItemStack dispenseStack(IBlockSource par1IBlockSource, ItemStack par2ItemStack)
+    public ItemStack dispenseStack(final IBlockSource par1IBlockSource, final ItemStack par2ItemStack)
     {
-        EnumFacing enumfacing = BlockDispenser.getFacing(par1IBlockSource.getBlockMetadata());
-        World world = par1IBlockSource.getWorld();
-        int i = par1IBlockSource.getXInt() + enumfacing.getFrontOffsetX();
-        int j = par1IBlockSource.getYInt() + enumfacing.getFrontOffsetY();
-        int k = par1IBlockSource.getZInt() + enumfacing.getFrontOffsetZ();
-        Material material = world.getBlockMaterial(i, j, k);
-        int l = world.getBlockMetadata(i, j, k);
-        Item item;
+        final EnumFacing enumfacing = BlockDispenser.getFacing(par1IBlockSource.getBlockMetadata());
+        final World world = par1IBlockSource.getWorld();
+        final int i = par1IBlockSource.getXInt() + enumfacing.getFrontOffsetX();
+        final int j = par1IBlockSource.getYInt() + enumfacing.getFrontOffsetY();
+        final int k = par1IBlockSource.getZInt() + enumfacing.getFrontOffsetZ();
+        final Material material = world.getBlockMaterial(i, j, k);
+        final int l = world.getBlockMetadata(i, j, k);
+        final Item item;
 
         if (Material.water.equals(material) && l == 0)
         {
@@ -46,9 +46,9 @@ final class DispenserBehaviorEmptyBucket extends BehaviorDefaultDispenseItem
         }
 
         // CraftBukkit start
-        org.bukkit.block.Block block = world.getWorld().getBlockAt(par1IBlockSource.getXInt(), par1IBlockSource.getYInt(), par1IBlockSource.getZInt());
-        CraftItemStack craftItem = CraftItemStack.asCraftMirror(par2ItemStack);
-        BlockDispenseEvent event = new BlockDispenseEvent(block, craftItem.clone(), new org.bukkit.util.Vector(i, j, k));
+        final org.bukkit.block.Block block = world.getWorld().getBlockAt(par1IBlockSource.getXInt(), par1IBlockSource.getYInt(), par1IBlockSource.getZInt());
+        final CraftItemStack craftItem = CraftItemStack.asCraftMirror(par2ItemStack);
+        final BlockDispenseEvent event = new BlockDispenseEvent(block, craftItem.clone(), new org.bukkit.util.Vector(i, j, k));
 
         if (!BlockDispenser.eventFired)
         {
@@ -63,8 +63,8 @@ final class DispenserBehaviorEmptyBucket extends BehaviorDefaultDispenseItem
         if (!event.getItem().equals(craftItem))
         {
             // Chain to handler for new item
-            ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-            IBehaviorDispenseItem ibehaviordispenseitem = (IBehaviorDispenseItem) BlockDispenser.dispenseBehaviorRegistry.getObject(eventStack.getItem());
+            final ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
+            final IBehaviorDispenseItem ibehaviordispenseitem = (IBehaviorDispenseItem) BlockDispenser.dispenseBehaviorRegistry.getObject(eventStack.getItem());
 
             if (ibehaviordispenseitem != IBehaviorDispenseItem.itemDispenseBehaviorProvider && ibehaviordispenseitem != this)
             {

@@ -9,17 +9,17 @@ import java.util.Random;
 
 public class WorldGenTaiga2 extends WorldGenerator
 {
-    public WorldGenTaiga2(boolean par1)
+    public WorldGenTaiga2(final boolean par1)
     {
         super(par1);
     }
 
-    public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
+    public boolean generate(final World par1World, final Random par2Random, final int par3, final int par4, final int par5)
     {
-        int l = par2Random.nextInt(4) + 6;
-        int i1 = 1 + par2Random.nextInt(2);
-        int j1 = l - i1;
-        int k1 = 2 + par2Random.nextInt(2);
+        final int l = par2Random.nextInt(4) + 6;
+        final int i1 = 1 + par2Random.nextInt(2);
+        final int j1 = l - i1;
+        final int k1 = 2 + par2Random.nextInt(2);
         boolean flag = true;
 
         if (par4 >= 1 && par4 + l + 1 <= 256)
@@ -31,7 +31,7 @@ public class WorldGenTaiga2 extends WorldGenerator
 
             for (l1 = par4; l1 <= par4 + 1 + l && flag; ++l1)
             {
-                boolean flag1 = true;
+                final boolean flag1 = true;
 
                 if (l1 - par4 < i1)
                 {
@@ -50,7 +50,7 @@ public class WorldGenTaiga2 extends WorldGenerator
                         {
                             j2 = par1World.getBlockId(i2, l1, l2);
 
-                            Block block = Block.blocksList[j2];
+                            final Block block = Block.blocksList[j2];
 
                             if (j2 != 0 && block != null && !block.isLeaves(par1World, i2, l1, l2))
                             {
@@ -72,8 +72,8 @@ public class WorldGenTaiga2 extends WorldGenerator
             else
             {
                 l1 = par1World.getBlockId(par3, par4 - 1, par5);
-                Block soil = Block.blocksList[l1];
-                boolean isValidSoil = soil != null && soil.canSustainPlant(par1World, par3, par4 - 1, par5, ForgeDirection.UP, (BlockSapling)Block.sapling);
+                final Block soil = Block.blocksList[l1];
+                final boolean isValidSoil = soil != null && soil.canSustainPlant(par1World, par3, par4 - 1, par5, ForgeDirection.UP, (BlockSapling)Block.sapling);
 
                 if (isValidSoil && par4 < 256 - l - 1)
                 {
@@ -90,13 +90,13 @@ public class WorldGenTaiga2 extends WorldGenerator
 
                         for (i3 = par3 - k2; i3 <= par3 + k2; ++i3)
                         {
-                            int k3 = i3 - par3;
+                            final int k3 = i3 - par3;
 
                             for (int l3 = par5 - k2; l3 <= par5 + k2; ++l3)
                             {
-                                int i4 = l3 - par5;
+                                final int i4 = l3 - par5;
 
-                                Block block = Block.blocksList[par1World.getBlockId(i3, j3, l3)];
+                                final Block block = Block.blocksList[par1World.getBlockId(i3, j3, l3)];
 
                                 if ((Math.abs(k3) != k2 || Math.abs(i4) != k2 || k2 <= 0) &&
                                     (block == null || block.canBeReplacedByLeaves(par1World, i3, j3, l3)))
@@ -129,7 +129,7 @@ public class WorldGenTaiga2 extends WorldGenerator
                     {
                         i3 = par1World.getBlockId(par3, par4 + j3, par5);
 
-                        Block block = Block.blocksList[i3];
+                        final Block block = Block.blocksList[i3];
 
                         if (i3 == 0 || block == null || block.isLeaves(par1World, par3, par4 + j3, par5))
                         {

@@ -6,7 +6,7 @@ class CallableLevelGeneratorOptions implements Callable
 {
     final WorldInfo worldInfoInstance;
 
-    CallableLevelGeneratorOptions(WorldInfo par1WorldInfo)
+    CallableLevelGeneratorOptions(final WorldInfo par1WorldInfo)
     {
         this.worldInfoInstance = par1WorldInfo;
     }

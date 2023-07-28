@@ -16,39 +16,39 @@ public class ProxyCreator {
     static {
         try {
             proxyInterface = pool.get("me.Kepa2012.fastbukkit.model.IProxiedEvent");
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             t.printStackTrace();
         }
     }
 
-    public static IProxiedEvent createEventProxy(Method eventMethod) {
+    public static IProxiedEvent createEventProxy(final Method eventMethod) {
         if (!CoreSettings.getInstance().getSettings().isFastBukkit()) return null;
 
         try {
-            Class<?> declCl = eventMethod.getDeclaringClass();
-            ClassLoader bukkitLoader = declCl.getClassLoader();
+            final Class<?> declCl = eventMethod.getDeclaringClass();
+            final ClassLoader bukkitLoader = declCl.getClassLoader();
             pool.insertClassPath(new LoaderClassPath(bukkitLoader));
-            int randomNumber = rng.nextInt(999999);
+            final int randomNumber = rng.nextInt(999999);
 
-            CtClass ctProxiedEvent = pool.makeClass(eventMethod.getDeclaringClass().getName() + "_" + eventMethod.getName() + randomNumber);
+            final CtClass ctProxiedEvent = pool.makeClass(eventMethod.getDeclaringClass().getName() + "_" + eventMethod.getName() + randomNumber);
             ctProxiedEvent.setInterfaces(new CtClass[]{proxyInterface});
 
-            SignatureAttribute.ClassSignature signature = new SignatureAttribute.ClassSignature(null, null, new SignatureAttribute.ClassType[]{new SignatureAttribute.ClassType(ctProxiedEvent.getName(), new SignatureAttribute.TypeArgument[]{new SignatureAttribute.TypeArgument(new SignatureAttribute.ClassType("me.Kepa2012.fastbukkit.model.IProxiedEvent"))})});
+            final SignatureAttribute.ClassSignature signature = new SignatureAttribute.ClassSignature(null, null, new SignatureAttribute.ClassType[]{new SignatureAttribute.ClassType(ctProxiedEvent.getName(), new SignatureAttribute.TypeArgument[]{new SignatureAttribute.TypeArgument(new SignatureAttribute.ClassType("me.Kepa2012.fastbukkit.model.IProxiedEvent"))})});
 
             ctProxiedEvent.setGenericSignature(signature.encode());
 
-            String finalMethodCode = getProxyCode(eventMethod.getDeclaringClass().getName(), eventMethod.getName(), eventMethod.getParameterTypes()[0].getName());
+            final String finalMethodCode = getProxyCode(eventMethod.getDeclaringClass().getName(), eventMethod.getName(), eventMethod.getParameterTypes()[0].getName());
 
-            CtMethod ctCallEvent = CtNewMethod.make(finalMethodCode, ctProxiedEvent);
+            final CtMethod ctCallEvent = CtNewMethod.make(finalMethodCode, ctProxiedEvent);
 
             ctProxiedEvent.addMethod(ctCallEvent);
 
-            Class<IProxiedEvent> c = (Class<IProxiedEvent>) ctProxiedEvent.toClass(bukkitLoader, declCl.getProtectionDomain());
+            final Class<IProxiedEvent> c = (Class<IProxiedEvent>) ctProxiedEvent.toClass(bukkitLoader, declCl.getProtectionDomain());
 
             System.out.println("[DBG-FastBukkit] Created proxy " + eventMethod.getDeclaringClass().getName() + "_" + eventMethod.getName() + randomNumber);
 
             return c.newInstance();
-        } catch (Throwable t_) {
+        } catch (final Throwable t_) {
             System.err.println("[DBG-FastBukkit] Something went wrong with " + eventMethod.getDeclaringClass().getName() + "." + eventMethod.getName());
             System.err.println("[DBG-FastBukkit] Error: " + t_.getClass().getSimpleName() + ":" + t_.getMessage());
             System.err.println("[DBG-FastBukkit] We will use slow reflection invocation");
@@ -57,7 +57,7 @@ public class ProxyCreator {
         }
     }
 
-    private static String getProxyCode(String listenerClass, String methodName, String eventClass) {
+    private static String getProxyCode(final String listenerClass, final String methodName, final String eventClass) {
         return "public void callEvent(org.bukkit.event.Listener listener, org.bukkit.event.Event event) { ((" + listenerClass + ")listener)." + methodName + "((" + eventClass + ") event); }";
     }
 }

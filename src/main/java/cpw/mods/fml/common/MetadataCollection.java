@@ -30,17 +30,17 @@ public class MetadataCollection
     private Map<String, ModMetadata> metadatas = Maps.newHashMap();
     private int metadataVersion = 1;
 
-    public static MetadataCollection from(InputStream inputStream, String sourceName)
+    public static MetadataCollection from(final InputStream inputStream, final String sourceName)
     {
         if (inputStream == null)
         {
             return new MetadataCollection();
         }
 
-        InputStreamReader reader = new InputStreamReader(inputStream);
+        final InputStreamReader reader = new InputStreamReader(inputStream);
         try
         {
-            JsonRootNode root = parser.parse(reader);
+            final JsonRootNode root = parser.parse(reader);
             if (root.hasElements())
             {
                 return parse10ModInfo(root);
@@ -50,46 +50,46 @@ public class MetadataCollection
                 return parseModInfo(root);
             }
         }
-        catch (InvalidSyntaxException e)
+        catch (final InvalidSyntaxException e)
         {
             FMLLog.log(Level.SEVERE, e, "The mcmod.info file in %s cannot be parsed as valid JSON. It will be ignored", sourceName);
             return new MetadataCollection();
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             throw Throwables.propagate(e);
         }
     }
 
-    private static MetadataCollection parseModInfo(JsonRootNode root)
+    private static MetadataCollection parseModInfo(final JsonRootNode root)
     {
-        MetadataCollection mc = new MetadataCollection();
+        final MetadataCollection mc = new MetadataCollection();
         mc.metadataVersion = Integer.parseInt(root.getNumberValue("modinfoversion"));
         mc.parseModMetadataList(root.getNode("modlist"));
         return mc;
     }
 
-    private static MetadataCollection parse10ModInfo(JsonRootNode root)
+    private static MetadataCollection parse10ModInfo(final JsonRootNode root)
     {
-        MetadataCollection mc = new MetadataCollection();
+        final MetadataCollection mc = new MetadataCollection();
         mc.parseModMetadataList(root);
         return mc;
     }
 
-    private void parseModMetadataList(JsonNode metadataList)
+    private void parseModMetadataList(final JsonNode metadataList)
     {
-        for (JsonNode node : metadataList.getElements())
+        for (final JsonNode node : metadataList.getElements())
         {
-            ModMetadata mmd = new ModMetadata(node);
+            final ModMetadata mmd = new ModMetadata(node);
             metadatas.put(mmd.modId, mmd);
         }
     }
 
-    public ModMetadata getMetadataForId(String modId, Map<String, Object> extraData)
+    public ModMetadata getMetadataForId(final String modId, final Map<String, Object> extraData)
     {
         if (!metadatas.containsKey(modId))
         {
-            ModMetadata dummy = new ModMetadata();
+            final ModMetadata dummy = new ModMetadata();
             dummy.modId = modId;
             dummy.name = (String) extraData.get("name");
             dummy.version = (String) extraData.get("version");

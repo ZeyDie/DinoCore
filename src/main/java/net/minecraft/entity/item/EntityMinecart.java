@@ -43,7 +43,7 @@ public abstract class EntityMinecart extends Entity
     protected String entityName;
 
     /** Minecart rotational logic matrix */
-    protected static final int[][][] matrix = new int[][][] {{{0, 0, -1}, {0, 0, 1}}, {{ -1, 0, 0}, {1, 0, 0}}, {{ -1, -1, 0}, {1, 0, 0}}, {{ -1, 0, 0}, {1, -1, 0}}, {{0, 0, -1}, {0, -1, 1}}, {{0, -1, -1}, {0, 0, 1}}, {{0, 0, 1}, {1, 0, 0}}, {{0, 0, 1}, { -1, 0, 0}}, {{0, 0, -1}, { -1, 0, 0}}, {{0, 0, -1}, {1, 0, 0}}};
+    protected static final int[][][] matrix = {{{0, 0, -1}, {0, 0, 1}}, {{ -1, 0, 0}, {1, 0, 0}}, {{ -1, -1, 0}, {1, 0, 0}}, {{ -1, 0, 0}, {1, -1, 0}}, {{0, 0, -1}, {0, -1, 1}}, {{0, -1, -1}, {0, 0, 1}}, {{0, 0, 1}, {1, 0, 0}}, {{0, 0, 1}, { -1, 0, 0}}, {{0, 0, -1}, { -1, 0, 0}}, {{0, 0, -1}, {1, 0, 0}}};
 
     /** appears to be the progress of the turn */
     protected int turnProgress;
@@ -71,7 +71,7 @@ public abstract class EntityMinecart extends Entity
     // CraftBukkit end
     /* Forge: Minecart Compatibility Layer Integration. */
     public static float defaultMaxSpeedAirLateral = 0.4f;
-    public static float defaultMaxSpeedAirVertical = -1f;
+    public static float defaultMaxSpeedAirVertical = -1.0f;
     public static double defaultDragAir = 0.94999998807907104D;
     protected boolean canUseRail = true;
     protected boolean canBePushed = true;
@@ -83,7 +83,7 @@ public abstract class EntityMinecart extends Entity
     protected float maxSpeedAirVertical = defaultMaxSpeedAirVertical;
     protected double dragAir = defaultDragAir;
 
-    public EntityMinecart(World par1World)
+    public EntityMinecart(final World par1World)
     {
         super(par1World);
         this.preventEntitySpawning = true;
@@ -98,7 +98,7 @@ public abstract class EntityMinecart extends Entity
      * MinecartChest, 2 for MinecartFurnace, 3 for MinecartTNT, 4 for MinecartMobSpawner, 5 for MinecartHopper and 0 for
      * a standard empty minecart
      */
-    public static EntityMinecart createMinecart(World par0World, double par1, double par3, double par5, int par7)
+    public static EntityMinecart createMinecart(final World par0World, final double par1, final double par3, final double par5, final int par7)
     {
         switch (par7)
         {
@@ -140,7 +140,7 @@ public abstract class EntityMinecart extends Entity
      * Returns a boundingBox used to collide the entity with other entities and blocks. This enables the entity to be
      * pushable on contact, like boats or minecarts.
      */
-    public AxisAlignedBB getCollisionBox(Entity par1Entity)
+    public AxisAlignedBB getCollisionBox(final Entity par1Entity)
     {
         if (getCollisionHandler() != null)
         {
@@ -169,7 +169,7 @@ public abstract class EntityMinecart extends Entity
         return canBePushed;
     }
 
-    public EntityMinecart(World par1World, double par2, double par4, double par6)
+    public EntityMinecart(final World par1World, final double par2, final double par4, final double par6)
     {
         this(par1World);
         this.setPosition(par2, par4, par6);
@@ -193,8 +193,9 @@ public abstract class EntityMinecart extends Entity
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, float par2)
     {
+        float par21 = par2;
         if (!this.worldObj.isRemote && !this.isDead)
         {
             if (this.isEntityInvulnerable())
@@ -204,9 +205,9 @@ public abstract class EntityMinecart extends Entity
             else
             {
                 // CraftBukkit start
-                Vehicle vehicle = (Vehicle) this.getBukkitEntity();
-                org.bukkit.entity.Entity passenger = (par1DamageSource.getEntity() == null) ? null : par1DamageSource.getEntity().getBukkitEntity();
-                VehicleDamageEvent event = new VehicleDamageEvent(vehicle, passenger, par2);
+                final Vehicle vehicle = (Vehicle) this.getBukkitEntity();
+                final org.bukkit.entity.Entity passenger = (par1DamageSource.getEntity() == null) ? null : par1DamageSource.getEntity().getBukkitEntity();
+                final VehicleDamageEvent event = new VehicleDamageEvent(vehicle, passenger, par21);
                 this.worldObj.getServer().getPluginManager().callEvent(event);
 
                 if (event.isCancelled())
@@ -214,13 +215,13 @@ public abstract class EntityMinecart extends Entity
                     return true;
                 }
 
-                par2 = (float) event.getDamage();
+                par21 = (float) event.getDamage();
                 // CraftBukkit end
                 this.setRollingDirection(-this.getRollingDirection());
                 this.setRollingAmplitude(10);
                 this.setBeenAttacked();
-                this.setDamage(this.getDamage() + par2 * 10.0F);
-                boolean flag = par1DamageSource.getEntity() instanceof EntityPlayer && ((EntityPlayer)par1DamageSource.getEntity()).capabilities.isCreativeMode;
+                this.setDamage(this.getDamage() + par21 * 10.0F);
+                final boolean flag = par1DamageSource.getEntity() instanceof EntityPlayer && ((EntityPlayer)par1DamageSource.getEntity()).capabilities.isCreativeMode;
 
                 if (flag || this.getDamage() > 40.0F)
                 {
@@ -230,7 +231,7 @@ public abstract class EntityMinecart extends Entity
                     }
 
                     // CraftBukkit start
-                    VehicleDestroyEvent destroyEvent = new VehicleDestroyEvent(vehicle, passenger);
+                    final VehicleDestroyEvent destroyEvent = new VehicleDestroyEvent(vehicle, passenger);
                     this.worldObj.getServer().getPluginManager().callEvent(destroyEvent);
 
                     if (destroyEvent.isCancelled())
@@ -258,10 +259,10 @@ public abstract class EntityMinecart extends Entity
         }
     }
 
-    public void killMinecart(DamageSource par1DamageSource)
+    public void killMinecart(final DamageSource par1DamageSource)
     {
         this.setDead();
-        ItemStack itemstack = new ItemStack(Item.minecartEmpty, 1);
+        final ItemStack itemstack = new ItemStack(Item.minecartEmpty, 1);
 
         if (this.entityName != null)
         {
@@ -310,11 +311,11 @@ public abstract class EntityMinecart extends Entity
     public void onUpdate()
     {
         // CraftBukkit start
-        double prevX = this.posX;
-        double prevY = this.posY;
-        double prevZ = this.posZ;
-        float prevYaw = this.rotationYaw;
-        float prevPitch = this.rotationPitch;
+        final double prevX = this.posX;
+        final double prevY = this.posY;
+        final double prevZ = this.posZ;
+        final float prevYaw = this.rotationYaw;
+        final float prevPitch = this.rotationPitch;
         // CraftBukkit end
         if (this.field_82344_g != null)
         {
@@ -341,7 +342,7 @@ public abstract class EntityMinecart extends Entity
         if (!this.worldObj.isRemote && this.worldObj instanceof WorldServer)
         {
             this.worldObj.theProfiler.startSection("portal");
-            MinecraftServer minecraftserver = ((WorldServer)this.worldObj).getMinecraftServer();
+            final MinecraftServer minecraftserver = ((WorldServer)this.worldObj).getMinecraftServer();
             i = this.getMaxInPortalTime();
 
             if (this.inPortal)
@@ -352,7 +353,7 @@ public abstract class EntityMinecart extends Entity
                     {
                         this.portalCounter = i;
                         this.timeUntilPortal = this.getPortalCooldown();
-                        byte b0;
+                        final byte b0;
 
                         if (this.worldObj.provider.dimensionId == -1)
                         {
@@ -394,10 +395,10 @@ public abstract class EntityMinecart extends Entity
         {
             if (this.turnProgress > 0)
             {
-                double d0 = this.posX + (this.minecartX - this.posX) / (double)this.turnProgress;
-                double d1 = this.posY + (this.minecartY - this.posY) / (double)this.turnProgress;
-                double d2 = this.posZ + (this.minecartZ - this.posZ) / (double)this.turnProgress;
-                double d3 = MathHelper.wrapAngleTo180_double(this.minecartYaw - (double)this.rotationYaw);
+                final double d0 = this.posX + (this.minecartX - this.posX) / (double)this.turnProgress;
+                final double d1 = this.posY + (this.minecartY - this.posY) / (double)this.turnProgress;
+                final double d2 = this.posZ + (this.minecartZ - this.posZ) / (double)this.turnProgress;
+                final double d3 = MathHelper.wrapAngleTo180_double(this.minecartYaw - (double)this.rotationYaw);
                 this.rotationYaw = (float)((double)this.rotationYaw + d3 / (double)this.turnProgress);
                 this.rotationPitch = (float)((double)this.rotationPitch + (this.minecartPitch - (double)this.rotationPitch) / (double)this.turnProgress);
                 --this.turnProgress;
@@ -416,25 +417,25 @@ public abstract class EntityMinecart extends Entity
             this.prevPosY = this.posY;
             this.prevPosZ = this.posZ;
             this.motionY -= 0.03999999910593033D;
-            int j = MathHelper.floor_double(this.posX);
+            final int j = MathHelper.floor_double(this.posX);
             i = MathHelper.floor_double(this.posY);
-            int k = MathHelper.floor_double(this.posZ);
+            final int k = MathHelper.floor_double(this.posZ);
 
             if (BlockRailBase.isRailBlockAt(this.worldObj, j, i - 1, k))
             {
                 --i;
             }
 
-            double d4 = this.maxSpeed; // CraftBukkit
-            double d5 = 0.0078125D;
-            int l = this.worldObj.getBlockId(j, i, k);
+            final double d4 = this.maxSpeed; // CraftBukkit
+            final double d5 = 0.0078125D;
+            final int l = this.worldObj.getBlockId(j, i, k);
 
             if (canUseRail() && BlockRailBase.isRailBlock(l))
             {
-                BlockRailBase rail = (BlockRailBase)Block.blocksList[l];
-                float railMaxSpeed = rail.getRailMaxSpeed(worldObj, this, j, i, k);
-                double maxSpeed = Math.min(railMaxSpeed, getCurrentCartSpeedCapOnRail());
-                int i1 = rail.getBasicRailMetadata(worldObj, this, j, i, k);
+                final BlockRailBase rail = (BlockRailBase)Block.blocksList[l];
+                final float railMaxSpeed = rail.getRailMaxSpeed(worldObj, this, j, i, k);
+                final double maxSpeed = Math.min(railMaxSpeed, getCurrentCartSpeedCapOnRail());
+                final int i1 = rail.getBasicRailMetadata(worldObj, this, j, i, k);
                 this.updateOnTrack(j, i, k, maxSpeed, getSlopeAdjustment(), l, i1);
                 if (l == Block.railActivator.blockID)
                 {
@@ -448,8 +449,8 @@ public abstract class EntityMinecart extends Entity
 
             this.doBlockCollisions();
             this.rotationPitch = 0.0F;
-            double d6 = this.prevPosX - this.posX;
-            double d7 = this.prevPosZ - this.posZ;
+            final double d6 = this.prevPosX - this.posX;
+            final double d7 = this.prevPosZ - this.posZ;
 
             if (d6 * d6 + d7 * d7 > 0.001D)
             {
@@ -461,7 +462,7 @@ public abstract class EntityMinecart extends Entity
                 }
             }
 
-            double d8 = (double)MathHelper.wrapAngleTo180_float(this.rotationYaw - this.prevRotationYaw);
+            final double d8 = (double)MathHelper.wrapAngleTo180_float(this.rotationYaw - this.prevRotationYaw);
 
             if (d8 < -170.0D || d8 >= 170.0D)
             {
@@ -471,10 +472,10 @@ public abstract class EntityMinecart extends Entity
 
             this.setRotation(this.rotationYaw, this.rotationPitch);
             // CraftBukkit start
-            org.bukkit.World bworld = this.worldObj.getWorld();
-            Location from = new Location(bworld, prevX, prevY, prevZ, prevYaw, prevPitch);
-            Location to = new Location(bworld, this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
-            Vehicle vehicle = (Vehicle) this.getBukkitEntity();
+            final org.bukkit.World bworld = this.worldObj.getWorld();
+            final Location from = new Location(bworld, prevX, prevY, prevZ, prevYaw, prevPitch);
+            final Location to = new Location(bworld, this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
+            final Vehicle vehicle = (Vehicle) this.getBukkitEntity();
             this.worldObj.getServer().getPluginManager().callEvent(new org.bukkit.event.vehicle.VehicleUpdateEvent(vehicle));
 
             if (!from.equals(to))
@@ -483,7 +484,7 @@ public abstract class EntityMinecart extends Entity
             }
 
             // CraftBukkit end
-            AxisAlignedBB box;
+            final AxisAlignedBB box;
             if (getCollisionHandler() != null)
             {
                 box = getCollisionHandler().getMinecartCollisionBox(this);
@@ -493,13 +494,13 @@ public abstract class EntityMinecart extends Entity
                 box = boundingBox.expand(0.2D, 0.0D, 0.2D);
             }
 
-            List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, box);
+            final List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, box);
 
             if (list != null && !list.isEmpty())
             {
                 for (int j1 = 0; j1 < list.size(); ++j1)
                 {
-                    Entity entity = (Entity)list.get(j1);
+                    final Entity entity = (Entity)list.get(j1);
 
                     if (entity != this.riddenByEntity && entity.canBePushed() && entity instanceof EntityMinecart)
                     {
@@ -525,9 +526,9 @@ public abstract class EntityMinecart extends Entity
     /**
      * Called every tick the minecart is on an activator rail.
      */
-    public void onActivatorRailPass(int par1, int par2, int par3, boolean par4) {}
+    public void onActivatorRailPass(final int par1, final int par2, final int par3, final boolean par4) {}
 
-    protected void func_94088_b(double par1)
+    protected void func_94088_b(final double par1)
     {
         if (this.motionX < -par1)
         {
@@ -581,10 +582,11 @@ public abstract class EntityMinecart extends Entity
         }
     }
 
-    protected void updateOnTrack(int par1, int par2, int par3, double par4, double par6, int par8, int par9)
+    protected void updateOnTrack(final int par1, final int par2, final int par3, final double par4, final double par6, final int par8, int par9)
     {
+        int par91 = par9;
         this.fallDistance = 0.0F;
-        Vec3 vec3 = this.func_70489_a(this.posX, this.posY, this.posZ);
+        final Vec3 vec3 = this.func_70489_a(this.posX, this.posY, this.posZ);
         this.posY = (double)par2;
         boolean flag = false;
         boolean flag1 = false;
@@ -597,39 +599,39 @@ public abstract class EntityMinecart extends Entity
 
         if (((BlockRailBase)Block.blocksList[par8]).isPowered())
         {
-            par9 &= 7;
+            par91 &= 7;
         }
 
-        if (par9 >= 2 && par9 <= 5)
+        if (par91 >= 2 && par91 <= 5)
         {
             this.posY = (double)(par2 + 1);
         }
 
-        if (par9 == 2)
+        if (par91 == 2)
         {
             this.motionX -= par6;
         }
 
-        if (par9 == 3)
+        if (par91 == 3)
         {
             this.motionX += par6;
         }
 
-        if (par9 == 4)
+        if (par91 == 4)
         {
             this.motionZ += par6;
         }
 
-        if (par9 == 5)
+        if (par91 == 5)
         {
             this.motionZ -= par6;
         }
 
-        int[][] aint = matrix[par9];
+        final int[][] aint = matrix[par91];
         double d2 = (double)(aint[1][0] - aint[0][0]);
         double d3 = (double)(aint[1][2] - aint[0][2]);
-        double d4 = Math.sqrt(d2 * d2 + d3 * d3);
-        double d5 = this.motionX * d2 + this.motionZ * d3;
+        final double d4 = Math.sqrt(d2 * d2 + d3 * d3);
+        final double d5 = this.motionX * d2 + this.motionZ * d3;
 
         if (d5 < 0.0D)
         {
@@ -692,11 +694,11 @@ public abstract class EntityMinecart extends Entity
         d8 = (double)par1 + 0.5D + (double)aint[0][0] * 0.5D;
         d9 = (double)par3 + 0.5D + (double)aint[0][2] * 0.5D;
         d10 = (double)par1 + 0.5D + (double)aint[1][0] * 0.5D;
-        double d11 = (double)par3 + 0.5D + (double)aint[1][2] * 0.5D;
+        final double d11 = (double)par3 + 0.5D + (double)aint[1][2] * 0.5D;
         d2 = d10 - d8;
         d3 = d11 - d9;
-        double d12;
-        double d13;
+        final double d12;
+        final double d13;
 
         if (d2 == 0.0D)
         {
@@ -731,11 +733,11 @@ public abstract class EntityMinecart extends Entity
         }
 
         this.applyDrag();
-        Vec3 vec31 = this.func_70489_a(this.posX, this.posY, this.posZ);
+        final Vec3 vec31 = this.func_70489_a(this.posX, this.posY, this.posZ);
 
         if (vec31 != null && vec3 != null)
         {
-            double d14 = (vec3.yCoord - vec31.yCoord) * 0.05D;
+            final double d14 = (vec3.yCoord - vec31.yCoord) * 0.05D;
             d6 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
 
             if (d6 > 0.0D)
@@ -747,8 +749,8 @@ public abstract class EntityMinecart extends Entity
             this.setPosition(this.posX, vec31.yCoord, this.posZ);
         }
 
-        int j1 = MathHelper.floor_double(this.posX);
-        int k1 = MathHelper.floor_double(this.posZ);
+        final int j1 = MathHelper.floor_double(this.posX);
+        final int k1 = MathHelper.floor_double(this.posZ);
 
         if (j1 != par1 || k1 != par3)
         {
@@ -764,15 +766,15 @@ public abstract class EntityMinecart extends Entity
 
         if (flag && shouldDoRailFunctions())
         {
-            double d15 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
+            final double d15 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
 
             if (d15 > 0.01D)
             {
-                double d16 = 0.06D;
+                final double d16 = 0.06D;
                 this.motionX += this.motionX / d15 * d16;
                 this.motionZ += this.motionZ / d15 * d16;
             }
-            else if (par9 == 1)
+            else if (par91 == 1)
             {
                 if (this.worldObj.isBlockNormalCube(par1 - 1, par2, par3))
                 {
@@ -783,7 +785,7 @@ public abstract class EntityMinecart extends Entity
                     this.motionX = -0.02D;
                 }
             }
-            else if (par9 == 0)
+            else if (par91 == 0)
             {
                 if (this.worldObj.isBlockNormalCube(par1, par2, par3 - 1))
                 {
@@ -814,18 +816,21 @@ public abstract class EntityMinecart extends Entity
     }
 
     @SideOnly(Side.CLIENT)
-    public Vec3 func_70495_a(double par1, double par3, double par5, double par7)
+    public Vec3 func_70495_a(double par1, double par3, double par5, final double par7)
     {
-        int i = MathHelper.floor_double(par1);
-        int j = MathHelper.floor_double(par3);
-        int k = MathHelper.floor_double(par5);
+        double par11 = par1;
+        double par51 = par5;
+        double par31 = par3;
+        final int i = MathHelper.floor_double(par11);
+        int j = MathHelper.floor_double(par31);
+        final int k = MathHelper.floor_double(par51);
 
         if (BlockRailBase.isRailBlockAt(this.worldObj, i, j - 1, k))
         {
             --j;
         }
 
-        int l = this.worldObj.getBlockId(i, j, k);
+        final int l = this.worldObj.getBlockId(i, j, k);
 
         if (!BlockRailBase.isRailBlock(l))
         {
@@ -833,104 +838,107 @@ public abstract class EntityMinecart extends Entity
         }
         else
         {
-            int i1 = ((BlockRailBase)Block.blocksList[l]).getBasicRailMetadata(worldObj, this, i, j, k);
+            final int i1 = ((BlockRailBase)Block.blocksList[l]).getBasicRailMetadata(worldObj, this, i, j, k);
 
-            par3 = (double)j;
+            par31 = (double)j;
 
             if (i1 >= 2 && i1 <= 5)
             {
-                par3 = (double)(j + 1);
+                par31 = (double)(j + 1);
             }
 
-            int[][] aint = matrix[i1];
+            final int[][] aint = matrix[i1];
             double d4 = (double)(aint[1][0] - aint[0][0]);
             double d5 = (double)(aint[1][2] - aint[0][2]);
-            double d6 = Math.sqrt(d4 * d4 + d5 * d5);
+            final double d6 = Math.sqrt(d4 * d4 + d5 * d5);
             d4 /= d6;
             d5 /= d6;
-            par1 += d4 * par7;
-            par5 += d5 * par7;
+            par11 += d4 * par7;
+            par51 += d5 * par7;
 
-            if (aint[0][1] != 0 && MathHelper.floor_double(par1) - i == aint[0][0] && MathHelper.floor_double(par5) - k == aint[0][2])
+            if (aint[0][1] != 0 && MathHelper.floor_double(par11) - i == aint[0][0] && MathHelper.floor_double(par51) - k == aint[0][2])
             {
-                par3 += (double)aint[0][1];
+                par31 += (double)aint[0][1];
             }
-            else if (aint[1][1] != 0 && MathHelper.floor_double(par1) - i == aint[1][0] && MathHelper.floor_double(par5) - k == aint[1][2])
+            else if (aint[1][1] != 0 && MathHelper.floor_double(par11) - i == aint[1][0] && MathHelper.floor_double(par51) - k == aint[1][2])
             {
-                par3 += (double)aint[1][1];
+                par31 += (double)aint[1][1];
             }
 
-            return this.func_70489_a(par1, par3, par5);
+            return this.func_70489_a(par11, par31, par51);
         }
     }
 
     public Vec3 func_70489_a(double par1, double par3, double par5)
     {
-        int i = MathHelper.floor_double(par1);
-        int j = MathHelper.floor_double(par3);
-        int k = MathHelper.floor_double(par5);
+        double par11 = par1;
+        double par51 = par5;
+        double par31 = par3;
+        final int i = MathHelper.floor_double(par11);
+        int j = MathHelper.floor_double(par31);
+        final int k = MathHelper.floor_double(par51);
 
         if (BlockRailBase.isRailBlockAt(this.worldObj, i, j - 1, k))
         {
             --j;
         }
 
-        int l = this.worldObj.getBlockId(i, j, k);
+        final int l = this.worldObj.getBlockId(i, j, k);
 
         if (BlockRailBase.isRailBlock(l))
         {
-            int i1 = ((BlockRailBase)Block.blocksList[l]).getBasicRailMetadata(worldObj, this, i, j, k);
-            par3 = (double)j;
+            final int i1 = ((BlockRailBase)Block.blocksList[l]).getBasicRailMetadata(worldObj, this, i, j, k);
+            par31 = (double)j;
 
             if (i1 >= 2 && i1 <= 5)
             {
-                par3 = (double)(j + 1);
+                par31 = (double)(j + 1);
             }
 
-            int[][] aint = matrix[i1];
+            final int[][] aint = matrix[i1];
             double d3 = 0.0D;
-            double d4 = (double)i + 0.5D + (double)aint[0][0] * 0.5D;
-            double d5 = (double)j + 0.5D + (double)aint[0][1] * 0.5D;
-            double d6 = (double)k + 0.5D + (double)aint[0][2] * 0.5D;
-            double d7 = (double)i + 0.5D + (double)aint[1][0] * 0.5D;
-            double d8 = (double)j + 0.5D + (double)aint[1][1] * 0.5D;
-            double d9 = (double)k + 0.5D + (double)aint[1][2] * 0.5D;
-            double d10 = d7 - d4;
-            double d11 = (d8 - d5) * 2.0D;
-            double d12 = d9 - d6;
+            final double d4 = (double)i + 0.5D + (double)aint[0][0] * 0.5D;
+            final double d5 = (double)j + 0.5D + (double)aint[0][1] * 0.5D;
+            final double d6 = (double)k + 0.5D + (double)aint[0][2] * 0.5D;
+            final double d7 = (double)i + 0.5D + (double)aint[1][0] * 0.5D;
+            final double d8 = (double)j + 0.5D + (double)aint[1][1] * 0.5D;
+            final double d9 = (double)k + 0.5D + (double)aint[1][2] * 0.5D;
+            final double d10 = d7 - d4;
+            final double d11 = (d8 - d5) * 2.0D;
+            final double d12 = d9 - d6;
 
             if (d10 == 0.0D)
             {
-                par1 = (double)i + 0.5D;
-                d3 = par5 - (double)k;
+                par11 = (double)i + 0.5D;
+                d3 = par51 - (double)k;
             }
             else if (d12 == 0.0D)
             {
-                par5 = (double)k + 0.5D;
-                d3 = par1 - (double)i;
+                par51 = (double)k + 0.5D;
+                d3 = par11 - (double)i;
             }
             else
             {
-                double d13 = par1 - d4;
-                double d14 = par5 - d6;
+                final double d13 = par11 - d4;
+                final double d14 = par51 - d6;
                 d3 = (d13 * d10 + d14 * d12) * 2.0D;
             }
 
-            par1 = d4 + d10 * d3;
-            par3 = d5 + d11 * d3;
-            par5 = d6 + d12 * d3;
+            par11 = d4 + d10 * d3;
+            par31 = d5 + d11 * d3;
+            par51 = d6 + d12 * d3;
 
             if (d11 < 0.0D)
             {
-                ++par3;
+                ++par31;
             }
 
             if (d11 > 0.0D)
             {
-                par3 += 0.5D;
+                par31 += 0.5D;
             }
 
-            return this.worldObj.getWorldVec3Pool().getVecFromPool(par1, par3, par5);
+            return this.worldObj.getWorldVec3Pool().getVecFromPool(par11, par31, par51);
         }
         else
         {
@@ -941,7 +949,7 @@ public abstract class EntityMinecart extends Entity
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    protected void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    protected void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         if (par1NBTTagCompound.getBoolean("CustomDisplayTile"))
         {
@@ -950,7 +958,7 @@ public abstract class EntityMinecart extends Entity
             this.setDisplayTileOffset(par1NBTTagCompound.getInteger("DisplayOffset"));
         }
 
-        if (par1NBTTagCompound.hasKey("CustomName") && par1NBTTagCompound.getString("CustomName").length() > 0)
+        if (par1NBTTagCompound.hasKey("CustomName") && !par1NBTTagCompound.getString("CustomName").isEmpty())
         {
             this.entityName = par1NBTTagCompound.getString("CustomName");
         }
@@ -959,7 +967,7 @@ public abstract class EntityMinecart extends Entity
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    protected void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    protected void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         if (this.hasDisplayTile())
         {
@@ -969,7 +977,7 @@ public abstract class EntityMinecart extends Entity
             par1NBTTagCompound.setInteger("DisplayOffset", this.getDisplayTileOffset());
         }
 
-        if (this.entityName != null && this.entityName.length() > 0)
+        if (this.entityName != null && !this.entityName.isEmpty())
         {
             par1NBTTagCompound.setString("CustomName", this.entityName);
         }
@@ -984,7 +992,7 @@ public abstract class EntityMinecart extends Entity
     /**
      * Applies a velocity to each of the entities pushing them away from each other. Args: entity
      */
-    public void applyEntityCollision(Entity par1Entity)
+    public void applyEntityCollision(final Entity par1Entity)
     {
         MinecraftForge.EVENT_BUS.post(new MinecartCollisionEvent(this, par1Entity));
         if (getCollisionHandler() != null)
@@ -997,9 +1005,9 @@ public abstract class EntityMinecart extends Entity
             if (par1Entity != this.riddenByEntity)
             {
                 // CraftBukkit start
-                Vehicle vehicle = (Vehicle) this.getBukkitEntity();
-                org.bukkit.entity.Entity hitEntity = (par1Entity == null) ? null : par1Entity.getBukkitEntity();
-                VehicleEntityCollisionEvent collisionEvent = new VehicleEntityCollisionEvent(vehicle, hitEntity);
+                final Vehicle vehicle = (Vehicle) this.getBukkitEntity();
+                final org.bukkit.entity.Entity hitEntity = (par1Entity == null) ? null : par1Entity.getBukkitEntity();
+                final VehicleEntityCollisionEvent collisionEvent = new VehicleEntityCollisionEvent(vehicle, hitEntity);
                 this.worldObj.getServer().getPluginManager().callEvent(collisionEvent);
 
                 if (collisionEvent.isCancelled())
@@ -1042,11 +1050,11 @@ public abstract class EntityMinecart extends Entity
 
                     if (par1Entity instanceof EntityMinecart)
                     {
-                        double d4 = par1Entity.posX - this.posX;
-                        double d5 = par1Entity.posZ - this.posZ;
-                        Vec3 vec3 = this.worldObj.getWorldVec3Pool().getVecFromPool(d4, 0.0D, d5).normalize();
-                        Vec3 vec31 = this.worldObj.getWorldVec3Pool().getVecFromPool((double)MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F), 0.0D, (double)MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F)).normalize();
-                        double d6 = Math.abs(vec3.dotProduct(vec31));
+                        final double d4 = par1Entity.posX - this.posX;
+                        final double d5 = par1Entity.posZ - this.posZ;
+                        final Vec3 vec3 = this.worldObj.getWorldVec3Pool().getVecFromPool(d4, 0.0D, d5).normalize();
+                        final Vec3 vec31 = this.worldObj.getWorldVec3Pool().getVecFromPool((double)MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F), 0.0D, (double)MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F)).normalize();
+                        final double d6 = Math.abs(vec3.dotProduct(vec31));
 
                         if (d6 < 0.800000011920929D)
                         {
@@ -1100,7 +1108,7 @@ public abstract class EntityMinecart extends Entity
      * Sets the position and rotation. Only difference from the other one is no bounding on the rotation. Args: posX,
      * posY, posZ, yaw, pitch
      */
-    public void setPositionAndRotation2(double par1, double par3, double par5, float par7, float par8, int par9)
+    public void setPositionAndRotation2(final double par1, final double par3, final double par5, final float par7, final float par8, final int par9)
     {
         this.minecartX = par1;
         this.minecartY = par3;
@@ -1117,7 +1125,7 @@ public abstract class EntityMinecart extends Entity
      * Sets the current amount of damage the minecart has taken. Decreases over time. The cart breaks when this is over
      * 40.
      */
-    public void setDamage(float par1)
+    public void setDamage(final float par1)
     {
         this.dataWatcher.updateObject(19, Float.valueOf(par1));
     }
@@ -1127,7 +1135,7 @@ public abstract class EntityMinecart extends Entity
     /**
      * Sets the velocity to the args. Args: x, y, z
      */
-    public void setVelocity(double par1, double par3, double par5)
+    public void setVelocity(final double par1, final double par3, final double par5)
     {
         this.velocityX = this.motionX = par1;
         this.velocityY = this.motionY = par3;
@@ -1146,7 +1154,7 @@ public abstract class EntityMinecart extends Entity
     /**
      * Sets the rolling amplitude the cart rolls while being attacked.
      */
-    public void setRollingAmplitude(int par1)
+    public void setRollingAmplitude(final int par1)
     {
         this.dataWatcher.updateObject(17, Integer.valueOf(par1));
     }
@@ -1162,7 +1170,7 @@ public abstract class EntityMinecart extends Entity
     /**
      * Sets the rolling direction the cart rolls while being attacked. Can be 1 or -1.
      */
-    public void setRollingDirection(int par1)
+    public void setRollingDirection(final int par1)
     {
         this.dataWatcher.updateObject(18, Integer.valueOf(par1));
     }
@@ -1185,7 +1193,7 @@ public abstract class EntityMinecart extends Entity
         }
         else
         {
-            int i = this.getDataWatcher().getWatchableObjectInt(20) & 65535;
+            final int i = this.getDataWatcher().getWatchableObjectInt(20) & 65535;
             return i > 0 && i < Block.blocksList.length ? Block.blocksList[i] : null;
         }
     }
@@ -1215,21 +1223,21 @@ public abstract class EntityMinecart extends Entity
         return 6;
     }
 
-    public void setDisplayTile(int par1)
+    public void setDisplayTile(final int par1)
     {
         this.getDataWatcher().updateObject(20, Integer.valueOf(par1 & 65535 | this.getDisplayTileData() << 16));
         this.setHasDisplayTile(true);
     }
 
-    public void setDisplayTileData(int par1)
+    public void setDisplayTileData(final int par1)
     {
-        Block block = this.getDisplayTile();
-        int j = block == null ? 0 : block.blockID;
+        final Block block = this.getDisplayTile();
+        final int j = block == null ? 0 : block.blockID;
         this.getDataWatcher().updateObject(20, Integer.valueOf(j & 65535 | par1 << 16));
         this.setHasDisplayTile(true);
     }
 
-    public void setDisplayTileOffset(int par1)
+    public void setDisplayTileOffset(final int par1)
     {
         this.getDataWatcher().updateObject(21, Integer.valueOf(par1));
         this.setHasDisplayTile(true);
@@ -1240,7 +1248,7 @@ public abstract class EntityMinecart extends Entity
         return this.getDataWatcher().getWatchableObjectByte(22) == 1;
     }
 
-    public void setHasDisplayTile(boolean par1)
+    public void setHasDisplayTile(final boolean par1)
     {
         this.getDataWatcher().updateObject(22, Byte.valueOf((byte)(par1 ? 1 : 0)));
     }
@@ -1248,7 +1256,7 @@ public abstract class EntityMinecart extends Entity
     /**
      * Sets the minecart's name.
      */
-    public void setMinecartName(String par1Str)
+    public void setMinecartName(final String par1Str)
     {
         this.entityName = par1Str;
     }
@@ -1281,7 +1289,7 @@ public abstract class EntityMinecart extends Entity
         return new Vector(flyingX, flyingY, flyingZ);
     }
 
-    public void setFlyingVelocityMod(Vector flying)
+    public void setFlyingVelocityMod(final Vector flying)
     {
         flyingX = flying.getX();
         flyingY = flying.getY();
@@ -1293,7 +1301,7 @@ public abstract class EntityMinecart extends Entity
         return new Vector(derailedX, derailedY, derailedZ);
     }
 
-    public void setDerailedVelocityMod(Vector derailed)
+    public void setDerailedVelocityMod(final Vector derailed)
     {
         derailedX = derailed.getX();
         derailedY = derailed.getY();
@@ -1305,7 +1313,7 @@ public abstract class EntityMinecart extends Entity
      * Moved to allow overrides.
      * This code handles minecart movement and speed capping when on a rail.
      */
-    public void moveMinecartOnRail(int x, int y, int z, double par4){
+    public void moveMinecartOnRail(final int x, final int y, final int z, final double par4){
         double d12 = this.motionX;
         double d13 = this.motionZ;
 
@@ -1353,7 +1361,7 @@ public abstract class EntityMinecart extends Entity
      * that is currently set.
      * @param handler The new handler
      */
-    public static void setCollisionHandler(IMinecartCollisionHandler handler)
+    public static void setCollisionHandler(final IMinecartCollisionHandler handler)
     {
         collisionHandler = handler;
     }
@@ -1400,7 +1408,7 @@ public abstract class EntityMinecart extends Entity
      * This function is mainly used to gracefully detach a minecart from a rail.
      * @param use Whether the minecart can currently use rails.
      */
-    public void setCanUseRail(boolean use)
+    public void setCanUseRail(final boolean use)
     {
         canUseRail = use;
     }
@@ -1469,8 +1477,8 @@ public abstract class EntityMinecart extends Entity
 
     public final void setCurrentCartSpeedCapOnRail(float value)
     {
-        value = Math.min(value, getMaxCartSpeedOnRail());
-        currentSpeedRail = value;
+        float value1 = Math.min(value, getMaxCartSpeedOnRail());
+        currentSpeedRail = value1;
     }
 
     public float getMaxSpeedAirLateral()
@@ -1478,7 +1486,7 @@ public abstract class EntityMinecart extends Entity
         return maxSpeedAirLateral;
     }
 
-    public void setMaxSpeedAirLateral(float value)
+    public void setMaxSpeedAirLateral(final float value)
     {
         maxSpeedAirLateral = value;
     }
@@ -1488,7 +1496,7 @@ public abstract class EntityMinecart extends Entity
         return maxSpeedAirVertical;
     }
 
-    public void setMaxSpeedAirVertical(float value)
+    public void setMaxSpeedAirVertical(final float value)
     {
         maxSpeedAirVertical = value;
     }
@@ -1498,7 +1506,7 @@ public abstract class EntityMinecart extends Entity
         return dragAir;
     }
 
-    public void setDragAir(double value)
+    public void setDragAir(final double value)
     {
         dragAir = value;
     }

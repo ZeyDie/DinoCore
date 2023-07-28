@@ -17,31 +17,31 @@ public class ValueObjectList extends ValueObject
 {
     public List field_96430_d;
 
-    public static ValueObjectList func_98161_a(String par0Str)
+    public static ValueObjectList func_98161_a(final String par0Str)
     {
-        ValueObjectList valueobjectlist = new ValueObjectList();
+        final ValueObjectList valueobjectlist = new ValueObjectList();
         valueobjectlist.field_96430_d = new ArrayList();
 
         try
         {
-            JsonRootNode jsonrootnode = (new JdomParser()).parse(par0Str);
+            final JsonRootNode jsonrootnode = (new JdomParser()).parse(par0Str);
 
             if (jsonrootnode.isArrayNode(new Object[] {"servers"}))
             {
-                Iterator iterator = jsonrootnode.getArrayNode(new Object[] {"servers"}).iterator();
+                final Iterator iterator = jsonrootnode.getArrayNode(new Object[] {"servers"}).iterator();
 
                 while (iterator.hasNext())
                 {
-                    JsonNode jsonnode = (JsonNode)iterator.next();
+                    final JsonNode jsonnode = (JsonNode)iterator.next();
                     valueobjectlist.field_96430_d.add(McoServer.func_98163_a(jsonnode));
                 }
             }
         }
-        catch (InvalidSyntaxException invalidsyntaxexception)
+        catch (final InvalidSyntaxException invalidsyntaxexception)
         {
             ;
         }
-        catch (IllegalArgumentException illegalargumentexception)
+        catch (final IllegalArgumentException illegalargumentexception)
         {
             ;
         }

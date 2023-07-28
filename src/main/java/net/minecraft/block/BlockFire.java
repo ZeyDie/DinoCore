@@ -34,7 +34,7 @@ public class BlockFire extends Block
     @SideOnly(Side.CLIENT)
     private Icon[] iconArray;
 
-    protected BlockFire(int par1)
+    protected BlockFire(final int par1)
     {
         super(par1, Material.fire);
         this.setTickRandomly(true);
@@ -72,7 +72,7 @@ public class BlockFire extends Block
      * chanceToEncourageFire the faster it will burn and spread to other blocks. Args: blockID, chanceToEncourageFire,
      * abilityToCatchFire
      */
-    private void setBurnRate(int par1, int par2, int par3)
+    private void setBurnRate(final int par1, final int par2, final int par3)
     {
         Block.setBurnProperties(par1, par2, par3);
     }
@@ -81,7 +81,7 @@ public class BlockFire extends Block
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4)
     {
         return null;
     }
@@ -114,7 +114,7 @@ public class BlockFire extends Block
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random par1Random)
+    public int quantityDropped(final Random par1Random)
     {
         return 0;
     }
@@ -122,7 +122,7 @@ public class BlockFire extends Block
     /**
      * How many world ticks before ticking
      */
-    public int tickRate(World par1World)
+    public int tickRate(final World par1World)
     {
         return 30;
     }
@@ -130,12 +130,12 @@ public class BlockFire extends Block
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (par1World.getGameRules().getGameRuleBooleanValue("doFireTick"))
         {
-            Block base = Block.blocksList[par1World.getBlockId(par2, par3 - 1, par4)];
-            boolean flag = (base != null && base.isFireSource(par1World, par2, par3 - 1, par4, par1World.getBlockMetadata(par2, par3 - 1, par4), UP));
+            final Block base = Block.blocksList[par1World.getBlockId(par2, par3 - 1, par4)];
+            final boolean flag = (base != null && base.isFireSource(par1World, par2, par3 - 1, par4, par1World.getBlockMetadata(par2, par3 - 1, par4), UP));
 
             if (!this.canPlaceBlockAt(par1World, par2, par3, par4))
             {
@@ -148,7 +148,7 @@ public class BlockFire extends Block
             }
             else
             {
-                int l = par1World.getBlockMetadata(par2, par3, par4);
+                final int l = par1World.getBlockMetadata(par2, par3, par4);
 
                 if (l < 15)
                 {
@@ -170,7 +170,7 @@ public class BlockFire extends Block
                 }
                 else
                 {
-                    boolean flag1 = par1World.isBlockHighHumidity(par2, par3, par4);
+                    final boolean flag1 = par1World.isBlockHighHumidity(par2, par3, par4);
                     byte b0 = 0;
 
                     if (flag1)
@@ -200,7 +200,7 @@ public class BlockFire extends Block
                                         l1 += (k1 - (par3 + 1)) * 100;
                                     }
 
-                                    int i2 = this.getChanceOfNeighborsEncouragingFire(par1World, i1, k1, j1);
+                                    final int i2 = this.getChanceOfNeighborsEncouragingFire(par1World, i1, k1, j1);
 
                                     if (i2 > 0)
                                     {
@@ -228,12 +228,12 @@ public class BlockFire extends Block
                                                     continue;
                                                 }
 
-                                                org.bukkit.Server server = par1World.getServer();
-                                                org.bukkit.World bworld = par1World.getWorld();
-                                                org.bukkit.block.BlockState blockState = bworld.getBlockAt(i1, k1, j1).getState();
+                                                final org.bukkit.Server server = par1World.getServer();
+                                                final org.bukkit.World bworld = par1World.getWorld();
+                                                final org.bukkit.block.BlockState blockState = bworld.getBlockAt(i1, k1, j1).getState();
                                                 blockState.setTypeId(this.blockID);
                                                 blockState.setData(new org.bukkit.material.MaterialData(this.blockID, (byte) k2));
-                                                BlockSpreadEvent spreadEvent = new BlockSpreadEvent(blockState.getBlock(), bworld.getBlockAt(par2, par3, par4), blockState);
+                                                final BlockSpreadEvent spreadEvent = new BlockSpreadEvent(blockState.getBlock(), bworld.getBlockAt(par2, par3, par4), blockState);
                                                 server.getPluginManager().callEvent(spreadEvent);
 
                                                 if (!spreadEvent.isCancelled())
@@ -260,15 +260,15 @@ public class BlockFire extends Block
     }
 
     @Deprecated
-    private void tryToCatchBlockOnFire(World par1World, int par2, int par3, int par4, int par5, Random par6Random, int par7)
+    private void tryToCatchBlockOnFire(final World par1World, final int par2, final int par3, final int par4, final int par5, final Random par6Random, final int par7)
     {
         tryToCatchBlockOnFire(par1World, par2, par3, par4, par5, par6Random, par7, UP);
     }
 
-    private void tryToCatchBlockOnFire(World par1World, int par2, int par3, int par4, int par5, Random par6Random, int par7, ForgeDirection face)
+    private void tryToCatchBlockOnFire(final World par1World, final int par2, final int par3, final int par4, final int par5, final Random par6Random, final int par7, final ForgeDirection face)
     {
         int j1 = 0;
-        Block block = Block.blocksList[par1World.getBlockId(par2, par3, par4)];
+        final Block block = Block.blocksList[par1World.getBlockId(par2, par3, par4)];
         if (block != null)
         {
             j1 = block.getFlammability(par1World, par2, par3, par4, par1World.getBlockMetadata(par2, par3, par4), face);
@@ -276,10 +276,10 @@ public class BlockFire extends Block
 
         if (par6Random.nextInt(par5) < j1)
         {    
-            boolean flag = par1World.getBlockId(par2, par3, par4) == Block.tnt.blockID;
+            final boolean flag = par1World.getBlockId(par2, par3, par4) == Block.tnt.blockID;
             // CraftBukkit start
-            org.bukkit.block.Block theBlock = par1World.getWorld().getBlockAt(par2, par3, par4);
-            BlockBurnEvent event = new BlockBurnEvent(theBlock);
+            final org.bukkit.block.Block theBlock = par1World.getWorld().getBlockAt(par2, par3, par4);
+            final BlockBurnEvent event = new BlockBurnEvent(theBlock);
             par1World.getServer().getPluginManager().callEvent(event);
 
             if (event.isCancelled())
@@ -315,7 +315,7 @@ public class BlockFire extends Block
     /**
      * Returns true if at least one block next to this one can burn.
      */
-    private boolean canNeighborBurn(World par1World, int par2, int par3, int par4)
+    private boolean canNeighborBurn(final World par1World, final int par2, final int par3, final int par4)
     {
         return canBlockCatchFire(par1World, par2 + 1, par3, par4, WEST ) ||
                canBlockCatchFire(par1World, par2 - 1, par3, par4, EAST ) ||
@@ -328,9 +328,9 @@ public class BlockFire extends Block
     /**
      * Gets the highest chance of a neighbor block encouraging this block to catch fire
      */
-    private int getChanceOfNeighborsEncouragingFire(World par1World, int par2, int par3, int par4)
+    private int getChanceOfNeighborsEncouragingFire(final World par1World, final int par2, final int par3, final int par4)
     {
-        byte b0 = 0;
+        final byte b0 = 0;
 
         if (!par1World.isAirBlock(par2, par3, par4))
         {
@@ -361,7 +361,7 @@ public class BlockFire extends Block
      * Deprecated for a side-sensitive version
      */
     @Deprecated
-    public boolean canBlockCatchFire(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public boolean canBlockCatchFire(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4)
     {
         return canBlockCatchFire(par1IBlockAccess, par2, par3, par4, UP);
     }
@@ -373,7 +373,7 @@ public class BlockFire extends Block
      * Deprecated for a side-sensitive version
      */
     @Deprecated
-    public int getChanceToEncourageFire(World par1World, int par2, int par3, int par4, int par5)
+    public int getChanceToEncourageFire(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         return getChanceToEncourageFire(par1World, par2, par3, par4, par5, UP);
     }
@@ -381,7 +381,7 @@ public class BlockFire extends Block
     /**
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
      */
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
+    public boolean canPlaceBlockAt(final World par1World, final int par2, final int par3, final int par4)
     {
         return par1World.doesBlockHaveSolidTopSurface(par2, par3 - 1, par4) || this.canNeighborBurn(par1World, par2, par3, par4);
     }
@@ -390,7 +390,7 @@ public class BlockFire extends Block
      * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
      * their own) Args: x, y, z, neighbor blockID
      */
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(final World par1World, final int par2, final int par3, final int par4, final int par5)
     {
         if (!par1World.doesBlockHaveSolidTopSurface(par2, par3 - 1, par4) && !this.canNeighborBurn(par1World, par2, par3, par4))
         {
@@ -401,7 +401,7 @@ public class BlockFire extends Block
     /**
      * Called whenever the block is added into the world. Args: world, x, y, z
      */
-    public void onBlockAdded(World par1World, int par2, int par3, int par4)
+    public void onBlockAdded(final World par1World, final int par2, final int par3, final int par4)
     {
         if (par1World.provider instanceof WorldProviderEnd || par1World.getBlockId(par2, par3 - 1, par4) != Block.obsidian.blockID || !Block.portal.tryToCreatePortal(par1World, par2, par3, par4)) // Cauldron - check WorldProviderEnd directly instead of dimension range. Fixes Multiverse nether portals.
         {
@@ -421,7 +421,7 @@ public class BlockFire extends Block
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void randomDisplayTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (par5Random.nextInt(24) == 0)
         {
@@ -508,13 +508,13 @@ public class BlockFire extends Block
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.iconArray = new Icon[] {par1IconRegister.registerIcon(this.getTextureName() + "_layer_0"), par1IconRegister.registerIcon(this.getTextureName() + "_layer_1")};
     }
 
     @SideOnly(Side.CLIENT)
-    public Icon getFireIcon(int par1)
+    public Icon getFireIcon(final int par1)
     {
         return this.iconArray[par1];
     }
@@ -524,13 +524,13 @@ public class BlockFire extends Block
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public Icon getIcon(int par1, int par2)
+    public Icon getIcon(final int par1, final int par2)
     {
         return this.iconArray[0];
     }
 
     // CraftBukkit start
-    private void fireExtinguished(World world, int x, int y, int z)
+    private void fireExtinguished(final World world, final int x, final int y, final int z)
     {
         if (!CraftEventFactory.callBlockFadeEvent(world.getWorld().getBlockAt(x, y, z), 0).isCancelled())
         {
@@ -549,9 +549,9 @@ public class BlockFire extends Block
      * @param face The side the fire is coming from
      * @return True if the face can catch fire.
      */
-    public boolean canBlockCatchFire(IBlockAccess world, int x, int y, int z, ForgeDirection face)
+    public boolean canBlockCatchFire(final IBlockAccess world, final int x, final int y, final int z, final ForgeDirection face)
     {
-        Block block = Block.blocksList[world.getBlockId(x, y, z)];
+        final Block block = Block.blocksList[world.getBlockId(x, y, z)];
         if (block != null)
         {
             return block.isFlammable(world, x, y, z, world.getBlockMetadata(x, y, z), face);
@@ -570,10 +570,10 @@ public class BlockFire extends Block
      * @param face The side the fire is coming from
      * @return The chance of the block catching fire, or oldChance if it is higher
      */
-    public int getChanceToEncourageFire(World world, int x, int y, int z, int oldChance, ForgeDirection face)
+    public int getChanceToEncourageFire(final World world, final int x, final int y, final int z, final int oldChance, final ForgeDirection face)
     {
         int newChance = 0;
-        Block block = Block.blocksList[world.getBlockId(x, y, z)];
+        final Block block = Block.blocksList[world.getBlockId(x, y, z)];
         if (block != null)
         {
             newChance = block.getFireSpreadSpeed(world, x, y, z, world.getBlockMetadata(x, y, z), face);

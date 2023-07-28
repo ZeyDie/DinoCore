@@ -11,7 +11,7 @@ public class BlockBreakable extends Block
     private boolean localFlag;
     private String breakableBlockIcon;
 
-    protected BlockBreakable(int par1, String par2Str, Material par3Material, boolean par4)
+    protected BlockBreakable(final int par1, final String par2Str, final Material par3Material, final boolean par4)
     {
         super(par1, par3Material);
         this.localFlag = par4;
@@ -33,9 +33,9 @@ public class BlockBreakable extends Block
      * Returns true if the given side of this block type should be rendered, if the adjacent block is at the given
      * coordinates.  Args: blockAccess, x, y, z, side
      */
-    public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public boolean shouldSideBeRendered(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
-        int i1 = par1IBlockAccess.getBlockId(par2, par3, par4);
+        final int i1 = par1IBlockAccess.getBlockId(par2, par3, par4);
         return !this.localFlag && i1 == this.blockID ? false : super.shouldSideBeRendered(par1IBlockAccess, par2, par3, par4, par5);
     }
 
@@ -45,7 +45,7 @@ public class BlockBreakable extends Block
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.blockIcon = par1IconRegister.registerIcon(this.breakableBlockIcon);
     }

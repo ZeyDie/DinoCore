@@ -9,7 +9,7 @@ public class ChunkProviderEvent extends Event
 
     public final IChunkProvider chunkProvider;
     
-    public ChunkProviderEvent(IChunkProvider chunkProvider)
+    public ChunkProviderEvent(final IChunkProvider chunkProvider)
     {
         this.chunkProvider = chunkProvider;
     }
@@ -28,7 +28,7 @@ public class ChunkProviderEvent extends Event
         public final byte[] blockArray;
         public final BiomeGenBase[] biomeArray;
         
-        public ReplaceBiomeBlocks(IChunkProvider chunkProvider, int chunkX, int chunkZ, byte[] blockArray, BiomeGenBase[] biomeArray)
+        public ReplaceBiomeBlocks(final IChunkProvider chunkProvider, final int chunkX, final int chunkZ, final byte[] blockArray, final BiomeGenBase[] biomeArray)
         {
             super(chunkProvider);
             this.chunkX = chunkX;
@@ -55,7 +55,7 @@ public class ChunkProviderEvent extends Event
         public final int sizeY;
         public final int sizeZ;
         
-        public InitNoiseField(IChunkProvider chunkProvider, double[] noisefield, int posX, int posY, int posZ, int sizeX, int sizeY, int sizeZ)
+        public InitNoiseField(final IChunkProvider chunkProvider, final double[] noisefield, final int posX, final int posY, final int posZ, final int sizeX, final int sizeY, final int sizeZ)
         {
             super(chunkProvider);
             this.noisefield = noisefield;

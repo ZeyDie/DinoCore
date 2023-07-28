@@ -12,7 +12,7 @@ public class InventoryOpenEvent extends InventoryEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
 
-    public InventoryOpenEvent(InventoryView transaction) {
+    public InventoryOpenEvent(final InventoryView transaction) {
         super(transaction);
         this.cancelled = false;
     }
@@ -46,7 +46,7 @@ public class InventoryOpenEvent extends InventoryEvent implements Cancellable {
      *
      * @param cancel true if you wish to cancel this event
      */
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         cancelled = cancel;
     }
 

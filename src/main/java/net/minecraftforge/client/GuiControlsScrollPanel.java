@@ -22,7 +22,7 @@ public class GuiControlsScrollPanel extends GuiSlot
     private int _mouseY;
     private int selected = -1;
 
-    public GuiControlsScrollPanel(GuiControls controls, GameSettings options, Minecraft mc)
+    public GuiControlsScrollPanel(final GuiControls controls, final GameSettings options, final Minecraft mc)
     {
         super(mc, controls.width, controls.height, 16, (controls.height - 32) + 4, 25);
         this.controls = controls;
@@ -37,7 +37,7 @@ public class GuiControlsScrollPanel extends GuiSlot
     }
 
     @Override
-    protected void elementClicked(int i, boolean flag)
+    protected void elementClicked(final int i, final boolean flag)
     {
         if (!flag)
         {
@@ -55,7 +55,7 @@ public class GuiControlsScrollPanel extends GuiSlot
     }
 
     @Override
-    protected boolean isSelected(int i)
+    protected boolean isSelected(final int i)
     {
         return false;
     }
@@ -64,7 +64,7 @@ public class GuiControlsScrollPanel extends GuiSlot
     protected void drawBackground() {}
 
     @Override
-    public void drawScreen(int mX, int mY, float f)
+    public void drawScreen(final int mX, final int mY, final float f)
     {
         _mouseX = mX;
         _mouseY = mY;
@@ -83,19 +83,20 @@ public class GuiControlsScrollPanel extends GuiSlot
     }
 
     @Override
-    protected void drawSlot(int index, int xPosition, int yPosition, int l, Tessellator tessellator)
+    protected void drawSlot(final int index, int xPosition, final int yPosition, final int l, final Tessellator tessellator)
     {
-        int width = 70;
-        int height = 20;
-        xPosition -= 20;
-        boolean flag = _mouseX >= xPosition && _mouseY >= yPosition && _mouseX < xPosition + width && _mouseY < yPosition + height;
-        int k = (flag ? 2 : 1);
+        int xPosition1 = xPosition;
+        final int width = 70;
+        final int height = 20;
+        xPosition1 -= 20;
+        final boolean flag = _mouseX >= xPosition1 && _mouseY >= yPosition && _mouseX < xPosition1 + width && _mouseY < yPosition + height;
+        final int k = (flag ? 2 : 1);
 
         mc.renderEngine.bindTexture(WIDGITS);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        controls.drawTexturedModalRect(xPosition, yPosition, 0, 46 + k * 20, width / 2, height);
-        controls.drawTexturedModalRect(xPosition + width / 2, yPosition, 200 - width / 2, 46 + k * 20, width / 2, height);
-        controls.drawString(mc.fontRenderer, options.getKeyBindingDescription(index), xPosition + width + 4, yPosition + 6, 0xFFFFFFFF);
+        controls.drawTexturedModalRect(xPosition1, yPosition, 0, 46 + k * 20, width / 2, height);
+        controls.drawTexturedModalRect(xPosition1 + width / 2, yPosition, 200 - width / 2, 46 + k * 20, width / 2, height);
+        controls.drawString(mc.fontRenderer, options.getKeyBindingDescription(index), xPosition1 + width + 4, yPosition + 6, 0xFFFFFFFF);
 
         boolean conflict = false;
         for (int x = 0; x < options.keyBindings.length; x++)
@@ -109,10 +110,10 @@ public class GuiControlsScrollPanel extends GuiSlot
 
         String str = (conflict ? EnumChatFormatting.RED : "") + options.getOptionDisplayString(index);
         str = (index == selected ? EnumChatFormatting.WHITE + "> " + EnumChatFormatting.YELLOW + "??? " + EnumChatFormatting.WHITE + "<" : str);
-        controls.drawCenteredString(mc.fontRenderer, str, xPosition + (width / 2), yPosition + (height - 8) / 2, 0xFFFFFFFF);
+        controls.drawCenteredString(mc.fontRenderer, str, xPosition1 + (width / 2), yPosition + (height - 8) / 2, 0xFFFFFFFF);
     }
 
-    public boolean keyTyped(char c, int i)
+    public boolean keyTyped(final char c, final int i)
     {
         if (selected != -1)
         {

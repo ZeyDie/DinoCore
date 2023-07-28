@@ -31,36 +31,36 @@ public class BaseModTicker implements ITickHandler
     private boolean sendGuiTicks;
 
 
-    BaseModTicker(BaseModProxy mod, boolean guiTicker)
+    BaseModTicker(final BaseModProxy mod, final boolean guiTicker)
     {
         this.mod = mod;
         this.ticks = EnumSet.of(TickType.WORLDLOAD);
         this.sendGuiTicks = guiTicker;
     }
 
-    BaseModTicker(EnumSet<TickType> ticks, boolean guiTicker)
+    BaseModTicker(final EnumSet<TickType> ticks, final boolean guiTicker)
     {
         this.ticks = ticks;
         this.sendGuiTicks = guiTicker;
     }
 
     @Override
-    public void tickStart(EnumSet<TickType> types, Object... tickData)
+    public void tickStart(final EnumSet<TickType> types, final Object... tickData)
     {
         tickBaseMod(types, false, tickData);
     }
 
     @Override
-    public void tickEnd(EnumSet<TickType> types, Object... tickData)
+    public void tickEnd(final EnumSet<TickType> types, final Object... tickData)
     {
         tickBaseMod(types, true, tickData);
     }
 
-    private void tickBaseMod(EnumSet<TickType> types, boolean end, Object... tickData)
+    private void tickBaseMod(final EnumSet<TickType> types, final boolean end, final Object... tickData)
     {
         if (FMLCommonHandler.instance().getSide().isClient() && ( ticks.contains(TickType.CLIENT) || ticks.contains(TickType.WORLDLOAD)))
         {
-            EnumSet cTypes=EnumSet.copyOf(types);
+            final EnumSet cTypes=EnumSet.copyOf(types);
             if ( ( end && types.contains(TickType.CLIENT)) || types.contains(TickType.WORLDLOAD))
             {
                 clockTickTrigger =  true;
@@ -83,9 +83,9 @@ public class BaseModTicker implements ITickHandler
         }
     }
 
-    private void sendTick(EnumSet<TickType> types, boolean end, Object... tickData)
+    private void sendTick(final EnumSet<TickType> types, final boolean end, final Object... tickData)
     {
-        for (TickType type : types)
+        for (final TickType type : types)
         {
             if (!ticks.contains(type))
             {
@@ -120,7 +120,7 @@ public class BaseModTicker implements ITickHandler
         return mod.getClass().getSimpleName();
     }
 
-    public void setMod(BaseModProxy mod)
+    public void setMod(final BaseModProxy mod)
     {
         this.mod = mod;
     }

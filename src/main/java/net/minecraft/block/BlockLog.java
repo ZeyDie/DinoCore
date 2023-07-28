@@ -15,13 +15,13 @@ import java.util.Random;
 public class BlockLog extends BlockRotatedPillar
 {
     /** The type of tree this log came from. */
-    public static final String[] woodType = new String[] {"oak", "spruce", "birch", "jungle"};
+    public static final String[] woodType = {"oak", "spruce", "birch", "jungle"};
     @SideOnly(Side.CLIENT)
     private Icon[] field_111052_c;
     @SideOnly(Side.CLIENT)
     private Icon[] tree_top;
 
-    protected BlockLog(int par1)
+    protected BlockLog(final int par1)
     {
         super(par1, Material.wood);
         this.setCreativeTab(CreativeTabs.tabBlock);
@@ -30,7 +30,7 @@ public class BlockLog extends BlockRotatedPillar
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random par1Random)
+    public int quantityDropped(final Random par1Random)
     {
         return 1;
     }
@@ -38,7 +38,7 @@ public class BlockLog extends BlockRotatedPillar
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return Block.wood.blockID;
     }
@@ -48,10 +48,10 @@ public class BlockLog extends BlockRotatedPillar
      * different metadata value, but before the new metadata value is set. Args: World, x, y, z, old block ID, old
      * metadata
      */
-    public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    public void breakBlock(final World par1World, final int par2, final int par3, final int par4, final int par5, final int par6)
     {
-        byte b0 = 4;
-        int j1 = b0 + 1;
+        final byte b0 = 4;
+        final int j1 = b0 + 1;
 
         if (par1World.checkChunksExist(par2 - j1, par3 - j1, par4 - j1, par2 + j1, par3 + j1, par4 + j1))
         {
@@ -61,7 +61,7 @@ public class BlockLog extends BlockRotatedPillar
                 {
                     for (int i2 = -b0; i2 <= b0; ++i2)
                     {
-                        int j2 = par1World.getBlockId(par2 + k1, par3 + l1, par4 + i2);
+                        final int j2 = par1World.getBlockId(par2 + k1, par3 + l1, par4 + i2);
 
                         if (Block.blocksList[j2] != null)
                         {
@@ -78,7 +78,7 @@ public class BlockLog extends BlockRotatedPillar
     /**
      * The icon for the side of the block.
      */
-    protected Icon getSideIcon(int par1)
+    protected Icon getSideIcon(final int par1)
     {
         return this.field_111052_c[par1];
     }
@@ -88,7 +88,7 @@ public class BlockLog extends BlockRotatedPillar
     /**
      * The icon for the tops and bottoms of the block.
      */
-    protected Icon getEndIcon(int par1)
+    protected Icon getEndIcon(final int par1)
     {
         return this.tree_top[par1];
     }
@@ -96,7 +96,7 @@ public class BlockLog extends BlockRotatedPillar
     /**
      * returns a number between 0 and 3
      */
-    public static int limitToValidMetadata(int par0)
+    public static int limitToValidMetadata(final int par0)
     {
         return par0 & 3;
     }
@@ -106,7 +106,7 @@ public class BlockLog extends BlockRotatedPillar
     /**
      * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
      */
-    public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubBlocks(final int par1, final CreativeTabs par2CreativeTabs, final List par3List)
     {
         par3List.add(new ItemStack(par1, 1, 0));
         par3List.add(new ItemStack(par1, 1, 1));
@@ -120,7 +120,7 @@ public class BlockLog extends BlockRotatedPillar
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.field_111052_c = new Icon[woodType.length];
         this.tree_top = new Icon[woodType.length];
@@ -133,13 +133,13 @@ public class BlockLog extends BlockRotatedPillar
     }
 
     @Override
-    public boolean canSustainLeaves(World world, int x, int y, int z)
+    public boolean canSustainLeaves(final World world, final int x, final int y, final int z)
     {
         return true;
     }
 
     @Override
-    public boolean isWood(World world, int x, int y, int z)
+    public boolean isWood(final World world, final int x, final int y, final int z)
     {
         return true;
     }

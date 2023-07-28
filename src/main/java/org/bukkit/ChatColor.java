@@ -113,11 +113,11 @@ public enum ChatColor {
     private final static Map<Integer, ChatColor> BY_ID = Maps.newHashMap();
     private final static Map<Character, ChatColor> BY_CHAR = Maps.newHashMap();
 
-    private ChatColor(char code, int intCode) {
+    private ChatColor(final char code, final int intCode) {
         this(code, intCode, false);
     }
 
-    private ChatColor(char code, int intCode, boolean isFormat) {
+    private ChatColor(final char code, final int intCode, final boolean isFormat) {
         this.code = code;
         this.intCode = intCode;
         this.isFormat = isFormat;
@@ -158,7 +158,7 @@ public enum ChatColor {
      * @param code Code to check
      * @return Associative {@link org.bukkit.ChatColor} with the given code, or null if it doesn't exist
      */
-    public static ChatColor getByChar(char code) {
+    public static ChatColor getByChar(final char code) {
         return BY_CHAR.get(code);
     }
 
@@ -168,9 +168,9 @@ public enum ChatColor {
      * @param code Code to check
      * @return Associative {@link org.bukkit.ChatColor} with the given code, or null if it doesn't exist
      */
-    public static ChatColor getByChar(String code) {
+    public static ChatColor getByChar(final String code) {
         Validate.notNull(code, "Code cannot be null");
-        Validate.isTrue(code.length() > 0, "Code must have at least one char");
+        Validate.isTrue(!code.isEmpty(), "Code must have at least one char");
 
         return BY_CHAR.get(code.charAt(0));
     }
@@ -198,8 +198,8 @@ public enum ChatColor {
      * @param textToTranslate Text containing the alternate color code character.
      * @return Text containing the ChatColor.COLOR_CODE color code character.
      */
-    public static String translateAlternateColorCodes(char altColorChar, String textToTranslate) {
-        char[] b = textToTranslate.toCharArray();
+    public static String translateAlternateColorCodes(final char altColorChar, final String textToTranslate) {
+        final char[] b = textToTranslate.toCharArray();
         for (int i = 0; i < b.length - 1; i++) {
             if (b[i] == altColorChar && "0123456789AaBbCcDdEeFfKkLlMmNnOoRr".indexOf(b[i+1]) > -1) {
                 b[i] = ChatColor.COLOR_CHAR;
@@ -215,16 +215,16 @@ public enum ChatColor {
      * @param input Input string to retrieve the colors from.
      * @return Any remaining ChatColors to pass onto the next line.
      */
-    public static String getLastColors(String input) {
+    public static String getLastColors(final String input) {
         String result = "";
-        int length = input.length();
+        final int length = input.length();
 
         // Search backwards from the end as it is faster
         for (int index = length - 1; index > -1; index--) {
-            char section = input.charAt(index);
+            final char section = input.charAt(index);
             if (section == COLOR_CHAR && index < length - 1) {
-                char c = input.charAt(index + 1);
-                ChatColor color = getByChar(c);
+                final char c = input.charAt(index + 1);
+                final ChatColor color = getByChar(c);
 
                 if (color != null) {
                     result = color.toString() + result;
@@ -241,7 +241,7 @@ public enum ChatColor {
     }
 
     static {
-        for (ChatColor color : values()) {
+        for (final ChatColor color : values()) {
             BY_ID.put(color.intCode, color);
             BY_CHAR.put(color.code, color);
         }

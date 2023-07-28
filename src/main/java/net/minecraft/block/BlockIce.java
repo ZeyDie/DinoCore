@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class BlockIce extends BlockBreakable
 {
-    public BlockIce(int par1)
+    public BlockIce(final int par1)
     {
         super(par1, "ice", Material.ice, false);
         this.slipperiness = 0.98F;
@@ -40,7 +40,7 @@ public class BlockIce extends BlockBreakable
      * Returns true if the given side of this block type should be rendered, if the adjacent block is at the given
      * coordinates.  Args: blockAccess, x, y, z, side
      */
-    public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public boolean shouldSideBeRendered(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5)
     {
         return super.shouldSideBeRendered(par1IBlockAccess, par2, par3, par4, 1 - par5);
     }
@@ -49,14 +49,14 @@ public class BlockIce extends BlockBreakable
      * Called when the player destroys a block with an item that can harvest it. (i, j, k) are the coordinates of the
      * block and l is the block's subtype/damage.
      */
-    public void harvestBlock(World par1World, EntityPlayer par2EntityPlayer, int par3, int par4, int par5, int par6)
+    public void harvestBlock(final World par1World, final EntityPlayer par2EntityPlayer, final int par3, final int par4, final int par5, final int par6)
     {
         par2EntityPlayer.addStat(StatList.mineBlockStatArray[this.blockID], 1);
         par2EntityPlayer.addExhaustion(0.025F);
 
         if (this.canSilkHarvest() && EnchantmentHelper.getSilkTouchModifier(par2EntityPlayer))
         {
-            ItemStack itemstack = this.createStackedBlock(par6);
+            final ItemStack itemstack = this.createStackedBlock(par6);
 
             if (itemstack != null)
             {
@@ -71,9 +71,9 @@ public class BlockIce extends BlockBreakable
                 return;
             }
 
-            int i1 = EnchantmentHelper.getFortuneModifier(par2EntityPlayer);
+            final int i1 = EnchantmentHelper.getFortuneModifier(par2EntityPlayer);
             this.dropBlockAsItem(par1World, par3, par4, par5, par6, i1);
-            Material material = par1World.getBlockMaterial(par3, par4 - 1, par5);
+            final Material material = par1World.getBlockMaterial(par3, par4 - 1, par5);
 
             if (material.blocksMovement() || material.isLiquid())
             {
@@ -85,7 +85,7 @@ public class BlockIce extends BlockBreakable
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random par1Random)
+    public int quantityDropped(final Random par1Random)
     {
         return 0;
     }
@@ -93,7 +93,7 @@ public class BlockIce extends BlockBreakable
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void updateTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         if (par1World.getSavedLightValue(EnumSkyBlock.Block, par2, par3, par4) > 11 - Block.lightOpacity[this.blockID])
         {

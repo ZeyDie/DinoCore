@@ -11,11 +11,11 @@ import java.lang.reflect.Type;
 @SideOnly(Side.CLIENT)
 public class TextureMetadataSectionSerializer extends BaseMetadataSectionSerializer
 {
-    public TextureMetadataSection func_110494_a(JsonElement par1JsonElement, Type par2Type, JsonDeserializationContext par3JsonDeserializationContext)
+    public TextureMetadataSection func_110494_a(final JsonElement par1JsonElement, final Type par2Type, final JsonDeserializationContext par3JsonDeserializationContext)
     {
-        JsonObject jsonobject = par1JsonElement.getAsJsonObject();
-        boolean flag = this.func_110484_a(jsonobject.get("blur"), "blur", Boolean.valueOf(false));
-        boolean flag1 = this.func_110484_a(jsonobject.get("clamp"), "clamp", Boolean.valueOf(false));
+        final JsonObject jsonobject = par1JsonElement.getAsJsonObject();
+        final boolean flag = this.func_110484_a(jsonobject.get("blur"), "blur", Boolean.valueOf(false));
+        final boolean flag1 = this.func_110484_a(jsonobject.get("clamp"), "clamp", Boolean.valueOf(false));
         return new TextureMetadataSection(flag, flag1);
     }
 
@@ -27,7 +27,7 @@ public class TextureMetadataSectionSerializer extends BaseMetadataSectionSeriali
         return "texture";
     }
 
-    public Object deserialize(JsonElement par1JsonElement, Type par2Type, JsonDeserializationContext par3JsonDeserializationContext)
+    public Object deserialize(final JsonElement par1JsonElement, final Type par2Type, final JsonDeserializationContext par3JsonDeserializationContext)
     {
         return this.func_110494_a(par1JsonElement, par2Type, par3JsonDeserializationContext);
     }

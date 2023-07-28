@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class BiomeGenTaiga extends BiomeGenBase
 {
-    public BiomeGenTaiga(int par1)
+    public BiomeGenTaiga(final int par1)
     {
         super(par1);
         this.spawnableCreatureList.add(new SpawnListEntry(EntityWolf.class, 8, 4, 4));
@@ -20,7 +20,7 @@ public class BiomeGenTaiga extends BiomeGenBase
     /**
      * Gets a WorldGen appropriate for this biome.
      */
-    public WorldGenerator getRandomWorldGenForTrees(Random par1Random)
+    public WorldGenerator getRandomWorldGenForTrees(final Random par1Random)
     {
         return (WorldGenerator)(par1Random.nextInt(3) == 0 ? new WorldGenTaiga1() : new WorldGenTaiga2(false));
     }

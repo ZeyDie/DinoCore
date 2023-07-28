@@ -5,9 +5,10 @@ import java.io.DataInput;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 public class ScreamTracker3 {
-	private static final int[] effect_map = new int[] {
+	private static final int[] effect_map = {
 		0xFF,
 		0x25, /* A: Set Speed.*/
 		0x0B, /* B: Pattern Jump.*/
@@ -35,7 +36,7 @@ public class ScreamTracker3 {
 		0xFF, 0xFF, 0xFF, 0xFF
 	};
 
-	private static final int[] effect_s_map = new int[] {
+	private static final int[] effect_s_map = {
 		0x00, /* 0: Set Filter.*/
 		0x03, /* 1: Glissando.*/
 		0x05, /* 2: Set Fine Tune.*/
@@ -54,20 +55,35 @@ public class ScreamTracker3 {
 		0x0F  /* F: Invert Loop.*/
 	};
 
-	public static boolean is_s3m( byte[] header_96_bytes ) {
-		String s3m_identifier;
+	public static boolean is_s3m(final byte[] header_96_bytes ) {
+		final String s3m_identifier;
 		s3m_identifier = ascii_text( header_96_bytes, 44, 4 );
 		return s3m_identifier.equals( "SCRM" );
 	}
 
-	public static Module load_s3m( byte[] header_96_bytes, DataInput data_input ) throws IOException {
-		int num_pattern_orders, num_instruments, num_patterns, num_channels;
-		int flags, tracker_version, master_volume, panning, channel_config, sequence_length;
-		int instrument_idx, pattern_idx, channel_idx, order_idx, panning_offset;
-		boolean signed_samples, stereo_mode, default_panning;
-		int[] channel_map, sequence;
-		byte[] s3m_file;
-		Module module;
+	public static Module load_s3m(final byte[] header_96_bytes, final DataInput data_input ) throws IOException {
+		final int num_pattern_orders;
+        int num_instruments;
+        final int num_patterns;
+        int num_channels;
+        int flags;
+        int tracker_version;
+        final int master_volume;
+        int panning;
+        int channel_config;
+        int sequence_length;
+        int instrument_idx;
+        int pattern_idx;
+        int channel_idx;
+        int order_idx;
+        final int panning_offset;
+        boolean signed_samples;
+        boolean stereo_mode;
+        final boolean default_panning;
+        final int[] channel_map;
+        final int[] sequence;
+        final byte[] s3m_file;
+		final Module module;
 		Instrument instrument;
 		s3m_file = read_s3m_file( header_96_bytes, data_input );
 		module = new Module();
@@ -137,10 +153,11 @@ public class ScreamTracker3 {
 		return module;
 	}
 
-	private static int[] read_s3m_sequence( byte[] s3m_file ) {
-		int num_pattern_orders, sequence_length;
-		int sequence_idx, order_idx, pattern_order;
-		int[] sequence;
+	private static int[] read_s3m_sequence(final byte[] s3m_file ) {
+		final int num_pattern_orders;
+        int sequence_length;
+        int sequence_idx, order_idx, pattern_order;
+		final int[] sequence;
 		num_pattern_orders = get_num_pattern_orders( s3m_file );
 		sequence_length = 0;
 		for( order_idx = 0; order_idx < num_pattern_orders; order_idx++ ) {
@@ -165,14 +182,19 @@ public class ScreamTracker3 {
 		return sequence;
 	}
 
-	private static Instrument read_s3m_instrument( byte[] s3m_file, int instrument_idx, boolean signed_samples ) {
-		int instrument_offset;
-		int sample_data_offset, sample_data_length;
-		int loop_start, loop_length, c2_rate, sample_idx, amplitude;
-		boolean sixteen_bit;
-		Instrument instrument;
-		Sample sample;
-		short[] sample_data;
+	private static Instrument read_s3m_instrument(final byte[] s3m_file, final int instrument_idx, final boolean signed_samples ) {
+		final int instrument_offset;
+		final int sample_data_offset;
+        int sample_data_length;
+        final int loop_start;
+        int loop_length;
+        final int c2_rate;
+        int sample_idx;
+        int amplitude;
+        final boolean sixteen_bit;
+		final Instrument instrument;
+		final Sample sample;
+		final short[] sample_data;
 		instrument_offset = get_instrument_offset( s3m_file, instrument_idx );
 		instrument = new Instrument();
 		instrument.name = ascii_text( s3m_file, instrument_offset + 48, 28 );
@@ -227,13 +249,14 @@ public class ScreamTracker3 {
 		return instrument;
 	}
 	
-	private static Pattern read_s3m_pattern( byte[] s3m_file, int pattern_idx, int[] channel_map ) {
+	private static Pattern read_s3m_pattern(final byte[] s3m_file, final int pattern_idx, final int[] channel_map ) {
 		int pattern_offset;
-		int num_channels, num_notes;
-		int row_idx, channel_idx, note_idx;
+		int num_channels;
+        final int num_notes;
+        int row_idx, channel_idx, note_idx;
 		int token, key, volume_column, effect, effect_param;
-		byte[] pattern_data;
-		Pattern pattern;
+		final byte[] pattern_data;
+		final Pattern pattern;
 		num_channels = 0;
 		for( channel_idx = 0; channel_idx < 32; channel_idx++ ) {
 			if( channel_map[ channel_idx ] >= num_channels ) {
@@ -329,10 +352,12 @@ public class ScreamTracker3 {
 		return pattern;
 	}
 
-	private static byte[] read_s3m_file( byte[] header_96_bytes, DataInput data_input ) throws IOException {
+	private static byte[] read_s3m_file(final byte[] header_96_bytes, final DataInput data_input ) throws IOException {
 		int s3m_file_length;
-		int num_pattern_orders, num_instruments, num_patterns;
-		int instrument_idx, pattern_idx;
+		final int num_pattern_orders;
+        int num_instruments;
+        final int num_patterns;
+        int instrument_idx, pattern_idx;
 		int instrument_offset, sample_data_offset, pattern_offset;
 		byte[] s3m_file;
 		if( !is_s3m( header_96_bytes ) ) {
@@ -384,32 +409,33 @@ public class ScreamTracker3 {
 		return s3m_file;
 	}
 
-	private static int get_num_pattern_orders( byte[] s3m_file ) {
-		int num_pattern_orders;
+	private static int get_num_pattern_orders(final byte[] s3m_file ) {
+		final int num_pattern_orders;
 		num_pattern_orders = unsigned_short_le( s3m_file, 32 );
 		return num_pattern_orders;
 	}
 
-	private static int get_num_instruments( byte[] s3m_file ) {
-		int num_instruments;
+	private static int get_num_instruments(final byte[] s3m_file ) {
+		final int num_instruments;
 		num_instruments = unsigned_short_le( s3m_file, 34 );
 		return num_instruments;
 	}
 	
-	private static int get_num_patterns( byte[] s3m_file ) {
-		int num_patterns;
+	private static int get_num_patterns(final byte[] s3m_file ) {
+		final int num_patterns;
 		num_patterns = unsigned_short_le( s3m_file, 36 );
 		return num_patterns;
 	}
 
-	private static int get_instrument_offset( byte[] s3m_file, int instrument_idx ) {
-		int instrument_offset, pointer_offset;
-		pointer_offset = 96 + get_num_pattern_orders( s3m_file );
+	private static int get_instrument_offset(final byte[] s3m_file, final int instrument_idx ) {
+		final int instrument_offset;
+        final int pointer_offset;
+        pointer_offset = 96 + get_num_pattern_orders( s3m_file );
 		instrument_offset = unsigned_short_le( s3m_file, pointer_offset + instrument_idx * 2 ) << 4;
 		return instrument_offset;
 	}
 
-	private static int get_sample_data_offset( byte[] s3m_file, int instrument_offset ) {
+	private static int get_sample_data_offset(final byte[] s3m_file, final int instrument_offset ) {
 		int sample_data_offset;
 		sample_data_offset = 0;
 		if( s3m_file[ instrument_offset ] == 1 ) {
@@ -419,9 +445,9 @@ public class ScreamTracker3 {
 		return sample_data_offset;
 	}
 
-	private static int get_sample_data_length( byte[] s3m_file, int instrument_offset ) {
+	private static int get_sample_data_length(final byte[] s3m_file, final int instrument_offset ) {
 		int sample_data_length;
-		boolean sixteen_bit;
+		final boolean sixteen_bit;
 		sample_data_length = 0;
 		if( s3m_file[ instrument_offset ] == 1 ) {
 			sample_data_length = unsigned_short_le( s3m_file, instrument_offset + 16 );
@@ -433,21 +459,22 @@ public class ScreamTracker3 {
 		return sample_data_length;
 	}
 
-	private static int get_pattern_offset( byte[] s3m_file, int pattern_idx ) {
-		int pattern_offset, pointer_offset;
-		pointer_offset = 96 + get_num_pattern_orders( s3m_file );
+	private static int get_pattern_offset(final byte[] s3m_file, final int pattern_idx ) {
+		final int pattern_offset;
+        int pointer_offset;
+        pointer_offset = 96 + get_num_pattern_orders( s3m_file );
 		pointer_offset += get_num_instruments( s3m_file ) * 2;
 		pattern_offset = unsigned_short_le( s3m_file, pointer_offset + pattern_idx * 2 ) << 4;
 		return pattern_offset;
 	}
 
-	private static int get_pattern_length( byte[] s3m_file, int pattern_offset ) {
-		int pattern_length;
+	private static int get_pattern_length(final byte[] s3m_file, final int pattern_offset ) {
+		final int pattern_length;
 		pattern_length = unsigned_short_le( s3m_file, pattern_offset );
 		return pattern_length;
 	}
 
-	private static byte[] read_more( byte[] old_data, int new_length, DataInput data_input ) throws IOException {
+	private static byte[] read_more(final byte[] old_data, final int new_length, final DataInput data_input ) throws IOException {
 		byte[] new_data;
 		new_data = old_data;
 		if( new_length > old_data.length ) {
@@ -455,23 +482,23 @@ public class ScreamTracker3 {
 			System.arraycopy( old_data, 0, new_data, 0, old_data.length );
 			try {
 				data_input.readFully( new_data, old_data.length, new_data.length - old_data.length );
-			} catch( EOFException e ) {
+			} catch( final EOFException e ) {
 				System.out.println( "ScreamTracker3: Module has been truncated!" );
 			}
 		}
 		return new_data;
 	}
 
-	private static int unsigned_short_le( byte[] buffer, int offset ) {
+	private static int unsigned_short_le(final byte[] buffer, final int offset ) {
 		int value;
 		value = buffer[ offset ] & 0xFF;
 		value = value | ( ( buffer[ offset + 1 ] & 0xFF ) << 8 );
 		return value;
 	}
 
-	private static String ascii_text( byte[] buffer, int offset, int length ) {
+	private static String ascii_text(final byte[] buffer, final int offset, final int length ) {
 		int idx, chr;
-		byte[] string_buffer;
+		final byte[] string_buffer;
 		String string;
 		string_buffer = new byte[ length ];
 		for( idx = 0; idx < length; idx++ ) {
@@ -481,12 +508,8 @@ public class ScreamTracker3 {
 			}
 			string_buffer[ idx ] = ( byte ) chr;
 		}
-		try {
-			string = new String( string_buffer, 0, length, "ISO-8859-1" );
-		} catch( UnsupportedEncodingException e ) {
-			string = "";
-		}
-		return string;
+        string = new String( string_buffer, 0, length, StandardCharsets.ISO_8859_1);
+        return string;
 	}
 }
 

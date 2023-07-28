@@ -23,7 +23,7 @@ public class FMLInjectionAndSortingTweaker implements ITweaker {
     }
 
     @Override
-    public void acceptOptions(List<String> args, File gameDir, File assetsDir, String profile)
+    public void acceptOptions(final List<String> args, final File gameDir, final File assetsDir, final String profile)
     {
         if (!run)
         {
@@ -34,7 +34,7 @@ public class FMLInjectionAndSortingTweaker implements ITweaker {
     }
 
     @Override
-    public void injectIntoClassLoader(LaunchClassLoader classLoader)
+    public void injectIntoClassLoader(final LaunchClassLoader classLoader)
     {
     }
 

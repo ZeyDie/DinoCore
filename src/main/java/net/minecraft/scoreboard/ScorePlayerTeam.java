@@ -20,7 +20,7 @@ public class ScorePlayerTeam extends Team
     private boolean allowFriendlyFire = true;
     private boolean field_98301_h = true;
 
-    public ScorePlayerTeam(Scoreboard par1Scoreboard, String par2Str)
+    public ScorePlayerTeam(final Scoreboard par1Scoreboard, final String par2Str)
     {
         this.theScoreboard = par1Scoreboard;
         this.field_96675_b = par2Str;
@@ -37,7 +37,7 @@ public class ScorePlayerTeam extends Team
         return this.field_96673_d;
     }
 
-    public void setTeamName(String par1Str)
+    public void setTeamName(final String par1Str)
     {
         if (par1Str == null)
         {
@@ -63,7 +63,7 @@ public class ScorePlayerTeam extends Team
         return this.field_96674_e;
     }
 
-    public void setNamePrefix(String par1Str)
+    public void setNamePrefix(final String par1Str)
     {
         if (par1Str == null)
         {
@@ -84,7 +84,7 @@ public class ScorePlayerTeam extends Team
         return this.colorSuffix;
     }
 
-    public void setNameSuffix(String par1Str)
+    public void setNameSuffix(final String par1Str)
     {
         if (par1Str == null)
         {
@@ -97,7 +97,7 @@ public class ScorePlayerTeam extends Team
         }
     }
 
-    public String func_142053_d(String par1Str)
+    public String func_142053_d(final String par1Str)
     {
         return this.getColorPrefix() + par1Str + this.getColorSuffix();
     }
@@ -105,7 +105,7 @@ public class ScorePlayerTeam extends Team
     /**
      * Returns the player name including the color prefixes and suffixes
      */
-    public static String formatPlayerName(Team par0Team, String par1Str)
+    public static String formatPlayerName(final Team par0Team, final String par1Str)
     {
         return par0Team == null ? par1Str : par0Team.func_142053_d(par1Str);
     }
@@ -115,7 +115,7 @@ public class ScorePlayerTeam extends Team
         return this.allowFriendlyFire;
     }
 
-    public void setAllowFriendlyFire(boolean par1)
+    public void setAllowFriendlyFire(final boolean par1)
     {
         this.allowFriendlyFire = par1;
         this.theScoreboard.func_96538_b(this);
@@ -126,7 +126,7 @@ public class ScorePlayerTeam extends Team
         return this.field_98301_h;
     }
 
-    public void setSeeFriendlyInvisiblesEnabled(boolean par1)
+    public void setSeeFriendlyInvisiblesEnabled(final boolean par1)
     {
         this.field_98301_h = par1;
         this.theScoreboard.func_96538_b(this);
@@ -150,7 +150,7 @@ public class ScorePlayerTeam extends Team
     }
 
     @SideOnly(Side.CLIENT)
-    public void func_98298_a(int par1)
+    public void func_98298_a(final int par1)
     {
         this.setAllowFriendlyFire((par1 & 1) > 0);
         this.setSeeFriendlyInvisiblesEnabled((par1 & 2) > 0);

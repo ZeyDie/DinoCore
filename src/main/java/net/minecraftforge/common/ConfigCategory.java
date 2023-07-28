@@ -20,12 +20,12 @@ public class ConfigCategory implements Map<String, Property>
     public final ConfigCategory parent;
     private boolean changed = false;
 
-    public ConfigCategory(String name)
+    public ConfigCategory(final String name)
     {
         this(name, null);
     }
 
-    public ConfigCategory(String name, ConfigCategory parent)
+    public ConfigCategory(final String name, final ConfigCategory parent)
     {
         this.name = name;
         this.parent = parent;
@@ -35,11 +35,11 @@ public class ConfigCategory implements Map<String, Property>
         }
     }
 
-    public boolean equals(Object obj)
+    public boolean equals(final Object obj)
     {
         if (obj instanceof ConfigCategory)
         {
-            ConfigCategory cat = (ConfigCategory)obj;
+            final ConfigCategory cat = (ConfigCategory)obj;
             return name.equals(cat.name) && children.equals(cat.children);  
         }
         
@@ -51,7 +51,7 @@ public class ConfigCategory implements Map<String, Property>
         return getQualifiedName(name, parent);
     }
 
-    public static String getQualifiedName(String name, ConfigCategory parent)
+    public static String getQualifiedName(final String name, final ConfigCategory parent)
     {
         return (parent == null ? name : parent.getQualifiedName() + Configuration.CATEGORY_SPLITTER + name);
     }
@@ -71,27 +71,27 @@ public class ConfigCategory implements Map<String, Property>
         return ImmutableMap.copyOf(properties);
     }
 
-    public void setComment(String comment)
+    public void setComment(final String comment)
     {
         this.comment = comment;
     }
 
-    public boolean containsKey(String key)
+    public boolean containsKey(final String key)
     {
         return properties.containsKey(key);
     }
 
-    public Property get(String key)
+    public Property get(final String key)
     {
         return properties.get(key);
     }
 
-    private void write(BufferedWriter out, String... data) throws IOException
+    private void write(final BufferedWriter out, final String... data) throws IOException
     {
         write(out, true, data);
     }
 
-    private void write(BufferedWriter out, boolean new_line, String... data) throws IOException
+    private void write(final BufferedWriter out, final boolean new_line, final String... data) throws IOException
     {
         for (int x = 0; x < data.length; x++)
         {
@@ -100,11 +100,11 @@ public class ConfigCategory implements Map<String, Property>
         if (new_line) out.write(NEW_LINE);
     }
 
-    public void write(BufferedWriter out, int indent) throws IOException
+    public void write(final BufferedWriter out, final int indent) throws IOException
     {
-        String pad0 = getIndent(indent);
-        String pad1 = getIndent(indent + 1);
-        String pad2 = getIndent(indent + 2);
+        final String pad0 = getIndent(indent);
+        final String pad1 = getIndent(indent + 1);
+        final String pad2 = getIndent(indent + 2);
 
         write(out, pad0, "####################");
         write(out, pad0, "# ", name);
@@ -112,9 +112,9 @@ public class ConfigCategory implements Map<String, Property>
         if (comment != null)
         {
             write(out, pad0, "#===================");
-            Splitter splitter = Splitter.onPattern("\r?\n");
+            final Splitter splitter = Splitter.onPattern("\r?\n");
 
-            for (String line : splitter.split(comment))
+            for (final String line : splitter.split(comment))
             {
                 write(out, pad0, "# ", line);
             }
@@ -129,11 +129,11 @@ public class ConfigCategory implements Map<String, Property>
 
         write(out, pad0, name, " {");
 
-        Property[] props = properties.values().toArray(new Property[properties.size()]);
+        final Property[] props = properties.values().toArray(new Property[0]);
 
         for (int x = 0; x < props.length; x++)
         {
-            Property prop = props[x];
+            final Property prop = props[x];
 
             if (prop.comment != null)
             {
@@ -142,8 +142,8 @@ public class ConfigCategory implements Map<String, Property>
                     out.newLine();
                 }
 
-                Splitter splitter = Splitter.onPattern("\r?\n");
-                for (String commentLine : splitter.split(prop.comment))
+                final Splitter splitter = Splitter.onPattern("\r?\n");
+                for (final String commentLine : splitter.split(prop.comment))
                 {
                     write(out, pad1, "# ", commentLine);
                 }
@@ -158,11 +158,11 @@ public class ConfigCategory implements Map<String, Property>
 
             if (prop.isList())
             {
-                char type = prop.getType().getID();
+                final char type = prop.getType().getID();
                 
                 write(out, pad1, String.valueOf(type), ":", propName, " <");
 
-                for (String line : prop.getStringList())
+                for (final String line : prop.getStringList())
                 {
                     write(out, pad2, line);
                 }
@@ -175,12 +175,12 @@ public class ConfigCategory implements Map<String, Property>
             }
             else
             {
-                char type = prop.getType().getID();
+                final char type = prop.getType().getID();
                 write(out, pad1, String.valueOf(type), ":", propName, "=", prop.getString());
             }
         }
 
-        for (ConfigCategory child : children)
+        for (final ConfigCategory child : children)
         {
             child.write(out, indent + 1);
         }
@@ -188,9 +188,9 @@ public class ConfigCategory implements Map<String, Property>
         write(out, pad0, "}", NEW_LINE);
     }
 
-    private String getIndent(int indent)
+    private String getIndent(final int indent)
     {
-        StringBuilder buf = new StringBuilder("");
+        final StringBuilder buf = new StringBuilder("");
         for (int x = 0; x < indent; x++)
         {
             buf.append("    ");
@@ -201,7 +201,7 @@ public class ConfigCategory implements Map<String, Property>
     public boolean hasChanged()
     {
         if (changed) return true;
-        for (Property prop : properties.values())
+        for (final Property prop : properties.values())
         {
             if (prop.hasChanged()) return true;
         }
@@ -211,7 +211,7 @@ public class ConfigCategory implements Map<String, Property>
     void resetChangedState()
     {
         changed = false;
-        for (Property prop : properties.values())
+        for (final Property prop : properties.values())
         {
             prop.resetChangedState();
         }
@@ -221,20 +221,20 @@ public class ConfigCategory implements Map<String, Property>
     //Map bouncer functions for compatibility with older mods, to be removed once all mods stop using it.
     @Override public int size(){ return properties.size(); }
     @Override public boolean isEmpty() { return properties.isEmpty(); }
-    @Override public boolean containsKey(Object key) { return properties.containsKey(key); }
-    @Override public boolean containsValue(Object value){ return properties.containsValue(value); }
-    @Override public Property get(Object key) { return properties.get(key); }
-    @Override public Property put(String key, Property value)
+    @Override public boolean containsKey(final Object key) { return properties.containsKey(key); }
+    @Override public boolean containsValue(final Object value){ return properties.containsValue(value); }
+    @Override public Property get(final Object key) { return properties.get(key); }
+    @Override public Property put(final String key, final Property value)
     {
         changed = true;
         return properties.put(key, value);
     }
-    @Override public Property remove(Object key)
+    @Override public Property remove(final Object key)
     {
         changed = true;
         return properties.remove(key);
     }
-    @Override public void putAll(Map<? extends String, ? extends Property> m)
+    @Override public void putAll(final Map<? extends String, ? extends Property> m)
     {
         changed = true;
         properties.putAll(m);
@@ -255,7 +255,7 @@ public class ConfigCategory implements Map<String, Property>
 
     public Set<ConfigCategory> getChildren(){ return ImmutableSet.copyOf(children); }
     
-    public void removeChild(ConfigCategory child)
+    public void removeChild(final ConfigCategory child)
     {
         if (children.contains(child))
         {

@@ -17,7 +17,7 @@ public class ItemFireworkCharge extends Item
     @SideOnly(Side.CLIENT)
     private Icon theIcon;
 
-    public ItemFireworkCharge(int par1)
+    public ItemFireworkCharge(final int par1)
     {
         super(par1);
     }
@@ -27,13 +27,13 @@ public class ItemFireworkCharge extends Item
     /**
      * Gets an icon index based on an item's damage value and the given render pass
      */
-    public Icon getIconFromDamageForRenderPass(int par1, int par2)
+    public Icon getIconFromDamageForRenderPass(final int par1, final int par2)
     {
         return par2 > 0 ? this.theIcon : super.getIconFromDamageForRenderPass(par1, par2);
     }
 
     @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack par1ItemStack, int par2)
+    public int getColorFromItemStack(final ItemStack par1ItemStack, final int par2)
     {
         if (par2 != 1)
         {
@@ -41,7 +41,7 @@ public class ItemFireworkCharge extends Item
         }
         else
         {
-            NBTBase nbtbase = func_92108_a(par1ItemStack, "Colors");
+            final NBTBase nbtbase = func_92108_a(par1ItemStack, "Colors");
 
             if (nbtbase == null)
             {
@@ -49,7 +49,7 @@ public class ItemFireworkCharge extends Item
             }
             else
             {
-                NBTTagIntArray nbttagintarray = (NBTTagIntArray)nbtbase;
+                final NBTTagIntArray nbttagintarray = (NBTTagIntArray)nbtbase;
 
                 if (nbttagintarray.intArray.length == 1)
                 {
@@ -60,12 +60,12 @@ public class ItemFireworkCharge extends Item
                     int j = 0;
                     int k = 0;
                     int l = 0;
-                    int[] aint = nbttagintarray.intArray;
-                    int i1 = aint.length;
+                    final int[] aint = nbttagintarray.intArray;
+                    final int i1 = aint.length;
 
                     for (int j1 = 0; j1 < i1; ++j1)
                     {
-                        int k1 = aint[j1];
+                        final int k1 = aint[j1];
                         j += (k1 & 16711680) >> 16;
                         k += (k1 & 65280) >> 8;
                         l += (k1 & 255) >> 0;
@@ -87,11 +87,11 @@ public class ItemFireworkCharge extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public static NBTBase func_92108_a(ItemStack par0ItemStack, String par1Str)
+    public static NBTBase func_92108_a(final ItemStack par0ItemStack, final String par1Str)
     {
         if (par0ItemStack.hasTagCompound())
         {
-            NBTTagCompound nbttagcompound = par0ItemStack.getTagCompound().getCompoundTag("Explosion");
+            final NBTTagCompound nbttagcompound = par0ItemStack.getTagCompound().getCompoundTag("Explosion");
 
             if (nbttagcompound != null)
             {
@@ -107,11 +107,11 @@ public class ItemFireworkCharge extends Item
     /**
      * allows items to add custom lines of information to the mouseover description
      */
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    public void addInformation(final ItemStack par1ItemStack, final EntityPlayer par2EntityPlayer, final List par3List, final boolean par4)
     {
         if (par1ItemStack.hasTagCompound())
         {
-            NBTTagCompound nbttagcompound = par1ItemStack.getTagCompound().getCompoundTag("Explosion");
+            final NBTTagCompound nbttagcompound = par1ItemStack.getTagCompound().getCompoundTag("Explosion");
 
             if (nbttagcompound != null)
             {
@@ -121,9 +121,9 @@ public class ItemFireworkCharge extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public static void func_92107_a(NBTTagCompound par0NBTTagCompound, List par1List)
+    public static void func_92107_a(final NBTTagCompound par0NBTTagCompound, final List par1List)
     {
-        byte b0 = par0NBTTagCompound.getByte("Type");
+        final byte b0 = par0NBTTagCompound.getByte("Type");
 
         if (b0 >= 0 && b0 <= 4)
         {
@@ -134,7 +134,7 @@ public class ItemFireworkCharge extends Item
             par1List.add(StatCollector.translateToLocal("item.fireworksCharge.type").trim());
         }
 
-        int[] aint = par0NBTTagCompound.getIntArray("Colors");
+        final int[] aint = par0NBTTagCompound.getIntArray("Colors");
         int i;
         int j;
 
@@ -142,8 +142,8 @@ public class ItemFireworkCharge extends Item
         {
             boolean flag = true;
             String s = "";
-            int[] aint1 = aint;
-            int k = aint.length;
+            final int[] aint1 = aint;
+            final int k = aint.length;
 
             for (i = 0; i < k; ++i)
             {
@@ -176,19 +176,19 @@ public class ItemFireworkCharge extends Item
             par1List.add(s);
         }
 
-        int[] aint2 = par0NBTTagCompound.getIntArray("FadeColors");
+        final int[] aint2 = par0NBTTagCompound.getIntArray("FadeColors");
         boolean flag2;
 
         if (aint2.length > 0)
         {
             flag2 = true;
             String s1 = StatCollector.translateToLocal("item.fireworksCharge.fadeTo") + " ";
-            int[] aint3 = aint2;
+            final int[] aint3 = aint2;
             i = aint2.length;
 
             for (j = 0; j < i; ++j)
             {
-                int i1 = aint3[j];
+                final int i1 = aint3[j];
 
                 if (!flag2)
                 {
@@ -224,7 +224,7 @@ public class ItemFireworkCharge extends Item
             par1List.add(StatCollector.translateToLocal("item.fireworksCharge.trail"));
         }
 
-        boolean flag4 = par0NBTTagCompound.getBoolean("Flicker");
+        final boolean flag4 = par0NBTTagCompound.getBoolean("Flicker");
 
         if (flag4)
         {
@@ -233,7 +233,7 @@ public class ItemFireworkCharge extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         super.registerIcons(par1IconRegister);
         this.theIcon = par1IconRegister.registerIcon(this.getIconString() + "_overlay");

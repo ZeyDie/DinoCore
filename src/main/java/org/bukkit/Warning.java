@@ -58,7 +58,7 @@ public @interface Warning {
          *  OFF is always false<br>
          *  DEFAULT is false if and only if annotation is not null and specifies false for {@link Warning#value()}, true otherwise.
          */
-        public boolean printFor(Warning warning) {
+        public boolean printFor(final Warning warning) {
             if (this == DEFAULT) {
                 return warning == null || warning.value();
             }
@@ -75,7 +75,7 @@ public @interface Warning {
             if (value == null) {
                 return DEFAULT;
             }
-            WarningState state = values.get(value.toLowerCase());
+            final WarningState state = values.get(value.toLowerCase());
             if (state == null) {
                 return DEFAULT;
             }

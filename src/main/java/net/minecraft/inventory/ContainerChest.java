@@ -24,7 +24,7 @@ public class ContainerChest extends Container
             return bukkitEntity;
         }
 
-        CraftInventory inventory;
+        final CraftInventory inventory;
 
         if (this.lowerChestInventory instanceof InventoryPlayer)
         {
@@ -44,12 +44,12 @@ public class ContainerChest extends Container
     }
     // CraftBukkit end
 
-    public ContainerChest(IInventory par1IInventory, IInventory par2IInventory)
+    public ContainerChest(final IInventory par1IInventory, final IInventory par2IInventory)
     {
         this.lowerChestInventory = par2IInventory;
         this.numRows = par2IInventory.getSizeInventory() / 9;
         par2IInventory.openChest();
-        int i = (this.numRows - 4) * 18;
+        final int i = (this.numRows - 4) * 18;
         // CraftBukkit start - Save player
         // TODO: Should we check to make sure it really is an InventoryPlayer?
         this.player = (InventoryPlayer)par1IInventory;
@@ -79,7 +79,7 @@ public class ContainerChest extends Container
         }
     }
 
-    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
+    public boolean canInteractWith(final EntityPlayer par1EntityPlayer)
     {
         if (!this.checkReachable)
         {
@@ -92,14 +92,14 @@ public class ContainerChest extends Container
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
-    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+    public ItemStack transferStackInSlot(final EntityPlayer par1EntityPlayer, final int par2)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(par2);
+        final Slot slot = (Slot)this.inventorySlots.get(par2);
 
         if (slot != null && slot.getHasStack())
         {
-            ItemStack itemstack1 = slot.getStack();
+            final ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
             if (par2 < this.numRows * 9)
@@ -130,7 +130,7 @@ public class ContainerChest extends Container
     /**
      * Called when the container is closed.
      */
-    public void onContainerClosed(EntityPlayer par1EntityPlayer)
+    public void onContainerClosed(final EntityPlayer par1EntityPlayer)
     {
         super.onContainerClosed(par1EntityPlayer);
         this.lowerChestInventory.closeChest();

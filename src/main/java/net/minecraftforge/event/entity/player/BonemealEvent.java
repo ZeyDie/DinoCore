@@ -25,7 +25,7 @@ public class BonemealEvent extends PlayerEvent
     public final int Y;
     public final int Z;
     
-    public BonemealEvent(EntityPlayer player, World world, int id, int x, int y, int z)
+    public BonemealEvent(final EntityPlayer player, final World world, final int id, final int x, final int y, final int z)
     {
         super(player);
         this.world = world;

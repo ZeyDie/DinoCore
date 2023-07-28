@@ -17,7 +17,7 @@ public class EntityTNTPrimed extends Entity
     public float yield = 4; // CraftBukkit
     public boolean isIncendiary = false; // CraftBukkit
 
-    public EntityTNTPrimed(World par1World)
+    public EntityTNTPrimed(final World par1World)
     {
         super(par1World);
         this.fuse = 0;
@@ -26,11 +26,11 @@ public class EntityTNTPrimed extends Entity
         this.yOffset = this.height / 2.0F;
     }
 
-    public EntityTNTPrimed(World par1World, double par2, double par4, double par6, EntityLivingBase par8EntityLivingBase)
+    public EntityTNTPrimed(final World par1World, final double par2, final double par4, final double par6, final EntityLivingBase par8EntityLivingBase)
     {
         this(par1World);
         this.setPosition(par2, par4, par6);
-        float f = (float)(Math.random() * Math.PI * 2.0D);
+        final float f = (float)(Math.random() * Math.PI * 2.0D);
         this.motionX = (double)(-((float)Math.sin((double)f)) * 0.02F);
         this.motionY = 0.20000000298023224D;
         this.motionZ = (double)(-((float)Math.cos((double)f)) * 0.02F);
@@ -102,8 +102,8 @@ public class EntityTNTPrimed extends Entity
     {
         // CraftBukkit start
         // float f = 4.0F;
-        CraftServer server = this.worldObj.getServer();
-        ExplosionPrimeEvent event = new ExplosionPrimeEvent((org.bukkit.entity.Explosive) org.bukkit.craftbukkit.v1_6_R3.entity.CraftEntity.getEntity(server, this));
+        final CraftServer server = this.worldObj.getServer();
+        final ExplosionPrimeEvent event = new ExplosionPrimeEvent((org.bukkit.entity.Explosive) org.bukkit.craftbukkit.v1_6_R3.entity.CraftEntity.getEntity(server, this));
         server.getPluginManager().callEvent(event);
 
         if (!event.isCancelled())
@@ -118,7 +118,7 @@ public class EntityTNTPrimed extends Entity
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
-    protected void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    protected void writeEntityToNBT(final NBTTagCompound par1NBTTagCompound)
     {
         par1NBTTagCompound.setByte("Fuse", (byte)this.fuse);
     }
@@ -126,7 +126,7 @@ public class EntityTNTPrimed extends Entity
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
-    protected void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    protected void readEntityFromNBT(final NBTTagCompound par1NBTTagCompound)
     {
         this.fuse = par1NBTTagCompound.getByte("Fuse");
     }

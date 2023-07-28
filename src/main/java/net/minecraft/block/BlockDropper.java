@@ -24,7 +24,7 @@ public class BlockDropper extends BlockDispenser
 {
     private final IBehaviorDispenseItem dropperDefaultBehaviour = new BehaviorDefaultDispenseItem();
 
-    protected BlockDropper(int par1)
+    protected BlockDropper(final int par1)
     {
         super(par1);
     }
@@ -35,7 +35,7 @@ public class BlockDropper extends BlockDispenser
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.blockIcon = par1IconRegister.registerIcon("furnace_side");
         this.furnaceTopIcon = par1IconRegister.registerIcon("furnace_top");
@@ -46,7 +46,7 @@ public class BlockDropper extends BlockDispenser
     /**
      * Returns the behavior for the given ItemStack.
      */
-    protected IBehaviorDispenseItem getBehaviorForItemStack(ItemStack par1ItemStack)
+    protected IBehaviorDispenseItem getBehaviorForItemStack(final ItemStack par1ItemStack)
     {
         return this.dropperDefaultBehaviour;
     }
@@ -54,19 +54,19 @@ public class BlockDropper extends BlockDispenser
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World par1World)
+    public TileEntity createNewTileEntity(final World par1World)
     {
         return new TileEntityDropper();
     }
 
-    public void dispense(World par1World, int par2, int par3, int par4)   // CraftBukkit - protected -> public
+    public void dispense(final World par1World, final int par2, final int par3, final int par4)   // CraftBukkit - protected -> public
     {
-        BlockSourceImpl blocksourceimpl = new BlockSourceImpl(par1World, par2, par3, par4);
-        TileEntityDispenser tileentitydispenser = (TileEntityDispenser)blocksourceimpl.getBlockTileEntity();
+        final BlockSourceImpl blocksourceimpl = new BlockSourceImpl(par1World, par2, par3, par4);
+        final TileEntityDispenser tileentitydispenser = (TileEntityDispenser)blocksourceimpl.getBlockTileEntity();
 
         if (tileentitydispenser != null)
         {
-            int l = tileentitydispenser.getRandomStackFromInventory();
+            final int l = tileentitydispenser.getRandomStackFromInventory();
 
             if (l < 0)
             {
@@ -74,16 +74,16 @@ public class BlockDropper extends BlockDispenser
             }
             else
             {
-                ItemStack itemstack = tileentitydispenser.getStackInSlot(l);
-                int i1 = par1World.getBlockMetadata(par2, par3, par4) & 7;
-                IInventory iinventory = TileEntityHopper.getInventoryAtLocation(par1World, (double)(par2 + Facing.offsetsXForSide[i1]), (double)(par3 + Facing.offsetsYForSide[i1]), (double)(par4 + Facing.offsetsZForSide[i1]));
+                final ItemStack itemstack = tileentitydispenser.getStackInSlot(l);
+                final int i1 = par1World.getBlockMetadata(par2, par3, par4) & 7;
+                final IInventory iinventory = TileEntityHopper.getInventoryAtLocation(par1World, (double)(par2 + Facing.offsetsXForSide[i1]), (double)(par3 + Facing.offsetsYForSide[i1]), (double)(par4 + Facing.offsetsZForSide[i1]));
                 ItemStack itemstack1=null;
 
                 if (iinventory != null)
                 {
                     // CraftBukkit start - Fire event when pushing items into other inventories
-                    CraftItemStack oitemstack = CraftItemStack.asCraftMirror(itemstack.copy().splitStack(1));
-                    org.bukkit.inventory.Inventory destinationInventory;
+                    final CraftItemStack oitemstack = CraftItemStack.asCraftMirror(itemstack.copy().splitStack(1));
+                    final org.bukkit.inventory.Inventory destinationInventory;
 
                     // Have to special case large chests as they work oddly
                     if (iinventory instanceof InventoryLargeChest)
@@ -102,7 +102,7 @@ public class BlockDropper extends BlockDispenser
                         // Cauldron end
                     }
 
-                    InventoryMoveItemEvent event = new InventoryMoveItemEvent(tileentitydispenser.getOwner().getInventory(), oitemstack.clone(), destinationInventory, true);
+                    final InventoryMoveItemEvent event = new InventoryMoveItemEvent(tileentitydispenser.getOwner().getInventory(), oitemstack.clone(), destinationInventory, true);
                     par1World.getServer().getPluginManager().callEvent(event);
 
                     if (event.isCancelled())

@@ -25,12 +25,12 @@ public class MemoryConfiguration extends MemorySection implements Configuration 
      * @param defaults Default value provider
      * @throws IllegalArgumentException Thrown if defaults is null
      */
-    public MemoryConfiguration(Configuration defaults) {
+    public MemoryConfiguration(final Configuration defaults) {
         this.defaults = defaults;
     }
 
     @Override
-    public void addDefault(String path, Object value) {
+    public void addDefault(final String path, final Object value) {
         Validate.notNull(path, "Path may not be null");
 
         if (defaults == null) {
@@ -40,21 +40,21 @@ public class MemoryConfiguration extends MemorySection implements Configuration 
         defaults.set(path, value);
     }
 
-    public void addDefaults(Map<String, Object> defaults) {
+    public void addDefaults(final Map<String, Object> defaults) {
         Validate.notNull(defaults, "Defaults may not be null");
 
-        for (Map.Entry<String, Object> entry : defaults.entrySet()) {
+        for (final Map.Entry<String, Object> entry : defaults.entrySet()) {
             addDefault(entry.getKey(), entry.getValue());
         }
     }
 
-    public void addDefaults(Configuration defaults) {
+    public void addDefaults(final Configuration defaults) {
         Validate.notNull(defaults, "Defaults may not be null");
 
         addDefaults(defaults.getValues(true));
     }
 
-    public void setDefaults(Configuration defaults) {
+    public void setDefaults(final Configuration defaults) {
         Validate.notNull(defaults, "Defaults may not be null");
 
         this.defaults = defaults;

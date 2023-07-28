@@ -16,11 +16,11 @@ public class CommandException extends RuntimeException {
      *
      * @param msg the detail message.
      */
-    public CommandException(String msg) {
+    public CommandException(final String msg) {
         super(msg);
     }
 
-    public CommandException(String msg, Throwable cause) {
+    public CommandException(final String msg, final Throwable cause) {
         super(msg, cause);
     }
 }

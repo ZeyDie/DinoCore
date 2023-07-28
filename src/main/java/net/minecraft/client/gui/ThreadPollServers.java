@@ -19,7 +19,7 @@ class ThreadPollServers extends Thread
     /** Slot container for the server list */
     final GuiSlotServer serverSlotContainer;
 
-    ThreadPollServers(GuiSlotServer par1GuiSlotServer, ServerData par2ServerData)
+    ThreadPollServers(final GuiSlotServer par1GuiSlotServer, final ServerData par2ServerData)
     {
         this.serverSlotContainer = par1GuiSlotServer;
         this.pollServersServerData = par2ServerData;
@@ -42,41 +42,41 @@ class ThreadPollServers extends Thread
                             {
                                 flag = true;
                                 this.pollServersServerData.serverMOTD = EnumChatFormatting.DARK_GRAY + "Polling..";
-                                long i = System.nanoTime();
+                                final long i = System.nanoTime();
                                 GuiMultiplayer.func_82291_a(this.pollServersServerData);
-                                long j = System.nanoTime();
+                                final long j = System.nanoTime();
                                 this.pollServersServerData.pingToServer = (j - i) / 1000000L;
                                 flag = false;
                                 break label183;
                             }
-                            catch (UnknownHostException unknownhostexception)
+                            catch (final UnknownHostException unknownhostexception)
                             {
                                 this.pollServersServerData.pingToServer = -1L;
                                 this.pollServersServerData.serverMOTD = EnumChatFormatting.DARK_RED + "Can\'t resolve hostname";
                                 flag = false;
                             }
-                            catch (SocketTimeoutException sockettimeoutexception)
+                            catch (final SocketTimeoutException sockettimeoutexception)
                             {
                                 this.pollServersServerData.pingToServer = -1L;
                                 this.pollServersServerData.serverMOTD = EnumChatFormatting.DARK_RED + "Can\'t reach server";
                                 flag = false;
                                 break label187;
                             }
-                            catch (ConnectException connectexception)
+                            catch (final ConnectException connectexception)
                             {
                                 this.pollServersServerData.pingToServer = -1L;
                                 this.pollServersServerData.serverMOTD = EnumChatFormatting.DARK_RED + "Can\'t reach server";
                                 flag = false;
                                 break label186;
                             }
-                            catch (IOException ioexception)
+                            catch (final IOException ioexception)
                             {
                                 this.pollServersServerData.pingToServer = -1L;
                                 this.pollServersServerData.serverMOTD = EnumChatFormatting.DARK_RED + "Communication error";
                                 flag = false;
                                 break label185;
                             }
-                            catch (Exception exception)
+                            catch (final Exception exception)
                             {
                                 this.pollServersServerData.pingToServer = -1L;
                                 this.pollServersServerData.serverMOTD = "ERROR: " + exception.getClass();

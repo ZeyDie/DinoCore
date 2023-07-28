@@ -18,7 +18,7 @@ import java.util.Random;
 
 public class BlockEnderChest extends BlockContainer
 {
-    protected BlockEnderChest(int par1)
+    protected BlockEnderChest(final int par1)
     {
         super(par1, Material.rock);
         this.setCreativeTab(CreativeTabs.tabDecorations);
@@ -53,7 +53,7 @@ public class BlockEnderChest extends BlockContainer
     /**
      * Returns the ID of the items to drop on destruction.
      */
-    public int idDropped(int par1, Random par2Random, int par3)
+    public int idDropped(final int par1, final Random par2Random, final int par3)
     {
         return Block.obsidian.blockID;
     }
@@ -61,7 +61,7 @@ public class BlockEnderChest extends BlockContainer
     /**
      * Returns the quantity of items to drop on block destruction.
      */
-    public int quantityDropped(Random par1Random)
+    public int quantityDropped(final Random par1Random)
     {
         return 8;
     }
@@ -77,10 +77,10 @@ public class BlockEnderChest extends BlockContainer
     /**
      * Called when the block is placed in the world.
      */
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
+    public void onBlockPlacedBy(final World par1World, final int par2, final int par3, final int par4, final EntityLivingBase par5EntityLivingBase, final ItemStack par6ItemStack)
     {
         byte b0 = 0;
-        int l = MathHelper.floor_double((double)(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        final int l = MathHelper.floor_double((double)(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
         if (l == 0)
         {
@@ -108,10 +108,10 @@ public class BlockEnderChest extends BlockContainer
     /**
      * Called upon block activation (right click on the block.)
      */
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(final World par1World, final int par2, final int par3, final int par4, final EntityPlayer par5EntityPlayer, final int par6, final float par7, final float par8, final float par9)
     {
-        InventoryEnderChest inventoryenderchest = par5EntityPlayer.getInventoryEnderChest();
-        TileEntityEnderChest tileentityenderchest = (TileEntityEnderChest)par1World.getBlockTileEntity(par2, par3, par4);
+        final InventoryEnderChest inventoryenderchest = par5EntityPlayer.getInventoryEnderChest();
+        final TileEntityEnderChest tileentityenderchest = (TileEntityEnderChest)par1World.getBlockTileEntity(par2, par3, par4);
 
         if (inventoryenderchest != null && tileentityenderchest != null)
         {
@@ -139,7 +139,7 @@ public class BlockEnderChest extends BlockContainer
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
-    public TileEntity createNewTileEntity(World par1World)
+    public TileEntity createNewTileEntity(final World par1World)
     {
         return new TileEntityEnderChest();
     }
@@ -149,24 +149,24 @@ public class BlockEnderChest extends BlockContainer
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    public void randomDisplayTick(final World par1World, final int par2, final int par3, final int par4, final Random par5Random)
     {
         for (int l = 0; l < 3; ++l)
         {
             double d0 = (double)((float)par2 + par5Random.nextFloat());
-            double d1 = (double)((float)par3 + par5Random.nextFloat());
+            final double d1 = (double)((float)par3 + par5Random.nextFloat());
             d0 = (double)((float)par4 + par5Random.nextFloat());
             double d2 = 0.0D;
             double d3 = 0.0D;
             double d4 = 0.0D;
-            int i1 = par5Random.nextInt(2) * 2 - 1;
-            int j1 = par5Random.nextInt(2) * 2 - 1;
+            final int i1 = par5Random.nextInt(2) * 2 - 1;
+            final int j1 = par5Random.nextInt(2) * 2 - 1;
             d2 = ((double)par5Random.nextFloat() - 0.5D) * 0.125D;
             d3 = ((double)par5Random.nextFloat() - 0.5D) * 0.125D;
             d4 = ((double)par5Random.nextFloat() - 0.5D) * 0.125D;
-            double d5 = (double)par4 + 0.5D + 0.25D * (double)j1;
+            final double d5 = (double)par4 + 0.5D + 0.25D * (double)j1;
             d4 = (double)(par5Random.nextFloat() * 1.0F * (float)j1);
-            double d6 = (double)par2 + 0.5D + 0.25D * (double)i1;
+            final double d6 = (double)par2 + 0.5D + 0.25D * (double)i1;
             d2 = (double)(par5Random.nextFloat() * 1.0F * (float)i1);
             par1World.spawnParticle("portal", d6, d1, d5, d2, d3, d4);
         }
@@ -178,7 +178,7 @@ public class BlockEnderChest extends BlockContainer
      * When this method is called, your block should register all the icons it needs with the given IconRegister. This
      * is the only chance you get to register icons.
      */
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(final IconRegister par1IconRegister)
     {
         this.blockIcon = par1IconRegister.registerIcon("obsidian");
     }

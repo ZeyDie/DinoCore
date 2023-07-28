@@ -12,12 +12,12 @@ public class Tree extends MaterialData {
         super(Material.LOG);
     }
 
-    public Tree(TreeSpecies species) {
+    public Tree(final TreeSpecies species) {
         this();
         setSpecies(species);
     }
 
-    public Tree(TreeSpecies species, BlockFace dir) {
+    public Tree(final TreeSpecies species, final BlockFace dir) {
         this();
         setSpecies(species);
         setDirection(dir);
@@ -68,7 +68,7 @@ public class Tree extends MaterialData {
      *
      * @param species New species of this tree
      */
-    public void setSpecies(TreeSpecies species) {
+    public void setSpecies(final TreeSpecies species) {
         setData((byte) ((getData() & 0xC) | species.getData()));
     }
 
@@ -95,8 +95,8 @@ public class Tree extends MaterialData {
      *
      * @param dir - direction of end of log (BlockFace.SELF for no direction)
      */
-    public void setDirection(BlockFace dir) {
-        int dat;
+    public void setDirection(final BlockFace dir) {
+        final int dat;
         switch (dir) {
             case UP:
             case DOWN:

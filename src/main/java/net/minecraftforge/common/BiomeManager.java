@@ -9,27 +9,27 @@ import java.util.ArrayList;
 
 public class BiomeManager
 {
-    public static void addVillageBiome(BiomeGenBase biome, boolean canSpawn)
+    public static void addVillageBiome(final BiomeGenBase biome, final boolean canSpawn)
     {
         if (!MapGenVillage.villageSpawnBiomes.contains(biome))
         {
-            ArrayList<BiomeGenBase> biomes = new ArrayList<BiomeGenBase>(MapGenVillage.villageSpawnBiomes);
+            final ArrayList<BiomeGenBase> biomes = new ArrayList<BiomeGenBase>(MapGenVillage.villageSpawnBiomes);
             biomes.add(biome);
             MapGenVillage.villageSpawnBiomes = biomes;
         }
     }
 
-    public static void removeVillageBiome(BiomeGenBase biome)
+    public static void removeVillageBiome(final BiomeGenBase biome)
     {
         if (MapGenVillage.villageSpawnBiomes.contains(biome))
         {
-            ArrayList<BiomeGenBase> biomes = new ArrayList<BiomeGenBase>(MapGenVillage.villageSpawnBiomes);
+            final ArrayList<BiomeGenBase> biomes = new ArrayList<BiomeGenBase>(MapGenVillage.villageSpawnBiomes);
             biomes.remove(biome);
             MapGenVillage.villageSpawnBiomes = biomes;
         }
     }
 
-    public static void addStrongholdBiome(BiomeGenBase biome)
+    public static void addStrongholdBiome(final BiomeGenBase biome)
     {
         if (!MapGenStronghold.allowedBiomes.contains(biome))
         {
@@ -37,7 +37,7 @@ public class BiomeManager
         }
     }
 
-    public static void removeStrongholdBiome(BiomeGenBase biome)
+    public static void removeStrongholdBiome(final BiomeGenBase biome)
     {
         if (MapGenStronghold.allowedBiomes.contains(biome))
         {
@@ -45,7 +45,7 @@ public class BiomeManager
         }
     }
 
-    public static void addSpawnBiome(BiomeGenBase biome)
+    public static void addSpawnBiome(final BiomeGenBase biome)
     {
         if (!WorldChunkManager.allowedBiomes.contains(biome))
         {
@@ -53,7 +53,7 @@ public class BiomeManager
         }
     }
 
-    public static void removeSpawnBiome(BiomeGenBase biome)
+    public static void removeSpawnBiome(final BiomeGenBase biome)
     {
         if (WorldChunkManager.allowedBiomes.contains(biome))
         {

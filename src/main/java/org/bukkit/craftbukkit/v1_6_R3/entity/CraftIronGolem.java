@@ -5,7 +5,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.IronGolem;
 
 public class CraftIronGolem extends CraftGolem implements IronGolem {
-    public CraftIronGolem(CraftServer server, net.minecraft.entity.monster.EntityIronGolem entity) {
+    public CraftIronGolem(final CraftServer server, final net.minecraft.entity.monster.EntityIronGolem entity) {
         super(server, entity);
     }
 
@@ -23,7 +23,7 @@ public class CraftIronGolem extends CraftGolem implements IronGolem {
         return getHandle().isPlayerCreated();
     }
 
-    public void setPlayerCreated(boolean playerCreated) {
+    public void setPlayerCreated(final boolean playerCreated) {
         getHandle().setJumping(playerCreated);
     }
 

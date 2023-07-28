@@ -22,7 +22,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer
     private ResourceLocation locationSkin;
     private ResourceLocation locationCape;
 
-    public AbstractClientPlayer(World par1World, String par2Str)
+    public AbstractClientPlayer(final World par1World, final String par2Str)
     {
         super(par1World, par2Str);
         this.setupCustomSkin();
@@ -61,19 +61,19 @@ public abstract class AbstractClientPlayer extends EntityPlayer
         return this.locationCape;
     }
 
-    public static ThreadDownloadImageData getDownloadImageSkin(ResourceLocation par0ResourceLocation, String par1Str)
+    public static ThreadDownloadImageData getDownloadImageSkin(final ResourceLocation par0ResourceLocation, final String par1Str)
     {
         return getDownloadImage(par0ResourceLocation, getSkinUrl(par1Str), locationStevePng, new ImageBufferDownload());
     }
 
-    public static ThreadDownloadImageData getDownloadImageCape(ResourceLocation par0ResourceLocation, String par1Str)
+    public static ThreadDownloadImageData getDownloadImageCape(final ResourceLocation par0ResourceLocation, final String par1Str)
     {
         return getDownloadImage(par0ResourceLocation, getCapeUrl(par1Str), (ResourceLocation)null, (IImageBuffer)null);
     }
 
-    private static ThreadDownloadImageData getDownloadImage(ResourceLocation par0ResourceLocation, String par1Str, ResourceLocation par2ResourceLocation, IImageBuffer par3IImageBuffer)
+    private static ThreadDownloadImageData getDownloadImage(final ResourceLocation par0ResourceLocation, final String par1Str, final ResourceLocation par2ResourceLocation, final IImageBuffer par3IImageBuffer)
     {
-        TextureManager texturemanager = Minecraft.getMinecraft().getTextureManager();
+        final TextureManager texturemanager = Minecraft.getMinecraft().getTextureManager();
         Object object = texturemanager.getTexture(par0ResourceLocation);
 
         if (object == null)
@@ -85,27 +85,27 @@ public abstract class AbstractClientPlayer extends EntityPlayer
         return (ThreadDownloadImageData)object;
     }
 
-    public static String getSkinUrl(String par0Str)
+    public static String getSkinUrl(final String par0Str)
     {
         return String.format("http://skins.minecraft.net/MinecraftSkins/%s.png", new Object[] {StringUtils.stripControlCodes(par0Str)});
     }
 
-    public static String getCapeUrl(String par0Str)
+    public static String getCapeUrl(final String par0Str)
     {
         return String.format("http://skins.minecraft.net/MinecraftCloaks/%s.png", new Object[] {StringUtils.stripControlCodes(par0Str)});
     }
 
-    public static ResourceLocation getLocationSkin(String par0Str)
+    public static ResourceLocation getLocationSkin(final String par0Str)
     {
         return new ResourceLocation("skins/" + StringUtils.stripControlCodes(par0Str));
     }
 
-    public static ResourceLocation getLocationCape(String par0Str)
+    public static ResourceLocation getLocationCape(final String par0Str)
     {
         return new ResourceLocation("cloaks/" + StringUtils.stripControlCodes(par0Str));
     }
 
-    public static ResourceLocation getLocationSkull(String par0Str)
+    public static ResourceLocation getLocationSkull(final String par0Str)
     {
         return new ResourceLocation("skull/" + StringUtils.stripControlCodes(par0Str));
     }

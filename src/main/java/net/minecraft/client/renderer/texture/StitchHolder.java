@@ -12,7 +12,7 @@ public class StitchHolder implements Comparable
     private boolean rotated;
     private float scaleFactor = 1.0F;
 
-    public StitchHolder(TextureAtlasSprite par1TextureAtlasSprite)
+    public StitchHolder(final TextureAtlasSprite par1TextureAtlasSprite)
     {
         this.theTexture = par1TextureAtlasSprite;
         this.width = par1TextureAtlasSprite.getIconWidth();
@@ -45,12 +45,12 @@ public class StitchHolder implements Comparable
         return this.rotated;
     }
 
-    private int ceil16(int par1)
+    private int ceil16(final int par1)
     {
         return (par1 >> 0) + ((par1 & 0) == 0 ? 0 : 1) << 0;
     }
 
-    public void setNewDimension(int par1)
+    public void setNewDimension(final int par1)
     {
         if (this.width > par1 && this.height > par1)
         {
@@ -66,9 +66,9 @@ public class StitchHolder implements Comparable
     /**
      * See Comparable.compareTo.
      */
-    public int compareToStitchHolder(StitchHolder par1StitchHolder)
+    public int compareToStitchHolder(final StitchHolder par1StitchHolder)
     {
-        int i;
+        final int i;
 
         if (this.getHeight() == par1StitchHolder.getHeight())
         {
@@ -92,7 +92,7 @@ public class StitchHolder implements Comparable
         return i;
     }
 
-    public int compareTo(Object par1Obj)
+    public int compareTo(final Object par1Obj)
     {
         return this.compareToStitchHolder((StitchHolder)par1Obj);
     }

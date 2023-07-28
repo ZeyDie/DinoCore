@@ -75,22 +75,22 @@ public class ServerCommandManager extends CommandHandler implements IAdminComman
      * Sends a message to the admins of the server from a given CommandSender with the given resource string and given
      * extra srings. If the int par2 is even or zero, the original sender is also notified.
      */
-    public void notifyAdmins(ICommandSender par1ICommandSender, int par2, String par3Str, Object... par4ArrayOfObj) {
+    public void notifyAdmins(final ICommandSender par1ICommandSender, final int par2, final String par3Str, final Object... par4ArrayOfObj) {
         boolean flag = true;
 
         if (par1ICommandSender instanceof TileEntityCommandBlock && !MinecraftServer.getServer().worldServers[0].getGameRules().getGameRuleBooleanValue("commandBlockOutput")) {
             flag = false;
         }
 
-        ChatMessageComponent chatmessagecomponent = ChatMessageComponent.createFromTranslationWithSubstitutions("chat.type.admin", new Object[]{par1ICommandSender.getCommandSenderName(), ChatMessageComponent.createFromTranslationWithSubstitutions(par3Str, par4ArrayOfObj)});
+        final ChatMessageComponent chatmessagecomponent = ChatMessageComponent.createFromTranslationWithSubstitutions("chat.type.admin", new Object[]{par1ICommandSender.getCommandSenderName(), ChatMessageComponent.createFromTranslationWithSubstitutions(par3Str, par4ArrayOfObj)});
         chatmessagecomponent.setColor(EnumChatFormatting.GRAY);
         chatmessagecomponent.setItalic(Boolean.valueOf(true));
 
         if (flag) {
-            Iterator iterator = MinecraftServer.getServer().getConfigurationManager().playerEntityList.iterator();
+            final Iterator iterator = MinecraftServer.getServer().getConfigurationManager().playerEntityList.iterator();
 
             while (iterator.hasNext()) {
-                EntityPlayerMP entityplayermp = (EntityPlayerMP) iterator.next();
+                final EntityPlayerMP entityplayermp = (EntityPlayerMP) iterator.next();
 
                 if (entityplayermp != par1ICommandSender && MinecraftServer.getServer().getConfigurationManager().isPlayerOpped(entityplayermp.getCommandSenderName())) {
                     entityplayermp.sendChatToPlayer(chatmessagecomponent);

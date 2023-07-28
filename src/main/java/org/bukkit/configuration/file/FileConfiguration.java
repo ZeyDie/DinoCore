@@ -25,7 +25,7 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      *
      * @param defaults Default value provider
      */
-    public FileConfiguration(Configuration defaults) {
+    public FileConfiguration(final Configuration defaults) {
         super(defaults);
     }
 
@@ -39,14 +39,14 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      * @throws IOException Thrown when the given file cannot be written to for any reason.
      * @throws IllegalArgumentException Thrown when file is null.
      */
-    public void save(File file) throws IOException {
+    public void save(final File file) throws IOException {
         Validate.notNull(file, "File cannot be null");
 
         Files.createParentDirs(file);
 
-        String data = saveToString();
+        final String data = saveToString();
 
-        FileWriter writer = new FileWriter(file);
+        final FileWriter writer = new FileWriter(file);
 
         try {
             writer.write(data);
@@ -65,7 +65,7 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      * @throws IOException Thrown when the given file cannot be written to for any reason.
      * @throws IllegalArgumentException Thrown when file is null.
      */
-    public void save(String file) throws IOException {
+    public void save(final String file) throws IOException {
         Validate.notNull(file, "File cannot be null");
 
         save(new File(file));
@@ -92,7 +92,7 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      * @throws InvalidConfigurationException Thrown when the given file is not a valid Configuration.
      * @throws IllegalArgumentException Thrown when file is null.
      */
-    public void load(File file) throws FileNotFoundException, IOException, InvalidConfigurationException {
+    public void load(final File file) throws FileNotFoundException, IOException, InvalidConfigurationException {
         Validate.notNull(file, "File cannot be null");
 
         load(new FileInputStream(file));
@@ -109,12 +109,12 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      * @throws InvalidConfigurationException Thrown when the given file is not a valid Configuration.
      * @throws IllegalArgumentException Thrown when stream is null.
      */
-    public void load(InputStream stream) throws IOException, InvalidConfigurationException {
+    public void load(final InputStream stream) throws IOException, InvalidConfigurationException {
         Validate.notNull(stream, "Stream cannot be null");
 
-        InputStreamReader reader = new InputStreamReader(stream);
-        StringBuilder builder = new StringBuilder();
-        BufferedReader input = new BufferedReader(reader);
+        final InputStreamReader reader = new InputStreamReader(stream);
+        final StringBuilder builder = new StringBuilder();
+        final BufferedReader input = new BufferedReader(reader);
 
 
         try {
@@ -145,7 +145,7 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      * @throws InvalidConfigurationException Thrown when the given file is not a valid Configuration.
      * @throws IllegalArgumentException Thrown when file is null.
      */
-    public void load(String file) throws FileNotFoundException, IOException, InvalidConfigurationException {
+    public void load(final String file) throws FileNotFoundException, IOException, InvalidConfigurationException {
         Validate.notNull(file, "File cannot be null");
 
         load(new File(file));

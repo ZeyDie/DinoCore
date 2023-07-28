@@ -5,12 +5,12 @@ import org.bukkit.entity.Creature;
 import org.bukkit.entity.LivingEntity;
 
 public class CraftCreature extends CraftLivingEntity implements Creature {
-    public CraftCreature(CraftServer server, net.minecraft.entity.EntityCreature entity) {
+    public CraftCreature(final CraftServer server, final net.minecraft.entity.EntityCreature entity) {
         super(server, entity);
     }
 
-    public void setTarget(LivingEntity target) {
-        net.minecraft.entity.EntityCreature entity = getHandle();
+    public void setTarget(final LivingEntity target) {
+        final net.minecraft.entity.EntityCreature entity = getHandle();
         if (target == null) {
             entity.entityToAttack = null;
         } else if (target instanceof CraftLivingEntity) {

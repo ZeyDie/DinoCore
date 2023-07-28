@@ -29,7 +29,7 @@ public class GuiScreenCreateOnlineWorld extends ScreenWithCallback
     private String field_96254_s = "You must enter a name!";
     private WorldTemplate field_110356_u;
 
-    public GuiScreenCreateOnlineWorld(GuiScreen par1GuiScreen)
+    public GuiScreenCreateOnlineWorld(final GuiScreen par1GuiScreen)
     {
         super.buttonList = Collections.synchronizedList(new ArrayList());
         this.field_96260_a = par1GuiScreen;
@@ -94,7 +94,7 @@ public class GuiScreenCreateOnlineWorld extends ScreenWithCallback
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
-    protected void actionPerformed(GuiButton par1GuiButton)
+    protected void actionPerformed(final GuiButton par1GuiButton)
     {
         if (par1GuiButton.enabled)
         {
@@ -117,8 +117,8 @@ public class GuiScreenCreateOnlineWorld extends ScreenWithCallback
     {
         if (this.func_96249_i())
         {
-            TaskWorldCreation taskworldcreation = new TaskWorldCreation(this, this.field_96257_c.getText(), "Minecraft Realms Server", this.field_98109_n, this.field_110356_u);
-            GuiScreenLongRunningTask guiscreenlongrunningtask = new GuiScreenLongRunningTask(this.mc, this.field_96260_a, taskworldcreation);
+            final TaskWorldCreation taskworldcreation = new TaskWorldCreation(this, this.field_96257_c.getText(), "Minecraft Realms Server", this.field_98109_n, this.field_110356_u);
+            final GuiScreenLongRunningTask guiscreenlongrunningtask = new GuiScreenLongRunningTask(this.mc, this.field_96260_a, taskworldcreation);
             guiscreenlongrunningtask.func_98117_g();
             this.mc.displayGuiScreen(guiscreenlongrunningtask);
         }
@@ -126,14 +126,14 @@ public class GuiScreenCreateOnlineWorld extends ScreenWithCallback
 
     private boolean func_96249_i()
     {
-        this.field_96256_r = this.field_96257_c.getText() == null || this.field_96257_c.getText().trim().equals("");
+        this.field_96256_r = this.field_96257_c.getText() == null || this.field_96257_c.getText().trim().isEmpty();
         return !this.field_96256_r;
     }
 
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(final char par1, final int par2)
     {
         this.field_96257_c.textboxKeyTyped(par1, par2);
         this.field_96255_b.textboxKeyTyped(par1, par2);
@@ -153,7 +153,7 @@ public class GuiScreenCreateOnlineWorld extends ScreenWithCallback
     /**
      * Called when the mouse is clicked.
      */
-    protected void mouseClicked(int par1, int par2, int par3)
+    protected void mouseClicked(final int par1, final int par2, final int par3)
     {
         super.mouseClicked(par1, par2, par3);
         this.field_96257_c.mouseClicked(par1, par2, par3);
@@ -163,7 +163,7 @@ public class GuiScreenCreateOnlineWorld extends ScreenWithCallback
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int par1, int par2, float par3)
+    public void drawScreen(final int par1, final int par2, final float par3)
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRenderer, I18n.getString("mco.selectServer.create"), this.width / 2, 11, 16777215);
@@ -180,42 +180,42 @@ public class GuiScreenCreateOnlineWorld extends ScreenWithCallback
         super.drawScreen(par1, par2, par3);
     }
 
-    public void func_110355_a(WorldTemplate par1WorldTemplate)
+    public void func_110355_a(final WorldTemplate par1WorldTemplate)
     {
         this.field_110356_u = par1WorldTemplate;
     }
 
-    public void func_110354_a(Object par1Obj)
+    public void func_110354_a(final Object par1Obj)
     {
         this.func_110355_a((WorldTemplate)par1Obj);
     }
 
-    static Minecraft func_96248_a(GuiScreenCreateOnlineWorld par0GuiScreenCreateOnlineWorld)
+    static Minecraft func_96248_a(final GuiScreenCreateOnlineWorld par0GuiScreenCreateOnlineWorld)
     {
         return par0GuiScreenCreateOnlineWorld.mc;
     }
 
-    static GuiScreen func_96247_b(GuiScreenCreateOnlineWorld par0GuiScreenCreateOnlineWorld)
+    static GuiScreen func_96247_b(final GuiScreenCreateOnlineWorld par0GuiScreenCreateOnlineWorld)
     {
         return par0GuiScreenCreateOnlineWorld.field_96260_a;
     }
 
-    static Minecraft func_96246_c(GuiScreenCreateOnlineWorld par0GuiScreenCreateOnlineWorld)
+    static Minecraft func_96246_c(final GuiScreenCreateOnlineWorld par0GuiScreenCreateOnlineWorld)
     {
         return par0GuiScreenCreateOnlineWorld.mc;
     }
 
-    static Minecraft func_130026_d(GuiScreenCreateOnlineWorld par0GuiScreenCreateOnlineWorld)
+    static Minecraft func_130026_d(final GuiScreenCreateOnlineWorld par0GuiScreenCreateOnlineWorld)
     {
         return par0GuiScreenCreateOnlineWorld.mc;
     }
 
-    static Minecraft func_130027_e(GuiScreenCreateOnlineWorld par0GuiScreenCreateOnlineWorld)
+    static Minecraft func_130027_e(final GuiScreenCreateOnlineWorld par0GuiScreenCreateOnlineWorld)
     {
         return par0GuiScreenCreateOnlineWorld.mc;
     }
 
-    static Minecraft func_130028_f(GuiScreenCreateOnlineWorld par0GuiScreenCreateOnlineWorld)
+    static Minecraft func_130028_f(final GuiScreenCreateOnlineWorld par0GuiScreenCreateOnlineWorld)
     {
         return par0GuiScreenCreateOnlineWorld.mc;
     }

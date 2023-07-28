@@ -51,11 +51,11 @@ public class SpigotTimings {
      * @param period
      * @return
      */
-    public static CustomTimingsHandler getPluginTaskTimings(BukkitTask task, long period) {
+    public static CustomTimingsHandler getPluginTaskTimings(final BukkitTask task, final long period) {
         if (!task.isSync()) {
             return null;
         }
-        String plugin;
+        final String plugin;
         final CraftTask ctask = (CraftTask) task;
 
         if (task.getOwner() != null) {
@@ -65,7 +65,7 @@ public class SpigotTimings {
         } else {
             plugin = "Unknown";
         }
-        String taskname = ctask.getTaskName();
+        final String taskname = ctask.getTaskName();
 
         String name = "Task: " + plugin + " Runnable: " + taskname;
         if (period > 0) {
@@ -86,8 +86,8 @@ public class SpigotTimings {
      * @param entity
      * @return
      */
-    public static CustomTimingsHandler getEntityTimings(Entity entity) {
-        String entityType = entity.getClass().getSimpleName();
+    public static CustomTimingsHandler getEntityTimings(final Entity entity) {
+        final String entityType = entity.getClass().getSimpleName();
         CustomTimingsHandler result = entityTypeTimingMap.get(entityType);
         if (result == null) {
             result = new CustomTimingsHandler("** tickEntity - " + entityType, activatedEntityTimer);
@@ -101,8 +101,8 @@ public class SpigotTimings {
      * @param entity
      * @return
      */
-    public static CustomTimingsHandler getTileEntityTimings(TileEntity entity) {
-        String entityType = entity.getClass().getSimpleName();
+    public static CustomTimingsHandler getTileEntityTimings(final TileEntity entity) {
+        final String entityType = entity.getClass().getSimpleName();
         CustomTimingsHandler result = tileEntityTypeTimingMap.get(entityType);
         if (result == null) {
             result = new CustomTimingsHandler("** tickTileEntity - " + entityType, tickTileEntityTimer);
@@ -139,8 +139,8 @@ public class SpigotTimings {
         public final CustomTimingsHandler syncChunkLoadTileTicksTimer;
         public final CustomTimingsHandler syncChunkLoadPostTimer;
 
-        public WorldTimingsHandler(World server) {
-            String name = server.worldInfo.getWorldName() +" - ";
+        public WorldTimingsHandler(final World server) {
+            final String name = server.worldInfo.getWorldName() +" - ";
 
             mobSpawn = new CustomTimingsHandler("** " + name + "mobSpawn");
             doChunkUnload = new CustomTimingsHandler("** " + name + "doChunkUnload");

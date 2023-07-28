@@ -18,23 +18,23 @@ final class DispenserBehaviorFireball extends BehaviorDefaultDispenseItem
     /**
      * Dispense the specified stack, play the dispense sound and spawn particles.
      */
-    public ItemStack dispenseStack(IBlockSource par1IBlockSource, ItemStack par2ItemStack)
+    public ItemStack dispenseStack(final IBlockSource par1IBlockSource, final ItemStack par2ItemStack)
     {
-        EnumFacing enumfacing = BlockDispenser.getFacing(par1IBlockSource.getBlockMetadata());
-        IPosition iposition = BlockDispenser.getIPositionFromBlockSource(par1IBlockSource);
-        double d0 = iposition.getX() + (double)((float)enumfacing.getFrontOffsetX() * 0.3F);
-        double d1 = iposition.getY() + (double)((float)enumfacing.getFrontOffsetX() * 0.3F);
-        double d2 = iposition.getZ() + (double)((float)enumfacing.getFrontOffsetZ() * 0.3F);
-        World world = par1IBlockSource.getWorld();
-        Random random = world.rand;
-        double d3 = random.nextGaussian() * 0.05D + (double)enumfacing.getFrontOffsetX();
-        double d4 = random.nextGaussian() * 0.05D + (double)enumfacing.getFrontOffsetY();
-        double d5 = random.nextGaussian() * 0.05D + (double)enumfacing.getFrontOffsetZ();
+        final EnumFacing enumfacing = BlockDispenser.getFacing(par1IBlockSource.getBlockMetadata());
+        final IPosition iposition = BlockDispenser.getIPositionFromBlockSource(par1IBlockSource);
+        final double d0 = iposition.getX() + (double)((float)enumfacing.getFrontOffsetX() * 0.3F);
+        final double d1 = iposition.getY() + (double)((float)enumfacing.getFrontOffsetX() * 0.3F);
+        final double d2 = iposition.getZ() + (double)((float)enumfacing.getFrontOffsetZ() * 0.3F);
+        final World world = par1IBlockSource.getWorld();
+        final Random random = world.rand;
+        final double d3 = random.nextGaussian() * 0.05D + (double)enumfacing.getFrontOffsetX();
+        final double d4 = random.nextGaussian() * 0.05D + (double)enumfacing.getFrontOffsetY();
+        final double d5 = random.nextGaussian() * 0.05D + (double)enumfacing.getFrontOffsetZ();
         // CraftBukkit start
-        ItemStack itemstack1 = par2ItemStack.splitStack(1);
-        org.bukkit.block.Block block = world.getWorld().getBlockAt(par1IBlockSource.getXInt(), par1IBlockSource.getYInt(), par1IBlockSource.getZInt());
-        CraftItemStack craftItem = CraftItemStack.asCraftMirror(itemstack1);
-        BlockDispenseEvent event = new BlockDispenseEvent(block, craftItem.clone(), new org.bukkit.util.Vector(d3, d4, d5));
+        final ItemStack itemstack1 = par2ItemStack.splitStack(1);
+        final org.bukkit.block.Block block = world.getWorld().getBlockAt(par1IBlockSource.getXInt(), par1IBlockSource.getYInt(), par1IBlockSource.getZInt());
+        final CraftItemStack craftItem = CraftItemStack.asCraftMirror(itemstack1);
+        final BlockDispenseEvent event = new BlockDispenseEvent(block, craftItem.clone(), new org.bukkit.util.Vector(d3, d4, d5));
 
         if (!BlockDispenser.eventFired)
         {
@@ -51,8 +51,8 @@ final class DispenserBehaviorFireball extends BehaviorDefaultDispenseItem
         {
             par2ItemStack.stackSize++;
             // Chain to handler for new item
-            ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-            IBehaviorDispenseItem ibehaviordispenseitem = (IBehaviorDispenseItem) BlockDispenser.dispenseBehaviorRegistry.getObject(eventStack.getItem());
+            final ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
+            final IBehaviorDispenseItem ibehaviordispenseitem = (IBehaviorDispenseItem) BlockDispenser.dispenseBehaviorRegistry.getObject(eventStack.getItem());
 
             if (ibehaviordispenseitem != IBehaviorDispenseItem.itemDispenseBehaviorProvider && ibehaviordispenseitem != this)
             {
@@ -70,7 +70,7 @@ final class DispenserBehaviorFireball extends BehaviorDefaultDispenseItem
     /**
      * Play the dispense sound from the specified block.
      */
-    protected void playDispenseSound(IBlockSource par1IBlockSource)
+    protected void playDispenseSound(final IBlockSource par1IBlockSource)
     {
         par1IBlockSource.getWorld().playAuxSFX(1009, par1IBlockSource.getXInt(), par1IBlockSource.getYInt(), par1IBlockSource.getZInt(), 0);
     }

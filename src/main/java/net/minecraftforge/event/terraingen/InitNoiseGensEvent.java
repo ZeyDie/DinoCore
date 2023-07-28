@@ -12,7 +12,7 @@ public class InitNoiseGensEvent extends WorldEvent
     public final NoiseGeneratorOctaves[] originalNoiseGens;
     public NoiseGeneratorOctaves[] newNoiseGens;
     
-    public InitNoiseGensEvent(World world, Random rand, NoiseGeneratorOctaves[] original)
+    public InitNoiseGensEvent(final World world, final Random rand, final NoiseGeneratorOctaves[] original)
     {
         super(world);
         this.rand = rand;

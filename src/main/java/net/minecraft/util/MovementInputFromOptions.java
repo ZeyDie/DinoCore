@@ -9,7 +9,7 @@ public class MovementInputFromOptions extends MovementInput
 {
     private GameSettings gameSettings;
 
-    public MovementInputFromOptions(GameSettings par1GameSettings)
+    public MovementInputFromOptions(final GameSettings par1GameSettings)
     {
         this.gameSettings = par1GameSettings;
     }

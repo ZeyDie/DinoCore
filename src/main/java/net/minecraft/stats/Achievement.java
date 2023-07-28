@@ -47,17 +47,17 @@ public class Achievement extends StatBase
      */
     private boolean isSpecial;
 
-    public Achievement(int par1, String par2Str, int par3, int par4, Item par5Item, Achievement par6Achievement)
+    public Achievement(final int par1, final String par2Str, final int par3, final int par4, final Item par5Item, final Achievement par6Achievement)
     {
         this(par1, par2Str, par3, par4, new ItemStack(par5Item), par6Achievement);
     }
 
-    public Achievement(int par1, String par2Str, int par3, int par4, Block par5Block, Achievement par6Achievement)
+    public Achievement(final int par1, final String par2Str, final int par3, final int par4, final Block par5Block, final Achievement par6Achievement)
     {
         this(par1, par2Str, par3, par4, new ItemStack(par5Block), par6Achievement);
     }
 
-    public Achievement(int par1, String par2Str, int par3, int par4, ItemStack par5ItemStack, Achievement par6Achievement)
+    public Achievement(final int par1, final String par2Str, final int par3, final int par4, final ItemStack par5ItemStack, final Achievement par6Achievement)
     {
         super(5242880 + par1, "achievement." + par2Str);
         this.theItemStack = par5ItemStack;
@@ -143,7 +143,7 @@ public class Achievement extends StatBase
     /**
      * Defines a string formatter for the achievement.
      */
-    public Achievement setStatStringFormatter(IStatStringFormat par1IStatStringFormat)
+    public Achievement setStatStringFormatter(final IStatStringFormat par1IStatStringFormat)
     {
         this.statStringFormatter = par1IStatStringFormat;
         return this;

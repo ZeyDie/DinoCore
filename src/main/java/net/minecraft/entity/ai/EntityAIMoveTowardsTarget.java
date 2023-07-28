@@ -18,7 +18,7 @@ public class EntityAIMoveTowardsTarget extends EntityAIBase
      */
     private float maxTargetDistance;
 
-    public EntityAIMoveTowardsTarget(EntityCreature par1EntityCreature, double par2, float par4)
+    public EntityAIMoveTowardsTarget(final EntityCreature par1EntityCreature, final double par2, final float par4)
     {
         this.theEntity = par1EntityCreature;
         this.speed = par2;
@@ -43,7 +43,7 @@ public class EntityAIMoveTowardsTarget extends EntityAIBase
         }
         else
         {
-            Vec3 vec3 = RandomPositionGenerator.findRandomTargetBlockTowards(this.theEntity, 16, 7, this.theEntity.worldObj.getWorldVec3Pool().getVecFromPool(this.targetEntity.posX, this.targetEntity.posY, this.targetEntity.posZ));
+            final Vec3 vec3 = RandomPositionGenerator.findRandomTargetBlockTowards(this.theEntity, 16, 7, this.theEntity.worldObj.getWorldVec3Pool().getVecFromPool(this.targetEntity.posX, this.targetEntity.posY, this.targetEntity.posZ));
 
             if (vec3 == null)
             {

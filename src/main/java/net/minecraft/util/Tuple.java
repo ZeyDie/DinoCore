@@ -8,7 +8,7 @@ public class Tuple
     /** Second Object in the Tuple */
     private Object second;
 
-    public Tuple(Object par1Obj, Object par2Obj)
+    public Tuple(final Object par1Obj, final Object par2Obj)
     {
         this.first = par1Obj;
         this.second = par2Obj;

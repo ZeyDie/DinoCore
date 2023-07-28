@@ -7,7 +7,7 @@ import net.minecraft.world.storage.MapData;
 
 public class ItemEmptyMap extends ItemMapBase
 {
-    protected ItemEmptyMap(int par1)
+    protected ItemEmptyMap(final int par1)
     {
         super(par1);
         this.setCreativeTab(CreativeTabs.tabMisc);
@@ -16,14 +16,14 @@ public class ItemEmptyMap extends ItemMapBase
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer)
     {
-        ItemStack itemstack1 = new ItemStack(Item.map, 1, par2World.getUniqueDataId("map"));
-        String s = "map_" + itemstack1.getItemDamage();
-        MapData mapdata = new MapData(s);
+        final ItemStack itemstack1 = new ItemStack(Item.map, 1, par2World.getUniqueDataId("map"));
+        final String s = "map_" + itemstack1.getItemDamage();
+        final MapData mapdata = new MapData(s);
         par2World.setItemData(s, mapdata);
         mapdata.scale = 0;
-        int i = 128 * (1 << mapdata.scale);
+        final int i = 128 * (1 << mapdata.scale);
         mapdata.xCenter = (int)(Math.round(par3EntityPlayer.posX / (double)i) * (long)i);
         mapdata.zCenter = (int)(Math.round(par3EntityPlayer.posZ / (double)i) * (long)i);
         mapdata.dimension = (byte)par2World.provider.dimensionId;

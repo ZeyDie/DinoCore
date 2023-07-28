@@ -22,7 +22,7 @@ public class ThreadLanServerFind extends Thread
     /** The socket we're using to receive packets on. */
     private final MulticastSocket socket;
 
-    public ThreadLanServerFind(LanServerList par1LanServerList) throws IOException
+    public ThreadLanServerFind(final LanServerList par1LanServerList) throws IOException
     {
         super("LanServerDetector");
         this.localServerList = par1LanServerList;
@@ -35,27 +35,27 @@ public class ThreadLanServerFind extends Thread
 
     public void run()
     {
-        byte[] abyte = new byte[1024];
+        final byte[] abyte = new byte[1024];
 
         while (!this.isInterrupted())
         {
-            DatagramPacket datagrampacket = new DatagramPacket(abyte, abyte.length);
+            final DatagramPacket datagrampacket = new DatagramPacket(abyte, abyte.length);
 
             try
             {
                 this.socket.receive(datagrampacket);
             }
-            catch (SocketTimeoutException sockettimeoutexception)
+            catch (final SocketTimeoutException sockettimeoutexception)
             {
                 continue;
             }
-            catch (IOException ioexception)
+            catch (final IOException ioexception)
             {
                 ioexception.printStackTrace();
                 break;
             }
 
-            String s = new String(datagrampacket.getData(), datagrampacket.getOffset(), datagrampacket.getLength());
+            final String s = new String(datagrampacket.getData(), datagrampacket.getOffset(), datagrampacket.getLength());
             Minecraft.getMinecraft().getLogAgent().logFine(datagrampacket.getAddress() + ": " + s);
             this.localServerList.func_77551_a(s, datagrampacket.getAddress());
         }
@@ -64,7 +64,7 @@ public class ThreadLanServerFind extends Thread
         {
             this.socket.leaveGroup(this.broadcastAddress);
         }
-        catch (IOException ioexception1)
+        catch (final IOException ioexception1)
         {
             ;
         }

@@ -29,12 +29,12 @@ public class CommandServerMessage extends CommandBase
         return 0;
     }
 
-    public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandUsage(final ICommandSender par1ICommandSender)
     {
         return "commands.message.usage";
     }
 
-    public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public void processCommand(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         if (par2ArrayOfStr.length < 2)
         {
@@ -42,7 +42,7 @@ public class CommandServerMessage extends CommandBase
         }
         else
         {
-            EntityPlayerMP entityplayermp = getPlayer(par1ICommandSender, par2ArrayOfStr[0]);
+            final EntityPlayerMP entityplayermp = getPlayer(par1ICommandSender, par2ArrayOfStr[0]);
 
             if (entityplayermp == null)
             {
@@ -54,7 +54,7 @@ public class CommandServerMessage extends CommandBase
             }
             else
             {
-                String s = func_82361_a(par1ICommandSender, par2ArrayOfStr, 1, !(par1ICommandSender instanceof EntityPlayer));
+                final String s = func_82361_a(par1ICommandSender, par2ArrayOfStr, 1, !(par1ICommandSender instanceof EntityPlayer));
                 entityplayermp.sendChatToPlayer(ChatMessageComponent.createFromTranslationWithSubstitutions("commands.message.display.incoming", new Object[] {par1ICommandSender.getCommandSenderName(), s}).setColor(EnumChatFormatting.GRAY).setItalic(Boolean.valueOf(true)));
                 par1ICommandSender.sendChatToPlayer(ChatMessageComponent.createFromTranslationWithSubstitutions("commands.message.display.outgoing", new Object[] {entityplayermp.getCommandSenderName(), s}).setColor(EnumChatFormatting.GRAY).setItalic(Boolean.valueOf(true)));
             }
@@ -64,7 +64,7 @@ public class CommandServerMessage extends CommandBase
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      */
-    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    public List addTabCompletionOptions(final ICommandSender par1ICommandSender, final String[] par2ArrayOfStr)
     {
         return getListOfStringsMatchingLastWord(par2ArrayOfStr, MinecraftServer.getServer().getAllUsernames());
     }
@@ -72,7 +72,7 @@ public class CommandServerMessage extends CommandBase
     /**
      * Return whether the specified command parameter index is a username parameter.
      */
-    public boolean isUsernameIndex(String[] par1ArrayOfStr, int par2)
+    public boolean isUsernameIndex(final String[] par1ArrayOfStr, final int par2)
     {
         return par2 == 0;
     }

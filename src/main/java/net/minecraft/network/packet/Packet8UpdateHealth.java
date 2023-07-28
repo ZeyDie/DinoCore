@@ -17,7 +17,7 @@ public class Packet8UpdateHealth extends Packet
 
     public Packet8UpdateHealth() {}
 
-    public Packet8UpdateHealth(float par1, int par2, float par3)
+    public Packet8UpdateHealth(final float par1, final int par2, final float par3)
     {
         this.healthMP = par1;
         this.food = par2;
@@ -27,7 +27,7 @@ public class Packet8UpdateHealth extends Packet
     /**
      * Abstract. Reads the raw packet data from the data stream.
      */
-    public void readPacketData(DataInput par1DataInput) throws IOException
+    public void readPacketData(final DataInput par1DataInput) throws IOException
     {
         this.healthMP = par1DataInput.readFloat();
         this.food = par1DataInput.readShort();
@@ -37,7 +37,7 @@ public class Packet8UpdateHealth extends Packet
     /**
      * Abstract. Writes the raw packet data to the data stream.
      */
-    public void writePacketData(DataOutput par1DataOutput) throws IOException
+    public void writePacketData(final DataOutput par1DataOutput) throws IOException
     {
         par1DataOutput.writeFloat(this.healthMP);
         par1DataOutput.writeShort(this.food);
@@ -47,7 +47,7 @@ public class Packet8UpdateHealth extends Packet
     /**
      * Passes this Packet on to the NetHandler for processing.
      */
-    public void processPacket(NetHandler par1NetHandler)
+    public void processPacket(final NetHandler par1NetHandler)
     {
         par1NetHandler.handleUpdateHealth(this);
     }
@@ -72,7 +72,7 @@ public class Packet8UpdateHealth extends Packet
      * eg return packet30entity.entityId == entityId; WARNING : will throw if you compare a packet to a different packet
      * class
      */
-    public boolean containsSameEntityIDAs(Packet par1Packet)
+    public boolean containsSameEntityIDAs(final Packet par1Packet)
     {
         return true;
     }

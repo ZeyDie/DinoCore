@@ -165,7 +165,7 @@ public class CodecIBXM implements ICodec
  * will call the reverseByteOrder() method.
  * @param b True if the calling audio library requires byte-reversal.
  */
-    public void reverseByteOrder( boolean b )
+    public void reverseByteOrder(final boolean b )
     {
         reverseBytes = b;
     }
@@ -176,7 +176,7 @@ public class CodecIBXM implements ICodec
  * @param url URL to an audio file to stream from.
  * @return False if an error occurred or if end of stream was reached.
  */
-    public boolean initialize( URL url )
+    public boolean initialize(final URL url )
     {
         initialized( SET, false );
         cleanup();
@@ -194,7 +194,7 @@ public class CodecIBXM implements ICodec
         {
             is = url.openStream();
         }
-        catch( IOException ioe )
+        catch( final IOException ioe )
         {
             errorMessage( "Unable to open stream in method 'initialize'" );
             printStackTrace( ioe );
@@ -210,7 +210,7 @@ public class CodecIBXM implements ICodec
         {
             setModule( loadModule( is ) );
         }
-        catch( IllegalArgumentException iae )
+        catch( final IllegalArgumentException iae )
         {
             errorMessage( "Illegal argument in method 'initialize'" );
             printStackTrace( iae );
@@ -220,12 +220,12 @@ public class CodecIBXM implements ICodec
                 {
                     is.close();
                 }
-                catch( IOException ioe )
+                catch( final IOException ioe )
                 {}
             }
             return false;
         }
-        catch( IOException ioe )
+        catch( final IOException ioe )
         {
             errorMessage( "Error loading module in method 'initialize'" );
             printStackTrace( ioe );
@@ -235,7 +235,7 @@ public class CodecIBXM implements ICodec
                 {
                     is.close();
                 }
-                catch( IOException ioe2 )
+                catch( final IOException ioe2 )
                 {}
             }
             return false;
@@ -247,7 +247,7 @@ public class CodecIBXM implements ICodec
             {
                 is.close();
             }
-            catch( IOException ioe )
+            catch( final IOException ioe )
             {}
         }
 
@@ -289,7 +289,7 @@ public class CodecIBXM implements ICodec
             return null;
         }
 
-        int bufferFrameSize = (int) SoundSystemConfig.getStreamingBufferSize()
+        final int bufferFrameSize = (int) SoundSystemConfig.getStreamingBufferSize()
                                     / 4;
 
         int frames = songDuration - playPosition;
@@ -301,7 +301,7 @@ public class CodecIBXM implements ICodec
             endOfStream( SET, true );
             return null;
         }
-		byte[] outputBuffer = new byte[ frames * 4 ];
+		final byte[] outputBuffer = new byte[ frames * 4 ];
 
         ibxm.get_audio( outputBuffer, frames );
 
@@ -316,7 +316,7 @@ public class CodecIBXM implements ICodec
             reverseBytes( outputBuffer, 0, frames * 4 );
 
         // Wrap the data into a SoundBuffer:
-        SoundBuffer buffer = new SoundBuffer( outputBuffer, myAudioFormat );
+        final SoundBuffer buffer = new SoundBuffer( outputBuffer, myAudioFormat );
 
         return buffer;
     }
@@ -343,10 +343,10 @@ public class CodecIBXM implements ICodec
             return null;
         }
 
-        int bufferFrameSize = (int) SoundSystemConfig.getFileChunkSize()
+        final int bufferFrameSize = (int) SoundSystemConfig.getFileChunkSize()
                                     / 4;
 
-		byte[] outputBuffer = new byte[ bufferFrameSize * 4 ];
+		final byte[] outputBuffer = new byte[ bufferFrameSize * 4 ];
 
         // Buffer to contain the audio data:
         byte[] fullBuffer = null;
@@ -379,7 +379,7 @@ public class CodecIBXM implements ICodec
             reverseBytes( fullBuffer, 0, totalBytes );
 
         // Wrap the data into a SoundBuffer:
-        SoundBuffer buffer = new SoundBuffer( fullBuffer, myAudioFormat );
+        final SoundBuffer buffer = new SoundBuffer( fullBuffer, myAudioFormat );
 
         return buffer;
     }
@@ -419,26 +419,26 @@ public class CodecIBXM implements ICodec
  * @param input an InputStream containing the module file to be decoded.
  * @throws IllegalArgumentException if the data is not recognised as a module file.
  */
-    private static Module loadModule( InputStream input )
+    private static Module loadModule(final InputStream input )
                                     throws IllegalArgumentException, IOException
     {
-        DataInputStream data_input_stream = new DataInputStream( input );
+        final DataInputStream data_input_stream = new DataInputStream( input );
 
         // Check if data is in XM format:
-        byte[] xm_header = new byte[ 60 ];
+        final byte[] xm_header = new byte[ 60 ];
         data_input_stream.readFully( xm_header );
         if( FastTracker2.is_xm( xm_header ) )
             return FastTracker2.load_xm( xm_header, data_input_stream );
 
         // Check if data is in ScreamTracker 3 format:
-        byte[] s3m_header = new byte[ 96 ];
+        final byte[] s3m_header = new byte[ 96 ];
         System.arraycopy( xm_header, 0, s3m_header, 0, 60 );
         data_input_stream.readFully( s3m_header, 60, 36 );
         if( ScreamTracker3.is_s3m( s3m_header ) )
             return ScreamTracker3.load_s3m( s3m_header, data_input_stream );
 
         // Check if data is in ProTracker format:
-        byte[] mod_header = new byte[ 1084 ];
+        final byte[] mod_header = new byte[ 1084 ];
         System.arraycopy( s3m_header, 0, mod_header, 0, 96 );
         data_input_stream.readFully( mod_header, 96, 988 );
         return ProTracker.load_mod( mod_header, data_input_stream );
@@ -447,7 +447,7 @@ public class CodecIBXM implements ICodec
 /**
  * Sets the Module instance to be played.
  */
-    private void setModule( Module m )
+    private void setModule(final Module m )
     {
         if( m != null )
             module = m;
@@ -461,7 +461,7 @@ public class CodecIBXM implements ICodec
  * @param value New value if action == SET, or XXX if action == GET.
  * @return True if steam is initialized.
  */
-    private synchronized boolean initialized( boolean action, boolean value )
+    private synchronized boolean initialized(final boolean action, final boolean value )
     {
         if( action == SET )
             initialized = value;
@@ -474,7 +474,7 @@ public class CodecIBXM implements ICodec
  * @param value New value if action == SET, or XXX if action == GET.
  * @return True if end of stream was reached.
  */
-    private synchronized boolean endOfStream( boolean action, boolean value )
+    private synchronized boolean endOfStream(final boolean action, final boolean value )
     {
         if( action == SET )
             endOfStream = value;
@@ -488,7 +488,7 @@ public class CodecIBXM implements ICodec
  * @param maxLength Maximum size this array may be.
  * @return New array.
  */
-    private static byte[] trimArray( byte[] array, int maxLength )
+    private static byte[] trimArray(final byte[] array, final int maxLength )
     {
         byte[] trimmedArray = null;
         if( array != null && array.length > maxLength )
@@ -503,7 +503,7 @@ public class CodecIBXM implements ICodec
  * Reverse-orders all bytes contained in the specified array.
  * @param buffer Array containing audio data.
  */
-    public static void reverseBytes( byte[] buffer )
+    public static void reverseBytes(final byte[] buffer )
     {
         reverseBytes( buffer, 0, buffer.length );
     }
@@ -514,7 +514,7 @@ public class CodecIBXM implements ICodec
  * @param offset Array index to begin.
  * @param size number of bytes to reverse-order.
  */
-    public static void reverseBytes( byte[] buffer, int offset, int size )
+    public static void reverseBytes(final byte[] buffer, final int offset, final int size )
     {
 
         byte b;
@@ -532,17 +532,17 @@ public class CodecIBXM implements ICodec
  * @param two_bytes_data For stereo sounds.
  * @return byte array containing the converted data.
  */
-    private static byte[] convertAudioBytes( byte[] audio_bytes,
-                                             boolean two_bytes_data )
+    private static byte[] convertAudioBytes(final byte[] audio_bytes,
+                                            final boolean two_bytes_data )
     {
-        ByteBuffer dest = ByteBuffer.allocateDirect( audio_bytes.length );
+        final ByteBuffer dest = ByteBuffer.allocateDirect( audio_bytes.length );
         dest.order( ByteOrder.nativeOrder() );
-        ByteBuffer src = ByteBuffer.wrap( audio_bytes );
+        final ByteBuffer src = ByteBuffer.wrap( audio_bytes );
         src.order( ByteOrder.LITTLE_ENDIAN );
         if( two_bytes_data )
         {
-            ShortBuffer dest_short = dest.asShortBuffer();
-            ShortBuffer src_short = src.asShortBuffer();
+            final ShortBuffer dest_short = dest.asShortBuffer();
+            final ShortBuffer src_short = src.asShortBuffer();
             while( src_short.hasRemaining() )
             {
                 dest_short.put(src_short.get());
@@ -559,7 +559,7 @@ public class CodecIBXM implements ICodec
 
         if( !dest.hasArray() )
         {
-            byte[] arrayBackedBuffer = new byte[dest.capacity()];
+            final byte[] arrayBackedBuffer = new byte[dest.capacity()];
             dest.get( arrayBackedBuffer );
             dest.clear();
 
@@ -577,41 +577,43 @@ public class CodecIBXM implements ICodec
  * @param length How many bytes to append from the second array.
  * @return Byte array containing information from both arrays.
  */
-    private static byte[] appendByteArrays( byte[] arrayOne, byte[] arrayTwo,
-                                            int length )
+    private static byte[] appendByteArrays(byte[] arrayOne, byte[] arrayTwo,
+                                           final int length )
     {
-        byte[] newArray;
-        if( arrayOne == null && arrayTwo == null )
+        byte[] arrayOne1 = arrayOne;
+        byte[] arrayTwo1 = arrayTwo;
+        final byte[] newArray;
+        if( arrayOne1 == null && arrayTwo1 == null )
         {
             // no data, just return
             return null;
         }
-        else if( arrayOne == null )
+        else if( arrayOne1 == null )
         {
             // create the new array, same length as arrayTwo:
             newArray = new byte[ length ];
             // fill the new array with the contents of arrayTwo:
-            System.arraycopy( arrayTwo, 0, newArray, 0, length );
-            arrayTwo = null;
+            System.arraycopy(arrayTwo1, 0, newArray, 0, length );
+            arrayTwo1 = null;
         }
-        else if( arrayTwo == null )
+        else if( arrayTwo1 == null )
         {
             // create the new array, same length as arrayOne:
-            newArray = new byte[ arrayOne.length ];
+            newArray = new byte[ arrayOne1.length ];
             // fill the new array with the contents of arrayOne:
-            System.arraycopy( arrayOne, 0, newArray, 0, arrayOne.length );
-            arrayOne = null;
+            System.arraycopy(arrayOne1, 0, newArray, 0, arrayOne1.length );
+            arrayOne1 = null;
         }
         else
         {
             // create the new array large enough to hold both arrays:
-            newArray = new byte[ arrayOne.length + length ];
-            System.arraycopy( arrayOne, 0, newArray, 0, arrayOne.length );
+            newArray = new byte[ arrayOne1.length + length ];
+            System.arraycopy(arrayOne1, 0, newArray, 0, arrayOne1.length );
             // fill the new array with the contents of both arrays:
-            System.arraycopy( arrayTwo, 0, newArray, arrayOne.length,
+            System.arraycopy(arrayTwo1, 0, newArray, arrayOne1.length,
                               length );
-            arrayOne = null;
-            arrayTwo = null;
+            arrayOne1 = null;
+            arrayTwo1 = null;
         }
 
         return newArray;
@@ -621,7 +623,7 @@ public class CodecIBXM implements ICodec
  * Prints an error message.
  * @param message Message to print.
  */
-    private void errorMessage( String message )
+    private void errorMessage(final String message )
     {
         logger.errorMessage( "CodecWav", message, 0 );
     }
@@ -630,7 +632,7 @@ public class CodecIBXM implements ICodec
  * Prints an exception's error message followed by the stack trace.
  * @param e Exception containing the information to print.
  */
-    private void printStackTrace( Exception e )
+    private void printStackTrace(final Exception e )
     {
         logger.printStackTrace( e, 1 );
     }

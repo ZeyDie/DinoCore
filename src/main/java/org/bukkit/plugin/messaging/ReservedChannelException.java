@@ -9,7 +9,7 @@ public class ReservedChannelException extends RuntimeException {
         this("Attempted to register for a reserved channel name.");
     }
 
-    public ReservedChannelException(String name) {
+    public ReservedChannelException(final String name) {
         super("Attempted to register for a reserved channel name ('" + name + "')");
     }
 }

@@ -29,7 +29,7 @@ public class PlayerJoinEvent extends PlayerEvent {
      *
      * @param joinMessage join message
      */
-    public void setJoinMessage(String joinMessage) {
+    public void setJoinMessage(final String joinMessage) {
         this.joinMessage = joinMessage;
     }
 

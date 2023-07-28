@@ -20,7 +20,7 @@ public class EntityLargeExplodeFX extends EntityFX
     private TextureManager theRenderEngine;
     private float field_70582_as;
 
-    public EntityLargeExplodeFX(TextureManager par1TextureManager, World par2World, double par3, double par5, double par7, double par9, double par11, double par13)
+    public EntityLargeExplodeFX(final TextureManager par1TextureManager, final World par2World, final double par3, final double par5, final double par7, final double par9, final double par11, final double par13)
     {
         super(par2World, par3, par5, par7, 0.0D, 0.0D, 0.0D);
         this.theRenderEngine = par1TextureManager;
@@ -29,21 +29,21 @@ public class EntityLargeExplodeFX extends EntityFX
         this.field_70582_as = 1.0F - (float)par9 * 0.5F;
     }
 
-    public void renderParticle(Tessellator par1Tessellator, float par2, float par3, float par4, float par5, float par6, float par7)
+    public void renderParticle(final Tessellator par1Tessellator, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7)
     {
-        int i = (int)(((float)this.field_70581_a + par2) * 15.0F / (float)this.field_70584_aq);
+        final int i = (int)(((float)this.field_70581_a + par2) * 15.0F / (float)this.field_70584_aq);
 
         if (i <= 15)
         {
             this.theRenderEngine.bindTexture(field_110127_a);
-            float f6 = (float)(i % 4) / 4.0F;
-            float f7 = f6 + 0.24975F;
-            float f8 = (float)(i / 4) / 4.0F;
-            float f9 = f8 + 0.24975F;
-            float f10 = 2.0F * this.field_70582_as;
-            float f11 = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)par2 - interpPosX);
-            float f12 = (float)(this.prevPosY + (this.posY - this.prevPosY) * (double)par2 - interpPosY);
-            float f13 = (float)(this.prevPosZ + (this.posZ - this.prevPosZ) * (double)par2 - interpPosZ);
+            final float f6 = (float)(i % 4) / 4.0F;
+            final float f7 = f6 + 0.24975F;
+            final float f8 = (float)(i / 4) / 4.0F;
+            final float f9 = f8 + 0.24975F;
+            final float f10 = 2.0F * this.field_70582_as;
+            final float f11 = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)par2 - interpPosX);
+            final float f12 = (float)(this.prevPosY + (this.posY - this.prevPosY) * (double)par2 - interpPosY);
+            final float f13 = (float)(this.prevPosZ + (this.posZ - this.prevPosZ) * (double)par2 - interpPosZ);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             GL11.glDisable(GL11.GL_LIGHTING);
             RenderHelper.disableStandardItemLighting();
@@ -61,7 +61,7 @@ public class EntityLargeExplodeFX extends EntityFX
         }
     }
 
-    public int getBrightnessForRender(float par1)
+    public int getBrightnessForRender(final float par1)
     {
         return 61680;
     }

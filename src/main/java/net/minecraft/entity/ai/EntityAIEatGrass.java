@@ -18,7 +18,7 @@ public class EntityAIEatGrass extends EntityAIBase
     /** A decrementing tick used for the sheep's head offset and animation. */
     int eatGrassTick;
 
-    public EntityAIEatGrass(EntityLiving par1EntityLiving)
+    public EntityAIEatGrass(final EntityLiving par1EntityLiving)
     {
         this.theEntity = par1EntityLiving;
         this.theWorld = par1EntityLiving.worldObj;
@@ -36,9 +36,9 @@ public class EntityAIEatGrass extends EntityAIBase
         }
         else
         {
-            int i = MathHelper.floor_double(this.theEntity.posX);
-            int j = MathHelper.floor_double(this.theEntity.posY);
-            int k = MathHelper.floor_double(this.theEntity.posZ);
+            final int i = MathHelper.floor_double(this.theEntity.posX);
+            final int j = MathHelper.floor_double(this.theEntity.posY);
+            final int k = MathHelper.floor_double(this.theEntity.posZ);
             return this.theWorld.getBlockId(i, j, k) == Block.tallGrass.blockID && this.theWorld.getBlockMetadata(i, j, k) == 1 ? true : this.theWorld.getBlockId(i, j - 1, k) == Block.grass.blockID;
         }
     }
@@ -83,9 +83,9 @@ public class EntityAIEatGrass extends EntityAIBase
 
         if (this.eatGrassTick == 4)
         {
-            int i = MathHelper.floor_double(this.theEntity.posX);
-            int j = MathHelper.floor_double(this.theEntity.posY);
-            int k = MathHelper.floor_double(this.theEntity.posZ);
+            final int i = MathHelper.floor_double(this.theEntity.posX);
+            final int j = MathHelper.floor_double(this.theEntity.posY);
+            final int k = MathHelper.floor_double(this.theEntity.posZ);
 
             if (this.theWorld.getBlockId(i, j, k) == Block.tallGrass.blockID)
             {

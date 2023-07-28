@@ -5,6 +5,6 @@ import net.minecraft.client.audio.SoundPoolEntry;
 
 public class PlaySoundEffectEvent extends SoundResultEvent
 {
-    public PlaySoundEffectEvent(SoundManager manager, SoundPoolEntry source, String name, float volume, float pitch)
+    public PlaySoundEffectEvent(final SoundManager manager, final SoundPoolEntry source, final String name, final float volume, final float pitch)
     { super(manager, source, name, volume, pitch); }
 }

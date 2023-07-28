@@ -58,7 +58,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
         return cancel;
     }
 
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 
@@ -80,7 +80,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
      *
      * @param amount the amount of experience to drop
      */
-    public void setExpToDrop(int amount) {
+    public void setExpToDrop(final int amount) {
         exp = amount;
     }
 

@@ -20,7 +20,7 @@ public class RenderTNTPrimed extends Render
         this.shadowSize = 0.5F;
     }
 
-    public void renderPrimedTNT(EntityTNTPrimed par1EntityTNTPrimed, double par2, double par4, double par6, float par8, float par9)
+    public void renderPrimedTNT(final EntityTNTPrimed par1EntityTNTPrimed, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         GL11.glPushMatrix();
         GL11.glTranslatef((float)par2, (float)par4, (float)par6);
@@ -42,7 +42,7 @@ public class RenderTNTPrimed extends Render
 
             f2 *= f2;
             f2 *= f2;
-            float f3 = 1.0F + f2 * 0.3F;
+            final float f3 = 1.0F + f2 * 0.3F;
             GL11.glScalef(f3, f3, f3);
         }
 
@@ -67,7 +67,7 @@ public class RenderTNTPrimed extends Render
         GL11.glPopMatrix();
     }
 
-    protected ResourceLocation func_110808_a(EntityTNTPrimed par1EntityTNTPrimed)
+    protected ResourceLocation func_110808_a(final EntityTNTPrimed par1EntityTNTPrimed)
     {
         return TextureMap.locationBlocksTexture;
     }
@@ -75,7 +75,7 @@ public class RenderTNTPrimed extends Render
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+    protected ResourceLocation getEntityTexture(final Entity par1Entity)
     {
         return this.func_110808_a((EntityTNTPrimed)par1Entity);
     }
@@ -86,7 +86,7 @@ public class RenderTNTPrimed extends Render
      * (Render<T extends Entity) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9)
     {
         this.renderPrimedTNT((EntityTNTPrimed)par1Entity, par2, par4, par6, par8, par9);
     }
