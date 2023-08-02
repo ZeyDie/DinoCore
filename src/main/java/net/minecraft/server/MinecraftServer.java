@@ -6,6 +6,7 @@ import com.zeydie.threads.EntityThread;
 import com.zeydie.threads.UnloadingThread;
 import com.zeydie.threads.WorldThread;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import jline.console.ConsoleReader;
@@ -605,14 +606,14 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
                         if (worldServer != null && worldServer.getWorldInfo().getWorldName().equals(MinecraftServer.this.getFolderName())) {
                             this.getLogAgent().logInfo("Saving chunks for level \'" + worldServer.getWorldInfo().getWorldName() + "\'/" + worldServer.provider.getDimensionName());
 
-                            worldServer.saveAllChunks(true, null);
+                            worldServer.saveAllChunks(false, null);
                             worldServer.flush();
 
                             this.server.getPluginManager().callEvent(new WorldSaveEvent(worldServer.getWorld()));
-
                             return;
                         }
                     }
+
             //TODO ZeyCodeEnd
 
             // CraftBukkit start
@@ -638,7 +639,6 @@ public abstract class MinecraftServer implements ICommandSender, Runnable, IPlay
                     // Cauldron end
                 }
             }
-
             // CraftBukkit end
         }
     }
