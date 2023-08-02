@@ -55,7 +55,7 @@ public class WorldChunkManager
     /**
      * Gets the list of valid biomes for the player to spawn in.
      */
-    public List getBiomesToSpawnIn()
+    public List<BiomeGenBase> getBiomesToSpawnIn()
     {
         return this.biomesToSpawnIn;
     }

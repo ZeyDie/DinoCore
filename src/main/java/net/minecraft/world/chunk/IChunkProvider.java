@@ -2,6 +2,7 @@ package net.minecraft.world.chunk;
 
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.IProgressUpdate;
+import net.minecraft.util.WeightedRandomItem;
 import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
 
@@ -54,7 +55,7 @@ public interface IChunkProvider
     /**
      * Returns a list of creatures of the specified type that can spawn at the given location.
      */
-    List getPossibleCreatures(EnumCreatureType enumcreaturetype, int i, int j, int k);
+    List<?> getPossibleCreatures(EnumCreatureType enumcreaturetype, int i, int j, int k);
 
     /**
      * Returns the location of the closest structure of the specified type. If not found returns null.

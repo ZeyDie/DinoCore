@@ -17,10 +17,12 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
     private static class CustomBiomeGrid implements BiomeGrid {
         net.minecraft.world.biome.BiomeGenBase[] biome;
 
+        @Override
         public Biome getBiome(final int x, final int z) {
             return CraftBlock.biomeBaseToBiome(biome[(z << 4) | x]);
         }
 
+        @Override
         public void setBiome(final int x, final int z, final Biome bio) {
            biome[(z << 4) | x] = CraftBlock.biomeToBiomeBase(bio);
         }
@@ -36,6 +38,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
     /**
      * Checks to see if a chunk exists at x, y
      */
+    @Override
     public boolean chunkExists(final int x, final int z) {
         return true;
     }
@@ -44,6 +47,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
      * Will return back a chunk, if it doesn't exist and its not a MP client it will generates all the blocks for the
      * specified chunk from the map seed and chunk seed
      */
+    @Override
     public net.minecraft.world.chunk.Chunk provideChunk(final int x, final int z) {
         random.setSeed((long) x * 341873128712L + (long) z * 132897987541L);
 
@@ -161,6 +165,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
     /**
      * Populates chunk with ores etc etc
      */
+    @Override
     public void populate(final net.minecraft.world.chunk.IChunkProvider icp, final int i, final int i1) {
         // Nothing!
     }
@@ -169,6 +174,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
      * Two modes of operation: if passed true, save all Chunks in one go.  If passed false, save up to two chunks.
      * Return true if all chunks have been saved.
      */
+    @Override
     public boolean saveChunks(final boolean bln, final net.minecraft.util.IProgressUpdate ipu) {
         return true;
     }
@@ -176,6 +182,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
     /**
      * Unloads chunks that are marked to be unloaded. This is not guaranteed to unload every such chunk.
      */
+    @Override
     public boolean unloadQueuedChunks() {
         return false;
     }
@@ -183,19 +190,23 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
     /**
      * Returns if the IChunkProvider supports saving.
      */
+    @Override
     public boolean canSave() {
         return true;
     }
 
+    @Override
     @SuppressWarnings("deprecation")
     public byte[] generate(final org.bukkit.World world, final Random random, final int x, final int z) {
         return generator.generate(world, random, x, z);
     }
 
+    @Override
     public byte[][] generateBlockSections(final org.bukkit.World world, final Random random, final int x, final int z, final BiomeGrid biomes) {
         return generator.generateBlockSections(world, random, x, z, biomes);
     }
 
+    @Override
     public short[][] generateExtBlockSections(final org.bukkit.World world, final Random random, final int x, final int z, final BiomeGrid biomes) {
         return generator.generateExtBlockSections(world, random, x, z, biomes);
     }
@@ -203,6 +214,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
     /**
      * loads or generates the chunk at the chunk location specified
      */
+    @Override
     public net.minecraft.world.chunk.Chunk loadChunk(final int x, final int z) {
         return provideChunk(x, z);
     }
@@ -217,6 +229,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
         return generator.getDefaultPopulators(world);
     }
 
+    @Override
     public List<?> getPossibleCreatures(final net.minecraft.entity.EnumCreatureType type, final int x, final int y, final int z) {
         final net.minecraft.world.biome.BiomeGenBase biomebase = world.getBiomeGenForCoords(x, z);
 
@@ -226,12 +239,15 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
     /**
      * Returns the location of the closest structure of the specified type. If not found returns null.
      */
+    @Override
     public net.minecraft.world.ChunkPosition findClosestStructure(final net.minecraft.world.World world, final String type, final int x, final int y, final int z) {
         return "Stronghold".equals(type) && this.strongholdGen != null ? this.strongholdGen.getNearestInstance(world, x, y, z) : null;
     }
 
+    @Override
     public void recreateStructures(final int i, final int j) {}
 
+    @Override
     public int getLoadedChunkCount() {
         return 0;
     }
@@ -239,6 +255,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
     /**
      * Converts the instance data to a readable string.
      */
+    @Override
     public String makeString() {
         return "CustomChunkGenerator";
     }

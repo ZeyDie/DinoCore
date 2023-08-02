@@ -119,7 +119,7 @@ public abstract class World implements IBlockAccess {
     /**
      * Array list of players in the world.
      */
-    public List playerEntities = new ArrayList();
+    public List<EntityPlayer> playerEntities = new ArrayList();
 
     /**
      * a list of all the lightning entities

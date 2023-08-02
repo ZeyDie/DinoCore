@@ -69,7 +69,7 @@ public class WorldServer extends World {
     public EntityTracker theEntityTracker; // CraftBukkit - private final -> public
     private final PlayerManager thePlayerManager;
     private LongObjectHashMap<Set<NextTickListEntry>> tickEntriesByChunk; // Spigot - switch to something better for chunk-wise access
-    private Set pendingTickListEntriesHashSet; // Cauldron - vanilla compatibility
+    private Set<NextTickListEntry> pendingTickListEntriesHashSet; // Cauldron - vanilla compatibility
     private TreeSet<NextTickListEntry> tickEntryQueue; // Spigot
     public ChunkProviderServer theChunkProviderServer;
 
@@ -127,7 +127,7 @@ public class WorldServer extends World {
         }
 
         if (this.tickEntriesByChunk == null) {
-            this.pendingTickListEntriesHashSet = new HashSet(); // Cauldron - vanilla compatibility
+            this.pendingTickListEntriesHashSet = new HashSet<>(); // Cauldron - vanilla compatibility
             this.tickEntriesByChunk = new LongObjectHashMap<Set<NextTickListEntry>>();
         }
 
@@ -185,7 +185,7 @@ public class WorldServer extends World {
 
         // Spigot start
         if (this.tickEntriesByChunk == null) {
-            this.pendingTickListEntriesHashSet = new HashSet(); // Cauldron - vanilla compatibility
+            this.pendingTickListEntriesHashSet = new HashSet<>(); // Cauldron - vanilla compatibility
             this.tickEntriesByChunk = new LongObjectHashMap<Set<NextTickListEntry>>();
         }
 
@@ -313,6 +313,7 @@ public class WorldServer extends World {
     /**
      * Runs a single tick for the world
      */
+    @Override
     public void tick() {
         ProfilerSection.DIMENSION_BLOCKTICK.start(this.provider.dimensionId); // Cauldron - mobius hook
         super.tick();
@@ -401,7 +402,7 @@ public class WorldServer extends World {
      * only spawns creatures allowed by the chunkProvider
      */
     public SpawnListEntry spawnRandomCreature(final EnumCreatureType par1EnumCreatureType, final int par2, final int par3, final int par4) {
-        List list = this.getChunkProvider().getPossibleCreatures(par1EnumCreatureType, par2, par3, par4);
+        List<WeightedRandomItem> list = (List<WeightedRandomItem>) this.getChunkProvider().getPossibleCreatures(par1EnumCreatureType, par2, par3, par4);
         list = ForgeEventFactory.getPotentialSpawns(this, par1EnumCreatureType, par2, par3, par4, list);
         return list != null && !list.isEmpty() ? (SpawnListEntry) WeightedRandom.getRandomItem(this.rand, list) : null;
     }
@@ -409,9 +410,10 @@ public class WorldServer extends World {
     /**
      * Updates the flag that indicates whether or not all players in the world are sleeping.
      */
+    @Override
     public void updateAllPlayersSleepingFlag() {
         this.allPlayersSleeping = !this.playerEntities.isEmpty();
-        final Iterator iterator = this.playerEntities.iterator();
+        final Iterator<EntityPlayer> iterator = this.playerEntities.iterator();
 
         while (iterator.hasNext()) {
             final EntityPlayer entityplayer = (EntityPlayer) iterator.next();
@@ -426,7 +428,7 @@ public class WorldServer extends World {
 
     protected void wakeAllPlayers() {
         this.allPlayersSleeping = false;
-        final Iterator iterator = this.playerEntities.iterator();
+        final Iterator<EntityPlayer> iterator = this.playerEntities.iterator();
 
         while (iterator.hasNext()) {
             final EntityPlayer entityplayer = (EntityPlayer) iterator.next();
@@ -462,7 +464,7 @@ public class WorldServer extends World {
 
     public boolean areAllPlayersAsleep() {
         if (this.allPlayersSleeping && !this.isRemote) {
-            final Iterator iterator = this.playerEntities.iterator();
+            final Iterator<EntityPlayer> iterator = this.playerEntities.iterator();
             // CraftBukkit - This allows us to assume that some people are in bed but not really, allowing time to pass in spite of AFKers
             boolean foundActualSleepers = false;
             EntityPlayer entityplayer;
@@ -488,6 +490,7 @@ public class WorldServer extends World {
         }
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
 
     /**
@@ -520,6 +523,7 @@ public class WorldServer extends World {
      * plays random cave ambient sounds and runs updateTick on random blocks within each chunk in the vacinity of a
      * player
      */
+    @Override
     protected void tickBlocksAndAmbiance() {
         super.tickBlocksAndAmbiance();
         int i = 0;
@@ -652,6 +656,7 @@ public class WorldServer extends World {
     /**
      * Returns true if the given block will receive a scheduled tick in this tick. Args: X, Y, Z, blockID
      */
+    @Override
     public boolean isBlockTickScheduledThisTick(final int par1, final int par2, final int par3, final int par4) {
         // Spigot start
         final int te_cnt = this.pendingTickEntries.size();
@@ -671,10 +676,12 @@ public class WorldServer extends World {
     /**
      * Schedules a tick to a block with a delay (Most commonly the tick rate)
      */
+    @Override
     public void scheduleBlockUpdate(final int par1, final int par2, final int par3, final int par4, final int par5) {
         this.scheduleBlockUpdateWithPriority(par1, par2, par3, par4, par5, 0);
     }
 
+    @Override
     public void scheduleBlockUpdateWithPriority(final int par1, final int par2, final int par3, final int par4, int par5, final int par6) {
         int par51 = par5;
         final NextTickListEntry nextticklistentry = new NextTickListEntry(par1, par2, par3, par4);
@@ -716,6 +723,7 @@ public class WorldServer extends World {
     /**
      * Schedules a block update from the saved information in a chunk. Called when the chunk is loaded.
      */
+    @Override
     public void scheduleBlockUpdateFromLoad(final int par1, final int par2, final int par3, final int par4, final int par5, final int par6) {
         final NextTickListEntry nextticklistentry = new NextTickListEntry(par1, par2, par3, par4);
         nextticklistentry.setPriority(par6);
@@ -761,6 +769,7 @@ public class WorldServer extends World {
     /**
      * Runs through the list of updates to run and ticks them
      */
+    @Override
     public boolean tickUpdates(final boolean par1) {
         // Spigot start
         int i = this.tickEntryQueue.size();
@@ -856,7 +865,8 @@ public class WorldServer extends World {
         }
     }
 
-    public List getPendingBlockUpdates(final Chunk par1Chunk, final boolean par2) {
+    @Override
+    public List<NextTickListEntry> getPendingBlockUpdates(final Chunk par1Chunk, final boolean par2) {
         // Spigot start
         return this.getNextTickEntriesForChunk(par1Chunk, par2);
         // Spigot end
@@ -866,6 +876,7 @@ public class WorldServer extends World {
      * Will update the entity in the world if the chunk the entity is in is currently loaded or its forced to update.
      * Args: entity, forceUpdate
      */
+    @Override
     public void updateEntityWithOptionalForce(final Entity par1Entity, final boolean par2) {
         /* CraftBukkit start - We prevent spawning in general, so this butchering is not needed
         if (!this.server.getSpawnAnimals() && (entity instanceof EntityAnimal || entity instanceof EntityWaterAnimal)) {
@@ -898,6 +909,7 @@ public class WorldServer extends World {
     /**
      * Creates the chunk provider for this world. Called in the constructor. Retrieves provider from worldProvider?
      */
+    @Override
     protected IChunkProvider createChunkProvider() {
         final IChunkLoader ichunkloader = this.saveHandler.getChunkLoader(this.provider);
         // Cauldron start - if provider is vanilla, proceed to create a bukkit compatible chunk generator
@@ -927,8 +939,8 @@ public class WorldServer extends World {
     /**
      * pars: min x,y,z , max x,y,z
      */
-    public List getAllTileEntityInBox(final int par1, final int par2, final int par3, final int par4, final int par5, final int par6) {
-        final ArrayList arraylist = new ArrayList();
+    public List<TileEntity> getAllTileEntityInBox(final int par1, final int par2, final int par3, final int par4, final int par5, final int par6) {
+        final List<TileEntity> arraylist = new ArrayList<>();
 
         // CraftBukkit start - Get tile entities from chunks instead of world
         for (int chunkX = (par1 >> 4); chunkX <= ((par4 - 1) >> 4); chunkX++) {
@@ -956,14 +968,17 @@ public class WorldServer extends World {
     /**
      * Called when checking if a certain block can be mined or not. The 'spawn safe zone' check is located here.
      */
+    @Override
     public boolean canMineBlock(final EntityPlayer par1EntityPlayer, final int par2, final int par3, final int par4) {
         return super.canMineBlock(par1EntityPlayer, par2, par3, par4);
     }
 
+    @Override
     public boolean canMineBlockBody(final EntityPlayer par1EntityPlayer, final int par2, final int par3, final int par4) {
         return !this.mcServer.isBlockProtected(this, par2, par3, par4, par1EntityPlayer);
     }
 
+    @Override
     protected void initialize(final WorldSettings par1WorldSettings) {
         if (this.entityIdMap == null) {
             this.entityIdMap = new IntHashMap();
@@ -971,7 +986,7 @@ public class WorldServer extends World {
 
         // Spigot start
         if (this.tickEntriesByChunk == null) {
-            this.pendingTickListEntriesHashSet = new HashSet(); // Cauldron - vanilla compatibility
+            this.pendingTickListEntriesHashSet = new HashSet<>(); // Cauldron - vanilla compatibility
             this.tickEntriesByChunk = new LongObjectHashMap<Set<NextTickListEntry>>();
         }
 
@@ -998,7 +1013,7 @@ public class WorldServer extends World {
         } else {
             this.findingSpawnPoint = true;
             final WorldChunkManager worldchunkmanager = this.provider.worldChunkMgr;
-            final List list = worldchunkmanager.getBiomesToSpawnIn();
+            final List<BiomeGenBase> list = worldchunkmanager.getBiomesToSpawnIn();
             final Random random = new Random(this.getSeed());
             final ChunkPosition chunkposition = worldchunkmanager.findBiomePosition(0, 0, 256, list, random);
             int i = 0;
@@ -1132,6 +1147,7 @@ public class WorldServer extends World {
         this.perWorldStorage.saveAllData();
     }
 
+    @Override
     protected void onEntityAdded(final Entity par1Entity) {
         super.onEntityAdded(par1Entity);
         this.entityIdMap.addKey(par1Entity.entityId, par1Entity);
@@ -1144,6 +1160,7 @@ public class WorldServer extends World {
         }
     }
 
+    @Override
     public void onEntityRemoved(final Entity par1Entity) {
         super.onEntityRemoved(par1Entity);
         this.entityIdMap.removeObject(par1Entity.entityId);
@@ -1159,6 +1176,7 @@ public class WorldServer extends World {
     /**
      * Returns the Entity with the given ID, or null if it doesn't exist in this World.
      */
+    @Override
     public Entity getEntityByID(final int par1) {
         return (Entity) this.entityIdMap.lookup(par1);
     }
@@ -1166,6 +1184,7 @@ public class WorldServer extends World {
     /**
      * adds a lightning bolt to the list of lightning bolts in this world.
      */
+    @Override
     public boolean addWeatherEffect(final Entity par1Entity) {
         // Cauldron start - vanilla compatibility
         if (par1Entity instanceof net.minecraft.entity.effect.EntityLightningBolt) {
@@ -1190,6 +1209,7 @@ public class WorldServer extends World {
     /**
      * sends a Packet 38 (Entity Status) to all tracked players of that entity
      */
+    @Override
     public void setEntityState(final Entity par1Entity, final byte par2) {
         final Packet38EntityStatus packet38entitystatus = new Packet38EntityStatus(par1Entity.entityId, par2);
         this.getEntityTracker().sendPacketToAllAssociatedPlayers(par1Entity, packet38entitystatus);
@@ -1198,6 +1218,7 @@ public class WorldServer extends World {
     /**
      * returns a new explosion. Does initiation (at time of writing Explosion is not finished)
      */
+    @Override
     public Explosion newExplosion(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final boolean par9, final boolean par10) {
         // CraftBukkit start
         final Explosion explosion = super.newExplosion(par1Entity, par2, par4, par6, par8, par9, par10);
@@ -1218,7 +1239,7 @@ public class WorldServer extends World {
             explosion.affectedBlockPositions.clear();
         }
 
-        final Iterator iterator = this.playerEntities.iterator();
+        final Iterator<EntityPlayer> iterator = this.playerEntities.iterator();
 
         while (iterator.hasNext()) {
             final EntityPlayer entityplayer = (EntityPlayer) iterator.next();
@@ -1235,9 +1256,10 @@ public class WorldServer extends World {
      * Adds a block event with the given Args to the blockEventCache. During the next tick(), the block specified will
      * have its onBlockEvent handler called with the given parameters. Args: X,Y,Z, BlockID, EventID, EventParameter
      */
+    @Override
     public void addBlockEvent(final int par1, final int par2, final int par3, final int par4, final int par5, final int par6) {
         final BlockEventData blockeventdata = new BlockEventData(par1, par2, par3, par4, par5, par6);
-        final Iterator iterator = this.blockEventCache[this.blockEventCacheIndex].iterator();
+        final Iterator<BlockEventData> iterator = this.blockEventCache[this.blockEventCacheIndex].iterator();
         BlockEventData blockeventdata1;
 
         do {
@@ -1258,7 +1280,7 @@ public class WorldServer extends World {
         while (!this.blockEventCache[this.blockEventCacheIndex].isEmpty()) {
             final int i = this.blockEventCacheIndex;
             this.blockEventCacheIndex ^= 1;
-            final Iterator iterator = this.blockEventCache[i].iterator();
+            final Iterator<BlockEventData> iterator = this.blockEventCache[i].iterator();
 
             while (iterator.hasNext()) {
                 final BlockEventData blockeventdata = (BlockEventData) iterator.next();
@@ -1290,6 +1312,7 @@ public class WorldServer extends World {
     /**
      * Updates all weather states.
      */
+    @Override
     protected void updateWeather() {
         final boolean flag = this.isRaining();
         super.updateWeather();
