@@ -1,2 +1,3 @@
-./gradlew setupCIWorkspace idea eclipse
+./gradlew setupCIWorkspace idea
+mkdir eclipse
 pause
