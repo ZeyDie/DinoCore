@@ -360,7 +360,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
             return false;
         }
 
-        if (entity.playerNetServerHandler == null || entity.playerNetServerHandler.connectionClosed) {
+        if (entity.playerNetServerHandler == null || entity.playerNetServerHandler.disconnected) {
             return false;
         }
 
@@ -999,7 +999,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         if (playerConnection == null) {
             throw new IllegalStateException("Cannot set scoreboard yet");
         }
-        if (playerConnection.connectionClosed) {
+        if (playerConnection.disconnected) {
             throw new IllegalStateException("Cannot set scoreboard for invalid CraftPlayer");
         }
 

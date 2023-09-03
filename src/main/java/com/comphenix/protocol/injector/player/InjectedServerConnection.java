@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package com.comphenix.protocol.injector.player;
 
 import com.comphenix.net.sf.cglib.proxy.Factory;

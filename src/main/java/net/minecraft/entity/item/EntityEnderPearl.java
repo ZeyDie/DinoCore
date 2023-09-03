@@ -56,7 +56,7 @@ public class EntityEnderPearl extends EntityThrowable
             {
                 final EntityPlayerMP entityplayermp = (EntityPlayerMP)this.getThrower();
 
-                if (!entityplayermp.playerNetServerHandler.connectionClosed && entityplayermp.worldObj == this.worldObj)
+                if (!entityplayermp.playerNetServerHandler.disconnected && entityplayermp.worldObj == this.worldObj)
                 {
                     final EnderTeleportEvent event = new EnderTeleportEvent(entityplayermp, this.posX, this.posY, this.posZ, 5);
                     // Cauldron start - invert condition; return if cancelled otherwise fall through to CB event
@@ -74,14 +74,14 @@ public class EntityEnderPearl extends EntityThrowable
                     final PlayerTeleportEvent teleEvent = new PlayerTeleportEvent(player, player.getLocation(), location, PlayerTeleportEvent.TeleportCause.ENDER_PEARL);
                     Bukkit.getPluginManager().callEvent(teleEvent);
 
-                    if (!teleEvent.isCancelled() && !entityplayermp.playerNetServerHandler.connectionClosed)
+                    if (!teleEvent.isCancelled() && !entityplayermp.playerNetServerHandler.disconnected)
                     {
                         entityplayermp.playerNetServerHandler.teleport(teleEvent.getTo());
                         this.getThrower().fallDistance = 0.0F;
                         final EntityDamageByEntityEvent damageEvent = new EntityDamageByEntityEvent(this.getBukkitEntity(), player, EntityDamageByEntityEvent.DamageCause.FALL, 5.0D);
                         Bukkit.getPluginManager().callEvent(damageEvent);
 
-                        if (!damageEvent.isCancelled() && !entityplayermp.playerNetServerHandler.connectionClosed)
+                        if (!damageEvent.isCancelled() && !entityplayermp.playerNetServerHandler.disconnected)
                         {
                             entityplayermp.initialInvulnerability = -1; // Remove spawning invulnerability
                             player.setLastDamageCause(damageEvent);

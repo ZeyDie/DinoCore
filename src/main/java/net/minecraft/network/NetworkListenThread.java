@@ -69,7 +69,7 @@ public abstract class NetworkListenThread {
                 netserverhandler.kickPlayerFromServer("Internal server error");
             }
 
-            if (netserverhandler.connectionClosed) {
+            if (netserverhandler.disconnected) {
                 this.connections.remove(i--);
             }
 

@@ -473,7 +473,7 @@ public abstract class NetHandler
 
     public void func_142031_a(final Packet133TileEditorOpen par1Packet133TileEditorOpen) {}
 
-    public boolean isConnectionClosed()
+    public boolean isDisconnected()
     {
         return false;
     }

@@ -7,7 +7,11 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractSettings {
     @NotNull
-    private final SGsonFile gsonFile = new SGsonFile(DefaultPaths.getOptimizationFile(String.format("%s.json", this.getConfigName())));
+    private final SGsonFile gsonFile = new SGsonFile(
+            DefaultPaths.getCoreFile(
+                    String.format("%s.json", this.getConfigName())
+            )
+    );
 
     public final void reload() {
         this.setSettings(this.loadSettings(this.getSettings()));

@@ -49,6 +49,7 @@ import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.InventoryView;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -82,7 +83,8 @@ public class NetServerHandler extends NetHandler {
     /**
      * This is set to true whenever a player disconnects from the server.
      */
-    public boolean connectionClosed;
+    //TODO ZeyCodeReplace connectionClosed on disconnected
+    public boolean disconnected;
 
     /**
      * Reference to the EntityPlayerMP object.
@@ -206,7 +208,7 @@ public class NetServerHandler extends NetHandler {
 
     public void kickPlayerFromServer(String par1Str) {
         String par1Str1 = par1Str;
-        if (!this.connectionClosed) {
+        if (!this.disconnected) {
             // CraftBukkit start
             String leaveMessage = EnumChatFormatting.YELLOW + this.playerEntity.getCommandSenderName() + " left the game.";
             final PlayerKickEvent event = new PlayerKickEvent(this.server.getPlayer(this.playerEntity), par1Str1, leaveMessage);
@@ -235,7 +237,7 @@ public class NetServerHandler extends NetHandler {
 
             // CraftBukkit end
             this.mcServer.getConfigurationManager().disconnect(this.playerEntity);
-            this.connectionClosed = true;
+            this.disconnected = true;
         }
     }
 
@@ -815,7 +817,7 @@ public class NetServerHandler extends NetHandler {
     }
 
     public void handleErrorMessage(final String par1Str, final Object[] par2ArrayOfObj) {
-        if (this.connectionClosed) {
+        if (this.disconnected) {
             return;    // CraftBukkit - Rarely it would send a disconnect line twice
         }
 
@@ -828,7 +830,7 @@ public class NetServerHandler extends NetHandler {
         }
 
         // CraftBukkit end
-        this.connectionClosed = true;
+        this.disconnected = true;
 
         if (this.mcServer.isSinglePlayer() && this.playerEntity.getCommandSenderName().equals(this.mcServer.getServerOwner())) {
             this.mcServer.getLogAgent().logInfo("Stopping singleplayer server as player logged out");
@@ -841,13 +843,19 @@ public class NetServerHandler extends NetHandler {
      * nothing.
      */
     public void unexpectedPacket(final Packet par1Packet) {
-        if (this.connectionClosed) {
+        if (this.disconnected) {
             return;    // CraftBukkit
         }
 
         this.mcServer.getLogAgent().logWarning(this.getClass() + " wasn\'t prepared to deal with a " + par1Packet.getClass());
         this.kickPlayerFromServer("Protocol error, unexpected packet");
     }
+
+    //TODO ZeyCodeStart
+    public void sendPacket(@NotNull final Packet packet) {
+        this.sendPacketToPlayer(packet);
+    }
+    //TODO ZeyCodeEnd
 
     /**
      * addToSendQueue. if it is a chat packet, check before sending it
@@ -2236,8 +2244,8 @@ public class NetServerHandler extends NetHandler {
         }
     }
 
-    public boolean isConnectionClosed() {
-        return this.connectionClosed;
+    public boolean isDisconnected() {
+        return this.disconnected;
     }
 
 

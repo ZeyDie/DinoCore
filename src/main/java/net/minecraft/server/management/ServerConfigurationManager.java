@@ -337,7 +337,7 @@ public abstract class ServerConfigurationManager {
      */
     public String disconnect(final EntityPlayerMP entityplayermp)   // CraftBukkit - return string
     {
-        if (entityplayermp.playerNetServerHandler.connectionClosed) {
+        if (entityplayermp.playerNetServerHandler.disconnected) {
             return null;    // CraftBukkit - exploitsies fix
         }
 

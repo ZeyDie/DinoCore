@@ -13,6 +13,7 @@ import com.zeydie.settings.optimization.NettySettings;
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.socket.SocketChannel;
@@ -45,6 +46,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@ChannelHandler.Sharable
 public class TcpConnection
 
         //TODO ZeyCodeStart
@@ -681,7 +683,7 @@ public class TcpConnection
         for (int i = this.readPackets.size(); i >= 0; i--) {
             final Packet packet = this.readPackets.poll();
 
-            if (packet != null && !this.theNetHandler.isConnectionClosed())
+            if (packet != null && !this.theNetHandler.isDisconnected())
                 packet.processPacket(this.theNetHandler);
         }
         //TODO ZeyCodeEnd

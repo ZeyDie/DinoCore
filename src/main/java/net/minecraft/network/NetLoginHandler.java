@@ -6,6 +6,7 @@ import com.zeydie.netty.wrappers.NettyPacketWrapperLegacy;
 import com.zeydie.settings.optimization.CoreSettings;
 import com.zeydie.settings.optimization.NettySettings;
 import cpw.mods.fml.common.network.FMLNetworkHandler;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.socket.SocketChannel;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -25,6 +26,7 @@ import java.security.PublicKey;
 import java.util.Arrays;
 import java.util.Random;
 
+@ChannelHandler.Sharable
 public class NetLoginHandler extends NetHandler {
     /**
      * The Random object used to generate serverId hex strings.
@@ -323,7 +325,7 @@ public class NetLoginHandler extends NetHandler {
         return true;
     }
 
-    public boolean isConnectionClosed() {
+    public boolean isDisconnected() {
         return this.connectionComplete;
     }
 
