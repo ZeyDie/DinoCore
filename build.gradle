@@ -31,7 +31,7 @@ compileJava {
     sourceCompatibility = targetCompatibility = '1.7'
 }
 
-version = "1.6.4-" + new Date().format('dd.MM.yyyy')
+version = "1.6.4-deobf"
 group = 'net.minecraftforge'
 archivesBaseName = "DinoCore"
 
@@ -46,10 +46,10 @@ dependencies {
     compile fileTree(dir: libsFolder, include: '*.jar')
 
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
-    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.26'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.26'
 
     // https://mvnrepository.com/artifact/org.jetbrains/annotations
-    compile group: 'org.jetbrains', name: 'annotations', version: '24.0.0'
+    compileOnly group: 'org.jetbrains', name: 'annotations', version: '24.0.0'
 }
 
 task devJar(type: Jar) {
